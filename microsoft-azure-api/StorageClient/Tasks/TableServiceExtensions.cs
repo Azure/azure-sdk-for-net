@@ -100,7 +100,6 @@ namespace Microsoft.WindowsAzure.StorageClient.Tasks
         private static TaskSequence GetUnexpectedInternalClientErrorTaskSequence<T>(TimeSpan timeout, Action<T> setResult)
         {
             // this fires to signal the the detection of a known astoria 1.0 bug.
-            // See RDBUG:27062
             TraceHelper.WriteLine("Creating unexpected internal client error task sequence " + timeout);
             NullTaskReturn scratch;
 
