@@ -1,0 +1,27 @@
+<StyleCopSettings Version="4.3">
+  <GlobalSettings>
+    <StringProperty Name="LinkedSettingsFile">%StyleCopLocation%\bin\Settings.SourceAnalysis</StringProperty>
+  </GlobalSettings>
+  <Parsers>
+    <Parser ParserId="Microsoft.StyleCop.CSharp.CsParser">
+      <ParserSettings>
+        <BooleanProperty Name="AnalyzeGeneratedFiles">True</BooleanProperty>
+      </ParserSettings>
+    </Parser>
+  </Parsers>
+  <Analyzers>
+    <Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.NamingRules">
+      <AnalyzerSettings>
+        <CollectionProperty Name="Hungarian">
+          <Value>md</Value>
+        </CollectionProperty>
+      </AnalyzerSettings>
+    </Analyzer>
+    <Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.DocumentationRules">
+      <AnalyzerSettings>
+        <StringProperty Name="CompanyName">Microsoft</StringProperty>
+        <StringProperty Name="Copyright">Copyright (c)2010 Microsoft. All rights reserved.</StringProperty>
+      </AnalyzerSettings>
+    </Analyzer>
+  </Analyzers>
+</StyleCopSettings>
