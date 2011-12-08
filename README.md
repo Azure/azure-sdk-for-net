@@ -42,7 +42,7 @@ within your project you can also have them installed by the .NET package manager
     <li>Account: To use this SDK to call Windows Azure services, you need to first
     create an account.</li>
     <li>Hosting: To host your Java code in Windows Azure, you additionally need
-    to download the full Windows Azure SDK for .NET – which includes packaging,
+    to download the full Windows Azure SDK for .NET - which includes packaging,
     emulation, and deployment tools.</li>
     <li>.NET Framework 3.5 or higher</li>
 </ul>
@@ -56,7 +56,7 @@ within your project you can also have them installed by the .NET package manager
     Developer Center</a>.</li>
 </ul>
 
-<p>First, include the classes you need (in this case we’ll include the StorageClient
+<p>First, include the classes you need (in this case we'll include the StorageClient
 and further demonstrate creating a table):<br/>
 <pre>using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;</pre></p>
