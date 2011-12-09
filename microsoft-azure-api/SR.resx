@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright 2011 Microsoft Corporation
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BlobSizeReductonError" xml:space="preserve">
+    <value>Cannot change size below currently written size</value>
+  </data>
+  <data name="BlobSizeTypeMismatch" xml:space="preserve">
+    <value>A stream blob must have a blob size of 0.</value>
+  </data>
+  <data name="BlobTooLargeError" xml:space="preserve">
+    <value>The blob is larger than maximum supported size '{0}'</value>
+  </data>
+  <data name="BlocksExistError" xml:space="preserve">
+    <value>Data already uploaded</value>
+  </data>
+  <data name="BlockTooLargeError" xml:space="preserve">
+    <value>Block size can not be larger than '{0}'</value>
+  </data>
+  <data name="ConditionalRequiresDateTime" xml:space="preserve">
+    <value>If-Modified-Since and If-Unmodified-Since require a DateTime value.</value>
+  </data>
+  <data name="ConditionalRequiresETag" xml:space="preserve">
+    <value>If-Match and If-None-Match require an ETag value.</value>
+  </data>
+  <data name="MD5MismatchError" xml:space="preserve">
+    <value>Calculated MD5 does not match existing property</value>
+  </data>
+  <data name="UndefinedBlobType" xml:space="preserve">
+    <value>The blob type cannot be undefined.</value>
+  </data>
+  <data name="BlocksTooSmallError" xml:space="preserve">
+    <value>The block size must be positive value</value>
+  </data>
+  <data name="ArgumentEmptyError" xml:space="preserve">
+    <value>The argument must not be empty string.</value>
+  </data>
+  <data name="MissingContainerInformation" xml:space="preserve">
+    <value>Invalid blob address '{0}', missing container information</value>
+  </data>
+  <data name="ArgumentOutOfRangeError" xml:space="preserve">
+    <value>The argument is out of range</value>
+  </data>
+  <data name="ArgumentTooLargeError" xml:space="preserve">
+    <value>The argument '{0}' is larger than maximum of '{1}'</value>
+  </data>
+  <data name="ArgumentTooSmallError" xml:space="preserve">
+    <value>The argument '{0}' is smaller than minimum of '{1}'</value>
+  </data>
+  <data name="SeekTooFarError" xml:space="preserve">
+    <value>Attempting to seek past the end of the stream</value>
+  </data>
+  <data name="SeekTooLowError" xml:space="preserve">
+    <value>Attempting to seek before the start of the stream</value>
+  </data>
+  <data name="RelativeAddressNotPermitted" xml:space="preserve">
+    <value>Address '{0}' is not an absolute address. Relative addresses are not permitted in here.</value>
+  </data>
+  <data name="TooManyBlocksError" xml:space="preserve">
+    <value>The number of blocks is larger than the maximum of '{0}'</value>
+  </data>
+  <data name="NoMoreResultsForSegmentCursor" xml:space="preserve">
+    <value>The segment cursor has no more results.</value>
+  </data>
+  <data name="TableNameInvalid" xml:space="preserve">
+    <value>'{0}' is not a valid table name.</value>
+  </data>
+  <data name="AttachToTableServiceContext" xml:space="preserve">
+    <value>Cannot attach to a TableStorageDataServiceContext object. These objects already contain the functionality for accessing the table storage service.</value>
+  </data>
+  <data name="CannotCreateSASWithoutAccountKey" xml:space="preserve">
+    <value>Cannot create Shared Access Signature unless the Account Key credentials are used by the BlobServiceClient.</value>
+  </data>
+  <data name="CannotModifySnapshot" xml:space="preserve">
+    <value>Cannot perform this operation on a blob representing a snapshot.</value>
+  </data>
+  <data name="InvalidQueryParametersInsideBlobAddress" xml:space="preserve">
+    <value>Invalid query parameters inside Blob address '{0}'.</value>
+  </data>
+  <data name="MissingMandatoryParamtersForSAS" xml:space="preserve">
+    <value>Missing mandatory parameters for valid Shared Access Signature</value>
+  </data>
+  <data name="MultipleCredentialsProvided" xml:space="preserve">
+    <value>Cannot provide credentials as part of the address and as constructor parameter. Either pass in the address or use a different constructor.</value>
+  </data>
+  <data name="MultipleSnapshotTimesProvided" xml:space="preserve">
+    <value>Multiple different snapshot times provided as part of query '{0}' and as constructor parameter '{1}'.</value>
+  </data>
+  <data name="TooManyPolicyIdentifiers" xml:space="preserve">
+    <value>Too many '{0}' shared access policy identifiers provided. Server does not support setting more than '{1}' on a single container.</value>
+  </data>
+  <data name="MessageTooLarge" xml:space="preserve">
+    <value>Messages cannot be larger than {0} bytes.</value>
+  </data>
+  <data name="InvalidAclType" xml:space="preserve">
+    <value>Invalid acl public access type returned '{0}'. Expected blob or container.</value>
+  </data>
+  <data name="IncompatibleAddressesProvided" xml:space="preserve">
+    <value>Cannot combine incompatible absolute Uris base '{0}'  relative '{1}'.When trying to combine 2 absolute Uris, the base uri should be a valid base of the relative Uri.</value>
+  </data>
+  <data name="MissingAccountInformationInUri" xml:space="preserve">
+    <value>Cannot find account information inside Uri '{0}'</value>
+  </data>
+  <data name="PathStyleUriMissingAccountNameInformation" xml:space="preserve">
+    <value>Missing account name information inside path style uri. Path style uris should be of the form http://&lt;IPAddressPlusPort&gt;/&lt;accountName&gt;</value>
+  </data>
+  <data name="CannotCreateSASSignatureForGivenCred" xml:space="preserve">
+    <value>Cannot create Shared Access Signature as the credentials does not have account name information. Please check that the credentials used support creating Shared Access Signature.</value>
+  </data>
+  <data name="ClientSideTimeoutError" xml:space="preserve">
+    <value>Server operation did not finish within user specified timeout '{0}' seconds, check if operation is valid or try increasing the timeout.</value>
+  </data>
+  <data name="MustCallEndMoveNextSegmentFirst" xml:space="preserve">
+    <value>EndMoveNextSegment must be called before the Current property can be accessed.</value>
+  </data>
+  <data name="BlobQSharedKeyLiteUnsuppported" xml:space="preserve">
+    <value>"Versions before 2009-09-19 do not support Shared Key Lite for Blob And Queue, current target version '{0}'"</value>
+  </data>
+  <data name="MissingXmsDateInHeader" xml:space="preserve">
+    <value>Canonicalization did not find a non empty x-ms-date header in the WebRequest. Please use a WebRequest with a valid x-ms-date header in RFC 123 format (example request.Headers["x-ms-date"] = DateTime.UtcNow.ToString("R", CultureInfo.InvariantCulture))</value>
+  </data>
+  <data name="NotSupportedForPageBlob" xml:space="preserve">
+    <value>This operation is not supported for creating a PageBlob. Use other operations to create a PageBlob.</value>
+  </data>
+  <data name="DeleteSnapshotsNotValidError" xml:space="preserve">
+    <value>The option '{0}' must be 'None' to delete a specific snapshot specified by '{1}'</value>
+  </data>
+  <data name="CredentialsCantSignRequest" xml:space="preserve">
+    <value>The supplied credentials '{0'} cannot be used to sign request</value>
+  </data>
+  <data name="CannotCreateSASForSnapshot" xml:space="preserve">
+    <value>Cannot create Shared Access Signature for snapshots. Perform the operation on the root blob instead.</value>
+  </data>
+  <data name="ConditionNotMatchedError" xml:space="preserve">
+    <value>The conditionals specified for this operation did not match server.</value>
+  </data>
+  <data name="ConfigurationSettingPublisherError" xml:space="preserve">
+    <value>SetConfigurationSettingPublisher needs to be called before FromConfigurationSetting can be used</value>
+  </data>
+  <data name="ListSnapshotsWithDelimiterError" xml:space="preserve">
+    <value>Listing snapshots is only supported in flat mode (no delimiter). Consider setting BlobRequestOptions.UseFlatBlobListing property to true.</value>
+  </data>
+  <data name="ServerReturnedMoreThanMaxResults" xml:space="preserve">
+    <value>Server returned more that MaxResults requested</value>
+  </data>
+  <data name="InvalidContinuationType" xml:space="preserve">
+    <value>The continuation type passed in is unexpected. Please verify that the correct continuation type is passed in. Expected {0}, found {1}</value>
+  </data>
+  <data name="BlobTypeMismatchExceptionMessage" xml:space="preserve">
+    <value>BlobType of the blob reference doesn't match BlobType of the blob.</value>
+  </data>
+  <data name="BinaryMessageShouldUseBase64Encoding" xml:space="preserve">
+    <value>EncodeMessage should be true for binary message.</value>
+  </data>
+  <data name="CannotRetryNonSeekableStreamError" xml:space="preserve">
+    <value>Cannot retry operation using a source stream which does not support seek. To avoid this exception set the RetryPolicy to NoRetry or use a seekable stream.</value>
+  </data>
+  <data name="SnapshotTimePassedTwice" xml:space="preserve">
+    <value>Snapshot query parameter is already defined in the blobUri. Either pass in a snapshotTime parameter or use a full URL with a snapshot query parameter.</value>
+  </data>
+</root>
