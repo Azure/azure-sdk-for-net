@@ -108,6 +108,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\HttpQuery.cs" />
     <Compile Include="Implementation\ServiceBusRestProxy.cs" />
     <Compile Include="Implementation\WrapToken.cs" />
     <Compile Include="Implementation\WrapTokenManager.cs" />

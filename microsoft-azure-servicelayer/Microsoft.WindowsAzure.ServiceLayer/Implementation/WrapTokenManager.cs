@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Implementation
             {
                 // The token is not there; start a new authentication request.
                 Uri scopeUri = new Uri(ServiceConfig.ScopeHostUri, resourcePath);
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, scopeUri);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, ServiceConfig.AuthenticationUri);
                 Dictionary<string, string> settings = new Dictionary<string, string>()
                 {
                     {"wrap_name",       ServiceConfig.UserName},
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Implementation
                 request.Content = new FormUrlEncodedContent(settings);
 
                 return Client.SendAsync(request)
-                    .ContinueWith<WrapToken>(t => { return SetToken(t.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion);
+                    .ContinueWith<WrapToken>(t => { return SetToken(resourcePath, t.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion);
             }
 
             // Return cached token.
@@ -79,11 +79,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Implementation
         /// <summary>
         /// Creates and caches a token from the given response.
         /// </summary>
+        /// <param name="resourcePath">Path of the authenticated resource</param>
         /// <param name="response">HTTP response.</param>
         /// <returns>Cached token</returns>
-        internal WrapToken SetToken(HttpResponseMessage response)
+        internal WrapToken SetToken(string resourcePath, HttpResponseMessage response)
         {
-            WrapToken newToken = new WrapToken(response);
+            WrapToken newToken = new WrapToken(resourcePath, response);
             WrapToken retToken;
 
             // Another request may have created a token for the same scope. In this case we simply ignore 

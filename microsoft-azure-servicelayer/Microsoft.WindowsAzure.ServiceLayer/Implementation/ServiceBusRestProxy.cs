@@ -37,9 +37,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Implementation
         internal ServiceBusRestProxy(ServiceBusServiceConfig serviceOptions)
         {
             Debug.Assert(serviceOptions != null);
-            ServiceConfig = serviceOptions;
 
+            ServiceConfig = serviceOptions;
             Channel = new HttpClient();
+            TokenManager = new WrapTokenManager(ServiceConfig);
         }
 
         /// <summary>
