@@ -115,6 +115,7 @@
     <Compile Include="IServiceBusService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueInfo.cs" />
+    <Compile Include="SerializationHelper.cs" />
     <Compile Include="ServiceBusService.cs" />
     <Compile Include="ServiceBusServiceConfig.cs" />
   </ItemGroup>

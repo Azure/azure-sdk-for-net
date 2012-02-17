@@ -6,7 +6,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
+using Windows.Data.Xml.Dom;
 using Windows.Foundation;
+using Windows.Web.Syndication;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.Implementation
 {
@@ -59,6 +61,43 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Implementation
         }
 
         /// <summary>
+        /// Gets the queue with the given name.
+        /// </summary>
+        /// <param name="queueName">Name of the queue</param>
+        /// <returns>Queue data</returns>
+        IAsyncOperation<QueueInfo> IServiceBusService.GetQueueAsync(string queueName)
+        {
+            if (queueName == null)
+                throw new ArgumentNullException("queueName");
+
+            Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
+
+            return AuthenticateRequestAsync(request)
+                .ContinueWith<HttpResponseMessage>(r => { return Channel.SendAsync(r.Result).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<QueueInfo>(r => { return GetQueue(r.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation<QueueInfo>();
+        }
+
+        /// <summary>
+        /// Deletes a queue with the given name.
+        /// </summary>
+        /// <param name="queueName">Queue name</param>
+        /// <returns>Asycnrhonous action</returns>
+        IAsyncAction IServiceBusService.DeleteQueueAsync(string queueName)
+        {
+            if (queueName == null)
+                throw new ArgumentNullException("queueName");
+
+            Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+
+            return AuthenticateRequestAsync(request)
+                .ContinueWith<HttpResponseMessage>(r => { return Channel.SendAsync(r.Result).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncAction();
+        }
+
+        /// <summary>
         /// Authenticates the request.
         /// </summary>
         /// <param name="request">Request to authenticate</param>
@@ -77,8 +116,26 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Implementation
         IEnumerable<QueueInfo> GetQueues(HttpResponseMessage response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
+            SyndicationFeed feed = new SyndicationFeed();
+            feed.Load(response.Content.ReadAsStringAsync().Result);
 
-            throw new NotImplementedException();
+            return SerializationHelper.DeserializeCollection<QueueInfo>(feed, (item, queue) => queue.Initialize(item));
+        }
+
+        /// <summary>
+        /// Extracts a single queue from the given response.
+        /// </summary>
+        /// <param name="response">HTTP response</param>
+        /// <returns>Queue</returns>
+        QueueInfo GetQueue(HttpResponseMessage response)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(response.Content.ReadAsStringAsync().Result);
+
+            SyndicationItem feedItem = new SyndicationItem();
+            feedItem.LoadFromXml(doc);
+
+            return SerializationHelper.DeserializeItem<QueueInfo>(feedItem, (item, queue) => queue.Initialize(item));
         }
     }
 }
