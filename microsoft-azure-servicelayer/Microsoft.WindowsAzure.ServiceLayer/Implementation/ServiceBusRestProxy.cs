@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,6 +98,35 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Implementation
         }
 
         /// <summary>
+        /// Creates a queue with the given name and default settings.
+        /// </summary>
+        /// <param name="queueName">Name of the queue</param>
+        /// <returns>Queue data</returns>
+        IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName)
+        {
+            if (queueName == null)
+                throw new ArgumentNullException("queueName");
+
+            return CreateQueueAsync(queueName, new QueueSettings());
+        }
+
+        /// <summary>
+        /// Creates a queue with the given parameters.
+        /// </summary>
+        /// <param name="queueName">Name of the queue</param>
+        /// <param name="queueSettings">Parameters of the queue</param>
+        /// <returns>Created queue</returns>
+        IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName, QueueSettings queueSettings)
+        {
+            if (queueName == null)
+                throw new ArgumentNullException("queueName");
+            if (queueSettings == null)
+                throw new ArgumentNullException("queueSettings");
+
+            return CreateQueueAsync(queueName, queueSettings);
+        }
+
+        /// <summary>
         /// Authenticates the request.
         /// </summary>
         /// <param name="request">Request to authenticate</param>
@@ -134,8 +163,29 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Implementation
 
             SyndicationItem feedItem = new SyndicationItem();
             feedItem.LoadFromXml(doc);
-
             return SerializationHelper.DeserializeItem<QueueInfo>(feedItem, (item, queue) => queue.Initialize(item));
+        }
+
+        /// <summary>
+        /// Creates a queue with the given parameters.
+        /// </summary>
+        /// <param name="queueName">Name of the queue</param>
+        /// <param name="queueSettings">Parameters of the queue</param>
+        /// <returns>Created queue</returns>
+        IAsyncOperation<QueueInfo> CreateQueueAsync(string queueName, QueueSettings queueSettings)
+        {
+            Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
+            string content = SerializationHelper.Serialize(queueSettings);
+
+            request.Content = new StringContent(content, Encoding.UTF8, "application/atom+xml");
+            request.Content.Headers.ContentType.Parameters.Add(new System.Net.Http.Headers.NameValueHeaderValue("type", "entry"));
+
+            return AuthenticateRequestAsync(request)
+                .ContinueWith<HttpResponseMessage>(tr => { return Channel.SendAsync(request).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<QueueInfo>(tr => { return GetQueue(tr.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation<QueueInfo>();
+
         }
     }
 }

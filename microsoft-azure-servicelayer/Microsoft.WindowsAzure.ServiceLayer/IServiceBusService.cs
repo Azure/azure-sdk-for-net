@@ -28,7 +28,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// Deletes a queue with the given name.
         /// </summary>
         /// <param name="queueName">Queue name</param>
-        /// <returns></returns>
+        /// <returns>Asynchronous operation</returns>
         IAsyncAction DeleteQueueAsync(string queueName);
+
+        /// <summary>
+        /// Creates a queue with the given name and default settings.
+        /// </summary>
+        /// <param name="queueName">Queue name</param>
+        /// <returns>Created queue</returns>
+        IAsyncOperation<QueueInfo> CreateQueueAsync(string queueName);
+
+        /// <summary>
+        /// Creates a queue with the given parameters.
+        /// </summary>
+        /// <param name="queueName">Queue name</param>
+        /// <param name="queueSettings">Queue parameters</param>
+        /// <returns>Created queue</returns>
+        IAsyncOperation<QueueInfo> CreateQueueAsync(string queueName, QueueSettings queueSettings);
     }
 }
