@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
                 throw new ArgumentNullException("password");
 
             ServiceBusServiceConfig serviceOptions = new ServiceBusServiceConfig(serviceNamespace, userName, password);
-            return new Implementation.ServiceBusRestProxy(serviceOptions);
+            return new ServiceBusRestProxy(serviceOptions);
         }
     }
 }
