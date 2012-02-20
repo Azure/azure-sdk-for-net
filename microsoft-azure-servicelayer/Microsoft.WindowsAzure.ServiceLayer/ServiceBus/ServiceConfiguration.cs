@@ -20,12 +20,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
     /// Options of the service bus service.
     /// </summary>
-    public class ServiceBusServiceConfig
+    public class ServiceConfiguration
     {
         /// <summary>
         /// Gets the service namespace.
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <param name="serviceNamespace">Service namespace</param>
         /// <param name="userName">User name for authentication</param>
         /// <param name="password">Password for authentication</param>
-        internal ServiceBusServiceConfig(string serviceNamespace, string userName, string password)
+        internal ServiceConfiguration(string serviceNamespace, string userName, string password)
         {
             ServiceNamespace = serviceNamespace;
             UserName = userName;

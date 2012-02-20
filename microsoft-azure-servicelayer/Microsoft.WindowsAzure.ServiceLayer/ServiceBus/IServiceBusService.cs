@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 using Windows.Foundation;
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
     /// Service bus service

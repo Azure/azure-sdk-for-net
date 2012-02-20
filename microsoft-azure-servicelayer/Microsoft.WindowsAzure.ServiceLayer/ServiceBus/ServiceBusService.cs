@@ -19,7 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
     /// Factory for creating service bus services
@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             if (password == null)
                 throw new ArgumentNullException("password");
 
-            ServiceBusServiceConfig serviceOptions = new ServiceBusServiceConfig(serviceNamespace, userName, password);
+            ServiceConfiguration serviceOptions = new ServiceConfiguration(serviceNamespace, userName, password);
             return new ServiceBusRestProxy(serviceOptions);
         }
     }

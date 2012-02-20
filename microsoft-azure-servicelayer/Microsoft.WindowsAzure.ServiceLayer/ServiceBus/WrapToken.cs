@@ -23,7 +23,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
     /// WRAP token; used for authenticating outgoing web requests.

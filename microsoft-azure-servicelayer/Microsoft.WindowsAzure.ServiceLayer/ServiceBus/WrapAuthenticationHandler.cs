@@ -19,14 +19,14 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
     /// HTTP handler for WRAP authentication of outgoing requests.
     /// </summary>
     class WrapAuthenticationHandler: HttpClientHandler
     {
-        ServiceBusServiceConfig ServiceConfig { get; set; }         // Service configuration
+        ServiceConfiguration ServiceConfig { get; set; }         // Configuration parameters
         HttpClient Channel { get; set; }                            // HTTP channel for processing requests
         Dictionary<string, WrapToken> Tokens { get; set; }          // Cached tokens
         Object SyncObject { get; set; }                             // Synchronization object for accessing cached tokens
@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// Constructor.
         /// </summary>
         /// <param name="serviceConfig">Configuration</param>
-        internal WrapAuthenticationHandler(ServiceBusServiceConfig serviceConfig)
+        internal WrapAuthenticationHandler(ServiceConfiguration serviceConfig)
         {
             ServiceConfig = serviceConfig;
             Tokens = new Dictionary<string, WrapToken>(StringComparer.OrdinalIgnoreCase);

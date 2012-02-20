@@ -21,7 +21,7 @@ using Windows.Data.Xml.Dom;
 using Windows.Web.Syndication;
 
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
     /// Service bus queue info

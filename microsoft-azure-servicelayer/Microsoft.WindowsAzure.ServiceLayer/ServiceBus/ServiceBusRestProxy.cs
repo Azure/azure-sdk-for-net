@@ -25,7 +25,7 @@ using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Web.Syndication;
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
     /// REST proxy for the service bus interface.
@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <summary>
         /// Gets the service options.
         /// </summary>
-        internal ServiceBusServiceConfig ServiceConfig { get; private set; }
+        internal ServiceConfiguration ServiceConfig { get; private set; }
 
         /// <summary>
         /// Gets HTTP client used for communicating with the service.
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// Constructor.
         /// </summary>
         /// <param name="serviceOptions">Service options</param>
-        internal ServiceBusRestProxy(ServiceBusServiceConfig serviceOptions)
+        internal ServiceBusRestProxy(ServiceConfiguration serviceOptions)
         {
             Debug.Assert(serviceOptions != null);
 
