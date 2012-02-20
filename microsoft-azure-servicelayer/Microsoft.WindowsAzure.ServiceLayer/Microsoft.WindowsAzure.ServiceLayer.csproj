@@ -108,10 +108,12 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureServiceException.cs" />
+    <Compile Include="HttpErrorHandler.cs" />
     <Compile Include="HttpQuery.cs" />
     <Compile Include="ServiceBusRestProxy.cs" />
+    <Compile Include="WrapAuthenticationHandler.cs" />
     <Compile Include="WrapToken.cs" />
-    <Compile Include="WrapTokenManager.cs" />
     <Compile Include="IServiceBusService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueInfo.cs" />

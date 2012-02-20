@@ -27,10 +27,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// </summary>
         HttpClient Channel { get; set; }
 
-        /// <summary>
-        /// Gets the token manager used for authentication
-        /// </summary>
-        WrapTokenManager TokenManager { get; set; }
 
         /// <summary>
         /// Constructor.
@@ -41,8 +37,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             Debug.Assert(serviceOptions != null);
 
             ServiceConfig = serviceOptions;
-            Channel = new HttpClient();
-            TokenManager = new WrapTokenManager(ServiceConfig);
+            HttpMessageHandler chain = new HttpErrorHandler(
+                new WrapAuthenticationHandler(serviceOptions));
+            Channel = new HttpClient(chain);
         }
 
         /// <summary>
@@ -54,8 +51,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, "$Resources/Queues");
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
 
-            return AuthenticateRequestAsync(request)
-                .ContinueWith<HttpResponseMessage>(r => { return Channel.SendAsync(r.Result).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
+            return Channel.SendAsync(request)
                 .ContinueWith<IEnumerable<QueueInfo>>(r => { return GetQueues(r.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<QueueInfo>>();
         }
@@ -73,8 +69,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
 
-            return AuthenticateRequestAsync(request)
-                .ContinueWith<HttpResponseMessage>(r => { return Channel.SendAsync(r.Result).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
+            return Channel.SendAsync(request)
                 .ContinueWith<QueueInfo>(r => { return GetQueue(r.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<QueueInfo>();
         }
@@ -92,8 +87,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
 
-            return AuthenticateRequestAsync(request)
-                .ContinueWith<HttpResponseMessage>(r => { return Channel.SendAsync(r.Result).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
+            return Channel.SendAsync(request)
                 .AsAsyncAction();
         }
 
@@ -124,17 +118,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer
                 throw new ArgumentNullException("queueSettings");
 
             return CreateQueueAsync(queueName, queueSettings);
-        }
-
-        /// <summary>
-        /// Authenticates the request.
-        /// </summary>
-        /// <param name="request">Request to authenticate</param>
-        /// <returns>Authenticated request</returns>
-        Task<HttpRequestMessage> AuthenticateRequestAsync(HttpRequestMessage request)
-        {
-            return TokenManager.GetTokenAsync(request.RequestUri.AbsolutePath)
-                .ContinueWith(t => { return t.Result.Authorize(request); }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
 
         /// <summary>
@@ -176,16 +159,24 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         {
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
-            string content = SerializationHelper.Serialize(queueSettings);
 
-            request.Content = new StringContent(content, Encoding.UTF8, "application/atom+xml");
-            request.Content.Headers.ContentType.Parameters.Add(new System.Net.Http.Headers.NameValueHeaderValue("type", "entry"));
-
-            return AuthenticateRequestAsync(request)
+            return Task.Factory.StartNew(() => SetBody(request, queueSettings))
                 .ContinueWith<HttpResponseMessage>(tr => { return Channel.SendAsync(request).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith<QueueInfo>(tr => { return GetQueue(tr.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<QueueInfo>();
 
+        }
+
+        /// <summary>
+        /// Serializes given object and sets the request's body.
+        /// </summary>
+        /// <param name="request">Target request</param>
+        /// <param name="bodyObject">Object to serialize</param>
+        void SetBody(HttpRequestMessage request, object bodyObject)
+        {
+            string content = SerializationHelper.Serialize(bodyObject);
+            request.Content = new StringContent(content, Encoding.UTF8, "application/atom+xml");
+            request.Content.Headers.ContentType.Parameters.Add(new System.Net.Http.Headers.NameValueHeaderValue("type", "entry"));
         }
     }
 }
