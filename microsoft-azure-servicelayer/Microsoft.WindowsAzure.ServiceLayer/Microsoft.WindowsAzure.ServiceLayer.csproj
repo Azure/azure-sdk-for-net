@@ -106,6 +106,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Folder Include="ServiceBus\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureServiceException.cs" />
