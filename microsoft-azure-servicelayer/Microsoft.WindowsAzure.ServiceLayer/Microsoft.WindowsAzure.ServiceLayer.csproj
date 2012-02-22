@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureServiceException.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="HttpErrorHandler.cs" />
     <Compile Include="HttpQuery.cs" />
     <Compile Include="ServiceBus\ServiceBusRestProxy.cs" />
