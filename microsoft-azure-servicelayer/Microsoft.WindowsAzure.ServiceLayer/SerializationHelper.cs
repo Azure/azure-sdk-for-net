@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
     /// <summary>
     /// Serialization/deserialization helper.
     /// </summary>
-    static class SerializationHelper
+    static internal class SerializationHelper
     {
         /// <summary>
         /// Deserializes the feed into a collection of items of the same type.

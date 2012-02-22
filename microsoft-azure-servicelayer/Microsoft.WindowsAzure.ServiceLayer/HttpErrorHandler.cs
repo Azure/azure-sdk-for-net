@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.ServiceLayer
 {
-    class HttpErrorHandler: MessageProcessingHandler
+    internal class HttpErrorHandler: MessageProcessingHandler
     {
         /// <summary>
         /// Constructor.

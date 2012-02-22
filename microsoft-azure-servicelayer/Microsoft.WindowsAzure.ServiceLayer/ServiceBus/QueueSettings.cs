@@ -26,30 +26,30 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     public sealed class QueueSettings
     {
         [DataMember(Order = 0)]
-        public TimeSpan? LockDuration { get; internal set; }
+        public TimeSpan? LockDuration { get; set; }
 
         [DataMember(Order = 1)]
-        public int? MaxSizeInMegabytes { get; internal set; }
+        public int? MaxSizeInMegabytes { get; set; }
 
         [DataMember(Order = 2)]
-        public bool? RequiresDuplicateDetection { get; internal set; }
+        public bool? RequiresDuplicateDetection { get; set; }
 
         [DataMember(Order = 3)]
-        public bool? RequiresSession { get; internal set; }
+        public bool? RequiresSession { get; set; }
 
         [DataMember(Order = 4)]
-        public TimeSpan? DefaultMessageTimeToLive { get; internal set; }
+        public TimeSpan? DefaultMessageTimeToLive { get; set; }
 
         [DataMember(Order = 5, Name = "DeadLetteringOnMessageExpiration")]
-        public bool? EnableDeadLetteringOnMessageExpiration { get; internal set; }
+        public bool? EnableDeadLetteringOnMessageExpiration { get; set; }
 
         [DataMember(Order = 6)]
-        public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; internal set; }
+        public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; set; }
 
         [DataMember(Order = 7)]
-        public int? MaxDeliveryCount { get; internal set; }
+        public int? MaxDeliveryCount { get; set; }
 
         [DataMember(Order = 8)]
-        public bool? EnableBatchedOperations { get; internal set; }
+        public bool? EnableBatchedOperations { get; set; }
     }
 }

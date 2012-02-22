@@ -24,12 +24,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// HTTP handler for WRAP authentication of outgoing requests.
     /// </summary>
-    class WrapAuthenticationHandler: HttpClientHandler
+    internal class WrapAuthenticationHandler: HttpClientHandler
     {
-        ServiceConfiguration ServiceConfig { get; set; }         // Configuration parameters
-        HttpClient Channel { get; set; }                            // HTTP channel for processing requests
-        Dictionary<string, WrapToken> Tokens { get; set; }          // Cached tokens
-        Object SyncObject { get; set; }                             // Synchronization object for accessing cached tokens
+        private ServiceConfiguration ServiceConfig { get; set; }        // Configuration parameters
+        private HttpClient Channel { get; set; }                        // HTTP channel for processing requests
+        private Dictionary<string, WrapToken> Tokens { get; set; }      // Cached tokens
+        private Object SyncObject { get; set; }                         // Synchronization object for accessing cached tokens
 
         /// <summary>
         /// Constructor.
@@ -64,7 +64,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="resourcePath">Resource path</param>
         /// <returns>Authentication token</returns>
-        WrapToken GetToken(string resourcePath)
+        private WrapToken GetToken(string resourcePath)
         {
             WrapToken token;
 

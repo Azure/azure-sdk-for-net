@@ -30,17 +30,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// REST proxy for the service bus interface.
     /// </summary>
-    class ServiceBusRestProxy: IServiceBusService
+    internal class ServiceBusRestProxy: IServiceBusService
     {
         /// <summary>
         /// Gets the service options.
         /// </summary>
-        internal ServiceConfiguration ServiceConfig { get; private set; }
+        private ServiceConfiguration ServiceConfig { get; set; }
 
         /// <summary>
         /// Gets HTTP client used for communicating with the service.
         /// </summary>
-        HttpClient Channel { get; set; }
+        private HttpClient Channel { get; set; }
 
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="response">HTTP response</param>
         /// <returns>Collection of queues</returns>
-        IEnumerable<QueueInfo> GetQueues(HttpResponseMessage response)
+        private IEnumerable<QueueInfo> GetQueues(HttpResponseMessage response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
             SyndicationFeed feed = new SyndicationFeed();
@@ -154,7 +154,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="response">HTTP response</param>
         /// <returns>Queue</returns>
-        QueueInfo GetQueue(HttpResponseMessage response)
+        private QueueInfo GetQueue(HttpResponseMessage response)
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(response.Content.ReadAsStringAsync().Result);
@@ -187,7 +187,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="request">Target request</param>
         /// <param name="bodyObject">Object to serialize</param>
-        void SetBody(HttpRequestMessage request, object bodyObject)
+        private void SetBody(HttpRequestMessage request, object bodyObject)
         {
             string content = SerializationHelper.Serialize(bodyObject);
             request.Content = new StringContent(content, Encoding.UTF8, "application/atom+xml");

@@ -21,7 +21,10 @@ using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.ServiceLayer
 {
-    class AzureServiceException: Exception
+    /// <summary>
+    /// Exception that occurs as a result of calls to Windows Azure service.
+    /// </summary>
+    internal class AzureServiceException: Exception
     {
     }
 }

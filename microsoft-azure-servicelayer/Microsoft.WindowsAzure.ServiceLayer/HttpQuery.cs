@@ -24,9 +24,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer
     /// <summary>
     /// Helper class for processing HTTP query strings.
     /// </summary>
-    class HttpQuery
+    internal class HttpQuery
     {
-        Dictionary<string, string> _values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, string> _values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Constructor.
