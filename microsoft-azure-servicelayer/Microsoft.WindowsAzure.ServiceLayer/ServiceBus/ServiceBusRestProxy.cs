@@ -66,7 +66,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, "$Resources/Queues");
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
 
-            return Channel.SendAsync(request)
+            return Channel
+                .SendAsync(request)
                 .ContinueWith<IEnumerable<QueueInfo>>(r => { return GetQueues(r.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<QueueInfo>>();
         }
@@ -86,7 +87,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
 
-            return Channel.SendAsync(request)
+            return Channel
+                .SendAsync(request)
                 .ContinueWith<QueueInfo>(r => { return GetQueue(r.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<QueueInfo>();
         }
@@ -106,7 +108,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
 
-            return Channel.SendAsync(request)
+            return Channel
+                .SendAsync(request)
                 .AsAsyncAction();
         }
 
@@ -185,7 +188,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
 
-            return Task.Factory.StartNew(() => SetBody(request, queueSettings))
+            return Task.Factory
+                .StartNew(() => SetBody(request, queueSettings))
                 .ContinueWith<HttpResponseMessage>(tr => { return Channel.SendAsync(request).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith<QueueInfo>(tr => { return GetQueue(tr.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<QueueInfo>();

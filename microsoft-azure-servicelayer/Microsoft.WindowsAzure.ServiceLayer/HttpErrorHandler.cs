@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.ServiceLayer
@@ -43,12 +44,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         }
 
         /// <summary>
-        /// Processes outhoing HTTP requests.
+        /// Processes outgoing HTTP requests.
         /// </summary>
         /// <param name="request">Request.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Processed HTTP request.</returns>
-        protected override HttpRequestMessage ProcessRequest(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        protected override HttpRequestMessage ProcessRequest(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             // We're not interested in outgoing requests; do nothing.
             return request;
@@ -60,11 +61,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <param name="response">HTTP response.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Processed HTTP response.</returns>
-        protected override HttpResponseMessage ProcessResponse(HttpResponseMessage response, System.Threading.CancellationToken cancellationToken)
+        protected override HttpResponseMessage ProcessResponse(HttpResponseMessage response, CancellationToken cancellationToken)
         {
             if (!response.IsSuccessStatusCode)
             {
-                throw new AzureServiceException();
+                throw new WindowsAzureServiceException();
             }
             return response;
         }

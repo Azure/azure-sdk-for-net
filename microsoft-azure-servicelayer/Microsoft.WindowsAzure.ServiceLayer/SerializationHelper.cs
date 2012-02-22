@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
 
@@ -40,11 +41,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         static internal IEnumerable<T> DeserializeCollection<T>(SyndicationFeed feed, Action<SyndicationItem, T> itemAction)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
-
-            foreach (SyndicationItem item in feed.Items)
-            {
-                yield return DeserializeItem(serializer, item, itemAction);
-            }
+            return feed.Items.Select(item => DeserializeItem<T>(item, itemAction));
         }
 
         /// <summary>
@@ -103,6 +100,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
                 }
             }
 
+            // Turn serialized content into an atom entry.
             SyndicationContent content = new SyndicationContent();
             content.Type = Constants.SerializationContentType;
             content.Xml = new XmlDocument();

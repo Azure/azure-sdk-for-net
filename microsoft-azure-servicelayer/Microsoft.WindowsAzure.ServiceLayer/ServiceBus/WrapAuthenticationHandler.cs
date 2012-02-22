@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
@@ -52,9 +53,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="request">HTTP request to send.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>HTTP response.</returns>
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            return Task.Factory.StartNew<WrapToken>(() => { return GetToken(request.RequestUri.AbsolutePath); })
+            return Task.Factory
+                .StartNew<WrapToken>(() => { return GetToken(request.RequestUri.AbsolutePath); })
                 .ContinueWith<HttpRequestMessage>((tr) => { return tr.Result.Authorize(request); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith<HttpResponseMessage>((tr) => { return base.SendAsync(tr.Result, cancellationToken).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }

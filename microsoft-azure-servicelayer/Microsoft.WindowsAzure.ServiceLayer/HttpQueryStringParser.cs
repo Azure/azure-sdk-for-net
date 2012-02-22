@@ -24,7 +24,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
     /// <summary>
     /// Helper class for processing HTTP query strings.
     /// </summary>
-    internal class HttpQuery
+    internal class HttpQueryStringParser
     {
         private Dictionary<string, string> _values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// Constructor.
         /// </summary>
         /// <param name="queryString">Query string.</param>
-        internal HttpQuery(string queryString)
+        internal HttpQueryStringParser(string queryString)
         {
             string[] pairs = queryString.Split('&');
 
