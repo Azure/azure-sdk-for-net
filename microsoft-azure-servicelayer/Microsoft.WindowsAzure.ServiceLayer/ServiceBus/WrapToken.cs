@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// WRAP token; used for authenticating outgoing web requests.
     /// </summary>
-    class WrapToken
+    internal class WrapToken
     {
         private DateTime _expirationDate;                   // Token's expiration date.
 
@@ -45,7 +45,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets the value saying whether the token is expired.
         /// </summary>
-        internal bool IsExpired { get { return DateTime.Now > _expirationDate; } }
+        internal bool IsExpired 
+        { 
+            get 
+            { 
+                return DateTime.Now > _expirationDate; 
+            } 
+        }
 
         /// <summary>
         /// Constructor.

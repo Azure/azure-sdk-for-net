@@ -50,6 +50,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// </summary>
         /// <param name="parameterName">Parameter name.</param>
         /// <returns>Parameter value.</returns>
-        internal string this[string parameterName] { get { return _values[parameterName]; } }
+        internal string this[string parameterName] 
+        { 
+            get 
+            { 
+                return _values[parameterName]; 
+            } 
+        }
     }
 }

@@ -69,10 +69,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             string serializedString = item.Content.Xml.GetXml();
 
             using (StringReader stringReader = new StringReader(serializedString))
-            using (XmlReader xmlReader = XmlReader.Create(stringReader))
             {
+                XmlReader xmlReader = XmlReader.Create(stringReader);
                 T deserializedObject = (T)serializer.ReadObject(xmlReader);
                 itemAction(item, deserializedObject);
+
                 return deserializedObject;
             }
         }
@@ -94,10 +95,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
                 stream.Flush();
                 stream.Seek(0, SeekOrigin.Begin);
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    itemXml = reader.ReadToEnd();
-                }
+                StreamReader reader = new StreamReader(stream);
+                itemXml = reader.ReadToEnd();
             }
 
             // Turn serialized content into an atom entry.
