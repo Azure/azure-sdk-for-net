@@ -60,7 +60,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         protected override HttpResponseMessage ProcessResponse(HttpResponseMessage response, System.Threading.CancellationToken cancellationToken)
         {
             if (!response.IsSuccessStatusCode)
+            {
                 throw new AzureServiceException();
+            }
             return response;
         }
     }

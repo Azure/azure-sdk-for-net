@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     class WrapToken
     {
-        private DateTime _expirationDate;
+        private DateTime _expirationDate;                   // Token's expiration date.
 
         /// <summary>
         /// Specifies the scope of the token.

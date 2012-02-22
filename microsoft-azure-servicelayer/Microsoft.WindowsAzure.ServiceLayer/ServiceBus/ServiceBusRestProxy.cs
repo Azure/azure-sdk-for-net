@@ -79,7 +79,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         IAsyncOperation<QueueInfo> IServiceBusService.GetQueueAsync(string queueName)
         {
             if (queueName == null)
+            {
                 throw new ArgumentNullException("queueName");
+            }
 
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
@@ -97,7 +99,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         IAsyncAction IServiceBusService.DeleteQueueAsync(string queueName)
         {
             if (queueName == null)
+            {
                 throw new ArgumentNullException("queueName");
+            }
 
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
@@ -114,7 +118,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName)
         {
             if (queueName == null)
+            {
                 throw new ArgumentNullException("queueName");
+            }
 
             return CreateQueueAsync(queueName, new QueueSettings());
         }
@@ -128,9 +134,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName, QueueSettings queueSettings)
         {
             if (queueName == null)
+            {
                 throw new ArgumentNullException("queueName");
+            }
             if (queueSettings == null)
+            {
                 throw new ArgumentNullException("queueSettings");
+            }
 
             return CreateQueueAsync(queueName, queueSettings);
         }

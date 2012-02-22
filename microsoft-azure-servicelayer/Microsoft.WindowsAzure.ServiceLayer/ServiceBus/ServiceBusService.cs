@@ -36,11 +36,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         public static IServiceBusService Create(string serviceNamespace, string userName, string password)
         {
             if (serviceNamespace == null)
+            {
                 throw new ArgumentNullException("serviceNamespace");
+            }
             if (userName == null)
+            {
                 throw new ArgumentNullException("userName");
+            }
             if (password == null)
+            {
                 throw new ArgumentNullException("password");
+            }
 
             ServiceConfiguration serviceOptions = new ServiceConfiguration(serviceNamespace, userName, password);
             return new ServiceBusRestProxy(serviceOptions);

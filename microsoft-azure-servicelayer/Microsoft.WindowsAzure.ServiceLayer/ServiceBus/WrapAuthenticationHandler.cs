@@ -72,7 +72,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 Tokens.TryGetValue(resourcePath, out token);
                 if (token != null && token.IsExpired)
+                {
                     Tokens.Remove(resourcePath);
+                }
             }
 
             if (token == null)
