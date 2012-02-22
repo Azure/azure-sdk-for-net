@@ -89,7 +89,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                     {"wrap_scope",      scopeUri.ToString()},
                 };
 
-                request.Headers.Accept.ParseAdd("application/x-www-form-urlencoded");       //TODO: is there a constant for this type?
+                request.Headers.Accept.ParseAdd(Constants.WrapAuthenticationContentType);
                 request.Content = new FormUrlEncodedContent(settings);
 
                 HttpResponseMessage response = Channel.SendAsync(request).Result;

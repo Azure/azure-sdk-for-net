@@ -200,7 +200,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private void SetBody(HttpRequestMessage request, object bodyObject)
         {
             string content = SerializationHelper.Serialize(bodyObject);
-            request.Content = new StringContent(content, Encoding.UTF8, "application/atom+xml");
+            request.Content = new StringContent(content, Encoding.UTF8, Constants.BodyContentType);
             request.Content.Headers.ContentType.Parameters.Add(new System.Net.Http.Headers.NameValueHeaderValue("type", "entry"));
         }
     }

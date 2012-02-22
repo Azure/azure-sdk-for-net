@@ -104,7 +104,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             }
 
             SyndicationContent content = new SyndicationContent();
-            content.Type = "application/xml";
+            content.Type = Constants.SerializationContentType;
             content.Xml = new XmlDocument();
             content.Xml.LoadXml(itemXml);
 

@@ -69,13 +69,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             UserName = userName;
             Password = password;
 
-            string stringUri = string.Format(CultureInfo.InvariantCulture, "https://{0}.servicebus.windows.net/", ServiceNamespace);
+            string stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusServiceUri, ServiceNamespace);
             ServiceBusUri = new Uri(stringUri, UriKind.Absolute);
 
-            stringUri = string.Format(CultureInfo.InvariantCulture, "https://{0}-sb.accesscontrol.windows.net/wrapv0.9/", ServiceNamespace);
+            stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusAuthenticationUri, ServiceNamespace);
             AuthenticationUri = new Uri(stringUri, UriKind.Absolute);
 
-            stringUri = string.Format(CultureInfo.InvariantCulture, "http://{0}.servicebus.windows.net/", ServiceNamespace);
+            stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusScopeUri, ServiceNamespace);
             ScopeHostUri = new Uri(stringUri);
         }
     }
