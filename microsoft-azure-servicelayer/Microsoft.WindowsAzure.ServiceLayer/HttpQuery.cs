@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="queryString">Query string</param>
+        /// <param name="queryString">Query string.</param>
         internal HttpQuery(string queryString)
         {
             string[] pairs = queryString.Split('&');
@@ -48,8 +48,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <summary>
         /// Gets parameter by name.
         /// </summary>
-        /// <param name="parameterName">Parameter name</param>
-        /// <returns>Parameter value</returns>
+        /// <param name="parameterName">Parameter name.</param>
+        /// <returns>Parameter value.</returns>
         internal string this[string parameterName] { get { return _values[parameterName]; } }
     }
 }

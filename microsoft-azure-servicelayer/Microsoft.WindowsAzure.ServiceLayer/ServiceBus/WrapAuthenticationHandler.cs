@@ -26,15 +26,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     internal class WrapAuthenticationHandler: HttpClientHandler
     {
-        private ServiceConfiguration ServiceConfig { get; set; }        // Configuration parameters
-        private HttpClient Channel { get; set; }                        // HTTP channel for processing requests
-        private Dictionary<string, WrapToken> Tokens { get; set; }      // Cached tokens
-        private Object SyncObject { get; set; }                         // Synchronization object for accessing cached tokens
+        private ServiceConfiguration ServiceConfig { get; set; }        // Configuration parameters.
+        private HttpClient Channel { get; set; }                        // HTTP channel for processing requests.
+        private Dictionary<string, WrapToken> Tokens { get; set; }      // Cached tokens.
+        private Object SyncObject { get; set; }                         // Synchronization object for accessing cached tokens.
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="serviceConfig">Configuration</param>
+        /// <param name="serviceConfig">Configuration of the service.</param>
         internal WrapAuthenticationHandler(ServiceConfiguration serviceConfig)
         {
             ServiceConfig = serviceConfig;
@@ -49,9 +49,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Sends the request.
         /// </summary>
-        /// <param name="request">HTTP request to send</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>HTTP response</returns>
+        /// <param name="request">HTTP request to send.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>HTTP response.</returns>
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {
             return Task.Factory.StartNew<WrapToken>(() => { return GetToken(request.RequestUri.AbsolutePath); })
@@ -62,8 +62,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets authentication token for a resource with the given path.
         /// </summary>
-        /// <param name="resourcePath">Resource path</param>
-        /// <returns>Authentication token</returns>
+        /// <param name="resourcePath">Resource path.</param>
+        /// <returns>Authentication token.</returns>
         private WrapToken GetToken(string resourcePath)
         {
             WrapToken token;

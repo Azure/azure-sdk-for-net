@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         internal string Scope { get; private set; }
 
         /// <summary>
-        /// Specifies the 
+        /// Gets the token string. 
         /// </summary>
         internal string Token { get; private set; }
 
@@ -50,8 +50,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="resourcePath">Path of the authenticated resource</param>
-        /// <param name="response">HTTP response with the token</param>
+        /// <param name="resourcePath">Path of the authenticated resource.</param>
+        /// <param name="response">HTTP response with the token.</param>
         internal WrapToken(string resourcePath, HttpResponseMessage response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
@@ -66,8 +66,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Authorizes the request.
         /// </summary>
-        /// <param name="request">Source request</param>
-        /// <returns>Authorized request</returns>
+        /// <param name="request">Source request.</param>
+        /// <returns>Authorized request.</returns>
         internal HttpRequestMessage Authorize(HttpRequestMessage request)
         {
             request.Headers.Add("Authorization", Token);

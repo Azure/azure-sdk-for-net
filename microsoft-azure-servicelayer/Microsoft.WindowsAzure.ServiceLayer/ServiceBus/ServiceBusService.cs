@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
-    /// Factory for creating service bus services
+    /// Factory for creating service bus services.
     /// </summary>
     public static class ServiceBusService
     {

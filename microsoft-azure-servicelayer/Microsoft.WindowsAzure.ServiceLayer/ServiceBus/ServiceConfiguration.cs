@@ -60,9 +60,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Constructor with explicitly specified options.
         /// </summary>
-        /// <param name="serviceNamespace">Service namespace</param>
-        /// <param name="userName">User name for authentication</param>
-        /// <param name="password">Password for authentication</param>
+        /// <param name="serviceNamespace">Service namespace.</param>
+        /// <param name="userName">User name for authentication.</param>
+        /// <param name="password">Password for authentication.</param>
         internal ServiceConfiguration(string serviceNamespace, string userName, string password)
         {
             ServiceNamespace = serviceNamespace;

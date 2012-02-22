@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="serviceOptions">Service options</param>
+        /// <param name="serviceOptions">Configuration parameters.</param>
         internal ServiceBusRestProxy(ServiceConfiguration serviceOptions)
         {
             Debug.Assert(serviceOptions != null);
@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets all available queues in the namespace.
         /// </summary>
-        /// <returns>All queues in the namespace</returns>
+        /// <returns>All queues in the namespace.</returns>
         IAsyncOperation<IEnumerable<QueueInfo>> IServiceBusService.ListQueuesAsync()
         {
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, "$Resources/Queues");
@@ -74,8 +74,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets the queue with the given name.
         /// </summary>
-        /// <param name="queueName">Name of the queue</param>
-        /// <returns>Queue data</returns>
+        /// <param name="queueName">Name of the queue.</param>
+        /// <returns>Queue data.</returns>
         IAsyncOperation<QueueInfo> IServiceBusService.GetQueueAsync(string queueName)
         {
             if (queueName == null)
@@ -94,8 +94,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Deletes a queue with the given name.
         /// </summary>
-        /// <param name="queueName">Queue name</param>
-        /// <returns>Asycnrhonous action</returns>
+        /// <param name="queueName">Queue name.</param>
+        /// <returns>Asycnrhonous action.</returns>
         IAsyncAction IServiceBusService.DeleteQueueAsync(string queueName)
         {
             if (queueName == null)
@@ -113,8 +113,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Creates a queue with the given name and default settings.
         /// </summary>
-        /// <param name="queueName">Name of the queue</param>
-        /// <returns>Queue data</returns>
+        /// <param name="queueName">Name of the queue.</param>
+        /// <returns>Queue data.</returns>
         IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName)
         {
             if (queueName == null)
@@ -128,9 +128,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Creates a queue with the given parameters.
         /// </summary>
-        /// <param name="queueName">Name of the queue</param>
-        /// <param name="queueSettings">Parameters of the queue</param>
-        /// <returns>Created queue</returns>
+        /// <param name="queueName">Name of the queue.</param>
+        /// <param name="queueSettings">Parameters of the queue.</param>
+        /// <returns>Created queue.</returns>
         IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName, QueueSettings queueSettings)
         {
             if (queueName == null)
@@ -148,8 +148,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Extracts queues from the given HTTP response.
         /// </summary>
-        /// <param name="response">HTTP response</param>
-        /// <returns>Collection of queues</returns>
+        /// <param name="response">HTTP response.</param>
+        /// <returns>Collection of queues.</returns>
         private IEnumerable<QueueInfo> GetQueues(HttpResponseMessage response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
@@ -162,8 +162,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Extracts a single queue from the given response.
         /// </summary>
-        /// <param name="response">HTTP response</param>
-        /// <returns>Queue</returns>
+        /// <param name="response">HTTP response.</param>
+        /// <returns>Queue data.</returns>
         private QueueInfo GetQueue(HttpResponseMessage response)
         {
             XmlDocument doc = new XmlDocument();
@@ -177,9 +177,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Creates a queue with the given parameters.
         /// </summary>
-        /// <param name="queueName">Name of the queue</param>
-        /// <param name="queueSettings">Parameters of the queue</param>
-        /// <returns>Created queue</returns>
+        /// <param name="queueName">Name of the queue.</param>
+        /// <param name="queueSettings">Parameters of the queue.</param>
+        /// <returns>Created queue.</returns>
         IAsyncOperation<QueueInfo> CreateQueueAsync(string queueName, QueueSettings queueSettings)
         {
             Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
@@ -195,8 +195,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Serializes given object and sets the request's body.
         /// </summary>
-        /// <param name="request">Target request</param>
-        /// <param name="bodyObject">Object to serialize</param>
+        /// <param name="request">Target request.</param>
+        /// <param name="bodyObject">Object to serialize.</param>
         private void SetBody(HttpRequestMessage request, object bodyObject)
         {
             string content = SerializationHelper.Serialize(bodyObject);

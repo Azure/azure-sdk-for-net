@@ -20,7 +20,7 @@ using System.Runtime.Serialization;
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
-    /// Queue creation options
+    /// Queue creation options.
     /// </summary>
     [DataContract(Namespace="http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name="QueueDescription")]
     public sealed class QueueSettings

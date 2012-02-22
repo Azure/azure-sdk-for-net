@@ -24,7 +24,7 @@ using Windows.Web.Syndication;
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
-    /// Service bus queue info
+    /// Service bus queue info.
     /// </summary>
     [DataContract(Namespace="http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name="QueueDescription")]
     public sealed class QueueInfo
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Initializes the object after deserialization.
         /// </summary>
-        /// <param name="item">Atom item</param>
+        /// <param name="item">Atom item.</param>
         internal void Initialize(SyndicationItem item)
         {
             Name = item.Title.Text;
