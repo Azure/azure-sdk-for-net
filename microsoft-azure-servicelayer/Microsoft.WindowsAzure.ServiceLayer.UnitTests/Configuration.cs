@@ -8,10 +8,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
 {
     static class Configuration
     {
-        public static string ServiceNamespace { get { return "aliakb-test"; } }
+        public static string ServiceNamespace { get { throw new NotImplementedException(); } }
 
-        public static string UserName { get { return "owner"; } }
+        public static string UserName { get { throw new NotImplementedException(); } }
 
-        public static string Password { get { return "0Myg+PyST7O5Bj+j9+Byjlljr4lomN1Y1QJR7D9JgZg="; } }
+        public static string Password { get { throw new NotImplementedException(); } }
     }
 }
