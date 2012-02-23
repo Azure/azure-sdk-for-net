@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{53C097E2-7384-446B-836B-A7910993091E}</ProjectGuid>
-    <OutputType>winmdobj</OutputType>
+    <ProjectGuid>{DA6C7F9A-B35C-4D34-AD83-7131ACE8F72C}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.ServiceLayer</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.ServiceLayer</AssemblyName>
+    <RootNamespace>Microsoft.WindowsAzure.ServiceLayer.UnitTests</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.ServiceLayer.UnitTests</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -106,22 +106,21 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\Microsoft.WindowsAzure.ServiceLayer\Microsoft.WindowsAzure.ServiceLayer.csproj">
+      <Project>{53c097e2-7384-446b-836b-a7910993091e}</Project>
+      <Name>Microsoft.WindowsAzure.ServiceLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WindowsAzureServiceException.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="HttpErrorHandler.cs" />
-    <Compile Include="HttpQueryStringParser.cs" />
-    <Compile Include="ServiceBus\ServiceBusRestProxy.cs" />
-    <Compile Include="ServiceBus\WrapAuthenticationHandler.cs" />
-    <Compile Include="ServiceBus\WrapToken.cs" />
-    <Compile Include="ServiceBus\IServiceBusService.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="ServiceBusManagementTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceBus\QueueInfo.cs" />
-    <Compile Include="ServiceBus\QueueSettings.cs" />
-    <Compile Include="SerializationHelper.cs" />
-    <Compile Include="ServiceBus\ServiceBusService.cs" />
-    <Compile Include="ServiceBus\ServiceConfiguration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="xunit, Version=1.9.0.1566, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

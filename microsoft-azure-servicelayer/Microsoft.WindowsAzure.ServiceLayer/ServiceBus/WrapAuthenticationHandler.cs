@@ -1,22 +1,23 @@
-﻿/*
- * Copyright 2012 Microsoft Corporation
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *    http://www.apache.org/licenses/LICENSE-2.0
- * 
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
+﻿//
+// Copyright 2012 Microsoft Corporation
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
@@ -24,17 +25,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// HTTP handler for WRAP authentication of outgoing requests.
     /// </summary>
-    class WrapAuthenticationHandler: HttpClientHandler
+    internal class WrapAuthenticationHandler: HttpClientHandler
     {
-        ServiceConfiguration ServiceConfig { get; set; }         // Configuration parameters
-        HttpClient Channel { get; set; }                            // HTTP channel for processing requests
-        Dictionary<string, WrapToken> Tokens { get; set; }          // Cached tokens
-        Object SyncObject { get; set; }                             // Synchronization object for accessing cached tokens
+        private ServiceConfiguration ServiceConfig { get; set; }        // Configuration parameters.
+        private HttpClient Channel { get; set; }                        // HTTP channel for processing requests.
+        private Dictionary<string, WrapToken> Tokens { get; set; }      // Cached tokens.
+        private Object SyncObject { get; set; }                         // Synchronization object for accessing cached tokens.
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="serviceConfig">Configuration</param>
+        /// <param name="serviceConfig">Configuration of the service.</param>
         internal WrapAuthenticationHandler(ServiceConfiguration serviceConfig)
         {
             ServiceConfig = serviceConfig;
@@ -49,12 +50,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Sends the request.
         /// </summary>
-        /// <param name="request">HTTP request to send</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>HTTP response</returns>
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        /// <param name="request">HTTP request to send.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>HTTP response.</returns>
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            return Task.Factory.StartNew<WrapToken>(() => { return GetToken(request.RequestUri.AbsolutePath); })
+            return Task.Factory
+                .StartNew<WrapToken>(() => { return GetToken(request.RequestUri.AbsolutePath); })
                 .ContinueWith<HttpRequestMessage>((tr) => { return tr.Result.Authorize(request); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith<HttpResponseMessage>((tr) => { return base.SendAsync(tr.Result, cancellationToken).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
@@ -62,9 +64,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets authentication token for a resource with the given path.
         /// </summary>
-        /// <param name="resourcePath">Resource path</param>
-        /// <returns>Authentication token</returns>
-        WrapToken GetToken(string resourcePath)
+        /// <param name="resourcePath">Resource path.</param>
+        /// <returns>Authentication token.</returns>
+        private WrapToken GetToken(string resourcePath)
         {
             WrapToken token;
 
@@ -72,7 +74,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 Tokens.TryGetValue(resourcePath, out token);
                 if (token != null && token.IsExpired)
+                {
                     Tokens.Remove(resourcePath);
+                }
             }
 
             if (token == null)
@@ -87,7 +91,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                     {"wrap_scope",      scopeUri.ToString()},
                 };
 
-                request.Headers.Accept.ParseAdd("application/x-www-form-urlencoded");       //TODO: is there a constant for this type?
+                request.Headers.Accept.ParseAdd(Constants.WrapAuthenticationContentType);
                 request.Content = new FormUrlEncodedContent(settings);
 
                 HttpResponseMessage response = Channel.SendAsync(request).Result;

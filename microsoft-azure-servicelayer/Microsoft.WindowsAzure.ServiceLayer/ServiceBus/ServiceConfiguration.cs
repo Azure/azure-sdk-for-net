@@ -1,17 +1,17 @@
-﻿/*
- * Copyright 2012 Microsoft Corporation
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *    http://www.apache.org/licenses/LICENSE-2.0
- * 
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
+﻿//
+// Copyright 2012 Microsoft Corporation
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
 
 using System;
 using System.Collections.Generic;
@@ -60,22 +60,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Constructor with explicitly specified options.
         /// </summary>
-        /// <param name="serviceNamespace">Service namespace</param>
-        /// <param name="userName">User name for authentication</param>
-        /// <param name="password">Password for authentication</param>
+        /// <param name="serviceNamespace">Service namespace.</param>
+        /// <param name="userName">User name for authentication.</param>
+        /// <param name="password">Password for authentication.</param>
         internal ServiceConfiguration(string serviceNamespace, string userName, string password)
         {
             ServiceNamespace = serviceNamespace;
             UserName = userName;
             Password = password;
 
-            string stringUri = string.Format(CultureInfo.InvariantCulture, "https://{0}.servicebus.windows.net/", ServiceNamespace);
+            string stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusServiceUri, ServiceNamespace);
             ServiceBusUri = new Uri(stringUri, UriKind.Absolute);
 
-            stringUri = string.Format(CultureInfo.InvariantCulture, "https://{0}-sb.accesscontrol.windows.net/wrapv0.9/", ServiceNamespace);
+            stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusAuthenticationUri, ServiceNamespace);
             AuthenticationUri = new Uri(stringUri, UriKind.Absolute);
 
-            stringUri = string.Format(CultureInfo.InvariantCulture, "http://{0}.servicebus.windows.net/", ServiceNamespace);
+            stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusScopeUri, ServiceNamespace);
             ScopeHostUri = new Uri(stringUri);
         }
     }
