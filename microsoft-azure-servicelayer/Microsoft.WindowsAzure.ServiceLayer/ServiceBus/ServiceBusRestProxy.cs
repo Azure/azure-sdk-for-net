@@ -53,6 +53,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Debug.Assert(serviceOptions != null);
 
             ServiceConfig = serviceOptions;
+
             HttpMessageHandler chain = new HttpErrorHandler(
                 new WrapAuthenticationHandler(serviceOptions));
             Channel = new HttpClient(chain);

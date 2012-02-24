@@ -481,5 +481,24 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                 Service.DeleteTopicAsync(topicName).AsTask().Wait();
             }
         }
+
+        /// <summary>
+        /// Tests subscribing to a queue.
+        /// </summary>
+        [Fact]
+        public void SubscribeToQueue()
+        {
+            string queueName = GetUniqueEntityName();
+            Service.CreateQueueAsync(queueName).AsTask().Wait();
+            try
+            {
+                string subscriptionName = GetUniqueEntityName();
+                Assert.Throws<AggregateException>(() => Service.CreateSubscriptionAsync(queueName, subscriptionName).AsTask().Wait());
+            }
+            finally
+            {
+                Service.DeleteQueueAsync(queueName).AsTask().Wait();
+            }
+        }
     }
 }
