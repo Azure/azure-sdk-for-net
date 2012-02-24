@@ -29,6 +29,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string ServiceBusServiceUri          = "https://{0}.servicebus.windows.net/";
         internal const string ServiceBusAuthenticationUri   = "https://{0}-sb.accesscontrol.windows.net/wrapv0.9/";
         internal const string ServiceBusScopeUri            = "http://{0}.servicebus.windows.net/";
+        internal const string SubscriptionsPath             = "{0}/subscriptions/";                     // <topic>/subscriptions
+        internal const string SubscriptionPath              = "{0}/subscriptions/{1}/";                 // <topic>/subscriptions/<subscription>
 
         internal const string WrapTokenAuthenticationString = "WRAP access_token=\"{0}\"";
 

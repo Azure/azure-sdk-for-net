@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -205,22 +206,126 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Creates a subscription with the given name for the given topic and 
+        /// default settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Created subscription.</returns>
+        IAsyncOperation<SubscriptionInfo> IServiceBusService.CreateSubscriptionAsync(string topicName, string subscriptionName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.SubscriptionPath, topicName, subscriptionName);
+            return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(path, new SubscriptionSettings(), InitSubscription);
+        }
+
+        /// <summary>
+        /// Creates a subscription with the given name for the given topic with
+        /// the specified settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <param name="subscriptionSettings">Subscription settings.</param>
+        /// <returns>Created subscription.</returns>
+        IAsyncOperation<SubscriptionInfo> IServiceBusService.CreateSubscriptionAsync(
+            string topicName, 
+            string subscriptionName, 
+            SubscriptionSettings subscriptionSettings)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            if (subscriptionSettings == null)
+            { 
+                throw new ArgumentNullException("subscriptionSettings");
+            }
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.SubscriptionPath, topicName, subscriptionName);
+            return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(path, subscriptionSettings, InitSubscription);
+        }
+
+        /// <summary>
+        /// Gets all subscriptions for the given topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <returns>Collection of subscriptions.</returns>
+        IAsyncOperation<IEnumerable<SubscriptionInfo>> IServiceBusService.ListSubscriptionsAsync(string topicName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.SubscriptionsPath, topicName);
+            return GetItemsAsync<SubscriptionInfo>(path, InitSubscription);
+        }
+
+        /// <summary>
+        /// Gets a subscription with the given name for the given topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Subscription information.</returns>
+        IAsyncOperation<SubscriptionInfo> IServiceBusService.GetSubscriptionAsync(string topicName, string subscriptionName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.SubscriptionPath, topicName, subscriptionName);
+            return GetItemAsync<SubscriptionInfo>(path, InitSubscription);
+        }
+
+        /// <summary>
+        /// Deletes a subscription with the given name from the given topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction IServiceBusService.DeleteSubscriptionAsync(string topicName, string subscriptionName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.SubscriptionPath, topicName, subscriptionName);
+            return DeleteItemAsync(path);
+        }
+
+        /// <summary>
         /// Gets service bus items of the given type.
         /// </summary>
         /// <typeparam name="INFO">Item type.</typeparam>
-        /// <param name="path">Path of the items.</param>
+        /// <param name="folderPath">Path of the items.</param>
         /// <param name="initAction">Initialization action for a single item.</param>
         /// <returns>A collection of items.</returns>
-        private IAsyncOperation<IEnumerable<INFO>> GetItemsAsync<INFO>(string path, Action<SyndicationItem, INFO> initAction)
+        private IAsyncOperation<IEnumerable<INFO>> GetItemsAsync<INFO>(string folderPath, Action<SyndicationItem, INFO> initAction)
         {
-            Uri uri = new Uri(ServiceConfig.ServiceBusUri, path);
+            Uri uri = new Uri(ServiceConfig.ServiceBusUri, folderPath);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
 
             return Channel
                 .SendAsync(request)
                 .ContinueWith<IEnumerable<INFO>>(r => { return GetItems<INFO>(r.Result, initAction); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<INFO>>();
-
         }
 
         /// <summary>
@@ -243,12 +348,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Obtains a service bus item of the given name and type.
         /// </summary>
         /// <typeparam name="INFO">Item type</typeparam>
-        /// <param name="itemName">Item name</param>
+        /// <param name="itemPath">Item path</param>
         /// <param name="initAction">Initialization action for the deserialized item.</param>
         /// <returns>Item data</returns>
-        private IAsyncOperation<INFO> GetItemAsync<INFO>(string itemName, Action<SyndicationItem, INFO> initAction)
+        private IAsyncOperation<INFO> GetItemAsync<INFO>(string itemPath, Action<SyndicationItem, INFO> initAction)
         {
-            Uri uri = new Uri(ServiceConfig.ServiceBusUri, itemName);
+            Uri uri = new Uri(ServiceConfig.ServiceBusUri, itemPath);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
 
             return Channel
@@ -278,11 +383,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Deletes an item with the given name.
         /// </summary>
-        /// <param name="itemName">Item name.</param>
+        /// <param name="itemPath">Item path.</param>
         /// <returns>Deletion result.</returns>
-        private IAsyncAction DeleteItemAsync(string itemName)
+        private IAsyncAction DeleteItemAsync(string itemPath)
         {
-            Uri uri = new Uri(ServiceConfig.ServiceBusUri, itemName);
+            Uri uri = new Uri(ServiceConfig.ServiceBusUri, itemPath);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
 
             return Channel
@@ -295,17 +400,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <typeparam name="INFO">Service bus object type (queue, topic, etc.).</typeparam>
         /// <typeparam name="SETTINGS">Settings for the given object type.</typeparam>
-        /// <param name="itemName">Name of the object.</param>
+        /// <param name="itemPath">Path of the object.</param>
         /// <param name="itemSettings">Settings of the object.</param>
         /// <param name="initAction">Initialization action</param>
         /// <returns>Created object.</returns>
         private IAsyncOperation<INFO> CreateItemAsync<INFO, SETTINGS>(
-            string itemName, 
+            string itemPath, 
             SETTINGS itemSettings, 
             Action<SyndicationItem, INFO> initAction
             ) where SETTINGS: class
         {
-            Uri uri = new Uri(ServiceConfig.ServiceBusUri, itemName);
+            Uri uri = new Uri(ServiceConfig.ServiceBusUri, itemPath);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
 
             return Task.Factory
@@ -336,5 +441,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             queueInfo.Initialize(feedItem);
         }
+
+        private static void InitSubscription(SyndicationItem feedItem, SubscriptionInfo subscriptionInfo)
+        {
+            subscriptionInfo.Initialize(feedItem);
+        }
+
     }
 }

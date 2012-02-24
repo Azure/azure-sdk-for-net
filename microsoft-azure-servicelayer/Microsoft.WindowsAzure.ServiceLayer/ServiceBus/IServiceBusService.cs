@@ -95,5 +95,45 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <returns>Result of the operation.</returns>
         IAsyncAction DeleteTopicAsync(string topicName);
+
+        /// <summary>
+        /// Creates a subscription with the given name for the given topic with default settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Created subscription.</returns>
+        IAsyncOperation<SubscriptionInfo> CreateSubscriptionAsync(string topicName, string subscriptionName);
+
+        /// <summary>
+        /// Creates a subscription with the given name for the given topic with specified settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <param name="subscriptionSettings">Subscription settings.</param>
+        /// <returns>Created subscription.</returns>
+        IAsyncOperation<SubscriptionInfo> CreateSubscriptionAsync(string topicName, string subscriptionName, SubscriptionSettings subscriptionSettings);
+
+        /// <summary>
+        /// Gets subscriptions for the given topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <returns>Collection of subscriptions.</returns>
+        IAsyncOperation<IEnumerable<SubscriptionInfo>> ListSubscriptionsAsync(string topicName);
+
+        /// <summary>
+        /// Gets a subsciption with the given name for the given topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Subscription information.</returns>
+        IAsyncOperation<SubscriptionInfo> GetSubscriptionAsync(string topicName, string subscriptionName);
+
+        /// <summary>
+        /// Deletes a subscription with the given name for the given topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction DeleteSubscriptionAsync(string topicName, string subscriptionName);
     }
 }

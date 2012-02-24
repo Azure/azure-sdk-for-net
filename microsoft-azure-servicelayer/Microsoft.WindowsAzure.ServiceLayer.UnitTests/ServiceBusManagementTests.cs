@@ -16,7 +16,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
     /// </summary>
     public class ServiceBusManagementTests
     {
-        class InternalQueueInfoComparer : IEqualityComparer<QueueInfo>
+        private class InternalQueueInfoComparer : IEqualityComparer<QueueInfo>
         {
             bool IEqualityComparer<QueueInfo>.Equals(QueueInfo x, QueueInfo y)
             {
@@ -28,11 +28,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                     && x.MaxDeliveryCount == y.MaxDeliveryCount
                     && x.MaxSizeInMegabytes == y.MaxSizeInMegabytes
                     && x.MessageCount == y.MessageCount
-                    && string.Equals(x.Name, y.Name, StringComparison.OrdinalIgnoreCase)
                     && x.RequiresDuplicateDetection == y.RequiresDuplicateDetection
                     && x.RequiresSession == y.RequiresSession
-                    && x.SizeInBytes == y.SizeInBytes
-                    && string.Equals(x.Uri.ToString(), y.Uri.ToString(), StringComparison.OrdinalIgnoreCase);
+                    && x.SizeInBytes == y.SizeInBytes;
             }
 
             int IEqualityComparer<QueueInfo>.GetHashCode(QueueInfo obj)
@@ -41,7 +39,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
         }
 
-        class InternalTopicInfoComparer : IEqualityComparer<TopicInfo>
+        private class InternalTopicInfoComparer : IEqualityComparer<TopicInfo>
         {
             bool IEqualityComparer<TopicInfo>.Equals(TopicInfo x, TopicInfo y)
             {
@@ -49,10 +47,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                     && x.DuplicateDetectionHistoryTimeWindow == y.DuplicateDetectionHistoryTimeWindow
                     && x.EnableBatchedOperations == y.EnableBatchedOperations
                     && x.MaxSizeInMegabytes == y.MaxSizeInMegabytes
-                    && string.Equals(x.Name, y.Name, StringComparison.OrdinalIgnoreCase)
                     && x.RequiresDuplicateDetection == y.RequiresDuplicateDetection
-                    && x.SizeInBytes == y.SizeInBytes
-                    && string.Equals(x.Uri.ToString(), y.Uri.ToString(), StringComparison.OrdinalIgnoreCase);
+                    && x.SizeInBytes == y.SizeInBytes;
             }
 
             int IEqualityComparer<TopicInfo>.GetHashCode(TopicInfo obj)
@@ -61,15 +57,34 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
         }
 
+        private class InternalSubscriptionInfoComparer : IEqualityComparer<SubscriptionInfo>
+        {
+            bool IEqualityComparer<SubscriptionInfo>.Equals(SubscriptionInfo x, SubscriptionInfo y)
+            {
+                return
+                    x.LockDuration == y.LockDuration
+                    && x.MaxDeliveryCount == y.MaxDeliveryCount
+                    && x.MessageCount == y.MessageCount
+                    && x.RequiresSession == y.RequiresSession;
+            }
+
+            int IEqualityComparer<SubscriptionInfo>.GetHashCode(SubscriptionInfo obj)
+            {
+                return obj.GetHashCode();
+            }
+        }
+
         IServiceBusService Service { get; set; }
         IEqualityComparer<QueueInfo> QueueInfoComparer { get; set; }
         IEqualityComparer<TopicInfo> TopicInfoComparer { get; set; }
+        IEqualityComparer<SubscriptionInfo> SubscriptionInfoComparer { get; set; }
 
         public ServiceBusManagementTests()
         {
             Service = ServiceBusService.Create(Configuration.ServiceNamespace, Configuration.UserName, Configuration.Password);
             QueueInfoComparer = new InternalQueueInfoComparer();
             TopicInfoComparer = new InternalTopicInfoComparer();
+            SubscriptionInfoComparer = new InternalSubscriptionInfoComparer();
         }
 
 
@@ -308,6 +323,136 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.Equal(settings.EnableBatchedOperations.Value, topic.EnableBatchedOperations);
             Assert.Equal(settings.MaxSizeInMegabytes.Value, topic.MaxSizeInMegabytes);
             Assert.Equal(settings.RequiresDuplicateDetection.Value, topic.RequiresDuplicateDetection);
+        }
+
+        /// <summary>
+        /// Tests the complete lifetime of a subscription.
+        /// </summary>
+        [Fact]
+        public void SubscriptionLifecycle()
+        {
+            string topicName = GetUniqueEntityName();
+            string subscriptionName = GetUniqueEntityName();
+
+            Service.CreateTopicAsync(topicName).AsTask().Wait();
+            try
+            {
+                // Create a subscription.
+                SubscriptionInfo newSubscription = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
+
+                // Confirm that the subscription can be obtained from the server.
+                SubscriptionInfo storedSubscription = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
+                Assert.Equal(storedSubscription, newSubscription, SubscriptionInfoComparer);
+
+                // Confirm that the subscription appears in the list.
+                Dictionary<string, SubscriptionInfo> subscriptions = GetItems(
+                    () => { return Service.ListSubscriptionsAsync(topicName); },
+                    (s) => { return s.Name; });
+                Assert.True(subscriptions.ContainsKey(subscriptionName));
+                Assert.Equal(newSubscription, subscriptions[subscriptionName], SubscriptionInfoComparer);
+
+                // Delete the subscription.
+                Service.DeleteSubscriptionAsync(topicName, subscriptionName).AsTask().Wait();
+                subscriptions = GetItems(
+                    () => { return Service.ListSubscriptionsAsync(topicName); },
+                    (s) => { return s.Name; });
+                
+                Assert.False(subscriptions.ContainsKey(subscriptionName));
+            }
+            finally
+            {
+                Service.DeleteTopicAsync(topicName).AsTask().Wait();
+            }
+        }
+
+        /// <summary>
+        /// Tests creating two subscriptions with identical names.
+        /// </summary>
+        [Fact]
+        public void CreateSubscriptionDuplicateName()
+        {
+            string topicName = GetUniqueEntityName();
+            string subscriptionName = GetUniqueEntityName();
+
+            Service.CreateTopicAsync(topicName).AsTask().Wait();
+            try
+            {
+                Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask().Wait();
+                Task<SubscriptionInfo> task = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask();
+                Assert.Throws<AggregateException>(() => task.Wait());
+            }
+            finally
+            {
+                Service.DeleteTopicAsync(topicName).AsTask().Wait();
+            }
+        }
+
+        /// <summary>
+        /// Tests getting a non-existing subscription from an existing topic.
+        /// </summary>
+        [Fact]
+        public void GetMissingSubscription()
+        {
+            string topicName = GetUniqueEntityName();
+            string subscriptionName = GetUniqueEntityName();
+
+            Service.CreateTopicAsync(topicName).AsTask().Wait();
+            try
+            {
+                Task<SubscriptionInfo> task = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask();
+                Assert.Throws<AggregateException>(() => task.Wait());
+            }
+            finally
+            {
+                Service.DeleteTopicAsync(topicName).AsTask().Wait();
+            }
+        }
+
+        /// <summary>
+        /// Tests getting a subscription from a non-existing topic.
+        /// </summary>
+        [Fact]
+        public void GetSubscriptionFromMissingTopic()
+        {
+            string topicName = GetUniqueEntityName();
+            string subscriptionName = GetUniqueEntityName();
+
+            Task<SubscriptionInfo> task = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask();
+            Assert.Throws<AggregateException>(() => task.Wait());
+        }
+
+        /// <summary>
+        /// Tests getting all subscriptions from a non-existing topic.
+        /// </summary>
+        [Fact]
+        public void ListSubscriptionsInMissingTopic()
+        {
+            string topicName = GetUniqueEntityName();
+
+            List<SubscriptionInfo> subscriptions = new List<SubscriptionInfo>(
+                Service.ListSubscriptionsAsync(topicName).AsTask<IEnumerable<SubscriptionInfo>>().Result);
+            Assert.Equal(subscriptions.Count, 0);
+        }
+
+        /// <summary>
+        /// Tests deleting a non-existing subscription.
+        /// </summary>
+        [Fact]
+        public void DeleteMissingSubscription()
+        {
+            string topicName = GetUniqueEntityName();
+            string subscriptionName = GetUniqueEntityName();
+
+            Service.CreateTopicAsync(topicName).AsTask().Wait();
+            try
+            {
+                Task task = Service.DeleteSubscriptionAsync(topicName, subscriptionName).AsTask();
+                Assert.Throws<AggregateException>(() => task.Wait());
+            }
+            finally
+            {
+                Service.DeleteTopicAsync(topicName).AsTask().Wait();
+            }
         }
     }
 }
