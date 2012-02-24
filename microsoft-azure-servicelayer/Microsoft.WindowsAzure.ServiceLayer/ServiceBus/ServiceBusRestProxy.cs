@@ -329,7 +329,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Deserializes collection of items of the given type from an atom feed contained in the specified response.
+        /// Deserializes collection of items of the given type from an atom 
+        /// feed contained in the specified response.
         /// </summary>
         /// <typeparam name="INFO">Item type.</typeparam>
         /// <param name="response">Source HTTP response.</param>
@@ -363,7 +364,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Deserializes a service bus item of the specified type from the given HTTP response.
+        /// Deserializes a service bus item of the specified type from the 
+        /// given HTTP response.
         /// </summary>
         /// <typeparam name="INFO">Type of the object to deserialize.</typeparam>
         /// <param name="response">Source HTTP response.</param>
@@ -432,20 +434,34 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             request.Content.Headers.ContentType.Parameters.Add(new System.Net.Http.Headers.NameValueHeaderValue("type", "entry"));
         }
 
+        /// <summary>
+        /// Initializes a topic after its deserialization.
+        /// </summary>
+        /// <param name="feedItem">Source Atom item.</param>
+        /// <param name="topicInfo">Deserialized topic.</param>
         private static void InitTopic(SyndicationItem feedItem, TopicInfo topicInfo)
         {
             topicInfo.Initialize(feedItem);
         }
 
+        /// <summary>
+        /// Initializes a queue after its deserialization.
+        /// </summary>
+        /// <param name="feedItem">Source Atom item.</param>
+        /// <param name="queueInfo">Deserialized queue.</param>
         private static void InitQueue(SyndicationItem feedItem, QueueInfo queueInfo)
         {
             queueInfo.Initialize(feedItem);
         }
 
+        /// <summary>
+        /// Initializes a subscription after its deserialization.
+        /// </summary>
+        /// <param name="feedItem">Source Atom item.</param>
+        /// <param name="subscriptionInfo">Deserialized subscription.</param>
         private static void InitSubscription(SyndicationItem feedItem, SubscriptionInfo subscriptionInfo)
         {
             subscriptionInfo.Initialize(feedItem);
         }
-
     }
 }

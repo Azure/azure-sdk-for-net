@@ -25,30 +25,61 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     [DataContract(Namespace="http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name="QueueDescription")]
     public sealed class QueueSettings
     {
+        /// <summary>
+        /// Determines the amount of time in which a message should be locked 
+        /// for processing by a receiver.
+        /// </summary>
         [DataMember(Order = 0)]
         public TimeSpan? LockDuration { get; set; }
 
+        /// <summary>
+        /// Specifies the maximum queue size in megabytes.
+        /// </summary>
         [DataMember(Order = 1)]
         public int? MaxSizeInMegabytes { get; set; }
 
+        /// <summary>
+        /// Tells whether duplicate detection is enabled.
+        /// </summary>
         [DataMember(Order = 2)]
         public bool? RequiresDuplicateDetection { get; set; }
 
+        /// <summary>
+        /// Tells whether the queue is session-aware.
+        /// </summary>
         [DataMember(Order = 3)]
         public bool? RequiresSession { get; set; }
 
+        /// <summary>
+        /// Specifies default message time to live. 
+        /// </summary>
         [DataMember(Order = 4)]
         public TimeSpan? DefaultMessageTimeToLive { get; set; }
 
+        /// <summary>
+        /// Tells how the Service Bus controls handles a message whose TTL has
+        /// expired.
+        /// </summary>
         [DataMember(Order = 5, Name = "DeadLetteringOnMessageExpiration")]
         public bool? EnableDeadLetteringOnMessageExpiration { get; set; }
 
+        /// <summary>
+        /// Specifies the time span during which the Service Bus detects 
+        /// message duplication.
+        /// </summary>
         [DataMember(Order = 6)]
         public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; set; }
 
+        /// <summary>
+        /// Specifies the maximum number of times a message SB will try to 
+        /// deliver before being dead lettered or discarded.
+        /// </summary>
         [DataMember(Order = 7)]
         public int? MaxDeliveryCount { get; set; }
 
+        /// <summary>
+        /// Tells whether server-side batching is enabled.
+        /// </summary>
         [DataMember(Order = 8)]
         public bool? EnableBatchedOperations { get; set; }
     }
