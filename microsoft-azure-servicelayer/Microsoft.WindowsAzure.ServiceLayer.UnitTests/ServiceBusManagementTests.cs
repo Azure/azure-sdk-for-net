@@ -16,6 +16,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
     /// </summary>
     public class ServiceBusManagementTests
     {
+        /// <summary>
+        /// Comparer for the QueueInfo type.
+        /// </summary>
         private class InternalQueueInfoComparer : IEqualityComparer<QueueInfo>
         {
             bool IEqualityComparer<QueueInfo>.Equals(QueueInfo x, QueueInfo y)
@@ -39,6 +42,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
         }
 
+        /// <summary>
+        /// Comparer for the TopicInfo type.
+        /// </summary>
         private class InternalTopicInfoComparer : IEqualityComparer<TopicInfo>
         {
             bool IEqualityComparer<TopicInfo>.Equals(TopicInfo x, TopicInfo y)
@@ -57,6 +63,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
         }
 
+        /// <summary>
+        /// Comparer for the SubscriptionInfo type.
+        /// </summary>
         private class InternalSubscriptionInfoComparer : IEqualityComparer<SubscriptionInfo>
         {
             bool IEqualityComparer<SubscriptionInfo>.Equals(SubscriptionInfo x, SubscriptionInfo y)
@@ -323,6 +332,24 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.Equal(settings.EnableBatchedOperations.Value, topic.EnableBatchedOperations);
             Assert.Equal(settings.MaxSizeInMegabytes.Value, topic.MaxSizeInMegabytes);
             Assert.Equal(settings.RequiresDuplicateDetection.Value, topic.RequiresDuplicateDetection);
+        }
+
+        /// <summary>
+        /// Tests ArgumentNullException for subscription parameters.
+        /// </summary>
+        [Fact]
+        public void NullArgsInSubscriptions()
+        {
+            Assert.Throws<ArgumentNullException>(() => Service.ListSubscriptionsAsync(null));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync(null, "test"));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync("test", null));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync(null, "test", new SubscriptionSettings()));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync("test", null, new SubscriptionSettings()));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync("test", "test", null));
+            Assert.Throws<ArgumentNullException>(() => Service.GetSubscriptionAsync(null, "test"));
+            Assert.Throws<ArgumentNullException>(() => Service.GetSubscriptionAsync("test", null));
+            Assert.Throws<ArgumentNullException>(() => Service.DeleteSubscriptionAsync(null, "test"));
+            Assert.Throws<ArgumentNullException>(() => Service.DeleteSubscriptionAsync("test", null));
         }
 
         /// <summary>
