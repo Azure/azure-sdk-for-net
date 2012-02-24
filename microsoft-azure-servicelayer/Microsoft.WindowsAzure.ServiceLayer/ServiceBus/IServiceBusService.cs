@@ -60,5 +60,40 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="queueSettings">Queue parameters.</param>
         /// <returns>Created queue.</returns>
         IAsyncOperation<QueueInfo> CreateQueueAsync(string queueName, QueueSettings queueSettings);
+
+        /// <summary>
+        /// Lists all existing topics in the namespace.
+        /// </summary>
+        /// <returns>Collection of topics.</returns>
+        IAsyncOperation<IEnumerable<TopicInfo>> ListTopicsAsync();
+
+        /// <summary>
+        /// Creates a topic with the given name and default settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <returns>Created topic.</returns>
+        IAsyncOperation<TopicInfo> CreateTopicAsync(string topicName);
+
+        /// <summary>
+        /// Creates a topic with the given name and settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="topicSettings">Topic settings.</param>
+        /// <returns>Created topics.</returns>
+        IAsyncOperation<TopicInfo> CreateTopicAsync(string topicName, TopicSettings topicSettings);
+
+        /// <summary>
+        /// Gets a topic with the given name.
+        /// </summary>
+        /// <param name="topicName">Topic name</param>
+        /// <returns>Topic data</returns>
+        IAsyncOperation<TopicInfo> GetTopicAsync(string topicName);
+
+        /// <summary>
+        /// Deletes a topic with the given name.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction DeleteTopicAsync(string topicName);
     }
 }

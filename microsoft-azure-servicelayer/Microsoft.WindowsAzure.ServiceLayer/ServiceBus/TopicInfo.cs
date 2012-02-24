@@ -15,69 +15,83 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 
 using Windows.Web.Syndication;
-
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
-    /// Service bus queue info.
+    /// Service bus topic.
     /// </summary>
-    [DataContract(Namespace="http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name="QueueDescription")]
-    public sealed class QueueInfo
+    [DataContract(Namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name = "TopicDescription")]
+    public sealed class TopicInfo
     {
-        [DataMember(Order=0)]
-        public TimeSpan LockDuration { get; internal set; }
+        /// <summary>
+        /// Determines how long a message lives in the associated subscriptions.
+        /// </summary>
+        [DataMember(Order = 0)]
+        public TimeSpan DefaultMessageTimeToLive { get; internal set; }
 
+        /// <summary>
+        /// Specifies the maximum topic size in megabytes.
+        /// </summary>
         [DataMember(Order=1)]
         public int MaxSizeInMegabytes { get; internal set; }
 
+        /// <summary>
+        /// If enabled, the topic will detect duplicate messages within the 
+        /// time span specified by the DuplicateDetectionHistoryTimeWindow property.
+        /// </summary>
         [DataMember(Order=2)]
         public bool RequiresDuplicateDetection { get; internal set; }
 
+        /// <summary>
+        /// Specifies the time span during which the Service Bus will detect 
+        /// message duplication.
+        /// </summary>
         [DataMember(Order=3)]
-        public bool RequiresSession { get; internal set; }
-
-        [DataMember(Order=4)]
-        public TimeSpan DefaultMessageTimeToLive { get; internal set; }
-
-        [DataMember(Order=5, Name="DeadLetteringOnMessageExpiration")]
-        public bool EnableDeadLetteringOnMessageExpiration { get; internal set; }
-
-        [DataMember(Order=6)]
         public TimeSpan DuplicateDetectionHistoryTimeWindow { get; internal set; }
 
-        [DataMember(Order=7)]
-        public int MaxDeliveryCount { get; internal set; }
-
-        [DataMember(Order=8)]
+        /// <summary>
+        /// Specifies whether service side batching operations are enabled.
+        /// </summary>
+        [DataMember(Order=4)]
         public bool EnableBatchedOperations { get; internal set; }
 
-        [DataMember(Order=9)]
+        /// <summary>
+        /// Reflects the actual bytes toward the topic quota that messages in
+        /// the topic currently occupy. 
+        /// </summary>
+        [DataMember(Order=5)]
         public int SizeInBytes { get; internal set; }
 
-        [DataMember(Order=10)]
-        public int MessageCount { get; internal set; }
-
+        /// <summary>
+        /// Gets the name of the topic.
+        /// </summary>
         [IgnoreDataMember]
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Gets URI of the topic.
+        /// </summary>
         [IgnoreDataMember]
         public Uri Uri { get; private set; }
 
         /// <summary>
         /// Constructor for serialization purposes.
         /// </summary>
-        internal QueueInfo()
+        internal TopicInfo()
         {
         }
 
         /// <summary>
-        /// Initializes the object after deserialization.
+        /// Initializes the item after deserialization.
         /// </summary>
-        /// <param name="item">Atom item.</param>
+        /// <param name="item">Source atom item.</param>
         internal void Initialize(SyndicationItem item)
         {
             Name = item.Title.Text;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
+using Windows.Foundation;
 
 using Xunit;
 
@@ -40,13 +41,35 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
         }
 
+        class InternalTopicInfoComparer : IEqualityComparer<TopicInfo>
+        {
+            bool IEqualityComparer<TopicInfo>.Equals(TopicInfo x, TopicInfo y)
+            {
+                return x.DefaultMessageTimeToLive == y.DefaultMessageTimeToLive
+                    && x.DuplicateDetectionHistoryTimeWindow == y.DuplicateDetectionHistoryTimeWindow
+                    && x.EnableBatchedOperations == y.EnableBatchedOperations
+                    && x.MaxSizeInMegabytes == y.MaxSizeInMegabytes
+                    && string.Equals(x.Name, y.Name, StringComparison.OrdinalIgnoreCase)
+                    && x.RequiresDuplicateDetection == y.RequiresDuplicateDetection
+                    && x.SizeInBytes == y.SizeInBytes
+                    && string.Equals(x.Uri.ToString(), y.Uri.ToString(), StringComparison.OrdinalIgnoreCase);
+            }
+
+            int IEqualityComparer<TopicInfo>.GetHashCode(TopicInfo obj)
+            {
+                return obj.GetHashCode();
+            }
+        }
+
         IServiceBusService Service { get; set; }
         IEqualityComparer<QueueInfo> QueueInfoComparer { get; set; }
+        IEqualityComparer<TopicInfo> TopicInfoComparer { get; set; }
 
         public ServiceBusManagementTests()
         {
             Service = ServiceBusService.Create(Configuration.ServiceNamespace, Configuration.UserName, Configuration.Password);
             QueueInfoComparer = new InternalQueueInfoComparer();
+            TopicInfoComparer = new InternalTopicInfoComparer();
         }
 
 
@@ -55,16 +78,24 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             return string.Format("UnitTests.{0}", Guid.NewGuid().ToString());
         }
 
-        Dictionary<string, QueueInfo> GetQueues()
+        Dictionary<string, T> GetItems<T>(
+            Func<IAsyncOperation<IEnumerable<T>>> getItems,
+            Func<T, string> getName)
         {
-            Dictionary<string, QueueInfo> queues = new Dictionary<string, QueueInfo>(StringComparer.OrdinalIgnoreCase);
-            foreach (QueueInfo queue in Service.ListQueuesAsync().AsTask<IEnumerable<QueueInfo>>().Result)
+            Dictionary<string, T> items = new Dictionary<string,T>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (T item in getItems().AsTask<IEnumerable<T>>().Result)
             {
-                queues.Add(queue.Name, queue);
+                string itemName = getName(item);
+                items.Add(itemName, item);
             }
-            return queues;
+
+            return items;
         }
 
+        /// <summary>
+        /// Tests null arguments in queue management API.
+        /// </summary>
         [Fact]
         public void NullArgsInQueues()
         {
@@ -90,14 +121,19 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.Equal<QueueInfo>(storedQueue, newQueue, QueueInfoComparer);
 
             // Confirm that the queue can be obtained in the list
-            Dictionary<string, QueueInfo> queues = GetQueues();
+            Dictionary<string, QueueInfo> queues = GetItems(
+                () => { return Service.ListQueuesAsync(); },
+                (queue) => { return queue.Name; });
 
             Assert.True(queues.ContainsKey(queueName));
             Assert.Equal<QueueInfo>(newQueue, queues[queueName], QueueInfoComparer);
 
             // Delete the queue
             Service.DeleteQueueAsync(queueName).AsTask().Wait();
-            queues = GetQueues();
+            queues = GetItems(
+                () => { return Service.ListQueuesAsync(); },
+                (queue) => { return queue.Name; });
+
             Assert.False(queues.ContainsKey(queueName));
         }
 
@@ -112,6 +148,30 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             QueueInfo newQueue = Service.CreateQueueAsync(queueName).AsTask<QueueInfo>().Result;
 
             Task t = Service.CreateQueueAsync(queueName).AsTask();
+            Assert.Throws<AggregateException>(() => t.Wait());
+
+            Service.DeleteQueueAsync(queueName).AsTask().Wait();
+        }
+
+        /// <summary>
+        /// Tests getting a missing queue.
+        /// </summary>
+        [Fact]
+        public void GetMissingQueue()
+        {
+            string queueName = GetUniqueEntityName();
+            Task t = Service.GetQueueAsync(queueName).AsTask();
+            Assert.Throws<AggregateException>(() => t.Wait());
+        }
+
+        /// <summary>
+        /// Tests deleting a missing queue.
+        /// </summary>
+        [Fact]
+        public void DeleteMissingQueue()
+        {
+            string queueName = GetUniqueEntityName();
+            Task t = Service.DeleteQueueAsync(queueName).AsTask();
             Assert.Throws<AggregateException>(() => t.Wait());
         }
 
@@ -144,6 +204,110 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.Equal(queueInfo.MaxSizeInMegabytes, settings.MaxSizeInMegabytes.Value);
             Assert.Equal(queueInfo.RequiresDuplicateDetection, settings.RequiresDuplicateDetection.Value);
             Assert.Equal(queueInfo.RequiresSession, settings.RequiresSession.Value);
+        }
+
+        /// <summary>
+        /// Tests throwing ArgumentNullException for topic management API.
+        /// </summary>
+        [Fact]
+        public void NullArgsInTopics()
+        {
+            Assert.Throws<ArgumentNullException>(() => Service.CreateTopicAsync(null));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateTopicAsync(null, new TopicSettings()));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateTopicAsync("foo", null));
+            Assert.Throws<ArgumentNullException>(() => Service.GetTopicAsync(null));
+            Assert.Throws<ArgumentNullException>(() => Service.DeleteTopicAsync(null));
+        }
+
+        /// <summary>
+        /// Tests the complete lifecycle of a topic.
+        /// </summary>
+        [Fact]
+        public void TopicLifecycle()
+        {
+            // Create a topic
+            string topicName = GetUniqueEntityName();
+            TopicInfo newTopic = Service.CreateTopicAsync(topicName).AsTask<TopicInfo>().Result;
+
+            // Confirm that the topic can be obtained from the server.
+            TopicInfo storedTopic = Service.GetTopicAsync(topicName).AsTask<TopicInfo>().Result;
+            Assert.Equal<TopicInfo>(storedTopic, newTopic, TopicInfoComparer);
+
+            // Conmfirm that the topic can be obtained in the list.
+            Dictionary<string, TopicInfo> topics = GetItems(
+                () => { return Service.ListTopicsAsync(); },
+                (t) => { return t.Name; });
+            Assert.True(topics.ContainsKey(topicName));
+            Assert.Equal(newTopic, topics[topicName], TopicInfoComparer);
+
+            // Delete the topic.
+            Service.DeleteTopicAsync(topicName).AsTask().Wait();
+            topics = GetItems(
+                () => { return Service.ListTopicsAsync(); },
+                (t) => { return t.Name; });
+
+            Assert.False(topics.ContainsKey(topicName));
+        }
+
+        /// <summary>
+        /// Tests creating two topics with identical names.
+        /// </summary>
+        [Fact]
+        public void CreateTopicDuplicateName()
+        {
+            // Create a topic
+            string topicName = GetUniqueEntityName();
+            TopicInfo newTopic = Service.CreateTopicAsync(topicName).AsTask<TopicInfo>().Result;
+
+            Task t = Service.CreateTopicAsync(topicName).AsTask();
+            Assert.Throws<AggregateException>(() => t.Wait());
+
+            Service.DeleteTopicAsync(topicName).AsTask().Wait();
+        }
+
+        /// <summary>
+        /// Tests getting a missing topic.
+        /// </summary>
+        [Fact]
+        public void GetMissingTopic()
+        {
+            string topicName = GetUniqueEntityName();
+            Task t = Service.GetTopicAsync(topicName).AsTask() ;
+            Assert.Throws<AggregateException>(() => t.Wait());
+        }
+
+        /// <summary>
+        /// Tests deleting a missing topic.
+        /// </summary>
+        [Fact]
+        public void DeleteMissingTopic()
+        {
+            string topicName = GetUniqueEntityName();
+            Task t = Service.DeleteTopicAsync(topicName).AsTask();
+            Assert.Throws<AggregateException>(() => t.Wait());
+        }
+
+        /// <summary>
+        /// Tests creation of a topic with all non-default parameters.
+        /// </summary>
+        [Fact]
+        public void CreateTopicWithNonDefaultParams()
+        {
+            string topicName = GetUniqueEntityName();
+            TopicSettings settings = new TopicSettings();
+
+            settings.DefaultMessageTimeToLive = TimeSpan.FromHours(24);
+            settings.DuplicateDetectionHistoryTimeWindow = TimeSpan.FromDays(2);
+            settings.EnableBatchedOperations = false;
+            settings.MaxSizeInMegabytes = 2048;
+            settings.RequiresDuplicateDetection = true;
+
+            TopicInfo topic = Service.CreateTopicAsync(topicName, settings).AsTask<TopicInfo>().Result;
+            Assert.Equal(settings.DefaultMessageTimeToLive.Value, topic.DefaultMessageTimeToLive);
+            Assert.Equal(settings.DuplicateDetectionHistoryTimeWindow.Value, topic.DuplicateDetectionHistoryTimeWindow);
+            Assert.Equal(settings.EnableBatchedOperations.Value, topic.EnableBatchedOperations);
+            Assert.Equal(settings.MaxSizeInMegabytes.Value, topic.MaxSizeInMegabytes);
+            Assert.Equal(settings.RequiresDuplicateDetection.Value, topic.RequiresDuplicateDetection);
         }
     }
 }
