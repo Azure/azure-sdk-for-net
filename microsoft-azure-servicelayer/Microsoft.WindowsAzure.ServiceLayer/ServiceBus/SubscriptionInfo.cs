@@ -68,12 +68,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         public bool EnableBatchedOperations { get; internal set; }
 
         /// <summary>
-        /// Gets the topic name the subscripton belongs to.
-        /// </summary>
-        [IgnoreDataMember]
-        public string TopicName { get { throw new NotImplementedException(); } private set { throw new NotImplementedException(); } }
-
-        /// <summary>
         /// Gets the name of the subscription.
         /// </summary>
         [IgnoreDataMember]

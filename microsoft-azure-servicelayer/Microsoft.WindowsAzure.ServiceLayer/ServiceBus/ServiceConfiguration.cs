@@ -78,5 +78,96 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusScopeUri, ServiceNamespace);
             ScopeHostUri = new Uri(stringUri);
         }
+
+        /// <summary>
+        /// Gets URI for a queue.
+        /// </summary>
+        /// <param name="queueName">Name of the queue.</param>
+        /// <returns>Queue's URI.</returns>
+        internal Uri GetQueueUri(string queueName)
+        {
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.QueuePath, queueName);
+            return new Uri(ServiceBusUri, path);
+        }
+
+        /// <summary>
+        /// Gets URI of a container with all queues.
+        /// </summary>
+        /// <returns>URI of the container with all queues.</returns>
+        internal Uri GetQueuesContainerUri()
+        {
+            string path = Constants.QueuesPath;
+            return new Uri(ServiceBusUri, path);
+        }
+
+
+        /// <summary>
+        /// Gets URI for a topic.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <returns>Topic's URI.</returns>
+        internal Uri GetTopicUri(string topicName)
+        {
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.TopicPath, topicName);
+            return new Uri(ServiceBusUri, path);
+        }
+
+        /// <summary>
+        /// Gets URI of a container with all topics.
+        /// </summary>
+        /// <returns>URI of the container with all topics.</returns>
+        internal Uri GetTopicsContainerUri()
+        {
+            string path = Constants.TopicsPath;
+            return new Uri(ServiceBusUri, path);
+        }
+
+        /// <summary>
+        /// Gets a URI for a subscription.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <returns>Subscription's URI.</returns>
+        internal Uri GetSubscriptionUri(string topicName, string subscriptionName)
+        {
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.SubscriptionPath, topicName, subscriptionName);
+            return new Uri(ServiceBusUri, path);
+        }
+
+        /// <summary>
+        /// Gets a URI of a container with all subscriptions for the topic.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <returns>URI of the container with all subscriptions.</returns>
+        internal Uri GetSubscriptionsContainerUri(string topicName)
+        {
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.SubscriptionsPath, topicName);
+            return new Uri(ServiceBusUri, path);
+        }
+
+        /// <summary>
+        /// Gets a URI for a rule.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <param name="ruleName">Name of the rule.</param>
+        /// <returns>Rule's URI.</returns>
+        internal Uri GetRuleUri(string topicName, string subscriptionName, string ruleName)
+        {
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.RulePath, topicName, subscriptionName, ruleName);
+            return new Uri(ServiceBusUri, path);
+        }
+
+        /// <summary>
+        /// Gets a URI of a container with all rules.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <returns>Uri of the container with all rules.</returns>
+        internal Uri GetRulesContainerUri(string topicName, string subscriptionName)
+        {
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.RulesPath, topicName, subscriptionName);
+            return new Uri(ServiceBusUri, path);
+        }
     }
 }

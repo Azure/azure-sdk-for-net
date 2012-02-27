@@ -135,5 +135,41 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="subscriptionName">Subscription name.</param>
         /// <returns>Result of the operation.</returns>
         IAsyncAction DeleteSubscriptionAsync(string topicName, string subscriptionName);
+
+        /// <summary>
+        /// Creates a subscription rule with the given characteristics.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topioc.</param>
+        /// <param name="ruleName">Name of the rule to be created.</param>
+        /// <param name="ruleSettings">Rule settings.</param>
+        /// <returns>Rule description.</returns>
+        IAsyncOperation<RuleInfo> CreateRuleAsync(string topicName, string subscriptionName, string ruleName, RuleSettings ruleSettings);
+
+        /// <summary>
+        /// Lists all rules for the given subscription.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <returns>All rules for the subscription.</returns>
+        IAsyncOperation<IEnumerable<RuleInfo>> ListRulesAsync(string topicName, string subscriptionName);
+
+        /// <summary>
+        /// Gets a subscription rule with the given name.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <param name="ruleName">Name of the rule.</param>
+        /// <returns>Rule information.</returns>
+        IAsyncOperation<RuleInfo> GetRuleAsync(string topicName, string subscriptionName, string ruleName);
+
+        /// <summary>
+        /// Deletes a rule with the given name.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <param name="ruleName">Name of the rule.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction DeleteRuleAsync(string topicName, string subscriptionName, string ruleName);
     }
 }
