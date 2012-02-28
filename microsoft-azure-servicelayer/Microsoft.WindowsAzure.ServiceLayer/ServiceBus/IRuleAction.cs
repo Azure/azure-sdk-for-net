@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
-    /// Filter's action.
+    /// Rule's action.
     /// </summary>
     public interface IRuleAction
     {

@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Creates a subscription rule with the given characteristics.
         /// </summary>
         /// <param name="topicName">Name of the topic.</param>
-        /// <param name="subscriptionName">Name of the subscription inside the topioc.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
         /// <param name="ruleName">Name of the rule to be created.</param>
         /// <param name="ruleSettings">Rule settings.</param>
         /// <returns>Rule description.</returns>

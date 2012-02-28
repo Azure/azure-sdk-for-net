@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
-    /// Empty rule action.
+    /// Represents a no-op filter action.
     /// </summary>
     [DataContract(Namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")]
     public sealed class EmptyRuleAction : IRuleAction

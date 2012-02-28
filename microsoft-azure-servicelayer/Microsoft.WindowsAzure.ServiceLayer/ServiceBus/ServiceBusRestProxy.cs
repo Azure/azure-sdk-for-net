@@ -376,7 +376,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("ruleSettings");
             }
-
             return CreateItemAsync<RuleInfo, RuleSettings>(
                 ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName),
                 ruleSettings,
