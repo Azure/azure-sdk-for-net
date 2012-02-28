@@ -125,7 +125,6 @@
     <Compile Include="ServiceBus\TrueRuleFilter.cs" />
     <Compile Include="WindowsAzureServiceException.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="HttpErrorHandler.cs" />
     <Compile Include="HttpQueryStringParser.cs" />
     <Compile Include="ServiceBus\ServiceBusRestProxy.cs" />
     <Compile Include="ServiceBus\WrapAuthenticationHandler.cs" />

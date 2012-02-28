@@ -65,8 +65,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             ServiceConfig = serviceOptions;
 
-            HttpMessageHandler chain = new HttpErrorHandler(
-                new WrapAuthenticationHandler(serviceOptions));
+            HttpMessageHandler chain = new WrapAuthenticationHandler(serviceOptions);
             Channel = new HttpClient(chain);
         }
 
@@ -473,8 +472,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, containerUri);
 
-            return Channel
-                .SendAsync(request)
+            return SendAsync(request)
                 .ContinueWith<IEnumerable<INFO>>(r => { return GetItems<INFO>(r.Result, initAction, extraTypes); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<INFO>>();
         }
@@ -509,8 +507,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, itemUri);
 
-            return Channel
-                .SendAsync(request)
+            return SendAsync(request)
                 .ContinueWith<INFO>(tr => { return GetItem<INFO>(tr.Result, initAction, extraTypes); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<INFO>();
         }
@@ -526,6 +523,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Deserialized object.</returns>
         private INFO GetItem<INFO>(HttpResponseMessage response, Action<SyndicationItem, INFO> initAction, params Type[] extraTypes)
         {
+            Debug.Assert(response.IsSuccessStatusCode);
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(response.Content.ReadAsStringAsync().Result);
 
@@ -544,8 +542,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, itemUri);
 
-            return Channel
-                .SendAsync(request)
+            return SendAsync(request)
                 .AsAsyncAction();
         }
 
@@ -568,7 +565,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             return Task.Factory
                 .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
-                .ContinueWith<HttpResponseMessage>(tr => { return Channel.SendAsync(request).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<HttpResponseMessage>(tr => { return SendAsync(request).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith<INFO>(tr => { return GetItem<INFO>(tr.Result, initAction, ExtraRuleTypes); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<INFO>();
         }
@@ -624,6 +621,31 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private static void InitRule(SyndicationItem feedItem, RuleInfo ruleInfo)
         {
             ruleInfo.Initialize(feedItem);
+        }
+
+        /// <summary>
+        /// Detects errors in HTTP responses and translates them into exceptios.
+        /// </summary>
+        /// <param name="response">Source HTTP response.</param>
+        /// <returns>Processed HTTP response.</returns>
+        private HttpResponseMessage CheckResponse(HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new WindowsAzureServiceException();
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Asynchronously sends the request.
+        /// </summary>
+        /// <param name="request">Request to send.</param>
+        /// <returns>HTTP response.</returns>
+        private Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        {
+            return Channel.SendAsync(request)
+                .ContinueWith<HttpResponseMessage>((task) => { return CheckResponse(task.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
     }
 }
