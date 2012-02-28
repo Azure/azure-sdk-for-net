@@ -33,6 +33,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     internal class ServiceBusRestProxy: IServiceBusService
     {
+        // Extra types used for serialization operations with rules.
+        private readonly Type[] ExtraRuleTypes = 
+        {
+            typeof(CorrelationRuleFilter),
+            typeof(FalseRuleFilter),
+            typeof(SqlRuleFilter),
+            typeof(TrueRuleFilter),
+            typeof(EmptyRuleAction),
+            typeof(SqlRuleAction),
+        };
+
         /// <summary>
         /// Gets the service options.
         /// </summary>
@@ -392,7 +403,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
             return GetItemsAsync<RuleInfo>(
                 ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
-                InitRule);
+                InitRule,
+                ExtraRuleTypes);
         }
 
         /// <summary>
@@ -419,7 +431,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             return GetItemAsync<RuleInfo>(
                 ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName),
-                InitRule);
+                InitRule,
+                ExtraRuleTypes);
         }
 
         /// <summary>
@@ -454,14 +467,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <typeparam name="INFO">Item type.</typeparam>
         /// <param name="containerUri">URI of a container with items.</param>
         /// <param name="initAction">Initialization action for a single item.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>A collection of items.</returns>
-        private IAsyncOperation<IEnumerable<INFO>> GetItemsAsync<INFO>(Uri containerUri, Action<SyndicationItem, INFO> initAction)
+        private IAsyncOperation<IEnumerable<INFO>> GetItemsAsync<INFO>(Uri containerUri, Action<SyndicationItem, INFO> initAction, params Type[] extraTypes)
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, containerUri);
 
             return Channel
                 .SendAsync(request)
-                .ContinueWith<IEnumerable<INFO>>(r => { return GetItems<INFO>(r.Result, initAction); }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<IEnumerable<INFO>>(r => { return GetItems<INFO>(r.Result, initAction, extraTypes); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<INFO>>();
         }
 
@@ -472,14 +486,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <typeparam name="INFO">Item type.</typeparam>
         /// <param name="response">Source HTTP response.</param>
         /// <param name="initAction">Initialization action.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Collection of deserialized items.</returns>
-        private IEnumerable<INFO> GetItems<INFO>(HttpResponseMessage response, Action<SyndicationItem, INFO> initAction)
+        private IEnumerable<INFO> GetItems<INFO>(HttpResponseMessage response, Action<SyndicationItem, INFO> initAction, params Type[] extraTypes)
         {
             Debug.Assert(response.IsSuccessStatusCode);
             SyndicationFeed feed = new SyndicationFeed();
             feed.Load(response.Content.ReadAsStringAsync().Result);
 
-            return SerializationHelper.DeserializeCollection<INFO>(feed, initAction);
+            return SerializationHelper.DeserializeCollection<INFO>(feed, initAction, extraTypes);
         }
 
         /// <summary>
@@ -488,14 +503,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <typeparam name="INFO">Item type</typeparam>
         /// <param name="itemUri">URI of the item.</param>
         /// <param name="initAction">Initialization action for the deserialized item.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Item data</returns>
-        private IAsyncOperation<INFO> GetItemAsync<INFO>(Uri itemUri, Action<SyndicationItem, INFO> initAction)
+        private IAsyncOperation<INFO> GetItemAsync<INFO>(Uri itemUri, Action<SyndicationItem, INFO> initAction, params Type[] extraTypes)
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, itemUri);
 
             return Channel
                 .SendAsync(request)
-                .ContinueWith<INFO>(tr => { return GetItem<INFO>(tr.Result, initAction); }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<INFO>(tr => { return GetItem<INFO>(tr.Result, initAction, extraTypes); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<INFO>();
         }
 
@@ -506,8 +522,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <typeparam name="INFO">Type of the object to deserialize.</typeparam>
         /// <param name="response">Source HTTP response.</param>
         /// <param name="initAction">Initialization action for deserialized items.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Deserialized object.</returns>
-        private INFO GetItem<INFO>(HttpResponseMessage response, Action<SyndicationItem, INFO> initAction)
+        private INFO GetItem<INFO>(HttpResponseMessage response, Action<SyndicationItem, INFO> initAction, params Type[] extraTypes)
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(response.Content.ReadAsStringAsync().Result);
@@ -515,7 +532,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             SyndicationItem feedItem = new SyndicationItem();
             feedItem.LoadFromXml(doc);
 
-            return SerializationHelper.DeserializeItem<INFO>(feedItem, initAction);
+            return SerializationHelper.DeserializeItem<INFO>(feedItem, initAction, extraTypes);
         }
 
         /// <summary>
@@ -550,9 +567,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, itemUri);
 
             return Task.Factory
-                .StartNew(() => SetBody(request, itemSettings))
+                .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
                 .ContinueWith<HttpResponseMessage>(tr => { return Channel.SendAsync(request).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .ContinueWith<INFO>(tr => { return GetItem<INFO>(tr.Result, initAction); }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<INFO>(tr => { return GetItem<INFO>(tr.Result, initAction, ExtraRuleTypes); }, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<INFO>();
         }
 
@@ -561,9 +578,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="request">Target request.</param>
         /// <param name="bodyObject">Object to serialize.</param>
-        private void SetBody(HttpRequestMessage request, object bodyObject)
+        /// <param name="supportedTypes">Supported types.</param>
+        private void SetBody(HttpRequestMessage request, object bodyObject, params Type[] supportedTypes)
         {
-            string content = SerializationHelper.Serialize(bodyObject);
+            string content = SerializationHelper.Serialize(bodyObject, supportedTypes);
             request.Content = new StringContent(content, Encoding.UTF8, Constants.BodyContentType);
             request.Content.Headers.ContentType.Parameters.Add(new System.Net.Http.Headers.NameValueHeaderValue("type", "entry"));
         }

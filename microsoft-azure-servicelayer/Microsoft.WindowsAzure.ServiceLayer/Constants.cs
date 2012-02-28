@@ -39,13 +39,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string SubscriptionsPath             = "{0}/subscriptions/";                     // <topic>/subscriptions
         internal const string SubscriptionPath              = "{0}/subscriptions/{1}/";                 // <topic>/subscriptions/<subscription>
 
-        internal const string RulesPath                     = "topics/{0}/subscriptions/{1}/rules/";    // topics/<topic>/subscriptions/<subscription>/rules
-        internal const string RulePath                      = "topics/{0}/subscriptions/{1}/rules/{2}"; // topics/<topic>/subscriptions/<subscription>/rules/<rule>
+        internal const string RulesPath                     = "{0}/subscriptions/{1}/rules/";           // topics/<topic>/subscriptions/<subscription>/rules
+        internal const string RulePath                      = "{0}/subscriptions/{1}/rules/{2}";        // <topic>/subscriptions/<subscription>/rules/<rule>
 
         internal const string WrapTokenAuthenticationString = "WRAP access_token=\"{0}\"";
 
         internal const string SerializationContentType      = "application/xml";
         internal const string BodyContentType               = "application/atom+xml";
         internal const string WrapAuthenticationContentType = "application/x-www-form-urlencoded";
+
+        internal const int CompatibilityLevel               = 20;                                       // Compatibility level for rules
     }
 }

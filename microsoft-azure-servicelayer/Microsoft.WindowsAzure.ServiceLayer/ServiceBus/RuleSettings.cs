@@ -26,30 +26,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         public IRuleAction Action { get; private set; }
 
         /// <summary>
-        /// Constructor for a rule with an empty action.
-        /// </summary>
-        /// <param name="filter">Rule's filter.</param>
-        public RuleSettings(IRuleFilter filter)
-            : this(filter, new EmptyRuleAction())
-        {
-        }
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="filter">Rule's filter.</param>
         /// <param name="action">Rule's action.</param>
         public RuleSettings(IRuleFilter filter, IRuleAction action)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException("filter");
-            }
-            if (action == null)
-            {
-                throw new ArgumentNullException("action");
-            }
-
+            //TODO: verify that at least one is not null.
             Filter = filter;
             Action = action;
         }

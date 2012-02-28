@@ -12,6 +12,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// Rule description.
     /// </summary>
+    [DataContract(Namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name = "RuleDescription")]
     public sealed class RuleInfo
     {
         /// <summary>
@@ -29,11 +30,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets rule's filter.
         /// </summary>
+        [DataMember(Order = 0)]
         public IRuleFilter Filter { get; internal set; }
 
         /// <summary>
         /// Gets rule's action.
         /// </summary>
+        [DataMember(Order = 1)]
         public IRuleAction Action { get; internal set; }
 
         /// <summary>

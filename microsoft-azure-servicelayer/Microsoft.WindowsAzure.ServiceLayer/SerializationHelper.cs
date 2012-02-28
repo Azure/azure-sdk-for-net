@@ -37,11 +37,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <typeparam name="T">Type of result items in the collection.</typeparam>
         /// <param name="feed">Atom feed with serialized items.</param>
         /// <param name="itemAction">Additional action to perform on each item.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Collection of deserialized items.</returns>
-        static internal IEnumerable<T> DeserializeCollection<T>(SyndicationFeed feed, Action<SyndicationItem, T> itemAction)
+        internal static IEnumerable<T> DeserializeCollection<T>(SyndicationFeed feed, Action<SyndicationItem, T> itemAction, IEnumerable<Type> extraTypes)
         {
-            DataContractSerializer serializer = new DataContractSerializer(typeof(T));
-            return feed.Items.Select(item => DeserializeItem<T>(item, itemAction));
+            DataContractSerializer serializer = new DataContractSerializer(typeof(T), extraTypes);
+            return feed.Items.Select(item => DeserializeItem<T>(serializer, item, itemAction));
         }
 
         /// <summary>
@@ -50,10 +51,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <typeparam name="T">Target object type.</typeparam>
         /// <param name="item">Atom item to deserialize.</param>
         /// <param name="itemAction">Action to perform after deserialization.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Deserialized object.</returns>
-        static internal T DeserializeItem<T>(SyndicationItem item, Action<SyndicationItem, T> itemAction)
+        internal static T DeserializeItem<T>(SyndicationItem item, Action<SyndicationItem, T> itemAction, IEnumerable<Type> extraTypes)
         {
-            return DeserializeItem<T>(new DataContractSerializer(typeof(T)), item, itemAction);
+            return DeserializeItem<T>(new DataContractSerializer(typeof(T), extraTypes), item, itemAction);
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <param name="item">Atom item.</param>
         /// <param name="itemAction">Action to perform after deserialization.</param>
         /// <returns>Deserialized object.</returns>
-        static T DeserializeItem<T>(DataContractSerializer serializer, SyndicationItem item, Action<SyndicationItem, T> itemAction)
+        private static T DeserializeItem<T>(DataContractSerializer serializer, SyndicationItem item, Action<SyndicationItem, T> itemAction)
         {
             string serializedString = item.Content.Xml.GetXml();
 
@@ -82,15 +84,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// Serializes given object.
         /// </summary>
         /// <param name="item">Object to serialize.</param>
+        /// <param name="knownTypes">List of supported types</param>
         /// <returns>Serialized representation.</returns>
-        static internal string Serialize(object item)
+        internal static string Serialize(object item, params Type[] knownTypes)
         {
             // Serialize the content
             string itemXml;
 
             using (MemoryStream stream = new MemoryStream())
             {
-                DataContractSerializer serializer = new DataContractSerializer(item.GetType());
+                DataContractSerializer serializer = new DataContractSerializer(item.GetType(), knownTypes);
                 serializer.WriteObject(stream, item);
 
                 stream.Flush();

@@ -83,14 +83,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
         }
 
-        IServiceBusService Service { get; set; }
+        IServiceBusService Service { get { return Configuration.ServiceBus; } }
         IEqualityComparer<QueueInfo> QueueInfoComparer { get; set; }
         IEqualityComparer<TopicInfo> TopicInfoComparer { get; set; }
         IEqualityComparer<SubscriptionInfo> SubscriptionInfoComparer { get; set; }
 
         public ServiceBusManagementTests()
         {
-            Service = ServiceBusService.Create(Configuration.ServiceNamespace, Configuration.UserName, Configuration.Password);
             QueueInfoComparer = new InternalQueueInfoComparer();
             TopicInfoComparer = new InternalTopicInfoComparer();
             SubscriptionInfoComparer = new InternalSubscriptionInfoComparer();
@@ -115,6 +114,38 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
 
             return items;
+        }
+
+        void TestRule<FILTER>(Func<FILTER> createFilter, Func<FILTER, string> getContent) where FILTER : IRuleFilter
+        {
+            FILTER filter = createFilter();
+            string originalContent = getContent(filter);
+            string ruleName = "rule." + Guid.NewGuid().ToString();
+            RuleSettings settings = new RuleSettings(filter, null);
+            RuleInfo rule = Service.CreateRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName, settings)
+                .AsTask<RuleInfo>().Result;
+
+
+            Assert.True(rule.Action is EmptyRuleAction);
+            Assert.True(rule.Filter is FILTER);
+
+            string newContent = getContent((FILTER)rule.Filter);
+            Assert.True(string.Equals(originalContent, newContent, StringComparison.Ordinal));
+        }
+
+        void TestAction<ACTION>(Func<ACTION> createAction, Func<ACTION, string> getContent) where ACTION : IRuleAction
+        {
+            ACTION action = createAction();
+            string originalContent = getContent(action);
+            string ruleName = "rule." + Guid.NewGuid().ToString();
+            RuleSettings settings = new RuleSettings(new SqlRuleFilter("1=1"), action);
+            RuleInfo rule = Service.CreateRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName, settings)
+                .AsTask<RuleInfo>().Result;
+
+            Assert.True(rule.Action is ACTION);
+
+            string newContent = getContent((ACTION)rule.Action);
+            Assert.True(string.Equals(originalContent, newContent, StringComparison.Ordinal));
         }
 
         /// <summary>
@@ -499,6 +530,142 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             {
                 Service.DeleteQueueAsync(queueName).AsTask().Wait();
             }
+        }
+
+        /// <summary>
+        /// Tests null argument exceptions in rule methods.
+        /// </summary>
+        [Fact]
+        public void NullArgsInRules()
+        {
+            RuleSettings validSettings = new RuleSettings(new SqlRuleFilter("1=1"), null);
+            Assert.Throws<ArgumentNullException>(() => Service.CreateRuleAsync(null, "test", "test", validSettings));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateRuleAsync("test", null, "test", validSettings));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateRuleAsync("test", "test", null, validSettings));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateRuleAsync("test", "test", "test", null));
+
+            Assert.Throws<ArgumentNullException>(() => Service.ListRulesAsync(null, "test"));
+            Assert.Throws<ArgumentNullException>(() => Service.ListRulesAsync("test", null));
+
+            Assert.Throws<ArgumentNullException>(() => Service.GetRuleAsync(null, "test", "test"));
+            Assert.Throws<ArgumentNullException>(() => Service.GetRuleAsync("test", null, "test"));
+            Assert.Throws<ArgumentNullException>(() => Service.GetRuleAsync("test", "test", null));
+
+            Assert.Throws<ArgumentNullException>(() => Service.DeleteRuleAsync(null, "test", "test"));
+            Assert.Throws<ArgumentNullException>(() => Service.DeleteRuleAsync("test", null, "test"));
+            Assert.Throws<ArgumentNullException>(() => Service.DeleteRuleAsync("test", "test", null));
+
+            Assert.Throws<ArgumentNullException>(() => new SqlRuleFilter(null));
+            Assert.Throws<ArgumentNullException>(() => new TrueRuleFilter(null));
+            Assert.Throws<ArgumentNullException>(() => new FalseRuleFilter(null));
+
+            Assert.Throws<ArgumentNullException>(() => new SqlRuleAction(null));
+        }
+
+        /// <summary>
+        /// Tests SQL rule filters.
+        /// </summary>
+        [Fact]
+        [TestSubscription]
+        public void SqlRuleFilter()
+        {
+            TestRule<SqlRuleFilter>(
+                () => { return new SqlRuleFilter("1=1"); },
+                (rf) => { return rf.Expression; });
+        }
+
+        /// <summary>
+        /// Tests true rule filters.
+        /// </summary>
+        [Fact]
+        [TestSubscription]
+        public void TrueRuleFilter()
+        {
+            TestRule<TrueRuleFilter>(
+                () => { return new TrueRuleFilter("1=1"); },
+                (rf) => { return rf.Expression; });
+        }
+
+        /// <summary>
+        /// Tests false rule filters.
+        /// </summary>
+        [Fact]
+        [TestSubscription]
+        public void FalseRuleFilter()
+        {
+            TestRule<FalseRuleFilter>(
+                () => { return new FalseRuleFilter("1=1"); },
+                (rf) => { return rf.Expression; });
+        }
+
+        /// <summary>
+        /// Tests correlation rule filters.
+        /// </summary>
+        [Fact]
+        [TestSubscription]
+        public void CorrelationRuleFilter()
+        {
+            TestRule<CorrelationRuleFilter>(
+                () => { return new CorrelationRuleFilter("abc"); },
+                (rf) => { return rf.CorrelationId; });
+        }
+
+        /// <summary>
+        /// Tests empty rule action.
+        /// </summary>
+        [Fact]
+        [TestSubscription]
+        public void EmptyRuleAction()
+        {
+            TestAction<EmptyRuleAction>(() => new EmptyRuleAction(), (a) => { return string.Empty; });
+        }
+
+        /// <summary>
+        /// Tests SQL rule action.
+        /// </summary>
+        [Fact]
+        [TestSubscription]
+        public void SqlRuleAction()
+        {
+            TestAction<SqlRuleAction>(() => new SqlRuleAction("set x=y"), (a) => { return a.Action; });
+        }
+
+        /// <summary>
+        /// Tests complete lifecycle of a rule.
+        /// </summary>
+        [Fact]
+        [TestSubscription]
+        public void RuleLifecycle()
+        {
+            // Create rule.
+            SqlRuleFilter filter = new ServiceBus.SqlRuleFilter("1=1");
+            RuleSettings settings = new RuleSettings(filter, null);
+            string ruleName = "testrule." + Guid.NewGuid().ToString();
+            RuleInfo rule = Service.CreateRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName, settings)
+                .AsTask<RuleInfo>().Result;
+
+            Assert.True(string.Equals(ruleName, rule.Name, StringComparison.OrdinalIgnoreCase));
+
+            // Read the rule
+            RuleInfo savedRule = Service.GetRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName)
+                .AsTask<RuleInfo>().Result;
+            Assert.True(string.Equals(ruleName, savedRule.Name, StringComparison.OrdinalIgnoreCase));
+            Assert.True(savedRule.Action is EmptyRuleAction);
+            Assert.True(savedRule.Filter is SqlRuleFilter);
+            Assert.True(string.Equals(((SqlRuleFilter)savedRule.Filter).Expression, filter.Expression, StringComparison.Ordinal));
+
+            // Read from the list.
+            Dictionary<string, RuleInfo> allRules = GetItems<RuleInfo>(
+                () => { return Service.ListRulesAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName); },
+                (r) => { return r.Name; });
+            Assert.True(allRules.ContainsKey(ruleName));
+
+            // Delete the rule.
+            Service.DeleteRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName).AsTask().Wait();
+            allRules = GetItems<RuleInfo>(
+                () => { return Service.ListRulesAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName); },
+                (r) => { return r.Name; });
+            Assert.False(allRules.ContainsKey(ruleName));
         }
     }
 }

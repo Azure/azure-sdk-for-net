@@ -10,14 +10,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// SQL-based rule filter.
     /// </summary>
-    [DataContract(Namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")]
+    [DataContract(Namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name="SqlFilter")]
     public sealed class SqlRuleFilter: IRuleFilter, ISqlRuleFilter
     {
         /// <summary>
         /// SQL filter expression.
         /// </summary>
-        [DataMember(Name="SqlExpression")]
+        [DataMember(Order = 0, Name="SqlExpression")]
         public string Expression { get; private set; }
+
+        /// <summary>
+        /// Compatibility level.
+        /// </summary>
+        [DataMember(Order = 1)]
+        public int CompatibilityLevel { get; private set; }
 
         /// <summary>
         /// Constructor.
@@ -29,8 +35,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("expression");
             }
-
             Expression = expression;
+            CompatibilityLevel = Constants.CompatibilityLevel;
         }
     }
 }
