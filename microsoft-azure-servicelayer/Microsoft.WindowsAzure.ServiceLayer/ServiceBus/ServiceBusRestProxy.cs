@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +31,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     internal class ServiceBusRestProxy: IServiceBusService
     {
+        // Extra types used for serialization operations with rules.
+        private static readonly Type[] ExtraRuleTypes = 
+        {
+            typeof(CorrelationRuleFilter),
+            typeof(FalseRuleFilter),
+            typeof(SqlRuleFilter),
+            typeof(TrueRuleFilter),
+            typeof(EmptyRuleAction),
+            typeof(SqlRuleAction),
+        };
+
         /// <summary>
         /// Gets the service options.
         /// </summary>
@@ -52,8 +62,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Debug.Assert(serviceOptions != null);
 
             ServiceConfig = serviceOptions;
-            HttpMessageHandler chain = new HttpErrorHandler(
-                new WrapAuthenticationHandler(serviceOptions));
+
+            HttpMessageHandler chain = new WrapAuthenticationHandler(serviceOptions);
             Channel = new HttpClient(chain);
         }
 
@@ -63,13 +73,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>All queues in the namespace.</returns>
         IAsyncOperation<IEnumerable<QueueInfo>> IServiceBusService.ListQueuesAsync()
         {
-            Uri uri = new Uri(ServiceConfig.ServiceBusUri, "$Resources/Queues");
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
-
-            return Channel
-                .SendAsync(request)
-                .ContinueWith<IEnumerable<QueueInfo>>(r => { return GetQueues(r.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation<IEnumerable<QueueInfo>>();
+            return GetItemsAsync<QueueInfo>(
+                ServiceConfig.GetQueuesContainerUri(), 
+                InitQueue);
         }
 
         /// <summary>
@@ -84,13 +90,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("queueName");
             }
 
-            Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
-
-            return Channel
-                .SendAsync(request)
-                .ContinueWith<QueueInfo>(r => { return GetQueue(r.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation<QueueInfo>();
+            return GetItemAsync<QueueInfo>(
+                ServiceConfig.GetQueueUri(queueName),
+                InitQueue);
         }
 
         /// <summary>
@@ -105,12 +107,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("queueName");
             }
 
-            Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
-
-            return Channel
-                .SendAsync(request)
-                .AsAsyncAction();
+            return DeleteItemAsync(
+                ServiceConfig.GetQueueUri(queueName));
         }
 
         /// <summary>
@@ -125,7 +123,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("queueName");
             }
 
-            return CreateQueueAsync(queueName, new QueueSettings());
+            return CreateItemAsync<QueueInfo, QueueSettings>(
+                ServiceConfig.GetQueueUri(queueName),
+                new QueueSettings(),
+                InitQueue);
         }
 
         /// <summary>
@@ -145,55 +146,424 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("queueSettings");
             }
 
-            return CreateQueueAsync(queueName, queueSettings);
+            return CreateItemAsync<QueueInfo, QueueSettings>(
+                ServiceConfig.GetQueueUri(queueName),
+                queueSettings,
+                InitQueue);
         }
 
         /// <summary>
-        /// Extracts queues from the given HTTP response.
+        /// Lists all topics in the namespace.
         /// </summary>
-        /// <param name="response">HTTP response.</param>
-        /// <returns>Collection of queues.</returns>
-        private IEnumerable<QueueInfo> GetQueues(HttpResponseMessage response)
+        /// <returns>A collection of topics.</returns>
+        IAsyncOperation<IEnumerable<TopicInfo>> IServiceBusService.ListTopicsAsync()
+        {
+            return GetItemsAsync<TopicInfo>(
+                ServiceConfig.GetTopicsContainerUri(),
+                InitTopic);
+        }
+
+        /// <summary>
+        /// Creates a topic with the given name and default settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <returns>Created topic.</returns>
+        IAsyncOperation<TopicInfo> IServiceBusService.CreateTopicAsync(string topicName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            return CreateItemAsync<TopicInfo, TopicSettings>(
+                ServiceConfig.GetTopicUri(topicName),
+                new TopicSettings(), 
+                InitTopic);
+        }
+
+        /// <summary>
+        /// Creates a topic with the given name and settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="topicSettings">Topic settings.</param>
+        /// <returns>Created topic.</returns>
+        IAsyncOperation<TopicInfo> IServiceBusService.CreateTopicAsync(string topicName, TopicSettings topicSettings)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (topicSettings == null)
+            {
+                throw new ArgumentNullException("topicSettings");
+            }
+
+            return CreateItemAsync<TopicInfo, TopicSettings>(
+                ServiceConfig.GetTopicUri(topicName),
+                topicSettings,
+                InitTopic);
+        }
+
+        /// <summary>
+        /// Gets a topic with the given name.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <returns>Topic information.</returns>
+        IAsyncOperation<TopicInfo> IServiceBusService.GetTopicAsync(string topicName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+
+            return GetItemAsync<TopicInfo>(
+                ServiceConfig.GetTopicUri(topicName),
+                InitTopic);
+        }
+
+        /// <summary>
+        /// Deletes a topic with the given name.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <returns>Deletion result.</returns>
+        IAsyncAction IServiceBusService.DeleteTopicAsync(string topicName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+
+            return DeleteItemAsync(
+                ServiceConfig.GetTopicUri(topicName));
+        }
+
+        /// <summary>
+        /// Creates a subscription with the given name for the given topic and 
+        /// default settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Created subscription.</returns>
+        IAsyncOperation<SubscriptionInfo> IServiceBusService.CreateSubscriptionAsync(string topicName, string subscriptionName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
+                ServiceConfig.GetSubscriptionUri(topicName, subscriptionName),
+                new SubscriptionSettings(), 
+                InitSubscription);
+        }
+
+        /// <summary>
+        /// Creates a subscription with the given name for the given topic with
+        /// the specified settings.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <param name="subscriptionSettings">Subscription settings.</param>
+        /// <returns>Created subscription.</returns>
+        IAsyncOperation<SubscriptionInfo> IServiceBusService.CreateSubscriptionAsync(
+            string topicName, 
+            string subscriptionName, 
+            SubscriptionSettings subscriptionSettings)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            if (subscriptionSettings == null)
+            { 
+                throw new ArgumentNullException("subscriptionSettings");
+            }
+            return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
+                ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
+                subscriptionSettings, 
+                InitSubscription);
+        }
+
+        /// <summary>
+        /// Gets all subscriptions for the given topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <returns>Collection of subscriptions.</returns>
+        IAsyncOperation<IEnumerable<SubscriptionInfo>> IServiceBusService.ListSubscriptionsAsync(string topicName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            return GetItemsAsync<SubscriptionInfo>(
+                ServiceConfig.GetSubscriptionsContainerUri(topicName), 
+                InitSubscription);
+        }
+
+        /// <summary>
+        /// Gets a subscription with the given name for the given topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Subscription information.</returns>
+        IAsyncOperation<SubscriptionInfo> IServiceBusService.GetSubscriptionAsync(string topicName, string subscriptionName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            return GetItemAsync<SubscriptionInfo>(
+                ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
+                InitSubscription);
+        }
+
+        /// <summary>
+        /// Deletes a subscription with the given name from the given topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction IServiceBusService.DeleteSubscriptionAsync(string topicName, string subscriptionName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            return DeleteItemAsync(
+                ServiceConfig.GetSubscriptionUri(topicName, subscriptionName));
+        }
+
+        /// <summary>
+        /// Creates a rule.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <param name="ruleName">Name of the rule to be created.</param>
+        /// <param name="ruleSettings">Rule's settings.</param>
+        /// <returns></returns>
+        IAsyncOperation<RuleInfo> IServiceBusService.CreateRuleAsync(string topicName, string subscriptionName, string ruleName, RuleSettings ruleSettings)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+
+                throw new ArgumentNullException("subscriptionName");
+            }
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException("ruleName");
+            }
+            if (ruleSettings == null)
+            {
+                throw new ArgumentNullException("ruleSettings");
+            }
+            return CreateItemAsync<RuleInfo, RuleSettings>(
+                ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName),
+                ruleSettings,
+                InitRule);
+        }
+
+        /// <summary>
+        /// Lists all rules in the given subscription.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <returns>A collection of rules.</returns>
+        IAsyncOperation<IEnumerable<RuleInfo>> IServiceBusService.ListRulesAsync(string topicName, string subscriptionName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+
+                throw new ArgumentNullException("subscriptionName");
+            }
+            return GetItemsAsync<RuleInfo>(
+                ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
+                InitRule,
+                ExtraRuleTypes);
+        }
+
+        /// <summary>
+        /// Gets a subscription rule with the given name.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription.</param>
+        /// <param name="ruleName">Name of the rule.</param>
+        /// <returns>Rule information.</returns>
+        IAsyncOperation<RuleInfo> IServiceBusService.GetRuleAsync(string topicName, string subscriptionName, string ruleName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException("ruleName");
+            }
+
+            return GetItemAsync<RuleInfo>(
+                ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName),
+                InitRule,
+                ExtraRuleTypes);
+        }
+
+        /// <summary>
+        /// Deletes a rule with the given name.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription.</param>
+        /// <param name="ruleName">Name of the rule.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction IServiceBusService.DeleteRuleAsync(string topicName, string subscriptionName, string ruleName)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+
+                throw new ArgumentNullException("subscriptionName");
+            }
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException("ruleName");
+            }
+            return DeleteItemAsync(
+                ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName));
+        }
+
+        /// <summary>
+        /// Gets service bus items of the given type.
+        /// </summary>
+        /// <typeparam name="TInfo">Item type.</typeparam>
+        /// <param name="containerUri">URI of a container with items.</param>
+        /// <param name="initAction">Initialization action for a single item.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
+        /// <returns>A collection of items.</returns>
+        private IAsyncOperation<IEnumerable<TInfo>> GetItemsAsync<TInfo>(Uri containerUri, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
+        {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, containerUri);
+
+            return SendAsync(request)
+                .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation<IEnumerable<TInfo>>();
+        }
+
+        /// <summary>
+        /// Deserializes collection of items of the given type from an atom 
+        /// feed contained in the specified response.
+        /// </summary>
+        /// <typeparam name="TInfo">Item type.</typeparam>
+        /// <param name="response">Source HTTP response.</param>
+        /// <param name="initAction">Initialization action.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
+        /// <returns>Collection of deserialized items.</returns>
+        private IEnumerable<TInfo> GetItems<TInfo>(HttpResponseMessage response, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
             Debug.Assert(response.IsSuccessStatusCode);
             SyndicationFeed feed = new SyndicationFeed();
             feed.Load(response.Content.ReadAsStringAsync().Result);
 
-            return SerializationHelper.DeserializeCollection<QueueInfo>(feed, (item, queue) => queue.Initialize(item));
+            return SerializationHelper.DeserializeCollection<TInfo>(feed, initAction, extraTypes);
         }
 
         /// <summary>
-        /// Extracts a single queue from the given response.
+        /// Obtains a service bus item of the given name and type.
         /// </summary>
-        /// <param name="response">HTTP response.</param>
-        /// <returns>Queue data.</returns>
-        private QueueInfo GetQueue(HttpResponseMessage response)
+        /// <typeparam name="TInfo">Item type</typeparam>
+        /// <param name="itemUri">URI of the item.</param>
+        /// <param name="initAction">Initialization action for the deserialized item.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
+        /// <returns>Item data</returns>
+        private IAsyncOperation<TInfo> GetItemAsync<TInfo>(Uri itemUri, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, itemUri);
+
+            return SendAsync(request)
+                .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation<TInfo>();
+        }
+
+        /// <summary>
+        /// Deserializes a service bus item of the specified type from the 
+        /// given HTTP response.
+        /// </summary>
+        /// <typeparam name="TInfo">Type of the object to deserialize.</typeparam>
+        /// <param name="response">Source HTTP response.</param>
+        /// <param name="initAction">Initialization action for deserialized items.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
+        /// <returns>Deserialized object.</returns>
+        private TInfo GetItem<TInfo>(HttpResponseMessage response, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
+        {
+            Debug.Assert(response.IsSuccessStatusCode);
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(response.Content.ReadAsStringAsync().Result);
 
             SyndicationItem feedItem = new SyndicationItem();
             feedItem.LoadFromXml(doc);
-            return SerializationHelper.DeserializeItem<QueueInfo>(feedItem, (item, queue) => queue.Initialize(item));
+
+            return SerializationHelper.DeserializeItem<TInfo>(feedItem, initAction, extraTypes);
         }
 
         /// <summary>
-        /// Creates a queue with the given parameters.
+        /// Deletes given item.
         /// </summary>
-        /// <param name="queueName">Name of the queue.</param>
-        /// <param name="queueSettings">Parameters of the queue.</param>
-        /// <returns>Created queue.</returns>
-        IAsyncOperation<QueueInfo> CreateQueueAsync(string queueName, QueueSettings queueSettings)
+        /// <param name="itemUri">URI of the item.</param>
+        /// <returns>Deletion result.</returns>
+        private IAsyncAction DeleteItemAsync(Uri itemUri)
         {
-            Uri uri = new Uri(ServiceConfig.ServiceBusUri, queueName);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, itemUri);
+
+            return SendAsync(request)
+                .AsAsyncAction();
+        }
+
+        /// <summary>
+        /// Creates a service bus object with the given name and parameters.
+        /// </summary>
+        /// <typeparam name="TInfo">Service bus object type (queue, topic, etc.).</typeparam>
+        /// <typeparam name="TSettings">Settings for the given object type.</typeparam>
+        /// <param name="itemUri">URI of the item.</param>
+        /// <param name="itemSettings">Settings of the object.</param>
+        /// <param name="initAction">Initialization action</param>
+        /// <returns>Created object.</returns>
+        private IAsyncOperation<TInfo> CreateItemAsync<TInfo, TSettings>(
+            Uri itemUri, 
+            TSettings itemSettings, 
+            Action<SyndicationItem, TInfo> initAction) where TSettings: class
+        {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, itemUri);
 
             return Task.Factory
-                .StartNew(() => SetBody(request, queueSettings))
-                .ContinueWith<HttpResponseMessage>(tr => { return Channel.SendAsync(request).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .ContinueWith<QueueInfo>(tr => { return GetQueue(tr.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation<QueueInfo>();
-
+                .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
+                .ContinueWith<HttpResponseMessage>(tr => SendAsync(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, ExtraRuleTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation<TInfo>();
         }
 
         /// <summary>
@@ -201,11 +571,78 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="request">Target request.</param>
         /// <param name="bodyObject">Object to serialize.</param>
-        private void SetBody(HttpRequestMessage request, object bodyObject)
+        /// <param name="supportedTypes">Supported types.</param>
+        private void SetBody(HttpRequestMessage request, object bodyObject, params Type[] supportedTypes)
         {
-            string content = SerializationHelper.Serialize(bodyObject);
+            string content = SerializationHelper.Serialize(bodyObject, supportedTypes);
             request.Content = new StringContent(content, Encoding.UTF8, Constants.BodyContentType);
             request.Content.Headers.ContentType.Parameters.Add(new System.Net.Http.Headers.NameValueHeaderValue("type", "entry"));
+        }
+
+        /// <summary>
+        /// Initializes a topic after its deserialization.
+        /// </summary>
+        /// <param name="feedItem">Source Atom item.</param>
+        /// <param name="topicInfo">Deserialized topic.</param>
+        private static void InitTopic(SyndicationItem feedItem, TopicInfo topicInfo)
+        {
+            topicInfo.Initialize(feedItem);
+        }
+
+        /// <summary>
+        /// Initializes a queue after its deserialization.
+        /// </summary>
+        /// <param name="feedItem">Source Atom item.</param>
+        /// <param name="queueInfo">Deserialized queue.</param>
+        private static void InitQueue(SyndicationItem feedItem, QueueInfo queueInfo)
+        {
+            queueInfo.Initialize(feedItem);
+        }
+
+        /// <summary>
+        /// Initializes a subscription after its deserialization.
+        /// </summary>
+        /// <param name="feedItem">Source Atom item.</param>
+        /// <param name="subscriptionInfo">Deserialized subscription.</param>
+        private static void InitSubscription(SyndicationItem feedItem, SubscriptionInfo subscriptionInfo)
+        {
+            subscriptionInfo.Initialize(feedItem);
+        }
+
+        /// <summary>
+        /// Initializes a rule after its deserialization.
+        /// </summary>
+        /// <param name="feedItem">Source Atom item.</param>
+        /// <param name="ruleInfo">Deserialized rule.</param>
+        private static void InitRule(SyndicationItem feedItem, RuleInfo ruleInfo)
+        {
+            ruleInfo.Initialize(feedItem);
+        }
+
+        /// <summary>
+        /// Detects errors in HTTP responses and translates them into exceptios.
+        /// </summary>
+        /// <param name="response">Source HTTP response.</param>
+        /// <returns>Processed HTTP response.</returns>
+        private HttpResponseMessage CheckResponse(HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                //TODO: pass status, etc. into the exception.
+                throw new WindowsAzureServiceException();
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Asynchronously sends the request.
+        /// </summary>
+        /// <param name="request">Request to send.</param>
+        /// <returns>HTTP response.</returns>
+        private Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        {
+            return Channel.SendAsync(request)
+                .ContinueWith<HttpResponseMessage>((task) => CheckResponse(task.Result), TaskContinuationOptions.OnlyOnRanToCompletion);
         }
     }
 }

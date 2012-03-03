@@ -78,5 +78,100 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusScopeUri, ServiceNamespace);
             ScopeHostUri = new Uri(stringUri);
         }
+
+        /// <summary>
+        /// Gets URI for a queue.
+        /// </summary>
+        /// <param name="queueName">Name of the queue.</param>
+        /// <returns>Queue's URI.</returns>
+        internal Uri GetQueueUri(string queueName)
+        {
+            return FormatUri(Constants.QueuePath, queueName);
+        }
+
+        /// <summary>
+        /// Gets URI of a container with all queues.
+        /// </summary>
+        /// <returns>URI of the container with all queues.</returns>
+        internal Uri GetQueuesContainerUri()
+        {
+            return FormatUri(Constants.QueuesPath);
+        }
+
+
+        /// <summary>
+        /// Gets URI for a topic.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <returns>Topic's URI.</returns>
+        internal Uri GetTopicUri(string topicName)
+        {
+            return FormatUri(Constants.TopicPath, topicName);
+        }
+
+        /// <summary>
+        /// Gets URI of a container with all topics.
+        /// </summary>
+        /// <returns>URI of the container with all topics.</returns>
+        internal Uri GetTopicsContainerUri()
+        {
+            return FormatUri(Constants.TopicsPath);
+        }
+
+        /// <summary>
+        /// Gets a URI for a subscription.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <returns>Subscription's URI.</returns>
+        internal Uri GetSubscriptionUri(string topicName, string subscriptionName)
+        {
+            return FormatUri(Constants.SubscriptionPath, topicName, subscriptionName);
+        }
+
+        /// <summary>
+        /// Gets a URI of a container with all subscriptions for the topic.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <returns>URI of the container with all subscriptions.</returns>
+        internal Uri GetSubscriptionsContainerUri(string topicName)
+        {
+            return FormatUri(Constants.SubscriptionsPath, topicName);
+        }
+
+        /// <summary>
+        /// Gets a URI for a rule.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <param name="ruleName">Name of the rule.</param>
+        /// <returns>Rule's URI.</returns>
+        internal Uri GetRuleUri(string topicName, string subscriptionName, string ruleName)
+        {
+            return FormatUri(Constants.RulePath, topicName, subscriptionName, ruleName);
+        }
+
+        /// <summary>
+        /// Gets a URI of a container with all rules.
+        /// </summary>
+        /// <param name="topicName">Name of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
+        /// <returns>Uri of the container with all rules.</returns>
+        internal Uri GetRulesContainerUri(string topicName, string subscriptionName)
+        {
+            return FormatUri(Constants.RulesPath, topicName, subscriptionName);
+        }
+
+        /// <summary>
+        /// Generates URI with the given parameters.
+        /// </summary>
+        /// <param name="format">Format string for the path.</param>
+        /// <param name="args">Optional arguments for formatting.</param>
+        /// <returns>URI.</returns>
+        private Uri FormatUri(string format, params object[] args)
+        {
+            string path = string.Format(CultureInfo.InvariantCulture, format, args);
+            return new Uri(ServiceBusUri, path);
+        }
     }
 }
