@@ -37,8 +37,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Specifies the maximum topic size in megabytes.
         /// </summary>
-        [DataMember(Order = 1)]
-        public int? MaxSizeInMegabytes { get; set; }
+        [DataMember(Order = 1, Name = "MaxSizeInMegabytes")]
+        public int? MaximumSizeInMegabytes { get; set; }
 
         /// <summary>
         /// If enabled, the topic will detect duplicate messages within the 

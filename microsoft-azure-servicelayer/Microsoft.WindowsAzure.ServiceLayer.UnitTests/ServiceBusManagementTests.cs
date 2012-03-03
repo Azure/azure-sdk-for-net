@@ -23,17 +23,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         {
             bool IEqualityComparer<QueueInfo>.Equals(QueueInfo x, QueueInfo y)
             {
-                return x.DefaultMessageTimeToLive == y.DefaultMessageTimeToLive
-                    && x.DuplicateDetectionHistoryTimeWindow == y.DuplicateDetectionHistoryTimeWindow
-                    && x.EnableBatchedOperations == y.EnableBatchedOperations
-                    && x.EnableDeadLetteringOnMessageExpiration == y.EnableDeadLetteringOnMessageExpiration
-                    && x.LockDuration == y.LockDuration
-                    && x.MaxDeliveryCount == y.MaxDeliveryCount
-                    && x.MaxSizeInMegabytes == y.MaxSizeInMegabytes
-                    && x.MessageCount == y.MessageCount
-                    && x.RequiresDuplicateDetection == y.RequiresDuplicateDetection
-                    && x.RequiresSession == y.RequiresSession
-                    && x.SizeInBytes == y.SizeInBytes;
+                return x.DefaultMessageTimeToLive == y.DefaultMessageTimeToLive &&
+                    x.DuplicateDetectionHistoryTimeWindow == y.DuplicateDetectionHistoryTimeWindow && 
+                    x.EnableBatchedOperations == y.EnableBatchedOperations &&
+                    x.EnableDeadLetteringOnMessageExpiration == y.EnableDeadLetteringOnMessageExpiration &&
+                    x.LockDuration == y.LockDuration &&
+                    x.MaximumDeliveryCount == y.MaximumDeliveryCount &&
+                    x.MaximumSizeInMegabytes == y.MaximumSizeInMegabytes &&
+                    x.MessageCount == y.MessageCount &&
+                    x.RequiresDuplicateDetection == y.RequiresDuplicateDetection &&
+                    x.RequiresSession == y.RequiresSession &&
+                    x.SizeInBytes == y.SizeInBytes;
             }
 
             int IEqualityComparer<QueueInfo>.GetHashCode(QueueInfo obj)
@@ -49,12 +49,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         {
             bool IEqualityComparer<TopicInfo>.Equals(TopicInfo x, TopicInfo y)
             {
-                return x.DefaultMessageTimeToLive == y.DefaultMessageTimeToLive
-                    && x.DuplicateDetectionHistoryTimeWindow == y.DuplicateDetectionHistoryTimeWindow
-                    && x.EnableBatchedOperations == y.EnableBatchedOperations
-                    && x.MaxSizeInMegabytes == y.MaxSizeInMegabytes
-                    && x.RequiresDuplicateDetection == y.RequiresDuplicateDetection
-                    && x.SizeInBytes == y.SizeInBytes;
+                return x.DefaultMessageTimeToLive == y.DefaultMessageTimeToLive &&
+                    x.DuplicateDetectionHistoryTimeWindow == y.DuplicateDetectionHistoryTimeWindow &&
+                    x.EnableBatchedOperations == y.EnableBatchedOperations &&
+                    x.MaximumSizeInMegabytes == y.MaximumSizeInMegabytes &&
+                    x.RequiresDuplicateDetection == y.RequiresDuplicateDetection &&
+                    x.SizeInBytes == y.SizeInBytes;
             }
 
             int IEqualityComparer<TopicInfo>.GetHashCode(TopicInfo obj)
@@ -71,10 +71,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             bool IEqualityComparer<SubscriptionInfo>.Equals(SubscriptionInfo x, SubscriptionInfo y)
             {
                 return
-                    x.LockDuration == y.LockDuration
-                    && x.MaxDeliveryCount == y.MaxDeliveryCount
-                    && x.MessageCount == y.MessageCount
-                    && x.RequiresSession == y.RequiresSession;
+                    x.LockDuration == y.LockDuration &&
+                    x.MaximumDeliveryCount == y.MaximumDeliveryCount &&
+                    x.MessageCount == y.MessageCount &&
+                    x.RequiresSession == y.RequiresSession;
             }
 
             int IEqualityComparer<SubscriptionInfo>.GetHashCode(SubscriptionInfo obj)
@@ -96,12 +96,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         }
 
 
-        string GetUniqueEntityName()
+        private string GetUniqueEntityName()
         {
             return string.Format("UnitTests.{0}", Guid.NewGuid().ToString());
         }
 
-        Dictionary<string, T> GetItems<T>(
+        private Dictionary<string, T> GetItems<T>(
             Func<IAsyncOperation<IEnumerable<T>>> getItems,
             Func<T, string> getName)
         {
@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             return items;
         }
 
-        void TestRule<FILTER>(Func<FILTER> createFilter, Func<FILTER, string> getContent) where FILTER : IRuleFilter
+        private void TestRule<FILTER>(Func<FILTER> createFilter, Func<FILTER, string> getContent) where FILTER : IRuleFilter
         {
             FILTER filter = createFilter();
             string originalContent = getContent(filter);
@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.True(string.Equals(originalContent, newContent, StringComparison.Ordinal));
         }
 
-        void TestAction<ACTION>(Func<ACTION> createAction, Func<ACTION, string> getContent) where ACTION : IRuleAction
+        private void TestAction<ACTION>(Func<ACTION> createAction, Func<ACTION, string> getContent) where ACTION : IRuleAction
         {
             ACTION action = createAction();
             string originalContent = getContent(action);
@@ -142,7 +142,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             RuleInfo rule = Service.CreateRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName, settings)
                 .AsTask<RuleInfo>().Result;
 
-            Assert.True(rule.Action is ACTION);
+            Assert.IsType<ACTION>(rule.Action);
 
             string newContent = getContent((ACTION)rule.Action);
             Assert.True(string.Equals(originalContent, newContent, StringComparison.Ordinal));
@@ -244,8 +244,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             settings.EnableBatchedOperations = false;
             settings.EnableDeadLetteringOnMessageExpiration = true;
             settings.LockDuration = TimeSpan.FromMinutes(3);
-            settings.MaxDeliveryCount = 5;
-            settings.MaxSizeInMegabytes = 2048;
+            settings.MaximumDeliveryCount = 5;
+            settings.MaximumSizeInMegabytes = 2048;
             settings.RequiresDuplicateDetection = true;
             settings.RequiresSession = true;
 
@@ -255,8 +255,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.Equal(queueInfo.EnableBatchedOperations, settings.EnableBatchedOperations.Value);
             Assert.Equal(queueInfo.EnableDeadLetteringOnMessageExpiration, settings.EnableDeadLetteringOnMessageExpiration.Value);
             Assert.Equal(queueInfo.LockDuration, settings.LockDuration.Value);
-            Assert.Equal(queueInfo.MaxDeliveryCount, settings.MaxDeliveryCount.Value);
-            Assert.Equal(queueInfo.MaxSizeInMegabytes, settings.MaxSizeInMegabytes.Value);
+            Assert.Equal(queueInfo.MaximumDeliveryCount, settings.MaximumDeliveryCount.Value);
+            Assert.Equal(queueInfo.MaximumSizeInMegabytes, settings.MaximumSizeInMegabytes.Value);
             Assert.Equal(queueInfo.RequiresDuplicateDetection, settings.RequiresDuplicateDetection.Value);
             Assert.Equal(queueInfo.RequiresSession, settings.RequiresSession.Value);
         }
@@ -354,14 +354,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             settings.DefaultMessageTimeToLive = TimeSpan.FromHours(24);
             settings.DuplicateDetectionHistoryTimeWindow = TimeSpan.FromDays(2);
             settings.EnableBatchedOperations = false;
-            settings.MaxSizeInMegabytes = 2048;
+            settings.MaximumSizeInMegabytes = 2048;
             settings.RequiresDuplicateDetection = true;
 
             TopicInfo topic = Service.CreateTopicAsync(topicName, settings).AsTask<TopicInfo>().Result;
             Assert.Equal(settings.DefaultMessageTimeToLive.Value, topic.DefaultMessageTimeToLive);
             Assert.Equal(settings.DuplicateDetectionHistoryTimeWindow.Value, topic.DuplicateDetectionHistoryTimeWindow);
             Assert.Equal(settings.EnableBatchedOperations.Value, topic.EnableBatchedOperations);
-            Assert.Equal(settings.MaxSizeInMegabytes.Value, topic.MaxSizeInMegabytes);
+            Assert.Equal(settings.MaximumSizeInMegabytes.Value, topic.MaximumSizeInMegabytes);
             Assert.Equal(settings.RequiresDuplicateDetection.Value, topic.RequiresDuplicateDetection);
         }
 

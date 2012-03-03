@@ -16,8 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +32,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     internal class ServiceBusRestProxy: IServiceBusService
     {
         // Extra types used for serialization operations with rules.
-        private readonly Type[] ExtraRuleTypes = 
+        private static readonly Type[] ExtraRuleTypes = 
         {
             typeof(CorrelationRuleFilter),
             typeof(FalseRuleFilter),
@@ -462,65 +460,65 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets service bus items of the given type.
         /// </summary>
-        /// <typeparam name="INFO">Item type.</typeparam>
+        /// <typeparam name="TInfo">Item type.</typeparam>
         /// <param name="containerUri">URI of a container with items.</param>
         /// <param name="initAction">Initialization action for a single item.</param>
         /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>A collection of items.</returns>
-        private IAsyncOperation<IEnumerable<INFO>> GetItemsAsync<INFO>(Uri containerUri, Action<SyndicationItem, INFO> initAction, params Type[] extraTypes)
+        private IAsyncOperation<IEnumerable<TInfo>> GetItemsAsync<TInfo>(Uri containerUri, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, containerUri);
 
             return SendAsync(request)
-                .ContinueWith<IEnumerable<INFO>>(r => { return GetItems<INFO>(r.Result, initAction, extraTypes); }, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation<IEnumerable<INFO>>();
+                .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation<IEnumerable<TInfo>>();
         }
 
         /// <summary>
         /// Deserializes collection of items of the given type from an atom 
         /// feed contained in the specified response.
         /// </summary>
-        /// <typeparam name="INFO">Item type.</typeparam>
+        /// <typeparam name="TInfo">Item type.</typeparam>
         /// <param name="response">Source HTTP response.</param>
         /// <param name="initAction">Initialization action.</param>
         /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Collection of deserialized items.</returns>
-        private IEnumerable<INFO> GetItems<INFO>(HttpResponseMessage response, Action<SyndicationItem, INFO> initAction, params Type[] extraTypes)
+        private IEnumerable<TInfo> GetItems<TInfo>(HttpResponseMessage response, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
             Debug.Assert(response.IsSuccessStatusCode);
             SyndicationFeed feed = new SyndicationFeed();
             feed.Load(response.Content.ReadAsStringAsync().Result);
 
-            return SerializationHelper.DeserializeCollection<INFO>(feed, initAction, extraTypes);
+            return SerializationHelper.DeserializeCollection<TInfo>(feed, initAction, extraTypes);
         }
 
         /// <summary>
         /// Obtains a service bus item of the given name and type.
         /// </summary>
-        /// <typeparam name="INFO">Item type</typeparam>
+        /// <typeparam name="TInfo">Item type</typeparam>
         /// <param name="itemUri">URI of the item.</param>
         /// <param name="initAction">Initialization action for the deserialized item.</param>
         /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Item data</returns>
-        private IAsyncOperation<INFO> GetItemAsync<INFO>(Uri itemUri, Action<SyndicationItem, INFO> initAction, params Type[] extraTypes)
+        private IAsyncOperation<TInfo> GetItemAsync<TInfo>(Uri itemUri, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, itemUri);
 
             return SendAsync(request)
-                .ContinueWith<INFO>(tr => { return GetItem<INFO>(tr.Result, initAction, extraTypes); }, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation<INFO>();
+                .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation<TInfo>();
         }
 
         /// <summary>
         /// Deserializes a service bus item of the specified type from the 
         /// given HTTP response.
         /// </summary>
-        /// <typeparam name="INFO">Type of the object to deserialize.</typeparam>
+        /// <typeparam name="TInfo">Type of the object to deserialize.</typeparam>
         /// <param name="response">Source HTTP response.</param>
         /// <param name="initAction">Initialization action for deserialized items.</param>
         /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Deserialized object.</returns>
-        private INFO GetItem<INFO>(HttpResponseMessage response, Action<SyndicationItem, INFO> initAction, params Type[] extraTypes)
+        private TInfo GetItem<TInfo>(HttpResponseMessage response, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
             Debug.Assert(response.IsSuccessStatusCode);
             XmlDocument doc = new XmlDocument();
@@ -529,7 +527,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             SyndicationItem feedItem = new SyndicationItem();
             feedItem.LoadFromXml(doc);
 
-            return SerializationHelper.DeserializeItem<INFO>(feedItem, initAction, extraTypes);
+            return SerializationHelper.DeserializeItem<TInfo>(feedItem, initAction, extraTypes);
         }
 
         /// <summary>
@@ -548,25 +546,24 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Creates a service bus object with the given name and parameters.
         /// </summary>
-        /// <typeparam name="INFO">Service bus object type (queue, topic, etc.).</typeparam>
-        /// <typeparam name="SETTINGS">Settings for the given object type.</typeparam>
+        /// <typeparam name="TInfo">Service bus object type (queue, topic, etc.).</typeparam>
+        /// <typeparam name="TSettings">Settings for the given object type.</typeparam>
         /// <param name="itemUri">URI of the item.</param>
         /// <param name="itemSettings">Settings of the object.</param>
         /// <param name="initAction">Initialization action</param>
         /// <returns>Created object.</returns>
-        private IAsyncOperation<INFO> CreateItemAsync<INFO, SETTINGS>(
+        private IAsyncOperation<TInfo> CreateItemAsync<TInfo, TSettings>(
             Uri itemUri, 
-            SETTINGS itemSettings, 
-            Action<SyndicationItem, INFO> initAction
-            ) where SETTINGS: class
+            TSettings itemSettings, 
+            Action<SyndicationItem, TInfo> initAction) where TSettings: class
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, itemUri);
 
             return Task.Factory
                 .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
-                .ContinueWith<HttpResponseMessage>(tr => { return SendAsync(request).Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .ContinueWith<INFO>(tr => { return GetItem<INFO>(tr.Result, initAction, ExtraRuleTypes); }, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation<INFO>();
+                .ContinueWith<HttpResponseMessage>(tr => SendAsync(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, ExtraRuleTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation<TInfo>();
         }
 
         /// <summary>
@@ -631,6 +628,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             if (!response.IsSuccessStatusCode)
             {
+                //TODO: pass status, etc. into the exception.
                 throw new WindowsAzureServiceException();
             }
             return response;
@@ -644,7 +642,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             return Channel.SendAsync(request)
-                .ContinueWith<HttpResponseMessage>((task) => { return CheckResponse(task.Result); }, TaskContinuationOptions.OnlyOnRanToCompletion);
+                .ContinueWith<HttpResponseMessage>((task) => CheckResponse(task.Result), TaskContinuationOptions.OnlyOnRanToCompletion);
         }
     }
 }

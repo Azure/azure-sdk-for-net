@@ -41,6 +41,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <returns>Collection of deserialized items.</returns>
         internal static IEnumerable<T> DeserializeCollection<T>(SyndicationFeed feed, Action<SyndicationItem, T> itemAction, IEnumerable<Type> extraTypes)
         {
+            Debug.Assert(extraTypes != null);
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), extraTypes);
             return feed.Items.Select(item => DeserializeItem<T>(serializer, item, itemAction));
         }
@@ -55,6 +56,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <returns>Deserialized object.</returns>
         internal static T DeserializeItem<T>(SyndicationItem item, Action<SyndicationItem, T> itemAction, IEnumerable<Type> extraTypes)
         {
+            Debug.Assert(extraTypes != null);
             return DeserializeItem<T>(new DataContractSerializer(typeof(T), extraTypes), item, itemAction);
         }
 

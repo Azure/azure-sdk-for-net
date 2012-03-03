@@ -52,8 +52,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Specifies how the Service Bus handles a message whose TTL has 
         /// expired.
         /// </summary>
-        [DataMember(Order = 3)]
-        public bool DeadLetteringOnMessageExpiration { get; internal set; }
+        [DataMember(Order = 3, Name = "DeadLetteringOnMessageExpiration")]
+        public bool EnableDeadLetteringOnMessageExpiration { get; internal set; }
 
         /// <summary>
         /// Determines how the Service Bus handles a message that causes an 
@@ -73,8 +73,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Tells the maximum number of times a message Service Bus will try 
         /// to deliver before being dead lettered or discarded.
         /// </summary>
-        [DataMember(Order = 6)]
-        public int MaxDeliveryCount { get; internal set; }
+        [DataMember(Order = 6, Name = "MaxDeliveryCount")]
+        public int MaximumDeliveryCount { get; internal set; }
 
         /// <summary>
         /// Tells whether server side batching is enabled.

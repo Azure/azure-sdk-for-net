@@ -38,8 +38,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Specifies the maximum queue size in megabytes.
         /// </summary>
-        [DataMember(Order=1)]
-        public int MaxSizeInMegabytes { get; internal set; }
+        [DataMember(Order=1, Name="MaxSizeInMegabytes")]
+        public int MaximumSizeInMegabytes { get; internal set; }
 
         /// <summary>
         /// Tells whether duplicate detection is enabled.
@@ -77,8 +77,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Gets the maximum number of times a message SB will try to deliver 
         /// before being dead lettered or discarded.
         /// </summary>
-        [DataMember(Order=7)]
-        public int MaxDeliveryCount { get; internal set; }
+        [DataMember(Order=7, Name="MaxDeliveryCount")]
+        public int MaximumDeliveryCount { get; internal set; }
 
         /// <summary>
         /// Tells whether server-side batching is enabled.
