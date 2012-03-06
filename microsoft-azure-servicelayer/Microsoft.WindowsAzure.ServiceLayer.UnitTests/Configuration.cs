@@ -76,5 +76,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         {
             return "Topic." + Guid.NewGuid().ToString();
         }
+
+        /// <summary>
+        /// Generates unique subscription name.
+        /// </summary>
+        /// <returns>Unique subscription name.</returns>
+        internal static string GetUniqueSubscriptionName()
+        {
+            return "S." + Guid.NewGuid().ToString();
+        }
     }
 }

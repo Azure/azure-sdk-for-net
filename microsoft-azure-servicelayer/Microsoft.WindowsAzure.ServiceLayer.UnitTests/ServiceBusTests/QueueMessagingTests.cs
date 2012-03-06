@@ -138,5 +138,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             Assert.Throws<AggregateException>(() => Configuration.ServiceBus.PeekMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
+
+        /// <summary>
+        /// Tests null reference exceptions in queue methods.
+        /// </summary>
+        [Fact]
+        public void NullArgsInQueueMessages()
+        {
+            BrokeredMessageSettings validMessageSettings = new BrokeredMessageSettings("This is a test");
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync(null, validMessageSettings));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync("somename", null));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.GetMessageAsync(null, TimeSpan.FromSeconds(10)));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.PeekMessageAsync(null, TimeSpan.FromSeconds(10)));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.UnlockMessageAsync(null, 0, "test"));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.UnlockMessageAsync("test", 0, null));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.DeleteMessageAsync(null, 0, "test"));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.DeleteMessageAsync("test", 0, null));
+        }
     }
 }
