@@ -638,7 +638,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         public void RuleLifecycle()
         {
             // Create rule.
-            SqlRuleFilter filter = new ServiceBus.SqlRuleFilter("1=1");
+            SqlRuleFilter filter = new SqlRuleFilter("1=1");
             RuleSettings settings = new RuleSettings(filter, null);
             string ruleName = "testrule." + Guid.NewGuid().ToString();
             RuleInfo rule = Service.CreateRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName, settings)

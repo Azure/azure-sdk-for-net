@@ -115,6 +115,9 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="ServiceBusManagementTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceBusTests\QueueRuntimeTestEnvironment.cs" />
+    <Compile Include="ServiceBusTests\QueueRuntimeTests.cs" />
+    <Compile Include="ServiceBusTests\TestEnvironment.cs" />
     <Compile Include="TestSubscriptionAttribute.cs" />
   </ItemGroup>
   <ItemGroup>

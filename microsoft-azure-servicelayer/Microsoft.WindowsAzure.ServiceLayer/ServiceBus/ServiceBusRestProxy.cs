@@ -458,6 +458,32 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Sends a brokered message to the queue or the topic.
+        /// </summary>
+        /// <param name="destination">Topic/queue name.</param>
+        /// <param name="message">Message to send.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction IServiceBusService.SendBrokeredMessageAsync(string destination, BrokeredMessageSettings message)
+        {
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+
+            Uri uri = ServiceConfig.GetDestinationUri(destination);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
+            message.SubmitTo(request);
+
+            return Channel
+                .SendAsync(request)
+                .AsAsyncAction();
+        }
+
+        /// <summary>
         /// Gets service bus items of the given type.
         /// </summary>
         /// <typeparam name="TInfo">Item type.</typeparam>

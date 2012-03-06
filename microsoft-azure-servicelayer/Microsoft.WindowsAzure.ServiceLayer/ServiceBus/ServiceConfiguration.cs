@@ -163,6 +163,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets a URI for sending messages to the given destination.
+        /// </summary>
+        /// <param name="destination">Destination path (queue/topic name).</param>
+        /// <returns>URI of the destination.</returns>
+        internal Uri GetDestinationUri(string destination)
+        {
+            return FormatUri(Constants.MessageDestination, destination);
+        }
+
+        /// <summary>
         /// Generates URI with the given parameters.
         /// </summary>
         /// <param name="format">Format string for the path.</param>

@@ -171,5 +171,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="ruleName">Name of the rule.</param>
         /// <returns>Result of the operation.</returns>
         IAsyncAction DeleteRuleAsync(string topicName, string subscriptionName, string ruleName);
+
+        /// <summary>
+        /// Sends a brokered message to a queue/topic with the given name.
+        /// </summary>
+        /// <param name="destination">Topic/queue name.</param>
+        /// <param name="message">Message to send.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction SendBrokeredMessageAsync(string destination, BrokeredMessageSettings message);
     }
 }
