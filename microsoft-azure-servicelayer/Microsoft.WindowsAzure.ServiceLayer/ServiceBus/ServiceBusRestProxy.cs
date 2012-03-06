@@ -463,7 +463,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="destination">Topic/queue name.</param>
         /// <param name="message">Message to send.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.SendBrokeredMessageAsync(string destination, BrokeredMessageSettings message)
+        IAsyncAction IServiceBusService.SendMessageAsync(string destination, BrokeredMessageSettings message)
         {
             if (destination == null)
             {
@@ -478,9 +478,33 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
             message.SubmitTo(request);
 
-            return Channel
-                .SendAsync(request)
-                .AsAsyncAction();
+            return SendAsync(request).AsAsyncAction();
+        }
+
+        /// <summary>
+        /// Peeks and locks a message at the top of the quuee.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="lockInterval">Lock duration period.</param>
+        /// <returns>Message from the queue.</returns>
+        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.PeekMessageAsync(string destination, TimeSpan lockInterval)
+        {
+            throw new NotImplementedException();
+        }
+
+        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.GetMessageAsync(string destination, TimeSpan lockInterval)
+        {
+            throw new NotImplementedException();
+        }
+
+        IAsyncAction IServiceBusService.UnlockMessageAsync(string destination, int sequenceNumber, string lockId)
+        {
+            throw new NotImplementedException();
+        }
+
+        IAsyncAction IServiceBusService.DeleteMessageAsync(string destination, int sequenceNumber, string lockId)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

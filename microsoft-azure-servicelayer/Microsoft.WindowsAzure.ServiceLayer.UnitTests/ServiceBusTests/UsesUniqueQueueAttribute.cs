@@ -15,41 +15,44 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xunit;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 {
     /// <summary>
-    /// Enviromnent for queues runtime tests.
+    /// An attribute for assigning unique SB queue for a test.
     /// </summary>
-    public class QueueRuntimeTestEnvironment: TestEnvironment, IDisposable
+    public sealed class UsesUniqueQueueAttribute: BeforeAfterTestAttribute
     {
         /// <summary>
-        /// Gets name of the queue used in tests.
+        /// Gets the name of the queue used by the test.
         /// </summary>
-        public string QueueName { get; private set; }
+        public static string QueueName { get; private set; }
 
         /// <summary>
-        /// Constructor. Creates a shared queue for tests.
+        /// Creates a unique queue for a test method.
         /// </summary>
-        public QueueRuntimeTestEnvironment()
-            : base()
+        /// <param name="methodUnderTest"></param>
+        public override void Before(MethodInfo methodUnderTest)
         {
-            QueueName = string.Format(CultureInfo.InvariantCulture, "Queue.{0}", Guid.NewGuid().ToString());
-            ServiceBus.CreateQueueAsync(QueueName).AsTask().Wait();
+            base.Before(methodUnderTest);
+            QueueName = Configuration.GetUniqueQueueName();
+            Configuration.ServiceBus.CreateQueueAsync(QueueName).AsTask().Wait();
         }
 
         /// <summary>
-        /// Disposes the environment by removing the queue.
+        /// Deletes a queue created for the test.
         /// </summary>
-        void IDisposable.Dispose()
+        /// <param name="methodUnderTest">Test method.</param>
+        public override void After(MethodInfo methodUnderTest)
         {
-            ServiceBus.DeleteQueueAsync(QueueName).AsTask().Wait();
+            base.After(methodUnderTest);
+            Configuration.ServiceBus.DeleteQueueAsync(QueueName).AsTask().Wait();
+            QueueName = null;
         }
     }
 }

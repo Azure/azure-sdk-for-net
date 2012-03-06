@@ -108,6 +108,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />
     <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
     <Compile Include="ServiceBus\CorrelationRuleFilter.cs" />
     <Compile Include="ServiceBus\EmptyRuleAction.cs" />

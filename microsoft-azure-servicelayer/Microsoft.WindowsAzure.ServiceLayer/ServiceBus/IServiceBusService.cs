@@ -178,6 +178,44 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="destination">Topic/queue name.</param>
         /// <param name="message">Message to send.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction SendBrokeredMessageAsync(string destination, BrokeredMessageSettings message);
+        IAsyncAction SendMessageAsync(string destination, BrokeredMessageSettings message);
+
+        /// <summary>
+        /// Peeks a message at the head of the queue and locks it for the
+        /// specified duration period. The message is guaranteed not to b
+        /// delivered to other receivers during the lock duration.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="lockInterval">Lock duration.</param>
+        /// <returns>Message from the queue.</returns>
+        IAsyncOperation<BrokeredMessageInfo> PeekMessageAsync(string destination, TimeSpan lockInterval);
+
+        /// <summary>
+        /// Gets a message at the head of the queue and removes it from the
+        /// queue.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="lockInterval">Lock duration.</param>
+        /// <returns>Message from the queue.</returns>
+        IAsyncOperation<BrokeredMessageInfo> GetMessageAsync(string destination, TimeSpan lockInterval);
+
+        /// <summary>
+        /// Unlocks previously locked message making it available to all
+        /// readers.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="sequenceNumber">Sequence number of the message.</param>
+        /// <param name="lockId">Lock ID of the message.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction UnlockMessageAsync(string destination, int sequenceNumber, string lockId);
+
+        /// <summary>
+        /// Deletes a previously locked message.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
+        /// <param name="lockId">Lock ID of the message.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction DeleteMessageAsync(string destination, int sequenceNumber, string lockId);
     }
 }

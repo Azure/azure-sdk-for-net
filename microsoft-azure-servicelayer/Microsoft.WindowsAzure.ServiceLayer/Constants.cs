@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string ServiceBusAuthenticationUri   = "https://{0}-sb.accesscontrol.windows.net/wrapv0.9/";
         internal const string ServiceBusScopeUri            = "http://{0}.servicebus.windows.net/";
 
-        internal const string MessageDestination            = "{0}";
+        internal const string MessageDestination            = "{0}/messages/";
 
         internal const string QueuesPath                    = "$Resources/Queues";
         internal const string QueuePath                     = "{0}";                                    // <queue>
