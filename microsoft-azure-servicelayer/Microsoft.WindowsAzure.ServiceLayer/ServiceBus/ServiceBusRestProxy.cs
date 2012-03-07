@@ -485,26 +485,84 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Peeks and locks a message at the top of the quuee.
         /// </summary>
         /// <param name="destination">Queue/topic name.</param>
-        /// <param name="lockInterval">Lock duration period.</param>
+        /// <param name="lockInterval">Lock duration.</param>
         /// <returns>Message from the queue.</returns>
         IAsyncOperation<BrokeredMessageInfo> IServiceBusService.PeekMessageAsync(string destination, TimeSpan lockInterval)
         {
-            throw new NotImplementedException();
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+            Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
+            return SendAsync(request)
+                .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation();
         }
 
+        /// <summary>
+        /// Gets and locks a message from the given path.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="lockInterval">Lock duration.</param>
+        /// <returns>Message.</returns>
         IAsyncOperation<BrokeredMessageInfo> IServiceBusService.GetMessageAsync(string destination, TimeSpan lockInterval)
         {
-            throw new NotImplementedException();
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+            Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            return SendAsync(request)
+                .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation();
         }
 
+        /// <summary>
+        /// Unlocks previously locked message.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
+        /// <param name="lockId">Lock ID.</param>
+        /// <returns>Result of the operation.</returns>
         IAsyncAction IServiceBusService.UnlockMessageAsync(string destination, int sequenceNumber, string lockId)
         {
-            throw new NotImplementedException();
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+            if (lockId == null)
+            {
+                throw new ArgumentNullException("lockId");
+            }
+            Uri uri = ServiceConfig.GetLockedMessageUri(destination, sequenceNumber, lockId);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
+            return SendAsync(request)
+                .AsAsyncAction();
         }
 
+        /// <summary>
+        /// Deletes previously locked message.
+        /// </summary>
+        /// <param name="destination">Topic/queue name.</param>
+        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
+        /// <param name="lockId">Lock ID.</param>
+        /// <returns>Result of the operation.</returns>
         IAsyncAction IServiceBusService.DeleteMessageAsync(string destination, int sequenceNumber, string lockId)
         {
-            throw new NotImplementedException();
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+            if (lockId == null)
+            {
+                throw new ArgumentNullException("lockId");
+            }
+            Uri uri = ServiceConfig.GetLockedMessageUri(destination, sequenceNumber, lockId);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            return SendAsync(request)
+                .AsAsyncAction();
         }
 
         /// <summary>

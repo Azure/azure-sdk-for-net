@@ -31,6 +31,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string ServiceBusScopeUri            = "http://{0}.servicebus.windows.net/";
 
         internal const string MessageDestination            = "{0}/messages/";
+        internal const string UnlockedMessagePath           = "{0}/messages/head?timeout={1}";
+        internal const string LockedMessagePath             = "{0}/messages/{1}/{2}";
 
         internal const string QueuesPath                    = "$Resources/Queues";
         internal const string QueuePath                     = "{0}";                                    // <queue>
