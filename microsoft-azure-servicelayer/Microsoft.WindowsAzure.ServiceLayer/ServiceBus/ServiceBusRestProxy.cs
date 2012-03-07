@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -495,7 +496,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
             Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
-            return SendAsync(request)
+            return SendAsync(request, CheckNoContent)
                 .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
@@ -514,7 +515,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
             Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
-            return SendAsync(request)
+            return SendAsync(request, CheckNoContent)
                 .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
@@ -526,7 +527,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="sequenceNumber">Sequence number of the locked message.</param>
         /// <param name="lockId">Lock ID.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.UnlockMessageAsync(string destination, int sequenceNumber, string lockId)
+        IAsyncAction IServiceBusService.UnlockMessageAsync(string destination, long sequenceNumber, string lockId)
         {
             if (destination == null)
             {
@@ -549,7 +550,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="sequenceNumber">Sequence number of the locked message.</param>
         /// <param name="lockId">Lock ID.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.DeleteMessageAsync(string destination, int sequenceNumber, string lockId)
+        IAsyncAction IServiceBusService.DeleteMessageAsync(string destination, long sequenceNumber, string lockId)
         {
             if (destination == null)
             {
@@ -577,7 +578,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, containerUri);
 
-            return SendAsync(request)
+            return SendAsync(request, CheckNoContent)
                 .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<TInfo>>();
         }
@@ -612,7 +613,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, itemUri);
 
-            return SendAsync(request)
+            return SendAsync(request, CheckNoContent)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<TInfo>();
         }
@@ -731,13 +732,19 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Detects errors in HTTP responses and translates them into exceptios.
         /// </summary>
         /// <param name="response">Source HTTP response.</param>
+        /// <param name="validators">Additional validators.</param>
         /// <returns>Processed HTTP response.</returns>
-        private HttpResponseMessage CheckResponse(HttpResponseMessage response)
+        private HttpResponseMessage CheckResponse(HttpResponseMessage response, IEnumerable<Func<HttpResponseMessage, HttpResponseMessage>> validators)
         {
             if (!response.IsSuccessStatusCode)
             {
-                //TODO: pass status, etc. into the exception.
-                throw new WindowsAzureServiceException();
+                throw new WindowsAzureServiceException(response);
+            }
+
+            // Pass the response through all validators.
+            foreach (Func<HttpResponseMessage, HttpResponseMessage> validator in validators)
+            {
+                response = validator(response);
             }
             return response;
         }
@@ -747,10 +754,24 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="request">Request to send.</param>
         /// <returns>HTTP response.</returns>
-        private Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        private Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, params Func<HttpResponseMessage, HttpResponseMessage>[] validators)
         {
             return Channel.SendAsync(request)
-                .ContinueWith<HttpResponseMessage>((task) => CheckResponse(task.Result), TaskContinuationOptions.OnlyOnRanToCompletion);
+                .ContinueWith<HttpResponseMessage>((task) => CheckResponse(task.Result, validators), TaskContinuationOptions.OnlyOnRanToCompletion);
+        }
+
+        /// <summary>
+        /// Throws exceptions for response with no content.
+        /// </summary>
+        /// <param name="response">Source response.</param>
+        /// <returns>Processed HTTP response.</returns>
+        private HttpResponseMessage CheckNoContent(HttpResponseMessage response)
+        {
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent || response.StatusCode == HttpStatusCode.ResetContent)
+            {
+                throw new WindowsAzureServiceException(response);
+            }
+            return response;
         }
     }
 }

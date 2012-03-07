@@ -207,7 +207,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="sequenceNumber">Sequence number of the message.</param>
         /// <param name="lockId">Lock ID of the message.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction UnlockMessageAsync(string destination, int sequenceNumber, string lockId);
+        IAsyncAction UnlockMessageAsync(string destination, long sequenceNumber, string lockId);
 
         /// <summary>
         /// Deletes a previously locked message.
@@ -216,6 +216,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="sequenceNumber">Sequence number of the locked message.</param>
         /// <param name="lockId">Lock ID of the message.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction DeleteMessageAsync(string destination, int sequenceNumber, string lockId);
+        IAsyncAction DeleteMessageAsync(string destination, long sequenceNumber, string lockId);
     }
 }

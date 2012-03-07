@@ -190,7 +190,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="sequenceNumber">Sequence number of the locked message.</param>
         /// <param name="lockId">Lock ID of the message.</param>
         /// <returns>URI of the locked message.</returns>
-        internal Uri GetLockedMessageUri(string destination, int sequenceNumber, string lockId)
+        internal Uri GetLockedMessageUri(string destination, long sequenceNumber, string lockId)
         {
             return FormatUri(Constants.LockedMessagePath, destination, sequenceNumber, lockId);
         }
