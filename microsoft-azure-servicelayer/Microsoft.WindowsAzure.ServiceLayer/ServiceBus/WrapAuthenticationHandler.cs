@@ -42,9 +42,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Tokens = new Dictionary<string, WrapToken>(StringComparer.OrdinalIgnoreCase);
             SyncObject = new object();
 
-            HttpMessageHandler handlers = new HttpErrorHandler(
-                new HttpClientHandler());
-            Channel = new HttpClient(handlers);
+            HttpMessageHandler chain = new HttpClientHandler();
+            Channel = new HttpClient(chain);
         }
 
         /// <summary>
