@@ -30,15 +30,144 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     public sealed class BrokeredMessageInfo
     {
         /// <summary>
+        /// Gets message's broker properties.
+        /// </summary>
+        private BrokerProperties BrokerProperties { get; set; }
+
+        /// <summary>
         /// Gets the message text.
         /// </summary>
         public string Text { get; private set; }
 
         /// <summary>
-        /// Gets message's broker properties.
+        /// Gets the identifier of the correlation.
         /// </summary>
-        public BrokerProperties BrokerProperties { get; private set; }
+        public string CorrelationId
+        {
+            get { return BrokerProperties.CorrelationId; }
+        }
 
+        /// <summary>
+        /// Gets the number of deliveries.
+        /// </summary>
+        public int DeliveryCount
+        {
+            get { return BrokerProperties.DeliveryCount.Value; }
+        }
+
+        /// <summary>
+        /// Gets the date and time of the sent time.
+        /// </summary>
+        public DateTime? EnqueuedTime
+        {
+            get { return BrokerProperties.EnqueuedTime; }
+        }
+
+        /// <summary>
+        /// Gets the date and time at which the message is set to expire.
+        /// </summary>
+        public DateTime? ExpiresAt
+        {
+            get { return BrokerProperties.ExpiresAt; }
+        }
+
+        /// <summary>
+        /// Gets the application specific label.
+        /// </summary>
+        public string Label
+        {
+            get { return BrokerProperties.Label; }
+        }
+
+        /// <summary>
+        /// Gets the date and time until which the message will be locked in
+        /// the queue/subscription.
+        /// </summary>
+        public DateTime? LockedUntil
+        {
+            get { return BrokerProperties.LockedUntil; }
+        }
+
+        /// <summary>
+        /// Gets the lock token assigned by Service Bus to the message.
+        /// </summary>
+        public string LockToken
+        {
+            get { return BrokerProperties.LockToken; }
+        }
+
+        /// <summary>
+        /// Gets the identifier of the message.
+        /// </summary>
+        public string MessageId
+        {
+            get { return BrokerProperties.MessageId; } 
+        }
+
+        /// <summary>
+        /// Gets the address of the queue to reply to.
+        /// </summary>
+        public string ReplyTo
+        {
+            get { return BrokerProperties.ReplyTo; }
+        }
+
+        /// <summary>
+        /// Gets the session identifier to reply to.
+        /// </summary>
+        public string ReplyToSessionId
+        {
+            get { return BrokerProperties.ReplyToSessionId; }
+        }
+
+        /// <summary>
+        /// Gets the date and time at which the message will be enqueued.
+        /// </summary>
+        public DateTime? ScheduledEnqueueTime
+        {
+            get { return BrokerProperties.ScheduledEnqueueTime; }
+        }
+
+        /// <summary>
+        /// Gets the unique number assigned to the message by the Service Bus.
+        /// </summary>
+        public long? SequenceNumber
+        {
+            get { return BrokerProperties.SequenceNumber; }
+        }
+
+        /// <summary>
+        /// Gets the identifier of the session.
+        /// </summary>
+        public string SessionId
+        {
+            get { return BrokerProperties.SessionId; }
+        }
+
+        /// <summary>
+        /// Gets the size of the message in bytes.
+        /// </summary>
+        public long Size
+        {
+            get { return BrokerProperties.Size.Value; }
+        }
+
+        /// <summary>
+        /// Gets the message's time to live.
+        /// </summary>
+        public TimeSpan? TimeToLive
+        {
+            get { return BrokerProperties.TimeToLive; }
+        }
+
+        /// <summary>
+        /// Gets the send to address.
+        /// </summary>
+        public string To
+        {
+            get { return BrokerProperties.To; }
+        }
+        
         /// <summary>
         /// Constructor. Initializes the object from the HTTP response.
         /// </summary>
@@ -52,8 +181,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             string propertiesString = null;
             IEnumerable<string> values;
 
-
-            if (response.Headers.TryGetValues("BrokerProperties", out values))
+            if (response.Headers.TryGetValues(Constants.BrokerPropertiesHeader, out values))
             {
                 foreach (string value in values)
                 {
