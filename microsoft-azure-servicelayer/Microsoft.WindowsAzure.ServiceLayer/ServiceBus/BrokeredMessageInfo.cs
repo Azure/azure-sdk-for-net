@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets the date and time of the sent time.
         /// </summary>
-        public DateTime? EnqueuedTime
+        public DateTimeOffset? EnqueuedTime
         {
             get { return BrokerProperties.EnqueuedTime; }
         }
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets the date and time at which the message is set to expire.
         /// </summary>
-        public DateTime? ExpiresAt
+        public DateTimeOffset? ExpiresAt
         {
             get { return BrokerProperties.ExpiresAt; }
         }
@@ -83,7 +83,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Gets the date and time until which the message will be locked in
         /// the queue/subscription.
         /// </summary>
-        public DateTime? LockedUntil
+        public DateTimeOffset? LockedUntil
         {
             get { return BrokerProperties.LockedUntil; }
         }
@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets the date and time at which the message will be enqueued.
         /// </summary>
-        public DateTime? ScheduledEnqueueTime
+        public DateTimeOffset? ScheduledEnqueueTime
         {
             get { return BrokerProperties.ScheduledEnqueueTime; }
         }

@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Gets or sets the date and time at which the message will be 
         /// enqueued.
         /// </summary>
-        public DateTime? ScheduledEnqueueTime
+        public DateTimeOffset? ScheduledEnqueueTime
         {
             get { return BrokerProperties.ScheduledEnqueueTime; }
             set { BrokerProperties.ScheduledEnqueueTime = value; }

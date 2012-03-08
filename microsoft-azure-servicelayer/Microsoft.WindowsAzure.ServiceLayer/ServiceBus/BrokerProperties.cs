@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Gets/sets the date and time of the sent time.
         /// </summary>
         [IgnoreDataMember]
-        internal DateTime? EnqueuedTime { get; set; }
+        internal DateTimeOffset? EnqueuedTime { get; set; }
 
         /// <summary>
         /// EnqueuedTime property as a string.
@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Gets/sets the date and time at whcih the message is set to expire.
         /// </summary>
         [IgnoreDataMember]
-        internal DateTime? ExpiresAt { get; set; }
+        internal DateTimeOffset? ExpiresAt { get; set; }
 
         /// <summary>
         /// ExpiresAt property as a string.
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// in the queue/subscription.
         /// </summary>
         [IgnoreDataMember]
-        internal DateTime? LockedUntil { get; set; }
+        internal DateTimeOffset? LockedUntil { get; set; }
 
         /// <summary>
         /// LockedUntil property as a string.
@@ -117,7 +117,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// enqueued.
         /// </summary>
         [IgnoreDataMember]
-        internal DateTime? ScheduledEnqueueTime { get; set; }
+        internal DateTimeOffset? ScheduledEnqueueTime { get; set; }
 
         /// <summary>
         /// ScheduledEnqueueTime property as a string.
@@ -226,7 +226,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="source">Source date/time.</param>
         /// <returns>UTC date/time.</returns>
-        private static string DateTimeToUtcString(DateTime? source)
+        private static string DateTimeToUtcString(DateTimeOffset? source)
         {
             string result = null;
 
@@ -258,13 +258,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="value">Date/time string to convert.</param>
         /// <returns>Converted value.</returns>
-        private DateTime? StringToUtcDateTime(string value)
+        private DateTimeOffset? StringToUtcDateTime(string value)
         {
-            DateTime? retValue = null;
+            DateTimeOffset? retValue = null;
 
             if (!string.IsNullOrEmpty(value))
             {
-                retValue = Convert.ToDateTime(value, CultureInfo.InvariantCulture);
+                DateTime dateTime = Convert.ToDateTime(value, CultureInfo.InvariantCulture);
+                retValue = new DateTimeOffset(dateTime.ToUniversalTime());
             }
             return retValue;
         }
