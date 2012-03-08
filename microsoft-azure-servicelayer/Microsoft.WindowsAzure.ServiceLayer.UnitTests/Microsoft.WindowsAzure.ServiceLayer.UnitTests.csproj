@@ -115,6 +115,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="ServiceBusManagementTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceBusTests\MessagePropertiesTests.cs" />
     <Compile Include="ServiceBusTests\QueueMessagingTests.cs" />
     <Compile Include="ServiceBusTests\UsesUniqueQueueAttribute.cs" />
     <Compile Include="ServiceBusTests\UsesUniqueSubscriptionAttribute.cs" />

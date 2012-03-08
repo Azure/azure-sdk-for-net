@@ -53,8 +53,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string MessageContentType            = "application/atom+xml";
         internal const string WrapAuthenticationContentType = "application/x-www-form-urlencoded";
 
-        internal const string BrokerPropertiesHeader        = "BrokerProperties";
+        internal const string BrokerPropertiesHeader        = "BrokerProperties";                       // Header name for broker properties.
 
-        internal const int CompatibilityLevel               = 20;                                       // Compatibility level for rules
+        internal const int CompatibilityLevel               = 20;                                       // Compatibility level for rules.
+
+        internal const string JsonNullValue                 = "null";                                   // String representation of null value in Json.
     }
 }

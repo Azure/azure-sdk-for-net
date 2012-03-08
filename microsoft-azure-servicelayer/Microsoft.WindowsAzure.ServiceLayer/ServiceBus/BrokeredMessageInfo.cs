@@ -29,10 +29,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public sealed class BrokeredMessageInfo
     {
-        /// <summary>
-        /// Gets message's broker properties.
-        /// </summary>
-        private BrokerProperties BrokerProperties { get; set; }
+        BrokerProperties _brokerProperties;                 // Broker properties of the message.
+        CustomPropertiesDictionary _customProperties;       // Custom properties of the message.
 
         /// <summary>
         /// Gets the message text.
@@ -44,7 +42,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string CorrelationId
         {
-            get { return BrokerProperties.CorrelationId; }
+            get { return _brokerProperties.CorrelationId; }
         }
 
         /// <summary>
@@ -52,7 +50,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public int DeliveryCount
         {
-            get { return BrokerProperties.DeliveryCount.Value; }
+            get { return _brokerProperties.DeliveryCount.Value; }
         }
 
         /// <summary>
@@ -60,7 +58,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public DateTimeOffset? EnqueuedTime
         {
-            get { return BrokerProperties.EnqueuedTime; }
+            get { return _brokerProperties.EnqueuedTime; }
         }
 
         /// <summary>
@@ -68,7 +66,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public DateTimeOffset? ExpiresAt
         {
-            get { return BrokerProperties.ExpiresAt; }
+            get { return _brokerProperties.ExpiresAt; }
         }
 
         /// <summary>
@@ -76,7 +74,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string Label
         {
-            get { return BrokerProperties.Label; }
+            get { return _brokerProperties.Label; }
         }
 
         /// <summary>
@@ -85,7 +83,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public DateTimeOffset? LockedUntil
         {
-            get { return BrokerProperties.LockedUntil; }
+            get { return _brokerProperties.LockedUntil; }
         }
 
         /// <summary>
@@ -93,7 +91,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string LockToken
         {
-            get { return BrokerProperties.LockToken; }
+            get { return _brokerProperties.LockToken; }
         }
 
         /// <summary>
@@ -101,7 +99,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string MessageId
         {
-            get { return BrokerProperties.MessageId; } 
+            get { return _brokerProperties.MessageId; } 
+        }
+
+        /// <summary>
+        /// Gets the property bag.
+        /// </summary>
+        public IDictionary<string, object> Properties
+        {
+            get { return _customProperties; }
         }
 
         /// <summary>
@@ -109,7 +115,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string ReplyTo
         {
-            get { return BrokerProperties.ReplyTo; }
+            get { return _brokerProperties.ReplyTo; }
         }
 
         /// <summary>
@@ -117,7 +123,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string ReplyToSessionId
         {
-            get { return BrokerProperties.ReplyToSessionId; }
+            get { return _brokerProperties.ReplyToSessionId; }
         }
 
         /// <summary>
@@ -125,7 +131,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public DateTimeOffset? ScheduledEnqueueTime
         {
-            get { return BrokerProperties.ScheduledEnqueueTime; }
+            get { return _brokerProperties.ScheduledEnqueueTime; }
         }
 
         /// <summary>
@@ -133,7 +139,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public long? SequenceNumber
         {
-            get { return BrokerProperties.SequenceNumber; }
+            get { return _brokerProperties.SequenceNumber; }
         }
 
         /// <summary>
@@ -141,7 +147,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string SessionId
         {
-            get { return BrokerProperties.SessionId; }
+            get { return _brokerProperties.SessionId; }
         }
 
         /// <summary>
@@ -149,7 +155,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public long Size
         {
-            get { return BrokerProperties.Size.Value; }
+            get { return _brokerProperties.Size.Value; }
         }
 
         /// <summary>
@@ -157,7 +163,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public TimeSpan? TimeToLive
         {
-            get { return BrokerProperties.TimeToLive; }
+            get { return _brokerProperties.TimeToLive; }
         }
 
         /// <summary>
@@ -165,7 +171,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string To
         {
-            get { return BrokerProperties.To; }
+            get { return _brokerProperties.To; }
         }
         
         /// <summary>
@@ -176,6 +182,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             Debug.Assert(response.IsSuccessStatusCode);
             Text = response.Content.ReadAsStringAsync().Result;
+            _customProperties = new CustomPropertiesDictionary(response);
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Dictionary<string, object>));
             string propertiesString = null;
@@ -183,20 +190,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             if (response.Headers.TryGetValues(Constants.BrokerPropertiesHeader, out values))
             {
+                StringBuilder builder = new StringBuilder();
                 foreach (string value in values)
                 {
-                    propertiesString = value;
+                    builder.Append(value);
                     break;
                 }
+                propertiesString = builder.ToString();
             }
 
             if (string.IsNullOrEmpty(propertiesString))
             {
-                BrokerProperties = new ServiceBus.BrokerProperties();
+                _brokerProperties = new ServiceBus.BrokerProperties();
             }
             else
             {
-                BrokerProperties = BrokerProperties.Deserialize(propertiesString);
+                _brokerProperties = BrokerProperties.Deserialize(propertiesString);
             }
         }
     }
