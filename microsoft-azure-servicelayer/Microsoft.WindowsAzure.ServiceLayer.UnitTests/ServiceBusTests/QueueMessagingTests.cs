@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             // Create a message.
             string messageText = Guid.NewGuid().ToString();
-            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings(messageText);
+            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings("text/plain", messageText);
 
             // Set the requested property.
             setValue(messageSettings, value);
@@ -73,14 +73,18 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
             string text = Guid.NewGuid().ToString();
-            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings(text);
+            string contentType = "text/plain";
+            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings(contentType, text);
 
             BrokeredMessageInfo message = Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings)
                 .AsTask()
                 .ContinueWith((t) => Configuration.ServiceBus.PeekMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .Result;
 
-            Assert.Equal(message.Text, text, StringComparer.Ordinal);
+            string newText = message.ReadContentAsStringAsync().AsTask().Result;
+
+            Assert.Equal(text, newText, StringComparer.Ordinal);
+            Assert.Equal(contentType, message.ContentType, StringComparer.Ordinal);
 
             // Make sure the message is still there.
             QueueInfo info = Configuration.ServiceBus.GetQueueAsync(queueName).AsTask().Result;
@@ -96,14 +100,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
             string text = Guid.NewGuid().ToString();
-            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings(text);
+            string contentType = "text/html";
+            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings(contentType, text);
 
             BrokeredMessageInfo message = Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings)
                 .AsTask()
                 .ContinueWith((t) => Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .Result;
+            string newText = message.ReadContentAsStringAsync().AsTask().Result;
 
-            Assert.Equal(message.Text, text, StringComparer.Ordinal);
+            Assert.Equal(newText, text, StringComparer.Ordinal);
+            Assert.Equal(message.ContentType, contentType, StringComparer.Ordinal);
 
             // Make sure the message disappeared.
             QueueInfo info = Configuration.ServiceBus.GetQueueAsync(queueName).AsTask().Result;
@@ -131,7 +138,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
 
-            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings("This is only a test.");
+            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings("text/plain", "This is only a test.");
             Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings).AsTask().Wait();
             BrokeredMessageInfo message = Configuration.ServiceBus.PeekMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
             Configuration.ServiceBus.DeleteMessageAsync(queueName, message.SequenceNumber.Value, message.LockToken).AsTask().Wait();
@@ -180,7 +187,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [Fact]
         public void NullArgsInQueueMessages()
         {
-            BrokeredMessageSettings validMessageSettings = new BrokeredMessageSettings("This is a test");
+            BrokeredMessageSettings validMessageSettings = new BrokeredMessageSettings("test/plain", "This is a test");
             Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync(null, validMessageSettings));
             Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync("somename", null));
             Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.GetMessageAsync(null, TimeSpan.FromSeconds(10)));

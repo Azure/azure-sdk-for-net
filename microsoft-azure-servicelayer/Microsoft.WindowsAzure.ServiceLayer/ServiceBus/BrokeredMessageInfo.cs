@@ -16,11 +16,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Storage.Streams;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -29,13 +32,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public sealed class BrokeredMessageInfo
     {
-        BrokerProperties _brokerProperties;                 // Broker properties of the message.
-        CustomPropertiesDictionary _customProperties;       // Custom properties of the message.
+        private HttpContent _content;                               // Source HTTP content.
+        private BrokerProperties _brokerProperties;                 // Broker properties of the message.
+        private CustomPropertiesDictionary _customProperties;       // Custom properties of the message.
 
         /// <summary>
-        /// Gets the message text.
+        /// Gets the content type of the message.
         /// </summary>
-        public string Text { get; private set; }
+        public string ContentType
+        {
+            get { return _content.Headers.ContentType.ToString(); }
+        }
 
         /// <summary>
         /// Gets the identifier of the correlation.
@@ -173,7 +180,30 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             get { return _brokerProperties.To; }
         }
-        
+
+        /// <summary>
+        /// Reads content of the message as a string.
+        /// </summary>
+        /// <returns>Content of the message.</returns>
+        public IAsyncOperation<string> ReadContentAsStringAsync()
+        {
+            return _content
+                .ReadAsStringAsync()
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Gets a stream with message's content.
+        /// </summary>
+        /// <returns>Stream.</returns>
+        public IAsyncOperation<IInputStream> GetContentStream()
+        {
+            return _content
+                .ReadAsStreamAsync()
+                .ContinueWith(t => t.Result.AsInputStream())
+                .AsAsyncOperation();
+        }
+
         /// <summary>
         /// Constructor. Initializes the object from the HTTP response.
         /// </summary>
@@ -181,7 +211,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         internal BrokeredMessageInfo(HttpResponseMessage response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
-            Text = response.Content.ReadAsStringAsync().Result;
+            _content = response.Content;
             _customProperties = new CustomPropertiesDictionary(response);
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Dictionary<string, object>));

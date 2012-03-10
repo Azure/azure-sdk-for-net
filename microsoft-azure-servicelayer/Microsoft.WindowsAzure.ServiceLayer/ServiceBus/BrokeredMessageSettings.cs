@@ -16,10 +16,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Storage.Streams;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -28,13 +29,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public sealed class BrokeredMessageSettings
     {
+        private MessageBody _body;                               // Body content
         private BrokerProperties _brokerProperties;             // Broker properties of the message.
         private CustomPropertiesDictionary _customProperties;   // Custom properties of the message.
 
         /// <summary>
-        /// Text of the message.
+        /// Gets the content type of the message.
         /// </summary>
-        public string Text { get; internal set; }
+        public string ContentType
+        {
+            get { return _body.ContentType; }
+        }
 
         /// <summary>
         /// Gets or sets the identifier of the correlation.
@@ -127,19 +132,108 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Constructor.
+        /// Constructor for a message consisting of text.
         /// </summary>
         /// <param name="messageText">Text of the message.</param>
-        public BrokeredMessageSettings(string messageText)
+        public BrokeredMessageSettings(string contentType, string messageText)
         {
+            if (contentType == null)
+            {
+                throw new ArgumentNullException("contentType");
+            }
             if (messageText == null)
             {
                 throw new ArgumentNullException("messageText");
             }
-
-            Text = messageText;
+            _body = new MessageBody(contentType, messageText);
             _brokerProperties = new BrokerProperties();
             _customProperties = new CustomPropertiesDictionary();
+        }
+
+        /// <summary>
+        /// Constructor for a message consisting of bytes.
+        /// </summary>
+        /// <param name="contentType">Content type.</param>
+        /// <param name="messageBytes">Content of the message.</param>
+        public BrokeredMessageSettings(string contentType, byte[] messageBytes)
+        {
+            if (contentType == null)
+            {
+                throw new ArgumentNullException("contentType");
+            }
+            if (messageBytes == null)
+            {
+                throw new ArgumentNullException("messageBytes");
+            }
+            _body = new MessageBody(contentType, messageBytes);
+        }
+
+        /// <summary>
+        /// Constructor for a message with the content specified in the stream.
+        /// </summary>
+        /// <param name="contentType">Content type.</param>
+        /// <param name="stream">Stream with the content.</param>
+        public BrokeredMessageSettings(string contentType, IInputStream stream)
+        {
+            if (contentType == null)
+            {
+                throw new ArgumentNullException("contentType");
+            }
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            _body = new MessageBody(contentType, stream.AsStreamForRead());
+        }
+
+        /// <summary>
+        /// Reads message's body as a string. This method is not thread-safe.
+        /// </summary>
+        /// <returns>Message body.</returns>
+        public IAsyncOperation<string> ReadContentAsStringAsync()
+        {
+            return Task<string>.Factory
+                .StartNew(() => _body.ReadAsString())
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Reads message's body as an array of bytes.
+        /// </summary>
+        /// <returns>Message body.</returns>
+        public IAsyncOperation<byte[]> ReadContentAsBytesAsync()
+        {
+            return Task<byte[]>.Factory
+                .StartNew(() => _body.ReadAsBytes())
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Gets stream with the content of the message.
+        /// </summary>
+        /// <returns>Stream with the content.</returns>
+        public IAsyncOperation<IInputStream> GetContentAsStreamAsync()
+        {
+            return Task<Stream>.Factory
+                .StartNew(() => _body.ReadAsStream())
+                .ContinueWith<IInputStream>(t => t.Result.AsInputStream(), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Copies content of the body to the given stream.
+        /// </summary>
+        /// <param name="stream">Target stream.</param>
+        /// <returns>Result of the operation.</returns>
+        public IAsyncAction CopyContentToAsync(IOutputStream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            return Task.Factory
+                .StartNew(() => _body.CopyTo(stream.AsStreamForWrite()))
+                .AsAsyncAction();
         }
 
         /// <summary>
@@ -148,10 +242,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="request">Target request.</param>
         internal void SubmitTo(HttpRequestMessage request)
         {
-            request.Content = new StringContent(Text, Encoding.UTF8, Constants.MessageContentType);
             _brokerProperties.SubmitTo(request);
-
             _customProperties.SubmitTo(request);
+            _body.SubmitTo(request);
         }
     }
 }
