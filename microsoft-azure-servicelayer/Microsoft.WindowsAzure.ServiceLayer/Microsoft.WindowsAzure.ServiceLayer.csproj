@@ -115,7 +115,6 @@
     <Compile Include="ServiceBus\IRuleAction.cs" />
     <Compile Include="ServiceBus\IRuleFilter.cs" />
     <Compile Include="ServiceBus\ISqlRuleFilter.cs" />
-    <Compile Include="ServiceBus\MessageBody.cs" />
     <Compile Include="ServiceBus\RuleInfo.cs" />
     <Compile Include="ServiceBus\SqlRuleFilter.cs" />
     <Compile Include="ServiceBus\SqlRuleAction.cs" />
@@ -125,7 +124,6 @@
     <Compile Include="ServiceBus\TopicSettings.cs" />
     <Compile Include="ServiceBus\SubscriptionSettings.cs" />
     <Compile Include="ServiceBus\TrueRuleFilter.cs" />
-    <Compile Include="StreamPositionGuard.cs" />
     <Compile Include="WindowsAzureException.cs" />
     <Compile Include="WindowsAzureServiceException.cs" />
     <Compile Include="Constants.cs" />

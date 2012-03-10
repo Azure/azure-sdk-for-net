@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,8 +74,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
             string text = Guid.NewGuid().ToString();
-            string contentType = "text/plain";
-            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings(contentType, text);
+            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings("text/plain", text);
 
             BrokeredMessageInfo message = Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings)
                 .AsTask()
@@ -84,7 +84,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             string newText = message.ReadContentAsStringAsync().AsTask().Result;
 
             Assert.Equal(text, newText, StringComparer.Ordinal);
-            Assert.Equal(contentType, message.ContentType, StringComparer.Ordinal);
 
             // Make sure the message is still there.
             QueueInfo info = Configuration.ServiceBus.GetQueueAsync(queueName).AsTask().Result;
@@ -100,8 +99,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
             string text = Guid.NewGuid().ToString();
-            string contentType = "text/html";
-            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings(contentType, text);
+            BrokeredMessageSettings messageSettings = new BrokeredMessageSettings("text/html", text);
 
             BrokeredMessageInfo message = Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings)
                 .AsTask()
@@ -110,7 +108,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             string newText = message.ReadContentAsStringAsync().AsTask().Result;
 
             Assert.Equal(newText, text, StringComparer.Ordinal);
-            Assert.Equal(message.ContentType, contentType, StringComparer.Ordinal);
 
             // Make sure the message disappeared.
             QueueInfo info = Configuration.ServiceBus.GetQueueAsync(queueName).AsTask().Result;
@@ -307,6 +304,62 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
                 (message, value) => { message.To = value; },
                 (message) => message.To,
                 StringComparer.Ordinal);
+        }
+
+        /// <summary>
+        /// Tests sending and receiving an array of bytes.
+        /// </summary>
+        [Fact]
+        [UsesUniqueQueue]
+        public void SendBytes()
+        {
+            string queueName = UsesUniqueQueueAttribute.QueueName;
+            byte[] bytes = new byte[] { 1, 2, 3, };
+            BrokeredMessageSettings settings = new BrokeredMessageSettings(bytes);
+            Configuration.ServiceBus.SendMessageAsync(queueName, settings).AsTask().Wait();
+
+            BrokeredMessageInfo message = Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
+
+            // Do that twice to make sure stream positions are preserved.
+            for (int i = 0; i < 2; i++)
+            {
+                byte[] newBytes = message.ReadContentAsBytesAsync().AsTask().Result;
+                Assert.Equal(bytes, newBytes);
+            }
+        }
+
+        /// <summary>
+        /// Tests sending a stream of bytes.
+        /// </summary>
+        [Fact]
+        [UsesUniqueQueue]
+        public void SendStream()
+        {
+            string queueName = UsesUniqueQueueAttribute.QueueName;
+            byte[] inBytes = new byte[] { 1, 2, 3, 4, };
+
+            using (MemoryStream inStream = new MemoryStream())
+            {
+                inStream.Write(inBytes, 0, inBytes.Length);
+                inStream.Flush();
+                inStream.Position = 0;
+
+                BrokeredMessageSettings settings = new BrokeredMessageSettings(inBytes);
+                Configuration.ServiceBus.SendMessageAsync(queueName, settings).AsTask().Wait();
+            }
+
+            BrokeredMessageInfo message = Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
+
+            for (int i = 0; i < 2; i++)
+            {
+                using (Stream stream = message.ReadContentAsStreamAsync().AsTask().Result.AsStreamForRead())
+                {
+                    byte[] outBytes = new byte[3];
+                    int cnt = stream.Read(outBytes, 0, 3);
+                    Assert.Equal(cnt, 3);
+                    Assert.Equal(inBytes, outBytes);
+                }
+            }
         }
     }
 }

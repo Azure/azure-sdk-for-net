@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public sealed class BrokeredMessageSettings
     {
-        private MessageBody _body;                               // Body content
+        private HttpContent _content;                           // Body content.
         private BrokerProperties _brokerProperties;             // Broker properties of the message.
         private CustomPropertiesDictionary _customProperties;   // Custom properties of the message.
 
@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string ContentType
         {
-            get { return _body.ContentType; }
+            get { return _content.Headers.ContentType.ToString(); }
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("messageText");
             }
-            _body = new MessageBody(contentType, messageText);
+            _content = new StringContent(messageText, Encoding.UTF8, contentType);
             _brokerProperties = new BrokerProperties();
             _customProperties = new CustomPropertiesDictionary();
         }
@@ -155,17 +155,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="contentType">Content type.</param>
         /// <param name="messageBytes">Content of the message.</param>
-        public BrokeredMessageSettings(string contentType, byte[] messageBytes)
+        public BrokeredMessageSettings(byte[] messageBytes)
         {
-            if (contentType == null)
-            {
-                throw new ArgumentNullException("contentType");
-            }
             if (messageBytes == null)
             {
                 throw new ArgumentNullException("messageBytes");
             }
-            _body = new MessageBody(contentType, messageBytes);
+            _content = new ByteArrayContent(messageBytes);
+            _brokerProperties = new BrokerProperties();
+            _customProperties = new CustomPropertiesDictionary();
         }
 
         /// <summary>
@@ -173,17 +171,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="contentType">Content type.</param>
         /// <param name="stream">Stream with the content.</param>
-        public BrokeredMessageSettings(string contentType, IInputStream stream)
+        public BrokeredMessageSettings(IInputStream stream)
         {
-            if (contentType == null)
-            {
-                throw new ArgumentNullException("contentType");
-            }
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
-            _body = new MessageBody(contentType, stream.AsStreamForRead());
+            _content = new StreamContent(stream.AsStreamForRead());
+            _brokerProperties = new BrokerProperties();
+            _customProperties = new CustomPropertiesDictionary();
         }
 
         /// <summary>
@@ -192,8 +188,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Message body.</returns>
         public IAsyncOperation<string> ReadContentAsStringAsync()
         {
-            return Task<string>.Factory
-                .StartNew(() => _body.ReadAsString())
+            return _content
+                .ReadAsStringAsync()
                 .AsAsyncOperation();
         }
 
@@ -203,8 +199,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Message body.</returns>
         public IAsyncOperation<byte[]> ReadContentAsBytesAsync()
         {
-            return Task<byte[]>.Factory
-                .StartNew(() => _body.ReadAsBytes())
+            return _content
+                .ReadAsByteArrayAsync()
                 .AsAsyncOperation();
         }
 
@@ -212,11 +208,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Gets stream with the content of the message.
         /// </summary>
         /// <returns>Stream with the content.</returns>
-        public IAsyncOperation<IInputStream> GetContentAsStreamAsync()
+        public IAsyncOperation<IInputStream> ReadContentAsStreamAsync()
         {
-            return Task<Stream>.Factory
-                .StartNew(() => _body.ReadAsStream())
-                .ContinueWith<IInputStream>(t => t.Result.AsInputStream(), TaskContinuationOptions.OnlyOnRanToCompletion)
+            return _content
+                .ReadAsStreamAsync()
+                .ContinueWith(t => t.Result.AsInputStream(), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
 
@@ -231,8 +227,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("stream");
             }
-            return Task.Factory
-                .StartNew(() => _body.CopyTo(stream.AsStreamForWrite()))
+            return _content
+                .CopyToAsync(stream.AsStreamForWrite())
                 .AsAsyncAction();
         }
 
@@ -244,7 +240,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             _brokerProperties.SubmitTo(request);
             _customProperties.SubmitTo(request);
-            _body.SubmitTo(request);
+            request.Content = _content;
         }
     }
 }

@@ -21,15 +21,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [Fact]
         public void NullArgumentsInConstructors()
         {
-            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings(null, new byte[] { 1 }));
-            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings("text/plain", (byte[])null));
+            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings((byte[])null));
             Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings(null, "This is a test."));
             Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings("text/plain", (string)null));
-            using (Stream stream = new MemoryStream())
-            {
-                Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings(null, stream.AsInputStream()));
-            }
-            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings("text/plain", (IInputStream)null));
+            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings((IInputStream)null));
         }
 
         /// <summary>
@@ -66,7 +61,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void ReadIntoStream()
         {
             Byte[] bytes = new byte[] { 1, 2, 3 };
-            BrokeredMessageSettings message = new BrokeredMessageSettings("foo", bytes);
+            BrokeredMessageSettings message = new BrokeredMessageSettings(bytes);
 
             // Do it twice to make sure the position in the stream is restored after each read.
             for (int i = 0; i < 2; i++)

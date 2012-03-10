@@ -193,15 +193,42 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Gets a stream with message's content.
+        /// Reads the content as an array of bytes.
+        /// </summary>
+        /// <returns>Array of bytes.</returns>
+        public IAsyncOperation<byte[]> ReadContentAsBytesAsync()
+        {
+            return _content
+                .ReadAsByteArrayAsync()
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Reads the content as a stream.
         /// </summary>
         /// <returns>Stream.</returns>
-        public IAsyncOperation<IInputStream> GetContentStream()
+        public IAsyncOperation<IInputStream> ReadContentAsStreamAsync()
         {
             return _content
                 .ReadAsStreamAsync()
-                .ContinueWith(t => t.Result.AsInputStream())
+                .ContinueWith(t => t.Result.AsInputStream(), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Copies content into the given stream.
+        /// </summary>
+        /// <param name="stream">Target stream.</param>
+        /// <returns>Result of the operation.</returns>
+        public IAsyncInfo CopyContentToAsync(IOutputStream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            return _content
+                .CopyToAsync(stream.AsStreamForWrite())
+                .AsAsyncAction();
         }
 
         /// <summary>
