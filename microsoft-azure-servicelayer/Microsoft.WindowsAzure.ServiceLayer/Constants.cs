@@ -32,7 +32,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
         internal const string MessageDestination            = "{0}/messages/";
         internal const string UnlockedMessagePath           = "{0}/messages/head?timeout={1}";
+        internal const string UnlockedSubscriptionMessagePath   = "{0}/subscriptions/{1}/head?timeout={2}";
         internal const string LockedMessagePath             = "{0}/messages/{1}/{2}";
+        internal const string LockedSubscriptionMessagePath = "{0}/subscriptions/{1}/messages/{2}/{3}";
 
         internal const string QueuesPath                    = "$Resources/Queues";
         internal const string QueuePath                     = "{0}";                                    // <queue>

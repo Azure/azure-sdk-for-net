@@ -118,6 +118,8 @@
     <Compile Include="ServiceBusTests\MessagePropertiesTests.cs" />
     <Compile Include="ServiceBusTests\MessageSettingsTests.cs" />
     <Compile Include="ServiceBusTests\QueueMessagingTests.cs" />
+    <Compile Include="ServiceBusTests\SubscriptionMessagingTests.cs" />
+    <Compile Include="ServiceBusTests\UniqueSubscriptionFixture.cs" />
     <Compile Include="ServiceBusTests\UsesUniqueQueueAttribute.cs" />
     <Compile Include="ServiceBusTests\UsesUniqueSubscriptionAttribute.cs" />
     <Compile Include="ServiceBusTests\UsesUniqueTopicAttribute.cs" />
