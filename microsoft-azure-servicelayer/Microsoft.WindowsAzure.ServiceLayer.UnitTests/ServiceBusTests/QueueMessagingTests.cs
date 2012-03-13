@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             // Send the message to the queue.
             string queueName = UsesUniqueQueueAttribute.QueueName;
             Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings).AsTask().Wait();
-            BrokeredMessageInfo message = Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
+            BrokeredMessageInfo message = Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
             T newValue = getValue(message);
 
             Assert.Equal(value, newValue, comparer);
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             BrokeredMessageInfo message = Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings)
                 .AsTask()
-                .ContinueWith((t) => Configuration.ServiceBus.PeekMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith((t) => Configuration.ServiceBus.PeekQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .Result;
 
             string newText = message.ReadContentAsStringAsync().AsTask().Result;
@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             BrokeredMessageInfo message = Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings)
                 .AsTask()
-                .ContinueWith((t) => Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith((t) => Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .Result;
             string newText = message.ReadContentAsStringAsync().AsTask().Result;
 
@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
 
-            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
 
         /// <summary>
@@ -137,8 +137,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             BrokeredMessageSettings messageSettings = new BrokeredMessageSettings("text/plain", "This is only a test.");
             Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings).AsTask().Wait();
-            BrokeredMessageInfo message = Configuration.ServiceBus.PeekMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
-            Configuration.ServiceBus.DeleteMessageAsync(queueName, message.SequenceNumber, message.LockToken).AsTask().Wait();
+            BrokeredMessageInfo message = Configuration.ServiceBus.PeekQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
+            Configuration.ServiceBus.DeleteQueueMessageAsync(queueName, message.SequenceNumber, message.LockToken).AsTask().Wait();
 
             QueueInfo info = Configuration.ServiceBus.GetQueueAsync(queueName).AsTask().Result;
             Assert.Equal(info.MessageCount, 0);
@@ -153,7 +153,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
 
-            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.PeekMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.PeekQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             string queueName = Configuration.GetUniqueQueueName();
 
-            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             string queueName = Configuration.GetUniqueQueueName();
 
-            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.PeekMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.PeekQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
 
         /// <summary>
@@ -187,12 +187,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings validMessageSettings = new BrokeredMessageSettings("test/plain", "This is a test");
             Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync(null, validMessageSettings));
             Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync("somename", null));
-            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.GetMessageAsync(null, TimeSpan.FromSeconds(10)));
-            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.PeekMessageAsync(null, TimeSpan.FromSeconds(10)));
-            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.UnlockMessageAsync(null, 0, "test"));
-            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.UnlockMessageAsync("test", 0, null));
-            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.DeleteMessageAsync(null, 0, "test"));
-            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.DeleteMessageAsync("test", 0, null));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.GetQueueMessageAsync(null, TimeSpan.FromSeconds(10)));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.PeekQueueMessageAsync(null, TimeSpan.FromSeconds(10)));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.UnlockQueueMessageAsync(null, 0, "test"));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.UnlockQueueMessageAsync("test", 0, null));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.DeleteQueueMessageAsync(null, 0, "test"));
+            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.DeleteQueueMessageAsync("test", 0, null));
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings settings = new BrokeredMessageSettings(bytes);
             Configuration.ServiceBus.SendMessageAsync(queueName, settings).AsTask().Wait();
 
-            BrokeredMessageInfo message = Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
+            BrokeredMessageInfo message = Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
 
             // Do that twice to make sure stream positions are preserved.
             for (int i = 0; i < 2; i++)
@@ -348,7 +348,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
                 Configuration.ServiceBus.SendMessageAsync(queueName, settings).AsTask().Wait();
             }
 
-            BrokeredMessageInfo message = Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
+            BrokeredMessageInfo message = Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
 
             for (int i = 0; i < 2; i++)
             {

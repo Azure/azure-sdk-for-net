@@ -485,16 +485,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Peeks and locks a message at the top of the quuee.
         /// </summary>
-        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="queueName">Queue/topic name.</param>
         /// <param name="lockInterval">Lock duration.</param>
         /// <returns>Message from the queue.</returns>
-        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.PeekMessageAsync(string destination, TimeSpan lockInterval)
+        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.PeekQueueMessageAsync(string queueName, TimeSpan lockInterval)
         {
-            if (destination == null)
+            if (queueName == null)
             {
-                throw new ArgumentNullException("destination");
+                throw new ArgumentNullException("queueName");
             }
-            Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
+            Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
             return SendAsync(request, CheckNoContent)
                 .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
@@ -504,16 +504,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets and locks a message from the given path.
         /// </summary>
-        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="queueName">Queue/topic name.</param>
         /// <param name="lockInterval">Lock duration.</param>
         /// <returns>Message.</returns>
-        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.GetMessageAsync(string destination, TimeSpan lockInterval)
+        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.GetQueueMessageAsync(string queueName, TimeSpan lockInterval)
         {
-            if (destination == null)
+            if (queueName == null)
             {
-                throw new ArgumentNullException("destination");
+                throw new ArgumentNullException("queueName");
             }
-            Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
+            Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
             return SendAsync(request, CheckNoContent)
                 .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
@@ -523,21 +523,21 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Unlocks previously locked message.
         /// </summary>
-        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="queueName">Queue/topic name.</param>
         /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockId">Lock ID.</param>
+        /// <param name="lockToken">Lock ID.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.UnlockMessageAsync(string destination, long sequenceNumber, string lockId)
+        IAsyncAction IServiceBusService.UnlockQueueMessageAsync(string queueName, long sequenceNumber, string lockToken)
         {
-            if (destination == null)
+            if (queueName == null)
             {
-                throw new ArgumentNullException("destination");
+                throw new ArgumentNullException("queueName");
             }
-            if (lockId == null)
+            if (lockToken == null)
             {
-                throw new ArgumentNullException("lockId");
+                throw new ArgumentNullException("lockToken");
             }
-            Uri uri = ServiceConfig.GetLockedMessageUri(destination, sequenceNumber, lockId);
+            Uri uri = ServiceConfig.GetLockedMessageUri(queueName, sequenceNumber, lockToken);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
             return SendAsync(request)
                 .AsAsyncAction();
@@ -546,21 +546,21 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Deletes previously locked message.
         /// </summary>
-        /// <param name="destination">Topic/queue name.</param>
+        /// <param name="queueName">Topic/queue name.</param>
         /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockId">Lock ID.</param>
+        /// <param name="lockToken">Lock ID.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.DeleteMessageAsync(string destination, long sequenceNumber, string lockId)
+        IAsyncAction IServiceBusService.DeleteQueueMessageAsync(string queueName, long sequenceNumber, string lockToken)
         {
-            if (destination == null)
+            if (queueName == null)
             {
-                throw new ArgumentNullException("destination");
+                throw new ArgumentNullException("queueName");
             }
-            if (lockId == null)
+            if (lockToken == null)
             {
-                throw new ArgumentNullException("lockId");
+                throw new ArgumentNullException("lockToken");
             }
-            Uri uri = ServiceConfig.GetLockedMessageUri(destination, sequenceNumber, lockId);
+            Uri uri = ServiceConfig.GetLockedMessageUri(queueName, sequenceNumber, lockToken);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
             return SendAsync(request)
                 .AsAsyncAction();

@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             messageSettings.Properties.Add("NumberProperty", 123);
 
             Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings).AsTask().Wait();
-            BrokeredMessageInfo message = Configuration.ServiceBus.GetMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
+            BrokeredMessageInfo message = Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
 
             Assert.NotEqual(message.Properties, null);
             Assert.True(message.Properties.ContainsKey("StringProperty"));
