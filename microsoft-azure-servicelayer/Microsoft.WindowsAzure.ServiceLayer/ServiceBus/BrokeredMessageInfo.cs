@@ -180,16 +180,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             if (response.Headers.TryGetValues(Constants.BrokerPropertiesHeader, out values))
             {
-                foreach (string value in values)
-                {
-                    propertiesString = value;
-                    break;
-                }
+                propertiesString = values.FirstOrDefault();
             }
 
             if (string.IsNullOrEmpty(propertiesString))
             {
-                _brokerProperties = new ServiceBus.BrokerProperties();
+                _brokerProperties = new BrokerProperties();
             }
             else
             {
@@ -202,8 +198,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public BrokeredMessageInfo()
         {
-            //TODO: get rid of this constructor once the issue with JavaScript serialization
-            // has been fixed.
+            //TODO: get rid of this constructor once the issue with JavaScript serialization has been fixed.
         }
     }
 }
