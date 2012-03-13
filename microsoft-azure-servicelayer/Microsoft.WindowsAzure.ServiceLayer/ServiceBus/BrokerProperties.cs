@@ -24,7 +24,8 @@ using System.Text;
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
-    /// Properties of a brokered message.
+    /// Properties of a brokered message. This class is used as a collection of
+    /// properties for BrokeredMessageSettings and BrokeredMessageInfo classes.
     /// </summary>
     [DataContract]
     internal class BrokerProperties
