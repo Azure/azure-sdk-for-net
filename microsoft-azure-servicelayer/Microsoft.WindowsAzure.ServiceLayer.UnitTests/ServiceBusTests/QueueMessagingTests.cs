@@ -344,7 +344,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
                 inStream.Flush();
                 inStream.Position = 0;
 
-                BrokeredMessageSettings settings = new BrokeredMessageSettings(inBytes);
+                BrokeredMessageSettings settings = new BrokeredMessageSettings(inStream.AsInputStream());
                 Configuration.ServiceBus.SendMessageAsync(queueName, settings).AsTask().Wait();
             }
 
