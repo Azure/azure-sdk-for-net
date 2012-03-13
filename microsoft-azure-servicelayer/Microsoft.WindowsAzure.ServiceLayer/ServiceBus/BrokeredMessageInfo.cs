@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     public sealed class BrokeredMessageInfo
     {
         private HttpContent _content;                               // Source HTTP content.
-        private BrokerProperties _brokerProperties;                 // Broker properties of the message.
+        private BrokerProperties _brokerProperties;                 // Message's broker properties.
         private CustomPropertiesDictionary _customProperties;       // Custom properties of the message.
 
         /// <summary>
@@ -258,12 +258,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             if (string.IsNullOrEmpty(propertiesString))
             {
-                _brokerProperties = new ServiceBus.BrokerProperties();
+                _brokerProperties = new BrokerProperties();
             }
             else
             {
                 _brokerProperties = BrokerProperties.Deserialize(propertiesString);
             }
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public BrokeredMessageInfo()
+        {
+            //TODO: get rid of this constructor once the issue with JavaScript serialization has been fixed.
         }
     }
 }

@@ -14,16 +14,12 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -172,18 +168,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Creates an object from JSon data.
         /// </summary>
-        /// <param name="jsonData"></param>
+        /// <param name="jsonData">Json data.</param>
         /// <returns></returns>
         internal static BrokerProperties Deserialize(string jsonData)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BrokerProperties));
-            using (MemoryStream stream = new MemoryStream())
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonData)))
             {
-                StreamWriter writer = new StreamWriter(stream);
-                writer.Write(jsonData);
-                writer.Flush();
-                stream.Seek(0, SeekOrigin.Begin);
-
                 BrokerProperties properties = serializer.ReadObject(stream) as BrokerProperties;
                 return properties;
             }
@@ -192,7 +183,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Prepares data for serialization.
         /// </summary>
-        /// <param name="context"><Serialization context./param>
+        /// <param name="context">Serialization context.</param>
         [OnSerializing]
         private void OnSerializing(StreamingContext context)
         {

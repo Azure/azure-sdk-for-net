@@ -26,7 +26,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
     /// <summary>
     /// Exception that occurs as a result of calls to Windows Azure service.
     /// </summary>
-    internal class WindowsAzureServiceException: Exception
+    internal class WindowsAzureServiceException: WindowsAzureException
     {
         /// <summary>
         /// Gets the HTTP status code.

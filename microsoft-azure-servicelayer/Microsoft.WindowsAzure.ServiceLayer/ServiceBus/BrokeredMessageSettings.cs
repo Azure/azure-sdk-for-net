@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     public sealed class BrokeredMessageSettings
     {
         private HttpContent _content;                           // Body content.
-        private BrokerProperties _brokerProperties;             // Broker properties of the message.
+        private BrokerProperties _brokerProperties;             // Message's broker properties.
         private CustomPropertiesDictionary _customProperties;   // Custom properties of the message.
 
         /// <summary>
