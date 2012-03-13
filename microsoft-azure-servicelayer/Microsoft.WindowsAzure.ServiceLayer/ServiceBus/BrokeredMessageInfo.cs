@@ -29,10 +29,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public sealed class BrokeredMessageInfo
     {
-        /// <summary>
-        /// Gets message's broker properties.
-        /// </summary>
-        private BrokerProperties BrokerProperties { get; set; }
+        private BrokerProperties _brokerProperties;         // Message's broker properties.
 
         /// <summary>
         /// Gets the message text.
@@ -44,7 +41,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string CorrelationId
         {
-            get { return BrokerProperties.CorrelationId; }
+            get { return _brokerProperties.CorrelationId; }
         }
 
         /// <summary>
@@ -52,7 +49,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public int DeliveryCount
         {
-            get { return BrokerProperties.DeliveryCount.Value; }
+            get { return _brokerProperties.DeliveryCount.Value; }
         }
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public DateTimeOffset? EnqueuedTime
         {
-            get { return BrokerProperties.EnqueuedTime; }
+            get { return _brokerProperties.EnqueuedTime; }
         }
 
         /// <summary>
@@ -68,7 +65,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public DateTimeOffset? ExpiresAt
         {
-            get { return BrokerProperties.ExpiresAt; }
+            get { return _brokerProperties.ExpiresAt; }
         }
 
         /// <summary>
@@ -76,7 +73,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string Label
         {
-            get { return BrokerProperties.Label; }
+            get { return _brokerProperties.Label; }
         }
 
         /// <summary>
@@ -85,7 +82,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public DateTimeOffset? LockedUntil
         {
-            get { return BrokerProperties.LockedUntil; }
+            get { return _brokerProperties.LockedUntil; }
         }
 
         /// <summary>
@@ -93,7 +90,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string LockToken
         {
-            get { return BrokerProperties.LockToken; }
+            get { return _brokerProperties.LockToken; }
         }
 
         /// <summary>
@@ -101,7 +98,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string MessageId
         {
-            get { return BrokerProperties.MessageId; } 
+            get { return _brokerProperties.MessageId; } 
         }
 
         /// <summary>
@@ -109,7 +106,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string ReplyTo
         {
-            get { return BrokerProperties.ReplyTo; }
+            get { return _brokerProperties.ReplyTo; }
         }
 
         /// <summary>
@@ -117,7 +114,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string ReplyToSessionId
         {
-            get { return BrokerProperties.ReplyToSessionId; }
+            get { return _brokerProperties.ReplyToSessionId; }
         }
 
         /// <summary>
@@ -125,7 +122,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public DateTimeOffset? ScheduledEnqueueTime
         {
-            get { return BrokerProperties.ScheduledEnqueueTime; }
+            get { return _brokerProperties.ScheduledEnqueueTime; }
         }
 
         /// <summary>
@@ -133,7 +130,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public long? SequenceNumber
         {
-            get { return BrokerProperties.SequenceNumber; }
+            get { return _brokerProperties.SequenceNumber; }
         }
 
         /// <summary>
@@ -141,7 +138,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string SessionId
         {
-            get { return BrokerProperties.SessionId; }
+            get { return _brokerProperties.SessionId; }
         }
 
         /// <summary>
@@ -149,7 +146,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public long Size
         {
-            get { return BrokerProperties.Size.Value; }
+            get { return _brokerProperties.Size.Value; }
         }
 
         /// <summary>
@@ -157,7 +154,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public TimeSpan? TimeToLive
         {
-            get { return BrokerProperties.TimeToLive; }
+            get { return _brokerProperties.TimeToLive; }
         }
 
         /// <summary>
@@ -165,7 +162,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string To
         {
-            get { return BrokerProperties.To; }
+            get { return _brokerProperties.To; }
         }
         
         /// <summary>
@@ -192,11 +189,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             if (string.IsNullOrEmpty(propertiesString))
             {
-                BrokerProperties = new ServiceBus.BrokerProperties();
+                _brokerProperties = new ServiceBus.BrokerProperties();
             }
             else
             {
-                BrokerProperties = BrokerProperties.Deserialize(propertiesString);
+                _brokerProperties = BrokerProperties.Deserialize(propertiesString);
             }
         }
     }

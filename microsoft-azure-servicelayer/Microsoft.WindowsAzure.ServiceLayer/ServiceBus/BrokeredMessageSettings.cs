@@ -28,10 +28,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public sealed class BrokeredMessageSettings
     {
-        /// <summary>
-        /// Gets broker propertiesof the message.
-        /// </summary>
-        private BrokerProperties BrokerProperties { get; set; }
+        private BrokerProperties _brokerProperties;         // Message's broker properties.
 
         /// <summary>
         /// Text of the message.
@@ -43,8 +40,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string CorrelationId 
         { 
-            get { return BrokerProperties.CorrelationId; } 
-            set { BrokerProperties.CorrelationId = value; } 
+            get { return _brokerProperties.CorrelationId; } 
+            set { _brokerProperties.CorrelationId = value; } 
         }
 
         /// <summary>
@@ -52,8 +49,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string Label 
         { 
-            get { return BrokerProperties.Label; } 
-            set { BrokerProperties.Label = value; } 
+            get { return _brokerProperties.Label; } 
+            set { _brokerProperties.Label = value; } 
         }
 
         /// <summary>
@@ -61,8 +58,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string MessageId
         {
-            get { return BrokerProperties.MessageId; }
-            set { BrokerProperties.MessageId = value; }
+            get { return _brokerProperties.MessageId; }
+            set { _brokerProperties.MessageId = value; }
         }
 
         /// <summary>
@@ -70,8 +67,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string ReplyTo
         {
-            get { return BrokerProperties.ReplyTo; }
-            set { BrokerProperties.ReplyTo = value; }
+            get { return _brokerProperties.ReplyTo; }
+            set { _brokerProperties.ReplyTo = value; }
         }
 
         /// <summary>
@@ -79,8 +76,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string ReplyToSessionId
         {
-            get { return BrokerProperties.ReplyToSessionId; }
-            set { BrokerProperties.ReplyToSessionId = value; }
+            get { return _brokerProperties.ReplyToSessionId; }
+            set { _brokerProperties.ReplyToSessionId = value; }
         }
 
         /// <summary>
@@ -89,8 +86,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public DateTimeOffset? ScheduledEnqueueTime
         {
-            get { return BrokerProperties.ScheduledEnqueueTime; }
-            set { BrokerProperties.ScheduledEnqueueTime = value; }
+            get { return _brokerProperties.ScheduledEnqueueTime; }
+            set { _brokerProperties.ScheduledEnqueueTime = value; }
         }
 
         /// <summary>
@@ -98,8 +95,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string SessionId
         {
-            get { return BrokerProperties.SessionId; }
-            set { BrokerProperties.SessionId = value; }
+            get { return _brokerProperties.SessionId; }
+            set { _brokerProperties.SessionId = value; }
         }
 
         /// <summary>
@@ -107,8 +104,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public TimeSpan? TimeToLive
         {
-            get { return BrokerProperties.TimeToLive; }
-            set { BrokerProperties.TimeToLive = value; } 
+            get { return _brokerProperties.TimeToLive; }
+            set { _brokerProperties.TimeToLive = value; } 
         }
 
         /// <summary>
@@ -116,8 +113,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string To
         {
-            get { return BrokerProperties.To; }
-            set { BrokerProperties.To = value; }
+            get { return _brokerProperties.To; }
+            set { _brokerProperties.To = value; }
         }
 
         /// <summary>
@@ -132,7 +129,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Text = messageText;
-            BrokerProperties = new BrokerProperties();
+            _brokerProperties = new BrokerProperties();
         }
 
         /// <summary>
@@ -142,7 +139,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         internal void SubmitTo(HttpRequestMessage request)
         {
             request.Content = new StringContent(Text, Encoding.UTF8, Constants.MessageContentType);
-            BrokerProperties.SubmitTo(request);
+            _brokerProperties.SubmitTo(request);
         }
     }
 }

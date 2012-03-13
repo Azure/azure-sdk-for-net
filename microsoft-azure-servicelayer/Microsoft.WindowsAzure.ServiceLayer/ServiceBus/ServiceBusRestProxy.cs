@@ -175,6 +175,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("topicName");
             }
+
             return CreateItemAsync<TopicInfo, TopicSettings>(
                 ServiceConfig.GetTopicUri(topicName),
                 new TopicSettings(), 
@@ -254,6 +255,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("subscriptionName");
             }
+
             return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName),
                 new SubscriptionSettings(), 
@@ -285,6 +287,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             { 
                 throw new ArgumentNullException("subscriptionSettings");
             }
+
             return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
                 subscriptionSettings, 
@@ -302,6 +305,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("topicName");
             }
+
             return GetItemsAsync<SubscriptionInfo>(
                 ServiceConfig.GetSubscriptionsContainerUri(topicName), 
                 InitSubscription);
@@ -323,6 +327,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("subscriptionName");
             }
+
             return GetItemAsync<SubscriptionInfo>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
                 InitSubscription);
@@ -344,6 +349,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("subscriptionName");
             }
+
             return DeleteItemAsync(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName));
         }
@@ -375,6 +381,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("ruleSettings");
             }
+
             return CreateItemAsync<RuleInfo, RuleSettings>(
                 ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName),
                 ruleSettings,
@@ -398,6 +405,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
                 throw new ArgumentNullException("subscriptionName");
             }
+
             return GetItemsAsync<RuleInfo>(
                 ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
                 InitRule,
@@ -454,6 +462,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("ruleName");
             }
+
             return DeleteItemAsync(
                 ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName));
         }
@@ -494,6 +503,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("destination");
             }
+
             Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
             return SendAsync(request, CheckNoContent)
@@ -513,6 +523,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("destination");
             }
+
             Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
             return SendAsync(request, CheckNoContent)
@@ -537,6 +548,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("lockId");
             }
+
             Uri uri = ServiceConfig.GetLockedMessageUri(destination, sequenceNumber, lockId);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
             return SendAsync(request)
@@ -560,6 +572,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("lockId");
             }
+
             Uri uri = ServiceConfig.GetLockedMessageUri(destination, sequenceNumber, lockId);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
             return SendAsync(request)
