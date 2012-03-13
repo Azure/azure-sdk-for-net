@@ -138,7 +138,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings messageSettings = new BrokeredMessageSettings("text/plain", "This is only a test.");
             Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings).AsTask().Wait();
             BrokeredMessageInfo message = Configuration.ServiceBus.PeekMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
-            Configuration.ServiceBus.DeleteMessageAsync(queueName, message.SequenceNumber.Value, message.LockToken).AsTask().Wait();
+            Configuration.ServiceBus.DeleteMessageAsync(queueName, message.SequenceNumber, message.LockToken).AsTask().Wait();
 
             QueueInfo info = Configuration.ServiceBus.GetQueueAsync(queueName).AsTask().Result;
             Assert.Equal(info.MessageCount, 0);
@@ -354,9 +354,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             {
                 using (Stream stream = message.ReadContentAsStreamAsync().AsTask().Result.AsStreamForRead())
                 {
-                    byte[] outBytes = new byte[3];
-                    int cnt = stream.Read(outBytes, 0, 3);
-                    Assert.Equal(cnt, 3);
+                    byte[] outBytes = new byte[4];
+                    int cnt = stream.Read(outBytes, 0, 4);
+                    Assert.Equal(cnt, 4);
                     Assert.Equal(inBytes, outBytes);
                 }
             }

@@ -192,7 +192,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns></returns>
         internal Uri GetUnlockedSubscriptionMessageUri(string topicName, string subscriptionName, TimeSpan lockDuration)
         {
-            return FormatUri(Constants.UnlockedSubscriptionMessagePath, topicName, subscriptionName, lockDuration);
+            return FormatUri(Constants.UnlockedSubscriptionMessagePath, topicName, subscriptionName, lockDuration.Seconds);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>URI of the locked message.</returns>
         internal Uri GetLockedSubscriptionMessageUri(string topicName, string subscriptionName, long sequenceNumber, string lockToken)
         {
-            return FormatUri(Constants.LockedSubscriptionMessagePath, topicName, subscriptionName, lockToken);
+            return FormatUri(Constants.LockedSubscriptionMessagePath, topicName, subscriptionName, sequenceNumber, lockToken);
         }
 
         /// <summary>

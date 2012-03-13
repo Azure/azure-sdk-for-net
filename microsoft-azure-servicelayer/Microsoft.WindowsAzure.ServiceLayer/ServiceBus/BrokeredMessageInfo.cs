@@ -144,9 +144,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets the unique number assigned to the message by the Service Bus.
         /// </summary>
-        public long? SequenceNumber
+        public long SequenceNumber
         {
-            get { return _brokerProperties.SequenceNumber; }
+            get { return _brokerProperties.SequenceNumber.Value; }
         }
 
         /// <summary>

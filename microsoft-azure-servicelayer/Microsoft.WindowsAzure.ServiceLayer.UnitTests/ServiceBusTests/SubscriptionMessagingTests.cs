@@ -106,8 +106,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             // Peeking is a non-destructive operation; should work two times in a row.
             for (int i = 0; i < 2; i++)
             {
-                BrokeredMessageInfo message = ServiceBus.PeekSubscriptionMessageAsync(TopicName, SubscriptionName, TimeSpan.FromSeconds(0)).AsTask().Result;
+                BrokeredMessageInfo message = ServiceBus.PeekSubscriptionMessageAsync(TopicName, SubscriptionName, TimeSpan.FromSeconds(10)).AsTask().Result;
                 Assert.Equal(messageText, message.ReadContentAsStringAsync().AsTask().Result, StringComparer.Ordinal);
+
+                // Unlock the message.
+                ServiceBus.UnlockSubscriptionMessageAsync(TopicName, SubscriptionName, message.SequenceNumber, message.LockToken).AsTask().Wait();
             }
 
             // Remove the message.
@@ -124,7 +127,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             SendTextMessage(messageText);
 
             BrokeredMessageInfo message = ServiceBus.PeekSubscriptionMessageAsync(TopicName, SubscriptionName, TimeSpan.FromSeconds(10)).AsTask().Result;
-            ServiceBus.DeleteSubscriptionMessageAsync(TopicName, SubscriptionName, message.SequenceNumber.Value, message.LockToken).AsTask().Wait();
+            ServiceBus.DeleteSubscriptionMessageAsync(TopicName, SubscriptionName, message.SequenceNumber, message.LockToken).AsTask().Wait();
 
             Assert.Throws<AggregateException>(() => ServiceBus.GetSubscriptionMessageAsync(TopicName, SubscriptionName, TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
