@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -174,6 +175,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("topicName");
             }
+
             return CreateItemAsync<TopicInfo, TopicSettings>(
                 ServiceConfig.GetTopicUri(topicName),
                 new TopicSettings(), 
@@ -253,6 +255,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("subscriptionName");
             }
+
             return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName),
                 new SubscriptionSettings(), 
@@ -284,6 +287,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             { 
                 throw new ArgumentNullException("subscriptionSettings");
             }
+
             return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
                 subscriptionSettings, 
@@ -301,6 +305,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("topicName");
             }
+
             return GetItemsAsync<SubscriptionInfo>(
                 ServiceConfig.GetSubscriptionsContainerUri(topicName), 
                 InitSubscription);
@@ -322,6 +327,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("subscriptionName");
             }
+
             return GetItemAsync<SubscriptionInfo>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
                 InitSubscription);
@@ -343,6 +349,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("subscriptionName");
             }
+
             return DeleteItemAsync(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName));
         }
@@ -374,6 +381,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("ruleSettings");
             }
+
             return CreateItemAsync<RuleInfo, RuleSettings>(
                 ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName),
                 ruleSettings,
@@ -397,6 +405,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
                 throw new ArgumentNullException("subscriptionName");
             }
+
             return GetItemsAsync<RuleInfo>(
                 ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
                 InitRule,
@@ -453,8 +462,121 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("ruleName");
             }
+
             return DeleteItemAsync(
                 ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName));
+        }
+
+        /// <summary>
+        /// Sends a brokered message to the queue or the topic.
+        /// </summary>
+        /// <param name="destination">Topic/queue name.</param>
+        /// <param name="message">Message to send.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction IServiceBusService.SendMessageAsync(string destination, BrokeredMessageSettings message)
+        {
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+
+            Uri uri = ServiceConfig.GetDestinationUri(destination);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
+            message.SubmitTo(request);
+
+            return SendAsync(request).AsAsyncAction();
+        }
+
+        /// <summary>
+        /// Peeks and locks a message at the top of the quuee.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="lockInterval">Lock duration.</param>
+        /// <returns>Message from the queue.</returns>
+        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.PeekMessageAsync(string destination, TimeSpan lockInterval)
+        {
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+
+            Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
+            return SendAsync(request, CheckNoContent)
+                .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Gets and locks a message from the given path.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="lockInterval">Lock duration.</param>
+        /// <returns>Message.</returns>
+        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.GetMessageAsync(string destination, TimeSpan lockInterval)
+        {
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+
+            Uri uri = ServiceConfig.GetUnlockedMessageUri(destination, lockInterval);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            return SendAsync(request, CheckNoContent)
+                .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Unlocks previously locked message.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
+        /// <param name="lockId">Lock ID.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction IServiceBusService.UnlockMessageAsync(string destination, long sequenceNumber, string lockId)
+        {
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+            if (lockId == null)
+            {
+                throw new ArgumentNullException("lockId");
+            }
+
+            Uri uri = ServiceConfig.GetLockedMessageUri(destination, sequenceNumber, lockId);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
+            return SendAsync(request)
+                .AsAsyncAction();
+        }
+
+        /// <summary>
+        /// Deletes previously locked message.
+        /// </summary>
+        /// <param name="destination">Topic/queue name.</param>
+        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
+        /// <param name="lockId">Lock ID.</param>
+        /// <returns>Result of the operation.</returns>
+        IAsyncAction IServiceBusService.DeleteMessageAsync(string destination, long sequenceNumber, string lockId)
+        {
+            if (destination == null)
+            {
+                throw new ArgumentNullException("destination");
+            }
+            if (lockId == null)
+            {
+                throw new ArgumentNullException("lockId");
+            }
+
+            Uri uri = ServiceConfig.GetLockedMessageUri(destination, sequenceNumber, lockId);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            return SendAsync(request)
+                .AsAsyncAction();
         }
 
         /// <summary>
@@ -469,7 +591,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, containerUri);
 
-            return SendAsync(request)
+            return SendAsync(request, CheckNoContent)
                 .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<TInfo>>();
         }
@@ -504,7 +626,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, itemUri);
 
-            return SendAsync(request)
+            return SendAsync(request, CheckNoContent)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<TInfo>();
         }
@@ -623,13 +745,19 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Detects errors in HTTP responses and translates them into exceptios.
         /// </summary>
         /// <param name="response">Source HTTP response.</param>
+        /// <param name="validators">Additional validators.</param>
         /// <returns>Processed HTTP response.</returns>
-        private HttpResponseMessage CheckResponse(HttpResponseMessage response)
+        private HttpResponseMessage CheckResponse(HttpResponseMessage response, IEnumerable<Func<HttpResponseMessage, HttpResponseMessage>> validators)
         {
             if (!response.IsSuccessStatusCode)
             {
-                //TODO: pass status, etc. into the exception.
-                throw new WindowsAzureServiceException();
+                throw new WindowsAzureServiceException(response);
+            }
+
+            // Pass the response through all validators.
+            foreach (Func<HttpResponseMessage, HttpResponseMessage> validator in validators)
+            {
+                response = validator(response);
             }
             return response;
         }
@@ -639,10 +767,24 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="request">Request to send.</param>
         /// <returns>HTTP response.</returns>
-        private Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        private Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, params Func<HttpResponseMessage, HttpResponseMessage>[] validators)
         {
             return Channel.SendAsync(request)
-                .ContinueWith<HttpResponseMessage>((task) => CheckResponse(task.Result), TaskContinuationOptions.OnlyOnRanToCompletion);
+                .ContinueWith<HttpResponseMessage>((task) => CheckResponse(task.Result, validators), TaskContinuationOptions.OnlyOnRanToCompletion);
+        }
+
+        /// <summary>
+        /// Throws exceptions for response with no content.
+        /// </summary>
+        /// <param name="response">Source response.</param>
+        /// <returns>Processed HTTP response.</returns>
+        private HttpResponseMessage CheckNoContent(HttpResponseMessage response)
+        {
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent || response.StatusCode == HttpStatusCode.ResetContent)
+            {
+                throw new WindowsAzureServiceException(response);
+            }
+            return response;
         }
     }
 }

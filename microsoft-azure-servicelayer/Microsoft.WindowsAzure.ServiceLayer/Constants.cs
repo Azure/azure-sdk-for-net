@@ -30,6 +30,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string ServiceBusAuthenticationUri   = "https://{0}-sb.accesscontrol.windows.net/wrapv0.9/";
         internal const string ServiceBusScopeUri            = "http://{0}.servicebus.windows.net/";
 
+        internal const string MessageDestination            = "{0}/messages/";
+        internal const string UnlockedMessagePath           = "{0}/messages/head?timeout={1}";
+        internal const string LockedMessagePath             = "{0}/messages/{1}/{2}";
+
         internal const string QueuesPath                    = "$Resources/Queues";
         internal const string QueuePath                     = "{0}";                                    // <queue>
 
@@ -46,7 +50,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
         internal const string SerializationContentType      = "application/xml";
         internal const string BodyContentType               = "application/atom+xml";
+        internal const string MessageContentType            = "application/atom+xml";
         internal const string WrapAuthenticationContentType = "application/x-www-form-urlencoded";
+
+        internal const string BrokerPropertiesHeader        = "BrokerProperties";
 
         internal const int CompatibilityLevel               = 20;                                       // Compatibility level for rules
     }
