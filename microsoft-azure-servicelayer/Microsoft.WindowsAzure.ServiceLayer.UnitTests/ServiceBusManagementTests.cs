@@ -171,7 +171,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         {
             // Create 3 items
             const int itemCount = 3;
-            Dictionary<string, TInfo> createdItems = new Dictionary<string, TInfo>(itemCount);
+            Dictionary<string, TInfo> createdItems = new Dictionary<string, TInfo>(StringComparer.OrdinalIgnoreCase);
 
             for (int i = 0; i < itemCount; i++)
             {
@@ -180,47 +180,51 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                 createdItems.Add(name, item);
             }
 
-            // Read all items one by one. Because tests are executed in random order,
-            // we cannot assume that the items we've created will be the only items
-            // on the server.
-            Dictionary<string, TInfo> allItems = new Dictionary<string, TInfo>();
-            int count = 0;
-
-            for (; ; )
+            try
             {
-                List<TInfo> readItems = new List<TInfo>(listItems(count, 1).AsTask().Result);
+                // Read all items one by one. Because tests are executed in random order,
+                // we cannot assume that the items we've created will be the only items
+                // on the server.
+                Dictionary<string, TInfo> allItems = new Dictionary<string, TInfo>(StringComparer.OrdinalIgnoreCase);
 
-                if (readItems.Count == 0)
+                for (; ; )
                 {
-                    break;
+                    List<TInfo> readItems = new List<TInfo>(listItems(allItems.Count, 1).AsTask().Result);
+
+                    if (readItems.Count == 0)
+                    {
+                        break;
+                    }
+                    Assert.Equal(readItems.Count, 1);
+                    TInfo item = readItems[0];
+                    string name = getName(item);
+
+                    Assert.False(allItems.ContainsKey(name));
+                    allItems.Add(name, item);
                 }
-                Assert.Equal(readItems.Count, 1);
-                TInfo item = readItems[0];
-                string name = getName(item);
 
-                Assert.False(allItems.ContainsKey(name));
-                allItems.Add(name, item);
+                Assert.True(allItems.Count >= createdItems.Count);
+
+                // Confirm that we've read everything we had created.
+                foreach (TInfo createdItem in createdItems.Values)
+                {
+                    Assert.True(allItems.ContainsKey(getName(createdItem)));
+                }
+
+                // Request more items that present in the database.
+                {
+                    List<TInfo> items = new List<TInfo>(
+                        listItems(0, allItems.Count + 1).AsTask().Result);
+                    Assert.Equal(items.Count, allItems.Count);
+                }
             }
-
-            Assert.True(allItems.Count >= createdItems.Count);
-
-            // Confirm that we've read everything we had created.
-            foreach (TInfo createdItem in createdItems.Values)
+            finally
             {
-                Assert.True(allItems.ContainsKey(getName(createdItem)));
-            }
-
-            // Request more items that present in the database.
-            {
-                List<TInfo> items = new List<TInfo>(
-                    listItems(0, allItems.Count + 1).AsTask().Result);
-                Assert.Equal(items.Count, allItems.Count);
-            }
-
-            // Delete all items we have created.
-            foreach (TInfo item in createdItems.Values)
-            {
-                deleteItem(item).AsTask().Wait();
+                // Delete all items we have created.
+                foreach (TInfo item in createdItems.Values)
+                {
+                    deleteItem(item).AsTask().Wait();
+                }
             }
         }
 

@@ -753,10 +753,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Action<SyndicationItem, TInfo> initAction,
             params Type[] extraTypes)
         {
-            containerUri = new Uri(
-                containerUri,
-                ServiceConfig.GetItemsRangeUri(firstItem, count));
-
+            containerUri = ServiceConfig.GetItemsRangeQuery(containerUri, firstItem, count);
             return GetItemsAsync(containerUri, initAction, extraTypes);
         }
 

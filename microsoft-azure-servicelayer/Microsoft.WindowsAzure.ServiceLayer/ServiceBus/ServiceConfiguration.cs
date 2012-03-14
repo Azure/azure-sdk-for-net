@@ -221,14 +221,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Gets a local URI for a range of items.
+        /// Gets a query for obtaining a range of items from the given 
+        /// container.
         /// </summary>
+        /// <param name="containerUri"></param>
         /// <param name="firstItem">Index of the first item.</param>
         /// <param name="count">Number of items to return.</param>
         /// <returns>Uri for the given range.</returns>
-        internal Uri GetItemsRangeUri(int firstItem, int count)
+        internal Uri GetItemsRangeQuery(Uri containerUri, int firstItem, int count)
         {
-            return FormatUri(Constants.RangeQuery, firstItem, count);
+            //TODO: is there a better way of adding query to a URI?
+            return FormatUri(Constants.RangeQueryUri, containerUri.ToString(), firstItem, count);
         }
 
         /// <summary>
