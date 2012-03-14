@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{53C097E2-7384-446B-836B-A7910993091E}</ProjectGuid>
-    <OutputType>winmdobj</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.WindowsAzure.ServiceLayer</RootNamespace>
     <AssemblyName>Microsoft.WindowsAzure.ServiceLayer</AssemblyName>
@@ -105,13 +105,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />
     <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
     <Compile Include="ServiceBus\BrokerProperties.cs" />
     <Compile Include="ServiceBus\CorrelationRuleFilter.cs" />
+    <Compile Include="ServiceBus\CustomPropertiesDictionary.cs" />
     <Compile Include="ServiceBus\EmptyRuleAction.cs" />
     <Compile Include="ServiceBus\FalseRuleFilter.cs" />
     <Compile Include="ServiceBus\IRuleAction.cs" />
