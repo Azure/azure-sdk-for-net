@@ -21,10 +21,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [Fact]
         public void NullArgumentsInConstructors()
         {
-            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings((byte[])null));
-            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings(null, "This is a test."));
-            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings("text/plain", (string)null));
-            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings((IInputStream)null));
+            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromBytes((byte[])null));
+            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText(null, "This is a test."));
+            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText("text/plain", (string)null));
+            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromStream((IInputStream)null));
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [Fact]
         public void NullArgumentsInMethods()
         {
-            BrokeredMessageSettings message = new BrokeredMessageSettings("text/plain", "This is a test.");
+            BrokeredMessageSettings message = BrokeredMessageSettings.CreateFromText("text/plain", "This is a test.");
             Assert.Throws<ArgumentNullException>(() => message.CopyContentToAsync(null));
         }
 
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void ReadAsString()
         {
             string originalBody = "This is only a test!";
-            BrokeredMessageSettings message = new BrokeredMessageSettings("text/plain", originalBody);
+            BrokeredMessageSettings message = BrokeredMessageSettings.CreateFromText("text/plain", originalBody);
 
             // Do it twice to make sure the position in the stream is restored after each read.
             for (int i = 0; i < 2; i++)
@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void ReadIntoStream()
         {
             Byte[] bytes = new byte[] { 1, 2, 3 };
-            BrokeredMessageSettings message = new BrokeredMessageSettings(bytes);
+            BrokeredMessageSettings message = BrokeredMessageSettings.CreateFromBytes(bytes);
 
             // Do it twice to make sure the position in the stream is restored after each read.
             for (int i = 0; i < 2; i++)

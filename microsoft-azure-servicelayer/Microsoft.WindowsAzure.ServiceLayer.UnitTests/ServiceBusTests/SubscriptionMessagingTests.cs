@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <returns>Message settings.</returns>
         BrokeredMessageSettings SendTextMessage(string messageText)
         {
-            BrokeredMessageSettings message = new BrokeredMessageSettings("text/plain", messageText);
+            BrokeredMessageSettings message = BrokeredMessageSettings.CreateFromText("text/plain", messageText);
             ServiceBus.SendMessageAsync(TopicName, message).AsTask().Wait();
             return message;
         }
