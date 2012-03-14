@@ -622,8 +622,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
-            return SendAsync(request, CheckNoContent)
-                .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+            return SendAsync(request)
+                .ContinueWith((t) => BrokeredMessageInfo.CreateFromPeekResponse(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
 
