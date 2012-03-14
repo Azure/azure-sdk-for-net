@@ -16,36 +16,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.ServiceLayer
 {
     /// <summary>
-    /// Exception that occurs as a result of calls to Windows Azure service.
+    /// Base class for all Windows Azure exceptions.
     /// </summary>
-    internal class WindowsAzureServiceException: WindowsAzureException
+    internal class WindowsAzureException: Exception
     {
-        /// <summary>
-        /// Gets the HTTP status code.
-        /// </summary>
-        internal HttpStatusCode StatusCode { get; private set; }
-
-        /// <summary>
-        /// Gets the reason string fore th exception.
-        /// </summary>
-        internal string ReasonPhrase { get; private set; }
-
-        /// <summary>
-        /// Constructor. 
-        /// </summary>
-        /// <param name="response">Source HTTP response.</param>
-        internal WindowsAzureServiceException(HttpResponseMessage response)
-        {
-            StatusCode = response.StatusCode;
-            ReasonPhrase = response.ReasonPhrase;
-        }
     }
 }

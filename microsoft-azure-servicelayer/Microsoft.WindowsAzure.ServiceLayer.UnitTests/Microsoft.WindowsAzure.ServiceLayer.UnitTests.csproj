@@ -115,7 +115,10 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="ServiceBusManagementTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestSubscriptionAttribute.cs" />
+    <Compile Include="ServiceBusTests\QueueMessagingTests.cs" />
+    <Compile Include="ServiceBusTests\UsesUniqueQueueAttribute.cs" />
+    <Compile Include="ServiceBusTests\UsesUniqueSubscriptionAttribute.cs" />
+    <Compile Include="ServiceBusTests\UsesUniqueTopicAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="xunit, Version=1.9.0.1566, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">

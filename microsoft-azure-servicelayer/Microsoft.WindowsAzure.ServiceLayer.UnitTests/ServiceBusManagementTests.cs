@@ -1,12 +1,26 @@
-﻿using System;
+﻿//
+// Copyright 2012 Microsoft Corporation
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
+using Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests;
 using Windows.Foundation;
-
 using Xunit;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
@@ -95,12 +109,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             SubscriptionInfoComparer = new InternalSubscriptionInfoComparer();
         }
 
-
-        private string GetUniqueEntityName()
-        {
-            return string.Format("UnitTests.{0}", Guid.NewGuid().ToString());
-        }
-
         private Dictionary<string, T> GetItems<T>(
             Func<IAsyncOperation<IEnumerable<T>>> getItems,
             Func<T, string> getName)
@@ -122,9 +130,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             string originalContent = getContent(filter);
             string ruleName = "rule." + Guid.NewGuid().ToString();
             RuleSettings settings = new RuleSettings(filter, null);
-            RuleInfo rule = Service.CreateRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName, settings)
+            RuleInfo rule = Service.CreateRuleAsync(UsesUniqueSubscriptionAttribute.TopicName, UsesUniqueSubscriptionAttribute.SubscriptionName, ruleName, settings)
                 .AsTask<RuleInfo>().Result;
-
 
             Assert.True(rule.Action is EmptyRuleAction);
             Assert.True(rule.Filter is FILTER);
@@ -139,7 +146,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             string originalContent = getContent(action);
             string ruleName = "rule." + Guid.NewGuid().ToString();
             RuleSettings settings = new RuleSettings(new SqlRuleFilter("1=1"), action);
-            RuleInfo rule = Service.CreateRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName, settings)
+            RuleInfo rule = Service.CreateRuleAsync(UsesUniqueSubscriptionAttribute.TopicName, UsesUniqueSubscriptionAttribute.SubscriptionName, ruleName, settings)
                 .AsTask<RuleInfo>().Result;
 
             Assert.IsType<ACTION>(rule.Action);
@@ -168,7 +175,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         public void QueueLifecycle()
         {
             // Create a queue.
-            string queueName = GetUniqueEntityName();
+            string queueName = Configuration.GetUniqueQueueName();
             QueueInfo newQueue = Service.CreateQueueAsync(queueName).AsTask<QueueInfo>().Result;
 
             // Confirm that the queue can be obtained from the server
@@ -196,16 +203,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Verifies that using an existing name for a new queue result in an exception.
         /// </summary>
         [Fact]
+        [UsesUniqueQueue]
         public void CreateQueueDuplicateName()
         {
             // Create a queue
-            string queueName = GetUniqueEntityName();
-            QueueInfo newQueue = Service.CreateQueueAsync(queueName).AsTask<QueueInfo>().Result;
+            string queueName = UsesUniqueQueueAttribute.QueueName;
 
             Task t = Service.CreateQueueAsync(queueName).AsTask();
             Assert.Throws<AggregateException>(() => t.Wait());
-
-            Service.DeleteQueueAsync(queueName).AsTask().Wait();
         }
 
         /// <summary>
@@ -214,7 +219,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void GetMissingQueue()
         {
-            string queueName = GetUniqueEntityName();
+            string queueName = Configuration.GetUniqueQueueName();
             Task t = Service.GetQueueAsync(queueName).AsTask();
             Assert.Throws<AggregateException>(() => t.Wait());
         }
@@ -225,7 +230,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void DeleteMissingQueue()
         {
-            string queueName = GetUniqueEntityName();
+            string queueName = Configuration.GetUniqueQueueName();
             Task t = Service.DeleteQueueAsync(queueName).AsTask();
             Assert.Throws<AggregateException>(() => t.Wait());
         }
@@ -236,7 +241,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void CreateQueueWithNonDefaultParams()
         {
-            string queueName = GetUniqueEntityName();
+            string queueName = Configuration.GetUniqueQueueName();
             QueueSettings settings = new QueueSettings();
 
             settings.DefaultMessageTimeToLive = TimeSpan.FromHours(24);
@@ -281,7 +286,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         public void TopicLifecycle()
         {
             // Create a topic
-            string topicName = GetUniqueEntityName();
+            string topicName = Configuration.GetUniqueTopicName();
             TopicInfo newTopic = Service.CreateTopicAsync(topicName).AsTask<TopicInfo>().Result;
 
             // Confirm that the topic can be obtained from the server.
@@ -308,16 +313,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests creating two topics with identical names.
         /// </summary>
         [Fact]
+        [UsesUniqueTopic]
         public void CreateTopicDuplicateName()
         {
             // Create a topic
-            string topicName = GetUniqueEntityName();
-            TopicInfo newTopic = Service.CreateTopicAsync(topicName).AsTask<TopicInfo>().Result;
+            string topicName = UsesUniqueTopicAttribute.TopicName;
 
             Task t = Service.CreateTopicAsync(topicName).AsTask();
             Assert.Throws<AggregateException>(() => t.Wait());
-
-            Service.DeleteTopicAsync(topicName).AsTask().Wait();
         }
 
         /// <summary>
@@ -326,7 +329,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void GetMissingTopic()
         {
-            string topicName = GetUniqueEntityName();
+            string topicName = Configuration.GetUniqueTopicName();
             Task t = Service.GetTopicAsync(topicName).AsTask() ;
             Assert.Throws<AggregateException>(() => t.Wait());
         }
@@ -337,7 +340,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void DeleteMissingTopic()
         {
-            string topicName = GetUniqueEntityName();
+            string topicName = Configuration.GetUniqueTopicName();
             Task t = Service.DeleteTopicAsync(topicName).AsTask();
             Assert.Throws<AggregateException>(() => t.Wait());
         }
@@ -348,7 +351,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void CreateTopicWithNonDefaultParams()
         {
-            string topicName = GetUniqueEntityName();
+            string topicName = Configuration.GetUniqueTopicName();
             TopicSettings settings = new TopicSettings();
 
             settings.DefaultMessageTimeToLive = TimeSpan.FromHours(24);
@@ -387,83 +390,62 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests the complete lifetime of a subscription.
         /// </summary>
         [Fact]
+        [UsesUniqueTopic]
         public void SubscriptionLifecycle()
         {
-            string topicName = GetUniqueEntityName();
-            string subscriptionName = GetUniqueEntityName();
+            string topicName = UsesUniqueTopicAttribute.TopicName;
+            string subscriptionName = Configuration.GetUniqueSubscriptionName();
 
-            Service.CreateTopicAsync(topicName).AsTask().Wait();
-            try
-            {
-                // Create a subscription.
-                SubscriptionInfo newSubscription = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
+            // Create a subscription.
+            SubscriptionInfo newSubscription = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
 
-                // Confirm that the subscription can be obtained from the server.
-                SubscriptionInfo storedSubscription = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
-                Assert.Equal(storedSubscription, newSubscription, SubscriptionInfoComparer);
+            // Confirm that the subscription can be obtained from the server.
+            SubscriptionInfo storedSubscription = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
+            Assert.Equal(storedSubscription, newSubscription, SubscriptionInfoComparer);
 
-                // Confirm that the subscription appears in the list.
-                Dictionary<string, SubscriptionInfo> subscriptions = GetItems(
-                    () => { return Service.ListSubscriptionsAsync(topicName); },
-                    (s) => { return s.Name; });
-                Assert.True(subscriptions.ContainsKey(subscriptionName));
-                Assert.Equal(newSubscription, subscriptions[subscriptionName], SubscriptionInfoComparer);
+            // Confirm that the subscription appears in the list.
+            Dictionary<string, SubscriptionInfo> subscriptions = GetItems(
+                () => { return Service.ListSubscriptionsAsync(topicName); },
+                (s) => { return s.Name; });
+            Assert.True(subscriptions.ContainsKey(subscriptionName));
+            Assert.Equal(newSubscription, subscriptions[subscriptionName], SubscriptionInfoComparer);
 
-                // Delete the subscription.
-                Service.DeleteSubscriptionAsync(topicName, subscriptionName).AsTask().Wait();
-                subscriptions = GetItems(
-                    () => { return Service.ListSubscriptionsAsync(topicName); },
-                    (s) => { return s.Name; });
+            // Delete the subscription.
+            Service.DeleteSubscriptionAsync(topicName, subscriptionName).AsTask().Wait();
+            subscriptions = GetItems(
+                () => { return Service.ListSubscriptionsAsync(topicName); },
+                (s) => { return s.Name; });
                 
-                Assert.False(subscriptions.ContainsKey(subscriptionName));
-            }
-            finally
-            {
-                Service.DeleteTopicAsync(topicName).AsTask().Wait();
-            }
+            Assert.False(subscriptions.ContainsKey(subscriptionName));
         }
 
         /// <summary>
         /// Tests creating two subscriptions with identical names.
         /// </summary>
         [Fact]
+        [UsesUniqueTopic]
         public void CreateSubscriptionDuplicateName()
         {
-            string topicName = GetUniqueEntityName();
-            string subscriptionName = GetUniqueEntityName();
+            string topicName = UsesUniqueTopicAttribute.TopicName;
+            string subscriptionName = Configuration.GetUniqueSubscriptionName();
 
-            Service.CreateTopicAsync(topicName).AsTask().Wait();
-            try
-            {
-                Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask().Wait();
-                Task<SubscriptionInfo> task = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask();
-                Assert.Throws<AggregateException>(() => task.Wait());
-            }
-            finally
-            {
-                Service.DeleteTopicAsync(topicName).AsTask().Wait();
-            }
+            Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask().Wait();
+            Task<SubscriptionInfo> task = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask();
+            Assert.Throws<AggregateException>(() => task.Wait());
         }
 
         /// <summary>
         /// Tests getting a non-existing subscription from an existing topic.
         /// </summary>
         [Fact]
+        [UsesUniqueTopic]
         public void GetMissingSubscription()
         {
-            string topicName = GetUniqueEntityName();
-            string subscriptionName = GetUniqueEntityName();
+            string topicName = UsesUniqueTopicAttribute.TopicName;
+            string subscriptionName = Configuration.GetUniqueSubscriptionName();
 
-            Service.CreateTopicAsync(topicName).AsTask().Wait();
-            try
-            {
-                Task<SubscriptionInfo> task = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask();
-                Assert.Throws<AggregateException>(() => task.Wait());
-            }
-            finally
-            {
-                Service.DeleteTopicAsync(topicName).AsTask().Wait();
-            }
+            Task<SubscriptionInfo> task = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask();
+            Assert.Throws<AggregateException>(() => task.Wait());
         }
 
         /// <summary>
@@ -472,8 +454,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void GetSubscriptionFromMissingTopic()
         {
-            string topicName = GetUniqueEntityName();
-            string subscriptionName = GetUniqueEntityName();
+            string topicName = Configuration.GetUniqueTopicName();
+            string subscriptionName = Configuration.GetUniqueSubscriptionName();
 
             Task<SubscriptionInfo> task = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask();
             Assert.Throws<AggregateException>(() => task.Wait());
@@ -485,7 +467,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void ListSubscriptionsInMissingTopic()
         {
-            string topicName = GetUniqueEntityName();
+            string topicName = Configuration.GetUniqueTopicName();
 
             List<SubscriptionInfo> subscriptions = new List<SubscriptionInfo>(
                 Service.ListSubscriptionsAsync(topicName).AsTask<IEnumerable<SubscriptionInfo>>().Result);
@@ -496,40 +478,27 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests deleting a non-existing subscription.
         /// </summary>
         [Fact]
+        [UsesUniqueTopic]
         public void DeleteMissingSubscription()
         {
-            string topicName = GetUniqueEntityName();
-            string subscriptionName = GetUniqueEntityName();
+            string topicName = UsesUniqueTopicAttribute.TopicName;
+            string subscriptionName = Configuration.GetUniqueSubscriptionName();
 
-            Service.CreateTopicAsync(topicName).AsTask().Wait();
-            try
-            {
-                Task task = Service.DeleteSubscriptionAsync(topicName, subscriptionName).AsTask();
-                Assert.Throws<AggregateException>(() => task.Wait());
-            }
-            finally
-            {
-                Service.DeleteTopicAsync(topicName).AsTask().Wait();
-            }
+            Task task = Service.DeleteSubscriptionAsync(topicName, subscriptionName).AsTask();
+            Assert.Throws<AggregateException>(() => task.Wait());
         }
 
         /// <summary>
         /// Tests subscribing to a queue.
         /// </summary>
         [Fact]
+        [UsesUniqueQueue]
         public void SubscribeToQueue()
         {
-            string queueName = GetUniqueEntityName();
-            Service.CreateQueueAsync(queueName).AsTask().Wait();
-            try
-            {
-                string subscriptionName = GetUniqueEntityName();
-                Assert.Throws<AggregateException>(() => Service.CreateSubscriptionAsync(queueName, subscriptionName).AsTask().Wait());
-            }
-            finally
-            {
-                Service.DeleteQueueAsync(queueName).AsTask().Wait();
-            }
+            string queueName = UsesUniqueQueueAttribute.QueueName;
+            string subscriptionName = Configuration.GetUniqueSubscriptionName();
+
+            Assert.Throws<AggregateException>(() => Service.CreateSubscriptionAsync(queueName, subscriptionName).AsTask().Wait());
         }
 
         /// <summary>
@@ -566,7 +535,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests SQL rule filters.
         /// </summary>
         [Fact]
-        [TestSubscription]
+        [UsesUniqueSubscription]
         public void SqlRuleFilter()
         {
             TestRule<SqlRuleFilter>(
@@ -578,7 +547,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests true rule filters.
         /// </summary>
         [Fact]
-        [TestSubscription]
+        [UsesUniqueSubscription]
         public void TrueRuleFilter()
         {
             TestRule<TrueRuleFilter>(
@@ -590,7 +559,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests false rule filters.
         /// </summary>
         [Fact]
-        [TestSubscription]
+        [UsesUniqueSubscription]
         public void FalseRuleFilter()
         {
             TestRule<FalseRuleFilter>(
@@ -602,7 +571,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests correlation rule filters.
         /// </summary>
         [Fact]
-        [TestSubscription]
+        [UsesUniqueSubscription]
         public void CorrelationRuleFilter()
         {
             TestRule<CorrelationRuleFilter>(
@@ -614,7 +583,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests empty rule action.
         /// </summary>
         [Fact]
-        [TestSubscription]
+        [UsesUniqueSubscription]
         public void EmptyRuleAction()
         {
             TestAction<EmptyRuleAction>(() => new EmptyRuleAction(), (a) => { return string.Empty; });
@@ -624,7 +593,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests SQL rule action.
         /// </summary>
         [Fact]
-        [TestSubscription]
+        [UsesUniqueSubscription]
         public void SqlRuleAction()
         {
             TestAction<SqlRuleAction>(() => new SqlRuleAction("set x=y"), (a) => { return a.Action; });
@@ -634,20 +603,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests complete lifecycle of a rule.
         /// </summary>
         [Fact]
-        [TestSubscription]
+        [UsesUniqueSubscription]
         public void RuleLifecycle()
         {
             // Create rule.
-            SqlRuleFilter filter = new ServiceBus.SqlRuleFilter("1=1");
+            SqlRuleFilter filter = new SqlRuleFilter("1=1");
             RuleSettings settings = new RuleSettings(filter, null);
             string ruleName = "testrule." + Guid.NewGuid().ToString();
-            RuleInfo rule = Service.CreateRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName, settings)
+            RuleInfo rule = Service.CreateRuleAsync(UsesUniqueSubscriptionAttribute.TopicName, UsesUniqueSubscriptionAttribute.SubscriptionName, ruleName, settings)
                 .AsTask<RuleInfo>().Result;
 
             Assert.True(string.Equals(ruleName, rule.Name, StringComparison.OrdinalIgnoreCase));
 
             // Read the rule
-            RuleInfo savedRule = Service.GetRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName)
+            RuleInfo savedRule = Service.GetRuleAsync(UsesUniqueSubscriptionAttribute.TopicName, UsesUniqueSubscriptionAttribute.SubscriptionName, ruleName)
                 .AsTask<RuleInfo>().Result;
             Assert.True(string.Equals(ruleName, savedRule.Name, StringComparison.OrdinalIgnoreCase));
             Assert.True(savedRule.Action is EmptyRuleAction);
@@ -656,14 +625,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
 
             // Read from the list.
             Dictionary<string, RuleInfo> allRules = GetItems<RuleInfo>(
-                () => { return Service.ListRulesAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName); },
+                () => { return Service.ListRulesAsync(UsesUniqueSubscriptionAttribute.TopicName, UsesUniqueSubscriptionAttribute.SubscriptionName); },
                 (r) => { return r.Name; });
             Assert.True(allRules.ContainsKey(ruleName));
 
             // Delete the rule.
-            Service.DeleteRuleAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName, ruleName).AsTask().Wait();
+            Service.DeleteRuleAsync(UsesUniqueSubscriptionAttribute.TopicName, UsesUniqueSubscriptionAttribute.SubscriptionName, ruleName).AsTask().Wait();
             allRules = GetItems<RuleInfo>(
-                () => { return Service.ListRulesAsync(TestSubscriptionAttribute.TopicName, TestSubscriptionAttribute.SubscriptionName); },
+                () => { return Service.ListRulesAsync(UsesUniqueSubscriptionAttribute.TopicName, UsesUniqueSubscriptionAttribute.SubscriptionName); },
                 (r) => { return r.Name; });
             Assert.False(allRules.ContainsKey(ruleName));
         }

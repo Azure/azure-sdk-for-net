@@ -84,8 +84,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Constructor for serialization purposes.
         /// </summary>
-        internal TopicInfo()
+        public TopicInfo()
         {
+            //TODO: make the constructor internal once the issue with JavaScript
+            // serialization has been fixed.
         }
 
         /// <summary>

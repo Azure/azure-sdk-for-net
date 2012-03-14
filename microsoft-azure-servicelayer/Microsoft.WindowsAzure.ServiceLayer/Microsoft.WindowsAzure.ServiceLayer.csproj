@@ -108,6 +108,9 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />
+    <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
+    <Compile Include="ServiceBus\BrokerProperties.cs" />
     <Compile Include="ServiceBus\CorrelationRuleFilter.cs" />
     <Compile Include="ServiceBus\EmptyRuleAction.cs" />
     <Compile Include="ServiceBus\FalseRuleFilter.cs" />
@@ -123,6 +126,7 @@
     <Compile Include="ServiceBus\TopicSettings.cs" />
     <Compile Include="ServiceBus\SubscriptionSettings.cs" />
     <Compile Include="ServiceBus\TrueRuleFilter.cs" />
+    <Compile Include="WindowsAzureException.cs" />
     <Compile Include="WindowsAzureServiceException.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="HttpQueryStringParser.cs" />

@@ -163,6 +163,39 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets a URI for sending messages to the given destination.
+        /// </summary>
+        /// <param name="destination">Destination path (queue/topic name).</param>
+        /// <returns>URI of the destination.</returns>
+        internal Uri GetDestinationUri(string destination)
+        {
+            return FormatUri(Constants.MessageDestination, destination);
+        }
+
+        /// <summary>
+        /// Gets URI of an unlocked message in the queue/topic.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="lockDuration">Duration of lock.</param>
+        /// <returns>URI of the unlocked message.</returns>
+        internal Uri GetUnlockedMessageUri(string destination, TimeSpan lockDuration)
+        {
+            return FormatUri(Constants.UnlockedMessagePath, destination, lockDuration.Seconds);
+        }
+
+        /// <summary>
+        /// Gets URI to a locked message.
+        /// </summary>
+        /// <param name="destination">Queue/topic name.</param>
+        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
+        /// <param name="lockId">Lock ID of the message.</param>
+        /// <returns>URI of the locked message.</returns>
+        internal Uri GetLockedMessageUri(string destination, long sequenceNumber, string lockId)
+        {
+            return FormatUri(Constants.LockedMessagePath, destination, sequenceNumber, lockId);
+        }
+
+        /// <summary>
         /// Generates URI with the given parameters.
         /// </summary>
         /// <param name="format">Format string for the path.</param>
