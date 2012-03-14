@@ -196,10 +196,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Reads the content as an array of bytes.
         /// </summary>
         /// <returns>Array of bytes.</returns>
-        public IAsyncOperation<byte[]> ReadContentAsBytesAsync()
+        public IAsyncOperation<IEnumerable<byte>> ReadContentAsBytesAsync()
         {
             return _content
                 .ReadAsByteArrayAsync()
+                .ContinueWith(t => (IEnumerable<byte>)t.Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
 

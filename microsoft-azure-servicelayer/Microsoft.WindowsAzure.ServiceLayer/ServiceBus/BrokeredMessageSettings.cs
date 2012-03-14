@@ -20,6 +20,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Foundation.Metadata;
 using Windows.Storage.Streams;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
@@ -135,7 +136,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Constructor for a message consisting of text.
         /// </summary>
         /// <param name="messageText">Text of the message.</param>
-        public BrokeredMessageSettings(string contentType, string messageText)
+        private BrokeredMessageSettings(string contentType, string messageText)
         {
             if (contentType == null)
             {
@@ -145,6 +146,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("messageText");
             }
+
             _content = new StringContent(messageText, Encoding.UTF8, contentType);
             _brokerProperties = new BrokerProperties();
             _customProperties = new CustomPropertiesDictionary();
@@ -155,12 +157,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="contentType">Content type.</param>
         /// <param name="messageBytes">Content of the message.</param>
-        public BrokeredMessageSettings(byte[] messageBytes)
+        private BrokeredMessageSettings(byte[] messageBytes)
         {
             if (messageBytes == null)
             {
                 throw new ArgumentNullException("messageBytes");
             }
+
             _content = new ByteArrayContent(messageBytes);
             _brokerProperties = new BrokerProperties();
             _customProperties = new CustomPropertiesDictionary();
@@ -171,15 +174,69 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="contentType">Content type.</param>
         /// <param name="stream">Stream with the content.</param>
-        public BrokeredMessageSettings(IInputStream stream)
+        private BrokeredMessageSettings(IInputStream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
+
             _content = new StreamContent(stream.AsStreamForRead());
             _brokerProperties = new BrokerProperties();
             _customProperties = new CustomPropertiesDictionary();
+        }
+
+        /// <summary>
+        /// Creates a message from the given text. This method exists only
+        /// becase JavaScript cannot work with multiple constructors with
+        /// identical number of parameters.
+        /// </summary>
+        /// <param name="contentType">Content type.</param>
+        /// <param name="messageText">Message text.</param>
+        /// <returns>Message settings.</returns>
+        public static BrokeredMessageSettings CreateFromText(string contentType, string messageText)
+        {
+            if (messageText == null)
+            {
+                throw new ArgumentNullException("messageText");
+            }
+
+            return new BrokeredMessageSettings(contentType: contentType, messageText: messageText);
+        }
+
+        /// <summary>
+        /// Creates a message object from the array of bytes. This method 
+        /// simply instantiates the object with the corresponding constructor; 
+        /// it is defined only because JavaScript does not support multiple 
+        /// constructors with the same number of parameters.
+        /// </summary>
+        /// <param name="messageBytes">Array of bytes.</param>
+        /// <returns>Message settings.</returns>
+        public static BrokeredMessageSettings CreateFromBytes(byte[] messageBytes)
+        {
+            if (messageBytes == null)
+            {
+                throw new ArgumentNullException("messageBytes");
+            }
+
+            return new BrokeredMessageSettings(messageBytes);
+        }
+
+        /// <summary>
+        /// Creates a message object from the given stream. This method
+        /// exists only because JavaScript does not support having multiple
+        /// constructors with the same number of parameters.
+        /// </summary>
+        /// <param name="stream">Stream with message data.</param>
+        /// <returns>Message settings.</returns>
+        public static BrokeredMessageSettings CreateFromStream(IInputStream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
+            return new BrokeredMessageSettings(stream);
         }
 
         /// <summary>
@@ -197,10 +254,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Reads message's body as an array of bytes.
         /// </summary>
         /// <returns>Message body.</returns>
-        public IAsyncOperation<byte[]> ReadContentAsBytesAsync()
+        public IAsyncOperation<IEnumerable<byte>> ReadContentAsBytesAsync()
         {
             return _content
                 .ReadAsByteArrayAsync()
+                .ContinueWith(t => (IEnumerable<byte>)t.Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
 
@@ -227,6 +285,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("stream");
             }
+
             return _content
                 .CopyToAsync(stream.AsStreamForWrite())
                 .AsAsyncAction();
