@@ -33,6 +33,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         IAsyncOperation<IEnumerable<QueueInfo>> ListQueuesAsync();
 
         /// <summary>
+        /// Lists available queues in the given range.
+        /// </summary>
+        /// <param name="firstItem">Index of the first item in range.</param>
+        /// <param name="count">Number items to return.</param>
+        /// <returns>Collection of queues.</returns>
+        IAsyncOperation<IEnumerable<QueueInfo>> ListQueuesAsync(int firstItem, int count);
+
+        /// <summary>
         /// Gets a queue with the given name.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>

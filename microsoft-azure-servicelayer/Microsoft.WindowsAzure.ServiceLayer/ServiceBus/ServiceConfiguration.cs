@@ -221,6 +221,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets a local URI for a range of items.
+        /// </summary>
+        /// <param name="firstItem">Index of the first item.</param>
+        /// <param name="count">Number of items to return.</param>
+        /// <returns>Uri for the given range.</returns>
+        internal Uri GetItemsRangeUri(int firstItem, int count)
+        {
+            return FormatUri(Constants.RangeQuery, firstItem, count);
+        }
+
+        /// <summary>
         /// Generates URI with the given parameters.
         /// </summary>
         /// <param name="format">Format string for the path.</param>

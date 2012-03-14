@@ -80,6 +80,33 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets available queues in the given range.
+        /// </summary>
+        /// <param name="firstItem">Index of the first item in range.</param>
+        /// <param name="count">Number of items to return.</param>
+        /// <returns>Collection of queues.</returns>
+        IAsyncOperation<IEnumerable<QueueInfo>> IServiceBusService.ListQueuesAsync(int firstItem, int count)
+        {
+            if (firstItem < 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            if (count <= 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+
+            return GetItemsAsync<QueueInfo>(
+                ServiceConfig.GetQueuesContainerUri(),
+                firstItem, count,
+                InitQueue);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Gets the queue with the given name.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
@@ -707,6 +734,30 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             return SendAsync(request, CheckNoContent)
                 .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<TInfo>>();
+        }
+
+        /// <summary>
+        /// Gets service bus items of the given type in the specified range.
+        /// </summary>
+        /// <typeparam name="TInfo">Item type.</typeparam>
+        /// <param name="containerUri">URI of a container with items.</param>
+        /// <param name="firstItem">Index of the first item.</param>
+        /// <param name="count">Number of items to return.</param>
+        /// <param name="initAction">Initialization item for a single item.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
+        /// <returns>A collection of items.</returns>
+        private IAsyncOperation<IEnumerable<TInfo>> GetItemsAsync<TInfo>(
+            Uri containerUri,
+            int firstItem,
+            int count,
+            Action<SyndicationItem, TInfo> initAction,
+            params Type[] extraTypes)
+        {
+            containerUri = new Uri(
+                containerUri,
+                ServiceConfig.GetItemsRangeUri(firstItem, count));
+
+            return GetItemsAsync(containerUri, initAction, extraTypes);
         }
 
         /// <summary>

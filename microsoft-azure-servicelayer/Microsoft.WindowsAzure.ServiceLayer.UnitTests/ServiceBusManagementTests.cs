@@ -156,6 +156,88 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         }
 
         /// <summary>
+        /// Tests listing items in the given range.
+        /// </summary>
+        /// <typeparam name="TInfo">Item type.</typeparam>
+        /// <param name="createItem">Method for creating an item.</param>
+        /// <param name="listItems">Method for listing items in a range.</param>
+        /// <param name="deleteItem">Method for deleting an item.</param>
+        /// <param name="getName">Method for getting item's name.</param>
+        private void TestListItemsInRange<TInfo>(
+            Func<IAsyncOperation<TInfo>> createItem,
+            Func<int, int, IAsyncOperation<IEnumerable<TInfo>>> listItems,
+            Func<TInfo, IAsyncAction> deleteItem,
+            Func<TInfo, string> getName)
+        {
+            // Create 3 items
+            const int itemCount = 3;
+            Dictionary<string, TInfo> createdItems = new Dictionary<string, TInfo>(itemCount);
+
+            for (int i = 0; i < itemCount; i++)
+            {
+                TInfo item = createItem().AsTask().Result;
+                string name = getName(item);
+                createdItems.Add(name, item);
+            }
+
+            // Read all items one by one. Because tests are executed in random order,
+            // we cannot assume that the items we've created will be the only items
+            // on the server.
+            Dictionary<string, TInfo> allItems = new Dictionary<string, TInfo>();
+            int count = 0;
+
+            for (; ; )
+            {
+                List<TInfo> readItems = new List<TInfo>(listItems(count, 1).AsTask().Result);
+
+                if (readItems.Count == 0)
+                {
+                    break;
+                }
+                Assert.Equal(readItems.Count, 1);
+                TInfo item = readItems[0];
+                string name = getName(item);
+
+                Assert.False(allItems.ContainsKey(name));
+                allItems.Add(name, item);
+            }
+
+            Assert.True(allItems.Count >= createdItems.Count);
+
+            // Confirm that we've read everything we had created.
+            foreach (TInfo createdItem in createdItems.Values)
+            {
+                Assert.True(allItems.ContainsKey(getName(createdItem)));
+            }
+
+            // Request more items that present in the database.
+            {
+                List<TInfo> items = new List<TInfo>(
+                    listItems(0, allItems.Count + 1).AsTask().Result);
+                Assert.Equal(items.Count, allItems.Count);
+            }
+
+            // Delete all items we have created.
+            foreach (TInfo item in createdItems.Values)
+            {
+                deleteItem(item).AsTask().Wait();
+            }
+        }
+
+        /// <summary>
+        /// Tests specifying invalid arguments in list items method.
+        /// </summary>
+        /// <typeparam name="T">Item type.</typeparam>
+        /// <param name="listItems">List items method.</param>
+        private void TestInvalidArgsInListItems<T>(Func<int, int, IAsyncOperation<IEnumerable<T>>> listItems)
+        {
+            Assert.Throws<ArgumentException>(() => listItems(-1, 1));
+            Assert.Throws<ArgumentException>(() => listItems(0, 0));
+            Assert.Throws<ArgumentException>(() => listItems(0, -1));
+        }
+
+
+        /// <summary>
         /// Tests null arguments in queue management API.
         /// </summary>
         [Fact]
@@ -197,6 +279,29 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                 (queue) => { return queue.Name; });
 
             Assert.False(queues.ContainsKey(queueName));
+        }
+
+        /// <summary>
+        /// Tests listing queues in the given range.
+        /// </summary>
+        [Fact]
+        public void ListQueuesInRange()
+        {
+            TestListItemsInRange<QueueInfo>(
+                () => Service.CreateQueueAsync(Configuration.GetUniqueQueueName()),
+                (firstItem, count) => Service.ListQueuesAsync(firstItem, count),
+                (queue) => Service.DeleteQueueAsync(queue.Name),
+                (queue) => queue.Name);
+        }
+
+        /// <summary>
+        /// Tests specifyin invalid arguments in ListQueues method.
+        /// </summary>
+        [Fact]
+        public void InvalidArgsInListQueues()
+        {
+            TestInvalidArgsInListItems<QueueInfo>(
+                (firstItem, count) => Service.ListQueuesAsync(firstItem, count));
         }
 
         /// <summary>
