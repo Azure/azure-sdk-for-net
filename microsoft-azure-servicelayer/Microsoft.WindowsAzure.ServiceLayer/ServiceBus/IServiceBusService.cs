@@ -76,6 +76,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         IAsyncOperation<IEnumerable<TopicInfo>> ListTopicsAsync();
 
         /// <summary>
+        /// Lists topics in the given range.
+        /// </summary>
+        /// <param name="firstItem">Index of the first topic.</param>
+        /// <param name="count">Number of topics in the range.</param>
+        /// <returns>Collection of topics.</returns>
+        IAsyncOperation<IEnumerable<TopicInfo>> ListTopicsAsync(int firstItem, int count);
+
+        /// <summary>
         /// Creates a topic with the given name and default settings.
         /// </summary>
         /// <param name="topicName">Topic name.</param>
@@ -129,6 +137,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         IAsyncOperation<IEnumerable<SubscriptionInfo>> ListSubscriptionsAsync(string topicName);
 
         /// <summary>
+        /// Gets subscription in the given range.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="firstItem">Index of the first subscription.</param>
+        /// <param name="count">Number of subscriptions in the range.</param>
+        /// <returns>Collection of subscriptions.</returns>
+        IAsyncOperation<IEnumerable<SubscriptionInfo>> ListSubscriptionsAsync(string topicName, int firstItem, int count);
+
+        /// <summary>
         /// Gets a subsciption with the given name for the given topic.
         /// </summary>
         /// <param name="topicName">Topic name.</param>
@@ -161,6 +178,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
         /// <returns>All rules for the subscription.</returns>
         IAsyncOperation<IEnumerable<RuleInfo>> ListRulesAsync(string topicName, string subscriptionName);
+
+        /// <summary>
+        /// Lists rules in the given range for the given subscription.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <param name="firstItem">Index of the first rule.</param>
+        /// <param name="count">Number of rules in the range.</param>
+        /// <returns>Collection of rules.</returns>
+        IAsyncOperation<IEnumerable<RuleInfo>> ListRulesAsync(string topicName, string subscriptionName, int firstItem, int count);
 
         /// <summary>
         /// Gets a subscription rule with the given name.

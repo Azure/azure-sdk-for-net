@@ -192,6 +192,30 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Lists topics in the given range.
+        /// </summary>
+        /// <param name="firstItem">Index of the first topic.</param>
+        /// <param name="count">Number of topics in the range.</param>
+        /// <returns>Collection of topics.</returns>
+        IAsyncOperation<IEnumerable<TopicInfo>> IServiceBusService.ListTopicsAsync(int firstItem, int count)
+        {
+            if (firstItem < 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            if (count <= 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            return GetItemsAsync<TopicInfo>(
+                ServiceConfig.GetTopicsContainerUri(),
+                firstItem, count,
+                InitTopic);
+        }
+
+        /// <summary>
         /// Creates a topic with the given name and default settings.
         /// </summary>
         /// <param name="topicName">Topic name.</param>
@@ -339,6 +363,36 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets subscription in the given range for the topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="firstItem">Index of the first rule.</param>
+        /// <param name="count">Number of rules in the range.</param>
+        /// <returns>Collection of subscriptions.</returns>
+        IAsyncOperation<IEnumerable<SubscriptionInfo>> IServiceBusService.ListSubscriptionsAsync(string topicName, int firstItem, int count)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException(topicName);
+            }
+            if (firstItem < 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            if (count <= 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+
+            return GetItemsAsync<SubscriptionInfo>(
+                ServiceConfig.GetSubscriptionsContainerUri(topicName),
+                firstItem, count,
+                InitSubscription);
+        }
+
+        /// <summary>
         /// Gets a subscription with the given name for the given topic.
         /// </summary>
         /// <param name="topicName">Topic name.</param>
@@ -429,12 +483,47 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
             if (subscriptionName == null)
             {
-
                 throw new ArgumentNullException("subscriptionName");
             }
 
             return GetItemsAsync<RuleInfo>(
                 ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
+                InitRule,
+                ExtraRuleTypes);
+        }
+
+        /// <summary>
+        /// Lists rules in the given range for a subscription.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <param name="firstItem">Index of the first rule in the range.</param>
+        /// <param name="count">Number of rules in the range.</param>
+        /// <returns>Collection of rules.</returns>
+        IAsyncOperation<IEnumerable<RuleInfo>> IServiceBusService.ListRulesAsync(string topicName, string subscriptionName, int firstItem, int count)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            if (firstItem < 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            if (count <= 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+
+            return GetItemsAsync<RuleInfo>(
+                ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
+                firstItem, count,
                 InitRule,
                 ExtraRuleTypes);
         }
