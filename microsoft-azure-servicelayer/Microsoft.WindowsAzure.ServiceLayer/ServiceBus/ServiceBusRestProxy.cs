@@ -80,6 +80,33 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets available queues in the given range.
+        /// </summary>
+        /// <param name="firstItem">Index of the first item in range.</param>
+        /// <param name="count">Number of items to return.</param>
+        /// <returns>Collection of queues.</returns>
+        IAsyncOperation<IEnumerable<QueueInfo>> IServiceBusService.ListQueuesAsync(int firstItem, int count)
+        {
+            if (firstItem < 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            if (count <= 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+
+            return GetItemsAsync<QueueInfo>(
+                ServiceConfig.GetQueuesContainerUri(),
+                firstItem, count,
+                InitQueue);
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Gets the queue with the given name.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
@@ -161,6 +188,30 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             return GetItemsAsync<TopicInfo>(
                 ServiceConfig.GetTopicsContainerUri(),
+                InitTopic);
+        }
+
+        /// <summary>
+        /// Lists topics in the given range.
+        /// </summary>
+        /// <param name="firstItem">Index of the first topic.</param>
+        /// <param name="count">Number of topics in the range.</param>
+        /// <returns>Collection of topics.</returns>
+        IAsyncOperation<IEnumerable<TopicInfo>> IServiceBusService.ListTopicsAsync(int firstItem, int count)
+        {
+            if (firstItem < 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            if (count <= 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            return GetItemsAsync<TopicInfo>(
+                ServiceConfig.GetTopicsContainerUri(),
+                firstItem, count,
                 InitTopic);
         }
 
@@ -312,6 +363,36 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets subscription in the given range for the topic.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="firstItem">Index of the first rule.</param>
+        /// <param name="count">Number of rules in the range.</param>
+        /// <returns>Collection of subscriptions.</returns>
+        IAsyncOperation<IEnumerable<SubscriptionInfo>> IServiceBusService.ListSubscriptionsAsync(string topicName, int firstItem, int count)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException(topicName);
+            }
+            if (firstItem < 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            if (count <= 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+
+            return GetItemsAsync<SubscriptionInfo>(
+                ServiceConfig.GetSubscriptionsContainerUri(topicName),
+                firstItem, count,
+                InitSubscription);
+        }
+
+        /// <summary>
         /// Gets a subscription with the given name for the given topic.
         /// </summary>
         /// <param name="topicName">Topic name.</param>
@@ -402,12 +483,47 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
             if (subscriptionName == null)
             {
-
                 throw new ArgumentNullException("subscriptionName");
             }
 
             return GetItemsAsync<RuleInfo>(
                 ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
+                InitRule,
+                ExtraRuleTypes);
+        }
+
+        /// <summary>
+        /// Lists rules in the given range for a subscription.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <param name="firstItem">Index of the first rule in the range.</param>
+        /// <param name="count">Number of rules in the range.</param>
+        /// <returns>Collection of rules.</returns>
+        IAsyncOperation<IEnumerable<RuleInfo>> IServiceBusService.ListRulesAsync(string topicName, string subscriptionName, int firstItem, int count)
+        {
+            if (topicName == null)
+            {
+                throw new ArgumentNullException("topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ArgumentNullException("subscriptionName");
+            }
+            if (firstItem < 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+            if (count <= 0)
+            {
+                //TODO: error message.
+                throw new ArgumentException();
+            }
+
+            return GetItemsAsync<RuleInfo>(
+                ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
+                firstItem, count,
                 InitRule,
                 ExtraRuleTypes);
         }
@@ -506,8 +622,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
-            return SendAsync(request, CheckNoContent)
-                .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+            return SendAsync(request)
+                .ContinueWith((t) => BrokeredMessageInfo.CreateFromPeekResponse(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
 
@@ -706,6 +822,27 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             return SendAsync(request, CheckNoContent)
                 .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<TInfo>>();
+        }
+
+        /// <summary>
+        /// Gets service bus items of the given type in the specified range.
+        /// </summary>
+        /// <typeparam name="TInfo">Item type.</typeparam>
+        /// <param name="containerUri">URI of a container with items.</param>
+        /// <param name="firstItem">Index of the first item.</param>
+        /// <param name="count">Number of items to return.</param>
+        /// <param name="initAction">Initialization item for a single item.</param>
+        /// <param name="extraTypes">Extra types for deserialization.</param>
+        /// <returns>A collection of items.</returns>
+        private IAsyncOperation<IEnumerable<TInfo>> GetItemsAsync<TInfo>(
+            Uri containerUri,
+            int firstItem,
+            int count,
+            Action<SyndicationItem, TInfo> initAction,
+            params Type[] extraTypes)
+        {
+            containerUri = ServiceConfig.GetItemsRangeQuery(containerUri, firstItem, count);
+            return GetItemsAsync(containerUri, initAction, extraTypes);
         }
 
         /// <summary>
