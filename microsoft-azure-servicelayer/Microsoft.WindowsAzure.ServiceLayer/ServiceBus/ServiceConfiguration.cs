@@ -221,6 +221,19 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets a query for obtaining a range of items from the given 
+        /// container.
+        /// </summary>
+        /// <param name="containerUri"></param>
+        /// <param name="firstItem">Index of the first item.</param>
+        /// <param name="count">Number of items to return.</param>
+        /// <returns>Uri for the given range.</returns>
+        internal Uri GetItemsRangeQuery(Uri containerUri, int firstItem, int count)
+        {
+            return FormatUri(Constants.RangeQueryUri, containerUri.ToString(), firstItem, count);
+        }
+
+        /// <summary>
         /// Generates URI with the given parameters.
         /// </summary>
         /// <param name="format">Format string for the path.</param>

@@ -156,6 +156,91 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         }
 
         /// <summary>
+        /// Tests listing items in the given range.
+        /// </summary>
+        /// <typeparam name="TInfo">Item type.</typeparam>
+        /// <param name="createItem">Method for creating an item.</param>
+        /// <param name="listItems">Method for listing items in a range.</param>
+        /// <param name="deleteItem">Method for deleting an item.</param>
+        /// <param name="getName">Method for getting item's name.</param>
+        private void TestListItemsInRange<TInfo>(
+            Func<IAsyncOperation<TInfo>> createItem,
+            Func<int, int, IAsyncOperation<IEnumerable<TInfo>>> listItems,
+            Func<TInfo, IAsyncAction> deleteItem,
+            Func<TInfo, string> getName)
+        {
+            // Create 3 items
+            const int itemCount = 3;
+            Dictionary<string, TInfo> createdItems = new Dictionary<string, TInfo>(StringComparer.OrdinalIgnoreCase);
+
+            for (int i = 0; i < itemCount; i++)
+            {
+                TInfo item = createItem().AsTask().Result;
+                string name = getName(item);
+                createdItems.Add(name, item);
+            }
+
+            try
+            {
+                // Read all items one by one. Because tests are executed in random order,
+                // we cannot assume that the items we've created will be the only items
+                // on the server.
+                Dictionary<string, TInfo> allItems = new Dictionary<string, TInfo>(StringComparer.OrdinalIgnoreCase);
+
+                for (; ; )
+                {
+                    List<TInfo> readItems = new List<TInfo>(listItems(allItems.Count, 1).AsTask().Result);
+
+                    if (readItems.Count == 0)
+                    {
+                        break;
+                    }
+                    Assert.Equal(readItems.Count, 1);
+                    TInfo item = readItems[0];
+                    string name = getName(item);
+
+                    Assert.False(allItems.ContainsKey(name));
+                    allItems.Add(name, item);
+                }
+
+                Assert.True(allItems.Count >= createdItems.Count);
+
+                // Confirm that we've read everything we had created.
+                foreach (TInfo createdItem in createdItems.Values)
+                {
+                    Assert.True(allItems.ContainsKey(getName(createdItem)));
+                }
+
+                // Request more items that present in the database.
+                {
+                    List<TInfo> items = new List<TInfo>(
+                        listItems(0, allItems.Count + 1).AsTask().Result);
+                    Assert.Equal(items.Count, allItems.Count);
+                }
+            }
+            finally
+            {
+                // Delete all items we have created.
+                foreach (TInfo item in createdItems.Values)
+                {
+                    deleteItem(item).AsTask().Wait();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tests specifying invalid arguments in list items method.
+        /// </summary>
+        /// <typeparam name="T">Item type.</typeparam>
+        /// <param name="listItems">List items method.</param>
+        private void TestInvalidArgsInListItems<T>(Func<int, int, IAsyncOperation<IEnumerable<T>>> listItems)
+        {
+            Assert.Throws<ArgumentException>(() => listItems(-1, 1));
+            Assert.Throws<ArgumentException>(() => listItems(0, 0));
+            Assert.Throws<ArgumentException>(() => listItems(0, -1));
+        }
+
+        /// <summary>
         /// Tests null arguments in queue management API.
         /// </summary>
         [Fact]
@@ -197,6 +282,114 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                 (queue) => { return queue.Name; });
 
             Assert.False(queues.ContainsKey(queueName));
+        }
+
+        /// <summary>
+        /// Tests listing queues in the given range.
+        /// </summary>
+        [Fact]
+        public void ListQueuesInRange()
+        {
+            TestListItemsInRange<QueueInfo>(
+                () => Service.CreateQueueAsync(Configuration.GetUniqueQueueName()),
+                (firstItem, count) => Service.ListQueuesAsync(firstItem, count),
+                queue => Service.DeleteQueueAsync(queue.Name),
+                queue => queue.Name);
+        }
+
+        /// <summary>
+        /// Tests specifying invalid arguments in ListQueues method.
+        /// </summary>
+        [Fact]
+        public void ListQueuesInvalidArgs()
+        {
+            TestInvalidArgsInListItems<QueueInfo>(
+                (firstItem, count) => Service.ListQueuesAsync(firstItem, count));
+        }
+
+        /// <summary>
+        /// Tests specifying range when listing topics.
+        /// </summary>
+        [Fact]
+        public void ListTopicsInRange()
+        {
+            TestListItemsInRange<TopicInfo>(
+                () => Service.CreateTopicAsync(Configuration.GetUniqueTopicName()),
+                (firstItem, count) => Service.ListTopicsAsync(firstItem, count),
+                topic => Service.DeleteTopicAsync(topic.Name),
+                topic => topic.Name);
+        }
+
+        /// <summary>
+        /// Tests specifying invalid arguments when listing topics.
+        /// </summary>
+        [Fact]
+        public void ListTopicsInvalidArgs()
+        {
+            TestInvalidArgsInListItems<TopicInfo>(
+                (firstItem, count) => Service.ListTopicsAsync(firstItem, count));
+        }
+
+        /// <summary>
+        /// Tests specifying range when listing subscriptions.
+        /// </summary>
+        [Fact]
+        [UsesUniqueTopic]
+        public void ListSubscriptionsInRange()
+        {
+            string topicName = UsesUniqueTopicAttribute.TopicName;
+
+            TestListItemsInRange<SubscriptionInfo>(
+                () => Service.CreateSubscriptionAsync(topicName, Configuration.GetUniqueSubscriptionName()),
+                (firstItem, count) => Service.ListSubscriptionsAsync(topicName, firstItem, count),
+                subscription => Service.DeleteSubscriptionAsync(topicName, subscription.Name),
+                subscription => subscription.Name);
+        }
+
+        /// <summary>
+        /// Tests specifying invalid arguments when listing subscriptions.
+        /// </summary>
+        [Fact]
+        public void ListSubscriptionsInvalidArgs()
+        {
+            TestInvalidArgsInListItems<SubscriptionInfo>(
+                (firstItem, count) => Service.ListSubscriptionsAsync("test", firstItem, count));
+
+            Assert.Throws<ArgumentNullException>(() => Service.ListSubscriptionsAsync(null, 1, 1));
+        }
+
+        /// <summary>
+        /// Tests specifying ranges when listing rules.
+        /// </summary>
+        [Fact]
+        [UsesUniqueSubscription]
+        public void ListRulesInRange()
+        {
+            string topicName = UsesUniqueSubscriptionAttribute.TopicName;
+            string subscriptionName = UsesUniqueSubscriptionAttribute.SubscriptionName;
+
+            TestListItemsInRange<RuleInfo>(
+                () =>
+                {
+                    RuleSettings settings = new RuleSettings(new TrueRuleFilter("1=1"), null);
+                    return Service.CreateRuleAsync(topicName, subscriptionName, Configuration.GetUniqueRuleName(), settings);
+                },
+                (firstItem, count) => Service.ListRulesAsync(topicName, subscriptionName, firstItem, count),
+                rule => Service.DeleteRuleAsync(topicName, subscriptionName, rule.Name),
+                rule => rule.Name);
+        }
+
+        /// <summary>
+        /// Tests specifying invalid arguments when listing rules.
+        /// </summary>
+        [Fact]
+        public void ListRulesInvalidArgs()
+        {
+            TestInvalidArgsInListItems<RuleInfo>(
+                (firstItem, count) => Service.ListRulesAsync("topic", "subscription", firstItem, count));
+
+            Assert.Throws<ArgumentNullException>(() => Service.ListRulesAsync(null, "subscription", 0, 1));
+            Assert.Throws<ArgumentNullException>(() => Service.ListRulesAsync("topic", null, 0, 1));
         }
 
         /// <summary>

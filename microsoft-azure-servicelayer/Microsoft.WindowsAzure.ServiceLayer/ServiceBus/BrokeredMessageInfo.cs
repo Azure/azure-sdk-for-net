@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -230,6 +231,21 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             return _content
                 .CopyToAsync(stream.AsStreamForWrite())
                 .AsAsyncAction();
+        }
+
+        /// <summary>
+        /// Creates a brokered message from the response. Returns null if the
+        /// response contains no data.
+        /// </summary>
+        /// <param name="response">Response with data.</param>
+        /// <returns></returns>
+        internal static BrokeredMessageInfo CreateFromPeekResponse(HttpResponseMessage response)
+        {
+            if (response.StatusCode == HttpStatusCode.NoContent || response.StatusCode == HttpStatusCode.ResetContent)
+            {
+                return null;
+            }
+            return new BrokeredMessageInfo(response);
         }
 
         /// <summary>
