@@ -152,8 +152,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void PeekMessageFromEmptyQueue()
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
-
-            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.PeekQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            BrokeredMessageInfo message = Configuration.ServiceBus.PeekQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
+            Assert.Null(message);
         }
 
         /// <summary>
