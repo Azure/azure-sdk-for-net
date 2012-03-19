@@ -1,4 +1,19 @@
-﻿using System;
+﻿//
+// Copyright 2012 Microsoft Corporation
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Diagnostics;
@@ -80,9 +95,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                     return value.GetNumber();
 
                 default:
-                    Debug.Assert(value.ValueType == JsonValueType.String);
-                    return value.GetString();
+                    break;
             }
+
+            // Extract extra types that are stored as strings.
+            Debug.Assert(value.ValueType == JsonValueType.String);
+            string stringValue = value.GetString();
+            DateTimeOffset dateTime;
+
+            if (DateTimeOffset.TryParse(stringValue, out dateTime))
+            {
+                return dateTime.ToUniversalTime();
+            }
+            return stringValue;
+
         }
 
         /// <summary>
@@ -134,10 +160,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 return JsonValue.CreateStringValue((string)value);
             }
+            else if (IsType<System.DateTimeOffset>(type))
+            {
+                return CreateDateTimeValue((DateTimeOffset)value);
+            }
             else
             {
-                //TODO: error message!
-                throw new InvalidCastException();
+                // Convert to string.
+                return JsonValue.CreateStringValue(value.ToString());
             }
         }
 
@@ -150,6 +180,18 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private static bool IsType<T>(Type type)
         {
             return object.ReferenceEquals(typeof(T), type);
+        }
+
+        /// <summary>
+        /// Creates a Json string for the given date/time.
+        /// </summary>
+        /// <param name="dateTime">Date/time.</param>
+        /// <returns>Json string value with the date/time.</returns>
+        private static JsonValue CreateDateTimeValue(DateTimeOffset dateTime)
+        {
+            dateTime = dateTime.ToUniversalTime();
+            string dateTimeString = dateTime.ToString("r");
+            return JsonValue.CreateStringValue(dateTimeString);
         }
     }
 }
