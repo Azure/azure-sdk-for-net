@@ -57,7 +57,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 }
                 else
                 {
-                    // The string could not be deserialized into Json value; storing raw string data.
                     Add(key, valueString);
                 }
             }
@@ -166,8 +165,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
             else
             {
-                // Convert to string.
-                return JsonValue.CreateStringValue(value.ToString());
+                //TODO: Error message.
+                throw new InvalidCastException();
             }
         }
 
