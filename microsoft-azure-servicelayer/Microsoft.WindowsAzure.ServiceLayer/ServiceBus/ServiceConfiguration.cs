@@ -230,7 +230,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Uri for the given range.</returns>
         internal Uri GetItemsRangeQuery(Uri containerUri, int firstItem, int count)
         {
-            //TODO: is there a better way of adding query to a URI?
             return FormatUri(Constants.RangeQueryUri, containerUri.ToString(), firstItem, count);
         }
 

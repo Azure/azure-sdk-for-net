@@ -240,7 +240,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.Throws<ArgumentException>(() => listItems(0, -1));
         }
 
-
         /// <summary>
         /// Tests null arguments in queue management API.
         /// </summary>
