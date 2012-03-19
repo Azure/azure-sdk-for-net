@@ -630,7 +630,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             return SendAsync(request, CheckNoContent)
                 .ContinueWith(t => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
-            throw new NotImplementedException();
         }
 
         /// <summary>

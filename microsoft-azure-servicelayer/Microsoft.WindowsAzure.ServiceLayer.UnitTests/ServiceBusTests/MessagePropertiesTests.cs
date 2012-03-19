@@ -51,8 +51,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             Assert.True(message.Properties.ContainsKey("StringProperty"));
             Assert.True(message.Properties.ContainsKey("BoolPropertyTrue"));
             Assert.True(message.Properties.ContainsKey("BoolPropertyFalse"));
-            // Assert.True(message.Properties.ContainsKey("NullProperty"));     // The server does not return null properties.
             Assert.True(message.Properties.ContainsKey("NumberProperty"));
+            // The server does not store/return null properties.
+            Assert.False(message.Properties.ContainsKey("NullProperty"));
 
             Assert.Equal((string)message.Properties["StringProperty"], "Test", StringComparer.Ordinal);
             Assert.Equal((bool)message.Properties["BoolPropertyTrue"], true);

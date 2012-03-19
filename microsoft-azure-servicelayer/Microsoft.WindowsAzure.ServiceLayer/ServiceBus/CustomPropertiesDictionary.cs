@@ -70,9 +70,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             switch (value.ValueType)
             {
-                case JsonValueType.Boolean: return value.GetBoolean();
-                case JsonValueType.Null: return null;
-                case JsonValueType.Number: return value.GetNumber();
+                case JsonValueType.Boolean: 
+                    return value.GetBoolean();
+
+                case JsonValueType.Null: 
+                    return null;
+
+                case JsonValueType.Number: 
+                    return value.GetNumber();
+
                 default:
                     Debug.Assert(value.ValueType == JsonValueType.String);
                     return value.GetString();
