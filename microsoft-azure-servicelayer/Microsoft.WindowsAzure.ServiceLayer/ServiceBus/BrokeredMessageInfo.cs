@@ -16,11 +16,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Storage.Streams;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -29,12 +32,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public sealed class BrokeredMessageInfo
     {
-        private BrokerProperties _brokerProperties;         // Message's broker properties.
+        private HttpContent _content;                               // Source HTTP content.
+        private BrokerProperties _brokerProperties;                 // Message's broker properties.
+        private CustomPropertiesDictionary _customProperties;       // Custom properties of the message.
 
         /// <summary>
-        /// Gets the message text.
+        /// Gets the content type of the message.
         /// </summary>
-        public string Text { get; private set; }
+        public string ContentType
+        {
+            get { return _content.Headers.ContentType.ToString(); }
+        }
 
         /// <summary>
         /// Gets the identifier of the correlation.
@@ -102,6 +110,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets the property bag.
+        /// </summary>
+        public IDictionary<string, object> Properties
+        {
+            get { return _customProperties; }
+        }
+
+        /// <summary>
         /// Gets the address of the queue to reply to.
         /// </summary>
         public string ReplyTo
@@ -128,9 +144,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets the unique number assigned to the message by the Service Bus.
         /// </summary>
-        public long? SequenceNumber
+        public long SequenceNumber
         {
-            get { return _brokerProperties.SequenceNumber; }
+            get { return _brokerProperties.SequenceNumber.Value; }
         }
 
         /// <summary>
@@ -164,7 +180,58 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             get { return _brokerProperties.To; }
         }
-        
+
+        /// <summary>
+        /// Reads content of the message as a string.
+        /// </summary>
+        /// <returns>Content of the message.</returns>
+        public IAsyncOperation<string> ReadContentAsStringAsync()
+        {
+            return _content
+                .ReadAsStringAsync()
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Reads the content as an array of bytes.
+        /// </summary>
+        /// <returns>Array of bytes.</returns>
+        public IAsyncOperation<IEnumerable<byte>> ReadContentAsBytesAsync()
+        {
+            return _content
+                .ReadAsByteArrayAsync()
+                .ContinueWith(t => (IEnumerable<byte>)t.Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Reads the content as a stream.
+        /// </summary>
+        /// <returns>Stream.</returns>
+        public IAsyncOperation<IInputStream> ReadContentAsStreamAsync()
+        {
+            return _content
+                .ReadAsStreamAsync()
+                .ContinueWith(t => t.Result.AsInputStream(), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Copies content into the given stream.
+        /// </summary>
+        /// <param name="stream">Target stream.</param>
+        /// <returns>Result of the operation.</returns>
+        public IAsyncInfo CopyContentToAsync(IOutputStream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+            return _content
+                .CopyToAsync(stream.AsStreamForWrite())
+                .AsAsyncAction();
+        }
+
         /// <summary>
         /// Constructor. Initializes the object from the HTTP response.
         /// </summary>
@@ -172,7 +239,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         internal BrokeredMessageInfo(HttpResponseMessage response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
-            Text = response.Content.ReadAsStringAsync().Result;
+            _content = response.Content;
+            _customProperties = new CustomPropertiesDictionary(response);
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Dictionary<string, object>));
             string propertiesString = null;
@@ -180,7 +248,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             if (response.Headers.TryGetValues(Constants.BrokerPropertiesHeader, out values))
             {
-                propertiesString = values.FirstOrDefault();
+                propertiesString = string.Join(string.Empty, values);
             }
 
             if (string.IsNullOrEmpty(propertiesString))

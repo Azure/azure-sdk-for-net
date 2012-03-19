@@ -255,15 +255,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             settings.RequiresSession = true;
 
             QueueInfo queueInfo = Service.CreateQueueAsync(queueName, settings).AsTask<QueueInfo>().Result;
-            Assert.Equal(queueInfo.DefaultMessageTimeToLive, settings.DefaultMessageTimeToLive.Value);
-            Assert.Equal(queueInfo.DuplicateDetectionHistoryTimeWindow, settings.DuplicateDetectionHistoryTimeWindow.Value);
-            Assert.Equal(queueInfo.EnableBatchedOperations, settings.EnableBatchedOperations.Value);
-            Assert.Equal(queueInfo.EnableDeadLetteringOnMessageExpiration, settings.EnableDeadLetteringOnMessageExpiration.Value);
-            Assert.Equal(queueInfo.LockDuration, settings.LockDuration.Value);
-            Assert.Equal(queueInfo.MaximumDeliveryCount, settings.MaximumDeliveryCount.Value);
-            Assert.Equal(queueInfo.MaximumSizeInMegabytes, settings.MaximumSizeInMegabytes.Value);
-            Assert.Equal(queueInfo.RequiresDuplicateDetection, settings.RequiresDuplicateDetection.Value);
-            Assert.Equal(queueInfo.RequiresSession, settings.RequiresSession.Value);
+            try
+            {
+                Assert.Equal(queueInfo.DefaultMessageTimeToLive, settings.DefaultMessageTimeToLive.Value);
+                Assert.Equal(queueInfo.DuplicateDetectionHistoryTimeWindow, settings.DuplicateDetectionHistoryTimeWindow.Value);
+                Assert.Equal(queueInfo.EnableBatchedOperations, settings.EnableBatchedOperations.Value);
+                Assert.Equal(queueInfo.EnableDeadLetteringOnMessageExpiration, settings.EnableDeadLetteringOnMessageExpiration.Value);
+                Assert.Equal(queueInfo.LockDuration, settings.LockDuration.Value);
+                Assert.Equal(queueInfo.MaximumDeliveryCount, settings.MaximumDeliveryCount.Value);
+                Assert.Equal(queueInfo.MaximumSizeInMegabytes, settings.MaximumSizeInMegabytes.Value);
+                Assert.Equal(queueInfo.RequiresDuplicateDetection, settings.RequiresDuplicateDetection.Value);
+                Assert.Equal(queueInfo.RequiresSession, settings.RequiresSession.Value);
+            }
+            finally
+            {
+                Service.DeleteQueueAsync(queueName).AsTask().Wait();
+            }
         }
 
         /// <summary>
@@ -361,11 +368,18 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             settings.RequiresDuplicateDetection = true;
 
             TopicInfo topic = Service.CreateTopicAsync(topicName, settings).AsTask<TopicInfo>().Result;
-            Assert.Equal(settings.DefaultMessageTimeToLive.Value, topic.DefaultMessageTimeToLive);
-            Assert.Equal(settings.DuplicateDetectionHistoryTimeWindow.Value, topic.DuplicateDetectionHistoryTimeWindow);
-            Assert.Equal(settings.EnableBatchedOperations.Value, topic.EnableBatchedOperations);
-            Assert.Equal(settings.MaximumSizeInMegabytes.Value, topic.MaximumSizeInMegabytes);
-            Assert.Equal(settings.RequiresDuplicateDetection.Value, topic.RequiresDuplicateDetection);
+            try
+            {
+                Assert.Equal(settings.DefaultMessageTimeToLive.Value, topic.DefaultMessageTimeToLive);
+                Assert.Equal(settings.DuplicateDetectionHistoryTimeWindow.Value, topic.DuplicateDetectionHistoryTimeWindow);
+                Assert.Equal(settings.EnableBatchedOperations.Value, topic.EnableBatchedOperations);
+                Assert.Equal(settings.MaximumSizeInMegabytes.Value, topic.MaximumSizeInMegabytes);
+                Assert.Equal(settings.RequiresDuplicateDetection.Value, topic.RequiresDuplicateDetection);
+            }
+            finally
+            {
+                Service.DeleteTopicAsync(topicName).AsTask().Wait();
+            }
         }
 
         /// <summary>
