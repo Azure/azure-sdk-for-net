@@ -173,7 +173,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Gets URI of an unlocked message in the queue/topic.
+        /// Gets URI of an unlocked message in the queue.
         /// </summary>
         /// <param name="destination">Queue/topic name.</param>
         /// <param name="lockDuration">Duration of lock.</param>
@@ -184,15 +184,40 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets URI of an unlocked message in the subscription.
+        /// </summary>
+        /// <param name="topicName"></param>
+        /// <param name="subscriptionName"></param>
+        /// <param name="lockDuration"></param>
+        /// <returns></returns>
+        internal Uri GetUnlockedSubscriptionMessageUri(string topicName, string subscriptionName, TimeSpan lockDuration)
+        {
+            return FormatUri(Constants.UnlockedSubscriptionMessagePath, topicName, subscriptionName, lockDuration.Seconds);
+        }
+
+        /// <summary>
         /// Gets URI to a locked message.
         /// </summary>
         /// <param name="destination">Queue/topic name.</param>
         /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockId">Lock ID of the message.</param>
+        /// <param name="lockToken">Lock ID of the message.</param>
         /// <returns>URI of the locked message.</returns>
-        internal Uri GetLockedMessageUri(string destination, long sequenceNumber, string lockId)
+        internal Uri GetLockedMessageUri(string destination, long sequenceNumber, string lockToken)
         {
-            return FormatUri(Constants.LockedMessagePath, destination, sequenceNumber, lockId);
+            return FormatUri(Constants.LockedMessagePath, destination, sequenceNumber, lockToken);
+        }
+
+        /// <summary>
+        /// Gets URI of a locked subscription message.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
+        /// <param name="lockToken">Lock ID of the message.</param>
+        /// <returns>URI of the locked message.</returns>
+        internal Uri GetLockedSubscriptionMessageUri(string topicName, string subscriptionName, long sequenceNumber, string lockToken)
+        {
+            return FormatUri(Constants.LockedSubscriptionMessagePath, topicName, subscriptionName, sequenceNumber, lockToken);
         }
 
         /// <summary>

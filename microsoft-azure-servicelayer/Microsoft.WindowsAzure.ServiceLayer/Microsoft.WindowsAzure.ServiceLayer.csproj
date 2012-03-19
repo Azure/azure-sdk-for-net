@@ -105,13 +105,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />
     <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
     <Compile Include="ServiceBus\BrokerProperties.cs" />
     <Compile Include="ServiceBus\CorrelationRuleFilter.cs" />
+    <Compile Include="ServiceBus\CustomPropertiesDictionary.cs" />
     <Compile Include="ServiceBus\EmptyRuleAction.cs" />
     <Compile Include="ServiceBus\FalseRuleFilter.cs" />
     <Compile Include="ServiceBus\IRuleAction.cs" />
