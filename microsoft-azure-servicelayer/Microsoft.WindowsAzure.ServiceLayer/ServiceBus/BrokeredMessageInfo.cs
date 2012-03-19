@@ -248,13 +248,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             if (response.Headers.TryGetValues(Constants.BrokerPropertiesHeader, out values))
             {
-                StringBuilder builder = new StringBuilder();
-                foreach (string value in values)
-                {
-                    builder.Append(value);
-                    break;
-                }
-                propertiesString = builder.ToString();
+                propertiesString = string.Join(string.Empty, values);
             }
 
             if (string.IsNullOrEmpty(propertiesString))

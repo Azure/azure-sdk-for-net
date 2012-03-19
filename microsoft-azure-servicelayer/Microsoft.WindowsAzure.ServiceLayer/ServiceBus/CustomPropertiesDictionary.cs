@@ -16,7 +16,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     internal class CustomPropertiesDictionary: Dictionary<string, object>
     {
         /// <summary>
-        /// Constructor for properties specified by the user.
+        /// Initializes a dictionary with no properties.
         /// </summary>
         internal CustomPropertiesDictionary()
             : base(StringComparer.OrdinalIgnoreCase)
@@ -24,7 +24,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Constructor for properties specified in the response message.
+        /// Initializes a dictionary with properties from the response.
         /// </summary>
         /// <param name="response">Response.</param>
         internal CustomPropertiesDictionary(HttpResponseMessage response)
@@ -33,13 +33,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             foreach (KeyValuePair<string, IEnumerable<string>> item in response.Headers)
             {
                 string key = item.Key;
-                StringBuilder value = new StringBuilder();
-                foreach (string itemString in item.Value)
-                {
-                    value.Append(itemString);
-                }
-
-                string valueString = value.ToString();
+                string valueString = string.Join(string.Empty, item.Value);
                 JsonValue translatedValue;
 
                 if (JsonValue.TryParse(valueString, out translatedValue) && IsSupportedType(translatedValue.ValueType))
@@ -48,7 +42,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 }
                 else
                 {
-                    // Add as a plain string.
+                    // The string could not be deserialized into Json value; storing raw string data.
                     Add(key, valueString);
                 }
             }
@@ -107,10 +101,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Translates 
+        /// Translates an object into Json value.
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">Object to translate.</param>
+        /// <returns>Translated Json object.</returns>
         private static JsonValue EncodeValue(object value)
         {
             Type type = value == null? null : value.GetType();
