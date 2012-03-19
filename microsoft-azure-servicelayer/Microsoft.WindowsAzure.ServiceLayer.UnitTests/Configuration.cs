@@ -85,5 +85,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         {
             return "S." + Guid.NewGuid().ToString();
         }
+
+        /// <summary>
+        /// Generates unique queue name.
+        /// </summary>
+        /// <returns>Unique queue name.</returns>
+        internal static string GetUniqueRuleName()
+        {
+            return "R." + Guid.NewGuid().ToString();
+        }
     }
 }
