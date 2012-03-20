@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void MessageProperties()
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
-            DateTimeOffset originalDateTime = new DateTimeOffset(DateTime.UtcNow);
+            DateTimeOffset originalDateTime = DateTimeOffset.Now;
             BrokeredMessageSettings messageSettings = BrokeredMessageSettings.CreateFromText("text/plain", "This is a test.");
 
             messageSettings.Properties.Add("StringProperty", "Test");
