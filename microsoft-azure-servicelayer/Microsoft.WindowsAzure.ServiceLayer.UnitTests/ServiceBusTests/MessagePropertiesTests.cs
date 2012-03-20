@@ -36,6 +36,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void MessageProperties()
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
+            DateTimeOffset originalDateTime = DateTimeOffset.Now;
             BrokeredMessageSettings messageSettings = BrokeredMessageSettings.CreateFromText("text/plain", "This is a test.");
 
             messageSettings.Properties.Add("StringProperty", "Test");
@@ -43,6 +44,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             messageSettings.Properties.Add("BoolPropertyFalse", false);
             messageSettings.Properties.Add("NullProperty", null);
             messageSettings.Properties.Add("NumberProperty", 123);
+            messageSettings.Properties.Add("TimeProperty", originalDateTime);
 
             Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings).AsTask().Wait();
             BrokeredMessageInfo message = Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
@@ -52,6 +54,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             Assert.True(message.Properties.ContainsKey("BoolPropertyTrue"));
             Assert.True(message.Properties.ContainsKey("BoolPropertyFalse"));
             Assert.True(message.Properties.ContainsKey("NumberProperty"));
+            Assert.True(message.Properties.ContainsKey("TimeProperty"));
             // The server does not store/return null properties.
             Assert.False(message.Properties.ContainsKey("NullProperty"));
 
@@ -59,6 +62,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             Assert.Equal((bool)message.Properties["BoolPropertyTrue"], true);
             Assert.Equal((bool)message.Properties["BoolPropertyFalse"], false);
             Assert.Equal(Convert.ToInt32(message.Properties["NumberProperty"]), 123);
+
+            // Times must be identical to a second.
+            DateTimeOffset readDateTime = (DateTimeOffset)message.Properties["TimeProperty"];
+            Assert.Equal(originalDateTime.Year, readDateTime.Year);
+            Assert.Equal(originalDateTime.Month, readDateTime.Month);
+            Assert.Equal(originalDateTime.Day, readDateTime.Day);
+            Assert.Equal(originalDateTime.Hour, readDateTime.Hour);
+            Assert.Equal(originalDateTime.Minute, readDateTime.Minute);
+            Assert.Equal(originalDateTime.Second, readDateTime.Second);
         }
 
         /// <summary>
