@@ -139,6 +139,9 @@
     <Compile Include="ServiceBus\ServiceBusService.cs" />
     <Compile Include="ServiceBus\ServiceConfiguration.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
