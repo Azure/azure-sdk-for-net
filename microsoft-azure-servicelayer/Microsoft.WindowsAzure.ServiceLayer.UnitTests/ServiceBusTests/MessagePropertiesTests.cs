@@ -36,8 +36,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void MessageProperties()
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
-            DateTimeOffset originalDateTime = DateTimeOffset.Now;
-            BrokeredMessageSettings messageSettings = BrokeredMessageSettings.CreateFromText("text/plain", "This is a test.");
+            DateTimeOffset originalDateTime = DateTimeOffset.UtcNow;
+            BrokeredMessageSettings messageSettings = MessageHelper.CreateMessage("This is a test.");
 
             messageSettings.Properties.Add("StringProperty", "Test");
             messageSettings.Properties.Add("BoolPropertyTrue", true);
@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void InvalidPropertyType()
         {
             string queueName = UsesUniqueQueueAttribute.QueueName;
-            BrokeredMessageSettings messageSettings = BrokeredMessageSettings.CreateFromText("text/plain", "This is a test.");
+            BrokeredMessageSettings messageSettings = MessageHelper.CreateMessage("This is a test.");
             
             messageSettings.Properties.Add("TestProperty", new int[] { 1, 2, 3});
             Assert.Throws<InvalidCastException>(() => Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings));
