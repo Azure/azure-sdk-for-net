@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// <summary>
         /// Gets the namespace used for testing.
         /// </summary>
-        private static string ServiceNamespace { get { throw new NotImplementedException();  } }
+        private static string ServiceNamespace { get { throw new NotImplementedException(); } }
 
         /// <summary>
         /// Gets the user name used for testing.
