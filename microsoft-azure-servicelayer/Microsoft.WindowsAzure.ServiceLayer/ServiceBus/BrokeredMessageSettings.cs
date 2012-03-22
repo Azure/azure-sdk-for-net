@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Message content.
         /// </summary>
-        public Content Content { get; set; }
+        public Content Content { get; private set; }
 
         /// <summary>
         /// Gets or sets the identifier of the correlation.
@@ -144,6 +144,66 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             _brokerProperties = new BrokerProperties();
             _customProperties = new CustomPropertiesDictionary();
         }
+
+        /// <summary>
+        /// Creates a message from the given text. This method exists only
+        /// because JavaScript cannot work with multiple constructors with
+        /// identical number of parameters.
+        /// </summary>
+        /// <param name="messageText">Message text.</param>
+        /// <param name="contentType">Content type.</param>
+        /// <returns>Message settings.</returns>
+        public static BrokeredMessageSettings CreateFromText(string messageText, string contentType = Constants.DefaultMessageContentType)
+        {
+            if (messageText == null)
+            {
+                throw new ArgumentNullException("messageText");
+            }
+            if (contentType == null)
+            {
+                throw new ArgumentNullException("contentType");
+            }
+
+            Content content = Content.CreateFromText(messageText, contentType);
+            return new BrokeredMessageSettings(content);
+        }
+
+        /// <summary>
+        /// Creates a message from the array of bytes. This method exists only
+        /// because JavaScript cannot work with multiple constructors with
+        /// identical number of parameters.
+        /// </summary>
+        /// <param name="messageBytes">Array of bytes.</param>
+        /// <returns>Message settings.</returns>
+        public static BrokeredMessageSettings CreateFromByteArray(byte[] messageBytes)
+        {
+            if (messageBytes == null)
+            {
+                throw new ArgumentNullException("messageBytes");
+            }
+
+            Content content = Content.CreateFromByteArray(messageBytes);
+            return new BrokeredMessageSettings(content);
+        }
+
+        /// <summary>
+        /// Creates a message from the given stream. The method exists only
+        /// because JavaScript cannot work with multiple constructors with
+        /// identical number of parameters.
+        /// </summary>
+        /// <param name="stream">Stream with message data.</param>
+        /// <returns>Message settings.</returns>
+        public static BrokeredMessageSettings CreateFromStream(IInputStream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
+            Content content = Content.CreateFromStream(stream);
+            return new BrokeredMessageSettings(content);
+        }
+
 
         /// <summary>
         /// Submits content to the given request.

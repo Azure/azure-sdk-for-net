@@ -19,9 +19,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// Tests specifying null arguments in constructors.
         /// </summary>
         [Fact]
-        public void NullArgumentsInConstructors()
+        public void InvalidArgumentsInMethods()
         {
             Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings(null));
+            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText(null));
+            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText("Test", null));
+            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromByteArray(null));
+            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromStream(null));
         }
     }
 }

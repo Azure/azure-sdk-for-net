@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <returns>Memory-initialized content with the given text.</returns>
         private static Content CreateMemoryContent(string text)
         {
-            return Content.CreateFromString(text, "text/plain");
+            return Content.CreateFromText(text, "text/plain");
         }
 
         /// <summary>
@@ -80,12 +80,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [Fact]
         public void InvalidArgs()
         {
-            Assert.Throws<ArgumentNullException>(() => Content.CreateFromString(null, "text/plain"));
-            Assert.Throws<ArgumentNullException>(() => Content.CreateFromString("test", null));
+            Assert.Throws<ArgumentNullException>(() => Content.CreateFromText(null, "text/plain"));
+            Assert.Throws<ArgumentNullException>(() => Content.CreateFromText("test", null));
             Assert.Throws<ArgumentNullException>(() => Content.CreateFromByteArray(null));
             Assert.Throws<ArgumentNullException>(() => Content.CreateFromStream(null));
 
-            Content content = Content.CreateFromString("this is a test.", "text/plain");
+            Content content = Content.CreateFromText("this is a test.", "text/plain");
             Assert.Throws<ArgumentNullException>(() => content.CopyToAsync(null));
         }
 
@@ -113,7 +113,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void ReadTextAsBytes()
         {
             string originalContent = Guid.NewGuid().ToString();
-            Content content = Content.CreateFromString(originalContent, "text/plain");
+            Content content = Content.CreateFromText(originalContent, "text/plain");
 
             // Must be able to read multiple times.
             for (int i = 0; i < 2; i++)
@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void ReadTextAsStream()
         {
             string originalContent = Guid.NewGuid().ToString();
-            Content content = Content.CreateFromString(originalContent, "text/plain");
+            Content content = Content.CreateFromText(originalContent, "text/plain");
 
             // Must be able to read multiple times.
             for (int i = 0; i < 2; i++)

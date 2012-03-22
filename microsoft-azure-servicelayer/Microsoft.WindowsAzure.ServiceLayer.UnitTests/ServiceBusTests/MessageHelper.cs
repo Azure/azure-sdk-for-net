@@ -35,8 +35,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Brokered message.</returns>
         internal static BrokeredMessageSettings CreateMessage(string messageText, string contentType = "text/plain")
         {
-            Content content = Content.CreateFromString(messageText, contentType);
-            return new BrokeredMessageSettings(content);
+            return BrokeredMessageSettings.CreateFromText(messageText, contentType);
         }
 
         /// <summary>
@@ -46,8 +45,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Brokered message.</returns>
         internal static BrokeredMessageSettings CreateMessage(byte[] bytes)
         {
-            Content content = Content.CreateFromByteArray(bytes);
-            return new BrokeredMessageSettings(content);
+            return BrokeredMessageSettings.CreateFromByteArray(bytes);
         }
 
         /// <summary>
@@ -57,8 +55,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Brokered message.</returns>
         internal static BrokeredMessageSettings CreateMessage(Stream stream)
         {
-            Content content = Content.CreateFromStream(stream.AsInputStream());
-            return new BrokeredMessageSettings(content);
+            return BrokeredMessageSettings.CreateFromStream(stream.AsInputStream());
         }
     }
 }

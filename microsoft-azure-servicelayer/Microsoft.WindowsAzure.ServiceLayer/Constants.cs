@@ -53,9 +53,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
         internal const string SerializationContentType      = "application/xml";
         internal const string BodyContentType               = "application/atom+xml";
-        internal const string MessageContentType            = "application/atom+xml";
+        internal const string DefaultMessageContentType     = "text/plain";
         internal const string WrapAuthenticationContentType = "application/x-www-form-urlencoded";
-
+        
         internal const string BrokerPropertiesHeader        = "BrokerProperties";                       // Header name for broker properties.
 
         internal const int CompatibilityLevel               = 20;                                       // Compatibility level for rules.

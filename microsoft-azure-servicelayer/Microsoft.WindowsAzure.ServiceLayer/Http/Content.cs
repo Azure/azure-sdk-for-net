@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="text">String content.</param>
         /// <param name="contentType">HTTP content type.</param>
         /// <returns>Content object.</returns>
-        public static Content CreateFromString(string text, string contentType)
+        public static Content CreateFromText(string text, string contentType)
         {
             if (text == null)
             {
