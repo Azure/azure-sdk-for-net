@@ -21,20 +21,23 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 
+using NetHttpContent = System.Net.Http.HttpContent;
+
 namespace Microsoft.WindowsAzure.ServiceLayer.Http
 {
     /// <summary>
-    /// HTTP content.
+    /// A data container for brokered messages, HTTP requests and responses.
     /// </summary>
-    /// <remarks>The class represents a container for HTTP content, which is
-    /// used in body of an HTTP request. The class provides multiple methods
-    /// for reading stored data, however, unless the content is buffered into
+    /// <remarks>
+    /// The class represents a container for HTTP content, which is used in 
+    /// body of an HTTP request. The class provides multiple methods for 
+    /// reading stored data, however, unless the content is buffered into
     /// memory, the data can be read only once. If you plan to read data more
     /// than once, you should load content's data into memory by calling
     /// CopyInfoBufferAsync.</remarks>
-    public sealed class Content
+    public sealed class HttpContent
     {
-        private IContent _rawContent;                       // Raw content.
+        private IHttpContent _rawContent;                       // Container with data.
 
         /// <summary>
         /// Gets content type.
@@ -47,7 +50,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="text">String content.</param>
         /// <param name="contentType">HTTP content type.</param>
         /// <returns>Content object.</returns>
-        public static Content CreateFromText(string text, string contentType)
+        public static HttpContent CreateFromText(string text, string contentType)
         {
             if (text == null)
             {
@@ -58,7 +61,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
                 throw new ArgumentNullException("contentType");
             }
 
-            return new Content(
+            return new HttpContent(
                 new MemoryContent(text),
                 contentType);
         }
@@ -68,14 +71,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// </summary>
         /// <param name="bytes">Binary data.</param>
         /// <returns>Content object.</returns>
-        public static Content CreateFromByteArray(byte[] bytes)
+        public static HttpContent CreateFromByteArray(byte[] bytes)
         {
             if (bytes == null)
             {
                 throw new ArgumentNullException("bytes");
             }
 
-            return new Content(new MemoryContent(bytes));
+            return new HttpContent(new MemoryContent(bytes));
         }
 
         /// <summary>
@@ -83,14 +86,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// </summary>
         /// <param name="stream">Binary data.</param>
         /// <returns>Content object.</returns>
-        public static Content CreateFromStream(IInputStream stream)
+        public static HttpContent CreateFromStream(IInputStream stream)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
             }
 
-            return new Content(new StreamContent(stream.AsStreamForRead()));
+            return new HttpContent(new StreamContent(stream.AsStreamForRead()));
         }
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// </summary>
         /// <param name="rawContent">Content container.</param>
         /// <param name="contentType">Content type.</param>
-        private Content(IContent rawContent, string contentType = null)
+        private HttpContent(IHttpContent rawContent, string contentType = null)
         {
             _rawContent = rawContent;
             ContentType = contentType;
@@ -178,7 +181,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="request">Target request.</param>
         internal void SubmitTo(HttpRequestMessage request)
         {
-            HttpContent content = new System.Net.Http.StreamContent(
+            NetHttpContent content = new System.Net.Http.StreamContent(
                 _rawContent.ReadAsStreamAsync().Result);
 
             if (!string.IsNullOrEmpty(ContentType))

@@ -361,5 +361,34 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
                 }
             }
         }
+
+        /// <summary>
+        /// Tests sending/receiving an empty string in the message content.
+        /// </summary>
+        [Fact]
+        public void EmptyStringContent()
+        {
+            BrokeredMessageSettings settings = MessageHelper.CreateMessage(string.Empty);
+            SendMessage(settings);
+
+            BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+            string readText = message.ReadContentAsStringAsync().AsTask().Result;
+            Assert.Equal(readText.Length, 0);
+        }
+
+        /// <summary>
+        /// Tests sending/receiving an empty bytes array.
+        /// </summary>
+        [Fact]
+        public void EmptyArrayContent()
+        {
+            byte[] originalBytes = new byte[0];
+            BrokeredMessageSettings settings = MessageHelper.CreateMessage(originalBytes);
+            SendMessage(settings);
+
+            BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+            List<byte> readBytes = new List<byte>(message.ReadContentAsBytesAsync().AsTask().Result);
+            Assert.Equal(originalBytes, readBytes);
+        }
     }
 }

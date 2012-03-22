@@ -105,8 +105,8 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Http\Content.cs" />
-    <Compile Include="Http\IContent.cs" />
+    <Compile Include="Http\HttpContent.cs" />
+    <Compile Include="Http\IHttpContent.cs" />
     <Compile Include="Http\MemoryContent.cs" />
     <Compile Include="Http\StreamContent.cs" />
     <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />

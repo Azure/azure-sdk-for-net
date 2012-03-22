@@ -26,7 +26,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
     /// Content interface. The interface is used to hide details on physical 
     /// storage mechanism.
     /// </summary>
-    interface IContent
+    internal interface IHttpContent
     {
         /// <summary>
         /// Reads content as a string.
@@ -60,6 +60,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <remarks>Buffering content allows multiple reading operations from
         /// the same content. Without buffering, data from stream-based content
         /// can be read only once.</remarks>
-        Task<IContent> BufferContentAsync();
+        Task<IHttpContent> BufferContentAsync();
     }
 }

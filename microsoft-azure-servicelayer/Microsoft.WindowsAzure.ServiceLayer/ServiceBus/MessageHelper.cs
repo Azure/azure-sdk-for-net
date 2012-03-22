@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Brokered message.</returns>
         internal static BrokeredMessageSettings CreateTextMessage(string messageText)
         {
-            Content content = Content.CreateFromText(messageText, "text/plain");
+            HttpContent content = HttpContent.CreateFromText(messageText, "text/plain");
             BrokeredMessageSettings message = new BrokeredMessageSettings(content);
             return message;
         }

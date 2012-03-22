@@ -26,7 +26,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
     /// <summary>
     /// A content whose data is stored in memory.
     /// </summary>
-    internal class MemoryContent: IContent
+    internal class MemoryContent: IHttpContent
     {
         private byte[] _bytes;                              // Memory content.
 
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Reads content as a string.
         /// </summary>
         /// <returns>Content string.</returns>
-        Task<string> IContent.ReadAsStringAsync()
+        Task<string> IHttpContent.ReadAsStringAsync()
         {
             using (MemoryStream stream = new MemoryStream(_bytes))
             {
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Reads content as a bytes array.
         /// </summary>
         /// <returns>Content bytes.</returns>
-        Task<byte[]> IContent.ReadAsBytesAsync()
+        Task<byte[]> IHttpContent.ReadAsBytesAsync()
         {
             TaskCompletionSource<byte[]> completion = new TaskCompletionSource<byte[]>();
             completion.SetResult(_bytes);
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Reads content as a stream.
         /// </summary>
         /// <returns>Content bytes in a stream.</returns>
-        Task<Stream> IContent.ReadAsStreamAsync()
+        Task<Stream> IHttpContent.ReadAsStreamAsync()
         {
             TaskCompletionSource<Stream> completion = new TaskCompletionSource<Stream>();
             completion.SetResult(new MemoryStream(_bytes));
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// </summary>
         /// <param name="stream">Destination stream.</param>
         /// <returns>Result of the operation.</returns>
-        Task IContent.CopyToAsync(Stream stream)
+        Task IHttpContent.CopyToAsync(Stream stream)
         {
             return stream.WriteAsync(_bytes, 0, _bytes.Length);
         }
@@ -99,9 +99,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Buffers content into memory.
         /// </summary>
         /// <returns>Buffered content.</returns>
-        Task<IContent> IContent.BufferContentAsync()
+        Task<IHttpContent> IHttpContent.BufferContentAsync()
         {
-            TaskCompletionSource<IContent> completion = new TaskCompletionSource<IContent>();
+            TaskCompletionSource<IHttpContent> completion = new TaskCompletionSource<IHttpContent>();
             completion.SetResult(this);
             return completion.Task;
         }

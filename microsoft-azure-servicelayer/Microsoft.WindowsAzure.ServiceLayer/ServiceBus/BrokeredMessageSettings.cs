@@ -16,13 +16,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Storage.Streams;
+
+using NetHttpContent = System.Net.Http.HttpContent;
+using NetHttpRequestMessage = System.Net.Http.HttpRequestMessage;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -37,7 +39,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Message content.
         /// </summary>
-        public Content Content { get; private set; }
+        public HttpContent Content { get; private set; }
 
         /// <summary>
         /// Gets or sets the identifier of the correlation.
@@ -133,7 +135,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Constructor.
         /// </summary>
         /// <param name="content">Message content.</param>
-        public BrokeredMessageSettings(Content content)
+        public BrokeredMessageSettings(HttpContent content)
         {
             if (content == null)
             {
@@ -164,7 +166,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("contentType");
             }
 
-            Content content = Content.CreateFromText(messageText, contentType);
+            HttpContent content = HttpContent.CreateFromText(messageText, contentType);
             return new BrokeredMessageSettings(content);
         }
 
@@ -182,7 +184,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("messageBytes");
             }
 
-            Content content = Content.CreateFromByteArray(messageBytes);
+            HttpContent content = HttpContent.CreateFromByteArray(messageBytes);
             return new BrokeredMessageSettings(content);
         }
 
@@ -200,7 +202,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("stream");
             }
 
-            Content content = Content.CreateFromStream(stream);
+            HttpContent content = HttpContent.CreateFromStream(stream);
             return new BrokeredMessageSettings(content);
         }
 
@@ -209,7 +211,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Submits content to the given request.
         /// </summary>
         /// <param name="request">Target request.</param>
-        internal void SubmitTo(HttpRequestMessage request)
+        internal void SubmitTo(NetHttpRequestMessage request)
         {
             _brokerProperties.SubmitTo(request);
             _customProperties.SubmitTo(request);
