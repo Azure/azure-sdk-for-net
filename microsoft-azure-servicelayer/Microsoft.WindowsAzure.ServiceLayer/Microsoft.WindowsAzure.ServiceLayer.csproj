@@ -105,6 +105,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Http\HttpContent.cs" />
+    <Compile Include="Http\IHttpContent.cs" />
+    <Compile Include="Http\MemoryContent.cs" />
+    <Compile Include="Http\StreamContent.cs" />
     <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />
     <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
     <Compile Include="ServiceBus\BrokerProperties.cs" />
@@ -115,6 +119,7 @@
     <Compile Include="ServiceBus\IRuleAction.cs" />
     <Compile Include="ServiceBus\IRuleFilter.cs" />
     <Compile Include="ServiceBus\ISqlRuleFilter.cs" />
+    <Compile Include="ServiceBus\MessageHelper.cs" />
     <Compile Include="ServiceBus\RuleInfo.cs" />
     <Compile Include="ServiceBus\SqlRuleFilter.cs" />
     <Compile Include="ServiceBus\SqlRuleAction.cs" />

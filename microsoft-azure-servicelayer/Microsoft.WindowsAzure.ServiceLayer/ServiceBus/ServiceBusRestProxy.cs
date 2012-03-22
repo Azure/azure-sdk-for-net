@@ -102,8 +102,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 ServiceConfig.GetQueuesContainerUri(),
                 firstItem, count,
                 InitQueue);
-
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -622,7 +620,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
-            return SendAsync(request)
+            return SendAsync(request, CheckNoContent)
                 .ContinueWith((t) => BrokeredMessageInfo.CreateFromPeekResponse(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
