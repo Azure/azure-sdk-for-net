@@ -23,9 +23,6 @@ using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Storage.Streams;
 
-using NetHttpContent = System.Net.Http.HttpContent;
-using NetHttpRequestMessage = System.Net.Http.HttpRequestMessage;
-
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
@@ -166,8 +163,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("contentType");
             }
 
-            HttpContent content = HttpContent.CreateFromText(messageText, contentType);
-            return new BrokeredMessageSettings(content);
+            return BrokeredMessageSettings.CreateFromText(messageText, contentType);
         }
 
         /// <summary>
@@ -184,8 +180,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("messageBytes");
             }
 
-            HttpContent content = HttpContent.CreateFromByteArray(messageBytes);
-            return new BrokeredMessageSettings(content);
+            return BrokeredMessageSettings.CreateFromByteArray(messageBytes);
         }
 
         /// <summary>
@@ -202,20 +197,18 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("stream");
             }
 
-            HttpContent content = HttpContent.CreateFromStream(stream);
-            return new BrokeredMessageSettings(content);
+            return BrokeredMessageSettings.CreateFromStream(stream);
         }
-
 
         /// <summary>
         /// Submits content to the given request.
         /// </summary>
         /// <param name="request">Target request.</param>
-        internal void SubmitTo(NetHttpRequestMessage request)
+        internal void SubmitTo(HttpRequest request)
         {
             _brokerProperties.SubmitTo(request);
             _customProperties.SubmitTo(request);
-            Content.SubmitTo(request);
+            request.Content = Content;
         }
     }
 }

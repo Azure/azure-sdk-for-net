@@ -20,10 +20,19 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
+//using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Web.Syndication;
+
+//TODO: remove usings
+using NewHttpMethod = Microsoft.WindowsAzure.ServiceLayer.Http.HttpMethod;
+using NewHttpRequest = Microsoft.WindowsAzure.ServiceLayer.Http.HttpRequest;
+using HttpContent = Microsoft.WindowsAzure.ServiceLayer.Http.HttpContent;
+
+using NetHttpMethod = System.Net.Http.HttpMethod;
+using NetHttpResponseMessage = System.Net.Http.HttpResponseMessage;
+using NetHttpRequestMessage = System.Net.Http.HttpRequestMessage;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -599,7 +608,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Uri uri = ServiceConfig.GetDestinationUri(destination);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Post, uri);
             message.SubmitTo(request);
 
             return SendAsync(request).AsAsyncAction();
@@ -619,7 +628,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Post, uri);
             return SendAsync(request, CheckNoContent)
                 .ContinueWith((t) => BrokeredMessageInfo.CreateFromPeekResponse(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
@@ -639,7 +648,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Delete, uri);
             return SendAsync(request, CheckNoContent)
                 .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
@@ -664,7 +673,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Uri uri = ServiceConfig.GetLockedMessageUri(queueName, sequenceNumber, lockToken);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Put, uri);
             return SendAsync(request)
                 .AsAsyncAction();
         }
@@ -688,7 +697,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Uri uri = ServiceConfig.GetLockedMessageUri(queueName, sequenceNumber, lockToken);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Delete, uri);
             return SendAsync(request)
                 .AsAsyncAction();
         }
@@ -714,7 +723,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Uri uri = ServiceConfig.GetUnlockedSubscriptionMessageUri(topicName, subscriptionName, lockInterval);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Post, uri);
             return SendAsync(request, CheckNoContent)
                 .ContinueWith(t => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
@@ -740,7 +749,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Uri uri = ServiceConfig.GetUnlockedSubscriptionMessageUri(topicName, subscriptionName, lockInterval);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Delete, uri);
             return SendAsync(request, CheckNoContent)
                 .ContinueWith(t => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
@@ -771,7 +780,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Uri uri = ServiceConfig.GetLockedSubscriptionMessageUri(topicName, subscriptionName, sequenceNumber, lockToken);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, uri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Put, uri);
             return SendAsync(request)
                 .AsAsyncAction();
         }
@@ -800,7 +809,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             Uri uri = ServiceConfig.GetLockedSubscriptionMessageUri(topicName, subscriptionName, sequenceNumber, lockToken);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Delete, uri);
             return SendAsync(request)
                 .AsAsyncAction();
         }
@@ -815,7 +824,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>A collection of items.</returns>
         private IAsyncOperation<IEnumerable<TInfo>> GetItemsAsync<TInfo>(Uri containerUri, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, containerUri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Get, containerUri);
 
             return SendAsync(request, CheckNoContent)
                 .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
@@ -871,7 +880,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Item data</returns>
         private IAsyncOperation<TInfo> GetItemAsync<TInfo>(Uri itemUri, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, itemUri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Get, itemUri);
 
             return SendAsync(request, CheckNoContent)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
@@ -906,7 +915,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Deletion result.</returns>
         private IAsyncAction DeleteItemAsync(Uri itemUri)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, itemUri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Delete, itemUri);
 
             return SendAsync(request)
                 .AsAsyncAction();
@@ -926,7 +935,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             TSettings itemSettings, 
             Action<SyndicationItem, TInfo> initAction) where TSettings: class
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, itemUri);
+            NewHttpRequest request = new NewHttpRequest(NewHttpMethod.Put, itemUri);
 
             return Task.Factory
                 .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
@@ -941,11 +950,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="request">Target request.</param>
         /// <param name="bodyObject">Object to serialize.</param>
         /// <param name="supportedTypes">Supported types.</param>
-        private void SetBody(HttpRequestMessage request, object bodyObject, params Type[] supportedTypes)
+        private void SetBody(NewHttpRequest request, object bodyObject, params Type[] supportedTypes)
         {
             string content = SerializationHelper.Serialize(bodyObject, supportedTypes);
-            request.Content = new StringContent(content, Encoding.UTF8, Constants.BodyContentType);
-            request.Content.Headers.ContentType.Parameters.Add(new System.Net.Http.Headers.NameValueHeaderValue("type", "entry"));
+            request.Content = HttpContent.CreateFromText(content, Constants.BodyContentType);
+            request.Headers.Add("type", "entry");
         }
 
         /// <summary>
@@ -1014,9 +1023,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="request">Request to send.</param>
         /// <returns>HTTP response.</returns>
-        private Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, params Func<HttpResponseMessage, HttpResponseMessage>[] validators)
+        private Task<HttpResponseMessage> SendAsync(NewHttpRequest request, params Func<HttpResponseMessage, HttpResponseMessage>[] validators)
         {
-            return Channel.SendAsync(request)
+            HttpRequestMessage netRequest = request.CreateNetRequest();
+            return Channel.SendAsync(netRequest)
                 .ContinueWith<HttpResponseMessage>((task) => CheckResponse(task.Result, validators), TaskContinuationOptions.OnlyOnRanToCompletion);
         }
 

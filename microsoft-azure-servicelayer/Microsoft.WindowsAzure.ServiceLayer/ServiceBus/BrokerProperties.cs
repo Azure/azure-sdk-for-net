@@ -16,10 +16,10 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using Microsoft.WindowsAzure.ServiceLayer.Http;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -266,7 +266,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Submits content of the class to the given HTTP request.
         /// </summary>
         /// <param name="request">Target request.</param>
-        internal void SubmitTo(HttpRequestMessage request)
+        internal void SubmitTo(HttpRequest request)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BrokerProperties));
             using (MemoryStream stream = new MemoryStream())
