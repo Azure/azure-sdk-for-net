@@ -18,13 +18,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Foundation;
 using Windows.Storage.Streams;
+
+using NetHttpContent = System.Net.Http.HttpContent;
+using NetHttpResponseMessage = System.Net.Http.HttpResponseMessage;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -42,7 +44,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         public string ContentType
         {
-            get { return _content.Headers.ContentType.ToString(); }
+            get { return _content.ContentType; }
         }
 
         /// <summary>
@@ -188,9 +190,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Content of the message.</returns>
         public IAsyncOperation<string> ReadContentAsStringAsync()
         {
-            return _content
-                .ReadAsStringAsync()
-                .AsAsyncOperation();
+            return _content.ReadAsStringAsync();
         }
 
         /// <summary>
@@ -199,10 +199,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Array of bytes.</returns>
         public IAsyncOperation<IEnumerable<byte>> ReadContentAsBytesAsync()
         {
-            return _content
-                .ReadAsByteArrayAsync()
-                .ContinueWith(t => (IEnumerable<byte>)t.Result, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation();
+            return _content.ReadAsByteArrayAsync();
         }
 
         /// <summary>
@@ -211,10 +208,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Stream.</returns>
         public IAsyncOperation<IInputStream> ReadContentAsStreamAsync()
         {
-            return _content
-                .ReadAsStreamAsync()
-                .ContinueWith(t => t.Result.AsInputStream(), TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation();
+            return _content.ReadAsStreamAsync();
         }
 
         /// <summary>
@@ -228,9 +222,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             {
                 throw new ArgumentNullException("stream");
             }
-            return _content
-                .CopyToAsync(stream.AsStreamForWrite())
-                .AsAsyncAction();
+
+            return _content.CopyToAsync(stream);
         }
 
         /// <summary>
@@ -239,9 +232,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="response">Response with data.</param>
         /// <returns></returns>
-        internal static BrokeredMessageInfo CreateFromPeekResponse(HttpResponseMessage response)
+        internal static BrokeredMessageInfo CreateFromPeekResponse(NetHttpResponseMessage response)
         {
-            if (response.StatusCode == HttpStatusCode.NoContent || response.StatusCode == HttpStatusCode.ResetContent)
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent || response.StatusCode == System.Net.HttpStatusCode.ResetContent)
             {
                 return null;
             }
@@ -252,10 +245,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Constructor. Initializes the object from the HTTP response.
         /// </summary>
         /// <param name="response">HTTP reponse with the data.</param>
-        internal BrokeredMessageInfo(HttpResponseMessage response)
+        internal BrokeredMessageInfo(NetHttpResponseMessage response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
-            _content = response.Content;
+            _content = HttpContent.CreateFromResponse(response);
             _customProperties = new CustomPropertiesDictionary(response);
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Dictionary<string, object>));

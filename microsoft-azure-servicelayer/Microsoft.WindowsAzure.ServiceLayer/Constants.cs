@@ -61,5 +61,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const int CompatibilityLevel               = 20;                                       // Compatibility level for rules.
 
         internal const string JsonNullValue                 = "null";                                   // String representation of null value in Json.
+
+        internal const string ContentTypeHeader             = "Content-Type";
     }
 }
