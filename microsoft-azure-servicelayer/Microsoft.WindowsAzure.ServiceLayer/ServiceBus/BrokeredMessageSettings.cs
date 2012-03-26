@@ -163,7 +163,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("contentType");
             }
 
-            return BrokeredMessageSettings.CreateFromText(messageText, contentType);
+            HttpContent content = HttpContent.CreateFromText(messageText, contentType);
+            return new BrokeredMessageSettings(content);
         }
 
         /// <summary>
@@ -180,7 +181,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("messageBytes");
             }
 
-            return BrokeredMessageSettings.CreateFromByteArray(messageBytes);
+            HttpContent content = HttpContent.CreateFromByteArray(messageBytes);
+            return new BrokeredMessageSettings(content);
         }
 
         /// <summary>
@@ -197,7 +199,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 throw new ArgumentNullException("stream");
             }
 
-            return BrokeredMessageSettings.CreateFromStream(stream);
+            HttpContent content = HttpContent.CreateFromStream(stream);
+            return new BrokeredMessageSettings(content);
         }
 
         /// <summary>
