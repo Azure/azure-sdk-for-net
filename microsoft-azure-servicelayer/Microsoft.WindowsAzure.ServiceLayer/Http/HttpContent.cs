@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ using Windows.Foundation;
 using Windows.Storage.Streams;
 
 using NetHttpContent = System.Net.Http.HttpContent;
+using NetHttpResponseMessage = System.Net.Http.HttpResponseMessage;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.Http
 {
@@ -186,9 +188,37 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
 
             if (!string.IsNullOrEmpty(ContentType))
             {
-                content.Headers.Add("Content-Type", ContentType);
+                content.Headers.Add(Constants.ContentTypeHeader, ContentType);
             }
             request.Content = content;
+        }
+
+        /// <summary>
+        /// Creates a content from the HTTP response.
+        /// </summary>
+        /// <param name="response">Source HTTP response.</param>
+        /// <returns>Content.</returns>
+        internal static HttpContent CreateFromResponse(NetHttpResponseMessage response)
+        {
+            Debug.Assert(response.IsSuccessStatusCode);
+            HttpContent content = null;
+
+            if (response.Content != null)
+            {
+                content = new HttpContent(new StreamContent(response.Content.ReadAsStreamAsync().Result));
+
+                IEnumerable<string> contentTypes;
+
+                if (response.Content.Headers.TryGetValues(Constants.ContentTypeHeader, out contentTypes))
+                {
+                    foreach (string type in contentTypes)
+                    {
+                        content.ContentType = type;
+                        break;
+                    }
+                }
+            }
+            return content;
         }
     }
 }
