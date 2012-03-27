@@ -69,6 +69,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
             {
                 throw new ArgumentNullException("originalRequest");
             }
+            if (!Enum.IsDefined(typeof(System.Net.HttpStatusCode), statusCode))
+            {
+                throw new ArgumentOutOfRangeException("statusCode");
+            }
 
             Request = originalRequest;
             StatusCode = statusCode;
@@ -79,7 +83,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Initializes the response object.
         /// </summary>
         /// <param name="originalRequest">Request that initiated the response.</param>
-        /// <param name="response">Actual HTTP response.</param>
+        /// <param name="response">.Net HTTP response.</param>
         internal HttpResponse(HttpRequest originalRequest, NetHttpResponseMessage response)
         {
             Debug.Assert(originalRequest != null);

@@ -47,6 +47,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         {
             HttpRequest validRequest = new HttpRequest("PUT", new Uri("http://microsoft.com"));
             Assert.Throws<ArgumentNullException>(() => new HttpResponse(null, 200));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new HttpResponse(validRequest, -5));
         }
     }
 }
