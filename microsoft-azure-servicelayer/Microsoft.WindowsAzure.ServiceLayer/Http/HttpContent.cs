@@ -17,12 +17,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 
 using NetHttpContent = System.Net.Http.HttpContent;
+using NetHttpRequestMessage = System.Net.Http.HttpRequestMessage;
 using NetHttpResponseMessage = System.Net.Http.HttpResponseMessage;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.Http
@@ -181,7 +181,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Submits content data into the given request.
         /// </summary>
         /// <param name="request">Target request.</param>
-        internal void SubmitTo(HttpRequestMessage request)
+        internal void SubmitTo(NetHttpRequestMessage request)
         {
             NetHttpContent content = new System.Net.Http.StreamContent(
                 _rawContent.ReadAsStreamAsync().Result);

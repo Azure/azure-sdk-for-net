@@ -25,7 +25,6 @@ using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 
-using NetHttpContent = System.Net.Http.HttpContent;
 using NetHttpResponseMessage = System.Net.Http.HttpResponseMessage;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus

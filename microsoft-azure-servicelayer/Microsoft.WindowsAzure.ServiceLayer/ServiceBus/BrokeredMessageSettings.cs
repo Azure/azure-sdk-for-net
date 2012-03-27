@@ -23,9 +23,6 @@ using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Storage.Streams;
 
-using NetHttpContent = System.Net.Http.HttpContent;
-using NetHttpRequestMessage = System.Net.Http.HttpRequestMessage;
-
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
@@ -206,16 +203,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             return new BrokeredMessageSettings(content);
         }
 
-
         /// <summary>
         /// Submits content to the given request.
         /// </summary>
         /// <param name="request">Target request.</param>
-        internal void SubmitTo(NetHttpRequestMessage request)
+        internal void SubmitTo(HttpRequest request)
         {
             _brokerProperties.SubmitTo(request);
             _customProperties.SubmitTo(request);
-            Content.SubmitTo(request);
+            request.Content = Content;
         }
     }
 }
