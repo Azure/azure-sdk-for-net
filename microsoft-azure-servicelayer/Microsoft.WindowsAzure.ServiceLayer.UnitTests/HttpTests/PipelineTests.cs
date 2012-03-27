@@ -19,32 +19,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
+using Xunit;
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
 {
     /// <summary>
-    /// Exception that occurs as a result of calls to Windows Azure service.
+    /// HTTP pipeline tests.
     /// </summary>
-    internal class WindowsAzureServiceException: WindowsAzureException
+    public class PipelineTests
     {
         /// <summary>
-        /// Gets the HTTP status code.
+        /// Tests passing invalid arguments in the request's constructor.
         /// </summary>
-        internal int StatusCode { get; private set; }
-
-        /// <summary>
-        /// Gets the reason string fore th exception.
-        /// </summary>
-        internal string ReasonPhrase { get; private set; }
-
-        /// <summary>
-        /// Constructor. 
-        /// </summary>
-        /// <param name="response">Source HTTP response.</param>
-        internal WindowsAzureServiceException(HttpResponse response)
+        [Fact]
+        public void InvalidArgsInRequestConstructor()
         {
-            StatusCode = response.StatusCode;
-            ReasonPhrase = response.ReasonPhrase;
+            Uri validUri = new Uri("http://microsoft.com");
+            Assert.Throws<ArgumentNullException>(() => new HttpRequest(null, validUri));
+            Assert.Throws<ArgumentNullException>(() => new HttpRequest("PUT", null));
+        }
+
+        /// <summary>
+        /// Tests passing invalid arguments in the response's constructor.
+        /// </summary>
+        [Fact]
+        public void InvalidArgsInResponseConstructor()
+        {
+            HttpRequest validRequest = new HttpRequest("PUT", new Uri("http://microsoft.com"));
+            Assert.Throws<ArgumentNullException>(() => new HttpResponse(null, 200));
         }
     }
 }

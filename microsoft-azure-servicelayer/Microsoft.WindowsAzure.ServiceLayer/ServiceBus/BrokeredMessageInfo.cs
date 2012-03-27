@@ -25,8 +25,6 @@ using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 
-using NetHttpResponseMessage = System.Net.Http.HttpResponseMessage;
-
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
@@ -231,9 +229,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="response">Response with data.</param>
         /// <returns></returns>
-        internal static BrokeredMessageInfo CreateFromPeekResponse(NetHttpResponseMessage response)
+        internal static BrokeredMessageInfo CreateFromPeekResponse(HttpResponse response)
         {
-            if (response.StatusCode == System.Net.HttpStatusCode.NoContent || response.StatusCode == System.Net.HttpStatusCode.ResetContent)
+            if (response.StatusCode == (int)System.Net.HttpStatusCode.NoContent || response.StatusCode == (int)System.Net.HttpStatusCode.ResetContent)
             {
                 return null;
             }
@@ -244,21 +242,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Constructor. Initializes the object from the HTTP response.
         /// </summary>
         /// <param name="response">HTTP reponse with the data.</param>
-        internal BrokeredMessageInfo(NetHttpResponseMessage response)
+        internal BrokeredMessageInfo(HttpResponse response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
-            _content = HttpContent.CreateFromResponse(response);
+            _content = response.Content;
             _customProperties = new CustomPropertiesDictionary(response);
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Dictionary<string, object>));
             string propertiesString = null;
-            IEnumerable<string> values;
 
-            if (response.Headers.TryGetValues(Constants.BrokerPropertiesHeader, out values))
-            {
-                propertiesString = string.Join(string.Empty, values);
-            }
-
+            response.Headers.TryGetValue(Constants.BrokerPropertiesHeader, out propertiesString);
             if (string.IsNullOrEmpty(propertiesString))
             {
                 _brokerProperties = new BrokerProperties();
