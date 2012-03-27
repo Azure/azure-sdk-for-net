@@ -106,6 +106,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Http\HttpContent.cs" />
+    <Compile Include="Http\HttpMethod.cs" />
+    <Compile Include="Http\HttpRequest.cs" />
     <Compile Include="Http\IHttpContent.cs" />
     <Compile Include="Http\MemoryContent.cs" />
     <Compile Include="Http\StreamContent.cs" />

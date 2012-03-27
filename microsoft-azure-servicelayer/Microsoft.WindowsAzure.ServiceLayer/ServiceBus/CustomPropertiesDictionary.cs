@@ -18,10 +18,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Data.Json;
+
+using NetHttpResponseMessage = System.Net.Http.HttpResponseMessage;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -42,7 +44,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Initializes a dictionary with properties from the response.
         /// </summary>
         /// <param name="response">Response.</param>
-        internal CustomPropertiesDictionary(HttpResponseMessage response)
+        internal CustomPropertiesDictionary(NetHttpResponseMessage response)
             : this()
         {
             foreach (KeyValuePair<string, IEnumerable<string>> item in response.Headers)
@@ -66,7 +68,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Submits stored properties to the request.
         /// </summary>
         /// <param name="request">HTTP request.</param>
-        internal void SubmitTo(HttpRequestMessage request)
+        internal void SubmitTo(HttpRequest request)
         {
             foreach (KeyValuePair<string, object> item in this)
             {
@@ -107,7 +109,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 return dateTime.ToUniversalTime();
             }
             return stringValue;
-
         }
 
         /// <summary>
