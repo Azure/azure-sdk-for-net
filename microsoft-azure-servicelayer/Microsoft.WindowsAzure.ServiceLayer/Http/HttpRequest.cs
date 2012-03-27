@@ -57,8 +57,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <summary>
         /// Initializes the request.
         /// </summary>
-        /// <param name="method">Request's HTTP method.</param>
-        /// <param name="uri">Request's URI.</param>
+        /// <param name="method">The request's HTTP method.</param>
+        /// <param name="uri">The request's URI.</param>
         public HttpRequest(string method, Uri uri)
         {
             if (uri == null)
