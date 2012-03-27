@@ -44,13 +44,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Initializes a dictionary with properties from the response.
         /// </summary>
         /// <param name="response">Response.</param>
-        internal CustomPropertiesDictionary(NetHttpResponseMessage response)
+        internal CustomPropertiesDictionary(HttpResponse response)
             : this()
         {
-            foreach (KeyValuePair<string, IEnumerable<string>> item in response.Headers)
+            foreach (KeyValuePair<string, string> item in response.Headers)
             {
                 string key = item.Key;
-                string valueString = string.Join(string.Empty, item.Value);
+                string valueString = item.Value;
                 JsonValue translatedValue;
 
                 if (JsonValue.TryParse(valueString, out translatedValue) && IsSupportedType(translatedValue.ValueType))

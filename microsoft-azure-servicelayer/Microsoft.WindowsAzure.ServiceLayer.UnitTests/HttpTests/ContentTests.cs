@@ -23,7 +23,7 @@ using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Storage.Streams;
 using Xunit;
 
-namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
+namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
 {
     /// <summary>
     /// Tests for the Content class.

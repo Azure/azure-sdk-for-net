@@ -16,10 +16,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.ServiceLayer.Http;
 
 namespace Microsoft.WindowsAzure.ServiceLayer
 {
@@ -31,7 +30,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <summary>
         /// Gets the HTTP status code.
         /// </summary>
-        internal HttpStatusCode StatusCode { get; private set; }
+        internal int StatusCode { get; private set; }
 
         /// <summary>
         /// Gets the reason string fore th exception.
@@ -42,7 +41,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// Constructor. 
         /// </summary>
         /// <param name="response">Source HTTP response.</param>
-        internal WindowsAzureServiceException(HttpResponseMessage response)
+        internal WindowsAzureServiceException(HttpResponse response)
         {
             StatusCode = response.StatusCode;
             ReasonPhrase = response.ReasonPhrase;

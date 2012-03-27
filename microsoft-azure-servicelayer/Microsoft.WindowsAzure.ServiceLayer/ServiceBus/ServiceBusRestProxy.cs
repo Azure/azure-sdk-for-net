@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
@@ -626,7 +625,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
             return SendAsync(request, CheckNoContent)
-                .ContinueWith((t) => BrokeredMessageInfo.CreateFromPeekResponse(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith(t => BrokeredMessageInfo.CreateFromPeekResponse(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
 
@@ -857,11 +856,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="initAction">Initialization action.</param>
         /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Collection of deserialized items.</returns>
-        private IEnumerable<TInfo> GetItems<TInfo>(NetHttpResponseMessage response, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
+        private IEnumerable<TInfo> GetItems<TInfo>(HttpResponse response, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
             Debug.Assert(response.IsSuccessStatusCode);
             SyndicationFeed feed = new SyndicationFeed();
-            feed.Load(response.Content.ReadAsStringAsync().Result);
+            feed.Load(response.Content.ReadAsStringAsync().AsTask().Result);
 
             return SerializationHelper.DeserializeCollection<TInfo>(feed, initAction, extraTypes);
         }
@@ -892,11 +891,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="initAction">Initialization action for deserialized items.</param>
         /// <param name="extraTypes">Extra types for deserialization.</param>
         /// <returns>Deserialized object.</returns>
-        private TInfo GetItem<TInfo>(NetHttpResponseMessage response, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
+        private TInfo GetItem<TInfo>(HttpResponse response, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
             Debug.Assert(response.IsSuccessStatusCode);
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(response.Content.ReadAsStringAsync().Result);
+            doc.LoadXml(response.Content.ReadAsStringAsync().AsTask().Result);
 
             SyndicationItem feedItem = new SyndicationItem();
             feedItem.LoadFromXml(doc);
@@ -935,7 +934,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             return Task.Factory
                 .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
-                .ContinueWith<NetHttpResponseMessage>(tr => SendAsync(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<HttpResponse>(tr => SendAsync(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, ExtraRuleTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<TInfo>();
         }
@@ -999,7 +998,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="response">Source HTTP response.</param>
         /// <param name="validators">Additional validators.</param>
         /// <returns>Processed HTTP response.</returns>
-        private NetHttpResponseMessage CheckResponse(NetHttpResponseMessage response, IEnumerable<Func<NetHttpResponseMessage, NetHttpResponseMessage>> validators)
+        private HttpResponse CheckResponse(HttpResponse response, IEnumerable<Func<HttpResponse, HttpResponse>> validators)
         {
             if (!response.IsSuccessStatusCode)
             {
@@ -1007,7 +1006,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
 
             // Pass the response through all validators.
-            foreach (Func<NetHttpResponseMessage, NetHttpResponseMessage> validator in validators)
+            foreach (Func<HttpResponse, HttpResponse> validator in validators)
             {
                 response = validator(response);
             }
@@ -1019,11 +1018,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="request">Request to send.</param>
         /// <returns>HTTP response.</returns>
-        private Task<NetHttpResponseMessage> SendAsync(HttpRequest request, params Func<NetHttpResponseMessage, NetHttpResponseMessage>[] validators)
+        private Task<HttpResponse> SendAsync(HttpRequest request, params Func<HttpResponse, HttpResponse>[] validators)
         {
             NetHttpRequestMessage netRequest = request.CreateNetRequest();
             return Channel.SendAsync(netRequest)
-                .ContinueWith<NetHttpResponseMessage>((task) => CheckResponse(task.Result, validators), TaskContinuationOptions.OnlyOnRanToCompletion);
+                .ContinueWith<HttpResponse>(t => new HttpResponse(request, t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<HttpResponse>(t => CheckResponse(t.Result, validators));
         }
 
         /// <summary>
@@ -1031,9 +1031,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="response">Source response.</param>
         /// <returns>Processed HTTP response.</returns>
-        private NetHttpResponseMessage CheckNoContent(NetHttpResponseMessage response)
+        private HttpResponse CheckNoContent(HttpResponse response)
         {
-            if (response.StatusCode == System.Net.HttpStatusCode.NoContent || response.StatusCode == HttpStatusCode.ResetContent)
+            if (response.StatusCode == (int)System.Net.HttpStatusCode.NoContent || response.StatusCode == (int)System.Net.HttpStatusCode.ResetContent)
             {
                 throw new WindowsAzureServiceException(response);
             }
