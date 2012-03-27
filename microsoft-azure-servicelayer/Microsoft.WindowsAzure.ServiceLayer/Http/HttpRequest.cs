@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
     /// </summary>
     public sealed class HttpRequest
     {
-        private NetHttpMethod _method;                      // HTTP method verb.
+        private NetHttpMethod _method;                      // HTTP method verb (get/put/post, etc.)
 
         /// <summary>
         /// Gets the URI used for the HTTP request.
