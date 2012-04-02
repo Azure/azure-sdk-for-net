@@ -19,7 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.Http
 {
     /// <summary>
     /// Helper class for processing HTTP query strings.

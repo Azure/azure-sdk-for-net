@@ -25,22 +25,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// Options of the service bus service.
     /// </summary>
-    public class ServiceConfiguration
+    internal class ServiceConfiguration
     {
         /// <summary>
         /// Gets the service namespace.
         /// </summary>
-        public string ServiceNamespace { get; private set; }
-
-        /// <summary>
-        /// Gets the user name used for authentication.
-        /// </summary>
-        public string UserName { get; private set; }
-
-        /// <summary>
-        /// Gets the password used for authentication.
-        /// </summary>
-        public string Password { get; private set; }
+        internal string ServiceNamespace { get; private set; }
 
         /// <summary>
         /// Gets the service bus URI.
@@ -48,35 +38,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         internal Uri ServiceBusUri { get; private set; }
 
         /// <summary>
-        /// Gets URI of the authentication service.
-        /// </summary>
-        internal Uri AuthenticationUri { get; private set; }
-
-        /// <summary>
-        /// Gets the host URI for authenticating requests.
-        /// </summary>
-        internal Uri ScopeHostUri { get; private set; }
-
-        /// <summary>
         /// Constructor with explicitly specified options.
         /// </summary>
         /// <param name="serviceNamespace">Service namespace.</param>
-        /// <param name="userName">User name for authentication.</param>
-        /// <param name="password">Password for authentication.</param>
-        internal ServiceConfiguration(string serviceNamespace, string userName, string password)
+        internal ServiceConfiguration(string serviceNamespace)
         {
             ServiceNamespace = serviceNamespace;
-            UserName = userName;
-            Password = password;
 
             string stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusServiceUri, ServiceNamespace);
             ServiceBusUri = new Uri(stringUri, UriKind.Absolute);
-
-            stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusAuthenticationUri, ServiceNamespace);
-            AuthenticationUri = new Uri(stringUri, UriKind.Absolute);
-
-            stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusScopeUri, ServiceNamespace);
-            ScopeHostUri = new Uri(stringUri);
         }
 
         /// <summary>

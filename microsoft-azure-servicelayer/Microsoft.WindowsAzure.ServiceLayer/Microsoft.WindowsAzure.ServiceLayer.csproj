@@ -106,10 +106,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Http\HttpContent.cs" />
+    <Compile Include="Http\HttpDefaultHandler.cs" />
     <Compile Include="Http\HttpMethod.cs" />
     <Compile Include="Http\HttpRequest.cs" />
     <Compile Include="Http\HttpResponse.cs" />
     <Compile Include="Http\IHttpContent.cs" />
+    <Compile Include="Http\IHttpHandler.cs" />
     <Compile Include="Http\MemoryContent.cs" />
     <Compile Include="Http\StreamContent.cs" />
     <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />
@@ -135,10 +137,10 @@
     <Compile Include="WindowsAzureException.cs" />
     <Compile Include="WindowsAzureServiceException.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="HttpQueryStringParser.cs" />
+    <Compile Include="Http\HttpQueryStringParser.cs" />
     <Compile Include="ServiceBus\ServiceBusRestProxy.cs" />
-    <Compile Include="ServiceBus\WrapAuthenticationHandler.cs" />
-    <Compile Include="ServiceBus\WrapToken.cs" />
+    <Compile Include="Http\WrapAuthenticationHandler.cs" />
+    <Compile Include="Http\WrapToken.cs" />
     <Compile Include="ServiceBus\IServiceBusService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBus\QueueInfo.cs" />
