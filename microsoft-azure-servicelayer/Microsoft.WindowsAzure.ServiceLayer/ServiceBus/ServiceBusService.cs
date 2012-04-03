@@ -37,18 +37,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>A service bus service with the given parameters.</returns>
         public static IServiceBusService Create(string serviceNamespace, string userName, string password)
         {
-            if (serviceNamespace == null)
-            {
-                throw new ArgumentNullException("serviceNamespace");
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException("userName");
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException("password");
-            }
+            Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
+            Validator.ArgumentIsNotNullOrEmptyString("userName", userName);
+            Validator.ArgumentIsNotNull("password", password);
 
             ServiceConfiguration config = new ServiceConfiguration(serviceNamespace);
             IHttpHandler pipeline = new HttpDefaultHandler();
@@ -67,14 +58,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>A service bus service with the given parameters.</returns>
         public static IServiceBusService Create(string serviceNamespace, IHttpHandler handler)
         {
-            if (serviceNamespace == null)
-            {
-                throw new ArgumentNullException("serviceNamespace");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
+            Validator.ArgumentIsNotNull("handler", handler);
 
             ServiceConfiguration config = new ServiceConfiguration(serviceNamespace);
             return new ServiceBusRestProxy(config, handler);

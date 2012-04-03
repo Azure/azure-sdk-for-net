@@ -50,10 +50,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>HTTP response.</returns>
         HttpResponse IHttpHandler.ProcessRequest(HttpRequest request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            Validator.ArgumentIsNotNull("request", request);
 
             NetHttpRequestMessage netRequest = request.CreateNetRequest();
             return _client.SendAsync(netRequest)

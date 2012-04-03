@@ -61,14 +61,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="uri">The request's URI.</param>
         public HttpRequest(string method, Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException("uri");
-            }
-            if (method == null)
-            {
-                throw new ArgumentNullException("method");
-            }
+            Validator.ArgumentIsNotNullOrEmptyString("method", method);
+            Validator.ArgumentIsNotNull("uri", uri);
 
             Uri = uri;
             _method = new NetHttpMethod(method);

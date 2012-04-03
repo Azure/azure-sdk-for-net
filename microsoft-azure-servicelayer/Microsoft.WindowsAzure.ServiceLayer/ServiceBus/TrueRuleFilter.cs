@@ -42,10 +42,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="expression">Rule's SQL expression.</param>
         public TrueRuleFilter(string expression)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException("expression");
-            }
+            Validator.ArgumentIsNotNullOrEmptyString("expression", expression);
+
             Expression = expression;
         }
     }

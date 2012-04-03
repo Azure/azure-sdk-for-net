@@ -134,10 +134,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="content">Message content.</param>
         public BrokeredMessageSettings(HttpContent content)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException("content");
-            }
+            Validator.ArgumentIsNotNull("content", content);
 
             Content = content;
             _brokerProperties = new BrokerProperties();
@@ -154,14 +151,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Message settings.</returns>
         public static BrokeredMessageSettings CreateFromText(string messageText, string contentType = Constants.DefaultMessageContentType)
         {
-            if (messageText == null)
-            {
-                throw new ArgumentNullException("messageText");
-            }
-            if (contentType == null)
-            {
-                throw new ArgumentNullException("contentType");
-            }
+            Validator.ArgumentIsNotNull("messageText", messageText);
+            Validator.ArgumentIsNotNullOrEmptyString("contentType", contentType);
 
             HttpContent content = HttpContent.CreateFromText(messageText, contentType);
             return new BrokeredMessageSettings(content);
@@ -176,10 +167,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Message settings.</returns>
         public static BrokeredMessageSettings CreateFromByteArray(byte[] messageBytes)
         {
-            if (messageBytes == null)
-            {
-                throw new ArgumentNullException("messageBytes");
-            }
+            Validator.ArgumentIsNotNull("messageBytes", messageBytes);
 
             HttpContent content = HttpContent.CreateFromByteArray(messageBytes);
             return new BrokeredMessageSettings(content);
@@ -194,10 +182,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Message settings.</returns>
         public static BrokeredMessageSettings CreateFromStream(IInputStream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            Validator.ArgumentIsNotNull("stream", stream);
 
             HttpContent content = HttpContent.CreateFromStream(stream);
             return new BrokeredMessageSettings(content);

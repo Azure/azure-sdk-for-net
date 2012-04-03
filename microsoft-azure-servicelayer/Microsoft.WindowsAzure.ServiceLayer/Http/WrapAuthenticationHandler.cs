@@ -52,24 +52,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="nextHandler">Next HTTP handler in the chain.</param>
         public WrapAuthenticationHandler(string serviceNamespace, string userName, string password, IHttpHandler nextHandler)
         {
-            if (serviceNamespace == null)
-            {
-                throw new ArgumentNullException("serviceNamespace");
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException("userName");
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException("password");
-            }
-            if (nextHandler == null)
-            {
-                // This handler relies on the next handler in the chain for sending
-                // requests.
-                throw new ArgumentNullException("nextHandler");
-            }
+            Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
+            Validator.ArgumentIsNotNullOrEmptyString("userName", userName);
+            Validator.ArgumentIsNotNull("password", password);
+            Validator.ArgumentIsNotNull("nextHandler", nextHandler);
 
             _namespace = serviceNamespace;
             _userName = userName;
@@ -92,10 +78,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Result of procession.</returns>
         HttpResponse IHttpHandler.ProcessRequest(HttpRequest request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            Validator.ArgumentIsNotNull("request", request);
+
             WrapToken token = GetToken(request.Uri.AbsolutePath);
             token.Authorize(request);
             return _nextHandler.ProcessRequest(request);

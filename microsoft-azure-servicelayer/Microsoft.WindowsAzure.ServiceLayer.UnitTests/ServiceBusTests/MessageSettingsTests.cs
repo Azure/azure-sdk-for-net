@@ -24,6 +24,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings(null));
             Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText(null));
             Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText("Test", null));
+            Assert.Throws<ArgumentException>(() => BrokeredMessageSettings.CreateFromText("Test", ""));
+            Assert.Throws<ArgumentException>(() => BrokeredMessageSettings.CreateFromText("Test", " "));
             Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromByteArray(null));
             Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromStream(null));
         }

@@ -94,6 +94,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             BrokeredMessageSettings message = MessageHelper.CreateMessage("This is a test.");
             Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync(null, message));
+            Assert.Throws<ArgumentException>(() => Configuration.ServiceBus.SendMessageAsync("", message));
+            Assert.Throws<ArgumentException>(() => Configuration.ServiceBus.SendMessageAsync(" ", message));
             Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync(_queueName, null));
         }
 

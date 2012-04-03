@@ -54,14 +54,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Content object.</returns>
         public static HttpContent CreateFromText(string text, string contentType)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
-            if (contentType == null)
-            {
-                throw new ArgumentNullException("contentType");
-            }
+            Validator.ArgumentIsNotNull("text", text);
+            Validator.ArgumentIsNotNullOrEmptyString("contentType", contentType);
 
             return new HttpContent(
                 new MemoryContent(text),
@@ -75,10 +69,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Content object.</returns>
         public static HttpContent CreateFromByteArray(byte[] bytes)
         {
-            if (bytes == null)
-            {
-                throw new ArgumentNullException("bytes");
-            }
+            Validator.ArgumentIsNotNull("bytes", bytes);
 
             return new HttpContent(new MemoryContent(bytes));
         }
@@ -90,10 +81,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Content object.</returns>
         public static HttpContent CreateFromStream(IInputStream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            Validator.ArgumentIsNotNull("stream", stream);
 
             return new HttpContent(new StreamContent(stream.AsStreamForRead()));
         }
@@ -155,10 +143,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Result of the operation.</returns>
         public IAsyncAction CopyToAsync(IOutputStream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            Validator.ArgumentIsNotNull("stream", stream);
 
             return _rawContent
                 .CopyToAsync(stream.AsStreamForWrite())

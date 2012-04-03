@@ -247,11 +247,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void NullArgsInQueues()
         {
+            QueueSettings validSettings = new QueueSettings();
             Assert.Throws<ArgumentNullException>(() => Service.CreateQueueAsync(null));
-            Assert.Throws<ArgumentNullException>(() => Service.CreateQueueAsync(null, new QueueSettings()));
+            Assert.Throws<ArgumentException>(() => Service.CreateQueueAsync(""));
+            Assert.Throws<ArgumentException>(() => Service.CreateQueueAsync(" "));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateQueueAsync(null, validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateQueueAsync("", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateQueueAsync(" ", validSettings));
             Assert.Throws<ArgumentNullException>(() => Service.CreateQueueAsync("foo", null));
             Assert.Throws<ArgumentNullException>(() => Service.GetQueueAsync(null));
+            Assert.Throws<ArgumentException>(() => Service.GetQueueAsync(""));
+            Assert.Throws<ArgumentException>(() => Service.GetQueueAsync(" "));
             Assert.Throws<ArgumentNullException>(() => Service.DeleteQueueAsync(null));
+            Assert.Throws<ArgumentException>(() => Service.DeleteQueueAsync(""));
+            Assert.Throws<ArgumentException>(() => Service.DeleteQueueAsync(" "));
         }
 
         /// <summary>
@@ -357,6 +366,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                 (firstItem, count) => Service.ListSubscriptionsAsync("test", firstItem, count));
 
             Assert.Throws<ArgumentNullException>(() => Service.ListSubscriptionsAsync(null, 1, 1));
+            Assert.Throws<ArgumentException>(() => Service.ListSubscriptionsAsync("", 1, 1));
+            Assert.Throws<ArgumentException>(() => Service.ListSubscriptionsAsync(" ", 1, 1));
         }
 
         /// <summary>
@@ -390,7 +401,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                 (firstItem, count) => Service.ListRulesAsync("topic", "subscription", firstItem, count));
 
             Assert.Throws<ArgumentNullException>(() => Service.ListRulesAsync(null, "subscription", 0, 1));
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync("", "subscription", 0, 1));
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync(" ", "subscription", 0, 1));
             Assert.Throws<ArgumentNullException>(() => Service.ListRulesAsync("topic", null, 0, 1));
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync("topic", "", 0, 1));
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync("topic", " ", 0, 1));
+
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync("topic", "subscription", -1, 1));
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync("topic", "subscripiton", 0, 0));
         }
 
         /// <summary>
@@ -473,11 +491,21 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void NullArgsInTopics()
         {
+            TopicSettings validSettings = new TopicSettings();
+
             Assert.Throws<ArgumentNullException>(() => Service.CreateTopicAsync(null));
-            Assert.Throws<ArgumentNullException>(() => Service.CreateTopicAsync(null, new TopicSettings()));
+            Assert.Throws<ArgumentException>(() => Service.CreateTopicAsync(""));
+            Assert.Throws<ArgumentException>(() => Service.CreateTopicAsync(" "));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateTopicAsync(null, validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateTopicAsync("", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateTopicAsync(" ", validSettings));
             Assert.Throws<ArgumentNullException>(() => Service.CreateTopicAsync("foo", null));
             Assert.Throws<ArgumentNullException>(() => Service.GetTopicAsync(null));
+            Assert.Throws<ArgumentException>(() => Service.GetTopicAsync(""));
+            Assert.Throws<ArgumentException>(() => Service.GetTopicAsync(" "));
             Assert.Throws<ArgumentNullException>(() => Service.DeleteTopicAsync(null));
+            Assert.Throws<ArgumentException>(() => Service.DeleteQueueAsync(""));
+            Assert.Throws<ArgumentException>(() => Service.DeleteQueueAsync(" "));
         }
 
         /// <summary>
@@ -580,18 +608,38 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests ArgumentNullException for subscription parameters.
         /// </summary>
         [Fact]
-        public void NullArgsInSubscriptions()
+        public void InvalidArgsInSubscriptions()
         {
+            SubscriptionSettings validSettings = new SubscriptionSettings();
+
             Assert.Throws<ArgumentNullException>(() => Service.ListSubscriptionsAsync(null));
+            Assert.Throws<ArgumentException>(() => Service.ListSubscriptionsAsync(""));
+            Assert.Throws<ArgumentException>(() => Service.ListSubscriptionsAsync(" "));
             Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync(null, "test"));
+            Assert.Throws<ArgumentException>(() => Service.CreateSubscriptionAsync("", "test"));
+            Assert.Throws<ArgumentException>(() => Service.CreateSubscriptionAsync(" ", "test"));
             Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync("test", null));
-            Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync(null, "test", new SubscriptionSettings()));
-            Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync("test", null, new SubscriptionSettings()));
+            Assert.Throws<ArgumentException>(() => Service.CreateSubscriptionAsync("test", ""));
+            Assert.Throws<ArgumentException>(() => Service.CreateSubscriptionAsync("test", " "));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync(null, "test", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateSubscriptionAsync("", "test", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateSubscriptionAsync(" ", "test", validSettings));
+            Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync("test", null, validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateSubscriptionAsync("test", "", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateSubscriptionAsync("test", " ", validSettings));
             Assert.Throws<ArgumentNullException>(() => Service.CreateSubscriptionAsync("test", "test", null));
             Assert.Throws<ArgumentNullException>(() => Service.GetSubscriptionAsync(null, "test"));
+            Assert.Throws<ArgumentException>(() => Service.GetSubscriptionAsync("", "test"));
+            Assert.Throws<ArgumentException>(() => Service.GetSubscriptionAsync(" ", "test"));
             Assert.Throws<ArgumentNullException>(() => Service.GetSubscriptionAsync("test", null));
+            Assert.Throws<ArgumentException>(() => Service.GetSubscriptionAsync("test", ""));
+            Assert.Throws<ArgumentException>(() => Service.GetSubscriptionAsync("test", " "));
             Assert.Throws<ArgumentNullException>(() => Service.DeleteSubscriptionAsync(null, "test"));
+            Assert.Throws<ArgumentException>(() => Service.DeleteSubscriptionAsync("", "test"));
+            Assert.Throws<ArgumentException>(() => Service.DeleteSubscriptionAsync(" ", "test"));
             Assert.Throws<ArgumentNullException>(() => Service.DeleteSubscriptionAsync("test", null));
+            Assert.Throws<ArgumentException>(() => Service.DeleteSubscriptionAsync("test", ""));
+            Assert.Throws<ArgumentException>(() => Service.DeleteSubscriptionAsync("test", " "));
         }
 
         /// <summary>
@@ -713,30 +761,60 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Tests null argument exceptions in rule methods.
         /// </summary>
         [Fact]
-        public void NullArgsInRules()
+        public void InvalidArgsInRules()
         {
             RuleSettings validSettings = new RuleSettings(new SqlRuleFilter("1=1"), null);
             Assert.Throws<ArgumentNullException>(() => Service.CreateRuleAsync(null, "test", "test", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateRuleAsync("", "test", "test", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateRuleAsync(" ", "test", "test", validSettings));
             Assert.Throws<ArgumentNullException>(() => Service.CreateRuleAsync("test", null, "test", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateRuleAsync("test", "", "test", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateRuleAsync("test", " ", "test", validSettings));
             Assert.Throws<ArgumentNullException>(() => Service.CreateRuleAsync("test", "test", null, validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateRuleAsync("test", "test", "", validSettings));
+            Assert.Throws<ArgumentException>(() => Service.CreateRuleAsync("test", "test", " ", validSettings));
             Assert.Throws<ArgumentNullException>(() => Service.CreateRuleAsync("test", "test", "test", null));
 
             Assert.Throws<ArgumentNullException>(() => Service.ListRulesAsync(null, "test"));
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync("", "test"));
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync(" ", "test"));
             Assert.Throws<ArgumentNullException>(() => Service.ListRulesAsync("test", null));
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync("test", ""));
+            Assert.Throws<ArgumentException>(() => Service.ListRulesAsync("test", " "));
 
             Assert.Throws<ArgumentNullException>(() => Service.GetRuleAsync(null, "test", "test"));
+            Assert.Throws<ArgumentException>(() => Service.GetRuleAsync("", "test", "test"));
+            Assert.Throws<ArgumentException>(() => Service.GetRuleAsync(" ", "test", "test"));
             Assert.Throws<ArgumentNullException>(() => Service.GetRuleAsync("test", null, "test"));
+            Assert.Throws<ArgumentException>(() => Service.GetRuleAsync("test", "", "test"));
+            Assert.Throws<ArgumentException>(() => Service.GetRuleAsync("test", " ", "test"));
             Assert.Throws<ArgumentNullException>(() => Service.GetRuleAsync("test", "test", null));
+            Assert.Throws<ArgumentException>(() => Service.GetRuleAsync("test", "test", ""));
+            Assert.Throws<ArgumentException>(() => Service.GetRuleAsync("test", "test", " "));
 
             Assert.Throws<ArgumentNullException>(() => Service.DeleteRuleAsync(null, "test", "test"));
+            Assert.Throws<ArgumentException>(() => Service.DeleteRuleAsync("", "test", "test"));
+            Assert.Throws<ArgumentException>(() => Service.DeleteRuleAsync(" ", "test", "test"));
             Assert.Throws<ArgumentNullException>(() => Service.DeleteRuleAsync("test", null, "test"));
+            Assert.Throws<ArgumentException>(() => Service.DeleteRuleAsync("test", "", "test"));
+            Assert.Throws<ArgumentException>(() => Service.DeleteRuleAsync("test", " ", "test"));
             Assert.Throws<ArgumentNullException>(() => Service.DeleteRuleAsync("test", "test", null));
+            Assert.Throws<ArgumentException>(() => Service.DeleteRuleAsync("test", "test", ""));
+            Assert.Throws<ArgumentException>(() => Service.DeleteRuleAsync("test", "test", " "));
 
             Assert.Throws<ArgumentNullException>(() => new SqlRuleFilter(null));
+            Assert.Throws<ArgumentException>(() => new SqlRuleFilter(""));
+            Assert.Throws<ArgumentException>(() => new SqlRuleFilter(" "));
             Assert.Throws<ArgumentNullException>(() => new TrueRuleFilter(null));
+            Assert.Throws<ArgumentException>(() => new TrueRuleFilter(""));
+            Assert.Throws<ArgumentException>(() => new TrueRuleFilter(" "));
             Assert.Throws<ArgumentNullException>(() => new FalseRuleFilter(null));
+            Assert.Throws<ArgumentException>(() => new FalseRuleFilter(""));
+            Assert.Throws<ArgumentException>(() => new FalseRuleFilter(" "));
 
             Assert.Throws<ArgumentNullException>(() => new SqlRuleAction(null));
+            Assert.Throws<ArgumentException>(() => new SqlRuleAction(""));
+            Assert.Throws<ArgumentException>(() => new SqlRuleAction(" "));
         }
 
         /// <summary>
@@ -852,11 +930,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         public void InvalidArgsInCreateService()
         {
             Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create(null, "user", "password"));
+            Assert.Throws<ArgumentException>(() => ServiceBusService.Create("", "user", "password"));
+            Assert.Throws<ArgumentException>(() => ServiceBusService.Create(" ", "user", "password"));
             Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create("namespace", null, "password"));
+            Assert.Throws<ArgumentException>(() => ServiceBusService.Create("namespace", "", "password"));
+            Assert.Throws<ArgumentException>(() => ServiceBusService.Create("namespace", " ", "password"));
             Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create("namespace", "user", null));
 
             IHttpHandler validHandler = new HttpDefaultHandler();
             Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create(null, validHandler));
+            Assert.Throws<ArgumentException>(() => ServiceBusService.Create("", validHandler));
+            Assert.Throws<ArgumentException>(() => ServiceBusService.Create(" ", validHandler));
             Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create("namespace", null));
         }
     }

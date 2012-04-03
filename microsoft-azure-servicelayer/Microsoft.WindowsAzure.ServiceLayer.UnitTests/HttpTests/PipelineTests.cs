@@ -37,6 +37,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         {
             Uri validUri = new Uri("http://microsoft.com");
             Assert.Throws<ArgumentNullException>(() => new HttpRequest(null, validUri));
+            Assert.Throws<ArgumentException>(() => new HttpRequest("", validUri));
             Assert.Throws<ArgumentNullException>(() => new HttpRequest("PUT", null));
         }
 
@@ -60,7 +61,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         {
             IHttpHandler validHandler = new HttpDefaultHandler();
             Assert.Throws<ArgumentNullException>(() => new WrapAuthenticationHandler(null, "user", "password", validHandler));
+            Assert.Throws<ArgumentException>(() => new WrapAuthenticationHandler("", "user", "password", validHandler));
+            Assert.Throws<ArgumentException>(() => new WrapAuthenticationHandler(" ", "user", "password", validHandler));
             Assert.Throws<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", null, "password", validHandler));
+            Assert.Throws<ArgumentException>(() => new WrapAuthenticationHandler("namespace", "", "password", validHandler));
+            Assert.Throws<ArgumentException>(() => new WrapAuthenticationHandler("namespace", " ", "password", validHandler));
             Assert.Throws<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", "user", null, validHandler));
             Assert.Throws<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", "user", "password", null));
         }
