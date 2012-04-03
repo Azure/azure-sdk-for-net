@@ -56,6 +56,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string DefaultMessageContentType     = "text/plain";
         internal const string WrapAuthenticationContentType = "application/x-www-form-urlencoded";
         
+        internal const string AcceptHeader                  = "Accept";                                 // "Accept" HTTP header name
         internal const string BrokerPropertiesHeader        = "BrokerProperties";                       // Header name for broker properties.
 
         internal const int CompatibilityLevel               = 20;                                       // Compatibility level for rules.

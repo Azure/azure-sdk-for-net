@@ -47,29 +47,25 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             typeof(SqlRuleAction),
         };
 
+        private IHttpHandler _channel;                      // HTTP processing channel.
+
         /// <summary>
         /// Gets the service options.
         /// </summary>
         private ServiceConfiguration ServiceConfig { get; set; }
 
         /// <summary>
-        /// Gets HTTP client used for communicating with the service.
+        /// Initializes the service bus service.
         /// </summary>
-        private NetHttpClient Channel { get; set; }
-
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="serviceOptions">Configuration parameters.</param>
-        internal ServiceBusRestProxy(ServiceConfiguration serviceOptions)
+        /// <param name="config">Service configuration.</param>
+        /// <param name="httpHandler">Handler for processing HTTP requests.</param>
+        internal ServiceBusRestProxy(ServiceConfiguration config, IHttpHandler httpHandler)
         {
-            Debug.Assert(serviceOptions != null);
+            Debug.Assert(config != null);
+            Debug.Assert(httpHandler != null);
 
-            ServiceConfig = serviceOptions;
-
-            NetHttpMessageHandler chain = new WrapAuthenticationHandler(serviceOptions);
-            Channel = new NetHttpClient(chain);
+            ServiceConfig = config;
+            _channel = httpHandler;
         }
 
         /// <summary>
@@ -81,6 +77,28 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             return GetItemsAsync<QueueInfo>(
                 ServiceConfig.GetQueuesContainerUri(), 
                 InitQueue);
+        }
+
+        /// <summary>
+        /// Gets HTTP handler used by the service.
+        /// </summary>
+        IHttpHandler IServiceBusService.HttpHandler
+        {
+            get { return _channel; }
+        }
+
+        /// <summary>
+        /// Clones the service and assigns a given handler to it.
+        /// </summary>
+        /// <param name="handler">HTTP handler to assign to the cloned service.</param>
+        /// <returns>Cloned service.</returns>
+        IServiceBusService IServiceBusService.AssignHandler(IHttpHandler handler)
+        {
+            if (handler == null)
+            {
+                throw new ArgumentNullException("handler");
+            }
+            return new ServiceBusRestProxy(ServiceConfig, handler);
         }
 
         /// <summary>
@@ -1020,10 +1038,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>HTTP response.</returns>
         private Task<HttpResponse> SendAsync(HttpRequest request, params Func<HttpResponse, HttpResponse>[] validators)
         {
-            NetHttpRequestMessage netRequest = request.CreateNetRequest();
-            return Channel.SendAsync(netRequest)
-                .ContinueWith<HttpResponse>(t => new HttpResponse(request, t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
-                .ContinueWith<HttpResponse>(t => CheckResponse(t.Result, validators));
+            return Task.Factory.StartNew(() => _channel.ProcessRequest(request))
+                .ContinueWith(t => CheckResponse(t.Result, validators));
         }
 
         /// <summary>

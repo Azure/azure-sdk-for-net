@@ -19,6 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
+using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests;
 using Windows.Foundation;
 using Xunit;
@@ -842,6 +843,21 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                 () => { return Service.ListRulesAsync(UsesUniqueSubscriptionAttribute.TopicName, UsesUniqueSubscriptionAttribute.SubscriptionName); },
                 (r) => { return r.Name; });
             Assert.False(allRules.ContainsKey(ruleName));
+        }
+
+        /// <summary>
+        /// Tests passing invalid arguments in creating a service.
+        /// </summary>
+        [Fact]
+        public void InvalidArgsInCreateService()
+        {
+            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create(null, "user", "password"));
+            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create("namespace", null, "password"));
+            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create("namespace", "user", null));
+
+            IHttpHandler validHandler = new HttpDefaultHandler();
+            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create(null, validHandler));
+            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create("namespace", null));
         }
     }
 }

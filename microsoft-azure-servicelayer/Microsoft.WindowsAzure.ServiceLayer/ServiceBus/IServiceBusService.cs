@@ -16,7 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Foundation;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
@@ -26,6 +26,18 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public interface IServiceBusService
     {
+        /// <summary>
+        /// Gets the handler used for processing HTTP requests.
+        /// </summary>
+        IHttpHandler HttpHandler { get; }
+
+        /// <summary>
+        /// Clones the service and assigns a new handler to it.
+        /// </summary>
+        /// <param name="handler">HTTP handler to assign to the clone.</param>
+        /// <returns>Cloned service with the new handler.</returns>
+        IServiceBusService AssignHandler(IHttpHandler handler);
+
         /// <summary>
         /// Lists all available queues in the namespace.
         /// </summary>
