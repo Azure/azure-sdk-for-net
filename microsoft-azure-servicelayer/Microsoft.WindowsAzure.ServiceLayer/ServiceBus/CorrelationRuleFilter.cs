@@ -36,10 +36,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="correlationId">Correlation ID.</param>
         public CorrelationRuleFilter(string correlationId)
         {
-            if (correlationId == null)
-            {
-                throw new ArgumentNullException("correlationId");
-            }
+            Validator.ArgumentIsNotNullOrEmptyString("correlationId", correlationId);
+
             CorrelationId = correlationId;
         }
     }

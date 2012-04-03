@@ -39,10 +39,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="action">Rule's SQL action string.</param>
         public SqlRuleAction(string action)
         {
-            if (action == null)
-            {
-                throw new ArgumentNullException("action");
-            }
+            Validator.ArgumentIsNotNullOrEmptyString("action", action);
 
             Action = action;
             CompatibilityLevel = Constants.CompatibilityLevel;
