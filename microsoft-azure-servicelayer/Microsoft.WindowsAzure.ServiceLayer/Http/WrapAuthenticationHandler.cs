@@ -28,6 +28,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
     /// <summary>
     /// HTTP handler for WRAP authentication of outgoing requests.
     /// </summary>
+    /// <remarks>This class uses handlers down the chain for sending its
+    /// authentication requests. This is why it requires specifying another
+    /// HTTP in the constructor.</remarks>
     public sealed class WrapAuthenticationHandler: IHttpHandler
     {
         private IHttpHandler _nextHandler;                              // Next HTTP handler in the chain.
