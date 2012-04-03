@@ -134,6 +134,7 @@
     <Compile Include="ServiceBus\TopicSettings.cs" />
     <Compile Include="ServiceBus\SubscriptionSettings.cs" />
     <Compile Include="ServiceBus\TrueRuleFilter.cs" />
+    <Compile Include="Validator.cs" />
     <Compile Include="WindowsAzureException.cs" />
     <Compile Include="WindowsAzureServiceException.cs" />
     <Compile Include="Constants.cs" />

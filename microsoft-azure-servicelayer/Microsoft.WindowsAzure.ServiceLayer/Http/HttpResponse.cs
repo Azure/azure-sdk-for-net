@@ -65,14 +65,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="statusCode">Status code of the HTTP response.</param>
         public HttpResponse(HttpRequest originalRequest, int statusCode)
         {
-            if (originalRequest == null)
-            {
-                throw new ArgumentNullException("originalRequest");
-            }
-            if (!Enum.IsDefined(typeof(System.Net.HttpStatusCode), statusCode))
-            {
-                throw new ArgumentOutOfRangeException("statusCode");
-            }
+            Validator.ArgumentIsNotNull("originalRequest", originalRequest);
+            Validator.ArgumentIsValidEnumValue<System.Net.HttpStatusCode>("statusCode", statusCode);
 
             Request = originalRequest;
             StatusCode = statusCode;

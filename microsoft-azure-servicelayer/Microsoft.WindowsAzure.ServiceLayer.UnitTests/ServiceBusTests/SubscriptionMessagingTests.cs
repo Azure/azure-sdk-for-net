@@ -118,16 +118,37 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [Fact]
         public void NullArgs()
         {
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.PeekSubscriptionMessageAsync(null, "subscription", TimeSpan.FromSeconds(10)));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.PeekSubscriptionMessageAsync("topic", null, TimeSpan.FromSeconds(10)));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.GetSubscriptionMessageAsync(null, "subscription", TimeSpan.FromSeconds(10)));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.GetSubscriptionMessageAsync("topic", null, TimeSpan.FromSeconds(10)));
+            TimeSpan validSpan = TimeSpan.FromSeconds(10);
+
+            Assert.Throws<ArgumentNullException>(() => ServiceBus.PeekSubscriptionMessageAsync(null, "subscription", validSpan));
+            Assert.Throws<ArgumentException>(() => ServiceBus.PeekSubscriptionMessageAsync("", "subscription", validSpan));
+            Assert.Throws<ArgumentException>(() => ServiceBus.PeekSubscriptionMessageAsync(" ", "subscription", validSpan));
+            Assert.Throws<ArgumentNullException>(() => ServiceBus.PeekSubscriptionMessageAsync("topic", null, validSpan));
+            Assert.Throws<ArgumentException>(() => ServiceBus.PeekSubscriptionMessageAsync("topic", "", validSpan));
+            Assert.Throws<ArgumentException>(() => ServiceBus.PeekSubscriptionMessageAsync("topic", " ", validSpan));
+            Assert.Throws<ArgumentNullException>(() => ServiceBus.GetSubscriptionMessageAsync(null, "subscription", validSpan));
+            Assert.Throws<ArgumentException>(() => ServiceBus.GetSubscriptionMessageAsync("", "subscription", validSpan));
+            Assert.Throws<ArgumentException>(() => ServiceBus.GetSubscriptionMessageAsync(" ", "subscription", validSpan));
+            Assert.Throws<ArgumentNullException>(() => ServiceBus.GetSubscriptionMessageAsync("topic", null, validSpan));
+            Assert.Throws<ArgumentException>(() => ServiceBus.GetSubscriptionMessageAsync("topic", "", validSpan));
+            Assert.Throws<ArgumentException>(() => ServiceBus.GetSubscriptionMessageAsync("topic", " ", validSpan));
+
             Assert.Throws<ArgumentNullException>(() => ServiceBus.UnlockSubscriptionMessageAsync(null, "subscription", 0, "lockToken"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync("", "subscription", 0, "lockToken"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync(" ", "subscription", 0, "lockToken"));
             Assert.Throws<ArgumentNullException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", null, 0, "lockToken"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", "", 0, "lockToken"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", " ", 0, "lockToken"));
             Assert.Throws<ArgumentNullException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", "subscription", 0, null));
+            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", "subscription", 0, ""));
             Assert.Throws<ArgumentNullException>(() => ServiceBus.DeleteSubscriptionMessageAsync(null, "subscription", 0, "lockToken"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync("", "subscription", 0, "lockToken"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync(" ", "subscription", 0, "lockToken"));
             Assert.Throws<ArgumentNullException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", null, 0, "lockToken"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", "", 0, "lockToken"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", " ", 0, "lockToken"));
             Assert.Throws<ArgumentNullException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", "subscription", 0, null));
+            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", "subscription", 0, ""));
         }
 
         /// <summary>

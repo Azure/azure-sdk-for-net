@@ -94,10 +94,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Cloned service.</returns>
         IServiceBusService IServiceBusService.AssignHandler(IHttpHandler handler)
         {
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            Validator.ArgumentIsNotNull("handler", handler);
+
             return new ServiceBusRestProxy(ServiceConfig, handler);
         }
 
@@ -109,16 +107,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Collection of queues.</returns>
         IAsyncOperation<IEnumerable<QueueInfo>> IServiceBusService.ListQueuesAsync(int firstItem, int count)
         {
-            if (firstItem < 0)
-            {
-                //TODO: error message.
-                throw new ArgumentException();
-            }
-            if (count <= 0)
-            {
-                //TODO: error message.
-                throw new ArgumentException();
-            }
+            Validator.ArgumentIsNonNegative("firstItem", firstItem);
+            Validator.ArgumentIsPositive("count", count);
 
             return GetItemsAsync<QueueInfo>(
                 ServiceConfig.GetQueuesContainerUri(),
@@ -133,10 +123,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Queue data.</returns>
         IAsyncOperation<QueueInfo> IServiceBusService.GetQueueAsync(string queueName)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException("queueName");
-            }
+            Validator.ArgumentIsValidPath("queueName", queueName);
 
             return GetItemAsync<QueueInfo>(
                 ServiceConfig.GetQueueUri(queueName),
@@ -150,10 +137,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Asycnrhonous action.</returns>
         IAsyncAction IServiceBusService.DeleteQueueAsync(string queueName)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException("queueName");
-            }
+            Validator.ArgumentIsValidPath("queueName", queueName);
 
             return DeleteItemAsync(
                 ServiceConfig.GetQueueUri(queueName));
@@ -166,10 +150,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Queue data.</returns>
         IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException("queueName");
-            }
+            Validator.ArgumentIsValidPath("queueName", queueName);
 
             return CreateItemAsync<QueueInfo, QueueSettings>(
                 ServiceConfig.GetQueueUri(queueName),
@@ -185,14 +166,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Created queue.</returns>
         IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName, QueueSettings queueSettings)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException("queueName");
-            }
-            if (queueSettings == null)
-            {
-                throw new ArgumentNullException("queueSettings");
-            }
+            Validator.ArgumentIsValidPath("queueName", queueName);
+            Validator.ArgumentIsNotNull("queueSettings", queueSettings);
 
             return CreateItemAsync<QueueInfo, QueueSettings>(
                 ServiceConfig.GetQueueUri(queueName),
@@ -219,16 +194,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Collection of topics.</returns>
         IAsyncOperation<IEnumerable<TopicInfo>> IServiceBusService.ListTopicsAsync(int firstItem, int count)
         {
-            if (firstItem < 0)
-            {
-                //TODO: error message.
-                throw new ArgumentException();
-            }
-            if (count <= 0)
-            {
-                //TODO: error message.
-                throw new ArgumentException();
-            }
+            Validator.ArgumentIsNonNegative("firstItem", firstItem);
+            Validator.ArgumentIsPositive("count", count);
+
             return GetItemsAsync<TopicInfo>(
                 ServiceConfig.GetTopicsContainerUri(),
                 firstItem, count,
@@ -242,10 +210,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Created topic.</returns>
         IAsyncOperation<TopicInfo> IServiceBusService.CreateTopicAsync(string topicName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
 
             return CreateItemAsync<TopicInfo, TopicSettings>(
                 ServiceConfig.GetTopicUri(topicName),
@@ -261,14 +226,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Created topic.</returns>
         IAsyncOperation<TopicInfo> IServiceBusService.CreateTopicAsync(string topicName, TopicSettings topicSettings)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (topicSettings == null)
-            {
-                throw new ArgumentNullException("topicSettings");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsNotNull("topicSettings", topicSettings);
 
             return CreateItemAsync<TopicInfo, TopicSettings>(
                 ServiceConfig.GetTopicUri(topicName),
@@ -283,10 +242,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Topic information.</returns>
         IAsyncOperation<TopicInfo> IServiceBusService.GetTopicAsync(string topicName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
 
             return GetItemAsync<TopicInfo>(
                 ServiceConfig.GetTopicUri(topicName),
@@ -300,10 +256,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Deletion result.</returns>
         IAsyncAction IServiceBusService.DeleteTopicAsync(string topicName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
 
             return DeleteItemAsync(
                 ServiceConfig.GetTopicUri(topicName));
@@ -318,14 +271,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Created subscription.</returns>
         IAsyncOperation<SubscriptionInfo> IServiceBusService.CreateSubscriptionAsync(string topicName, string subscriptionName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
 
             return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName),
@@ -346,18 +293,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             string subscriptionName, 
             SubscriptionSettings subscriptionSettings)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
-            if (subscriptionSettings == null)
-            { 
-                throw new ArgumentNullException("subscriptionSettings");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
+            Validator.ArgumentIsNotNull("subscriptionSettings", subscriptionSettings);
 
             return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
@@ -372,10 +310,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Collection of subscriptions.</returns>
         IAsyncOperation<IEnumerable<SubscriptionInfo>> IServiceBusService.ListSubscriptionsAsync(string topicName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
 
             return GetItemsAsync<SubscriptionInfo>(
                 ServiceConfig.GetSubscriptionsContainerUri(topicName), 
@@ -391,20 +326,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Collection of subscriptions.</returns>
         IAsyncOperation<IEnumerable<SubscriptionInfo>> IServiceBusService.ListSubscriptionsAsync(string topicName, int firstItem, int count)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException(topicName);
-            }
-            if (firstItem < 0)
-            {
-                //TODO: error message.
-                throw new ArgumentException();
-            }
-            if (count <= 0)
-            {
-                //TODO: error message.
-                throw new ArgumentException();
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsNonNegative("firstItem", firstItem);
+            Validator.ArgumentIsPositive("count", count);
 
             return GetItemsAsync<SubscriptionInfo>(
                 ServiceConfig.GetSubscriptionsContainerUri(topicName),
@@ -420,14 +344,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Subscription information.</returns>
         IAsyncOperation<SubscriptionInfo> IServiceBusService.GetSubscriptionAsync(string topicName, string subscriptionName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
 
             return GetItemAsync<SubscriptionInfo>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
@@ -442,14 +360,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Result of the operation.</returns>
         IAsyncAction IServiceBusService.DeleteSubscriptionAsync(string topicName, string subscriptionName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
 
             return DeleteItemAsync(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName));
@@ -465,23 +377,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns></returns>
         IAsyncOperation<RuleInfo> IServiceBusService.CreateRuleAsync(string topicName, string subscriptionName, string ruleName, RuleSettings ruleSettings)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-
-                throw new ArgumentNullException("subscriptionName");
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException("ruleName");
-            }
-            if (ruleSettings == null)
-            {
-                throw new ArgumentNullException("ruleSettings");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
+            Validator.ArgumentIsValidPath("ruleName", ruleName);
+            Validator.ArgumentIsNotNull("ruleSettings", ruleSettings);
 
             return CreateItemAsync<RuleInfo, RuleSettings>(
                 ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName),
@@ -497,14 +396,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>A collection of rules.</returns>
         IAsyncOperation<IEnumerable<RuleInfo>> IServiceBusService.ListRulesAsync(string topicName, string subscriptionName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
 
             return GetItemsAsync<RuleInfo>(
                 ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
@@ -522,24 +415,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Collection of rules.</returns>
         IAsyncOperation<IEnumerable<RuleInfo>> IServiceBusService.ListRulesAsync(string topicName, string subscriptionName, int firstItem, int count)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
-            if (firstItem < 0)
-            {
-                //TODO: error message.
-                throw new ArgumentException();
-            }
-            if (count <= 0)
-            {
-                //TODO: error message.
-                throw new ArgumentException();
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
+            Validator.ArgumentIsNonNegative("firstItem", firstItem);
+            Validator.ArgumentIsPositive("count", count);
 
             return GetItemsAsync<RuleInfo>(
                 ServiceConfig.GetRulesContainerUri(topicName, subscriptionName),
@@ -557,18 +436,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Rule information.</returns>
         IAsyncOperation<RuleInfo> IServiceBusService.GetRuleAsync(string topicName, string subscriptionName, string ruleName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException("ruleName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
+            Validator.ArgumentIsValidPath("ruleName", ruleName);
 
             return GetItemAsync<RuleInfo>(
                 ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName),
@@ -585,19 +455,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Result of the operation.</returns>
         IAsyncAction IServiceBusService.DeleteRuleAsync(string topicName, string subscriptionName, string ruleName)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-
-                throw new ArgumentNullException("subscriptionName");
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException("ruleName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
+            Validator.ArgumentIsValidPath("ruleName", ruleName);
 
             return DeleteItemAsync(
                 ServiceConfig.GetRuleUri(topicName, subscriptionName, ruleName));
@@ -611,14 +471,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Result of the operation.</returns>
         IAsyncAction IServiceBusService.SendMessageAsync(string destination, BrokeredMessageSettings message)
         {
-            if (destination == null)
-            {
-                throw new ArgumentNullException("destination");
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException("message");
-            }
+            Validator.ArgumentIsValidPath("destination", destination);
+            Validator.ArgumentIsNotNull("message", message);
 
             Uri uri = ServiceConfig.GetDestinationUri(destination);
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
@@ -635,10 +489,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Message from the queue.</returns>
         IAsyncOperation<BrokeredMessageInfo> IServiceBusService.PeekQueueMessageAsync(string queueName, TimeSpan lockInterval)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException("queueName");
-            }
+            Validator.ArgumentIsValidPath("queueName", queueName);
 
             Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
@@ -655,10 +506,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Message.</returns>
         IAsyncOperation<BrokeredMessageInfo> IServiceBusService.GetQueueMessageAsync(string queueName, TimeSpan lockInterval)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException("queueName");
-            }
+            Validator.ArgumentIsValidPath("queueName", queueName);
 
             Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
             HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
@@ -676,14 +524,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Result of the operation.</returns>
         IAsyncAction IServiceBusService.UnlockQueueMessageAsync(string queueName, long sequenceNumber, string lockToken)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException("queueName");
-            }
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException("lockToken");
-            }
+            Validator.ArgumentIsValidPath("queueName", queueName);
+            Validator.ArgumentIsNotNullOrEmptyString("lockToken", lockToken);
 
             Uri uri = ServiceConfig.GetLockedMessageUri(queueName, sequenceNumber, lockToken);
             HttpRequest request = new HttpRequest(HttpMethod.Put, uri);
@@ -700,14 +542,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Result of the operation.</returns>
         IAsyncAction IServiceBusService.DeleteQueueMessageAsync(string queueName, long sequenceNumber, string lockToken)
         {
-            if (queueName == null)
-            {
-                throw new ArgumentNullException("queueName");
-            }
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException("lockToken");
-            }
+            Validator.ArgumentIsValidPath("queueName", queueName);
+            Validator.ArgumentIsNotNullOrEmptyString("lockToken", lockToken);
 
             Uri uri = ServiceConfig.GetLockedMessageUri(queueName, sequenceNumber, lockToken);
             HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
@@ -726,14 +562,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Message from the subscription.</returns>
         IAsyncOperation<BrokeredMessageInfo> IServiceBusService.PeekSubscriptionMessageAsync(string topicName, string subscriptionName, TimeSpan lockInterval)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
 
             Uri uri = ServiceConfig.GetUnlockedSubscriptionMessageUri(topicName, subscriptionName, lockInterval);
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
@@ -752,14 +582,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Message from the subscription.</returns>
         IAsyncOperation<BrokeredMessageInfo> IServiceBusService.GetSubscriptionMessageAsync(string topicName, string subscriptionName, TimeSpan lockInterval)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
 
             Uri uri = ServiceConfig.GetUnlockedSubscriptionMessageUri(topicName, subscriptionName, lockInterval);
             HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
@@ -779,18 +603,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Result of the operation.</returns>
         IAsyncAction IServiceBusService.UnlockSubscriptionMessageAsync(string topicName, string subscriptionName, long sequenceNumber, string lockToken)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException("lockToken");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
+            Validator.ArgumentIsNotNullOrEmptyString("lockToken", lockToken);
 
             Uri uri = ServiceConfig.GetLockedSubscriptionMessageUri(topicName, subscriptionName, sequenceNumber, lockToken);
             HttpRequest request = new HttpRequest(HttpMethod.Put, uri);
@@ -808,18 +623,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Result of the operation.</returns>
         IAsyncAction IServiceBusService.DeleteSubscriptionMessageAsync(string topicName, string subscriptionName, long sequenceNumber, string lockToken)
         {
-            if (topicName == null)
-            {
-                throw new ArgumentNullException("topicName");
-            }
-            if (subscriptionName == null)
-            {
-                throw new ArgumentNullException("subscriptionName");
-            }
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException("lockToken");
-            }
+            Validator.ArgumentIsValidPath("topicName", topicName);
+            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
+            Validator.ArgumentIsNotNullOrEmptyString("lockToken", lockToken);
 
             Uri uri = ServiceConfig.GetLockedSubscriptionMessageUri(topicName, subscriptionName, sequenceNumber, lockToken);
             HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);

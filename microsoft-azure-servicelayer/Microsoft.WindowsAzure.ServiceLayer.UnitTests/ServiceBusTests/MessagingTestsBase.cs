@@ -192,6 +192,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void InvalidArgsInDeleteMessage()
         {
             Assert.Throws<ArgumentNullException>(() => DeleteMessage(0, null));
+            Assert.Throws<ArgumentException>(() => DeleteMessage(0, ""));
         }
 
         /// <summary>
@@ -216,6 +217,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void InvalidArgsInUnlockMessage()
         {
             Assert.Throws<ArgumentNullException>(() => UnlockMessage(0, null));
+            Assert.Throws<ArgumentException>(() => UnlockMessage(0, ""));
         }
 
         /// <summary>

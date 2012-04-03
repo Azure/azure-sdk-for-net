@@ -82,6 +82,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         {
             Assert.Throws<ArgumentNullException>(() => HttpContent.CreateFromText(null, "text/plain"));
             Assert.Throws<ArgumentNullException>(() => HttpContent.CreateFromText("test", null));
+            Assert.Throws<ArgumentException>(() => HttpContent.CreateFromText("text", ""));
             Assert.Throws<ArgumentNullException>(() => HttpContent.CreateFromByteArray(null));
             Assert.Throws<ArgumentNullException>(() => HttpContent.CreateFromStream(null));
 

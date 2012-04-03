@@ -215,10 +215,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <returns>Result of the operation.</returns>
         public IAsyncInfo CopyContentToAsync(IOutputStream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            Validator.ArgumentIsNotNull("stream", stream);
 
             return _content.CopyToAsync(stream);
         }
