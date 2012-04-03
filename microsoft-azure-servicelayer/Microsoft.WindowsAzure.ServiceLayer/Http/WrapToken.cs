@@ -19,11 +19,11 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.ServiceLayer.Http;
 
-namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
+namespace Microsoft.WindowsAzure.ServiceLayer.Http
 {
     /// <summary>
     /// WRAP token; used for authenticating outgoing web requests.
@@ -58,11 +58,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="resourcePath">Path of the authenticated resource.</param>
         /// <param name="response">HTTP response with the token.</param>
-        internal WrapToken(string resourcePath, HttpResponseMessage response)
+        internal WrapToken(string resourcePath, HttpResponse response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
             Scope = resourcePath;
-            string content = response.Content.ReadAsStringAsync().Result;
+            string content = response.Content.ReadAsStringAsync().AsTask().Result;
             HttpQueryStringParser query = new HttpQueryStringParser(content);
 
             Token = string.Format(CultureInfo.InvariantCulture, Constants.WrapTokenAuthenticationString, WebUtility.UrlDecode(query["wrap_access_token"]));
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="request">Source request.</param>
         /// <returns>Authorized request.</returns>
-        internal HttpRequestMessage Authorize(HttpRequestMessage request)
+        internal HttpRequest Authorize(HttpRequest request)
         {
             request.Headers.Add("Authorization", Token);
             return request;
