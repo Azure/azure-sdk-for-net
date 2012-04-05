@@ -38,8 +38,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         private Object _syncObject;                                     // Synchronization object for accessing cached tokens.
 
         private string _namespace;                                      // Service namespace.
-        private string _userName;                                       // User name.
-        private string _password;                                       // Password.
+        private string _issuerName;                                     // Issuer name.
+        private string _issuerPassword;                                 // Password.
         private Uri _authenticationUri;                                 // URI for processing authentication requests.
         private Uri _serviceHostUri;                                    // Host part of the URI for accessing service resources.
 
@@ -47,19 +47,19 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Initializes WARP authentication handler for use in Service Bus.
         /// </summary>
         /// <param name="serviceNamespace">Namespace.</param>
-        /// <param name="userName">User name.</param>
-        /// <param name="password">Password.</param>
+        /// <param name="issuerName">User name.</param>
+        /// <param name="issuerPassword">Password.</param>
         /// <param name="nextHandler">Next HTTP handler in the chain.</param>
-        public WrapAuthenticationHandler(string serviceNamespace, string userName, string password, IHttpHandler nextHandler)
+        public WrapAuthenticationHandler(string serviceNamespace, string issuerName, string issuerPassword, IHttpHandler nextHandler)
         {
             Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
-            Validator.ArgumentIsNotNullOrEmptyString("userName", userName);
-            Validator.ArgumentIsNotNull("password", password);
+            Validator.ArgumentIsNotNullOrEmptyString("issuerName", issuerName);
+            Validator.ArgumentIsNotNull("issuerPassword", issuerPassword);
             Validator.ArgumentIsNotNull("nextHandler", nextHandler);
 
             _namespace = serviceNamespace;
-            _userName = userName;
-            _password = password;
+            _issuerName = issuerName;
+            _issuerPassword = issuerPassword;
             _nextHandler = nextHandler;
             _syncObject = new object();
             _tokens = new Dictionary<string, WrapToken>(StringComparer.OrdinalIgnoreCase);
@@ -110,8 +110,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
                 HttpRequest request = new HttpRequest(HttpMethod.Post, _authenticationUri);
                 Dictionary<string, string> settings = new Dictionary<string, string>()
                 {
-                    {"wrap_name",       _userName},
-                    {"wrap_password",   _password},
+                    {"wrap_name",       _issuerName},
+                    {"wrap_password",   _issuerPassword},
                     {"wrap_scope",      scopeUri.ToString()},
                 };
 
