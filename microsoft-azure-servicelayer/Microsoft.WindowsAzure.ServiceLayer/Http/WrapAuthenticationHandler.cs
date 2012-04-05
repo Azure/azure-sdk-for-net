@@ -122,6 +122,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
                 request.Content = HttpContent.CreateFromByteArray(netContent.ReadAsByteArrayAsync().Result);
 
                 HttpResponse response = _nextHandler.ProcessRequest(request);
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new WrapAuthenticationException(response);
+                }
                 token = new WrapToken(resourcePath, response);
 
                 lock (_syncObject)
