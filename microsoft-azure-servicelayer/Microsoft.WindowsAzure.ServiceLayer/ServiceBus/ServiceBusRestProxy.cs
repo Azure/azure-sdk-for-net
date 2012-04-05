@@ -826,7 +826,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             if (!response.IsSuccessStatusCode)
             {
-                throw new WindowsAzureServiceException(response);
+                throw new WindowsAzureHttpException(response);
             }
 
             // Pass the response through all validators.
@@ -857,7 +857,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             if (response.StatusCode == (int)System.Net.HttpStatusCode.NoContent || response.StatusCode == (int)System.Net.HttpStatusCode.ResetContent)
             {
-                throw new WindowsAzureServiceException(response);
+                throw new WindowsAzureHttpException(response);
             }
             return response;
         }

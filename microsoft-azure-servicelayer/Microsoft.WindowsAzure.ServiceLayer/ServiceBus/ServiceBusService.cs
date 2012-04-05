@@ -32,18 +32,18 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// default pipeline.
         /// </summary>
         /// <param name="serviceNamespace">Service namespace.</param>
-        /// <param name="userName">User name.</param>
-        /// <param name="password">Password.</param>
+        /// <param name="issuerName">User name.</param>
+        /// <param name="issuerPassword">Password.</param>
         /// <returns>A service bus service with the given parameters.</returns>
-        public static IServiceBusService Create(string serviceNamespace, string userName, string password)
+        public static IServiceBusService Create(string serviceNamespace, string issuerName, string issuerPassword)
         {
             Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
-            Validator.ArgumentIsNotNullOrEmptyString("userName", userName);
-            Validator.ArgumentIsNotNull("password", password);
+            Validator.ArgumentIsNotNullOrEmptyString("issuerName", issuerName);
+            Validator.ArgumentIsNotNull("issuerPassword", issuerPassword);
 
             ServiceConfiguration config = new ServiceConfiguration(serviceNamespace);
             IHttpHandler pipeline = new HttpDefaultHandler();
-            pipeline = new WrapAuthenticationHandler(serviceNamespace, userName, password, pipeline);
+            pipeline = new WrapAuthenticationHandler(serviceNamespace, issuerName, issuerPassword, pipeline);
             return new ServiceBusRestProxy(config, pipeline);
         }
 

@@ -105,6 +105,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ErrorSource.cs" />
     <Compile Include="Http\HttpContent.cs" />
     <Compile Include="Http\HttpDefaultHandler.cs" />
     <Compile Include="Http\HttpMethod.cs" />
@@ -114,6 +115,8 @@
     <Compile Include="Http\IHttpHandler.cs" />
     <Compile Include="Http\MemoryContent.cs" />
     <Compile Include="Http\StreamContent.cs" />
+    <Compile Include="Http\WindowsAzureHttpException.cs" />
+    <Compile Include="Http\WrapAuthenticationException.cs" />
     <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />
     <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
     <Compile Include="ServiceBus\BrokerProperties.cs" />
@@ -136,7 +139,6 @@
     <Compile Include="ServiceBus\TrueRuleFilter.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="WindowsAzureException.cs" />
-    <Compile Include="WindowsAzureServiceException.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Http\HttpQueryStringParser.cs" />
     <Compile Include="ServiceBus\ServiceBusRestProxy.cs" />

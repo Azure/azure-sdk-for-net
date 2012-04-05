@@ -18,33 +18,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.ServiceLayer.Http;
 
-namespace Microsoft.WindowsAzure.ServiceLayer
+namespace Microsoft.WindowsAzure.ServiceLayer.Http
 {
     /// <summary>
-    /// Exception that occurs as a result of calls to Windows Azure service.
+    /// WRAP authentication exception.
     /// </summary>
-    internal class WindowsAzureServiceException: WindowsAzureException
+    /// <remarks>The exception occurs when WRAP authentication request fails.</remarks>
+    internal class WrapAuthenticationException: WindowsAzureHttpException
     {
         /// <summary>
-        /// Gets the HTTP status code.
+        /// Initializes the exception.
         /// </summary>
-        internal int StatusCode { get; private set; }
-
-        /// <summary>
-        /// Gets the reason string fore th exception.
-        /// </summary>
-        internal string ReasonPhrase { get; private set; }
-
-        /// <summary>
-        /// Constructor. 
-        /// </summary>
-        /// <param name="response">Source HTTP response.</param>
-        internal WindowsAzureServiceException(HttpResponse response)
+        /// <param name="response">Response.</param>
+        internal WrapAuthenticationException(HttpResponse response)
         {
-            StatusCode = response.StatusCode;
-            ReasonPhrase = response.ReasonPhrase;
+            HResult = GetComErrorCode(response.StatusCode, ErrorSource.WrapAuthentication);
+            //TODO: error message!
         }
     }
 }

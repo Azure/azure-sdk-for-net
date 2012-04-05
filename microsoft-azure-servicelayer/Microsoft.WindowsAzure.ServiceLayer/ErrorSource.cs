@@ -14,14 +14,19 @@
 //
 
 using System;
-using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.ServiceLayer
 {
     /// <summary>
-    /// Base class for all Windows Azure exceptions.
+    /// Specifies source of an error.
     /// </summary>
-    internal class WindowsAzureException: COMException
+    enum ErrorSource
     {
+        ServiceBus,                                     // The error comes from the service bus call.
+        WrapAuthentication,                             // The error comes from WRAP authentication call.
     }
 }
