@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
 
-namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
+namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
 {
     /// <summary>
     /// Helper class for dealing with messages.
