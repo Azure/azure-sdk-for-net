@@ -32,9 +32,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// </summary>
         /// <param name="response">Response.</param>
         internal WrapAuthenticationException(HttpResponse response)
+            : base(Resources.ErrorWrapAuthentication, response, ErrorSource.WrapAuthentication)
         {
-            HResult = GetComErrorCode(response.StatusCode, ErrorSource.WrapAuthentication);
-            //TODO: error message!
         }
     }
 }

@@ -23,5 +23,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer
     /// </summary>
     internal class WindowsAzureException: COMException
     {
+        /// <summary>
+        /// Initializes the exception with the specified error message.
+        /// </summary>
+        /// <param name="message"></param>
+        internal WindowsAzureException(string message)
+            : base(message)
+        {
+        }
     }
 }
