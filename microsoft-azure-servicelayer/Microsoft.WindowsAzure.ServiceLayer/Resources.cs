@@ -83,5 +83,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         {
             get { return GetString("ErrorFailedRequest"); }
         }
+
+        internal static string ErrorUnsupportedPropertyType
+        {
+            get { return GetString("ErrorUnsupportedPropertyType"); }
+        }
     }
 }

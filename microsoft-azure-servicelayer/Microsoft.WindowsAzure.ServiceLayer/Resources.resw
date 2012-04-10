@@ -132,6 +132,11 @@
   <data name="ErrorNoContent" xml:space="preserve">
     <value>HTTP response returned no data.</value>
   </data>
+  <data name="ErrorUnsupportedPropertyType" xml:space="preserve">
+    <value>Unsupported custom property type: {0}.
+
+Custom properties can be only of string, numerical, Boolean, and DateTime types.</value>
+  </data>
   <data name="ErrorWrapAuthentication" xml:space="preserve">
     <value>WRAP authentication failed.</value>
   </data>
