@@ -16,18 +16,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Web.Syndication;
 
-using NetHttpClient = System.Net.Http.HttpClient;
-using NetHttpMessageHandler = System.Net.Http.HttpMessageHandler;
-using NetHttpMethod = System.Net.Http.HttpMethod;
-using NetHttpResponseMessage = System.Net.Http.HttpResponseMessage;
-using NetHttpRequestMessage = System.Net.Http.HttpRequestMessage;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
@@ -47,7 +42,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             typeof(SqlRuleAction),
         };
 
-        private IHttpHandler _channel;                      // HTTP processing channel.
+        private HttpChannel _channel;                       // HTTP processing channel.
 
         /// <summary>
         /// Gets the service options.
@@ -65,7 +60,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Debug.Assert(httpHandler != null);
 
             ServiceConfig = config;
-            _channel = httpHandler;
+            _channel = new HttpChannel(httpHandler);
         }
 
         /// <summary>
@@ -84,7 +79,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         IHttpHandler IServiceBusService.HttpHandler
         {
-            get { return _channel; }
+            get { return _channel.Handler; }
         }
 
         /// <summary>
@@ -97,6 +92,33 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Validator.ArgumentIsNotNull("handler", handler);
 
             return new ServiceBusRestProxy(ServiceConfig, handler);
+        }
+
+        /// <summary>
+        /// Creates a message receiver for the given queue.
+        /// </summary>
+        /// <param name="queueName">Queue name.</param>
+        /// <returns>Message receiver.</returns>
+        MessageReceiver IServiceBusService.CreateMessageReceiver(string queueName)
+        {
+            Validator.ArgumentIsNotNullOrEmptyString("queueName", queueName);
+
+            return new MessageReceiver(ServiceConfig, _channel, queueName);
+        }
+
+        /// <summary>
+        /// Creates a message receiver for the given subscripiton.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Message receiver.</returns>
+        MessageReceiver IServiceBusService.CreateMessageReceiver(string topicName, string subscriptionName)
+        {
+            Validator.ArgumentIsNotNullOrEmptyString("topicName", topicName);
+            Validator.ArgumentIsNotNullOrEmptyString("subscriptionName", subscriptionName);
+
+            string path = string.Format(CultureInfo.InvariantCulture, Constants.SubscriptionPath, topicName, subscriptionName);
+            return new MessageReceiver(ServiceConfig, _channel, path);
         }
 
         /// <summary>
@@ -478,161 +500,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
             message.SubmitTo(request);
 
-            return SendAsync(request).AsAsyncAction();
+            return _channel.SendAsync(request).AsAsyncAction();
         }
-
-        /// <summary>
-        /// Peeks and locks a message at the top of the quuee.
-        /// </summary>
-        /// <param name="queueName">Queue/topic name.</param>
-        /// <param name="lockInterval">Lock duration.</param>
-        /// <returns>Message from the queue.</returns>
-        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.PeekQueueMessageAsync(string queueName, TimeSpan lockInterval)
-        {
-            Validator.ArgumentIsValidPath("queueName", queueName);
-
-            Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
-            HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
-            return SendAsync(request, CheckNoContent)
-                .ContinueWith(t => BrokeredMessageInfo.CreateFromPeekResponse(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation();
-        }
-
-        /// <summary>
-        /// Gets and locks a message from the given path.
-        /// </summary>
-        /// <param name="queueName">Queue/topic name.</param>
-        /// <param name="lockInterval">Lock duration.</param>
-        /// <returns>Message.</returns>
-        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.GetQueueMessageAsync(string queueName, TimeSpan lockInterval)
-        {
-            Validator.ArgumentIsValidPath("queueName", queueName);
-
-            Uri uri = ServiceConfig.GetUnlockedMessageUri(queueName, lockInterval);
-            HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
-            return SendAsync(request, CheckNoContent)
-                .ContinueWith((t) => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation();
-        }
-
-        /// <summary>
-        /// Unlocks previously locked message.
-        /// </summary>
-        /// <param name="queueName">Queue/topic name.</param>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock ID.</param>
-        /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.UnlockQueueMessageAsync(string queueName, long sequenceNumber, string lockToken)
-        {
-            Validator.ArgumentIsValidPath("queueName", queueName);
-            Validator.ArgumentIsNotNullOrEmptyString("lockToken", lockToken);
-
-            Uri uri = ServiceConfig.GetLockedMessageUri(queueName, sequenceNumber, lockToken);
-            HttpRequest request = new HttpRequest(HttpMethod.Put, uri);
-            return SendAsync(request)
-                .AsAsyncAction();
-        }
-
-        /// <summary>
-        /// Deletes previously locked message.
-        /// </summary>
-        /// <param name="queueName">Topic/queue name.</param>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock ID.</param>
-        /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.DeleteQueueMessageAsync(string queueName, long sequenceNumber, string lockToken)
-        {
-            Validator.ArgumentIsValidPath("queueName", queueName);
-            Validator.ArgumentIsNotNullOrEmptyString("lockToken", lockToken);
-
-            Uri uri = ServiceConfig.GetLockedMessageUri(queueName, sequenceNumber, lockToken);
-            HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
-            return SendAsync(request)
-                .AsAsyncAction();
-        }
-
-        /// <summary>
-        /// Peeks a message at the head of the subscription and locks it for 
-        /// the specified duration period. The message is guaranteed not to be
-        /// delivered to other receivers during the lock duration.
-        /// </summary>
-        /// <param name="topicName">Topic name.</param>
-        /// <param name="subscriptionName">Subscription name.</param>
-        /// <param name="lockInterval">Lock duration.</param>
-        /// <returns>Message from the subscription.</returns>
-        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.PeekSubscriptionMessageAsync(string topicName, string subscriptionName, TimeSpan lockInterval)
-        {
-            Validator.ArgumentIsValidPath("topicName", topicName);
-            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
-
-            Uri uri = ServiceConfig.GetUnlockedSubscriptionMessageUri(topicName, subscriptionName, lockInterval);
-            HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
-            return SendAsync(request, CheckNoContent)
-                .ContinueWith(t => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation();
-        }
-
-        /// <summary>
-        /// Gets a message at the head of the subscription and removes it from 
-        /// the subscription.
-        /// </summary>
-        /// <param name="topicName">Topic name.</param>
-        /// <param name="subscriptionName">Name of the subscription.</param>
-        /// <param name="lockInterval">Lock duration.</param>
-        /// <returns>Message from the subscription.</returns>
-        IAsyncOperation<BrokeredMessageInfo> IServiceBusService.GetSubscriptionMessageAsync(string topicName, string subscriptionName, TimeSpan lockInterval)
-        {
-            Validator.ArgumentIsValidPath("topicName", topicName);
-            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
-
-            Uri uri = ServiceConfig.GetUnlockedSubscriptionMessageUri(topicName, subscriptionName, lockInterval);
-            HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
-            return SendAsync(request, CheckNoContent)
-                .ContinueWith(t => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
-                .AsAsyncOperation();
-        }
-
-        /// <summary>
-        /// Unlocks previously locked message making it available to all
-        /// readers.
-        /// </summary>
-        /// <param name="topicName">Topic name.</param>
-        /// <param name="subscriptionName">Subscription name.</param>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock ID of the message.</param>
-        /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.UnlockSubscriptionMessageAsync(string topicName, string subscriptionName, long sequenceNumber, string lockToken)
-        {
-            Validator.ArgumentIsValidPath("topicName", topicName);
-            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
-            Validator.ArgumentIsNotNullOrEmptyString("lockToken", lockToken);
-
-            Uri uri = ServiceConfig.GetLockedSubscriptionMessageUri(topicName, subscriptionName, sequenceNumber, lockToken);
-            HttpRequest request = new HttpRequest(HttpMethod.Put, uri);
-            return SendAsync(request)
-                .AsAsyncAction();
-        }
-
-        /// <summary>
-        /// Deletes a previously locked message.
-        /// </summary>
-        /// <param name="topicName">Topic name.</param>
-        /// <param name="subscriptionName">Subscription name.</param>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock ID of the message.</param>
-        /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.DeleteSubscriptionMessageAsync(string topicName, string subscriptionName, long sequenceNumber, string lockToken)
-        {
-            Validator.ArgumentIsValidPath("topicName", topicName);
-            Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
-            Validator.ArgumentIsNotNullOrEmptyString("lockToken", lockToken);
-
-            Uri uri = ServiceConfig.GetLockedSubscriptionMessageUri(topicName, subscriptionName, sequenceNumber, lockToken);
-            HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
-            return SendAsync(request)
-                .AsAsyncAction();
-        }
-
         /// <summary>
         /// Gets service bus items of the given type.
         /// </summary>
@@ -645,7 +514,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequest request = new HttpRequest(HttpMethod.Get, containerUri);
 
-            return SendAsync(request, CheckNoContent)
+            return _channel.SendAsync(request, HttpChannel.CheckNoContent)
                 .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<TInfo>>();
         }
@@ -701,7 +570,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequest request = new HttpRequest(HttpMethod.Get, itemUri);
 
-            return SendAsync(request, CheckNoContent)
+            return _channel.SendAsync(request, HttpChannel.CheckNoContent)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<TInfo>();
         }
@@ -736,7 +605,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequest request = new HttpRequest(HttpMethod.Delete, itemUri);
 
-            return SendAsync(request)
+            return _channel.SendAsync(request)
                 .AsAsyncAction();
         }
 
@@ -758,7 +627,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             return Task.Factory
                 .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
-                .ContinueWith<HttpResponse>(tr => SendAsync(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<HttpResponse>(tr => _channel.SendAsync(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, ExtraRuleTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<TInfo>();
         }
@@ -814,52 +683,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private static void InitRule(SyndicationItem feedItem, RuleInfo ruleInfo)
         {
             ruleInfo.Initialize(feedItem);
-        }
-
-        /// <summary>
-        /// Detects errors in HTTP responses and translates them into exceptios.
-        /// </summary>
-        /// <param name="response">Source HTTP response.</param>
-        /// <param name="validators">Additional validators.</param>
-        /// <returns>Processed HTTP response.</returns>
-        private HttpResponse CheckResponse(HttpResponse response, IEnumerable<Func<HttpResponse, HttpResponse>> validators)
-        {
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new WindowsAzureHttpException(Resources.ErrorFailedRequest, response);
-            }
-
-            // Pass the response through all validators.
-            foreach (Func<HttpResponse, HttpResponse> validator in validators)
-            {
-                response = validator(response);
-            }
-            return response;
-        }
-
-        /// <summary>
-        /// Asynchronously sends the request.
-        /// </summary>
-        /// <param name="request">Request to send.</param>
-        /// <returns>HTTP response.</returns>
-        private Task<HttpResponse> SendAsync(HttpRequest request, params Func<HttpResponse, HttpResponse>[] validators)
-        {
-            return Task.Factory.StartNew(() => _channel.ProcessRequest(request))
-                .ContinueWith(t => CheckResponse(t.Result, validators));
-        }
-
-        /// <summary>
-        /// Throws exceptions for response with no content.
-        /// </summary>
-        /// <param name="response">Source response.</param>
-        /// <returns>Processed HTTP response.</returns>
-        private HttpResponse CheckNoContent(HttpResponse response)
-        {
-            if (response.StatusCode == (int)System.Net.HttpStatusCode.NoContent || response.StatusCode == (int)System.Net.HttpStatusCode.ResetContent)
-            {
-                throw new WindowsAzureHttpException(Resources.ErrorNoContent, response);
-            }
-            return response;
         }
     }
 }

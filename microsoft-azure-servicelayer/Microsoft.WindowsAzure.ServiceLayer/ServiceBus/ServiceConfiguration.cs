@@ -143,6 +143,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
+        /// Gets URI of a top-level message in the given message source.
+        /// </summary>
+        /// <param name="path">Local path to the message source.</param>
+        /// <param name="lockDuration">Lock duration for the message.</param>
+        /// <returns>URI of the message.</returns>
+        internal Uri GetTopMessageUri(string path, TimeSpan lockDuration)
+        {
+            return FormatUri(Constants.UnlockedMessagePath, path, lockDuration.Seconds);
+        }
+
+        /// <summary>
         /// Gets URI of an unlocked message in the queue.
         /// </summary>
         /// <param name="destination">Queue/topic name.</param>
