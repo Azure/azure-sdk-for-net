@@ -106,6 +106,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ErrorSource.cs" />
+    <Compile Include="Http\HttpChannel.cs" />
     <Compile Include="Http\HttpContent.cs" />
     <Compile Include="Http\HttpDefaultHandler.cs" />
     <Compile Include="Http\HttpMethod.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Http\StreamContent.cs" />
     <Compile Include="Http\WindowsAzureHttpException.cs" />
     <Compile Include="Http\WrapAuthenticationException.cs" />
+    <Compile Include="Resources.cs" />
     <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />
     <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
     <Compile Include="ServiceBus\BrokerProperties.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="ServiceBus\IRuleFilter.cs" />
     <Compile Include="ServiceBus\ISqlRuleFilter.cs" />
     <Compile Include="ServiceBus\MessageHelper.cs" />
+    <Compile Include="ServiceBus\MessageReceiver.cs" />
     <Compile Include="ServiceBus\RuleInfo.cs" />
     <Compile Include="ServiceBus\SqlRuleFilter.cs" />
     <Compile Include="ServiceBus\SqlRuleAction.cs" />
@@ -154,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

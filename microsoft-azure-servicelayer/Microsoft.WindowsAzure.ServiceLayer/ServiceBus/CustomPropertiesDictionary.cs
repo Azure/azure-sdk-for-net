@@ -166,8 +166,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             }
             else
             {
-                //TODO: Error message.
-                throw new InvalidCastException();
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorUnsupportedPropertyType, type.Name);
+                throw new InvalidCastException(message);
             }
         }
 

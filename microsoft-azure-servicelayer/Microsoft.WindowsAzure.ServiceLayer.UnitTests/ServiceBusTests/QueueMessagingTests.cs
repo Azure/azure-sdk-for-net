@@ -30,6 +30,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
     public sealed class QueueMessagingTests: MessagingTestsBase, IUseFixture<UniqueQueueFixture>
     {
         private string _queueName;                          // Shared queue.
+        private MessageReceiver _receiver;                  // Receiver for queued messages.
+
+        /// <summary>
+        /// Gets the receiver.
+        /// </summary>
+        public override MessageReceiver Receiver { get { return _receiver; } }
 
         /// <summary>
         /// Sends a message to the queue.
@@ -39,51 +45,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             Configuration.ServiceBus.SendMessageAsync(_queueName, settings).AsTask().Wait();
         }
-
-        /// <summary>
-        /// Gets the first message in the queue.
-        /// </summary>
-        /// <param name="lockSpan">Lock interval.</param>
-        /// <returns>Message.</returns>
-        protected override BrokeredMessageInfo GetMessage(TimeSpan lockSpan)
-        {
-            return Configuration.ServiceBus.GetQueueMessageAsync(_queueName, lockSpan).AsTask().Result;
-        }
-
-        /// <summary>
-        /// Peeks the first message in the queue.
-        /// </summary>
-        /// <param name="lockSpan">Lock interval.</param>
-        /// <returns>Message.</returns>
-        protected override BrokeredMessageInfo PeekMessage(TimeSpan lockSpan)
-        {
-            return Configuration.ServiceBus.PeekQueueMessageAsync(_queueName, lockSpan).AsTask().Result;
-        }
-
-        /// <summary>
-        /// Unlocks given message.
-        /// </summary>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock token of the locked message.</param>
-        protected override void UnlockMessage(long sequenceNumber, string lockToken)
-        {
-            Configuration.ServiceBus.UnlockQueueMessageAsync(_queueName, sequenceNumber, lockToken).AsTask().Wait();
-        }
-
-        /// <summary>
-        /// Deletes previously locked message.
-        /// </summary>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock token of the locked message.</param>
-        protected override void DeleteMessage(long sequenceNumber, string lockToken)
-        {
-            Configuration.ServiceBus.DeleteQueueMessageAsync(_queueName, sequenceNumber, lockToken).AsTask().Wait();
-        }
-
         // Assigns a fixture to the class.
         void IUseFixture<UniqueQueueFixture>.SetFixture(UniqueQueueFixture data)
         {
             _queueName = data.QueueName;
+            _receiver = Configuration.ServiceBus.CreateMessageReceiver(_queueName);
         }
 
         /// <summary>
@@ -106,8 +72,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void GetMessageFromNonExistingQueue()
         {
             string queueName = Configuration.GetUniqueQueueName();
+            MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(queueName);
 
-            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.Throws<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
 
         /// <summary>
@@ -117,8 +84,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void PeekMessageFromNonExistingQueue()
         {
             string queueName = Configuration.GetUniqueQueueName();
+            MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(queueName);
 
-            Assert.Throws<AggregateException>(() => Configuration.ServiceBus.PeekQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.Throws<AggregateException>(() => receiver.PeekMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
     }
 }
