@@ -18,6 +18,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
     public abstract class MessagingTestsBase
     {
         /// <summary>
+        /// Gets message receiver used with the test.
+        /// </summary>
+        public abstract MessageReceiver Receiver { get; }
+
+        /// <summary>
         /// Sends a message, 
         /// </summary>
         /// <param name="settings">Message to send.</param>
@@ -27,27 +32,37 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// Gets a message from the queue.
         /// </summary>
         /// <returns>First queued message.</returns>
-        protected abstract BrokeredMessageInfo GetMessage(TimeSpan lockSpan);
+        protected BrokeredMessageInfo GetMessage(TimeSpan lockSpan)
+        {
+            return Receiver.GetMessageAsync(lockSpan).AsTask().Result;
+        }
 
         /// <summary>
         /// Peeks a message from the queue.
         /// </summary>
         /// <returns>First queued message.</returns>
-        protected abstract BrokeredMessageInfo PeekMessage(TimeSpan lockSpan);
+        protected BrokeredMessageInfo PeekMessage(TimeSpan lockSpan)
+        {
+            return Receiver.PeekMessageAsync(lockSpan).AsTask().Result;
+        }
 
         /// <summary>
-        /// Unlocks previously locked message.
+        /// Abandons previously locked message.
         /// </summary>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock token of the locked message.</param>
-        protected abstract void UnlockMessage(long sequenceNumber, string lockToken);
+        /// <param name="message">Message to unlock.</param>
+        protected void AbandonMessage(BrokeredMessageInfo message)
+        {
+            Receiver.AbandonMessageAsync(message).AsTask().Wait();
+        }
 
         /// <summary>
         /// Deletes previously locked message.
         /// </summary>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock token of the locked message.</param>
-        protected abstract void DeleteMessage(long sequenceNumber, string lockToken);
+        /// <param name="message">Message to delete.</param>
+        protected void DeleteMessage(BrokeredMessageInfo message)
+        {
+            Receiver.DeleteMessageAsync(message).AsTask().Wait();
+        }
 
         /// <summary>
         /// Tests setting and reading a property.
@@ -131,7 +146,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
 
             // Delete message. This will fail if the message is not there.
-            DeleteMessage(message.SequenceNumber, message.LockToken);
+            DeleteMessage(message);
         }
 
         /// <summary>
@@ -180,7 +195,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             SendMessage(settings);
 
             BrokeredMessageInfo message = PeekMessage(TimeSpan.FromSeconds(10));
-            DeleteMessage(message.SequenceNumber, message.LockToken);
+            DeleteMessage(message);
 
             Assert.Throws<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
         }
@@ -191,21 +206,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [Fact]
         public void InvalidArgsInDeleteMessage()
         {
-            Assert.Throws<ArgumentNullException>(() => DeleteMessage(0, null));
-            Assert.Throws<ArgumentException>(() => DeleteMessage(0, ""));
+            Assert.Throws<ArgumentNullException>(() => Receiver.DeleteMessageAsync(null));
         }
 
         /// <summary>
         /// Tests unlocking a message.
         /// </summary>
         [Fact]
-        public void UnlockingMessage()
+        public void AbandoningMessage()
         {
             BrokeredMessageSettings settings = MessageHelper.CreateMessage("This is a test.");
             SendMessage(settings);
 
             BrokeredMessageInfo message = PeekMessage(TimeSpan.FromSeconds(10));
-            UnlockMessage(message.SequenceNumber, message.LockToken);
+            AbandonMessage(message);
             message = GetMessage(TimeSpan.FromSeconds(10));
             Assert.Throws<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
         }
@@ -214,10 +228,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// Tests specifying invalid arguments for UnlockMessage call.
         /// </summary>
         [Fact]
-        public void InvalidArgsInUnlockMessage()
+        public void InvalidArgsInAbandonMessage()
         {
-            Assert.Throws<ArgumentNullException>(() => UnlockMessage(0, null));
-            Assert.Throws<ArgumentException>(() => UnlockMessage(0, ""));
+            Assert.Throws<ArgumentNullException>(() => AbandonMessage(null));
         }
 
         /// <summary>

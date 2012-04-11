@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string TopicPath                     = "{0}";                                    // <topic>
 
         internal const string SubscriptionsPath             = "{0}/subscriptions/";                     // <topic>/subscriptions
-        internal const string SubscriptionPath              = "{0}/subscriptions/{1}/";                 // <topic>/subscriptions/<subscription>
+        internal const string SubscriptionPath              = "{0}/subscriptions/{1}";                 // <topic>/subscriptions/<subscription>
 
         internal const string RulesPath                     = "{0}/subscriptions/{1}/rules/";           // topics/<topic>/subscriptions/<subscription>/rules
         internal const string RulePath                      = "{0}/subscriptions/{1}/rules/{2}";        // <topic>/subscriptions/<subscription>/rules/<rule>

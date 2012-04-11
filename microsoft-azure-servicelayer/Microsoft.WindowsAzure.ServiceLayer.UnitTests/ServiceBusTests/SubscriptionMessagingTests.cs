@@ -28,7 +28,23 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
     /// </summary>
     public sealed class SubscriptionMessagingTests: MessagingTestsBase, IUseFixture<UniqueSubscriptionFixture>
     {
-        UniqueSubscriptionFixture _subscription;            // Unique topic/subscription fixture.
+        private UniqueSubscriptionFixture _subscription;    // Unique topic/subscription fixture.
+        private MessageReceiver _receiver;                  // Message receiver.
+
+        /// <summary>
+        /// Gets the receiver used for testing.
+        /// </summary>
+        public override MessageReceiver Receiver
+        {
+            get
+            {
+                if (_receiver == null)
+                {
+                    _receiver = Configuration.ServiceBus.CreateMessageReceiver(_subscription.TopicName, _subscription.SubscriptionName);
+                }
+                return _receiver;
+            }
+        }
 
         /// <summary>
         /// Gets the topics name used in tests.
@@ -64,46 +80,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         }
 
         /// <summary>
-        /// Gets the first message in the subscription.
-        /// </summary>
-        /// <param name="lockSpan">Locking interval.</param>
-        /// <returns>Message.</returns>
-        protected override BrokeredMessageInfo GetMessage(TimeSpan lockSpan)
-        {
-            return Configuration.ServiceBus.GetSubscriptionMessageAsync(TopicName, SubscriptionName, lockSpan).AsTask().Result;
-        }
-
-        /// <summary>
-        /// Peeks the first message in the subscription.
-        /// </summary>
-        /// <param name="lockSpan">Lock interval.</param>
-        /// <returns>Message or null, if none.</returns>
-        protected override BrokeredMessageInfo PeekMessage(TimeSpan lockSpan)
-        {
-            return Configuration.ServiceBus.PeekSubscriptionMessageAsync(TopicName, SubscriptionName, lockSpan).AsTask().Result;
-        }
-
-        /// <summary>
-        /// Unlocks previously locked message in the subscription.
-        /// </summary>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock token of the message.</param>
-        protected override void UnlockMessage(long sequenceNumber, string lockToken)
-        {
-            Configuration.ServiceBus.UnlockSubscriptionMessageAsync(TopicName, SubscriptionName, sequenceNumber, lockToken).AsTask().Wait();
-        }
-
-        /// <summary>
-        /// Deletes previously locked subscription message.
-        /// </summary>
-        /// <param name="sequenceNumber">Sequence number of the previously locked message.</param>
-        /// <param name="lockToken">Lock token of the message.</param>
-        protected override void DeleteMessage(long sequenceNumber, string lockToken)
-        {
-            Configuration.ServiceBus.DeleteSubscriptionMessageAsync(TopicName, SubscriptionName, sequenceNumber, lockToken).AsTask().Wait();
-        }
-
-        /// <summary>
         /// Assigns fixture to the class.
         /// </summary>
         /// <param name="data">Fixture.</param>
@@ -119,36 +95,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void NullArgs()
         {
             TimeSpan validSpan = TimeSpan.FromSeconds(10);
+            Assert.Throws<ArgumentNullException>(() => ServiceBus.CreateMessageReceiver(null, "subscription"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.CreateMessageReceiver("", "subscription"));
+            Assert.Throws<ArgumentException>(() => ServiceBus.CreateMessageReceiver(" ", "subscription"));
 
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.PeekSubscriptionMessageAsync(null, "subscription", validSpan));
-            Assert.Throws<ArgumentException>(() => ServiceBus.PeekSubscriptionMessageAsync("", "subscription", validSpan));
-            Assert.Throws<ArgumentException>(() => ServiceBus.PeekSubscriptionMessageAsync(" ", "subscription", validSpan));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.PeekSubscriptionMessageAsync("topic", null, validSpan));
-            Assert.Throws<ArgumentException>(() => ServiceBus.PeekSubscriptionMessageAsync("topic", "", validSpan));
-            Assert.Throws<ArgumentException>(() => ServiceBus.PeekSubscriptionMessageAsync("topic", " ", validSpan));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.GetSubscriptionMessageAsync(null, "subscription", validSpan));
-            Assert.Throws<ArgumentException>(() => ServiceBus.GetSubscriptionMessageAsync("", "subscription", validSpan));
-            Assert.Throws<ArgumentException>(() => ServiceBus.GetSubscriptionMessageAsync(" ", "subscription", validSpan));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.GetSubscriptionMessageAsync("topic", null, validSpan));
-            Assert.Throws<ArgumentException>(() => ServiceBus.GetSubscriptionMessageAsync("topic", "", validSpan));
-            Assert.Throws<ArgumentException>(() => ServiceBus.GetSubscriptionMessageAsync("topic", " ", validSpan));
-
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.UnlockSubscriptionMessageAsync(null, "subscription", 0, "lockToken"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync("", "subscription", 0, "lockToken"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync(" ", "subscription", 0, "lockToken"));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", null, 0, "lockToken"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", "", 0, "lockToken"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", " ", 0, "lockToken"));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", "subscription", 0, null));
-            Assert.Throws<ArgumentException>(() => ServiceBus.UnlockSubscriptionMessageAsync("topic", "subscription", 0, ""));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.DeleteSubscriptionMessageAsync(null, "subscription", 0, "lockToken"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync("", "subscription", 0, "lockToken"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync(" ", "subscription", 0, "lockToken"));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", null, 0, "lockToken"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", "", 0, "lockToken"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", " ", 0, "lockToken"));
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", "subscription", 0, null));
-            Assert.Throws<ArgumentException>(() => ServiceBus.DeleteSubscriptionMessageAsync("topic", "subscription", 0, ""));
+            Assert.Throws<ArgumentNullException>(() => ServiceBus.CreateMessageReceiver("topic", null));
+            Assert.Throws<ArgumentException>(() => ServiceBus.CreateMessageReceiver("topic", ""));
+            Assert.Throws<ArgumentException>(() => ServiceBus.CreateMessageReceiver("topic", " "));
         }
 
         /// <summary>
@@ -157,8 +110,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [Fact]
         public void GettingMessageFromNonExistingTopic()
         {
-            Assert.Throws<AggregateException>(
-                () => Configuration.ServiceBus.GetSubscriptionMessageAsync(Configuration.GetUniqueTopicName(), SubscriptionName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(
+                Configuration.GetUniqueTopicName(), SubscriptionName);
+
+            Assert.Throws<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
 
         /// <summary>
@@ -167,8 +122,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [Fact]
         public void GettingMessageFromNonExistingSubscription()
         {
-            Assert.Throws<AggregateException>(
-                () => Configuration.ServiceBus.GetSubscriptionMessageAsync(TopicName, Configuration.GetUniqueSubscriptionName(), TimeSpan.FromSeconds(10)).AsTask().Wait());
+            MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(
+                TopicName, Configuration.GetUniqueSubscriptionName());
+            Assert.Throws<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
     }
 }

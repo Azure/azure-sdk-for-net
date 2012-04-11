@@ -185,7 +185,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Content.</returns>
         internal static HttpContent CreateFromResponse(NetHttpResponseMessage response)
         {
-            Debug.Assert(response.IsSuccessStatusCode);
             HttpContent content = null;
 
             if (response.Content != null)
