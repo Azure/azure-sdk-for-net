@@ -114,7 +114,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
             if (value < 0)
             {
-                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentMustBeZeroOrPositive, argumentName);
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentMustBeZeroOrPositive, argumentName, value);
                 throw new ArgumentException(message);
             }
         }
@@ -131,7 +131,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
             if (value <= 0)
             {
-                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentMustBePositive, argumentName);
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentMustBePositive, argumentName, value);
                 throw new ArgumentException(message);
             }
         }

@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorArgumentMustBeNonEmpty" xml:space="preserve">
-    <value>Argument "{0}" must be non-empty string.</value>
+    <value>Argument "{0}" must be a non-empty string.</value>
   </data>
   <data name="ErrorArgumentMustBePositive" xml:space="preserve">
-    <value>Argument "{0}" must be greater than zero.</value>
+    <value>Argument "{0}" must be greater than zero. The actual value is "{1}".</value>
   </data>
   <data name="ErrorArgumentMustBeZeroOrPositive" xml:space="preserve">
-    <value>Argument "{0}" must be greater than or equal to zero.</value>
+    <value>Argument "{0}" must be greater than or equal to zero. The actual value is "{1}".</value>
   </data>
   <data name="ErrorFailedRequest" xml:space="preserve">
     <value>HTTP request failed.</value>
@@ -135,7 +135,7 @@
   <data name="ErrorUnsupportedPropertyType" xml:space="preserve">
     <value>Unsupported custom property type: {0}.
 
-Custom properties can be only of string, numerical, Boolean, and DateTime types.</value>
+Custom properties can be only of string, numerical, Boolean, or DateTime types.</value>
   </data>
   <data name="ErrorWrapAuthentication" xml:space="preserve">
     <value>WRAP authentication failed.</value>
