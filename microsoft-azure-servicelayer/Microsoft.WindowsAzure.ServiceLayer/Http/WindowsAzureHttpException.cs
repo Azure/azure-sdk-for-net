@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,21 +31,23 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <summary>
         /// Initializes the exception with data from the given HTTP response.
         /// </summary>
+        /// <param name="message">Error message.</param>
         /// <param name="response">HTTP response.</param>
-        internal WindowsAzureHttpException(HttpResponse response)
+        internal WindowsAzureHttpException(string message, HttpResponse response)
+            : this(message, response, ErrorSource.ServiceBus)
         {
-            HResult = GetComErrorCode(response.StatusCode, ErrorSource.ServiceBus);
-
-            //TODO: error message.
         }
 
         /// <summary>
-        /// Initializes an empty exception.
+        /// Initializes the exception.
         /// </summary>
-        /// <remarks>This constructor is only used from derived classes that 
-        /// set required properties directly.</remarks>
-        protected WindowsAzureHttpException()
+        /// <param name="message">Short error message.</param>
+        /// <param name="response">HTTP response that triggered the exception.</param>
+        /// <param name="source">Error source.</param>
+        protected WindowsAzureHttpException(string message, HttpResponse response, ErrorSource source)
+            : base(GetHttpErrorMessage(message, response))
         {
+            HResult = GetComErrorCode(response.StatusCode, source);
         }
 
         /// <summary>
@@ -61,6 +64,18 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
             code |= ((uint)errorSource) << 10;
             code |= (uint)statusCode;
             return (int)code;
+        }
+
+        /// <summary>
+        /// Generates result message for an exception.
+        /// </summary>
+        /// <param name="message">Short message.</param>
+        /// <param name="response">HTTP response with more details.</param>
+        /// <returns>Error message.</returns>
+        protected static string GetHttpErrorMessage(string message, HttpResponse response)
+        {
+            string details = string.Format(CultureInfo.CurrentUICulture, Resources.HttpDetails, response.StatusCode, response.ReasonPhrase);
+            return string.Format(CultureInfo.CurrentUICulture, Resources.HttpErrorMessage, message, details);
         }
     }
 }

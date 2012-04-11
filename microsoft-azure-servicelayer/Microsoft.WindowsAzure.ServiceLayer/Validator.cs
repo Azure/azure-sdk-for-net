@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,8 +58,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             }
             if (string.IsNullOrWhiteSpace(value))
             {
-                //TODO: error message!
-                throw new ArgumentException();
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentMustBeNonEmpty, argumentName);
+                throw new ArgumentException(message);
             }
         }
 
@@ -78,8 +79,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             }
             if (string.IsNullOrWhiteSpace(value))
             {
-                //TODO: error message!
-                throw new ArgumentException();
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentMustBeNonEmpty, argumentName);
+                throw new ArgumentException(message);
             }
         }
 
@@ -103,7 +104,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
         /// <summary>
         /// Throws the appropriate exception if the argument does not represent
-        /// a non-negative value.
+        /// a value which is greater than or equals to zero.
         /// </summary>
         /// <param name="argumentName">Name of the argument.</param>
         /// <param name="value">Value to check.</param>
@@ -113,8 +114,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
             if (value < 0)
             {
-                //TODO: error message!
-                throw new ArgumentException();
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentMustBeZeroOrPositive, argumentName, value);
+                throw new ArgumentException(message);
             }
         }
 
@@ -130,8 +131,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
             if (value <= 0)
             {
-                //TODO: error message!
-                throw new ArgumentException();
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentMustBePositive, argumentName, value);
+                throw new ArgumentException(message);
             }
         }
     }

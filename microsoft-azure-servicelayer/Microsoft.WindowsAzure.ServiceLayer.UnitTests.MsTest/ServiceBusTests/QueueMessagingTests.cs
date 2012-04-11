@@ -31,6 +31,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
     public sealed class QueueMessagingTests: MessagingTestsBase
     {
         private static string _queueName;                   // Shared queue.
+        private static MessageReceiver _receiver;           // Shared receiver for messages in the queue.
+
+        /// <summary>
+        /// Gets the receiver used in tests.
+        /// </summary>
+        protected override MessageReceiver Receiver { get { return _receiver; } }
 
         /// <summary>
         /// Initializes the environment for all tests in the class.
@@ -41,6 +47,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
         {
             _queueName = Configuration.GetUniqueQueueName();
             Configuration.ServiceBus.CreateQueueAsync(_queueName).AsTask().Wait();
+            _receiver = Configuration.ServiceBus.CreateMessageReceiver(_queueName);
         }
 
         /// <summary>
@@ -51,6 +58,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
         {
             Configuration.ServiceBus.DeleteQueueAsync(_queueName).AsTask().Wait();
             _queueName = null;
+            _receiver = null;
         }
 
 
@@ -61,46 +69,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
         protected override void SendMessage(BrokeredMessageSettings settings)
         {
             Configuration.ServiceBus.SendMessageAsync(_queueName, settings).AsTask().Wait();
-        }
-
-        /// <summary>
-        /// Gets the first message in the queue.
-        /// </summary>
-        /// <param name="lockSpan">Lock interval.</param>
-        /// <returns>Message.</returns>
-        protected override BrokeredMessageInfo GetMessage(TimeSpan lockSpan)
-        {
-            return Configuration.ServiceBus.GetQueueMessageAsync(_queueName, lockSpan).AsTask().Result;
-        }
-
-        /// <summary>
-        /// Peeks the first message in the queue.
-        /// </summary>
-        /// <param name="lockSpan">Lock interval.</param>
-        /// <returns>Message.</returns>
-        protected override BrokeredMessageInfo PeekMessage(TimeSpan lockSpan)
-        {
-            return Configuration.ServiceBus.PeekQueueMessageAsync(_queueName, lockSpan).AsTask().Result;
-        }
-
-        /// <summary>
-        /// Unlocks given message.
-        /// </summary>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock token of the locked message.</param>
-        protected override void UnlockMessage(long sequenceNumber, string lockToken)
-        {
-            Configuration.ServiceBus.UnlockQueueMessageAsync(_queueName, sequenceNumber, lockToken).AsTask().Wait();
-        }
-
-        /// <summary>
-        /// Deletes previously locked message.
-        /// </summary>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock token of the locked message.</param>
-        protected override void DeleteMessage(long sequenceNumber, string lockToken)
-        {
-            Configuration.ServiceBus.DeleteQueueMessageAsync(_queueName, sequenceNumber, lockToken).AsTask().Wait();
         }
 
         /// <summary>
@@ -123,8 +91,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
         public void GetMessageFromNonExistingQueue()
         {
             string queueName = Configuration.GetUniqueQueueName();
+            MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(queueName);
 
-            Assert.ThrowsException<AggregateException>(() => Configuration.ServiceBus.GetQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.ThrowsException<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
 
         /// <summary>
@@ -134,8 +103,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
         public void PeekMessageFromNonExistingQueue()
         {
             string queueName = Configuration.GetUniqueQueueName();
+            MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(queueName);
 
-            Assert.ThrowsException<AggregateException>(() => Configuration.ServiceBus.PeekQueueMessageAsync(queueName, TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.ThrowsException<AggregateException>(() => _receiver.PeekMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
     }
 }

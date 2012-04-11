@@ -220,11 +220,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
                 }
 
                 // Request more items that present in the database.
-                {
-                    List<TInfo> items = new List<TInfo>(
-                        listItems(0, allItems.Count + 1).AsTask().Result);
-                    Assert.AreEqual(items.Count, allItems.Count);
-                }
+                List<TInfo> items = new List<TInfo>(
+                    listItems(0, allItems.Count + 1).AsTask().Result);
+                Assert.AreEqual(items.Count, allItems.Count);
             }
             finally
             {

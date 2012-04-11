@@ -39,6 +39,21 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         IServiceBusService AssignHandler(IHttpHandler handler);
 
         /// <summary>
+        /// Creates a message receiver for the queue with the given name.
+        /// </summary>
+        /// <param name="queueName">Queue name.</param>
+        /// <returns>Message receiver.</returns>
+        MessageReceiver CreateMessageReceiver(string queueName);
+
+        /// <summary>
+        /// Creates a message receiver for the given subscription.
+        /// </summary>
+        /// <param name="topicName">Topic name.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <returns>Message receiver.</returns>
+        MessageReceiver CreateMessageReceiver(string topicName, string subscriptionName);
+
+        /// <summary>
         /// Lists all available queues in the namespace.
         /// </summary>
         /// <returns>Collection of queues.</returns>
@@ -226,85 +241,5 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="message">Message to send.</param>
         /// <returns>Result of the operation.</returns>
         IAsyncAction SendMessageAsync(string destination, BrokeredMessageSettings message);
-
-        /// <summary>
-        /// Peeks a message at the head of the queue and locks it for the
-        /// specified duration period. The message is guaranteed not to be
-        /// delivered to other receivers during the lock duration.
-        /// </summary>
-        /// <param name="queueName">Queue name.</param>
-        /// <param name="lockInterval">Lock duration.</param>
-        /// <returns>Message from the queue.</returns>
-        IAsyncOperation<BrokeredMessageInfo> PeekQueueMessageAsync(string queueName, TimeSpan lockInterval);
-
-        /// <summary>
-        /// Gets a message at the head of the queue and removes it from the
-        /// queue.
-        /// </summary>
-        /// <param name="queueName">Queue name.</param>
-        /// <param name="lockInterval">Lock duration.</param>
-        /// <returns>Message from the queue.</returns>
-        IAsyncOperation<BrokeredMessageInfo> GetQueueMessageAsync(string queueName, TimeSpan lockInterval);
-
-        /// <summary>
-        /// Unlocks previously locked message making it available to all
-        /// readers.
-        /// </summary>
-        /// <param name="queueName">Queue name.</param>
-        /// <param name="sequenceNumber">Sequence number of the message.</param>
-        /// <param name="lockToken">Lock ID of the message.</param>
-        /// <returns>Result of the operation.</returns>
-        IAsyncAction UnlockQueueMessageAsync(string queueName, long sequenceNumber, string lockToken);
-
-        /// <summary>
-        /// Deletes a previously locked message.
-        /// </summary>
-        /// <param name="queueName">Queue name.</param>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock ID of the message.</param>
-        /// <returns>Result of the operation.</returns>
-        IAsyncAction DeleteQueueMessageAsync(string queueName, long sequenceNumber, string lockToken);
-
-        /// <summary>
-        /// Peeks a message at the head of the subscription and locks it for 
-        /// the specified duration period. The message is guaranteed not to be
-        /// delivered to other receivers during the lock duration.
-        /// </summary>
-        /// <param name="topicName">Topic name.</param>
-        /// <param name="subscriptionName">Subscription name.</param>
-        /// <param name="lockInterval">Lock duration.</param>
-        /// <returns>Message from the subscription.</returns>
-        IAsyncOperation<BrokeredMessageInfo> PeekSubscriptionMessageAsync(string topicName, string subscriptionName, TimeSpan lockInterval);
-
-        /// <summary>
-        /// Gets a message at the head of the subscription and removes it from 
-        /// the subscription.
-        /// </summary>
-        /// <param name="topicName">Topic name.</param>
-        /// <param name="subscriptionName">Name of the subscription.</param>
-        /// <param name="lockInterval">Lock duration.</param>
-        /// <returns>Message from the subscription.</returns>
-        IAsyncOperation<BrokeredMessageInfo> GetSubscriptionMessageAsync(string topicName, string subscriptionName, TimeSpan lockInterval);
-
-        /// <summary>
-        /// Unlocks previously locked message making it available to all
-        /// readers.
-        /// </summary>
-        /// <param name="topicName">Topic name.</param>
-        /// <param name="subscriptionName">Subscription name.</param>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock ID of the message.</param>
-        /// <returns>Result of the operation.</returns>
-        IAsyncAction UnlockSubscriptionMessageAsync(string topicName, string subscriptionName, long sequenceNumber, string lockToken);
-
-        /// <summary>
-        /// Deletes a previously locked message.
-        /// </summary>
-        /// <param name="topicName">Topic name.</param>
-        /// <param name="subscriptionName">Subscription name.</param>
-        /// <param name="sequenceNumber">Sequence number of the locked message.</param>
-        /// <param name="lockToken">Lock ID of the message.</param>
-        /// <returns>Result of the operation.</returns>
-        IAsyncAction DeleteSubscriptionMessageAsync(string topicName, string subscriptionName, long sequenceNumber, string lockToken);
     }
 }
