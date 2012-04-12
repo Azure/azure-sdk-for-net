@@ -31,6 +31,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
     public sealed class MessagePropertiesTests
     {
         private string _queueName;                          // Test queue.
+        private MessageReceiver _receiver;                  // Receiver for queue messages.
 
         /// <summary>
         /// Initializes the test.
@@ -40,6 +41,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
         {
             _queueName = Configuration.GetUniqueQueueName();
             Configuration.ServiceBus.CreateQueueAsync(_queueName).AsTask().Wait();
+            _receiver = Configuration.ServiceBus.CreateMessageReceiver(_queueName);
         }
 
         /// <summary>
@@ -50,6 +52,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
         {
             Configuration.ServiceBus.DeleteQueueAsync(_queueName).AsTask().Wait();
             _queueName = null;
+            _receiver = null;
         }
 
         /// <summary>
@@ -69,7 +72,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
             messageSettings.Properties.Add("TimeProperty", originalDateTime);
 
             Configuration.ServiceBus.SendMessageAsync(_queueName, messageSettings).AsTask().Wait();
-            BrokeredMessageInfo message = Configuration.ServiceBus.GetQueueMessageAsync(_queueName, TimeSpan.FromSeconds(10)).AsTask().Result;
+            BrokeredMessageInfo message = _receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Result;
 
             Assert.IsNotNull(message.Properties);
             Assert.IsTrue(message.Properties.ContainsKey("StringProperty"));
