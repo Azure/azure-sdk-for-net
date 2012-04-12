@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="message">Error message.</param>
         /// <param name="response">HTTP response.</param>
         internal WindowsAzureHttpException(string message, HttpResponse response)
-            : this(message, response, ErrorSource.ServiceBus)
+            : this(message, ErrorSource.ServiceBus, response)
         {
         }
 
@@ -42,28 +42,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Initializes the exception.
         /// </summary>
         /// <param name="message">Short error message.</param>
-        /// <param name="response">HTTP response that triggered the exception.</param>
         /// <param name="source">Error source.</param>
-        protected WindowsAzureHttpException(string message, HttpResponse response, ErrorSource source)
+        /// <param name="response">HTTP response that triggered the exception.</param>
+        protected WindowsAzureHttpException(string message, ErrorSource source, HttpResponse response)
             : base(GetHttpErrorMessage(message, response))
         {
-            HResult = GetComErrorCode(response.StatusCode, source);
-        }
-
-        /// <summary>
-        /// Generates HRESULT for the given HTTP status code.
-        /// </summary>
-        /// <param name="statusCode">HTTP status code.</param>
-        /// <param name="errorSource">Error source.</param>
-        /// <returns>HRESULT with embedded status code and source.</returns>
-        internal static int GetComErrorCode(int statusCode, ErrorSource errorSource)
-        {
-            // 10 bits should be enough for the error code!
-            Debug.Assert((statusCode & 0xFC00) == 0);
-            uint code = 0x80040000;
-            code |= ((uint)errorSource) << 10;
-            code |= (uint)statusCode;
-            return (int)code;
+            HResult = HttpErrorHelper.GetComErrorCode(source, response.StatusCode);
         }
 
         /// <summary>

@@ -24,7 +24,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
     /// <summary>
     /// Specifies source of an error.
     /// </summary>
-    enum ErrorSource
+    public enum ErrorSource
     {
         ServiceBus,                                     // The error comes from the service bus call.
         WrapAuthentication,                             // The error comes from WRAP authentication call.

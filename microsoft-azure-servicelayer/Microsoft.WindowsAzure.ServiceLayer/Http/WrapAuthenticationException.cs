@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// </summary>
         /// <param name="response">Response.</param>
         internal WrapAuthenticationException(HttpResponse response)
-            : base(Resources.ErrorWrapAuthentication, response, ErrorSource.WrapAuthentication)
+            : base(Resources.ErrorWrapAuthentication, ErrorSource.WrapAuthentication, response)
         {
         }
     }
