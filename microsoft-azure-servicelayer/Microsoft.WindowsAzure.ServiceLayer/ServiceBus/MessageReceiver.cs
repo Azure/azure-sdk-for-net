@@ -59,12 +59,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="lockDuration">Lock duration</param>
         /// <returns>Received message.</returns>
-        public IAsyncOperation<BrokeredMessageInfo> GetMessageAsync(TimeSpan lockDuration)
+        public IAsyncOperation<BrokeredMessageDescription> GetMessageAsync(TimeSpan lockDuration)
         {
             Uri uri = _config.GetTopMessageUri(_path, lockDuration);
             HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
             return _channel.SendAsync(request, HttpChannel.CheckNoContent)
-                .ContinueWith(t => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith(t => new BrokeredMessageDescription(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
 
@@ -75,12 +75,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="lockDuration">Lock duration.</param>
         /// <returns>Received message.</returns>
-        public IAsyncOperation<BrokeredMessageInfo> PeekMessageAsync(TimeSpan lockDuration)
+        public IAsyncOperation<BrokeredMessageDescription> PeekMessageAsync(TimeSpan lockDuration)
         {
             Uri uri = _config.GetTopMessageUri(_path, lockDuration);
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
             return _channel.SendAsync(request, HttpChannel.CheckNoContent)
-                .ContinueWith(t => new BrokeredMessageInfo(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith(t => new BrokeredMessageDescription(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
 
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="message">Message to unlock.</param>
         /// <returns>Result of the operation.</returns>
-        public IAsyncAction AbandonMessageAsync(BrokeredMessageInfo message)
+        public IAsyncAction AbandonMessageAsync(BrokeredMessageDescription message)
         {
             if (message == null)
             {
@@ -107,7 +107,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="message">Message to delete.</param>
         /// <returns>Result of the operation.</returns>
-        public IAsyncAction DeleteMessageAsync(BrokeredMessageInfo message)
+        public IAsyncAction DeleteMessageAsync(BrokeredMessageDescription message)
         {
             if (message == null)
             {

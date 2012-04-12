@@ -67,9 +67,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Gets all available queues in the namespace.
         /// </summary>
         /// <returns>All queues in the namespace.</returns>
-        IAsyncOperation<IEnumerable<QueueInfo>> IServiceBusService.ListQueuesAsync()
+        IAsyncOperation<IEnumerable<QueueDescription>> IServiceBusService.ListQueuesAsync()
         {
-            return GetItemsAsync<QueueInfo>(
+            return GetItemsAsync<QueueDescription>(
                 ServiceConfig.GetQueuesContainerUri(), 
                 InitQueue);
         }
@@ -127,12 +127,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first item in range.</param>
         /// <param name="count">Number of items to return.</param>
         /// <returns>Collection of queues.</returns>
-        IAsyncOperation<IEnumerable<QueueInfo>> IServiceBusService.ListQueuesAsync(int firstItem, int count)
+        IAsyncOperation<IEnumerable<QueueDescription>> IServiceBusService.ListQueuesAsync(int firstItem, int count)
         {
             Validator.ArgumentIsNonNegative("firstItem", firstItem);
             Validator.ArgumentIsPositive("count", count);
 
-            return GetItemsAsync<QueueInfo>(
+            return GetItemsAsync<QueueDescription>(
                 ServiceConfig.GetQueuesContainerUri(),
                 firstItem, count,
                 InitQueue);
@@ -143,11 +143,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
         /// <returns>Queue data.</returns>
-        IAsyncOperation<QueueInfo> IServiceBusService.GetQueueAsync(string queueName)
+        IAsyncOperation<QueueDescription> IServiceBusService.GetQueueAsync(string queueName)
         {
             Validator.ArgumentIsValidPath("queueName", queueName);
 
-            return GetItemAsync<QueueInfo>(
+            return GetItemAsync<QueueDescription>(
                 ServiceConfig.GetQueueUri(queueName),
                 InitQueue);
         }
@@ -170,11 +170,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
         /// <returns>Queue data.</returns>
-        IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName)
+        IAsyncOperation<QueueDescription> IServiceBusService.CreateQueueAsync(string queueName)
         {
             Validator.ArgumentIsValidPath("queueName", queueName);
 
-            return CreateItemAsync<QueueInfo, QueueSettings>(
+            return CreateItemAsync<QueueDescription, QueueSettings>(
                 ServiceConfig.GetQueueUri(queueName),
                 new QueueSettings(),
                 InitQueue);
@@ -186,12 +186,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="queueSettings">Parameters of the queue.</param>
         /// <returns>Created queue.</returns>
-        IAsyncOperation<QueueInfo> IServiceBusService.CreateQueueAsync(string queueName, QueueSettings queueSettings)
+        IAsyncOperation<QueueDescription> IServiceBusService.CreateQueueAsync(string queueName, QueueSettings queueSettings)
         {
             Validator.ArgumentIsValidPath("queueName", queueName);
             Validator.ArgumentIsNotNull("queueSettings", queueSettings);
 
-            return CreateItemAsync<QueueInfo, QueueSettings>(
+            return CreateItemAsync<QueueDescription, QueueSettings>(
                 ServiceConfig.GetQueueUri(queueName),
                 queueSettings,
                 InitQueue);
@@ -201,9 +201,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Lists all topics in the namespace.
         /// </summary>
         /// <returns>A collection of topics.</returns>
-        IAsyncOperation<IEnumerable<TopicInfo>> IServiceBusService.ListTopicsAsync()
+        IAsyncOperation<IEnumerable<TopicDescription>> IServiceBusService.ListTopicsAsync()
         {
-            return GetItemsAsync<TopicInfo>(
+            return GetItemsAsync<TopicDescription>(
                 ServiceConfig.GetTopicsContainerUri(),
                 InitTopic);
         }
@@ -214,12 +214,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first topic.</param>
         /// <param name="count">Number of topics in the range.</param>
         /// <returns>Collection of topics.</returns>
-        IAsyncOperation<IEnumerable<TopicInfo>> IServiceBusService.ListTopicsAsync(int firstItem, int count)
+        IAsyncOperation<IEnumerable<TopicDescription>> IServiceBusService.ListTopicsAsync(int firstItem, int count)
         {
             Validator.ArgumentIsNonNegative("firstItem", firstItem);
             Validator.ArgumentIsPositive("count", count);
 
-            return GetItemsAsync<TopicInfo>(
+            return GetItemsAsync<TopicDescription>(
                 ServiceConfig.GetTopicsContainerUri(),
                 firstItem, count,
                 InitTopic);
@@ -230,11 +230,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="topicName">Topic name.</param>
         /// <returns>Created topic.</returns>
-        IAsyncOperation<TopicInfo> IServiceBusService.CreateTopicAsync(string topicName)
+        IAsyncOperation<TopicDescription> IServiceBusService.CreateTopicAsync(string topicName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
 
-            return CreateItemAsync<TopicInfo, TopicSettings>(
+            return CreateItemAsync<TopicDescription, TopicSettings>(
                 ServiceConfig.GetTopicUri(topicName),
                 new TopicSettings(), 
                 InitTopic);
@@ -246,12 +246,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="topicSettings">Topic settings.</param>
         /// <returns>Created topic.</returns>
-        IAsyncOperation<TopicInfo> IServiceBusService.CreateTopicAsync(string topicName, TopicSettings topicSettings)
+        IAsyncOperation<TopicDescription> IServiceBusService.CreateTopicAsync(string topicName, TopicSettings topicSettings)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsNotNull("topicSettings", topicSettings);
 
-            return CreateItemAsync<TopicInfo, TopicSettings>(
+            return CreateItemAsync<TopicDescription, TopicSettings>(
                 ServiceConfig.GetTopicUri(topicName),
                 topicSettings,
                 InitTopic);
@@ -262,11 +262,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="topicName">Topic name.</param>
         /// <returns>Topic information.</returns>
-        IAsyncOperation<TopicInfo> IServiceBusService.GetTopicAsync(string topicName)
+        IAsyncOperation<TopicDescription> IServiceBusService.GetTopicAsync(string topicName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
 
-            return GetItemAsync<TopicInfo>(
+            return GetItemAsync<TopicDescription>(
                 ServiceConfig.GetTopicUri(topicName),
                 InitTopic);
         }
@@ -291,12 +291,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <returns>Created subscription.</returns>
-        IAsyncOperation<SubscriptionInfo> IServiceBusService.CreateSubscriptionAsync(string topicName, string subscriptionName)
+        IAsyncOperation<SubscriptionDescription> IServiceBusService.CreateSubscriptionAsync(string topicName, string subscriptionName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
 
-            return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
+            return CreateItemAsync<SubscriptionDescription, SubscriptionSettings>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName),
                 new SubscriptionSettings(), 
                 InitSubscription);
@@ -310,7 +310,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="subscriptionName">Subscription name.</param>
         /// <param name="subscriptionSettings">Subscription settings.</param>
         /// <returns>Created subscription.</returns>
-        IAsyncOperation<SubscriptionInfo> IServiceBusService.CreateSubscriptionAsync(
+        IAsyncOperation<SubscriptionDescription> IServiceBusService.CreateSubscriptionAsync(
             string topicName, 
             string subscriptionName, 
             SubscriptionSettings subscriptionSettings)
@@ -319,7 +319,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
             Validator.ArgumentIsNotNull("subscriptionSettings", subscriptionSettings);
 
-            return CreateItemAsync<SubscriptionInfo, SubscriptionSettings>(
+            return CreateItemAsync<SubscriptionDescription, SubscriptionSettings>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
                 subscriptionSettings, 
                 InitSubscription);
@@ -330,11 +330,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="topicName">Topic name.</param>
         /// <returns>Collection of subscriptions.</returns>
-        IAsyncOperation<IEnumerable<SubscriptionInfo>> IServiceBusService.ListSubscriptionsAsync(string topicName)
+        IAsyncOperation<IEnumerable<SubscriptionDescription>> IServiceBusService.ListSubscriptionsAsync(string topicName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
 
-            return GetItemsAsync<SubscriptionInfo>(
+            return GetItemsAsync<SubscriptionDescription>(
                 ServiceConfig.GetSubscriptionsContainerUri(topicName), 
                 InitSubscription);
         }
@@ -346,13 +346,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first rule.</param>
         /// <param name="count">Number of rules in the range.</param>
         /// <returns>Collection of subscriptions.</returns>
-        IAsyncOperation<IEnumerable<SubscriptionInfo>> IServiceBusService.ListSubscriptionsAsync(string topicName, int firstItem, int count)
+        IAsyncOperation<IEnumerable<SubscriptionDescription>> IServiceBusService.ListSubscriptionsAsync(string topicName, int firstItem, int count)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsNonNegative("firstItem", firstItem);
             Validator.ArgumentIsPositive("count", count);
 
-            return GetItemsAsync<SubscriptionInfo>(
+            return GetItemsAsync<SubscriptionDescription>(
                 ServiceConfig.GetSubscriptionsContainerUri(topicName),
                 firstItem, count,
                 InitSubscription);
@@ -364,12 +364,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <returns>Subscription information.</returns>
-        IAsyncOperation<SubscriptionInfo> IServiceBusService.GetSubscriptionAsync(string topicName, string subscriptionName)
+        IAsyncOperation<SubscriptionDescription> IServiceBusService.GetSubscriptionAsync(string topicName, string subscriptionName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
 
-            return GetItemAsync<SubscriptionInfo>(
+            return GetItemAsync<SubscriptionDescription>(
                 ServiceConfig.GetSubscriptionUri(topicName, subscriptionName), 
                 InitSubscription);
         }
@@ -650,7 +650,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="feedItem">Source Atom item.</param>
         /// <param name="topicInfo">Deserialized topic.</param>
-        private static void InitTopic(SyndicationItem feedItem, TopicInfo topicInfo)
+        private static void InitTopic(SyndicationItem feedItem, TopicDescription topicInfo)
         {
             topicInfo.Initialize(feedItem);
         }
@@ -660,7 +660,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="feedItem">Source Atom item.</param>
         /// <param name="queueInfo">Deserialized queue.</param>
-        private static void InitQueue(SyndicationItem feedItem, QueueInfo queueInfo)
+        private static void InitQueue(SyndicationItem feedItem, QueueDescription queueInfo)
         {
             queueInfo.Initialize(feedItem);
         }
@@ -670,7 +670,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="feedItem">Source Atom item.</param>
         /// <param name="subscriptionInfo">Deserialized subscription.</param>
-        private static void InitSubscription(SyndicationItem feedItem, SubscriptionInfo subscriptionInfo)
+        private static void InitSubscription(SyndicationItem feedItem, SubscriptionDescription subscriptionInfo)
         {
             subscriptionInfo.Initialize(feedItem);
         }

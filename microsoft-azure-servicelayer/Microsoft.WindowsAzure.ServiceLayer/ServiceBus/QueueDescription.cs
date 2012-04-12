@@ -26,7 +26,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// Service bus queue info.
     /// </summary>
     [DataContract(Namespace="http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name="QueueDescription")]
-    public sealed class QueueInfo
+    public sealed class QueueDescription
     {
         /// <summary>
         /// Determines the amount of time in which a message should be locked 
@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Specifies the maximum queue size in megabytes.
         /// </summary>
         [DataMember(Order=1, Name="MaxSizeInMegabytes")]
-        public int MaximumSizeInMegabytes { get; internal set; }
+        public long MaximumSizeInMegabytes { get; internal set; }
 
         /// <summary>
         /// Tells whether duplicate detection is enabled.
@@ -91,13 +91,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// the queue’s quota.
         /// </summary>
         [DataMember(Order=9)]
-        public int SizeInBytes { get; internal set; }
+        public long SizeInBytes { get; internal set; }
 
         /// <summary>
         /// Gets the number of messages currently in the queue.
         /// </summary>
         [DataMember(Order=10)]
-        public int MessageCount { get; internal set; }
+        public long MessageCount { get; internal set; }
 
         /// <summary>
         /// Gets the name of the queue.
@@ -114,7 +114,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Constructor for serialization purposes.
         /// </summary>
-        public QueueInfo()
+        public QueueDescription()
         {
             //TODO: make the constructor internal once the issue with JavaScript
             // serialization has been fixed.

@@ -72,7 +72,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
             messageSettings.Properties.Add("TimeProperty", originalDateTime);
 
             Configuration.ServiceBus.SendMessageAsync(_queueName, messageSettings).AsTask().Wait();
-            BrokeredMessageInfo message = _receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Result;
+            BrokeredMessageDescription message = _receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Result;
 
             Assert.IsNotNull(message.Properties);
             Assert.IsTrue(message.Properties.ContainsKey("StringProperty"));

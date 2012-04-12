@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Lists all available queues in the namespace.
         /// </summary>
         /// <returns>Collection of queues.</returns>
-        IAsyncOperation<IEnumerable<QueueInfo>> ListQueuesAsync();
+        IAsyncOperation<IEnumerable<QueueDescription>> ListQueuesAsync();
 
         /// <summary>
         /// Lists available queues in the given range.
@@ -65,14 +65,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first item in range.</param>
         /// <param name="count">Number items to return.</param>
         /// <returns>Collection of queues.</returns>
-        IAsyncOperation<IEnumerable<QueueInfo>> ListQueuesAsync(int firstItem, int count);
+        IAsyncOperation<IEnumerable<QueueDescription>> ListQueuesAsync(int firstItem, int count);
 
         /// <summary>
         /// Gets a queue with the given name.
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
         /// <returns>Queue data.</returns>
-        IAsyncOperation<QueueInfo> GetQueueAsync(string queueName);
+        IAsyncOperation<QueueDescription> GetQueueAsync(string queueName);
 
         /// <summary>
         /// Deletes a queue with the given name.
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="queueName">Queue name.</param>
         /// <returns>Created queue.</returns>
-        IAsyncOperation<QueueInfo> CreateQueueAsync(string queueName);
+        IAsyncOperation<QueueDescription> CreateQueueAsync(string queueName);
 
         /// <summary>
         /// Creates a queue with the given parameters.
@@ -94,13 +94,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="queueName">Queue name.</param>
         /// <param name="queueSettings">Queue parameters.</param>
         /// <returns>Created queue.</returns>
-        IAsyncOperation<QueueInfo> CreateQueueAsync(string queueName, QueueSettings queueSettings);
+        IAsyncOperation<QueueDescription> CreateQueueAsync(string queueName, QueueSettings queueSettings);
 
         /// <summary>
         /// Lists all existing topics in the namespace.
         /// </summary>
         /// <returns>Collection of topics.</returns>
-        IAsyncOperation<IEnumerable<TopicInfo>> ListTopicsAsync();
+        IAsyncOperation<IEnumerable<TopicDescription>> ListTopicsAsync();
 
         /// <summary>
         /// Lists topics in the given range.
@@ -108,14 +108,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first topic.</param>
         /// <param name="count">Number of topics in the range.</param>
         /// <returns>Collection of topics.</returns>
-        IAsyncOperation<IEnumerable<TopicInfo>> ListTopicsAsync(int firstItem, int count);
+        IAsyncOperation<IEnumerable<TopicDescription>> ListTopicsAsync(int firstItem, int count);
 
         /// <summary>
         /// Creates a topic with the given name and default settings.
         /// </summary>
         /// <param name="topicName">Topic name.</param>
         /// <returns>Created topic.</returns>
-        IAsyncOperation<TopicInfo> CreateTopicAsync(string topicName);
+        IAsyncOperation<TopicDescription> CreateTopicAsync(string topicName);
 
         /// <summary>
         /// Creates a topic with the given name and settings.
@@ -123,14 +123,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="topicSettings">Topic settings.</param>
         /// <returns>Created topics.</returns>
-        IAsyncOperation<TopicInfo> CreateTopicAsync(string topicName, TopicSettings topicSettings);
+        IAsyncOperation<TopicDescription> CreateTopicAsync(string topicName, TopicSettings topicSettings);
 
         /// <summary>
         /// Gets a topic with the given name.
         /// </summary>
         /// <param name="topicName">Topic name</param>
         /// <returns>Topic data</returns>
-        IAsyncOperation<TopicInfo> GetTopicAsync(string topicName);
+        IAsyncOperation<TopicDescription> GetTopicAsync(string topicName);
 
         /// <summary>
         /// Deletes a topic with the given name.
@@ -145,7 +145,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <returns>Created subscription.</returns>
-        IAsyncOperation<SubscriptionInfo> CreateSubscriptionAsync(string topicName, string subscriptionName);
+        IAsyncOperation<SubscriptionDescription> CreateSubscriptionAsync(string topicName, string subscriptionName);
 
         /// <summary>
         /// Creates a subscription with the given name for the given topic with specified settings.
@@ -154,14 +154,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="subscriptionName">Subscription name.</param>
         /// <param name="subscriptionSettings">Subscription settings.</param>
         /// <returns>Created subscription.</returns>
-        IAsyncOperation<SubscriptionInfo> CreateSubscriptionAsync(string topicName, string subscriptionName, SubscriptionSettings subscriptionSettings);
+        IAsyncOperation<SubscriptionDescription> CreateSubscriptionAsync(string topicName, string subscriptionName, SubscriptionSettings subscriptionSettings);
 
         /// <summary>
         /// Gets subscriptions for the given topic.
         /// </summary>
         /// <param name="topicName">Topic name.</param>
         /// <returns>Collection of subscriptions.</returns>
-        IAsyncOperation<IEnumerable<SubscriptionInfo>> ListSubscriptionsAsync(string topicName);
+        IAsyncOperation<IEnumerable<SubscriptionDescription>> ListSubscriptionsAsync(string topicName);
 
         /// <summary>
         /// Gets subscription in the given range.
@@ -170,7 +170,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first subscription.</param>
         /// <param name="count">Number of subscriptions in the range.</param>
         /// <returns>Collection of subscriptions.</returns>
-        IAsyncOperation<IEnumerable<SubscriptionInfo>> ListSubscriptionsAsync(string topicName, int firstItem, int count);
+        IAsyncOperation<IEnumerable<SubscriptionDescription>> ListSubscriptionsAsync(string topicName, int firstItem, int count);
 
         /// <summary>
         /// Gets a subsciption with the given name for the given topic.
@@ -178,7 +178,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <returns>Subscription information.</returns>
-        IAsyncOperation<SubscriptionInfo> GetSubscriptionAsync(string topicName, string subscriptionName);
+        IAsyncOperation<SubscriptionDescription> GetSubscriptionAsync(string topicName, string subscriptionName);
 
         /// <summary>
         /// Deletes a subscription with the given name for the given topic.

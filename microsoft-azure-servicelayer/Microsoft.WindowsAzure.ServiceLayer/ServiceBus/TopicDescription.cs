@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// Service bus topic.
     /// </summary>
     [DataContract(Namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name = "TopicDescription")]
-    public sealed class TopicInfo
+    public sealed class TopicDescription
     {
         /// <summary>
         /// Determines how long a message lives in the associated subscriptions.
@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Specifies the maximum topic size in megabytes.
         /// </summary>
         [DataMember(Order=1, Name = "MaxSizeInMegabytes")]
-        public int MaximumSizeInMegabytes { get; internal set; }
+        public long MaximumSizeInMegabytes { get; internal set; }
 
         /// <summary>
         /// If enabled, the topic will detect duplicate messages within the 
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// the topic currently occupy. 
         /// </summary>
         [DataMember(Order=5)]
-        public int SizeInBytes { get; internal set; }
+        public long SizeInBytes { get; internal set; }
 
         /// <summary>
         /// Gets the name of the topic.
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Constructor for serialization purposes.
         /// </summary>
-        public TopicInfo()
+        public TopicDescription()
         {
             //TODO: make the constructor internal once the issue with JavaScript
             // serialization has been fixed.

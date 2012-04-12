@@ -119,7 +119,7 @@
     <Compile Include="Http\WindowsAzureHttpException.cs" />
     <Compile Include="Http\WrapAuthenticationException.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="ServiceBus\BrokeredMessageInfo.cs" />
+    <Compile Include="ServiceBus\BrokeredMessageDescription.cs" />
     <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
     <Compile Include="ServiceBus\BrokerProperties.cs" />
     <Compile Include="ServiceBus\CorrelationRuleFilter.cs" />
@@ -134,9 +134,9 @@
     <Compile Include="ServiceBus\RuleInfo.cs" />
     <Compile Include="ServiceBus\SqlRuleFilter.cs" />
     <Compile Include="ServiceBus\SqlRuleAction.cs" />
-    <Compile Include="ServiceBus\SubscriptionInfo.cs" />
+    <Compile Include="ServiceBus\SubscriptionDescription.cs" />
     <Compile Include="ServiceBus\RuleSettings.cs" />
-    <Compile Include="ServiceBus\TopicInfo.cs" />
+    <Compile Include="ServiceBus\TopicDescription.cs" />
     <Compile Include="ServiceBus\TopicSettings.cs" />
     <Compile Include="ServiceBus\SubscriptionSettings.cs" />
     <Compile Include="ServiceBus\TrueRuleFilter.cs" />
@@ -149,7 +149,7 @@
     <Compile Include="Http\WrapToken.cs" />
     <Compile Include="ServiceBus\IServiceBusService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceBus\QueueInfo.cs" />
+    <Compile Include="ServiceBus\QueueDescription.cs" />
     <Compile Include="ServiceBus\QueueSettings.cs" />
     <Compile Include="SerializationHelper.cs" />
     <Compile Include="ServiceBus\ServiceBusService.cs" />
