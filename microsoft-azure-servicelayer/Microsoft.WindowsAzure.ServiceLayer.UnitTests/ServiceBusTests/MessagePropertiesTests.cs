@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings).AsTask().Wait();
             MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(queueName);
-            BrokeredMessageInfo message = receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Result;
+            BrokeredMessageDescription message = receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Result;
 
             Assert.NotEqual(message.Properties, null);
             Assert.True(message.Properties.ContainsKey("StringProperty"));

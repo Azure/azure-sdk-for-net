@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Specifies the maximum queue size in megabytes.
         /// </summary>
         [DataMember(Order = 1, Name = "MaxSizeInMegabytes")]
-        public int? MaximumSizeInMegabytes { get; set; }
+        public long? MaximumSizeInMegabytes { get; set; }
 
         /// <summary>
         /// Tells whether duplicate detection is enabled.

@@ -34,9 +34,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// <summary>
         /// Comparer for the QueueInfo type.
         /// </summary>
-        private class InternalQueueInfoComparer : IEqualityComparer<QueueInfo>
+        private class InternalQueueInfoComparer : IEqualityComparer<QueueDescription>
         {
-            bool IEqualityComparer<QueueInfo>.Equals(QueueInfo x, QueueInfo y)
+            bool IEqualityComparer<QueueDescription>.Equals(QueueDescription x, QueueDescription y)
             {
                 return x.DefaultMessageTimeToLive == y.DefaultMessageTimeToLive &&
                     x.DuplicateDetectionHistoryTimeWindow == y.DuplicateDetectionHistoryTimeWindow && 
@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                     x.SizeInBytes == y.SizeInBytes;
             }
 
-            int IEqualityComparer<QueueInfo>.GetHashCode(QueueInfo obj)
+            int IEqualityComparer<QueueDescription>.GetHashCode(QueueDescription obj)
             {
                 return obj.GetHashCode();
             }
@@ -60,9 +60,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// <summary>
         /// Comparer for the TopicInfo type.
         /// </summary>
-        private class InternalTopicInfoComparer : IEqualityComparer<TopicInfo>
+        private class InternalTopicInfoComparer : IEqualityComparer<TopicDescription>
         {
-            bool IEqualityComparer<TopicInfo>.Equals(TopicInfo x, TopicInfo y)
+            bool IEqualityComparer<TopicDescription>.Equals(TopicDescription x, TopicDescription y)
             {
                 return x.DefaultMessageTimeToLive == y.DefaultMessageTimeToLive &&
                     x.DuplicateDetectionHistoryTimeWindow == y.DuplicateDetectionHistoryTimeWindow &&
@@ -72,7 +72,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                     x.SizeInBytes == y.SizeInBytes;
             }
 
-            int IEqualityComparer<TopicInfo>.GetHashCode(TopicInfo obj)
+            int IEqualityComparer<TopicDescription>.GetHashCode(TopicDescription obj)
             {
                 return obj.GetHashCode();
             }
@@ -81,9 +81,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// <summary>
         /// Comparer for the SubscriptionInfo type.
         /// </summary>
-        private class InternalSubscriptionInfoComparer : IEqualityComparer<SubscriptionInfo>
+        private class InternalSubscriptionInfoComparer : IEqualityComparer<SubscriptionDescription>
         {
-            bool IEqualityComparer<SubscriptionInfo>.Equals(SubscriptionInfo x, SubscriptionInfo y)
+            bool IEqualityComparer<SubscriptionDescription>.Equals(SubscriptionDescription x, SubscriptionDescription y)
             {
                 return
                     x.LockDuration == y.LockDuration &&
@@ -92,16 +92,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
                     x.RequiresSession == y.RequiresSession;
             }
 
-            int IEqualityComparer<SubscriptionInfo>.GetHashCode(SubscriptionInfo obj)
+            int IEqualityComparer<SubscriptionDescription>.GetHashCode(SubscriptionDescription obj)
             {
                 return obj.GetHashCode();
             }
         }
 
         IServiceBusService Service { get { return Configuration.ServiceBus; } }
-        IEqualityComparer<QueueInfo> QueueInfoComparer { get; set; }
-        IEqualityComparer<TopicInfo> TopicInfoComparer { get; set; }
-        IEqualityComparer<SubscriptionInfo> SubscriptionInfoComparer { get; set; }
+        IEqualityComparer<QueueDescription> QueueInfoComparer { get; set; }
+        IEqualityComparer<TopicDescription> TopicInfoComparer { get; set; }
+        IEqualityComparer<SubscriptionDescription> SubscriptionInfoComparer { get; set; }
 
         public ServiceBusManagementTests()
         {
@@ -271,19 +271,19 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         {
             // Create a queue.
             string queueName = Configuration.GetUniqueQueueName();
-            QueueInfo newQueue = Service.CreateQueueAsync(queueName).AsTask<QueueInfo>().Result;
+            QueueDescription newQueue = Service.CreateQueueAsync(queueName).AsTask<QueueDescription>().Result;
 
             // Confirm that the queue can be obtained from the server
-            QueueInfo storedQueue = Service.GetQueueAsync(queueName).AsTask<QueueInfo>().Result;
-            Assert.Equal<QueueInfo>(storedQueue, newQueue, QueueInfoComparer);
+            QueueDescription storedQueue = Service.GetQueueAsync(queueName).AsTask<QueueDescription>().Result;
+            Assert.Equal<QueueDescription>(storedQueue, newQueue, QueueInfoComparer);
 
             // Confirm that the queue can be obtained in the list
-            Dictionary<string, QueueInfo> queues = GetItems(
+            Dictionary<string, QueueDescription> queues = GetItems(
                 () => { return Service.ListQueuesAsync(); },
                 (queue) => { return queue.Name; });
 
             Assert.True(queues.ContainsKey(queueName));
-            Assert.Equal<QueueInfo>(newQueue, queues[queueName], QueueInfoComparer);
+            Assert.Equal<QueueDescription>(newQueue, queues[queueName], QueueInfoComparer);
 
             // Delete the queue
             Service.DeleteQueueAsync(queueName).AsTask().Wait();
@@ -300,7 +300,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void ListQueuesInRange()
         {
-            TestListItemsInRange<QueueInfo>(
+            TestListItemsInRange<QueueDescription>(
                 () => Service.CreateQueueAsync(Configuration.GetUniqueQueueName()),
                 (firstItem, count) => Service.ListQueuesAsync(firstItem, count),
                 queue => Service.DeleteQueueAsync(queue.Name),
@@ -313,7 +313,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void ListQueuesInvalidArgs()
         {
-            TestInvalidArgsInListItems<QueueInfo>(
+            TestInvalidArgsInListItems<QueueDescription>(
                 (firstItem, count) => Service.ListQueuesAsync(firstItem, count));
         }
 
@@ -323,7 +323,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void ListTopicsInRange()
         {
-            TestListItemsInRange<TopicInfo>(
+            TestListItemsInRange<TopicDescription>(
                 () => Service.CreateTopicAsync(Configuration.GetUniqueTopicName()),
                 (firstItem, count) => Service.ListTopicsAsync(firstItem, count),
                 topic => Service.DeleteTopicAsync(topic.Name),
@@ -336,7 +336,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void ListTopicsInvalidArgs()
         {
-            TestInvalidArgsInListItems<TopicInfo>(
+            TestInvalidArgsInListItems<TopicDescription>(
                 (firstItem, count) => Service.ListTopicsAsync(firstItem, count));
         }
 
@@ -349,7 +349,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         {
             string topicName = UsesUniqueTopicAttribute.TopicName;
 
-            TestListItemsInRange<SubscriptionInfo>(
+            TestListItemsInRange<SubscriptionDescription>(
                 () => Service.CreateSubscriptionAsync(topicName, Configuration.GetUniqueSubscriptionName()),
                 (firstItem, count) => Service.ListSubscriptionsAsync(topicName, firstItem, count),
                 subscription => Service.DeleteSubscriptionAsync(topicName, subscription.Name),
@@ -362,7 +362,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void ListSubscriptionsInvalidArgs()
         {
-            TestInvalidArgsInListItems<SubscriptionInfo>(
+            TestInvalidArgsInListItems<SubscriptionDescription>(
                 (firstItem, count) => Service.ListSubscriptionsAsync("test", firstItem, count));
 
             Assert.Throws<ArgumentNullException>(() => Service.ListSubscriptionsAsync(null, 1, 1));
@@ -466,7 +466,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             settings.RequiresDuplicateDetection = true;
             settings.RequiresSession = true;
 
-            QueueInfo queueInfo = Service.CreateQueueAsync(queueName, settings).AsTask<QueueInfo>().Result;
+            QueueDescription queueInfo = Service.CreateQueueAsync(queueName, settings).AsTask<QueueDescription>().Result;
             try
             {
                 Assert.Equal(queueInfo.DefaultMessageTimeToLive, settings.DefaultMessageTimeToLive.Value);
@@ -516,14 +516,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         {
             // Create a topic
             string topicName = Configuration.GetUniqueTopicName();
-            TopicInfo newTopic = Service.CreateTopicAsync(topicName).AsTask<TopicInfo>().Result;
+            TopicDescription newTopic = Service.CreateTopicAsync(topicName).AsTask<TopicDescription>().Result;
 
             // Confirm that the topic can be obtained from the server.
-            TopicInfo storedTopic = Service.GetTopicAsync(topicName).AsTask<TopicInfo>().Result;
-            Assert.Equal<TopicInfo>(storedTopic, newTopic, TopicInfoComparer);
+            TopicDescription storedTopic = Service.GetTopicAsync(topicName).AsTask<TopicDescription>().Result;
+            Assert.Equal<TopicDescription>(storedTopic, newTopic, TopicInfoComparer);
 
             // Conmfirm that the topic can be obtained in the list.
-            Dictionary<string, TopicInfo> topics = GetItems(
+            Dictionary<string, TopicDescription> topics = GetItems(
                 () => { return Service.ListTopicsAsync(); },
                 (t) => { return t.Name; });
             Assert.True(topics.ContainsKey(topicName));
@@ -589,7 +589,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             settings.MaximumSizeInMegabytes = 2048;
             settings.RequiresDuplicateDetection = true;
 
-            TopicInfo topic = Service.CreateTopicAsync(topicName, settings).AsTask<TopicInfo>().Result;
+            TopicDescription topic = Service.CreateTopicAsync(topicName, settings).AsTask<TopicDescription>().Result;
             try
             {
                 Assert.Equal(settings.DefaultMessageTimeToLive.Value, topic.DefaultMessageTimeToLive);
@@ -653,14 +653,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             string subscriptionName = Configuration.GetUniqueSubscriptionName();
 
             // Create a subscription.
-            SubscriptionInfo newSubscription = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
+            SubscriptionDescription newSubscription = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
 
             // Confirm that the subscription can be obtained from the server.
-            SubscriptionInfo storedSubscription = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
+            SubscriptionDescription storedSubscription = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask().Result;
             Assert.Equal(storedSubscription, newSubscription, SubscriptionInfoComparer);
 
             // Confirm that the subscription appears in the list.
-            Dictionary<string, SubscriptionInfo> subscriptions = GetItems(
+            Dictionary<string, SubscriptionDescription> subscriptions = GetItems(
                 () => { return Service.ListSubscriptionsAsync(topicName); },
                 (s) => { return s.Name; });
             Assert.True(subscriptions.ContainsKey(subscriptionName));
@@ -686,7 +686,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             string subscriptionName = Configuration.GetUniqueSubscriptionName();
 
             Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask().Wait();
-            Task<SubscriptionInfo> task = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask();
+            Task<SubscriptionDescription> task = Service.CreateSubscriptionAsync(topicName, subscriptionName).AsTask();
             Assert.Throws<AggregateException>(() => task.Wait());
         }
 
@@ -700,7 +700,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             string topicName = UsesUniqueTopicAttribute.TopicName;
             string subscriptionName = Configuration.GetUniqueSubscriptionName();
 
-            Task<SubscriptionInfo> task = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask();
+            Task<SubscriptionDescription> task = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask();
             Assert.Throws<AggregateException>(() => task.Wait());
         }
 
@@ -713,7 +713,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             string topicName = Configuration.GetUniqueTopicName();
             string subscriptionName = Configuration.GetUniqueSubscriptionName();
 
-            Task<SubscriptionInfo> task = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask();
+            Task<SubscriptionDescription> task = Service.GetSubscriptionAsync(topicName, subscriptionName).AsTask();
             Assert.Throws<AggregateException>(() => task.Wait());
         }
 
@@ -725,8 +725,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         {
             string topicName = Configuration.GetUniqueTopicName();
 
-            List<SubscriptionInfo> subscriptions = new List<SubscriptionInfo>(
-                Service.ListSubscriptionsAsync(topicName).AsTask<IEnumerable<SubscriptionInfo>>().Result);
+            List<SubscriptionDescription> subscriptions = new List<SubscriptionDescription>(
+                Service.ListSubscriptionsAsync(topicName).AsTask<IEnumerable<SubscriptionDescription>>().Result);
             Assert.Equal(subscriptions.Count, 0);
         }
 
