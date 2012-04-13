@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
             // 10 bits should be enough for the error code!
             Debug.Assert((httpStatusCode & ErrorSourceMask) == 0);
             uint code = ComErrorMask;
-            code |= ((uint)source) << 10;
+            code |= ((uint)source) << ErrorSourceOffset;
             code |= (uint)httpStatusCode;
             return (int)code;
         }
