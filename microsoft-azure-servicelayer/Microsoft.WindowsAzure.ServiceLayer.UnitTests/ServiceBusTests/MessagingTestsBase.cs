@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// Gets a message from the queue.
         /// </summary>
         /// <returns>First queued message.</returns>
-        protected BrokeredMessageInfo GetMessage(TimeSpan lockSpan)
+        protected BrokeredMessageDescription GetMessage(TimeSpan lockSpan)
         {
             return Receiver.GetMessageAsync(lockSpan).AsTask().Result;
         }
@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// Peeks a message from the queue.
         /// </summary>
         /// <returns>First queued message.</returns>
-        protected BrokeredMessageInfo PeekMessage(TimeSpan lockSpan)
+        protected BrokeredMessageDescription PeekMessage(TimeSpan lockSpan)
         {
             return Receiver.PeekMessageAsync(lockSpan).AsTask().Result;
         }
@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// Abandons previously locked message.
         /// </summary>
         /// <param name="message">Message to unlock.</param>
-        protected void AbandonMessage(BrokeredMessageInfo message)
+        protected void AbandonMessage(BrokeredMessageDescription message)
         {
             Receiver.AbandonMessageAsync(message).AsTask().Wait();
         }
@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// Deletes previously locked message.
         /// </summary>
         /// <param name="message">Message to delete.</param>
-        protected void DeleteMessage(BrokeredMessageInfo message)
+        protected void DeleteMessage(BrokeredMessageDescription message)
         {
             Receiver.DeleteMessageAsync(message).AsTask().Wait();
         }
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         protected void TestSetProperty<T>(
             T value,
             Action<BrokeredMessageSettings, T> setValue,
-            Func<BrokeredMessageInfo, T> getValue,
+            Func<BrokeredMessageDescription, T> getValue,
             IEqualityComparer<T> comparer = null)
         {
             if (comparer == null)
@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             SendMessage(settings);
 
             // Get the message and compare properties.
-            BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+            BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             T newValue = getValue(message);
             Assert.Equal(value, newValue, comparer);
         }
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
                 BrokeredMessageSettings settings = MessageHelper.CreateMessage(Guid.NewGuid().ToString(), contentType);
                 SendMessage(settings);
 
-                BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+                BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
                 Assert.Equal(message.ContentType, contentType, StringComparer.Ordinal);
             }
         }
@@ -126,7 +126,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings settings = MessageHelper.CreateMessage(originalContent);
             SendMessage(settings);
 
-            BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+            BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             string readContent = message.ReadContentAsStringAsync().AsTask().Result;
             Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
         }
@@ -141,7 +141,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings settings = MessageHelper.CreateMessage(originalContent);
             SendMessage(settings);
 
-            BrokeredMessageInfo message = PeekMessage(TimeSpan.FromSeconds(10));
+            BrokeredMessageDescription message = PeekMessage(TimeSpan.FromSeconds(10));
             string readContent = message.ReadContentAsStringAsync().AsTask().Result;
             Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
 
@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings settings = MessageHelper.CreateMessage(originalContent);
             SendMessage(settings);
 
-            BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+            BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             string readContent = message.ReadContentAsStringAsync().AsTask().Result;
             Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
 
@@ -194,7 +194,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings settings = MessageHelper.CreateMessage("This is a test.");
             SendMessage(settings);
 
-            BrokeredMessageInfo message = PeekMessage(TimeSpan.FromSeconds(10));
+            BrokeredMessageDescription message = PeekMessage(TimeSpan.FromSeconds(10));
             DeleteMessage(message);
 
             Assert.Throws<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings settings = MessageHelper.CreateMessage("This is a test.");
             SendMessage(settings);
 
-            BrokeredMessageInfo message = PeekMessage(TimeSpan.FromSeconds(10));
+            BrokeredMessageDescription message = PeekMessage(TimeSpan.FromSeconds(10));
             AbandonMessage(message);
             message = GetMessage(TimeSpan.FromSeconds(10));
             Assert.Throws<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
@@ -345,7 +345,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             byte[] originalBytes = new byte[] { 1, 2, 3, 4, };
             BrokeredMessageSettings settings = MessageHelper.CreateMessage(originalBytes);
             SendMessage(settings);
-            BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+            BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
 
             List<byte> readBytes = new List<byte>(message.ReadContentAsBytesAsync().AsTask().Result);
             Assert.Equal(originalBytes, readBytes);
@@ -362,7 +362,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             {
                 BrokeredMessageSettings settings = MessageHelper.CreateMessage(stream);
                 SendMessage(settings);
-                BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+                BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
 
                 using (Stream readStream = message.ReadContentAsStreamAsync().AsTask().Result.AsStreamForRead())
                 {
@@ -386,7 +386,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings settings = MessageHelper.CreateMessage(string.Empty);
             SendMessage(settings);
 
-            BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+            BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             string readText = message.ReadContentAsStringAsync().AsTask().Result;
             Assert.Equal(readText.Length, 0);
         }
@@ -401,7 +401,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageSettings settings = MessageHelper.CreateMessage(originalBytes);
             SendMessage(settings);
 
-            BrokeredMessageInfo message = GetMessage(TimeSpan.FromSeconds(10));
+            BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             List<byte> readBytes = new List<byte>(message.ReadContentAsBytesAsync().AsTask().Result);
             Assert.Equal(originalBytes, readBytes);
         }

@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// Service bus subscription information.
     /// </summary>
     [DataContract(Namespace = "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect", Name = "SubscriptionDescription")]
-    public sealed class SubscriptionInfo
+    public sealed class SubscriptionDescription
     {
         /// <summary>
         /// Gets the lock duration.
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// monitoring system.
         /// </summary>
         [DataMember(Order = 5)]
-        public int MessageCount { get; internal set; }
+        public long MessageCount { get; internal set; }
 
         /// <summary>
         /// Tells the maximum number of times a message Service Bus will try 
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Constructor. We don't want users to create instances of this class,
         /// so we make it internal.
         /// </summary>
-        public SubscriptionInfo()
+        public SubscriptionDescription()
         {
             //TODO: make the constructor internal once the issue with JavaScript
             // serialization has been fixed.

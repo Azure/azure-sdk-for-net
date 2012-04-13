@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// Brokered message obtained from the service.
     /// </summary>
-    public sealed class BrokeredMessageInfo
+    public sealed class BrokeredMessageDescription
     {
         private HttpContent _content;                               // Source HTTP content.
         private BrokerProperties _brokerProperties;                 // Message's broker properties.
@@ -226,20 +226,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="response">Response with data.</param>
         /// <returns></returns>
-        internal static BrokeredMessageInfo CreateFromPeekResponse(HttpResponse response)
+        internal static BrokeredMessageDescription CreateFromPeekResponse(HttpResponse response)
         {
             if (response.StatusCode == (int)System.Net.HttpStatusCode.NoContent || response.StatusCode == (int)System.Net.HttpStatusCode.ResetContent)
             {
                 return null;
             }
-            return new BrokeredMessageInfo(response);
+            return new BrokeredMessageDescription(response);
         }
 
         /// <summary>
         /// Constructor. Initializes the object from the HTTP response.
         /// </summary>
         /// <param name="response">HTTP reponse with the data.</param>
-        internal BrokeredMessageInfo(HttpResponse response)
+        internal BrokeredMessageDescription(HttpResponse response)
         {
             Debug.Assert(response.IsSuccessStatusCode);
             _content = response.Content;
@@ -262,7 +262,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Constructor.
         /// </summary>
-        public BrokeredMessageInfo()
+        public BrokeredMessageDescription()
         {
             //TODO: get rid of this constructor once the issue with JavaScript serialization has been fixed.
         }
