@@ -35,8 +35,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.HttpTests
         [TestMethod]
         public void InvalidErrorSource()
         {
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.CreateComErrorCode((ErrorSource)(-1), 200));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.CreateComErrorCode((ErrorSource)2, 200));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.CreateComErrorCode((WindowsAzureErrorSource)(-1), 200));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.CreateComErrorCode((WindowsAzureErrorSource)2, 200));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.HttpTests
         [TestMethod]
         public void InvalidHttpStatus()
         {
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.CreateComErrorCode(ErrorSource.ServiceBus, -1));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.CreateComErrorCode(WindowsAzureErrorSource.ServiceBus, -1));
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.HttpTests
         [TestMethod]
         public void InvalidComErrorCode()
         {
-            int validCode = HttpErrorHelper.CreateComErrorCode(ErrorSource.ServiceBus, 400);
-            ErrorSource source;
+            int validCode = HttpErrorHelper.CreateComErrorCode(WindowsAzureErrorSource.ServiceBus, 400);
+            WindowsAzureErrorSource source;
             int code;
 
             Assert.ThrowsException<ArgumentException>(() => HttpErrorHelper.ParseComErrorCode(validCode & 0x7FFFFFFF, out source, out code));   // Invalid severity.

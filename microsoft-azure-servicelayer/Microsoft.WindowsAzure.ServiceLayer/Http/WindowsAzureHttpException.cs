@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="message">Error message.</param>
         /// <param name="response">HTTP response.</param>
         internal WindowsAzureHttpException(string message, HttpResponse response)
-            : this(message, ErrorSource.ServiceBus, response)
+            : this(message, WindowsAzureErrorSource.ServiceBus, response)
         {
         }
 
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="message">Short error message.</param>
         /// <param name="source">Error source.</param>
         /// <param name="response">HTTP response that triggered the exception.</param>
-        protected WindowsAzureHttpException(string message, ErrorSource source, HttpResponse response)
+        protected WindowsAzureHttpException(string message, WindowsAzureErrorSource source, HttpResponse response)
             : base(GetHttpErrorMessage(message, response))
         {
             HResult = HttpErrorHelper.CreateComErrorCode(source, response.StatusCode);

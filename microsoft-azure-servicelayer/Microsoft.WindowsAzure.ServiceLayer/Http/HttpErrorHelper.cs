@@ -47,9 +47,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="source">The source of error.</param>
         /// <param name="httpStatusCode">HTTP status code.</param>
         /// <returns>HRESULT with embedded source and status code.</returns>
-        public static int CreateComErrorCode(ErrorSource source, int httpStatusCode)
+        public static int CreateComErrorCode(WindowsAzureErrorSource source, int httpStatusCode)
         {
-            Validator.ArgumentIsValidEnumValue<ErrorSource>("source", source);
+            Validator.ArgumentIsValidEnumValue<WindowsAzureErrorSource>("source", source);
             Validator.ArgumentIsValidEnumValue<System.Net.HttpStatusCode>("httpStatusCode", httpStatusCode);
 
             // 10 bits should be enough for the error code!
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="comErrorCode">COM error code (HRESULT).</param>
         /// <param name="source">Error source.</param>
         /// <param name="httpStatusCode">HTTP status code.</param>
-        public static void ParseComErrorCode(int comErrorCode, out ErrorSource source, out int httpStatusCode)
+        public static void ParseComErrorCode(int comErrorCode, out WindowsAzureErrorSource source, out int httpStatusCode)
         {
             if (!TryParseComErrorCode(comErrorCode, out source, out httpStatusCode))
             {
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="source">Error source.</param>
         /// <param name="httpStatusCode">HTTP status code.</param>
         /// <returns>True if COM error code was successfully parsed.</returns>
-        public static bool TryParseComErrorCode(int comErrorCode, out ErrorSource source, out int httpStatusCode)
+        public static bool TryParseComErrorCode(int comErrorCode, out WindowsAzureErrorSource source, out int httpStatusCode)
         {
             source = 0;
             httpStatusCode = 0;
@@ -92,8 +92,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
                 return false;
             }
 
-            ErrorSource tempErrorSource = (ErrorSource)((comErrorCode & ErrorSourceMask) >> ErrorSourceOffset);
-            if (!Enum.IsDefined(typeof(ErrorSource), tempErrorSource))
+            WindowsAzureErrorSource tempErrorSource = (WindowsAzureErrorSource)((comErrorCode & ErrorSourceMask) >> ErrorSourceOffset);
+            if (!Enum.IsDefined(typeof(WindowsAzureErrorSource), tempErrorSource))
             {
                 return false;
             }
