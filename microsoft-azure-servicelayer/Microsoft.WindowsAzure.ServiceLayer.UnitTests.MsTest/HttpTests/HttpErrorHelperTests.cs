@@ -35,8 +35,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.HttpTests
         [TestMethod]
         public void InvalidErrorSource()
         {
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.GetComErrorCode((ErrorSource)(-1), 200));
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.GetComErrorCode((ErrorSource)2, 200));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.CreateComErrorCode((ErrorSource)(-1), 200));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.CreateComErrorCode((ErrorSource)2, 200));
         }
 
         /// <summary>
@@ -45,22 +45,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.HttpTests
         [TestMethod]
         public void InvalidHttpStatus()
         {
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.GetComErrorCode(ErrorSource.ServiceBus, -1));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => HttpErrorHelper.CreateComErrorCode(ErrorSource.ServiceBus, -1));
         }
 
         /// <summary>
         /// Tests passing invalid HRESULTs to the TranslateComErrorCode method.
         /// </summary>
         [TestMethod]
-        public void InvalidHresult()
+        public void InvalidComErrorCode()
         {
-            int validCode = HttpErrorHelper.GetComErrorCode(ErrorSource.ServiceBus, 400);
+            int validCode = HttpErrorHelper.CreateComErrorCode(ErrorSource.ServiceBus, 400);
             ErrorSource source;
             int code;
 
-            Assert.ThrowsException<ArgumentException>(() => HttpErrorHelper.TranslateComErrorCode(validCode & 0x7FFFFFFF, out source, out code));   // Invalid severity.
-            Assert.ThrowsException<ArgumentException>(() => HttpErrorHelper.TranslateComErrorCode(validCode | 0x0000F000, out source, out code));   // Invalid error source.
-            Assert.ThrowsException<ArgumentException>(() => HttpErrorHelper.TranslateComErrorCode(validCode | 0x00000FFF, out source, out code));   // Invalid error code.
+            Assert.ThrowsException<ArgumentException>(() => HttpErrorHelper.ParseComErrorCode(validCode & 0x7FFFFFFF, out source, out code));   // Invalid severity.
+            Assert.ThrowsException<ArgumentException>(() => HttpErrorHelper.ParseComErrorCode(validCode | 0x0000F000, out source, out code));   // Invalid error source.
+            Assert.ThrowsException<ArgumentException>(() => HttpErrorHelper.ParseComErrorCode(validCode | 0x00000FFF, out source, out code));   // Invalid error code.
         }
     }
 }

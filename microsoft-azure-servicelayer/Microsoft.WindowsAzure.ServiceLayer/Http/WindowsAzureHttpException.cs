@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         protected WindowsAzureHttpException(string message, ErrorSource source, HttpResponse response)
             : base(GetHttpErrorMessage(message, response))
         {
-            HResult = HttpErrorHelper.GetComErrorCode(source, response.StatusCode);
+            HResult = HttpErrorHelper.CreateComErrorCode(source, response.StatusCode);
         }
 
         /// <summary>

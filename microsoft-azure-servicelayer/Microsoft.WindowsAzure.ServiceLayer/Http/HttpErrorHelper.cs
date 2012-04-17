@@ -30,24 +30,27 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
     /// Severity: SEVERITY_ERROR
     /// Facility: FACILITY_ITF
     /// 6 bits for error source
-    /// 10 bits for the HTTP status code.</remarks>
+    /// 10 bits for the HTTP status code.
+    /// 
+    /// More info on HRESULT: http://msdn.microsoft.com/en-us/library/bb446131.aspx
+    /// </remarks>
     public static class HttpErrorHelper
     {
         private const uint ComErrorMask = 0x80040000;       // severity: error; facility: intf.
         private const uint ErrorSourceMask = 0x0000FC00;    // 6 bits.
-        private const int ErrorSourceOffset = 10;           // Offset of the error source.
+        private const int ErrorSourceOffset = 10;           // Offset of the error source (# of bits)
         private const uint HttpStatusMask = 0x000003FF;     // Last 10 bits.
 
         /// <summary>
-        /// Generates HRESULT for the given HTTP error.
+        /// Creates HRESULT for the given HTTP error.
         /// </summary>
         /// <param name="source">The source of error.</param>
         /// <param name="httpStatusCode">HTTP status code.</param>
         /// <returns>HRESULT with embedded source and status code.</returns>
-        public static int GetComErrorCode(ErrorSource source, int httpStatusCode)
+        public static int CreateComErrorCode(ErrorSource source, int httpStatusCode)
         {
             Validator.ArgumentIsValidEnumValue<ErrorSource>("source", source);
-            Validator.ArgumentIsValidEnumValue<System.Net.HttpStatusCode>("source", httpStatusCode);
+            Validator.ArgumentIsValidEnumValue<System.Net.HttpStatusCode>("httpStatusCode", httpStatusCode);
 
             // 10 bits should be enough for the error code!
             Debug.Assert((httpStatusCode & ErrorSourceMask) == 0);
@@ -60,14 +63,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <summary>
         /// Extracts source and HTTP status code from the given HRESULT.
         /// </summary>
-        /// <param name="hresult">HRESULT code.</param>
+        /// <param name="comErrorCode">COM error code (HRESULT).</param>
         /// <param name="source">Error source.</param>
         /// <param name="httpStatusCode">HTTP status code.</param>
-        public static void TranslateComErrorCode(int hresult, out ErrorSource source, out int httpStatusCode)
+        public static void ParseComErrorCode(int comErrorCode, out ErrorSource source, out int httpStatusCode)
         {
-            if (!TryTranslateErrorCode(hresult, out source, out httpStatusCode))
+            if (!TryParseComErrorCode(comErrorCode, out source, out httpStatusCode))
             {
-                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentInvalidHresult, "hresult");
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentInvalidComError, "comErrorCode");
                 throw new ArgumentException(message);
             }
         }
@@ -75,27 +78,27 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <summary>
         /// Attempts to extract source and HTTP status code from the given HRESULT.
         /// </summary>
-        /// <param name="hresult">HRESULT code.</param>
+        /// <param name="comErrorCode">COM error code (HRESULT).</param>
         /// <param name="source">Error source.</param>
         /// <param name="httpStatusCode">HTTP status code.</param>
-        /// <returns>True if HRESULT was successfully parsed.</returns>
-        public static bool TryTranslateErrorCode(int hresult, out ErrorSource source, out int httpStatusCode)
+        /// <returns>True if COM error code was successfully parsed.</returns>
+        public static bool TryParseComErrorCode(int comErrorCode, out ErrorSource source, out int httpStatusCode)
         {
             source = 0;
             httpStatusCode = 0;
 
-            if ((hresult & ComErrorMask) != ComErrorMask)
+            if ((comErrorCode & ComErrorMask) != ComErrorMask)
             {
                 return false;
             }
 
-            ErrorSource tempErrorSource = (ErrorSource)((hresult & ErrorSourceMask) >> ErrorSourceOffset);
+            ErrorSource tempErrorSource = (ErrorSource)((comErrorCode & ErrorSourceMask) >> ErrorSourceOffset);
             if (!Enum.IsDefined(typeof(ErrorSource), tempErrorSource))
             {
                 return false;
             }
 
-            int tempStatusCode = (int)((uint)hresult & HttpStatusMask);
+            int tempStatusCode = (int)((uint)comErrorCode & HttpStatusMask);
             if (!Enum.IsDefined(typeof(System.Net.HttpStatusCode), tempStatusCode))
             {
                 return false;
