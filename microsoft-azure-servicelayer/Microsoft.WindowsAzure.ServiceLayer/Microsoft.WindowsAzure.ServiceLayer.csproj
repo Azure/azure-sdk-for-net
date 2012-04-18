@@ -105,11 +105,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="WindowsAzureErrorSource.cs" />
+    <Compile Include="WindowsAzureErrorCode.cs" />
     <Compile Include="Http\HttpChannel.cs" />
     <Compile Include="Http\HttpContent.cs" />
     <Compile Include="Http\HttpDefaultHandler.cs" />
-    <Compile Include="Http\HttpErrorHelper.cs" />
     <Compile Include="Http\HttpMethod.cs" />
     <Compile Include="Http\HttpRequest.cs" />
     <Compile Include="Http\HttpResponse.cs" />

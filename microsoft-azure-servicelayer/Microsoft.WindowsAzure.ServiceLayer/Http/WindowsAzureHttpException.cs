@@ -31,23 +31,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <summary>
         /// Initializes the exception with data from the given HTTP response.
         /// </summary>
-        /// <param name="message">Error message.</param>
+        /// <param name="shortMessage">Error message.</param>
         /// <param name="response">HTTP response.</param>
-        internal WindowsAzureHttpException(string message, HttpResponse response)
-            : this(message, WindowsAzureErrorSource.ServiceBus, response)
+        internal WindowsAzureHttpException(string shortMessage, HttpResponse response)
+            : this(shortMessage, response, CreateComErrorCode(response))
         {
         }
 
         /// <summary>
         /// Initializes the exception.
         /// </summary>
-        /// <param name="message">Short error message.</param>
-        /// <param name="source">Error source.</param>
+        /// <param name="shortMessage">Short error message.</param>
         /// <param name="response">HTTP response that triggered the exception.</param>
-        protected WindowsAzureHttpException(string message, WindowsAzureErrorSource source, HttpResponse response)
-            : base(GetHttpErrorMessage(message, response))
+        /// <param name="errorCode">Error code to be associated with the exception.</param>
+        protected WindowsAzureHttpException(string shortMessage, HttpResponse response, int errorCode)
+            : base(GetHttpErrorMessage(shortMessage, response), errorCode)
         {
-            HResult = HttpErrorHelper.CreateComErrorCode(source, response.StatusCode);
         }
 
         /// <summary>
@@ -56,10 +55,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <param name="message">Short message.</param>
         /// <param name="response">HTTP response with more details.</param>
         /// <returns>Error message.</returns>
-        protected static string GetHttpErrorMessage(string message, HttpResponse response)
+        private static string GetHttpErrorMessage(string message, HttpResponse response)
         {
             string details = string.Format(CultureInfo.CurrentUICulture, Resources.HttpDetails, response.StatusCode, response.ReasonPhrase);
             return string.Format(CultureInfo.CurrentUICulture, Resources.HttpErrorMessage, message, details);
+        }
+
+        /// <summary>
+        /// Creates a COM error code for the given HTTP response.
+        /// </summary>
+        /// <param name="response">HTTP response.</param>
+        /// <returns>COM error code.</returns>
+        private static int CreateComErrorCode(HttpResponse response)
+        {
+            return unchecked((int)(Constants.HttpErrorMask | response.StatusCode));
         }
     }
 }

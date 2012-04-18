@@ -111,7 +111,6 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="HttpTests\ContentTests.cs" />
-    <Compile Include="HttpTests\HttpErrorHelperTests.cs" />
     <Compile Include="HttpTests\PipelineTests.cs" />
     <Compile Include="HttpTests\TestHttpHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
