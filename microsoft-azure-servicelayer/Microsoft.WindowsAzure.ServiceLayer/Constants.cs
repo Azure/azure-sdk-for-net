@@ -26,6 +26,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
     /// </summary>
     internal static class Constants
     {
+        private const int ComErrorMask = unchecked((int)0x80040000);        // Mask for all COM error codes
+        internal const int WrapErrorMask = ComErrorMask;                    // Mask for WRAP exceptions
+        internal const int HttpErrorMask = ComErrorMask | 0x1000;           // Mask for HTTP exceptions
+
         internal const string ServiceBusServiceUri          = "https://{0}.servicebus.windows.net/";
         internal const string ServiceBusAuthenticationUri   = "https://{0}-sb.accesscontrol.windows.net/wrapv0.9/";
         internal const string ServiceBusScopeUri            = "http://{0}.servicebus.windows.net/";

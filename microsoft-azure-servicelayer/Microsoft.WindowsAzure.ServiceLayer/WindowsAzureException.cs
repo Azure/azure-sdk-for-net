@@ -26,9 +26,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <summary>
         /// Initializes the exception with the specified error message.
         /// </summary>
-        /// <param name="message"></param>
-        internal WindowsAzureException(string message)
-            : base(message)
+        /// <param name="message">Error message.</param>
+        /// <param name="errorCode">COM error code.</param>
+        internal WindowsAzureException(string message, int errorCode)
+            : base(message, errorCode)
         {
         }
     }
