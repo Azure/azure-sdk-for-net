@@ -258,13 +258,5 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 _brokerProperties = BrokerProperties.Deserialize(propertiesString);
             }
         }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public BrokeredMessageDescription()
-        {
-            //TODO: get rid of this constructor once the issue with JavaScript serialization has been fixed.
-        }
     }
 }
