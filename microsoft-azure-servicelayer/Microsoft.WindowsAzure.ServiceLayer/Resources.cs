@@ -93,5 +93,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         {
             get { return GetString("ErrorArgumentInvalidComError"); }
         }
+
+        internal static string ErrorNullFilterAndAction
+        {
+            get { return GetString("ErrorNullFilterAndAction"); }
+        }
     }
 }
