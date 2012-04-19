@@ -98,10 +98,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Constructor. We don't want users to create instances of this class,
         /// so we make it internal.
         /// </summary>
-        public SubscriptionDescription()
+        internal SubscriptionDescription()
         {
-            //TODO: make the constructor internal once the issue with JavaScript
-            // serialization has been fixed.
         }
 
         /// <summary>

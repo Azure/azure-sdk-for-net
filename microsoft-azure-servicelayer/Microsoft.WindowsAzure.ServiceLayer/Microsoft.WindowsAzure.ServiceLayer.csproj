@@ -144,15 +144,13 @@
     <Compile Include="WindowsAzureException.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Http\HttpQueryStringParser.cs" />
-    <Compile Include="ServiceBus\ServiceBusRestProxy.cs" />
+    <Compile Include="ServiceBus\ServiceBusClient.cs" />
     <Compile Include="Http\WrapAuthenticationHandler.cs" />
     <Compile Include="Http\WrapToken.cs" />
-    <Compile Include="ServiceBus\IServiceBusService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBus\QueueDescription.cs" />
     <Compile Include="ServiceBus\QueueSettings.cs" />
     <Compile Include="SerializationHelper.cs" />
-    <Compile Include="ServiceBus\ServiceBusService.cs" />
     <Compile Include="ServiceBus\ServiceConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>

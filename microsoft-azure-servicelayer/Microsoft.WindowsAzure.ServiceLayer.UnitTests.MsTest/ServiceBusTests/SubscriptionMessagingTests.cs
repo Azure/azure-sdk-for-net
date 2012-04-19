@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
         public void NullArgs()
         {
             TimeSpan validSpan = TimeSpan.FromSeconds(10);
-            IServiceBusService serviceBus = Configuration.ServiceBus;
+            ServiceBusClient serviceBus = Configuration.ServiceBus;
 
             Assert.ThrowsException<ArgumentNullException>(() => serviceBus.CreateMessageReceiver(null, "subscription"));
             Assert.ThrowsException<ArgumentException>(() => serviceBus.CreateMessageReceiver("", "subscription"));
