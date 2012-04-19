@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
         }
 
-        IServiceBusService Service { get { return Configuration.ServiceBus; } }
+        ServiceBusClient Service { get { return Configuration.ServiceBus; } }
         IEqualityComparer<QueueDescription> QueueInfoComparer { get; set; }
         IEqualityComparer<TopicDescription> TopicInfoComparer { get; set; }
         IEqualityComparer<SubscriptionDescription> SubscriptionInfoComparer { get; set; }
@@ -929,19 +929,19 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [Fact]
         public void InvalidArgsInCreateService()
         {
-            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create(null, "user", "password"));
-            Assert.Throws<ArgumentException>(() => ServiceBusService.Create("", "user", "password"));
-            Assert.Throws<ArgumentException>(() => ServiceBusService.Create(" ", "user", "password"));
-            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create("namespace", null, "password"));
-            Assert.Throws<ArgumentException>(() => ServiceBusService.Create("namespace", "", "password"));
-            Assert.Throws<ArgumentException>(() => ServiceBusService.Create("namespace", " ", "password"));
-            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create("namespace", "user", null));
+            Assert.Throws<ArgumentNullException>(() => new ServiceBusClient(null, "user", "password"));
+            Assert.Throws<ArgumentException>(() => new ServiceBusClient("", "user", "password"));
+            Assert.Throws<ArgumentException>(() => new ServiceBusClient(" ", "user", "password"));
+            Assert.Throws<ArgumentNullException>(() => new ServiceBusClient("namespace", null, "password"));
+            Assert.Throws<ArgumentException>(() => new ServiceBusClient("namespace", "", "password"));
+            Assert.Throws<ArgumentException>(() => new ServiceBusClient("namespace", " ", "password"));
+            Assert.Throws<ArgumentNullException>(() => new ServiceBusClient("namespace", "user", null));
 
             IHttpHandler validHandler = new HttpDefaultHandler();
-            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create(null, validHandler));
-            Assert.Throws<ArgumentException>(() => ServiceBusService.Create("", validHandler));
-            Assert.Throws<ArgumentException>(() => ServiceBusService.Create(" ", validHandler));
-            Assert.Throws<ArgumentNullException>(() => ServiceBusService.Create("namespace", null));
+            Assert.Throws<ArgumentNullException>(() => new ServiceBusClient(null, validHandler));
+            Assert.Throws<ArgumentException>(() => new ServiceBusClient("", validHandler));
+            Assert.Throws<ArgumentException>(() => new ServiceBusClient(" ", validHandler));
+            Assert.Throws<ArgumentNullException>(() => new ServiceBusClient("namespace", null));
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
     /// </summary>
     internal static class Configuration
     {
-        private static IServiceBusService _serviceBus;
+        private static ServiceBusClient _serviceBus;
 
         /// <summary>
         /// Gets the namespace used for testing.
@@ -47,13 +47,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// <summary>
         /// Gets an instance of the service bus service shared by all tests.
         /// </summary>
-        internal static IServiceBusService ServiceBus
+        internal static ServiceBusClient ServiceBus
         {
             get
             {
                 if (_serviceBus == null)
                 {
-                    _serviceBus = ServiceBusService.Create(ServiceNamespace, UserName, Password);
+                    _serviceBus = new ServiceBusClient(ServiceNamespace, UserName, Password);
                 }
                 return _serviceBus;
             }
