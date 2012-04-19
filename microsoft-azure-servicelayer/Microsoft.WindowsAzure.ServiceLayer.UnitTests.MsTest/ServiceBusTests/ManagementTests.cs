@@ -950,5 +950,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
             Assert.ThrowsException<ArgumentException>(() => new ServiceBusClient(" ", validHandler));
             Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient("namespace", null));
         }
+
+        /// <summary>
+        /// Tests passing invalid arguments to RuleSettings' constructor.
+        /// </summary>
+        [TestMethod]
+        public void InvalidArgsInCreateRuleSettings()
+        {
+            Assert.ThrowsException<ArgumentException>(() => new RuleSettings(null, null));
+        }
     }
 }

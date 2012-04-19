@@ -135,6 +135,9 @@
   <data name="ErrorNoContent" xml:space="preserve">
     <value>HTTP response returned no data.</value>
   </data>
+  <data name="ErrorNullFilterAndAction" xml:space="preserve">
+    <value>Either filter or action must not be null.</value>
+  </data>
   <data name="ErrorUnsupportedPropertyType" xml:space="preserve">
     <value>Unsupported custom property type: {0}.
 

@@ -47,7 +47,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="action">Rule's action.</param>
         public RuleSettings(IRuleFilter filter, IRuleAction action)
         {
-            //TODO: verify that at least one is not null.
+            if (filter == null && action == null)
+            {
+                throw new ArgumentException(
+                    Resources.ErrorNullFilterAndAction);
+            }
+
             Filter = filter;
             Action = action;
         }
