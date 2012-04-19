@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.HttpTests
         {
             TestHttpHandler handler1 = new TestHttpHandler(Configuration.ServiceBus.HttpHandler);
             TestHttpHandler handler2 = new TestHttpHandler(handler1);
-            IServiceBusService serviceBus = Configuration.ServiceBus.AssignHandler(handler1);
+            ServiceBusClient serviceBus = Configuration.ServiceBus.AssignHandler(handler1);
 
             serviceBus.ListQueuesAsync().AsTask().Wait();
             Assert.AreEqual(handler1.BeforeCount, 1);

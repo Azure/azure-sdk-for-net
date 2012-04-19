@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Gets the service bus interface.
         /// </summary>
-        private IServiceBusService ServiceBus
+        private ServiceBusClient ServiceBus
         {
             get { return Configuration.ServiceBus; }
         }

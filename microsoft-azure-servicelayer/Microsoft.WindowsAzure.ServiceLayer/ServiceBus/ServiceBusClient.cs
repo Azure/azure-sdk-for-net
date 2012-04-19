@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// REST proxy for the service bus interface.
     /// </summary>
-    internal class ServiceBusRestProxy: IServiceBusService
+    public sealed class ServiceBusClient
     {
         // Extra types used for serialization operations with rules.
         private static readonly Type[] ExtraRuleTypes = 
@@ -50,11 +50,52 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private ServiceConfiguration ServiceConfig { get; set; }
 
         /// <summary>
+        /// Initializes a service bus client.
+        /// </summary>
+        /// <param name="serviceNamespace">Service namespace.</param>
+        /// <param name="issuerName">Issuer name.</param>
+        /// <param name="issuerPassword">Password.</param>
+        /// <remarks>This constructor is used to initialize a new service bus 
+        /// client with the default HTTP pipeline. It is the most appropriate
+        /// for scenarios that do not require custom HTTP pipelines.</remarks>
+        public ServiceBusClient(string serviceNamespace, string issuerName, string issuerPassword)
+        {
+            Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
+            Validator.ArgumentIsNotNullOrEmptyString("issuerName", issuerName);
+            Validator.ArgumentIsNotNull("issuerPassword", issuerPassword);
+
+            ServiceConfig = new ServiceConfiguration(serviceNamespace);
+
+            // Create default HTTP pipeline.
+            IHttpHandler handlers = new HttpDefaultHandler();
+            handlers = new WrapAuthenticationHandler(serviceNamespace, issuerName, issuerPassword, handlers);
+            _channel = new HttpChannel(handlers);
+        }
+
+        /// <summary>
+        /// Initializes a service bus client.
+        /// </summary>
+        /// <param name="serviceNamespace">Service namespace.</param>
+        /// <param name="handler">HTTP handler.</param>
+        /// <remarks>This constructor is used to instantiate a service bus with
+        /// the non-standard HTTP pipeline. The caller is responsible for 
+        /// providing authentication and HTTP processing handlers in the
+        /// provided pipeline.</remarks>
+        public ServiceBusClient(string serviceNamespace, IHttpHandler handler)
+        {
+            Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
+            Validator.ArgumentIsNotNull("handler", handler);
+
+            ServiceConfig = new ServiceConfiguration(serviceNamespace);
+            _channel = new HttpChannel(handler);
+        }
+
+        /// <summary>
         /// Initializes the service bus service.
         /// </summary>
         /// <param name="config">Service configuration.</param>
         /// <param name="httpHandler">Handler for processing HTTP requests.</param>
-        internal ServiceBusRestProxy(ServiceConfiguration config, IHttpHandler httpHandler)
+        internal ServiceBusClient(ServiceConfiguration config, IHttpHandler httpHandler)
         {
             Debug.Assert(config != null);
             Debug.Assert(httpHandler != null);
@@ -67,7 +108,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Gets all available queues in the namespace.
         /// </summary>
         /// <returns>All queues in the namespace.</returns>
-        IAsyncOperation<IEnumerable<QueueDescription>> IServiceBusService.ListQueuesAsync()
+        public IAsyncOperation<IEnumerable<QueueDescription>> ListQueuesAsync()
         {
             return GetItemsAsync<QueueDescription>(
                 ServiceConfig.GetQueuesContainerUri(), 
@@ -77,7 +118,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Gets HTTP handler used by the service.
         /// </summary>
-        IHttpHandler IServiceBusService.HttpHandler
+        public IHttpHandler HttpHandler
         {
             get { return _channel.Handler; }
         }
@@ -87,11 +128,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="handler">HTTP handler to assign to the cloned service.</param>
         /// <returns>Cloned service.</returns>
-        IServiceBusService IServiceBusService.AssignHandler(IHttpHandler handler)
+        public ServiceBusClient AssignHandler(IHttpHandler handler)
         {
             Validator.ArgumentIsNotNull("handler", handler);
 
-            return new ServiceBusRestProxy(ServiceConfig, handler);
+            return new ServiceBusClient(ServiceConfig, handler);
         }
 
         /// <summary>
@@ -99,7 +140,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="queueName">Queue name.</param>
         /// <returns>Message receiver.</returns>
-        MessageReceiver IServiceBusService.CreateMessageReceiver(string queueName)
+        public MessageReceiver CreateMessageReceiver(string queueName)
         {
             Validator.ArgumentIsNotNullOrEmptyString("queueName", queueName);
 
@@ -112,7 +153,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <returns>Message receiver.</returns>
-        MessageReceiver IServiceBusService.CreateMessageReceiver(string topicName, string subscriptionName)
+        public MessageReceiver CreateMessageReceiver(string topicName, string subscriptionName)
         {
             Validator.ArgumentIsNotNullOrEmptyString("topicName", topicName);
             Validator.ArgumentIsNotNullOrEmptyString("subscriptionName", subscriptionName);
@@ -127,7 +168,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first item in range.</param>
         /// <param name="count">Number of items to return.</param>
         /// <returns>Collection of queues.</returns>
-        IAsyncOperation<IEnumerable<QueueDescription>> IServiceBusService.ListQueuesAsync(int firstItem, int count)
+        public IAsyncOperation<IEnumerable<QueueDescription>> ListQueuesAsync(int firstItem, int count)
         {
             Validator.ArgumentIsNonNegative("firstItem", firstItem);
             Validator.ArgumentIsPositive("count", count);
@@ -143,7 +184,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
         /// <returns>Queue data.</returns>
-        IAsyncOperation<QueueDescription> IServiceBusService.GetQueueAsync(string queueName)
+        public IAsyncOperation<QueueDescription> GetQueueAsync(string queueName)
         {
             Validator.ArgumentIsValidPath("queueName", queueName);
 
@@ -157,7 +198,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="queueName">Queue name.</param>
         /// <returns>Asycnrhonous action.</returns>
-        IAsyncAction IServiceBusService.DeleteQueueAsync(string queueName)
+        public IAsyncAction DeleteQueueAsync(string queueName)
         {
             Validator.ArgumentIsValidPath("queueName", queueName);
 
@@ -170,7 +211,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="queueName">Name of the queue.</param>
         /// <returns>Queue data.</returns>
-        IAsyncOperation<QueueDescription> IServiceBusService.CreateQueueAsync(string queueName)
+        public IAsyncOperation<QueueDescription> CreateQueueAsync(string queueName)
         {
             Validator.ArgumentIsValidPath("queueName", queueName);
 
@@ -186,7 +227,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="queueName">Name of the queue.</param>
         /// <param name="queueSettings">Parameters of the queue.</param>
         /// <returns>Created queue.</returns>
-        IAsyncOperation<QueueDescription> IServiceBusService.CreateQueueAsync(string queueName, QueueSettings queueSettings)
+        public IAsyncOperation<QueueDescription> CreateQueueAsync(string queueName, QueueSettings queueSettings)
         {
             Validator.ArgumentIsValidPath("queueName", queueName);
             Validator.ArgumentIsNotNull("queueSettings", queueSettings);
@@ -201,7 +242,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Lists all topics in the namespace.
         /// </summary>
         /// <returns>A collection of topics.</returns>
-        IAsyncOperation<IEnumerable<TopicDescription>> IServiceBusService.ListTopicsAsync()
+        public IAsyncOperation<IEnumerable<TopicDescription>> ListTopicsAsync()
         {
             return GetItemsAsync<TopicDescription>(
                 ServiceConfig.GetTopicsContainerUri(),
@@ -214,7 +255,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first topic.</param>
         /// <param name="count">Number of topics in the range.</param>
         /// <returns>Collection of topics.</returns>
-        IAsyncOperation<IEnumerable<TopicDescription>> IServiceBusService.ListTopicsAsync(int firstItem, int count)
+        public IAsyncOperation<IEnumerable<TopicDescription>> ListTopicsAsync(int firstItem, int count)
         {
             Validator.ArgumentIsNonNegative("firstItem", firstItem);
             Validator.ArgumentIsPositive("count", count);
@@ -230,7 +271,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="topicName">Topic name.</param>
         /// <returns>Created topic.</returns>
-        IAsyncOperation<TopicDescription> IServiceBusService.CreateTopicAsync(string topicName)
+        public IAsyncOperation<TopicDescription> CreateTopicAsync(string topicName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
 
@@ -246,7 +287,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="topicSettings">Topic settings.</param>
         /// <returns>Created topic.</returns>
-        IAsyncOperation<TopicDescription> IServiceBusService.CreateTopicAsync(string topicName, TopicSettings topicSettings)
+        public IAsyncOperation<TopicDescription> CreateTopicAsync(string topicName, TopicSettings topicSettings)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsNotNull("topicSettings", topicSettings);
@@ -262,7 +303,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="topicName">Topic name.</param>
         /// <returns>Topic information.</returns>
-        IAsyncOperation<TopicDescription> IServiceBusService.GetTopicAsync(string topicName)
+        public IAsyncOperation<TopicDescription> GetTopicAsync(string topicName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
 
@@ -276,7 +317,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="topicName">Topic name.</param>
         /// <returns>Deletion result.</returns>
-        IAsyncAction IServiceBusService.DeleteTopicAsync(string topicName)
+        public IAsyncAction DeleteTopicAsync(string topicName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
 
@@ -291,7 +332,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <returns>Created subscription.</returns>
-        IAsyncOperation<SubscriptionDescription> IServiceBusService.CreateSubscriptionAsync(string topicName, string subscriptionName)
+        public IAsyncOperation<SubscriptionDescription> CreateSubscriptionAsync(string topicName, string subscriptionName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
@@ -310,7 +351,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="subscriptionName">Subscription name.</param>
         /// <param name="subscriptionSettings">Subscription settings.</param>
         /// <returns>Created subscription.</returns>
-        IAsyncOperation<SubscriptionDescription> IServiceBusService.CreateSubscriptionAsync(
+        public IAsyncOperation<SubscriptionDescription> CreateSubscriptionAsync(
             string topicName, 
             string subscriptionName, 
             SubscriptionSettings subscriptionSettings)
@@ -330,7 +371,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="topicName">Topic name.</param>
         /// <returns>Collection of subscriptions.</returns>
-        IAsyncOperation<IEnumerable<SubscriptionDescription>> IServiceBusService.ListSubscriptionsAsync(string topicName)
+        public IAsyncOperation<IEnumerable<SubscriptionDescription>> ListSubscriptionsAsync(string topicName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
 
@@ -346,7 +387,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first rule.</param>
         /// <param name="count">Number of rules in the range.</param>
         /// <returns>Collection of subscriptions.</returns>
-        IAsyncOperation<IEnumerable<SubscriptionDescription>> IServiceBusService.ListSubscriptionsAsync(string topicName, int firstItem, int count)
+        public IAsyncOperation<IEnumerable<SubscriptionDescription>> ListSubscriptionsAsync(string topicName, int firstItem, int count)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsNonNegative("firstItem", firstItem);
@@ -364,7 +405,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <returns>Subscription information.</returns>
-        IAsyncOperation<SubscriptionDescription> IServiceBusService.GetSubscriptionAsync(string topicName, string subscriptionName)
+        public IAsyncOperation<SubscriptionDescription> GetSubscriptionAsync(string topicName, string subscriptionName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
@@ -380,7 +421,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Topic name.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.DeleteSubscriptionAsync(string topicName, string subscriptionName)
+        public IAsyncAction DeleteSubscriptionAsync(string topicName, string subscriptionName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
@@ -397,7 +438,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="ruleName">Name of the rule to be created.</param>
         /// <param name="ruleSettings">Rule's settings.</param>
         /// <returns></returns>
-        IAsyncOperation<RuleInfo> IServiceBusService.CreateRuleAsync(string topicName, string subscriptionName, string ruleName, RuleSettings ruleSettings)
+        public IAsyncOperation<RuleInfo> CreateRuleAsync(string topicName, string subscriptionName, string ruleName, RuleSettings ruleSettings)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
@@ -416,7 +457,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="topicName">Name of the topic.</param>
         /// <param name="subscriptionName">Name of the subscription inside the topic.</param>
         /// <returns>A collection of rules.</returns>
-        IAsyncOperation<IEnumerable<RuleInfo>> IServiceBusService.ListRulesAsync(string topicName, string subscriptionName)
+        public IAsyncOperation<IEnumerable<RuleInfo>> ListRulesAsync(string topicName, string subscriptionName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
@@ -435,7 +476,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="firstItem">Index of the first rule in the range.</param>
         /// <param name="count">Number of rules in the range.</param>
         /// <returns>Collection of rules.</returns>
-        IAsyncOperation<IEnumerable<RuleInfo>> IServiceBusService.ListRulesAsync(string topicName, string subscriptionName, int firstItem, int count)
+        public IAsyncOperation<IEnumerable<RuleInfo>> ListRulesAsync(string topicName, string subscriptionName, int firstItem, int count)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
@@ -456,7 +497,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="subscriptionName">Name of the subscription.</param>
         /// <param name="ruleName">Name of the rule.</param>
         /// <returns>Rule information.</returns>
-        IAsyncOperation<RuleInfo> IServiceBusService.GetRuleAsync(string topicName, string subscriptionName, string ruleName)
+        public IAsyncOperation<RuleInfo> GetRuleAsync(string topicName, string subscriptionName, string ruleName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
@@ -475,7 +516,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="subscriptionName">Name of the subscription.</param>
         /// <param name="ruleName">Name of the rule.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.DeleteRuleAsync(string topicName, string subscriptionName, string ruleName)
+        public IAsyncAction DeleteRuleAsync(string topicName, string subscriptionName, string ruleName)
         {
             Validator.ArgumentIsValidPath("topicName", topicName);
             Validator.ArgumentIsValidPath("subscriptionName", subscriptionName);
@@ -491,7 +532,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="destination">Topic/queue name.</param>
         /// <param name="message">Message to send.</param>
         /// <returns>Result of the operation.</returns>
-        IAsyncAction IServiceBusService.SendMessageAsync(string destination, BrokeredMessageSettings message)
+        public IAsyncAction SendMessageAsync(string destination, BrokeredMessageSettings message)
         {
             Validator.ArgumentIsValidPath("destination", destination);
             Validator.ArgumentIsNotNull("message", message);

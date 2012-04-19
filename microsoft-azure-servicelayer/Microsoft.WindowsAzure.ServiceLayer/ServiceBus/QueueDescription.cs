@@ -114,10 +114,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <summary>
         /// Constructor for serialization purposes.
         /// </summary>
-        public QueueDescription()
+        internal QueueDescription()
         {
-            //TODO: make the constructor internal once the issue with JavaScript
-            // serialization has been fixed.
         }
 
         /// <summary>
