@@ -28,6 +28,12 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// <summary>
     /// Settings of a new brokered message.
     /// </summary>
+    /// <remarks>Brokered messages support custom properties (see Properties).
+    /// A custom property can be a string, a number, a date/time, or a Boolea
+    /// variable; specifying a value of any other type will result in an error
+    /// when sending the message. Setting a property to null will result in its
+    /// removal from the message.
+    /// All numeric properties will read as doubles when reading the message.</remarks>
     public sealed class BrokeredMessageSettings
     {
         private BrokerProperties _brokerProperties;             // Message's broker properties.
