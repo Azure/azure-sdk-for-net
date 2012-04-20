@@ -15,20 +15,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
-using Windows.Storage.Streams;
-using Xunit;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
 {
     /// <summary>
     /// Tests for the Content class.
     /// </summary>
-    public sealed class ContentTests
+    [TestClass]
+    public class ContentTests
     {
         /// <summary>
         /// Creates a memory content from the given text.
@@ -77,23 +78,23 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         /// <summary>
         /// Tests passing invalid arguments into content's constructors.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void InvalidArgs()
         {
-            Assert.Throws<ArgumentNullException>(() => HttpContent.CreateFromText(null, "text/plain"));
-            Assert.Throws<ArgumentNullException>(() => HttpContent.CreateFromText("test", null));
-            Assert.Throws<ArgumentException>(() => HttpContent.CreateFromText("text", ""));
-            Assert.Throws<ArgumentNullException>(() => HttpContent.CreateFromByteArray(null));
-            Assert.Throws<ArgumentNullException>(() => HttpContent.CreateFromStream(null));
+            Assert.ThrowsException<ArgumentNullException>(() => HttpContent.CreateFromText(null, "text/plain"));
+            Assert.ThrowsException<ArgumentNullException>(() => HttpContent.CreateFromText("test", null));
+            Assert.ThrowsException<ArgumentException>(() => HttpContent.CreateFromText("text", ""));
+            Assert.ThrowsException<ArgumentNullException>(() => HttpContent.CreateFromByteArray(null));
+            Assert.ThrowsException<ArgumentNullException>(() => HttpContent.CreateFromStream(null));
 
             HttpContent content = HttpContent.CreateFromText("this is a test.", "text/plain");
-            Assert.Throws<ArgumentNullException>(() => content.CopyToAsync(null));
+            Assert.ThrowsException<ArgumentNullException>(() => content.CopyToAsync(null));
         }
 
         /// <summary>
         /// Tests reading text content as a string.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void ReadTextAsString()
         {
             string originalContent = Guid.NewGuid().ToString();
@@ -103,14 +104,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
             for (int i = 0; i < 2; i++)
             {
                 string readContent = content.ReadAsStringAsync().AsTask().Result;
-                Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
+                Assert.AreEqual(originalContent, readContent, false, CultureInfo.InvariantCulture);
             }
         }
 
         /// <summary>
         /// Tests reading text content as a bytes array.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void ReadTextAsBytes()
         {
             string originalContent = Guid.NewGuid().ToString();
@@ -122,14 +123,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
                 List<byte> bytes = new List<byte>(content.ReadAsByteArrayAsync().AsTask().Result);
 
                 string readContent = Encoding.UTF8.GetString(bytes.ToArray(), 0, bytes.Count);
-                Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
+                Assert.AreEqual(originalContent, readContent, false, CultureInfo.InvariantCulture);
             }
         }
 
         /// <summary>
         /// Tests reading text content as a bytes stream.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void ReadTextAsStream()
         {
             string originalContent = Guid.NewGuid().ToString();
@@ -142,7 +143,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     string readContent = reader.ReadToEnd();
-                    Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
+                    Assert.AreEqual(originalContent, readContent, false, CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -150,7 +151,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         /// <summary>
         /// Tests buffering memory content (which is a no-op operation).
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void BufferMemoryContent()
         {
             string originalContent = Guid.NewGuid().ToString();
@@ -162,14 +163,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
             for (int i = 0; i < 2; i++)
             {
                 string readContent = content.ReadAsStringAsync().AsTask().Result;
-                Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
+                Assert.AreEqual(originalContent, readContent, false, CultureInfo.InvariantCulture);
             }
         }
 
         /// <summary>
         /// Tests copying memory content into a stream.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void CopyMemoryContent()
         {
             byte[] originalContent = new byte[] { 1, 2, 3, 4, };
@@ -184,7 +185,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
                     stream.Flush();
                     byte[] readContent = stream.ToArray();
 
-                    Assert.Equal(originalContent, readContent);
+                    TestHelper.Equal(originalContent, readContent);
                 }
             }
         }
@@ -192,7 +193,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         /// <summary>
         /// Tests reading stream content as a string.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void ReadStreamAsText()
         {
             string originalContent = Guid.NewGuid().ToString();
@@ -200,34 +201,34 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
 
             // Reading the first time should be OK.
             string readContent = content.ReadAsStringAsync().AsTask().Result;
-            Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
+            Assert.AreEqual(originalContent, readContent, false, CultureInfo.InvariantCulture);
 
             // Reading again: there should be nothing left in the stream.
             readContent = content.ReadAsStringAsync().AsTask().Result;
-            Assert.Equal(readContent, string.Empty, StringComparer.Ordinal);
+            Assert.AreEqual(readContent, string.Empty, false, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// Tests reading stream as a bytes array.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void ReadStreamAsBytes()
         {
             byte[] originalBytes = new byte[] { 1, 2, 3, 4, };
             HttpContent content = CreateStreamContent(originalBytes);
             List<byte> readBytes = new List<byte>(content.ReadAsByteArrayAsync().AsTask().Result);
 
-            Assert.Equal(originalBytes, readBytes);
+            TestHelper.Equal(originalBytes, readBytes);
 
             // Reading again: there should be nothing left in the stream.
             readBytes = new List<byte>(content.ReadAsByteArrayAsync().AsTask().Result);
-            Assert.Equal(readBytes.Count, 0);
+            Assert.AreEqual(readBytes.Count, 0);
         }
 
         /// <summary>
         /// Tests buffering stream content.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void BufferStreamContent()
         {
             byte[] originalBytes = new byte[] { 1, 2, 3, 4, };
@@ -240,14 +241,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
             {
                 List<byte> readBytes = new List<byte>(
                     content.ReadAsByteArrayAsync().AsTask().Result);
-                Assert.Equal(originalBytes, readBytes);
+                TestHelper.Equal(originalBytes, readBytes);
             }
         }
 
         /// <summary>
         /// Tests copying stream content into a stream.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void CopyStreamContent()
         {
             byte[] originalContent = new byte[] { 1, 2, 3, 4, };
@@ -258,7 +259,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
                 content.CopyToAsync(stream.AsOutputStream()).AsTask().Wait();
                 stream.Flush();
                 byte[] readContent = stream.ToArray();
-                Assert.Equal(originalContent, readContent);
+                TestHelper.Equal(originalContent, readContent);
             }
 
             // Reading for the second time should 
@@ -267,7 +268,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
                 content.CopyToAsync(stream.AsOutputStream()).AsTask().Wait();
                 stream.Flush();
                 byte[] readContent = stream.ToArray();
-                Assert.Equal(readContent.Length, 0);
+                Assert.AreEqual(readContent.Length, 0);
             }
         }
     }

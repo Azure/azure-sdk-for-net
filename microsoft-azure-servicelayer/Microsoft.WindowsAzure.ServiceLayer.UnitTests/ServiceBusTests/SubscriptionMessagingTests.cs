@@ -18,56 +18,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
-using Xunit;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 {
     /// <summary>
     /// Unit tests for topic/subscription messaging.
     /// </summary>
-    public sealed class SubscriptionMessagingTests: MessagingTestsBase, IUseFixture<UniqueSubscriptionFixture>
+    [TestClass]
+    public class SubscriptionMessagingTests: MessagingTestsBase
     {
-        private UniqueSubscriptionFixture _subscription;    // Unique topic/subscription fixture.
-        private MessageReceiver _receiver;                  // Message receiver.
+        private static string _topicName;                   // Unique topic name.
+        private static string _subscriptionName;            // Unique subscription name.
+        private static MessageReceiver _receiver;           // Receiver for subscription messages.
 
         /// <summary>
-        /// Gets the receiver used for testing.
+        /// Gets the receiver.
         /// </summary>
-        public override MessageReceiver Receiver
+        protected override MessageReceiver Receiver { get { return _receiver; } }
+
+        /// <summary>
+        /// Initializes the environment for all test methods in the class.
+        /// </summary>
+        /// <param name="ctx">Test context.</param>
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext ctx)
         {
-            get
-            {
-                if (_receiver == null)
-                {
-                    _receiver = Configuration.ServiceBus.CreateMessageReceiver(_subscription.TopicName, _subscription.SubscriptionName);
-                }
-                return _receiver;
-            }
+            _topicName = Configuration.GetUniqueTopicName();
+            _subscriptionName = Configuration.GetUniqueSubscriptionName();
+
+            Configuration.ServiceBus.CreateTopicAsync(_topicName).AsTask().Wait();
+            Configuration.ServiceBus.CreateSubscriptionAsync(_topicName, _subscriptionName).AsTask().Wait();
+            _receiver = Configuration.ServiceBus.CreateMessageReceiver(_topicName, _subscriptionName);
         }
 
         /// <summary>
-        /// Gets the topics name used in tests.
+        /// Cleans up the environment after running all test methods in the 
+        /// class.
         /// </summary>
-        private string TopicName 
-        { 
-            get { return _subscription.TopicName; } 
-        }
-
-        /// <summary>
-        /// Gets the subscription name used in tests.
-        /// </summary>
-        private string SubscriptionName
+        [ClassCleanup]
+        public static void ClassCleanUp()
         {
-            get { return _subscription.SubscriptionName; }
-        }
-
-        /// <summary>
-        /// Gets the service bus interface.
-        /// </summary>
-        private ServiceBusClient ServiceBus
-        {
-            get { return Configuration.ServiceBus; }
+            Configuration.ServiceBus.DeleteTopicAsync(_topicName).AsTask().Wait();
+            _topicName = null;
+            _subscriptionName = null;
         }
 
         /// <summary>
@@ -76,55 +71,48 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <param name="settings">Message settings.</param>
         protected override void SendMessage(BrokeredMessageSettings settings)
         {
-            Configuration.ServiceBus.SendMessageAsync(TopicName, settings).AsTask().Wait();
-        }
-
-        /// <summary>
-        /// Assigns fixture to the class.
-        /// </summary>
-        /// <param name="data">Fixture.</param>
-        void IUseFixture<UniqueSubscriptionFixture>.SetFixture(UniqueSubscriptionFixture data)
-        {
-            _subscription = data;
+            Configuration.ServiceBus.SendMessageAsync(_topicName, settings).AsTask().Wait();
         }
 
         /// <summary>
         /// Tests passing invalid null arguments into methods.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void NullArgs()
         {
             TimeSpan validSpan = TimeSpan.FromSeconds(10);
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.CreateMessageReceiver(null, "subscription"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.CreateMessageReceiver("", "subscription"));
-            Assert.Throws<ArgumentException>(() => ServiceBus.CreateMessageReceiver(" ", "subscription"));
+            ServiceBusClient serviceBus = Configuration.ServiceBus;
 
-            Assert.Throws<ArgumentNullException>(() => ServiceBus.CreateMessageReceiver("topic", null));
-            Assert.Throws<ArgumentException>(() => ServiceBus.CreateMessageReceiver("topic", ""));
-            Assert.Throws<ArgumentException>(() => ServiceBus.CreateMessageReceiver("topic", " "));
+            Assert.ThrowsException<ArgumentNullException>(() => serviceBus.CreateMessageReceiver(null, "subscription"));
+            Assert.ThrowsException<ArgumentException>(() => serviceBus.CreateMessageReceiver("", "subscription"));
+            Assert.ThrowsException<ArgumentException>(() => serviceBus.CreateMessageReceiver(" ", "subscription"));
+
+            Assert.ThrowsException<ArgumentNullException>(() => serviceBus.CreateMessageReceiver("topic", null));
+            Assert.ThrowsException<ArgumentException>(() => serviceBus.CreateMessageReceiver("topic", ""));
+            Assert.ThrowsException<ArgumentException>(() => serviceBus.CreateMessageReceiver("topic", " "));
         }
 
         /// <summary>
         /// Tests getting a message from a non-existing topic.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void GettingMessageFromNonExistingTopic()
         {
             MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(
-                Configuration.GetUniqueTopicName(), SubscriptionName);
+                Configuration.GetUniqueTopicName(), _subscriptionName);
 
-            Assert.Throws<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.ThrowsException<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
 
         /// <summary>
         /// Tests getting a message from a non-existing subscription.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void GettingMessageFromNonExistingSubscription()
         {
             MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(
-                TopicName, Configuration.GetUniqueSubscriptionName());
-            Assert.Throws<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
+                _topicName, Configuration.GetUniqueSubscriptionName());
+            Assert.ThrowsException<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
     }
 }

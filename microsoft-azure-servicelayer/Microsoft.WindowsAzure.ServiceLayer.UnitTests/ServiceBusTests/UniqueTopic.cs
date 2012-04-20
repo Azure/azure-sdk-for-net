@@ -20,25 +20,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
 
-namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
+namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 {
     /// <summary>
-    /// Class for generating unique queues.
+    /// Class for generating unique topics.
     /// </summary>
-    internal class UniqueQueue: IDisposable
+    internal class UniqueTopic: IDisposable
     {
         /// <summary>
-        /// Gets the queue name.
+        /// Gets the topic name.
         /// </summary>
-        internal string QueueName { get; private set; }
+        internal string TopicName { get; private set; }
 
         /// <summary>
-        /// Creates a unique queue.
+        /// Creates a unique topic.
         /// </summary>
-        internal UniqueQueue()
+        internal UniqueTopic()
         {
-            QueueName = Configuration.GetUniqueQueueName();
-            Configuration.ServiceBus.CreateQueueAsync(QueueName).AsTask().Wait();
+            TopicName = Configuration.GetUniqueTopicName();
+            Configuration.ServiceBus.CreateTopicAsync(TopicName).AsTask().Wait();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
         /// </summary>
         void IDisposable.Dispose()
         {
-            Configuration.ServiceBus.DeleteQueueAsync(QueueName).AsTask().Wait();
+            Configuration.ServiceBus.DeleteTopicAsync(TopicName).AsTask().Wait();
         }
     }
 }
