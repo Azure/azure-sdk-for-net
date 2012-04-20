@@ -20,7 +20,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest
+namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
 {
     /// <summary>
     /// Helper methods for unit tests.

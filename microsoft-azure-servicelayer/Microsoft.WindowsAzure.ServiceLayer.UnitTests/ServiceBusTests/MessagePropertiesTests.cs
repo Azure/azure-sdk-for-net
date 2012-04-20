@@ -15,27 +15,52 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
-using Xunit;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 {
     /// <summary>
     /// Tests for message properties.
     /// </summary>
+    [TestClass]
     public sealed class MessagePropertiesTests
     {
+        private string _queueName;                          // Test queue.
+        private MessageReceiver _receiver;                  // Receiver for queue messages.
+
+        /// <summary>
+        /// Initializes the test.
+        /// </summary>
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _queueName = Configuration.GetUniqueQueueName();
+            Configuration.ServiceBus.CreateQueueAsync(_queueName).AsTask().Wait();
+            _receiver = Configuration.ServiceBus.CreateMessageReceiver(_queueName);
+        }
+
+        /// <summary>
+        /// Cleans up after test run.
+        /// </summary>
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            Configuration.ServiceBus.DeleteQueueAsync(_queueName).AsTask().Wait();
+            _queueName = null;
+            _receiver = null;
+        }
+
         /// <summary>
         /// Tests setting and reading message properties.
         /// </summary>
-        [Fact]
-        [UsesUniqueQueue]
+        [TestMethod]
         public void MessageProperties()
         {
-            string queueName = UsesUniqueQueueAttribute.QueueName;
             DateTimeOffset originalDateTime = DateTimeOffset.UtcNow;
             BrokeredMessageSettings messageSettings = MessageHelper.CreateMessage("This is a test.");
 
@@ -46,46 +71,43 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             messageSettings.Properties.Add("NumberProperty", 123);
             messageSettings.Properties.Add("TimeProperty", originalDateTime);
 
-            Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings).AsTask().Wait();
-            MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(queueName);
-            BrokeredMessageDescription message = receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Result;
+            Configuration.ServiceBus.SendMessageAsync(_queueName, messageSettings).AsTask().Wait();
+            BrokeredMessageDescription message = _receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Result;
 
-            Assert.NotEqual(message.Properties, null);
-            Assert.True(message.Properties.ContainsKey("StringProperty"));
-            Assert.True(message.Properties.ContainsKey("BoolPropertyTrue"));
-            Assert.True(message.Properties.ContainsKey("BoolPropertyFalse"));
-            Assert.True(message.Properties.ContainsKey("NumberProperty"));
-            Assert.True(message.Properties.ContainsKey("TimeProperty"));
+            Assert.IsNotNull(message.Properties);
+            Assert.IsTrue(message.Properties.ContainsKey("StringProperty"));
+            Assert.IsTrue(message.Properties.ContainsKey("BoolPropertyTrue"));
+            Assert.IsTrue(message.Properties.ContainsKey("BoolPropertyFalse"));
+            Assert.IsTrue(message.Properties.ContainsKey("NumberProperty"));
+            Assert.IsTrue(message.Properties.ContainsKey("TimeProperty"));
             // The server does not store/return null properties.
-            Assert.False(message.Properties.ContainsKey("NullProperty"));
+            Assert.IsFalse(message.Properties.ContainsKey("NullProperty"));
 
-            Assert.Equal((string)message.Properties["StringProperty"], "Test", StringComparer.Ordinal);
-            Assert.Equal((bool)message.Properties["BoolPropertyTrue"], true);
-            Assert.Equal((bool)message.Properties["BoolPropertyFalse"], false);
-            Assert.Equal(Convert.ToInt32(message.Properties["NumberProperty"]), 123);
+            Assert.AreEqual((string)message.Properties["StringProperty"], "Test", false, CultureInfo.InvariantCulture);
+            Assert.AreEqual((bool)message.Properties["BoolPropertyTrue"], true);
+            Assert.AreEqual((bool)message.Properties["BoolPropertyFalse"], false);
+            Assert.AreEqual(Convert.ToInt32(message.Properties["NumberProperty"]), 123);
 
             // Times must be identical to a second.
             DateTimeOffset readDateTime = (DateTimeOffset)message.Properties["TimeProperty"];
-            Assert.Equal(originalDateTime.Year, readDateTime.Year);
-            Assert.Equal(originalDateTime.Month, readDateTime.Month);
-            Assert.Equal(originalDateTime.Day, readDateTime.Day);
-            Assert.Equal(originalDateTime.Hour, readDateTime.Hour);
-            Assert.Equal(originalDateTime.Minute, readDateTime.Minute);
-            Assert.Equal(originalDateTime.Second, readDateTime.Second);
+            Assert.AreEqual(originalDateTime.Year, readDateTime.Year);
+            Assert.AreEqual(originalDateTime.Month, readDateTime.Month);
+            Assert.AreEqual(originalDateTime.Day, readDateTime.Day);
+            Assert.AreEqual(originalDateTime.Hour, readDateTime.Hour);
+            Assert.AreEqual(originalDateTime.Minute, readDateTime.Minute);
+            Assert.AreEqual(originalDateTime.Second, readDateTime.Second);
         }
 
         /// <summary>
         /// Tests that properties of unsupported types are rejected.
         /// </summary>
-        [Fact]
-        [UsesUniqueQueue]
+        [TestMethod]
         public void InvalidPropertyType()
         {
-            string queueName = UsesUniqueQueueAttribute.QueueName;
             BrokeredMessageSettings messageSettings = MessageHelper.CreateMessage("This is a test.");
             
             messageSettings.Properties.Add("TestProperty", new int[] { 1, 2, 3});
-            Assert.Throws<InvalidCastException>(() => Configuration.ServiceBus.SendMessageAsync(queueName, messageSettings));
+            Assert.ThrowsException<InvalidCastException>(() => Configuration.ServiceBus.SendMessageAsync(_queueName, messageSettings));
         }
     }
 }

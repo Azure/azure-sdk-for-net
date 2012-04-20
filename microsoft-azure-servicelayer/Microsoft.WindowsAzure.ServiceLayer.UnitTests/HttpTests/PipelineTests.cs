@@ -18,71 +18,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
-using Xunit;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
 {
     /// <summary>
     /// HTTP pipeline tests.
     /// </summary>
+    [TestClass]
     public class PipelineTests
     {
         /// <summary>
         /// Tests passing invalid arguments in the request's constructor.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void InvalidArgsInRequestConstructor()
         {
             Uri validUri = new Uri("http://microsoft.com");
-            Assert.Throws<ArgumentNullException>(() => new HttpRequest(null, validUri));
-            Assert.Throws<ArgumentException>(() => new HttpRequest("", validUri));
-            Assert.Throws<ArgumentNullException>(() => new HttpRequest("PUT", null));
+            Assert.ThrowsException<ArgumentNullException>(() => new HttpRequest(null, validUri));
+            Assert.ThrowsException<ArgumentException>(() => new HttpRequest("", validUri));
+            Assert.ThrowsException<ArgumentNullException>(() => new HttpRequest("PUT", null));
         }
 
         /// <summary>
         /// Tests passing invalid arguments in the response's constructor.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void InvalidArgsInResponseConstructor()
         {
             HttpRequest validRequest = new HttpRequest("PUT", new Uri("http://microsoft.com"));
-            Assert.Throws<ArgumentNullException>(() => new HttpResponse(null, 200));
-            Assert.Throws<ArgumentOutOfRangeException>(() => new HttpResponse(validRequest, -5));
+            Assert.ThrowsException<ArgumentNullException>(() => new HttpResponse(null, 200));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new HttpResponse(validRequest, -5));
         }
 
         /// <summary>
         /// Tests passing invalid arguments into constructors of public HTTP
         /// handlers.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void InvalidArgsInHandlers()
         {
             IHttpHandler validHandler = new HttpDefaultHandler();
-            Assert.Throws<ArgumentNullException>(() => new WrapAuthenticationHandler(null, "user", "password", validHandler));
-            Assert.Throws<ArgumentException>(() => new WrapAuthenticationHandler("", "user", "password", validHandler));
-            Assert.Throws<ArgumentException>(() => new WrapAuthenticationHandler(" ", "user", "password", validHandler));
-            Assert.Throws<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", null, "password", validHandler));
-            Assert.Throws<ArgumentException>(() => new WrapAuthenticationHandler("namespace", "", "password", validHandler));
-            Assert.Throws<ArgumentException>(() => new WrapAuthenticationHandler("namespace", " ", "password", validHandler));
-            Assert.Throws<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", "user", null, validHandler));
-            Assert.Throws<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", "user", "password", null));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(null, "user", "password", validHandler));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler("", "user", "password", validHandler));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(" ", "user", "password", validHandler));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", null, "password", validHandler));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler("namespace", "", "password", validHandler));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler("namespace", " ", "password", validHandler));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", "user", null, validHandler));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", "user", "password", null));
         }
 
         /// <summary>
         /// Tests passing invalid argument into AssignHandler method.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void InvalidArgsInAssignHandler()
         {
-            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.AssignHandler(null));
+            Assert.ThrowsException<ArgumentNullException>(() => Configuration.ServiceBus.AssignHandler(null));
         }
 
         /// <summary>
         /// Tests specifying pipeline handlers.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void PipelineHandlers()
         {
             TestHttpHandler handler1 = new TestHttpHandler(Configuration.ServiceBus.HttpHandler);
@@ -90,16 +91,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
             ServiceBusClient serviceBus = Configuration.ServiceBus.AssignHandler(handler1);
 
             serviceBus.ListQueuesAsync().AsTask().Wait();
-            Assert.Equal(handler1.BeforeCount, 1);
-            Assert.Equal(handler1.AfterCount, 1);
+            Assert.AreEqual(handler1.BeforeCount, 1);
+            Assert.AreEqual(handler1.AfterCount, 1);
 
             serviceBus = serviceBus.AssignHandler(handler2);
             serviceBus.ListQueuesAsync().AsTask().Wait();
-            Assert.Equal(handler1.BeforeCount, 2);
-            Assert.Equal(handler1.AfterCount, 2);
+            Assert.AreEqual(handler1.BeforeCount, 2);
+            Assert.AreEqual(handler1.AfterCount, 2);
 
-            Assert.Equal(handler2.BeforeCount, 1);
-            Assert.Equal(handler2.AfterCount, 1);
+            Assert.AreEqual(handler2.BeforeCount, 1);
+            Assert.AreEqual(handler2.AfterCount, 1);
         }
     }
 }

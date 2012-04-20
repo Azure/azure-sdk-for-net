@@ -4,30 +4,31 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
 using Windows.Storage.Streams;
-using Xunit;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 {
     /// <summary>
     /// Unit tests for the BrokeredMessageSettings class.
     /// </summary>
+    [TestClass]
     public sealed class MessageSettingsTests
     {
         /// <summary>
         /// Tests specifying null arguments in constructors.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void InvalidArgumentsInMethods()
         {
-            Assert.Throws<ArgumentNullException>(() => new BrokeredMessageSettings(null));
-            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText(null));
-            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText("Test", null));
-            Assert.Throws<ArgumentException>(() => BrokeredMessageSettings.CreateFromText("Test", ""));
-            Assert.Throws<ArgumentException>(() => BrokeredMessageSettings.CreateFromText("Test", " "));
-            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromByteArray(null));
-            Assert.Throws<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromStream(null));
+            Assert.ThrowsException<ArgumentNullException>(() => new BrokeredMessageSettings(null));
+            Assert.ThrowsException<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText(null));
+            Assert.ThrowsException<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText("Test", null));
+            Assert.ThrowsException<ArgumentException>(() => BrokeredMessageSettings.CreateFromText("Test", ""));
+            Assert.ThrowsException<ArgumentException>(() => BrokeredMessageSettings.CreateFromText("Test", " "));
+            Assert.ThrowsException<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromByteArray(null));
+            Assert.ThrowsException<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromStream(null));
         }
     }
 }

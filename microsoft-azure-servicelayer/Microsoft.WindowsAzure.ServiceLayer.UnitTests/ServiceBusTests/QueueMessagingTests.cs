@@ -19,23 +19,48 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
-using Xunit;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 {
     /// <summary>
     /// Runtime tests for queues.
     /// </summary>
-    public sealed class QueueMessagingTests: MessagingTestsBase, IUseFixture<UniqueQueueFixture>
+    [TestClass]
+    public sealed class QueueMessagingTests: MessagingTestsBase
     {
-        private string _queueName;                          // Shared queue.
-        private MessageReceiver _receiver;                  // Receiver for queued messages.
+        private static string _queueName;                   // Shared queue.
+        private static MessageReceiver _receiver;           // Shared receiver for messages in the queue.
 
         /// <summary>
-        /// Gets the receiver.
+        /// Gets the receiver used in tests.
         /// </summary>
-        public override MessageReceiver Receiver { get { return _receiver; } }
+        protected override MessageReceiver Receiver { get { return _receiver; } }
+
+        /// <summary>
+        /// Initializes the environment for all tests in the class.
+        /// </summary>
+        /// <param name="context">Test context.</param>
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
+        {
+            _queueName = Configuration.GetUniqueQueueName();
+            Configuration.ServiceBus.CreateQueueAsync(_queueName).AsTask().Wait();
+            _receiver = Configuration.ServiceBus.CreateMessageReceiver(_queueName);
+        }
+
+        /// <summary>
+        /// Cleans up the environment after running all tests in the class.
+        /// </summary>
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            Configuration.ServiceBus.DeleteQueueAsync(_queueName).AsTask().Wait();
+            _queueName = null;
+            _receiver = null;
+        }
+
 
         /// <summary>
         /// Sends a message to the queue.
@@ -45,48 +70,42 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         {
             Configuration.ServiceBus.SendMessageAsync(_queueName, settings).AsTask().Wait();
         }
-        // Assigns a fixture to the class.
-        void IUseFixture<UniqueQueueFixture>.SetFixture(UniqueQueueFixture data)
-        {
-            _queueName = data.QueueName;
-            _receiver = Configuration.ServiceBus.CreateMessageReceiver(_queueName);
-        }
 
         /// <summary>
         /// Tests specifying invalid arguments in SendMessage call.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void InvalidArgsInSendMessage()
         {
             BrokeredMessageSettings message = MessageHelper.CreateMessage("This is a test.");
-            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync(null, message));
-            Assert.Throws<ArgumentException>(() => Configuration.ServiceBus.SendMessageAsync("", message));
-            Assert.Throws<ArgumentException>(() => Configuration.ServiceBus.SendMessageAsync(" ", message));
-            Assert.Throws<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync(_queueName, null));
+            Assert.ThrowsException<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync(null, message));
+            Assert.ThrowsException<ArgumentException>(() => Configuration.ServiceBus.SendMessageAsync("", message));
+            Assert.ThrowsException<ArgumentException>(() => Configuration.ServiceBus.SendMessageAsync(" ", message));
+            Assert.ThrowsException<ArgumentNullException>(() => Configuration.ServiceBus.SendMessageAsync(_queueName, null));
         }
 
         /// <summary>
         /// Tests getting a message from a non-existing queue.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void GetMessageFromNonExistingQueue()
         {
             string queueName = Configuration.GetUniqueQueueName();
             MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(queueName);
 
-            Assert.Throws<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.ThrowsException<AggregateException>(() => receiver.GetMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
 
         /// <summary>
         /// Tests peeking a message from a non-existing quuee.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void PeekMessageFromNonExistingQueue()
         {
             string queueName = Configuration.GetUniqueQueueName();
             MessageReceiver receiver = Configuration.ServiceBus.CreateMessageReceiver(queueName);
 
-            Assert.Throws<AggregateException>(() => receiver.PeekMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
+            Assert.ThrowsException<AggregateException>(() => _receiver.PeekMessageAsync(TimeSpan.FromSeconds(10)).AsTask().Wait());
         }
     }
 }
