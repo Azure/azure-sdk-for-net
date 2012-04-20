@@ -130,7 +130,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest_TemporaryKey.pfx" />
+    <None Include="Microsoft.WindowsAzure.ServiceLayer.UnitTests_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\UnitTestLogo.png">
