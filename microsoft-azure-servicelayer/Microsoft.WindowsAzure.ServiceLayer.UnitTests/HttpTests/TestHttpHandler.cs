@@ -27,30 +27,37 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
     /// </summary>
     internal class TestHttpHandler: IHttpHandler
     {
-        internal int BeforeCount { get; set; }
-        internal int AfterCount { get; set; }
-        internal IHttpHandler NextHandler { get; private set; }
+        internal int RequestCount { get; set; }
+        internal int ResponseCount { get; set; }
 
         /// <summary>
         /// Initializes the object.
         /// </summary>
-        internal TestHttpHandler(IHttpHandler nextHandler)
+        internal TestHttpHandler()
         {
-            BeforeCount = 0;
-            AfterCount = 0;
-            NextHandler = nextHandler;
+            RequestCount = 0;
+            ResponseCount = 0;
         }
 
         /// <summary>
         /// Processes the request.
         /// </summary>
-        /// <param name="request">Original HTTP request.</param>
-        /// <returns>HTTP response.</returns>
-        HttpResponse IHttpHandler.ProcessRequest(HttpRequest request)
+        /// <param name="request">Request to process.</param>
+        /// <returns>Processed request.</returns>
+        HttpRequest IHttpHandler.ProcessRequest(HttpRequest request)
         {
-            BeforeCount++;
-            HttpResponse response = NextHandler.ProcessRequest(request);
-            AfterCount++;
+            RequestCount++;
+            return request;
+        }
+
+        /// <summary>
+        /// Processes the response.
+        /// </summary>
+        /// <param name="response">Response to process.</param>
+        /// <returns>Processed response.</returns>
+        HttpResponse IHttpHandler.ProcessResponse(HttpResponse response)
+        {
+            ResponseCount++;
             return response;
         }
     }

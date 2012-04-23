@@ -30,7 +30,18 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Processes HTTP request.
         /// </summary>
         /// <param name="request">Request to process.</param>
-        /// <returns>HTTP response.</returns>
-        HttpResponse ProcessRequest(HttpRequest request);
+        /// <returns>Processed request.</returns>
+        /// <remarks>The channel processes the request by passing it through
+        /// all handlers. Processing stops if any request handler indicates
+        /// failure, in which case the error from the handler gets returned
+        /// by the channel's SendAsync method.</remarks>
+        HttpRequest ProcessRequest(HttpRequest request);
+
+        /// <summary>
+        /// Processes HTTP response.
+        /// </summary>
+        /// <param name="response">Response to process.</param>
+        /// <returns>Processed response.</returns>
+        HttpResponse ProcessResponse(HttpResponse response);
     }
 }

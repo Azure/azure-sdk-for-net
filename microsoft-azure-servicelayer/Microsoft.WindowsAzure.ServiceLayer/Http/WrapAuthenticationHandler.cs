@@ -31,9 +31,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
     /// <remarks>This class uses handlers down the chain for sending its
     /// authentication requests. This is why it requires specifying another
     /// HTTP in the constructor.</remarks>
-    public sealed class WrapAuthenticationHandler: IHttpHandler
+    public sealed class WrapAuthenticationHandler : IHttpHandler
     {
-        private IHttpHandler _nextHandler;                              // Next HTTP handler in the chain.
+        private HttpChannel _channel;                                   // Channel for processing authentication requests.
         private Dictionary<string, WrapToken> _tokens;                  // Cached tokens.
         private Object _syncObject;                                     // Synchronization object for accessing cached tokens.
 
@@ -46,21 +46,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <summary>
         /// Initializes WARP authentication handler for use in Service Bus.
         /// </summary>
+        /// <param name="channel">Channel for processing authentication requests.</param>
         /// <param name="serviceNamespace">Namespace.</param>
         /// <param name="issuerName">User name.</param>
         /// <param name="issuerPassword">Password.</param>
-        /// <param name="nextHandler">Next HTTP handler in the chain.</param>
-        public WrapAuthenticationHandler(string serviceNamespace, string issuerName, string issuerPassword, IHttpHandler nextHandler)
+        public WrapAuthenticationHandler(HttpChannel channel, string serviceNamespace, string issuerName, string issuerPassword)
         {
+            Validator.ArgumentIsNotNull("channel", channel);
             Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
             Validator.ArgumentIsNotNullOrEmptyString("issuerName", issuerName);
             Validator.ArgumentIsNotNull("issuerPassword", issuerPassword);
-            Validator.ArgumentIsNotNull("nextHandler", nextHandler);
 
+            _channel = new HttpChannel(channel);
             _namespace = serviceNamespace;
             _issuerName = issuerName;
             _issuerPassword = issuerPassword;
-            _nextHandler = nextHandler;
+            _channel = new HttpChannel();
             _syncObject = new object();
             _tokens = new Dictionary<string, WrapToken>(StringComparer.OrdinalIgnoreCase);
 
@@ -75,16 +76,27 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Processes the request by updating it with the authentication data.
         /// </summary>
         /// <param name="request">Request to process.</param>
-        /// <returns>Result of procession.</returns>
-        HttpResponse IHttpHandler.ProcessRequest(HttpRequest request)
+        /// <returns>Processed request.</returns>
+        HttpRequest IHttpHandler.ProcessRequest(HttpRequest request)
         {
             Validator.ArgumentIsNotNull("request", request);
 
             WrapToken token = GetToken(request.Uri.AbsolutePath);
             token.Authorize(request);
-            return _nextHandler.ProcessRequest(request);
+            return request;
         }
 
+        /// <summary>
+        /// Processes the response.
+        /// </summary>
+        /// <param name="response">Response to process.</param>
+        /// <returns>Processed response.</returns>
+        HttpResponse IHttpHandler.ProcessResponse(HttpResponse response)
+        {
+            Validator.ArgumentIsNotNull("response", response);
+
+            return response;
+        }
         /// <summary>
         /// Gets authentication token for a resource with the given path.
         /// </summary>
@@ -121,7 +133,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
                 NetFormUrlEncodedContent netContent = new NetFormUrlEncodedContent(settings);
                 request.Content = HttpContent.CreateFromByteArray(netContent.ReadAsByteArrayAsync().Result);
 
-                HttpResponse response = _nextHandler.ProcessRequest(request);
+                HttpResponse response = _channel.SendAsyncInternal(request).Result;
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new WrapAuthenticationException(response);

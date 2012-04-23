@@ -20,8 +20,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
+using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
+using Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests;
 using Windows.Foundation;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
@@ -944,11 +945,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             Assert.ThrowsException<ArgumentException>(() => new ServiceBusClient("namespace", " ", "password"));
             Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient("namespace", "user", null));
 
-            IHttpHandler validHandler = new HttpDefaultHandler();
-            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient(null, validHandler));
-            Assert.ThrowsException<ArgumentException>(() => new ServiceBusClient("", validHandler));
-            Assert.ThrowsException<ArgumentException>(() => new ServiceBusClient(" ", validHandler));
-            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient("namespace", null));
+            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient(null));
+            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient(Configuration.ServiceBus, null));
         }
 
         /// <summary>
