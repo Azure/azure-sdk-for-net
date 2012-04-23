@@ -31,6 +31,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public sealed class ServiceBusClient
     {
+        private HttpChannel _channel;                       // HTTP channel.
+
         // Extra types used for serialization operations with rules.
         private static readonly Type[] ExtraRuleTypes = 
         {
@@ -46,11 +48,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Gets the service options.
         /// </summary>
         private ServiceConfiguration ServiceConfig { get; set; }
-
-        /// <summary>
-        /// Gets client's HTTP processing channel.
-        /// </summary>
-        public HttpChannel HttpChannel { get; private set; }
 
         /// <summary>
         /// Initializes a service bus client.
@@ -70,7 +67,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             ServiceConfig = new ServiceConfiguration(serviceNamespace);
 
             // Create the default HTTP channel.
-            HttpChannel = HttpChannel.CreateDefault(serviceNamespace, issuerName, issuerPassword);
+            _channel = HttpChannel.CreateDefault(serviceNamespace, issuerName, issuerPassword);
         }
 
         /// <summary>
@@ -85,7 +82,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Validator.ArgumentIsNotNull("handlers", handlers);
 
             ServiceConfig = client.ServiceConfig;
-            HttpChannel = new HttpChannel(client.HttpChannel, handlers);
+            _channel = new HttpChannel(client._channel, handlers);
         }
 
         /// <summary>
@@ -108,7 +105,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             Validator.ArgumentIsNotNullOrEmptyString("queueName", queueName);
 
-            return new MessageReceiver(ServiceConfig, HttpChannel, queueName);
+            return new MessageReceiver(ServiceConfig, _channel, queueName);
         }
 
         /// <summary>
@@ -123,7 +120,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Validator.ArgumentIsNotNullOrEmptyString("subscriptionName", subscriptionName);
 
             string path = string.Format(CultureInfo.InvariantCulture, Constants.SubscriptionPath, topicName, subscriptionName);
-            return new MessageReceiver(ServiceConfig, HttpChannel, path);
+            return new MessageReceiver(ServiceConfig, _channel, path);
         }
 
         /// <summary>
@@ -505,7 +502,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
             message.SubmitTo(request);
 
-            return HttpChannel.SendAsyncInternal(request).AsAsyncAction();
+            return _channel.SendAsyncInternal(request).AsAsyncAction();
         }
         /// <summary>
         /// Gets service bus items of the given type.
@@ -519,7 +516,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequest request = new HttpRequest(HttpMethod.Get, containerUri);
 
-            return HttpChannel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
+            return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
                 .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<TInfo>>();
         }
@@ -575,7 +572,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequest request = new HttpRequest(HttpMethod.Get, itemUri);
 
-            return HttpChannel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
+            return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<TInfo>();
         }
@@ -610,7 +607,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequest request = new HttpRequest(HttpMethod.Delete, itemUri);
 
-            return HttpChannel.SendAsyncInternal(request)
+            return _channel.SendAsyncInternal(request)
                 .AsAsyncAction();
         }
 
@@ -632,7 +629,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             return Task.Factory
                 .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
-                .ContinueWith<HttpResponse>(tr => HttpChannel.SendAsyncInternal(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<HttpResponse>(tr => _channel.SendAsyncInternal(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, ExtraRuleTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<TInfo>();
         }
