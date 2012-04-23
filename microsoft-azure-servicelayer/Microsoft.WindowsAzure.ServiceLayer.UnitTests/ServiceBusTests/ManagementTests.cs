@@ -24,7 +24,7 @@ using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Foundation;
 
-namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
+namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 {
     /// <summary>
     /// Tests for the service bus management.

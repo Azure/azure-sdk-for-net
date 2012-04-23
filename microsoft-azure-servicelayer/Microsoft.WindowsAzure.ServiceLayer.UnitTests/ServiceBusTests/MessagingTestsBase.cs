@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.ServiceLayer;
 using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
-using Xunit;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 {
@@ -18,9 +19,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
     public abstract class MessagingTestsBase
     {
         /// <summary>
-        /// Gets message receiver used with the test.
+        /// Gets the receiver for reading the messages.
         /// </summary>
-        public abstract MessageReceiver Receiver { get; }
+        protected abstract MessageReceiver Receiver { get; }
 
         /// <summary>
         /// Sends a message, 
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Abandons previously locked message.
         /// </summary>
-        /// <param name="message">Message to unlock.</param>
+        /// <param name="message">Message to abandon.</param>
         protected void AbandonMessage(BrokeredMessageDescription message)
         {
             Receiver.AbandonMessageAsync(message).AsTask().Wait();
@@ -95,13 +96,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             // Get the message and compare properties.
             BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             T newValue = getValue(message);
-            Assert.Equal(value, newValue, comparer);
+            Assert.IsTrue(comparer.Equals(value, newValue));
         }
 
         /// <summary>
         /// Verifies preserving content type.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void PreserveContentType()
         {
             string[] contentTypes = new string[] { "text/plain", "text/xml", };
@@ -112,14 +113,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
                 SendMessage(settings);
 
                 BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
-                Assert.Equal(message.ContentType, contentType, StringComparer.Ordinal);
+                Assert.AreEqual(message.ContentType, contentType, false, CultureInfo.InvariantCulture);
             }
         }
 
         /// <summary>
         /// Tests preserving content text.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void PreservingContentText()
         {
             string originalContent = Guid.NewGuid().ToString();
@@ -128,13 +129,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             string readContent = message.ReadContentAsStringAsync().AsTask().Result;
-            Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
+            Assert.AreEqual(originalContent, readContent, false, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
         /// Tests peeking a message.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void PeekingMessage()
         {
             string originalContent = Guid.NewGuid().ToString();
@@ -143,7 +144,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             BrokeredMessageDescription message = PeekMessage(TimeSpan.FromSeconds(10));
             string readContent = message.ReadContentAsStringAsync().AsTask().Result;
-            Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
+            Assert.AreEqual(originalContent, readContent, false, CultureInfo.InvariantCulture);
 
             // Delete message. This will fail if the message is not there.
             DeleteMessage(message);
@@ -152,16 +153,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests peeking a message from an empty queue.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void PeekingMessageFromEmptyQueue()
         {
-            Assert.Throws<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
+            Assert.ThrowsException<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
         }
 
         /// <summary>
         /// Tests getting a message.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void GettingMessage()
         {
             string originalContent = Guid.NewGuid().ToString();
@@ -170,25 +171,25 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             string readContent = message.ReadContentAsStringAsync().AsTask().Result;
-            Assert.Equal(originalContent, readContent, StringComparer.Ordinal);
+            Assert.AreEqual(originalContent, readContent, false, CultureInfo.InvariantCulture);
 
             // Make sure nothing's left.
-            Assert.Throws<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
+            Assert.ThrowsException<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
         }
 
         /// <summary>
         /// Tests getting a message from an empty queue.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void GettingMessageFromEmptyQueue()
         {
-            Assert.Throws<AggregateException>(() => GetMessage(TimeSpan.FromSeconds(10)));
+            Assert.ThrowsException<AggregateException>(() => GetMessage(TimeSpan.FromSeconds(10)));
         }
 
         /// <summary>
         /// Tests deleting a message.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void DeletingMessage()
         {
             BrokeredMessageSettings settings = MessageHelper.CreateMessage("This is a test.");
@@ -197,22 +198,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageDescription message = PeekMessage(TimeSpan.FromSeconds(10));
             DeleteMessage(message);
 
-            Assert.Throws<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
+            Assert.ThrowsException<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
         }
 
         /// <summary>
         /// Tests specifying invalid arguments for DeleteMessage call.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void InvalidArgsInDeleteMessage()
         {
-            Assert.Throws<ArgumentNullException>(() => Receiver.DeleteMessageAsync(null));
+            Assert.ThrowsException<ArgumentNullException>(() => DeleteMessage(null));
         }
 
         /// <summary>
         /// Tests unlocking a message.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void AbandoningMessage()
         {
             BrokeredMessageSettings settings = MessageHelper.CreateMessage("This is a test.");
@@ -221,22 +222,22 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageDescription message = PeekMessage(TimeSpan.FromSeconds(10));
             AbandonMessage(message);
             message = GetMessage(TimeSpan.FromSeconds(10));
-            Assert.Throws<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
+            Assert.ThrowsException<AggregateException>(() => PeekMessage(TimeSpan.FromSeconds(10)));
         }
 
         /// <summary>
         /// Tests specifying invalid arguments for UnlockMessage call.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void InvalidArgsInAbandonMessage()
         {
-            Assert.Throws<ArgumentNullException>(() => AbandonMessage(null));
+            Assert.ThrowsException<ArgumentNullException>(() => AbandonMessage(null));
         }
 
         /// <summary>
         /// Tests setting/getting message's CorrelationId property.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void SetCorrelationId()
         {
             TestSetProperty(
@@ -249,7 +250,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests setting/getting message's Label property.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void SetLabel()
         {
             TestSetProperty(
@@ -262,7 +263,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests setting/getting MessaqgeId property.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void SetMessageId()
         {
             TestSetProperty(
@@ -275,7 +276,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests setting ReplyTo property.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void SetReplyTo()
         {
             TestSetProperty(
@@ -288,7 +289,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests setting ReplyToSessionId property.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void SetReplyToSessionId()
         {
             TestSetProperty(
@@ -301,7 +302,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests setting SessionId property.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void SetSessionId()
         {
             TestSetProperty(
@@ -314,7 +315,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests setting TimeToLive property.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void SetTimeToLive()
         {
             TestSetProperty(
@@ -326,7 +327,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests setting To property.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void SetTo()
         {
             TestSetProperty(
@@ -339,7 +340,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests sending and receiving an array of bytes.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void PreserveBytes()
         {
             byte[] originalBytes = new byte[] { 1, 2, 3, 4, };
@@ -348,13 +349,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
 
             List<byte> readBytes = new List<byte>(message.ReadContentAsBytesAsync().AsTask().Result);
-            Assert.Equal(originalBytes, readBytes);
+            TestHelper.Equal(originalBytes, readBytes);
         }
 
         /// <summary>
         /// Tests sending and receiving a stream.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void PreserveStream()
         {
             byte[] originalBytes = new byte[] { 5, 4, 3, 2, 1, };
@@ -368,11 +369,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
                 {
                     byte[] readBytes = new byte[originalBytes.Length];
                     int cnt = readStream.Read(readBytes, 0, originalBytes.Length);
-                    Assert.Equal(cnt, readBytes.Length);
-                    Assert.Equal(originalBytes, readBytes);
+                    Assert.AreEqual(cnt, readBytes.Length);
+                    TestHelper.Equal(originalBytes, readBytes);
 
                     cnt = readStream.Read(readBytes, 0, 1);
-                    Assert.Equal(cnt, 0);
+                    Assert.AreEqual(cnt, 0);
                 }
             }
         }
@@ -380,7 +381,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         /// <summary>
         /// Tests sending/receiving an empty string in the message content.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void EmptyStringContent()
         {
             BrokeredMessageSettings settings = MessageHelper.CreateMessage(string.Empty);
@@ -388,13 +389,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             string readText = message.ReadContentAsStringAsync().AsTask().Result;
-            Assert.Equal(readText.Length, 0);
+            Assert.AreEqual(readText.Length, 0);
         }
 
         /// <summary>
         /// Tests sending/receiving an empty bytes array.
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void EmptyArrayContent()
         {
             byte[] originalBytes = new byte[0];
@@ -403,7 +404,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 
             BrokeredMessageDescription message = GetMessage(TimeSpan.FromSeconds(10));
             List<byte> readBytes = new List<byte>(message.ReadContentAsBytesAsync().AsTask().Result);
-            Assert.Equal(originalBytes, readBytes);
+            TestHelper.Equal(originalBytes, readBytes);
         }
     }
 }

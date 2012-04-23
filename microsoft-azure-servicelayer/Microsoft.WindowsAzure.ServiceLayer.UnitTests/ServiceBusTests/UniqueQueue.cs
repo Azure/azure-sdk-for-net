@@ -18,27 +18,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
 
-namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.MsTest.ServiceBusTests
+namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
 {
     /// <summary>
-    /// Class for generating unique topic/subscription pair.
+    /// Class for generating unique queues.
     /// </summary>
-    internal class UniqueSubscription: UniqueTopic
+    internal class UniqueQueue: IDisposable
     {
         /// <summary>
-        /// Gets the subscription name.
+        /// Gets the queue name.
         /// </summary>
-        internal string SubscriptionName { get; private set; }
+        internal string QueueName { get; private set; }
 
         /// <summary>
-        /// Creates a unique subscription.
+        /// Creates a unique queue.
         /// </summary>
-        internal UniqueSubscription()
-            : base()
+        internal UniqueQueue()
         {
-            SubscriptionName = Configuration.GetUniqueSubscriptionName();
-            Configuration.ServiceBus.CreateSubscriptionAsync(TopicName, SubscriptionName).AsTask().Wait();
+            QueueName = Configuration.GetUniqueQueueName();
+            Configuration.ServiceBus.CreateQueueAsync(QueueName).AsTask().Wait();
+        }
+
+        /// <summary>
+        /// Deletes the queue.
+        /// </summary>
+        void IDisposable.Dispose()
+        {
+            Configuration.ServiceBus.DeleteQueueAsync(QueueName).AsTask().Wait();
         }
     }
 }
