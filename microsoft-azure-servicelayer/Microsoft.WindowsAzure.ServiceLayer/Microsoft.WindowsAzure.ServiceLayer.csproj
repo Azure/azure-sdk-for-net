@@ -108,7 +108,6 @@
     <Compile Include="WindowsAzureErrorCode.cs" />
     <Compile Include="Http\HttpChannel.cs" />
     <Compile Include="Http\HttpContent.cs" />
-    <Compile Include="Http\HttpDefaultHandler.cs" />
     <Compile Include="Http\HttpMethod.cs" />
     <Compile Include="Http\HttpRequest.cs" />
     <Compile Include="Http\HttpResponse.cs" />
