@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             Uri uri = _config.GetTopMessageUri(_path, lockDuration);
             HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
-            return _channel.SendAsync(request, HttpChannel.CheckNoContent)
+            return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
                 .ContinueWith(t => new BrokeredMessageDescription(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             Uri uri = _config.GetTopMessageUri(_path, lockDuration);
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
-            return _channel.SendAsync(request, HttpChannel.CheckNoContent)
+            return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
                 .ContinueWith(t => new BrokeredMessageDescription(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation();
         }
@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             Uri uri = _config.GetLockedMessageUri(_path, message.SequenceNumber, message.LockToken);
             HttpRequest request = new HttpRequest(HttpMethod.Put, uri);
-            return _channel.SendAsync(request).AsAsyncAction();
+            return _channel.SendAsyncInternal(request).AsAsyncAction();
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             Uri uri = _config.GetLockedMessageUri(_path, message.SequenceNumber, message.LockToken);
             HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
-            return _channel.SendAsync(request).AsAsyncAction();
+            return _channel.SendAsyncInternal(request).AsAsyncAction();
         }
     }
 }

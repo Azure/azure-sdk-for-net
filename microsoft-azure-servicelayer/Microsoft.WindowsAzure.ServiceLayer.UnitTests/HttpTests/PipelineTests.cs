@@ -60,24 +60,28 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         [TestMethod]
         public void InvalidArgsInHandlers()
         {
-            IHttpHandler validHandler = new HttpDefaultHandler();
-            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(null, "user", "password", validHandler));
-            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler("", "user", "password", validHandler));
-            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(" ", "user", "password", validHandler));
-            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", null, "password", validHandler));
-            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler("namespace", "", "password", validHandler));
-            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler("namespace", " ", "password", validHandler));
-            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", "user", null, validHandler));
-            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", "user", "password", null));
+            HttpChannel validChannel = new HttpChannel();
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(null, "namespace", "user", "password"));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(validChannel, null, "user", "password"));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(validChannel, "", "user", "password"));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(validChannel, " ", "user", "password"));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(validChannel, "namespace", null, "password"));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(validChannel, "namespace", "", "password"));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(validChannel, "namespace", " ", "password"));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(validChannel, "namespace", "user", null));
         }
 
         /// <summary>
-        /// Tests passing invalid argument into AssignHandler method.
+        /// Tests passing invalid arguments into channel's constructor.
         /// </summary>
         [TestMethod]
-        public void InvalidArgsInAssignHandler()
+        public void InvalidArgsInHttpChannel()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => Configuration.ServiceBus.AssignHandler(null));
+            HttpChannel validChannel = new HttpChannel();
+
+            Assert.ThrowsException<ArgumentNullException>(() => new HttpChannel((IHttpHandler[])null));
+            Assert.ThrowsException<ArgumentNullException>(() => new HttpChannel((HttpChannel)null));
+            Assert.ThrowsException<ArgumentNullException>(() => new HttpChannel(validChannel, null));
         }
 
         /// <summary>
@@ -86,21 +90,21 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         [TestMethod]
         public void PipelineHandlers()
         {
-            TestHttpHandler handler1 = new TestHttpHandler(Configuration.ServiceBus.HttpHandler);
-            TestHttpHandler handler2 = new TestHttpHandler(handler1);
-            ServiceBusClient serviceBus = Configuration.ServiceBus.AssignHandler(handler1);
+            TestHttpHandler handler1 = new TestHttpHandler();
+            TestHttpHandler handler2 = new TestHttpHandler();
+            ServiceBusClient serviceBus = new ServiceBusClient(Configuration.ServiceBus, handler1);
 
             serviceBus.ListQueuesAsync().AsTask().Wait();
-            Assert.AreEqual(handler1.BeforeCount, 1);
-            Assert.AreEqual(handler1.AfterCount, 1);
+            Assert.AreEqual(handler1.RequestCount, 1);
+            Assert.AreEqual(handler1.ResponseCount, 1);
 
-            serviceBus = serviceBus.AssignHandler(handler2);
+            serviceBus = new ServiceBusClient(serviceBus, handler2);
             serviceBus.ListQueuesAsync().AsTask().Wait();
-            Assert.AreEqual(handler1.BeforeCount, 2);
-            Assert.AreEqual(handler1.AfterCount, 2);
+            Assert.AreEqual(handler1.RequestCount, 2);
+            Assert.AreEqual(handler1.ResponseCount, 2);
 
-            Assert.AreEqual(handler2.BeforeCount, 1);
-            Assert.AreEqual(handler2.AfterCount, 1);
+            Assert.AreEqual(handler2.RequestCount, 1);
+            Assert.AreEqual(handler2.ResponseCount, 1);
         }
     }
 }

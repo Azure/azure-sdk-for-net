@@ -31,6 +31,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// </summary>
     public sealed class ServiceBusClient
     {
+        private HttpChannel _channel;                       // HTTP channel.
+
         // Extra types used for serialization operations with rules.
         private static readonly Type[] ExtraRuleTypes = 
         {
@@ -41,8 +43,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             typeof(EmptyRuleAction),
             typeof(SqlRuleAction),
         };
-
-        private HttpChannel _channel;                       // HTTP processing channel.
 
         /// <summary>
         /// Gets the service options.
@@ -66,42 +66,23 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             ServiceConfig = new ServiceConfiguration(serviceNamespace);
 
-            // Create default HTTP pipeline.
-            IHttpHandler handlers = new HttpDefaultHandler();
-            handlers = new WrapAuthenticationHandler(serviceNamespace, issuerName, issuerPassword, handlers);
-            _channel = new HttpChannel(handlers);
+            // Create the default HTTP channel.
+            _channel = HttpChannel.CreateDefault(serviceNamespace, issuerName, issuerPassword);
         }
 
         /// <summary>
-        /// Initializes a service bus client.
+        /// Initializes a new service bus client by cloning an existing one and
+        /// adding extra HTTP handlers at the head of the processing channel.
         /// </summary>
-        /// <param name="serviceNamespace">Service namespace.</param>
-        /// <param name="handler">HTTP handler.</param>
-        /// <remarks>This constructor is used to instantiate a service bus with
-        /// the non-standard HTTP pipeline. The caller is responsible for 
-        /// providing authentication and HTTP processing handlers in the
-        /// provided pipeline.</remarks>
-        public ServiceBusClient(string serviceNamespace, IHttpHandler handler)
+        /// <param name="client">Source service bus client.</param>
+        /// <param name="handlers">Extra HTTP handlers.</param>
+        public ServiceBusClient(ServiceBusClient client, params IHttpHandler[] handlers)
         {
-            Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
-            Validator.ArgumentIsNotNull("handler", handler);
+            Validator.ArgumentIsNotNull("client", client);
+            Validator.ArgumentIsNotNull("handlers", handlers);
 
-            ServiceConfig = new ServiceConfiguration(serviceNamespace);
-            _channel = new HttpChannel(handler);
-        }
-
-        /// <summary>
-        /// Initializes the service bus service.
-        /// </summary>
-        /// <param name="config">Service configuration.</param>
-        /// <param name="httpHandler">Handler for processing HTTP requests.</param>
-        internal ServiceBusClient(ServiceConfiguration config, IHttpHandler httpHandler)
-        {
-            Debug.Assert(config != null);
-            Debug.Assert(httpHandler != null);
-
-            ServiceConfig = config;
-            _channel = new HttpChannel(httpHandler);
+            ServiceConfig = client.ServiceConfig;
+            _channel = new HttpChannel(client._channel, handlers);
         }
 
         /// <summary>
@@ -113,26 +94,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             return GetItemsAsync<QueueDescription>(
                 ServiceConfig.GetQueuesContainerUri(), 
                 InitQueue);
-        }
-
-        /// <summary>
-        /// Gets HTTP handler used by the service.
-        /// </summary>
-        public IHttpHandler HttpHandler
-        {
-            get { return _channel.Handler; }
-        }
-
-        /// <summary>
-        /// Clones the service and assigns a given handler to it.
-        /// </summary>
-        /// <param name="handler">HTTP handler to assign to the cloned service.</param>
-        /// <returns>Cloned service.</returns>
-        public ServiceBusClient AssignHandler(IHttpHandler handler)
-        {
-            Validator.ArgumentIsNotNull("handler", handler);
-
-            return new ServiceBusClient(ServiceConfig, handler);
         }
 
         /// <summary>
@@ -541,7 +502,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
             message.SubmitTo(request);
 
-            return _channel.SendAsync(request).AsAsyncAction();
+            return _channel.SendAsyncInternal(request).AsAsyncAction();
         }
         /// <summary>
         /// Gets service bus items of the given type.
@@ -555,7 +516,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequest request = new HttpRequest(HttpMethod.Get, containerUri);
 
-            return _channel.SendAsync(request, HttpChannel.CheckNoContent)
+            return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
                 .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<IEnumerable<TInfo>>();
         }
@@ -611,7 +572,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequest request = new HttpRequest(HttpMethod.Get, itemUri);
 
-            return _channel.SendAsync(request, HttpChannel.CheckNoContent)
+            return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<TInfo>();
         }
@@ -646,7 +607,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             HttpRequest request = new HttpRequest(HttpMethod.Delete, itemUri);
 
-            return _channel.SendAsync(request)
+            return _channel.SendAsyncInternal(request)
                 .AsAsyncAction();
         }
 
@@ -668,7 +629,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             return Task.Factory
                 .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
-                .ContinueWith<HttpResponse>(tr => _channel.SendAsync(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<HttpResponse>(tr => _channel.SendAsyncInternal(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, ExtraRuleTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
                 .AsAsyncOperation<TInfo>();
         }
