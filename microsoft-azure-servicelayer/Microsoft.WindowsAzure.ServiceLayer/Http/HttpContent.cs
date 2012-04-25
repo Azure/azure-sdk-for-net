@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Streams;
@@ -67,7 +68,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// </summary>
         /// <param name="bytes">Binary data.</param>
         /// <returns>Content object.</returns>
-        public static HttpContent CreateFromByteArray(byte[] bytes)
+        public static HttpContent CreateFromByteArray([ReadOnlyArray] byte[] bytes)
         {
             Validator.ArgumentIsNotNull("bytes", bytes);
 
