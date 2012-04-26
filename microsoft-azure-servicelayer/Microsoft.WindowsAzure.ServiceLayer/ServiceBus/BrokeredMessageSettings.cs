@@ -136,13 +136,23 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Constructor.
+        /// Creates a message with the given content.
         /// </summary>
-        /// <param name="content">Message content.</param>
-        public BrokeredMessageSettings(HttpContent content)
+        /// <param name="content">Content of the message.</param>
+        /// <returns>Brokered message.</returns>
+        public static BrokeredMessageSettings CreateFromContent(HttpContent content)
         {
             Validator.ArgumentIsNotNull("content", content);
 
+            return new BrokeredMessageSettings(content);
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="content">Message content.</param>
+        private BrokeredMessageSettings(HttpContent content)
+        {
             Content = content;
             _brokerProperties = new BrokerProperties();
             _customProperties = new CustomPropertiesDictionary();
