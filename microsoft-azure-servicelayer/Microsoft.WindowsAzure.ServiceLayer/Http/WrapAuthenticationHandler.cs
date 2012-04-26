@@ -46,18 +46,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <summary>
         /// Initializes WARP authentication handler for use in Service Bus.
         /// </summary>
-        /// <param name="channel">Channel for processing authentication requests.</param>
         /// <param name="serviceNamespace">Namespace.</param>
         /// <param name="issuerName">User name.</param>
         /// <param name="issuerPassword">Password.</param>
-        public WrapAuthenticationHandler(HttpChannel channel, string serviceNamespace, string issuerName, string issuerPassword)
+        public WrapAuthenticationHandler(string serviceNamespace, string issuerName, string issuerPassword)
         {
-            Validator.ArgumentIsNotNull("channel", channel);
             Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
             Validator.ArgumentIsNotNullOrEmptyString("issuerName", issuerName);
             Validator.ArgumentIsNotNull("issuerPassword", issuerPassword);
 
-            _channel = new HttpChannel(channel);
+            _channel = new HttpChannel();
             _namespace = serviceNamespace;
             _issuerName = issuerName;
             _issuerPassword = issuerPassword;
@@ -70,6 +68,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
 
             uriString = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusScopeUri, serviceNamespace);
             _serviceHostUri = new Uri(uriString, UriKind.Absolute);
+        }
+
+        /// <summary>
+        /// Disposes the handler.
+        /// </summary>
+        public void Dispose()
+        {
+            _channel.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -97,6 +104,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
 
             return response;
         }
+
         /// <summary>
         /// Gets authentication token for a resource with the given path.
         /// </summary>

@@ -60,15 +60,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
         [TestMethod]
         public void InvalidArgsInHandlers()
         {
-            HttpChannel validChannel = new HttpChannel();
-            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(null, "namespace", "user", "password"));
-            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(validChannel, null, "user", "password"));
-            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(validChannel, "", "user", "password"));
-            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(validChannel, " ", "user", "password"));
-            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(validChannel, "namespace", null, "password"));
-            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(validChannel, "namespace", "", "password"));
-            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(validChannel, "namespace", " ", "password"));
-            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(validChannel, "namespace", "user", null));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler(null, "user", "password"));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler("", "user", "password"));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler(" ", "user", "password"));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", null, "password"));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler("namespace", "", "password"));
+            Assert.ThrowsException<ArgumentException>(() => new WrapAuthenticationHandler("namespace", " ", "password"));
+            Assert.ThrowsException<ArgumentNullException>(() => new WrapAuthenticationHandler("namespace", "user", null));
         }
 
         /// <summary>

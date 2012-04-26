@@ -25,7 +25,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
     /// <summary>
     /// A collection of well-known error codes.
     /// </summary>
-    public static class WindowsAzureErrorCode2
+    public static class WindowsAzureErrorCode
     {
         // Internal HRESULT structure: 
         // Bits 31 - 16:    HRESULT flags indicating an error (Severity: ERROR; facility: ITF)
@@ -83,68 +83,5 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         public static int HttpServiceUnavailable              { get { return Constants.HttpErrorMask | (int)HttpStatusCode.ServiceUnavailable; } }
         public static int HttpGatewayTimeout                  { get { return Constants.HttpErrorMask | (int)HttpStatusCode.GatewayTimeout; } }
         public static int HttpVersionNotSupported             { get { return Constants.HttpErrorMask | (int)HttpStatusCode.HttpVersionNotSupported; } }
-    }
-
-    /// <summary>
-    /// A collection of well-known error codes.
-    /// </summary>
-    public enum WindowsAzureErrorCode
-    {
-        // Internal HRESULT structure: 
-        // Bits 31 - 16:    HRESULT flags indicating an error (Severity: ERROR; facility: ITF)
-        // Bits 12 - 15:    error source (HTTP, WRAP, etc)
-        // Bits 0 - 11:     source-specific information, if any. Contains status code for HTTP errors.
-
-        // Generic WRAP authentication failure.
-        WrapAuthenticationFailure = Constants.WrapErrorMask,
-
-        // HTTP status exceptions
-        HttpContinue                        = Constants.HttpErrorMask | HttpStatusCode.Continue,
-        HttpSwitchingProtocols              = Constants.HttpErrorMask | HttpStatusCode.SwitchingProtocols,
-        HttpOK                              = Constants.HttpErrorMask | HttpStatusCode.OK,
-        HttpCreated                         = Constants.HttpErrorMask | HttpStatusCode.Created,
-        HttpAccepted                        = Constants.HttpErrorMask | HttpStatusCode.Accepted,
-        HttpNonAuthoritativeInformation     = Constants.HttpErrorMask | HttpStatusCode.NonAuthoritativeInformation,
-        HttpNoContent                       = Constants.HttpErrorMask | HttpStatusCode.NoContent,
-        HttpResetContent                    = Constants.HttpErrorMask | HttpStatusCode.ResetContent,
-        HttpPartialContent                  = Constants.HttpErrorMask | HttpStatusCode.PartialContent,
-        HttpMultipleChoices                 = Constants.HttpErrorMask | HttpStatusCode.MultipleChoices,
-        HttpAmbiguous                       = Constants.HttpErrorMask | HttpStatusCode.Ambiguous,
-        HttpMovedPermanently                = Constants.HttpErrorMask | HttpStatusCode.MovedPermanently,
-        HttpMoved                           = Constants.HttpErrorMask | HttpStatusCode.Moved,
-        HttpFound                           = Constants.HttpErrorMask | HttpStatusCode.Found,
-        HttpRedirect                        = Constants.HttpErrorMask | HttpStatusCode.Redirect,
-        HttpSeeOther                        = Constants.HttpErrorMask | HttpStatusCode.SeeOther,
-        HttpRedirectMethod                  = Constants.HttpErrorMask | HttpStatusCode.RedirectMethod,
-        HttpNotModified                     = Constants.HttpErrorMask | HttpStatusCode.NotModified,
-        HttpUseProxy                        = Constants.HttpErrorMask | HttpStatusCode.UseProxy,
-        HttpUnused                          = Constants.HttpErrorMask | HttpStatusCode.Unused,
-        HttpRedirectKeepVerb                = Constants.HttpErrorMask | HttpStatusCode.RedirectKeepVerb,
-        HttpTemporaryRedirect               = Constants.HttpErrorMask | HttpStatusCode.TemporaryRedirect,
-        HttpBadRequest                      = Constants.HttpErrorMask | HttpStatusCode.BadRequest,
-        HttpUnauthorized                    = Constants.HttpErrorMask | HttpStatusCode.Unauthorized,
-        HttpPaymentRequired                 = Constants.HttpErrorMask | HttpStatusCode.PaymentRequired,
-        HttpForbidden                       = Constants.HttpErrorMask | HttpStatusCode.Forbidden,
-        HttpNotFound                        = Constants.HttpErrorMask | HttpStatusCode.NotFound,
-        HttpMethodNotAllowed                = Constants.HttpErrorMask | HttpStatusCode.MethodNotAllowed,
-        HttpNotAcceptable                   = Constants.HttpErrorMask | HttpStatusCode.NotAcceptable,
-        HttpProxyAuthenticationRequired     = Constants.HttpErrorMask | HttpStatusCode.ProxyAuthenticationRequired,
-        HttpRequestTimeout                  = Constants.HttpErrorMask | HttpStatusCode.RequestTimeout,
-        HttpConflict                        = Constants.HttpErrorMask | HttpStatusCode.Conflict,
-        HttpGone                            = Constants.HttpErrorMask | HttpStatusCode.Gone,
-        HttpLengthRequired                  = Constants.HttpErrorMask | HttpStatusCode.LengthRequired,
-        HttpPreconditionFailed              = Constants.HttpErrorMask | HttpStatusCode.PreconditionFailed,
-        HttpRequestEntityTooLarge           = Constants.HttpErrorMask | HttpStatusCode.RequestEntityTooLarge,
-        HttpRequestUriTooLong               = Constants.HttpErrorMask | HttpStatusCode.RequestUriTooLong,
-        HttpUnsupportedMediaType            = Constants.HttpErrorMask | HttpStatusCode.UnsupportedMediaType,
-        HttpRequestedRangeNotSatisfiable    = Constants.HttpErrorMask | HttpStatusCode.RequestedRangeNotSatisfiable,
-        HttpExpectationFailed               = Constants.HttpErrorMask | HttpStatusCode.ExpectationFailed,
-        HttpUpgradeRequired                 = Constants.HttpErrorMask | HttpStatusCode.UpgradeRequired,
-        HttpInternalServerError             = Constants.HttpErrorMask | HttpStatusCode.InternalServerError,
-        HttpNotImplemented                  = Constants.HttpErrorMask | HttpStatusCode.NotImplemented,
-        HttpBadGateway                      = Constants.HttpErrorMask | HttpStatusCode.BadGateway,
-        HttpServiceUnavailable              = Constants.HttpErrorMask | HttpStatusCode.ServiceUnavailable,
-        HttpGatewayTimeout                  = Constants.HttpErrorMask | HttpStatusCode.GatewayTimeout,
-        HttpVersionNotSupported             = Constants.HttpErrorMask | HttpStatusCode.HttpVersionNotSupported,
     }
 }
