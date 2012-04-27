@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="content">Content of the message.</param>
         /// <returns>Brokered message.</returns>
-        public static BrokeredMessageSettings CreateFromContent(HttpContent content)
+        public static BrokeredMessageSettings CreateFromHttpContent(HttpContent content)
         {
             Validator.ArgumentIsNotNull("content", content);
 
