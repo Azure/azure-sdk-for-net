@@ -150,11 +150,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
                 response = _handlers[i].ProcessResponse(response);
             }
 
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new WindowsAzureHttpException(Resources.ErrorFailedRequest, response);
-            }
-
             return response;
         }
 
@@ -178,6 +173,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Processed response.</returns>
         private HttpResponse ProcessResponse(HttpResponse response, Func<HttpResponse, HttpResponse>[] handlers)
         {
+            // HTTP protocol failures should result in exceptions.
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new WindowsAzureHttpException(Resources.ErrorFailedRequest, response);
+            }
+
+            // Pass response to extra handlers.
             for (int i = 0; i < handlers.Length; i++)
             {
                 response = handlers[i](response);
