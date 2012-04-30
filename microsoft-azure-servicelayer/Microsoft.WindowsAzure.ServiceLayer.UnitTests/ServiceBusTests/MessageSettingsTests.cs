@@ -22,8 +22,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         [TestMethod]
         public void InvalidArgumentsInMethods()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new BrokeredMessageSettings(null));
+            Assert.ThrowsException<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromHttpContent(null));
             Assert.ThrowsException<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText(null));
+            Assert.ThrowsException<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText(null, "Test"));
             Assert.ThrowsException<ArgumentNullException>(() => BrokeredMessageSettings.CreateFromText("Test", null));
             Assert.ThrowsException<ArgumentException>(() => BrokeredMessageSettings.CreateFromText("Test", ""));
             Assert.ThrowsException<ArgumentException>(() => BrokeredMessageSettings.CreateFromText("Test", " "));
