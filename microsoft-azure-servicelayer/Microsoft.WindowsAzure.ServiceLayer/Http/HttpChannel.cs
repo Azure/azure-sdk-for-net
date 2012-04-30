@@ -27,15 +27,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
     /// <summary>
     /// A channel for processing HTTP requests.
     /// </summary>
-    public sealed class HttpChannel
+    public sealed class HttpChannel: IDisposable
     {
         private System.Net.Http.HttpClient _client;         // HTTP client.
+        private HttpChannel _nextChannel;                   // Chained channel.
         private List<IHttpHandler> _handlers;               // HTTP handlers.
 
         /// <summary>
-        /// Initializes the channel with the given handlers.
+        /// Initializes the new channel with the given handlers.
         /// </summary>
         /// <param name="handlers">Handlers to put to the channel.</param>
+        /// <remarks>Use this constructor to start a new channel.</remarks>
         public HttpChannel(params IHttpHandler[] handlers)
         {
             Validator.ArgumentIsNotNull("handlers", handlers);
@@ -45,8 +47,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         }
 
         /// <summary>
-        /// Creates a new channel by taking handlers from the given channel
-        /// and adding extra handlers at the head of the queue.
+        /// Creates a channel with the given handlers and chains it to the
+        /// given channel.
         /// </summary>
         /// <param name="originalChannel">Original HTTP processing channel.</param>
         /// <param name="handlers">Handlers to add to new channel's queue.</param>
@@ -55,9 +57,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
             Validator.ArgumentIsNotNull("originalChannel", originalChannel);
             Validator.ArgumentIsNotNull("handlers", handlers);
 
-            _client = originalChannel._client;
             _handlers = new List<IHttpHandler>(handlers);
-            _handlers.AddRange(originalChannel._handlers);
+            _nextChannel = originalChannel;
         }
 
         /// <summary>
@@ -75,11 +76,31 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
             Validator.ArgumentIsNotNull("issuerName", issuerName);
             Validator.ArgumentIsNotNull("issuerPassword", issuerPassword);
 
-            WrapAuthenticationHandler wrapHandler = new WrapAuthenticationHandler(
-                new HttpChannel(), serviceNamespace, issuerName, issuerPassword);
+            WrapAuthenticationHandler wrapHandler = new WrapAuthenticationHandler(serviceNamespace, issuerName, issuerPassword);
             return new HttpChannel(wrapHandler);
         }
-        
+
+
+        /// <summary>
+        /// Disposes the HTTP channel and closes the underlying session.
+        /// </summary>
+        public void Dispose()
+        {
+            // Dispose the handlers
+            foreach (IHttpHandler handler in _handlers)
+            {
+                handler.Dispose();
+            }
+
+            // Dispose the client, if any
+            if (_client != null)
+            {
+                _client.Dispose();
+            }
+
+            GC.SuppressFinalize(this);
+        }
+
         /// <summary>
         /// Sends the request.
         /// </summary>
@@ -90,10 +111,46 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
             Validator.ArgumentIsNotNull("request", request);
 
             return Task.Factory
-                .StartNew(() => ProcessRequest(request))
-                .ContinueWith(t => SendRequest(request), TaskContinuationOptions.OnlyOnRanToCompletion)
-                .ContinueWith(t => ProcessResponse(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .StartNew(() => SendRequest(request))
                 .AsAsyncOperation();
+        }
+
+        /// <summary>
+        /// Sends HTTP requests passing it through all handlers.
+        /// </summary>
+        /// <param name="request">Request to send.</param>
+        /// <returns>Response to the request.</returns>
+        internal HttpResponse SendRequest(HttpRequest request)
+        {
+            // Pass through all handlers
+            for (int i = 0; i < _handlers.Count; i++)
+            {
+                request = _handlers[i].ProcessRequest(request);
+            }
+
+            // Get the response
+            HttpResponse response;
+
+            if (_nextChannel != null)
+            {
+                Debug.Assert(_client == null);
+                response = _nextChannel.SendRequest(request);
+            }
+            else
+            {
+                Debug.Assert(_client != null);
+                System.Net.Http.HttpRequestMessage netRequest = request.CreateNetRequest();
+                System.Net.Http.HttpResponseMessage netResponse = _client.SendAsync(netRequest).Result;
+                response = new HttpResponse(request, netResponse);
+            }
+
+            // Pass the response through all handlers in the reverse order.
+            for (int i = _handlers.Count - 1; i >= 0; i--)
+            {
+                response = _handlers[i].ProcessResponse(response);
+            }
+
+            return response;
         }
 
         /// <summary>
@@ -109,54 +166,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         }
 
         /// <summary>
-        /// Passes the request through all registered handlers.
-        /// </summary>
-        /// <param name="request">Request to process.</param>
-        /// <returns>Processed request.</returns>
-        private HttpRequest ProcessRequest(HttpRequest request)
-        {
-            for (int i = 0; i < _handlers.Count; i++)
-            {
-                request = _handlers[i].ProcessRequest(request);
-            }
-
-            return request;
-        }
-
-        /// <summary>
-        /// Sends the HTTP request.
-        /// </summary>
-        /// <param name="request">Request to send.</param>
-        /// <returns>Response to the given request.</returns>
-        private HttpResponse SendRequest(HttpRequest request)
-        {
-            return _client
-                .SendAsync(request.CreateNetRequest())
-                .ContinueWith(t => new HttpResponse(request, t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
-                .Result;
-        }
-
-        /// <summary>
-        /// Passes the response through all registered handlers.
-        /// </summary>
-        /// <param name="response">Response to process.</param>
-        /// <returns>Processed response.</returns>
-        private HttpResponse ProcessResponse(HttpResponse response)
-        {
-            for (int i = _handlers.Count - 1; i >= 0; i--)
-            {
-                response = _handlers[i].ProcessResponse(response);
-            }
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new WindowsAzureHttpException(Resources.ErrorFailedRequest, response);
-            }
-
-            return response;
-        }
-
-        /// <summary>
         /// Passes the response through all specified handlers.
         /// </summary>
         /// <param name="response">Response to process.</param>
@@ -164,6 +173,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Processed response.</returns>
         private HttpResponse ProcessResponse(HttpResponse response, Func<HttpResponse, HttpResponse>[] handlers)
         {
+            // HTTP protocol failures should result in exceptions.
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new WindowsAzureHttpException(Resources.ErrorFailedRequest, response);
+            }
+
+            // Pass response to extra handlers.
             for (int i = 0; i < handlers.Length; i++)
             {
                 response = handlers[i](response);

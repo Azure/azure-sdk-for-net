@@ -60,5 +60,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.HttpTests
             ResponseCount++;
             return response;
         }
+
+        /// <summary>
+        /// Disposes the handler.
+        /// </summary>
+        public void Dispose()
+        { 
+            // Do nothing.
+        }
     }
 }

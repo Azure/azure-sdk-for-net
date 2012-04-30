@@ -24,7 +24,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
     /// <summary>
     /// HTTP handler processes HTTP requests.
     /// </summary>
-    public interface IHttpHandler
+    public interface IHttpHandler: IDisposable
     {
         /// <summary>
         /// Processes HTTP request.
