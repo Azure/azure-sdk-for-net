@@ -27,9 +27,15 @@ using Windows.Web.Syndication;
 namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 {
     /// <summary>
-    /// REST proxy for the service bus interface.
+    /// Service bus client.
     /// </summary>
-    public sealed class ServiceBusClient
+    /// <remarks>The class serves as an entry point to the Service Bus
+    /// functionality. Explicitly disposing the class will close its underlying
+    /// connection and will make all other classes that are using that
+    /// connection unusable. Therefore, if you have created multiple instance
+    /// of this object by specifying HTTP handlers in the constructor, you
+    /// should dispose only one of them and only when it is no longer used.</remarks>
+    public sealed class ServiceBusClient: IDisposable
     {
         private HttpChannel _channel;                       // HTTP channel.
 
@@ -685,6 +691,15 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private static void InitRule(SyndicationItem feedItem, RuleInfo ruleInfo)
         {
             ruleInfo.Initialize(feedItem);
+        }
+
+        /// <summary>
+        /// Disposes the client by closing underlying connection.
+        /// </summary>
+        public void Dispose()
+        {
+            _channel.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

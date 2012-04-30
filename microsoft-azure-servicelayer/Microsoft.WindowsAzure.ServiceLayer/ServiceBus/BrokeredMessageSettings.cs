@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
@@ -135,27 +136,47 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Constructor.
+        /// Creates a message with the given content.
         /// </summary>
-        /// <param name="content">Message content.</param>
-        public BrokeredMessageSettings(HttpContent content)
+        /// <param name="content">Content of the message.</param>
+        /// <returns>Brokered message.</returns>
+        public static BrokeredMessageSettings CreateFromHttpContent(HttpContent content)
         {
             Validator.ArgumentIsNotNull("content", content);
 
+            return new BrokeredMessageSettings(content);
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="content">Message content.</param>
+        private BrokeredMessageSettings(HttpContent content)
+        {
             Content = content;
             _brokerProperties = new BrokerProperties();
             _customProperties = new CustomPropertiesDictionary();
         }
 
         /// <summary>
-        /// Creates a message from the given text. This method exists only
-        /// because JavaScript cannot work with multiple constructors with
-        /// identical number of parameters.
+        /// Creates a message with the default content type from the given 
+        /// text.
+        /// </summary>
+        /// <param name="messageText">Message text.</param>
+        /// <returns>Message settings.</returns>
+        public static BrokeredMessageSettings CreateFromText(string messageText)
+        {
+            return CreateFromText(messageText, Constants.DefaultMessageContentType);
+        }
+
+        /// <summary>
+        /// Creates a message with the specified content type from the given 
+        /// text.
         /// </summary>
         /// <param name="messageText">Message text.</param>
         /// <param name="contentType">Content type.</param>
         /// <returns>Message settings.</returns>
-        public static BrokeredMessageSettings CreateFromText(string messageText, string contentType = Constants.DefaultMessageContentType)
+        public static BrokeredMessageSettings CreateFromText(string messageText, string contentType)
         {
             Validator.ArgumentIsNotNull("messageText", messageText);
             Validator.ArgumentIsNotNullOrEmptyString("contentType", contentType);
@@ -171,7 +192,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// </summary>
         /// <param name="messageBytes">Array of bytes.</param>
         /// <returns>Message settings.</returns>
-        public static BrokeredMessageSettings CreateFromByteArray(byte[] messageBytes)
+        public static BrokeredMessageSettings CreateFromByteArray([ReadOnlyArray] byte[] messageBytes)
         {
             Validator.ArgumentIsNotNull("messageBytes", messageBytes);
 
