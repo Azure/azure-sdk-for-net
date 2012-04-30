@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string BodyContentType               = "application/atom+xml";
         internal const string DefaultMessageContentType     = "text/plain";
         internal const string WrapAuthenticationContentType = "application/x-www-form-urlencoded";
-        
+
         internal const string AcceptHeader                  = "Accept";                                 // "Accept" HTTP header name
         internal const string BrokerPropertiesHeader        = "BrokerProperties";                       // Header name for broker properties.
 
@@ -68,5 +68,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string JsonNullValue                 = "null";                                   // String representation of null value in Json.
 
         internal const string ContentTypeHeader             = "Content-Type";
+        internal const string AtomFeedElementName           = "feed";                                   // Local name of the atom feed.
     }
 }

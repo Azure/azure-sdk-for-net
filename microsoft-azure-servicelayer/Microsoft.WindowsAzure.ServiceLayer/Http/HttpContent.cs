@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
             // CreateFromByteArray method.
             return _rawContent
                 .ReadAsBytesAsync()
-                .ContinueWith<IEnumerable<byte>>(t => t.Result, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<IEnumerable<byte>>(t => t.Result)
                 .AsAsyncOperation();
         }
 
@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         {
             return _rawContent
                 .ReadAsStreamAsync()
-                .ContinueWith(t => t.Result.AsInputStream(), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith(t => t.Result.AsInputStream())
                 .AsAsyncOperation();
         }
 
@@ -159,7 +159,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         public IAsyncAction CopyToBufferAsync()
         {
             return _rawContent.BufferContentAsync()
-                .ContinueWith(t => { _rawContent = t.Result; }, TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith(t => { _rawContent = t.Result; })
                 .AsAsyncAction();
         }
 

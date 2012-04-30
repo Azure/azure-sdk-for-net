@@ -64,7 +64,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Uri uri = _config.GetTopMessageUri(_path, lockDuration);
             HttpRequest request = new HttpRequest(HttpMethod.Delete, uri);
             return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
-                .ContinueWith(t => new BrokeredMessageDescription(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith(t => new BrokeredMessageDescription(t.Result))
                 .AsAsyncOperation();
         }
 
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Uri uri = _config.GetTopMessageUri(_path, lockDuration);
             HttpRequest request = new HttpRequest(HttpMethod.Post, uri);
             return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
-                .ContinueWith(t => new BrokeredMessageDescription(t.Result), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith(t => new BrokeredMessageDescription(t.Result))
                 .AsAsyncOperation();
         }
 
