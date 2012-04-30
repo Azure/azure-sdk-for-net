@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// Deletes a queue with the given name.
         /// </summary>
         /// <param name="queueName">Queue name.</param>
-        /// <returns>Asycnrhonous action.</returns>
+        /// <returns>Asynchronous action.</returns>
         public IAsyncAction DeleteQueueAsync(string queueName)
         {
             Validator.ArgumentIsValidPath("queueName", queueName);
@@ -523,7 +523,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             HttpRequest request = new HttpRequest(HttpMethod.Get, containerUri);
 
             return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
-                .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<IEnumerable<TInfo>>(r => GetItems<TInfo>(r.Result, initAction, extraTypes))
                 .AsAsyncOperation<IEnumerable<TInfo>>();
         }
 
@@ -579,7 +579,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             HttpRequest request = new HttpRequest(HttpMethod.Get, itemUri);
 
             return _channel.SendAsyncInternal(request, HttpChannel.CheckNoContent)
-                .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, extraTypes))
                 .AsAsyncOperation<TInfo>();
         }
 
@@ -595,12 +595,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private TInfo GetItem<TInfo>(HttpResponse response, Action<SyndicationItem, TInfo> initAction, params Type[] extraTypes)
         {
             Debug.Assert(response.IsSuccessStatusCode);
+            string content = response.Content.ReadAsStringAsync().AsTask().Result;
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(response.Content.ReadAsStringAsync().AsTask().Result);
+            doc.LoadXml(content);
+
+            // Getting a non-existing item returns an Atom feed with currently available
+            // services. 
+            if (string.Equals((string)doc.FirstChild.NodeName, Constants.AtomFeedElementName, StringComparison.Ordinal))
+            {
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorItemNotFound, response.Request.Uri);
+                throw new WindowsAzureException(message, (int)WindowsAzureErrorCode.HttpNotFound);
+            }
 
             SyndicationItem feedItem = new SyndicationItem();
             feedItem.LoadFromXml(doc);
-
             return SerializationHelper.DeserializeItem<TInfo>(feedItem, initAction, extraTypes);
         }
 
@@ -635,8 +643,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             return Task.Factory
                 .StartNew(() => SetBody(request, itemSettings, ExtraRuleTypes))
-                .ContinueWith<HttpResponse>(tr => _channel.SendAsyncInternal(request).Result, TaskContinuationOptions.OnlyOnRanToCompletion)
-                .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, ExtraRuleTypes), TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith<HttpResponse>(tr => _channel.SendAsyncInternal(request).Result)
+                .ContinueWith<TInfo>(tr => GetItem<TInfo>(tr.Result, initAction, ExtraRuleTypes))
                 .AsAsyncOperation<TInfo>();
         }
 
