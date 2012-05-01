@@ -132,6 +132,9 @@
   <data name="ErrorFailedRequest" xml:space="preserve">
     <value>HTTP request failed.</value>
   </data>
+  <data name="ErrorItemNotFound" xml:space="preserve">
+    <value>Item "{0}" cannot be found.</value>
+  </data>
   <data name="ErrorNoContent" xml:space="preserve">
     <value>HTTP response returned no data.</value>
   </data>

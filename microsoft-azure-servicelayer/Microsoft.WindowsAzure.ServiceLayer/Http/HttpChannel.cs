@@ -162,7 +162,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         internal Task<HttpResponse> SendAsyncInternal(HttpRequest request, params Func<HttpResponse, HttpResponse>[] handlers)
         {
             return SendAsync(request).AsTask()
-                .ContinueWith(t => ProcessResponse(t.Result, handlers), TaskContinuationOptions.OnlyOnRanToCompletion);
+                .ContinueWith(t => ProcessResponse(t.Result, handlers));
         }
 
         /// <summary>

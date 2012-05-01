@@ -98,5 +98,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         {
             get { return GetString("ErrorNullFilterAndAction"); }
         }
+
+        internal static string ErrorItemNotFound
+        {
+            get { return GetString("ErrorItemNotFound"); }
+        }
     }
 }
