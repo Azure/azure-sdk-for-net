@@ -1,0 +1,6 @@
+*.suo
+*.user
+*.appxmanifest
+bin/
+bld/
+AppPackages/
