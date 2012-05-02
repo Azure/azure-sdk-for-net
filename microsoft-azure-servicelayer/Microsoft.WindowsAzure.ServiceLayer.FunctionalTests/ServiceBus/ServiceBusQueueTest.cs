@@ -24,10 +24,11 @@ using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.FunctionalTests
 {
-    [TestClass]
+    
     /// <summary>
     /// Functional Tests for the service bus management.
     /// </summary>
+    [TestClass]
     public class ServiceBusQueueTest
     {
         private string _queueName = "functionaltestWinMDQueue";

@@ -23,10 +23,11 @@ using Microsoft.WindowsAzure.ServiceLayer.ServiceBus;
 
 namespace Microsoft.WindowsAzure.ServiceLayer.FunctionalTests
 {
-    [TestClass]
+    
     /// <summary>
     /// Functional Tests for the service bus management.
     /// </summary>
+    [TestClass]
     public class ServiceBusTopicSubscriptionTest
     {
         private string _topicName = "functionaltestWinMDTopic";
@@ -154,7 +155,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.FunctionalTests
         async internal Task CleanupAsync()
         {
             await Service.DeleteTopicAsync(_topicName);
-
         }
     }
 }
