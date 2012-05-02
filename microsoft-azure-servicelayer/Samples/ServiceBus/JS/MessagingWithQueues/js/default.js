@@ -32,8 +32,7 @@
     };
     app.start();
 })();
-//TODO: this code needs to be changed once config pattern has been implemented
-var serviceBusClient = new Microsoft.WindowsAzure.ServiceLayer.ServiceBus.ServiceBusClient("<serviceNamespace>", "", "");
+var serviceBusClient = new Microsoft.WindowsAzure.ServiceLayer.ServiceBus.ServiceBusClient("<specify the serviceNamespace>", "<issuerName>", "<issuerPassword>");
 
 
 function runSendAndReceiveButtonClickHandler() {
