@@ -105,23 +105,58 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="WindowsAzureServiceException.cs" />
+    <Compile Include="WindowsAzureErrorCode.cs" />
+    <Compile Include="Http\HttpChannel.cs" />
+    <Compile Include="Http\HttpContent.cs" />
+    <Compile Include="Http\HttpMethod.cs" />
+    <Compile Include="Http\HttpRequest.cs" />
+    <Compile Include="Http\HttpResponse.cs" />
+    <Compile Include="Http\IHttpContent.cs" />
+    <Compile Include="Http\IHttpHandler.cs" />
+    <Compile Include="Http\MemoryContent.cs" />
+    <Compile Include="Http\StreamContent.cs" />
+    <Compile Include="Http\WindowsAzureHttpException.cs" />
+    <Compile Include="Http\WrapAuthenticationException.cs" />
+    <Compile Include="Resources.cs" />
+    <Compile Include="ServiceBus\BrokeredMessageDescription.cs" />
+    <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
+    <Compile Include="ServiceBus\BrokerProperties.cs" />
+    <Compile Include="ServiceBus\CorrelationRuleFilter.cs" />
+    <Compile Include="ServiceBus\CustomPropertiesDictionary.cs" />
+    <Compile Include="ServiceBus\EmptyRuleAction.cs" />
+    <Compile Include="ServiceBus\FalseRuleFilter.cs" />
+    <Compile Include="ServiceBus\IRuleAction.cs" />
+    <Compile Include="ServiceBus\IRuleFilter.cs" />
+    <Compile Include="ServiceBus\ISqlRuleFilter.cs" />
+    <Compile Include="ServiceBus\MessageHelper.cs" />
+    <Compile Include="ServiceBus\MessageReceiver.cs" />
+    <Compile Include="ServiceBus\RuleInfo.cs" />
+    <Compile Include="ServiceBus\SqlRuleFilter.cs" />
+    <Compile Include="ServiceBus\SqlRuleAction.cs" />
+    <Compile Include="ServiceBus\SubscriptionDescription.cs" />
+    <Compile Include="ServiceBus\RuleSettings.cs" />
+    <Compile Include="ServiceBus\TopicDescription.cs" />
+    <Compile Include="ServiceBus\TopicSettings.cs" />
+    <Compile Include="ServiceBus\SubscriptionSettings.cs" />
+    <Compile Include="ServiceBus\TrueRuleFilter.cs" />
+    <Compile Include="Validator.cs" />
+    <Compile Include="WindowsAzureException.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="HttpErrorHandler.cs" />
-    <Compile Include="HttpQueryStringParser.cs" />
-    <Compile Include="ServiceBus\ServiceBusRestProxy.cs" />
-    <Compile Include="ServiceBus\WrapAuthenticationHandler.cs" />
-    <Compile Include="ServiceBus\WrapToken.cs" />
-    <Compile Include="ServiceBus\IServiceBusService.cs" />
+    <Compile Include="Http\HttpQueryStringParser.cs" />
+    <Compile Include="ServiceBus\ServiceBusClient.cs" />
+    <Compile Include="Http\WrapAuthenticationHandler.cs" />
+    <Compile Include="Http\WrapToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceBus\QueueInfo.cs" />
+    <Compile Include="ServiceBus\QueueDescription.cs" />
     <Compile Include="ServiceBus\QueueSettings.cs" />
     <Compile Include="SerializationHelper.cs" />
-    <Compile Include="ServiceBus\ServiceBusService.cs" />
     <Compile Include="ServiceBus\ServiceConfiguration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
