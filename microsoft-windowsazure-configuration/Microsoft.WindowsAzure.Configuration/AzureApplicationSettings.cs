@@ -114,6 +114,7 @@ namespace Microsoft.WindowsAzure.Configuration
                 try
                 {
                     assembly = Assembly.Load(name);
+                    break;
                 }
                 catch (Exception e)
                 {
