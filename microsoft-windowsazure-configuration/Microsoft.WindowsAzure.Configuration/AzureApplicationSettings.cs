@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Configuration
         private const string GetSettingValueMethodName = "GetConfigurationSettingValue";
         private readonly string[] knownAssemblyNames = new string[]
         {
-            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.7, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
-            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
+            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
+            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
         };
 
 
