@@ -3,17 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.WindowsAzure.Configuration", "Microsoft.WindowsAzure.Configuration\Microsoft.WindowsAzure.Configuration.csproj", "{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{547A35E0-1E17-43FF-B0A3-823EBE54A357}"
-	ProjectSection(SolutionItems) = preProject
-		Local.testsettings = Local.testsettings
-		microsoft-windowsazure-configuration.vsmdi = microsoft-windowsazure-configuration.vsmdi
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
-EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = microsoft-windowsazure-configuration.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
