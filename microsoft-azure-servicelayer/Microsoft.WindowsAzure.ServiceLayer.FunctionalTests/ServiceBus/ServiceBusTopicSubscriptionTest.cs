@@ -147,7 +147,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.FunctionalTests
             {
                 CleanupAsync().Wait();
             }
-            catch (AggregateException ex)
+            catch (AggregateException)
             {
 
             }
