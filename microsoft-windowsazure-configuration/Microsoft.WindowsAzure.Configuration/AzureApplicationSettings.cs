@@ -1,4 +1,19 @@
-﻿using System;
+﻿//
+// Copyright 2012 Microsoft Corporation
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -8,11 +23,21 @@ using System.Web.Configuration;
 
 namespace Microsoft.WindowsAzure.Configuration
 {
-    /// <summary>
+
     /// Windows Azure settings.
     /// </summary>
     public class AzureApplicationSettings
     {
+        private const string RoleEnvironmentTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment";
+        private const string IsAvailablePropertyName = "IsAvailable";
+        private const string GetSettingValueMethodName = "GetConfigurationSettingValue";
+        private readonly string[] knownAssemblyNames = new string[]
+        {
+            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.7, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
+            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
+        };
+
+
         private MethodInfo _getServiceSettingMethod;        // Method for getting values from the service configuration.
 
         /// <summary>
@@ -24,15 +49,15 @@ namespace Microsoft.WindowsAzure.Configuration
             Assembly assembly = GetServiceRuntimeAssembly();
             if (assembly != null)
             {
-                Type roleEnvironmentType = assembly.GetType("Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment", false);
+                Type roleEnvironmentType = assembly.GetType(RoleEnvironmentTypeName, false);
                 if (roleEnvironmentType != null)
                 {
-                    PropertyInfo isAvailableProperty = roleEnvironmentType.GetProperty("IsAvailable");
+                    PropertyInfo isAvailableProperty = roleEnvironmentType.GetProperty(IsAvailablePropertyName);
                     bool isAvailable = isAvailableProperty != null && (bool)isAvailableProperty.GetValue(null, new object[] {});
 
                     if (isAvailable)
                     {
-                        _getServiceSettingMethod = roleEnvironmentType.GetMethod("GetConfigurationSettingValue",
+                        _getServiceSettingMethod = roleEnvironmentType.GetMethod(GetSettingValueMethodName,
                             BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod);
                     }
                 }
@@ -81,18 +106,11 @@ namespace Microsoft.WindowsAzure.Configuration
         /// <returns>Loaded assembly, if any.</returns>
         private Assembly GetServiceRuntimeAssembly()
         {
-            // Assemblies prior to 1.7 had version tag 1.0.
-            string[] assemblies = new string[]
-            {
-                "Microsoft.WindowsAzure.ServiceRuntime, Version=1.7, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
-                "Microsoft.WindowsAzure.ServiceRuntime, Version=1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
-            };
-
             Assembly assembly = null;
 
-            for (int i = 0; assembly == null && i < assemblies.Length; i++)
+            for (int i = 0; assembly == null && i < knownAssemblyNames.Length; i++)
             {
-                AssemblyName name = new AssemblyName(assemblies[i]);
+                AssemblyName name = new AssemblyName(knownAssemblyNames[i]);
                 try
                 {
                     assembly = Assembly.Load(name);
