@@ -103,5 +103,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         {
             get { return GetString("ErrorItemNotFound"); }
         }
+
+        internal static string ErrorInvalidConnectionString
+        {
+            get { return GetString("ErrorInvalidConnectionString"); }
+        }
     }
 }

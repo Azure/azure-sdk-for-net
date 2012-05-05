@@ -28,11 +28,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     internal class ServiceConfiguration
     {
         /// <summary>
-        /// Gets the service namespace.
-        /// </summary>
-        internal string ServiceNamespace { get; private set; }
-
-        /// <summary>
         /// Gets the service bus URI.
         /// </summary>
         internal Uri ServiceBusUri { get; private set; }
@@ -43,9 +38,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="serviceNamespace">Service namespace.</param>
         internal ServiceConfiguration(string serviceNamespace)
         {
-            ServiceNamespace = serviceNamespace;
-
-            string stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusServiceUri, ServiceNamespace);
+            string stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusServiceUri, serviceNamespace);
             ServiceBusUri = new Uri(stringUri, UriKind.Absolute);
         }
 
