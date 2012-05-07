@@ -23,7 +23,7 @@ using System.Web.Configuration;
 
 namespace Microsoft.WindowsAzure.Configuration
 {
-
+    /// <summary>
     /// Windows Azure settings.
     /// </summary>
     public class AzureApplicationSettings
