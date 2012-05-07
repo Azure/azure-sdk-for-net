@@ -29,6 +29,7 @@ namespace Microsoft.WindowsAzure.Configuration
     public class AzureApplicationSettings
     {
         private const string RoleEnvironmentTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment";
+        private const string RoleEnvironmentExceptionTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironmentException";
         private const string IsAvailablePropertyName = "IsAvailable";
         private const string GetSettingValueMethodName = "GetConfigurationSettingValue";
         private readonly string[] knownAssemblyNames = new string[]
@@ -37,7 +38,7 @@ namespace Microsoft.WindowsAzure.Configuration
             "Microsoft.WindowsAzure.ServiceRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
         };
 
-
+        private Type _roleEnvironmentExceptionType;         // Exception thrown for missing settings.
         private MethodInfo _getServiceSettingMethod;        // Method for getting values from the service configuration.
 
         /// <summary>
@@ -50,6 +51,7 @@ namespace Microsoft.WindowsAzure.Configuration
             if (assembly != null)
             {
                 Type roleEnvironmentType = assembly.GetType(RoleEnvironmentTypeName, false);
+                _roleEnvironmentExceptionType = assembly.GetType(RoleEnvironmentExceptionTypeName, false);
                 if (roleEnvironmentType != null)
                 {
                     PropertyInfo isAvailableProperty = roleEnvironmentType.GetProperty(IsAvailablePropertyName);
@@ -57,11 +59,39 @@ namespace Microsoft.WindowsAzure.Configuration
 
                     if (isAvailable)
                     {
-                        _getServiceSettingMethod = roleEnvironmentType.GetMethod(GetSettingValueMethodName,
-                            BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod);
+                        try
+                        {
+                            _getServiceSettingMethod = roleEnvironmentType.GetMethod(GetSettingValueMethodName,
+                                BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod);
+                        }
+                        catch (TargetInvocationException e)
+                        {
+                            if (!IsMissingSettingException(e.InnerException))
+                            {
+                                throw;
+                            }
+                        }
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks whether the given exception represents an exception throws
+        /// for a missing setting.
+        /// </summary>
+        /// <param name="e">Exception</param>
+        /// <returns>True for the missing setting exception.</returns>
+        private bool IsMissingSettingException(Exception e)
+        {
+            if (e == null)
+            {
+                return false;
+            }
+            Type type = e.GetType();
+
+            return object.ReferenceEquals(type, _roleEnvironmentExceptionType)
+                || type.IsSubclassOf(_roleEnvironmentExceptionType);
         }
 
         /// <summary>
