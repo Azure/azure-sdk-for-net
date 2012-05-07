@@ -55,22 +55,29 @@ namespace Microsoft.WindowsAzure.Configuration
                 if (roleEnvironmentType != null)
                 {
                     PropertyInfo isAvailableProperty = roleEnvironmentType.GetProperty(IsAvailablePropertyName);
-                    bool isAvailable = isAvailableProperty != null && (bool)isAvailableProperty.GetValue(null, new object[] {});
+                    bool isAvailable;
+
+                    try
+                    {
+                        isAvailable = isAvailableProperty != null && (bool)isAvailableProperty.GetValue(null, new object[] { });
+                    }
+                    catch (TargetInvocationException e)
+                    {
+                        // Running service runtime code from an application targeting .Net 4.0 results
+                        // in a type initialization exception unless application's configuration file
+                        // explicitly enables v2 runtime activation policy. In this case we should fall
+                        // back to the web.config/app.config file.
+                        if (!(e.InnerException is TypeInitializationException))
+                        {
+                            throw;
+                        }
+                        isAvailable = false;
+                    }
 
                     if (isAvailable)
                     {
-                        try
-                        {
-                            _getServiceSettingMethod = roleEnvironmentType.GetMethod(GetSettingValueMethodName,
-                                BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod);
-                        }
-                        catch (TargetInvocationException e)
-                        {
-                            if (!IsMissingSettingException(e.InnerException))
-                            {
-                                throw;
-                            }
-                        }
+                        _getServiceSettingMethod = roleEnvironmentType.GetMethod(GetSettingValueMethodName,
+                            BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod);
                     }
                 }
             }
@@ -115,7 +122,17 @@ namespace Microsoft.WindowsAzure.Configuration
 
             if (_getServiceSettingMethod != null)
             {
-                value = (string)_getServiceSettingMethod.Invoke(null, new object[] { name });
+                try
+                {
+                    value = (string)_getServiceSettingMethod.Invoke(null, new object[] { name });
+                }
+                catch (TargetInvocationException e)
+                {
+                    if (!IsMissingSettingException(e.InnerException))
+                    {
+                        throw;
+                    }
+                }
             }
             if (value == null)
             {
