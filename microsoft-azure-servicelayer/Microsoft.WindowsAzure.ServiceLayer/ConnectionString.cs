@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// </summary>
         /// <param name="connectionString">Connection string.</param>
         /// <returns>Parsed connection string.</returns>
-        internal static IEnumerable<Tuple<string, string>> Parse(string connectionString)
+        internal static IEnumerable<KeyValuePair<string, string>> Parse(string connectionString)
         {
             ConnectionString parser = new ConnectionString(connectionString);
             return parser.Parse();
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// Parses the string.
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<Tuple<string, string>> Parse()
+        private IEnumerable<KeyValuePair<string, string>> Parse()
         {
             Debug.Assert(_pos == 0);
             Debug.Assert(_state == ParserState.ExpectKey);
@@ -77,8 +77,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             for (;;)
             {
                 SkipWhitespaces();
+
                 if (_pos == _value.Length && _state != ParserState.ExpectValue)
                 {
+                    // Not stopping after the end has been reached and a value is expected
+                    // results in creating an empty value, which we expect.
                     break;
                 }
 
@@ -103,7 +106,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
                         Debug.Assert(value == null);
                         value = ExtractValue();
                         _state = ParserState.ExpectSeparator;
-                        yield return new Tuple<string, string>(key, value);
+                        yield return new KeyValuePair<string, string>(key, value);
                         key = null;
                         value = null;
                         break;
@@ -156,7 +159,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             int firstPos = _pos;
             char ch = _value[_pos++];
 
-            if (ch == '\"' || ch == '\'')
+            if (ch == '"' || ch == '\'')
             {
                 key = ExtractString(ch);
             }
@@ -172,10 +175,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer
                     if (ch == '=')
                     {
                         break;
-                    }
-                    if (!char.IsLetterOrDigit(ch) && !char.IsWhiteSpace(ch))
-                    {
-                        ThrowInvalidConnectionString();
                     }
                     _pos++;
                 }
@@ -239,7 +238,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             {
                 char ch = _value[_pos];
 
-                if (ch == '\'' || ch == '\"')
+                if (ch == '\'' || ch == '"')
                 {
                     _pos++;
                     value = ExtractString(ch);
@@ -255,11 +254,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
                         switch (ch)
                         {
-                            case '"':
-                            case '\'':
-                                ThrowInvalidConnectionString();
-                                break;
-
                             case ';':
                                 isFound = true;
                                 break;

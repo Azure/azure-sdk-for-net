@@ -63,8 +63,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
             Debug.Assert(response.IsSuccessStatusCode);
             Scope = resourcePath;
             string content = response.Content.ReadAsStringAsync().AsTask().Result;
-            HttpQueryStringParser query = new HttpQueryStringParser(content);
 
+            Dictionary<string, string> query = HttpQueryStringParser.Parse(content);
             Token = string.Format(CultureInfo.InvariantCulture, Constants.WrapTokenAuthenticationString, WebUtility.UrlDecode(query["wrap_access_token"]));
             _expirationDate = DateTime.Now + TimeSpan.FromSeconds(int.Parse(query["wrap_access_token_expires_in"]) / 2);
         }

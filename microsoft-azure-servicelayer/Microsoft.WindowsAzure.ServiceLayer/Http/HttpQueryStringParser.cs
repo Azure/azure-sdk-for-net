@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Constructor.
         /// </summary>
         /// <param name="queryString">Query string.</param>
-        internal HttpQueryStringParser(string queryString)
+        private HttpQueryStringParser(string queryString)
         {
             string[] pairs = queryString.Split('&');
 
@@ -46,16 +46,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         }
 
         /// <summary>
-        /// Gets parameter by name.
+        /// Parses the HTTP query string.
         /// </summary>
-        /// <param name="parameterName">Parameter name.</param>
-        /// <returns>Parameter value.</returns>
-        internal string this[string parameterName] 
-        { 
-            get 
-            { 
-                return _values[parameterName]; 
-            } 
+        /// <param name="queryString">Query string to parse.</param>
+        /// <returns>Collection of key/value pairs from the query string.</returns>
+        internal static Dictionary<string, string> Parse(string queryString)
+        {
+            HttpQueryStringParser parser = new HttpQueryStringParser(queryString);
+            return parser._values;
         }
     }
 }

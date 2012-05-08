@@ -42,9 +42,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
 
             Dictionary<string, string> actualValues = new Dictionary<string,string>(StringComparer.Ordinal);
-            foreach (Tuple<string, string> items in ConnectionString.Parse(connectionString))
+            foreach (KeyValuePair<string, string> items in ConnectionString.Parse(connectionString))
             {
-                actualValues.Add(items.Item1, items.Item2);
+                actualValues.Add(items.Key, items.Value);
             }
 
             Assert.AreEqual(expectedValues.Count, actualValues.Count);
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.ThrowsException<ArgumentException>(
                 () =>
                 {
-                    foreach (Tuple<string, string> item in ConnectionString.Parse(value))
+                    foreach (KeyValuePair<string, string> item in ConnectionString.Parse(value))
                     {
                         // Do nothing.
                     }
@@ -90,6 +90,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             ParseTest("\"a=\"=b", "a=", "b");
             ParseTest("\"a'b\"=c", "a'b", "c");
             ParseTest("'a\"b'=c", "a\"b", "c");
+            ParseTest("a'b=c", "a'b", "c");
+            ParseTest("a\"b=c", "a\"b", "c");
+            ParseTest("a'=b", "a'", "b");
+            ParseTest("a\"=b", "a\"", "b");
         }
 
         /// <summary>
@@ -127,6 +131,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             ParseTest("a=\"b;c=d\"", "a", "b;c=d");
             ParseTest("a='b c' ", "a", "b c");
             ParseTest("a=\"b c\" ", "a", "b c");
+            ParseTest("a=b'c", "a", "b'c");
+            ParseTest("a=b\"c", "a", "b\"c");
+            ParseTest("a=b'", "a", "b'");
+            ParseTest("a=b\"", "a", "b\"");
         }
 
         /// <summary>
@@ -154,17 +162,11 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             TestFailure("test");        // Missing assignment;
             TestFailure(";a=b");        // Separator without key=value;
             TestFailure("'a=b");        // Runaway single-quoted string at the beginning of the key name;
-            TestFailure("\"a=b");       // Runawat double-quoted string at the beginning of the key name;
-            TestFailure("a'b=c");       // Runaway single-quoted string in key name;
-            TestFailure("a\"b=c");      // Runaway double-quoted string in key name;
+            TestFailure("\"a=b");       // Runaway double-quoted string at the beginning of the key name;
             TestFailure("'=b");         // Runaway single-quoted string in key name;
             TestFailure("\"=b");        // Runaway double-quoted string in key name;
             TestFailure("a='b");        // Runaway single-quoted string in value;
             TestFailure("a=\"b");       // Runaway double-quoted string in value;
-            TestFailure("a=b'c");       // Unwrapped single quotation mark in the value;
-            TestFailure("a=b\"c");      // Unwrapped double quotation mark in the value;
-            TestFailure("a=b'");        // Extra single quotation mark at the end of the value;
-            TestFailure("a=b\"");       // Extra double quotation mark at the end of the value;
             TestFailure("a='b'c");      // Extra character after single-quoted value;
             TestFailure("a=\"b\"c");    // Extra character after double-quoted value;
             TestFailure("'a'b=c");      // Extra character after single-quoted key;

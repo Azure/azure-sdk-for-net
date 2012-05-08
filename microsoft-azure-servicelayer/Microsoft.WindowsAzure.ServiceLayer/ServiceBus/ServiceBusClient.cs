@@ -84,22 +84,37 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         public ServiceBusClient(string connectionString)
         {
             Validator.ArgumentIsNotNullOrEmptyString("connectionString", connectionString);
-            Dictionary<string, string> items;
+            Dictionary<string, string> items = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
 
-            if (TryParseConnectionString(connectionString, out items))
+            // Extract key=value pairs and put them into dictionary.
+            foreach (KeyValuePair<string, string> item in ConnectionString.Parse(connectionString))
+            {
+                items[item.Key] = item.Value;
+            }
+
+            // Make sure all required values are there.
+            bool isValid = items.ContainsKey(Constants.EndpointKey)
+                && items.ContainsKey(Constants.SecretIssuerKey)
+                && items.ContainsKey(Constants.SecretValueKey);
+
+            if (isValid)
             {
                 string serviceNamespace = GetServiceNamespace(items[Constants.EndpointKey]);
-                if (!string.IsNullOrEmpty(serviceNamespace))
+                isValid = isValid && !string.IsNullOrEmpty(serviceNamespace);
+                if (isValid)
                 {
                     ServiceConfig = new ServiceConfiguration(serviceNamespace);
                     _channel = HttpChannel.CreateDefault(
                         serviceNamespace, items[Constants.SecretIssuerKey], items[Constants.SecretValueKey]);
-                    return;
+                    isValid = true;
                 }
             }
 
-            string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorInvalidConnectionString, connectionString);
-            throw new ArgumentException(message);
+            if (!isValid)
+            {
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorInvalidConnectionString, connectionString);
+                throw new ArgumentException(message);
+            }
         }
 
         /// <summary>
@@ -745,9 +760,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private static bool TryParseConnectionString(string connectionString, out Dictionary<string, string> values)
         {
             values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (Tuple<string, string> item in ConnectionString.Parse(connectionString))
+            foreach (KeyValuePair<string, string> item in ConnectionString.Parse(connectionString))
             {
-                values[item.Item1] = item.Item2;
+                values[item.Key] = item.Value;
             }
 
             // All required keys must be there.
@@ -764,13 +779,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private static string GetServiceNamespace(string endpoint)
         {
             string value = null;
-            Match match = Regex.Match(endpoint, @"^http://(.+)/?\.servicebus.windows.net$", RegexOptions.IgnoreCase);
 
-            if (match.Success)
+            if (Uri.IsWellFormedUriString(endpoint, UriKind.Absolute))
             {
-                value = match.Groups[1].Value;
+                Uri uri = new Uri(endpoint, UriKind.Absolute);
+                Match match = Regex.Match(uri.Host, @"^(.+)\.servicebus\.windows\.net/?$");
+                if (match.Success)
+                {
+                    value = match.Groups[1].Value;
+                }
             }
-
             return value;
         }
     }
