@@ -19,7 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.ServiceLayer.Http
+namespace Microsoft.WindowsAzure.ServiceLayer
 {
     /// <summary>
     /// Helper class for processing HTTP query strings.
@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// Constructor.
         /// </summary>
         /// <param name="queryString">Query string.</param>
-        private HttpQueryStringParser(string queryString)
+        internal HttpQueryStringParser(string queryString)
         {
             string[] pairs = queryString.Split('&');
 
@@ -46,14 +46,16 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         }
 
         /// <summary>
-        /// Parses the HTTP query string.
+        /// Gets parameter by name.
         /// </summary>
-        /// <param name="queryString">Query string to parse.</param>
-        /// <returns>Collection of key/value pairs from the query string.</returns>
-        internal static Dictionary<string, string> Parse(string queryString)
-        {
-            HttpQueryStringParser parser = new HttpQueryStringParser(queryString);
-            return parser._values;
+        /// <param name="parameterName">Parameter name.</param>
+        /// <returns>Parameter value.</returns>
+        internal string this[string parameterName] 
+        { 
+            get 
+            { 
+                return _values[parameterName]; 
+            } 
         }
     }
 }

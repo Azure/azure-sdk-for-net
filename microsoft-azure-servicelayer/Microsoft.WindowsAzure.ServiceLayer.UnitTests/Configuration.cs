@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,20 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         /// Gets the password used for testing.
         /// </summary>
         private static string Password { get { throw new NotImplementedException(); } }
+
+        /// <summary>
+        /// Gets the connection string.
+        /// </summary>
+        internal static string ConnectionString
+        {
+            get
+            {
+                return string.Format(
+                    CultureInfo.InvariantCulture,
+                    "Endpoint=http://{0}.servicebus.windows.net;SharedSecretIssuer={1};SharedSecretValue={2}",
+                    ServiceNamespace, UserName, Password);
+            }
+        }
 
         /// <summary>
         /// Gets an instance of the service bus service shared by all tests.
