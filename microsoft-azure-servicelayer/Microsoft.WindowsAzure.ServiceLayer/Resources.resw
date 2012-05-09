@@ -132,6 +132,9 @@
   <data name="ErrorFailedRequest" xml:space="preserve">
     <value>HTTP request failed.</value>
   </data>
+  <data name="ErrorInvalidConnectionString" xml:space="preserve">
+    <value>Value "{0}" does not represent a valid connection string. The connection string must be in the format "Endpoint:http://&lt;namespace&gt;.servicebus.windows.net;SharedSecretIssuer=&lt;value&gt;;SharedSecretValue=&lt;value&gt;"</value>
+  </data>
   <data name="ErrorItemNotFound" xml:space="preserve">
     <value>Item "{0}" cannot be found.</value>
   </data>

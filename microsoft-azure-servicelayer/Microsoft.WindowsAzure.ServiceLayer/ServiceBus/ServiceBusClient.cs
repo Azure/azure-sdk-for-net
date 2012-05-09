@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceLayer.Http;
 using Windows.Data.Xml.Dom;
@@ -74,6 +75,46 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             // Create the default HTTP channel.
             _channel = HttpChannel.CreateDefault(serviceNamespace, issuerName, issuerPassword);
+        }
+
+        /// <summary>
+        /// Initializes the service bus client from the connection string.
+        /// </summary>
+        /// <param name="connectionString">Connection string.</param>
+        public ServiceBusClient(string connectionString)
+        {
+            Validator.ArgumentIsNotNullOrEmptyString("connectionString", connectionString);
+            Dictionary<string, string> items = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
+
+            // Extract key=value pairs and put them into dictionary.
+            foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse(connectionString))
+            {
+                items[item.Key] = item.Value;
+            }
+
+            // Make sure all required values are there.
+            bool isValid = items.ContainsKey(Constants.EndpointKey)
+                && items.ContainsKey(Constants.SecretIssuerKey)
+                && items.ContainsKey(Constants.SecretValueKey);
+
+            if (isValid)
+            {
+                string serviceNamespace = GetServiceNamespace(items[Constants.EndpointKey]);
+                isValid = isValid && !string.IsNullOrEmpty(serviceNamespace);
+                if (isValid)
+                {
+                    ServiceConfig = new ServiceConfiguration(serviceNamespace);
+                    _channel = HttpChannel.CreateDefault(
+                        serviceNamespace, items[Constants.SecretIssuerKey], items[Constants.SecretValueKey]);
+                    isValid = true;
+                }
+            }
+
+            if (!isValid)
+            {
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorInvalidConnectionString, connectionString);
+                throw new ArgumentException(message);
+            }
         }
 
         /// <summary>
@@ -708,6 +749,48 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         {
             _channel.Dispose();
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Parses the service bus connection string.
+        /// </summary>
+        /// <param name="connectionString">Connection string to pass.</param>
+        /// <param name="values">Parsed key/value pairs.</param>
+        /// <returns>True if the string was successfully parsed.</returns>
+        private static bool TryParseConnectionString(string connectionString, out Dictionary<string, string> values)
+        {
+            values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse(connectionString))
+            {
+                values[item.Key] = item.Value;
+            }
+
+            // All required keys must be there.
+            return values.ContainsKey(Constants.EndpointKey)
+                && values.ContainsKey(Constants.SecretIssuerKey)
+                && values.ContainsKey(Constants.SecretValueKey);
+        }
+
+        /// <summary>
+        /// Extracts the service namespace.
+        /// </summary>
+        /// <param name="endpoint">Endpoint URI.</param>
+        /// <returns>Service namespace or null if not found.</returns>
+        private static string GetServiceNamespace(string endpoint)
+        {
+            string value = null;
+            Uri uri;
+
+            if (Uri.TryCreate(endpoint, UriKind.Absolute, out uri))
+            {
+                Match match = Regex.Match(uri.Host, @"^(.+)\.servicebus\.windows\.net/?$", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    Debug.Assert(match.Groups.Count == 2);
+                    value = match.Groups[1].Value;
+                }
+            }
+            return value;
         }
     }
 }

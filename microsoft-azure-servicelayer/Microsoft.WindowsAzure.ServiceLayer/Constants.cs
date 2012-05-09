@@ -69,5 +69,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
         internal const string ContentTypeHeader             = "Content-Type";
         internal const string AtomFeedElementName           = "feed";                                   // Local name of the atom feed.
+
+        // Connection strings
+        internal const string EndpointKey                   = "Endpoint";
+        internal const string SecretIssuerKey               = "SharedSecretIssuer";
+        internal const string SecretValueKey                = "SharedSecretValue";
     }
 }

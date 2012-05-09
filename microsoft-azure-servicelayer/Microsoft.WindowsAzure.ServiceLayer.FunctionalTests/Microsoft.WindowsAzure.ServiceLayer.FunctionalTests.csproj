@@ -6,14 +6,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{53C097E2-7384-446B-836B-A7910993091E}</ProjectGuid>
-    <OutputType>winmdobj</OutputType>
+    <ProjectGuid>{F915151A-16E4-48F2-B1FD-E9047C4DECF2}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.ServiceLayer</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.ServiceLayer</AssemblyName>
+    <RootNamespace>Microsoft.WindowsAzure.ServiceLayer.FunctionalTests</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.ServiceLayer.FunctionalTests</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>Microsoft.WindowsAzure.ServiceLayer.FunctionalTests_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>2462F1A0D3AAB8142C4060171D8A41E2B9EEE51B</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -104,60 +106,47 @@
     <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <AppXPackage>True</AppXPackage>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ConnectionStringParser.cs" />
-    <Compile Include="WindowsAzureErrorCode.cs" />
-    <Compile Include="Http\HttpChannel.cs" />
-    <Compile Include="Http\HttpContent.cs" />
-    <Compile Include="Http\HttpMethod.cs" />
-    <Compile Include="Http\HttpRequest.cs" />
-    <Compile Include="Http\HttpResponse.cs" />
-    <Compile Include="Http\IHttpContent.cs" />
-    <Compile Include="Http\IHttpHandler.cs" />
-    <Compile Include="Http\MemoryContent.cs" />
-    <Compile Include="Http\StreamContent.cs" />
-    <Compile Include="Http\WindowsAzureHttpException.cs" />
-    <Compile Include="Http\WrapAuthenticationException.cs" />
-    <Compile Include="Resources.cs" />
-    <Compile Include="ServiceBus\BrokeredMessageDescription.cs" />
-    <Compile Include="ServiceBus\BrokeredMessageSettings.cs" />
-    <Compile Include="ServiceBus\BrokerProperties.cs" />
-    <Compile Include="ServiceBus\CorrelationRuleFilter.cs" />
-    <Compile Include="ServiceBus\CustomPropertiesDictionary.cs" />
-    <Compile Include="ServiceBus\EmptyRuleAction.cs" />
-    <Compile Include="ServiceBus\FalseRuleFilter.cs" />
-    <Compile Include="ServiceBus\IRuleAction.cs" />
-    <Compile Include="ServiceBus\IRuleFilter.cs" />
-    <Compile Include="ServiceBus\ISqlRuleFilter.cs" />
-    <Compile Include="ServiceBus\MessageHelper.cs" />
-    <Compile Include="ServiceBus\MessageReceiver.cs" />
-    <Compile Include="ServiceBus\RuleInfo.cs" />
-    <Compile Include="ServiceBus\SqlRuleFilter.cs" />
-    <Compile Include="ServiceBus\SqlRuleAction.cs" />
-    <Compile Include="ServiceBus\SubscriptionDescription.cs" />
-    <Compile Include="ServiceBus\RuleSettings.cs" />
-    <Compile Include="ServiceBus\TopicDescription.cs" />
-    <Compile Include="ServiceBus\TopicSettings.cs" />
-    <Compile Include="ServiceBus\SubscriptionSettings.cs" />
-    <Compile Include="ServiceBus\TrueRuleFilter.cs" />
-    <Compile Include="Validator.cs" />
-    <Compile Include="WindowsAzureException.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Http\HttpQueryStringParser.cs" />
-    <Compile Include="ServiceBus\ServiceBusClient.cs" />
-    <Compile Include="Http\WrapAuthenticationHandler.cs" />
-    <Compile Include="Http\WrapToken.cs" />
+    <!--A reference to the entire .Net Framework and Windows SDK are automatically included-->
+    <SDKReference Include="MSTestFramework, Version=11.0" />
+    <SDKReference Include="TestPlatform, Version=11.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration.cs" />
+    <Compile Include="ServiceBus\ServiceBusTopicSubscriptionTest.cs" />
+    <Compile Include="ServiceBus\ServiceBusQueueTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceBus\QueueDescription.cs" />
-    <Compile Include="ServiceBus\QueueSettings.cs" />
-    <Compile Include="SerializationHelper.cs" />
-    <Compile Include="ServiceBus\ServiceConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Resources.resw" />
+    <Content Include="Images\UnitTestLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UnitTestSmallLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UnitTestSplashScreen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UnitTestStoreLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Microsoft.WindowsAzure.ServiceLayer.FunctionalTests_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.WindowsAzure.ServiceLayer\Microsoft.WindowsAzure.ServiceLayer.csproj">
+      <Project>{53c097e2-7384-446b-836b-a7910993091e}</Project>
+      <Name>Microsoft.WindowsAzure.ServiceLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
@@ -169,7 +158,7 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>
+  </Target>  
   <Target Name="AfterBuild">
   </Target>
   -->
