@@ -38,6 +38,9 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
     /// should dispose only one of them and only when it is no longer used.</remarks>
     public sealed class ServiceBusClient: IDisposable
     {
+        // A constant for extracting namespace from a URI.
+        private const string NamespaceExtractingExpression = @"^(.+)\.servicebus\.windows\.net/?$";
+
         private HttpChannel _channel;                       // HTTP channel.
 
         // Extra types used for serialization operations with rules.
@@ -763,7 +766,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             if (Uri.TryCreate(endpoint, UriKind.Absolute, out uri))
             {
-                Match match = Regex.Match(uri.Host, @"^(.+)\.servicebus\.windows\.net/?$", RegexOptions.IgnoreCase);
+                Match match = Regex.Match(uri.Host, NamespaceExtractingExpression, RegexOptions.IgnoreCase);
                 if (match.Success)
                 {
                     Debug.Assert(match.Groups.Count == 2);

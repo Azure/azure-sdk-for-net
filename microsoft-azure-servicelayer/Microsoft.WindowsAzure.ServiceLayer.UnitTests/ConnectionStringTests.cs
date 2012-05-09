@@ -156,11 +156,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
         [TestMethod]
         public void InvalidInput()
         {
+            TestFailure(";");           // Separator without an assignment;
             TestFailure("=b");          // Missing key name;
             TestFailure("''=b");        // Empty key name;
             TestFailure("\"\"=b");      // Empty key name;
             TestFailure("test");        // Missing assignment;
             TestFailure(";a=b");        // Separator without key=value;
+            TestFailure("a=b;;");       // Two separators at the end;
+            TestFailure("a=b;;c=d");    // Two separators in the middle.
             TestFailure("'a=b");        // Runaway single-quoted string at the beginning of the key name;
             TestFailure("\"a=b");       // Runaway double-quoted string at the beginning of the key name;
             TestFailure("'=b");         // Runaway single-quoted string in key name;
