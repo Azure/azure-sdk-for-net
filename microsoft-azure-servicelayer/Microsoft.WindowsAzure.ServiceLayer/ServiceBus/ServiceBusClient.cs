@@ -752,26 +752,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         }
 
         /// <summary>
-        /// Parses the service bus connection string.
-        /// </summary>
-        /// <param name="connectionString">Connection string to pass.</param>
-        /// <param name="values">Parsed key/value pairs.</param>
-        /// <returns>True if the string was successfully parsed.</returns>
-        private static bool TryParseConnectionString(string connectionString, out Dictionary<string, string> values)
-        {
-            values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse(connectionString))
-            {
-                values[item.Key] = item.Value;
-            }
-
-            // All required keys must be there.
-            return values.ContainsKey(Constants.EndpointKey)
-                && values.ContainsKey(Constants.SecretIssuerKey)
-                && values.ContainsKey(Constants.SecretValueKey);
-        }
-
-        /// <summary>
         /// Extracts the service namespace.
         /// </summary>
         /// <param name="endpoint">Endpoint URI.</param>
