@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="ConnectionStringTests.cs" />
     <Compile Include="HttpTests\ContentTests.cs" />
     <Compile Include="HttpTests\PipelineTests.cs" />
     <Compile Include="HttpTests\TestHttpHandler.cs" />

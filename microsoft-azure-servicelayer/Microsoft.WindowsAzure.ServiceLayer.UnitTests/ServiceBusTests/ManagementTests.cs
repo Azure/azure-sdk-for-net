@@ -945,8 +945,23 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
             Assert.ThrowsException<ArgumentException>(() => new ServiceBusClient("namespace", " ", "password"));
             Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient("namespace", "user", null));
 
-            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient(null));
+            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient((ServiceBusClient)null));
             Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient(Configuration.ServiceBus, null));
+
+            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient((string)null));
+            string[] invalidConnectionStrings = new string[] 
+            {
+                string.Empty,
+                "SharedSecretIssuer=owner;SharedSecretValue=whatever",                          // Missing endpoint
+                "Endpoint=http://test.servicebus.windows.net;SharedSecretValue=whatever",       // Missing issuer
+                "Endpoint=http://test.servicebus.windows.net;SharedSecretIssuer=owner",         // Missing secret value
+                "Endpoint=http://foo.bar.com;SharedSecretIssuer=foo;SharedSecretValue=foo",     // Invalid endpoint
+            };
+
+            foreach (string value in invalidConnectionStrings)
+            {
+                Assert.ThrowsException<ArgumentException>(() => new ServiceBusClient(value));
+            }
         }
 
         /// <summary>
@@ -956,6 +971,19 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests.ServiceBusTests
         public void InvalidArgsInCreateRuleSettings()
         {
             Assert.ThrowsException<ArgumentException>(() => new RuleSettings(null, null));
+        }
+
+        /// <summary>
+        /// Tests instantiating SB client from the connection string.
+        /// </summary>
+        [TestMethod]
+        public void CreateFromConnectionString()
+        {
+            using (UniqueQueue tempQueue = new UniqueQueue())
+            {
+                ServiceBusClient serviceBus = new ServiceBusClient(Configuration.ConnectionString);
+                serviceBus.GetQueueAsync(tempQueue.QueueName).AsTask().Wait();
+            }
         }
     }
 }
