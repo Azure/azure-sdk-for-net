@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Dictionary<string, string> items = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
 
             // Extract key=value pairs and put them into dictionary.
-            foreach (KeyValuePair<string, string> item in ConnectionString.Parse(connectionString))
+            foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse(connectionString))
             {
                 items[item.Key] = item.Value;
             }
@@ -760,7 +760,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private static bool TryParseConnectionString(string connectionString, out Dictionary<string, string> values)
         {
             values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (KeyValuePair<string, string> item in ConnectionString.Parse(connectionString))
+            foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse(connectionString))
             {
                 values[item.Key] = item.Value;
             }
@@ -779,13 +779,14 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         private static string GetServiceNamespace(string endpoint)
         {
             string value = null;
+            Uri uri;
 
-            if (Uri.IsWellFormedUriString(endpoint, UriKind.Absolute))
+            if (Uri.TryCreate(endpoint, UriKind.Absolute, out uri))
             {
-                Uri uri = new Uri(endpoint, UriKind.Absolute);
-                Match match = Regex.Match(uri.Host, @"^(.+)\.servicebus\.windows\.net/?$");
+                Match match = Regex.Match(uri.Host, @"^(.+)\.servicebus\.windows\.net/?$", RegexOptions.IgnoreCase);
                 if (match.Success)
                 {
+                    Debug.Assert(match.Groups.Count == 2);
                     value = match.Groups[1].Value;
                 }
             }

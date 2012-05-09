@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
 
             Dictionary<string, string> actualValues = new Dictionary<string,string>(StringComparer.Ordinal);
-            foreach (KeyValuePair<string, string> items in ConnectionString.Parse(connectionString))
+            foreach (KeyValuePair<string, string> items in ConnectionStringParser.Parse(connectionString))
             {
                 actualValues.Add(items.Key, items.Value);
             }
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.ThrowsException<ArgumentException>(
                 () =>
                 {
-                    foreach (KeyValuePair<string, string> item in ConnectionString.Parse(value))
+                    foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse(value))
                     {
                         // Do nothing.
                     }

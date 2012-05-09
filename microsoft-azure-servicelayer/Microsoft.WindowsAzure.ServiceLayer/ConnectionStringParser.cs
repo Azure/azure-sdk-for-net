@@ -21,9 +21,11 @@ using System.Globalization;
 namespace Microsoft.WindowsAzure.ServiceLayer
 {
     /// <summary>
-    /// Helper methods for dealing with connection strings.
+    /// Helper methods for parsing connection strings.
     /// </summary>
-    internal class ConnectionString
+    /// <remarks>The rules for formatting connection strings are defined here:
+    /// http://www.connectionstrings.com/articles/show/important-rules-for-connection-strings</remarks>
+    internal class ConnectionStringParser
     {
         /// <summary>
         /// State of the parser.
@@ -47,7 +49,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <returns>Parsed connection string.</returns>
         internal static IEnumerable<KeyValuePair<string, string>> Parse(string connectionString)
         {
-            ConnectionString parser = new ConnectionString(connectionString);
+            ConnectionStringParser parser = new ConnectionStringParser(connectionString);
             return parser.Parse();
         }
 
@@ -55,7 +57,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// Initializes the object.
         /// </summary>
         /// <param name="value">Value to parse.</param>
-        private ConnectionString(string value)
+        private ConnectionStringParser(string value)
         {
             Debug.Assert(value != null);
             _value = value;
@@ -66,7 +68,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <summary>
         /// Parses the string.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A collection of key=value pairs.</returns>
         private IEnumerable<KeyValuePair<string, string>> Parse()
         {
             Debug.Assert(_pos == 0);
@@ -228,7 +230,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <summary>
         /// Extracts key's value.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Key's value.</returns>
         private string ExtractValue()
         {
             Debug.Assert(_state == ParserState.ExpectValue);
