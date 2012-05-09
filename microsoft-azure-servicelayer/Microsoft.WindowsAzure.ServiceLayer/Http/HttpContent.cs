@@ -115,10 +115,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Content bytes.</returns>
         public IAsyncOperation<IEnumerable<byte>> ReadAsByteArrayAsync()
         {
-            //TODO: this mehtod returns IEnumerable<byte> instead of byte[] because
-            // winmd does not accept arrays as return values. Check this with the
-            // latest version and make this method consistent with 
-            // CreateFromByteArray method.
+            // This mehtod returns IEnumerable<byte> instead of byte[] because
+            // winmd does not accept arrays as return values. 
             return _rawContent
                 .ReadAsBytesAsync()
                 .ContinueWith<IEnumerable<byte>>(t => t.Result)
