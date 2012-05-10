@@ -108,5 +108,35 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         {
             get { return GetString("ErrorInvalidConnectionString"); }
         }
+
+        internal static string ErrorParsingConnectionString
+        {
+            get { return GetString("ErrorParsingConnectionString"); }
+        }
+
+        internal static string ErrorConnectionStringMissingKey
+        {
+            get { return GetString("ErrorConnectionStringMissingKey"); }
+        }
+
+        internal static string ErrorConnectionStringEmptyKey
+        {
+            get { return GetString("ErrorConnectionStringEmptyKey"); }
+        }
+
+        internal static string ErrorConnectionStringMissingCharacter
+        {
+            get { return GetString("ErrorConnectionStringMissingCharacter"); }
+        }
+
+        internal static string ErrorMissingServiceBusKey
+        {
+            get { return GetString("ErrorMissingServiceBusKey"); }
+        }
+
+        internal static string ErrorInvalidEndpoint
+        {
+            get { return GetString("ErrorInvalidEndpoint"); }
+        }
     }
 }
