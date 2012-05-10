@@ -763,7 +763,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
 
             if (Uri.TryCreate(endpoint, UriKind.Absolute, out uri))
             {
-                Match match = Regex.Match(uri.Host, @"^(.+)\.servicebus\.windows\.net/?$", RegexOptions.IgnoreCase);
+                Match match = Regex.Match(uri.Host, Constants.NamespaceExpression, RegexOptions.IgnoreCase);
                 if (match.Success)
                 {
                     Debug.Assert(match.Groups.Count == 2);

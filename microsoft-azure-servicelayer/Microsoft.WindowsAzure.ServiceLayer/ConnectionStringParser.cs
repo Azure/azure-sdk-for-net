@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
                     case ParserState.ExpectAssignment:
                         Debug.Assert(!string.IsNullOrEmpty(key));
                         Debug.Assert(value == null);
-                        ExtractAssignment();
+                        SkipOperator('=');
                         _state = ParserState.ExpectValue;
                         break;
 
@@ -115,7 +115,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
                     default:
                         Debug.Assert(_state == ParserState.ExpectSeparator);
-                        ExtractSeparator();
+                        SkipOperator(';');
                         _state = ParserState.ExpectKey;
                         break;
                 }
@@ -213,14 +213,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         }
 
         /// <summary>
-        /// Extracts assignment operator.
+        /// Skips specified operator.
         /// </summary>
-        private void ExtractAssignment()
+        /// <param name="operatorChar">Operator character.</param>
+        private void SkipOperator(char operatorChar)
         {
-            Debug.Assert(_state == ParserState.ExpectAssignment);
             Debug.Assert(_pos < _value.Length);
-
-            if (_value[_pos] != '=')
+            if (_value[_pos] != operatorChar)
             {
                 ThrowInvalidConnectionString();
             }
@@ -270,20 +269,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer
                 }
             }
             return value;
-        }
-
-        /// <summary>
-        /// Extracts list separator.
-        /// </summary>
-        private void ExtractSeparator()
-        {
-            Debug.Assert(_state == ParserState.ExpectSeparator);
-            Debug.Assert(_pos < _value.Length);
-            if (_value[_pos] != ';')
-            {
-                ThrowInvalidConnectionString();
-            }
-            _pos++;
         }
     }
 }

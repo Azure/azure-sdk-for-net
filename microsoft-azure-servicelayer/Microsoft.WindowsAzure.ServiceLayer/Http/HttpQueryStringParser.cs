@@ -26,25 +26,6 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
     /// </summary>
     internal class HttpQueryStringParser
     {
-        private Dictionary<string, string> _values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="queryString">Query string.</param>
-        private HttpQueryStringParser(string queryString)
-        {
-            string[] pairs = queryString.Split('&');
-
-            foreach (string pair in pairs)
-            {
-                int pos = pair.IndexOf('=');
-                string name = pair.Substring(0, pos);
-                string value = pair.Substring(pos + 1);
-                _values.Add(name, value);
-            }
-        }
-
         /// <summary>
         /// Parses the HTTP query string.
         /// </summary>
@@ -52,8 +33,17 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Collection of key/value pairs from the query string.</returns>
         internal static Dictionary<string, string> Parse(string queryString)
         {
-            HttpQueryStringParser parser = new HttpQueryStringParser(queryString);
-            return parser._values;
+            Dictionary<string, string> values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            string[] pairs = queryString.Split('&');
+
+            foreach (string pair in pairs)
+            {
+                int pos = pair.IndexOf('=');
+                string name = pair.Substring(0, pos);
+                string value = pair.Substring(pos + 1);
+                values.Add(name, value);
+            }
+            return values;
         }
     }
 }
