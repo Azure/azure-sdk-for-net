@@ -33,6 +33,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         internal const string ServiceBusServiceUri          = "https://{0}.servicebus.windows.net/";
         internal const string ServiceBusAuthenticationUri   = "https://{0}-sb.accesscontrol.windows.net/wrapv0.9/";
         internal const string ServiceBusScopeUri            = "http://{0}.servicebus.windows.net/";
+        internal const string NamespaceExpression           = @"^(.+)\.servicebus\.windows\.net/?$";
 
         internal const string MessageDestination            = "{0}/messages/";
         internal const string UnlockedMessagePath           = "{0}/messages/head?timeout={1}";
