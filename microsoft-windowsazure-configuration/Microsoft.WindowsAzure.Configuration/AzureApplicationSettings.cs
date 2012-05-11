@@ -14,19 +14,18 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Web.Configuration;
 
-namespace Microsoft.WindowsAzure.Configuration
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// Windows Azure settings.
     /// </summary>
-    public class AzureApplicationSettings
+    internal class AzureApplicationSettings
     {
         private const string RoleEnvironmentTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment";
         private const string RoleEnvironmentExceptionTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironmentException";
@@ -106,17 +105,9 @@ namespace Microsoft.WindowsAzure.Configuration
         /// </summary>
         /// <param name="name">Setting name.</param>
         /// <returns>Setting value or null if such setting does not exist.</returns>
-        public string GetSetting(string name)
+        internal string GetSetting(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            if (name.Length == 0)
-            {
-                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentEmptyString, "name");
-                throw new ArgumentException(message);
-            }
+            Debug.Assert(!string.IsNullOrEmpty(name));
 
             string value = null;
 
