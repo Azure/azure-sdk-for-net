@@ -26,6 +26,11 @@ namespace Microsoft.WindowsAzure
         private static object _lock = new object();
         private static AzureApplicationSettings _appSettings;
 
+        /// <summary>
+        /// Gets a setting with the given name.
+        /// </summary>
+        /// <param name="name">Setting name.</param>
+        /// <returns>Setting value or null if not found.</returns>
         public static string GetSetting(string name)
         {
             if (name == null)
