@@ -14,8 +14,9 @@
 //
 
 using System;
+using System.Globalization;
 
-namespace Microsoft.WindowsAzure.Configuration
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// Configuration manager for accessing Windows Azure settings.
@@ -25,10 +26,25 @@ namespace Microsoft.WindowsAzure.Configuration
         private static object _lock = new object();
         private static AzureApplicationSettings _appSettings;
 
+        public static string GetSetting(string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            else if (name.Length == 0)
+            {
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentEmptyString, "name");
+                throw new ArgumentException(message);
+            }
+
+            return AppSettings.GetSetting(name);
+        }
+
         /// <summary>
         /// Gets application settings.
         /// </summary>
-        public static AzureApplicationSettings AppSettings
+        internal static AzureApplicationSettings AppSettings
         {
             get
             {
