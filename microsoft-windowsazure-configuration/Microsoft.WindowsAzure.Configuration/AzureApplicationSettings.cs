@@ -16,6 +16,7 @@
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Web.Configuration;
@@ -31,6 +32,8 @@ namespace Microsoft.WindowsAzure
         private const string RoleEnvironmentExceptionTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironmentException";
         private const string IsAvailablePropertyName = "IsAvailable";
         private const string GetSettingValueMethodName = "GetConfigurationSettingValue";
+
+        // Keep this array sorted by the version in the descendant order.
         private readonly string[] knownAssemblyNames = new string[]
         {
             "Microsoft.WindowsAzure.ServiceRuntime, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
@@ -59,6 +62,8 @@ namespace Microsoft.WindowsAzure
                     try
                     {
                         isAvailable = isAvailableProperty != null && (bool)isAvailableProperty.GetValue(null, new object[] { });
+                        string message = string.Format(CultureInfo.InvariantCulture, "Loaded \"{0}\"", assembly.FullName);
+                        Trace.WriteLine(message);
                     }
                     catch (TargetInvocationException e)
                     {
@@ -111,6 +116,56 @@ namespace Microsoft.WindowsAzure
 
             string value = null;
 
+            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting);
+            if (value == null)
+            {
+                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n]);
+            }
+            if (value == null)
+            {
+                value = GetValue("WebConfigurationManager", name, n => WebConfigurationManager.AppSettings[n]);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Gets setting's value from the given provider.
+        /// </summary>
+        /// <param name="providerName">Provider name.</param>
+        /// <param name="settingName">Setting name</param>
+        /// <param name="getValue">Method to obtain given setting.</param>
+        /// <returns>Setting value, or null if not found.</returns>
+        private static string GetValue(string providerName, string settingName, Func<string, string> getValue)
+        {
+            string value = getValue(settingName);
+            string message;
+
+            if (value != null)
+            {
+                message = string.Format(CultureInfo.InvariantCulture, "PASS ({0})", value);
+            }
+            else
+            {
+                message = "FAIL";
+            }
+
+            message = string.Format(CultureInfo.InvariantCulture, "Getting \"{0}\" from {1}: {2}.", settingName, providerName, message);
+            Trace.WriteLine(message);
+            return value;
+        }
+
+        /// <summary>
+        /// Gets a configuration setting from the service runtime.
+        /// </summary>
+        /// <param name="name">Setting name.</param>
+        /// <returns>Setting value or null if not found.</returns>
+        private string GetServiceRuntimeSetting(string name)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(name));
+
+            string value = null;
+
             if (_getServiceSettingMethod != null)
             {
                 try
@@ -125,15 +180,6 @@ namespace Microsoft.WindowsAzure
                     }
                 }
             }
-            if (value == null)
-            {
-                value = ConfigurationManager.AppSettings[name];
-            }
-            if (value == null)
-            {
-                value = WebConfigurationManager.AppSettings[name];
-            }
-
             return value;
         }
 
