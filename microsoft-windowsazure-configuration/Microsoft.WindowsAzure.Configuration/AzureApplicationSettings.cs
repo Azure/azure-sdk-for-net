@@ -19,7 +19,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Web.Configuration;
 
 namespace Microsoft.WindowsAzure
 {
@@ -120,10 +119,6 @@ namespace Microsoft.WindowsAzure
             if (value == null)
             {
                 value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n]);
-            }
-            if (value == null)
-            {
-                value = GetValue("WebConfigurationManager", name, n => WebConfigurationManager.AppSettings[n]);
             }
 
             return value;
