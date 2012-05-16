@@ -641,7 +641,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             // services. 
             if (string.Equals((string)doc.FirstChild.NodeName, Constants.AtomFeedElementName, StringComparison.Ordinal))
             {
-                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorItemNotFound, response.Request.Uri);
+                string message = string.Format(CultureInfo.InvariantCulture, Resources.ErrorItemNotFound, response.Request.Uri);
                 throw new WindowsAzureException(message, (int)WindowsAzureErrorCode.HttpNotFound);
             }
 
@@ -802,10 +802,10 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             Debug.Assert(!string.IsNullOrEmpty(errorMessage));
 
             // Short error message:
-            errorMessage = string.Format(CultureInfo.CurrentUICulture, errorMessage, args);
+            errorMessage = string.Format(CultureInfo.InvariantCulture, errorMessage, args);
 
             // Detailed error message:
-            errorMessage = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorInvalidConnectionString, argumentName, errorMessage);
+            errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.ErrorInvalidConnectionString, argumentName, errorMessage);
 
             return new ArgumentException(errorMessage);
         }

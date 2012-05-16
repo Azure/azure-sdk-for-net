@@ -153,13 +153,13 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             Debug.Assert(position <= _value.Length);
 
             // Create a short error message.
-            errorString = string.Format(CultureInfo.CurrentUICulture, errorString, args);
+            errorString = string.Format(CultureInfo.InvariantCulture, errorString, args);
 
             // Add position.
-            errorString = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorParsingConnectionString, errorString, _pos);
+            errorString = string.Format(CultureInfo.InvariantCulture, Resources.ErrorParsingConnectionString, errorString, _pos);
 
             // Create final error message.
-            errorString = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorInvalidConnectionString, _argumentName, errorString);
+            errorString = string.Format(CultureInfo.InvariantCulture, Resources.ErrorInvalidConnectionString, _argumentName, errorString);
 
             return new ArgumentException(errorString);
         }
