@@ -129,20 +129,40 @@
   <data name="ErrorArgumentMustBeZeroOrPositive" xml:space="preserve">
     <value>Argument "{0}" must be greater than or equal to zero. The actual value is "{1}".</value>
   </data>
+  <data name="ErrorConnectionStringEmptyKey" xml:space="preserve">
+    <value>Empty key name</value>
+  </data>
+  <data name="ErrorConnectionStringMissingCharacter" xml:space="preserve">
+    <value>Missing {0} character</value>
+  </data>
+  <data name="ErrorConnectionStringMissingKey" xml:space="preserve">
+    <value>Missing key name</value>
+  </data>
   <data name="ErrorFailedRequest" xml:space="preserve">
     <value>HTTP request failed.</value>
   </data>
   <data name="ErrorInvalidConnectionString" xml:space="preserve">
-    <value>Value "{0}" does not represent a valid connection string. The connection string must be in the format "Endpoint:http://&lt;namespace&gt;.servicebus.windows.net;SharedSecretIssuer=&lt;value&gt;;SharedSecretValue=&lt;value&gt;"</value>
+    <value>Argument "{0}" is not a valid connection string: "{1}"</value>
+    <comment>The most generic connection string validation message.</comment>
+  </data>
+  <data name="ErrorInvalidEndpoint" xml:space="preserve">
+    <value>"{0}" is not a valid endpoint. The endpoint must be in the following format: "http://namespace.servicebus.windows.net"</value>
   </data>
   <data name="ErrorItemNotFound" xml:space="preserve">
     <value>Item "{0}" cannot be found.</value>
+  </data>
+  <data name="ErrorMissingServiceBusKey" xml:space="preserve">
+    <value>Required key "{0}" is missing.</value>
   </data>
   <data name="ErrorNoContent" xml:space="preserve">
     <value>HTTP response returned no data.</value>
   </data>
   <data name="ErrorNullFilterAndAction" xml:space="preserve">
     <value>Either filter or action must not be null.</value>
+  </data>
+  <data name="ErrorParsingConnectionString" xml:space="preserve">
+    <value>"{0}" at position {1}.</value>
+    <comment>Parse error for connection strings.</comment>
   </data>
   <data name="ErrorUnsupportedPropertyType" xml:space="preserve">
     <value>Unsupported custom property type: {0}.

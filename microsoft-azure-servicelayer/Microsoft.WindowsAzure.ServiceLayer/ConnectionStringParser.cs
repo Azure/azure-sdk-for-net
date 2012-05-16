@@ -38,6 +38,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             ExpectSeparator,            // Separator or end of text is expected.
         }
 
+        private string _argumentName;                       // Name of the argument.
         private string _value;                              // Value being parsed.
         private int _pos;                                   // Current position.
         private ParserState _state;                         // Current state.
@@ -45,21 +46,27 @@ namespace Microsoft.WindowsAzure.ServiceLayer
         /// <summary>
         /// Parses the connection string into a collection of key/value pairs.
         /// </summary>
+        /// <param name="argumentName">Name of the argument to be used in
+        /// error messages.</param>
         /// <param name="connectionString">Connection string.</param>
         /// <returns>Parsed connection string.</returns>
-        internal static IEnumerable<KeyValuePair<string, string>> Parse(string connectionString)
+        internal static IEnumerable<KeyValuePair<string, string>> Parse(string argumentName, string connectionString)
         {
-            ConnectionStringParser parser = new ConnectionStringParser(connectionString);
+            ConnectionStringParser parser = new ConnectionStringParser(argumentName, connectionString);
             return parser.Parse();
         }
 
         /// <summary>
         /// Initializes the object.
         /// </summary>
+        /// <param name="argumentName">Name of the argument for error messages.</param>
         /// <param name="value">Value to parse.</param>
-        private ConnectionStringParser(string value)
+        private ConnectionStringParser(string argumentName, string value)
         {
+            Debug.Assert(!string.IsNullOrEmpty(argumentName));
             Debug.Assert(value != null);
+
+            _argumentName = argumentName;
             _value = value;
             _pos = 0;
             _state = ParserState.ExpectKey;
@@ -120,21 +127,41 @@ namespace Microsoft.WindowsAzure.ServiceLayer
                         break;
                 }
             }
+            // We should never end in the "expect value" state because missing values are
+            // treated as empty strings.
+            Debug.Assert(_state != ParserState.ExpectValue);
 
-            // Must end parsing in the valid state.
-            if (_state != ParserState.ExpectKey && _state != ParserState.ExpectSeparator)
+            // Must end parsing in the valid state (expected key or separator)
+            if (_state == ParserState.ExpectAssignment)
             {
-                ThrowInvalidConnectionString();
+                throw CreateException(_pos, Resources.ErrorConnectionStringMissingCharacter, "=");
             }
+            Debug.Assert(_state == ParserState.ExpectKey || _state == ParserState.ExpectSeparator);
         }
 
         /// <summary>
-        /// Throws the "invalid connection string" exception.
+        /// Generates an invalid connection string exception with the detailed 
+        /// error message.
         /// </summary>
-        private void ThrowInvalidConnectionString()
+        /// <param name="position">Position of the error.</param>
+        /// <param name="errorString">Short error formatting string.</param>
+        /// <param name="args">Optional arguments for the error string.</param>
+        /// <returns>Exception with the requested message.</returns>
+        private Exception CreateException(int position, string errorString, params object[] args)
         {
-            string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorInvalidConnectionString, _value);
-            throw new ArgumentException(message);
+            Debug.Assert(position >= 0);
+            Debug.Assert(position <= _value.Length);
+
+            // Create a short error message.
+            errorString = string.Format(CultureInfo.InvariantCulture, errorString, args);
+
+            // Add position.
+            errorString = string.Format(CultureInfo.InvariantCulture, Resources.ErrorParsingConnectionString, errorString, _pos);
+
+            // Create final error message.
+            errorString = string.Format(CultureInfo.InvariantCulture, Resources.ErrorInvalidConnectionString, _argumentName, errorString);
+
+            return new ArgumentException(errorString);
         }
 
         /// <summary>
@@ -167,7 +194,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             }
             else if (ch == ';' || ch == '=')
             {
-                ThrowInvalidConnectionString();
+                // Key name was expected.
+                throw CreateException(firstPos, Resources.ErrorConnectionStringMissingKey);
             }
             else
             {
@@ -185,7 +213,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
             if (key.Length == 0)
             {
-                ThrowInvalidConnectionString();
+                // Empty key name.
+                throw CreateException(firstPos, Resources.ErrorConnectionStringEmptyKey);
             }
 
             return key;
@@ -206,7 +235,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
 
             if (_pos == _value.Length)
             {
-                ThrowInvalidConnectionString();
+                // Runaway string.
+                throw CreateException(_pos, Resources.ErrorConnectionStringMissingCharacter, quote);
             }
 
             return _value.Substring(firstPos, _pos++ - firstPos);
@@ -221,7 +251,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer
             Debug.Assert(_pos < _value.Length);
             if (_value[_pos] != operatorChar)
             {
-                ThrowInvalidConnectionString();
+                // Character was expected.
+                throw CreateException(_pos, Resources.ErrorConnectionStringMissingCharacter, operatorChar);
             }
             _pos++;
         }

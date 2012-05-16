@@ -83,38 +83,35 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
         /// <param name="connectionString">Connection string.</param>
         public ServiceBusClient(string connectionString)
         {
-            Validator.ArgumentIsNotNullOrEmptyString("connectionString", connectionString);
+            const string connectionStringArgumentName = "connectionString";
+
+            Validator.ArgumentIsNotNullOrEmptyString(connectionStringArgumentName, connectionString);
             Dictionary<string, string> items = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
 
             // Extract key=value pairs and put them into dictionary.
-            foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse(connectionString))
+            foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse(connectionStringArgumentName, connectionString))
             {
                 items[item.Key] = item.Value;
             }
+            
+            // Make sure all required keys are there
+            string missingKey = FindFirstMissingKey(items, Constants.EndpointKey, Constants.SecretIssuerKey, Constants.SecretValueKey);
 
-            // Make sure all required values are there.
-            bool isValid = items.ContainsKey(Constants.EndpointKey)
-                && items.ContainsKey(Constants.SecretIssuerKey)
-                && items.ContainsKey(Constants.SecretValueKey);
-
-            if (isValid)
+            if (missingKey != null)
             {
-                string serviceNamespace = GetServiceNamespace(items[Constants.EndpointKey]);
-                isValid = isValid && !string.IsNullOrEmpty(serviceNamespace);
-                if (isValid)
-                {
-                    ServiceConfig = new ServiceConfiguration(serviceNamespace);
-                    _channel = HttpChannel.CreateDefault(
-                        serviceNamespace, items[Constants.SecretIssuerKey], items[Constants.SecretValueKey]);
-                    isValid = true;
-                }
+                throw CreateConnectionStringException(connectionStringArgumentName, Resources.ErrorMissingServiceBusKey, missingKey);
             }
 
-            if (!isValid)
+            string endpoint = items[Constants.EndpointKey];
+            string serviceNamespace = GetServiceNamespace(endpoint);
+            if (string.IsNullOrEmpty(serviceNamespace))
             {
-                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorInvalidConnectionString, connectionString);
-                throw new ArgumentException(message);
+                throw CreateConnectionStringException(connectionStringArgumentName, Resources.ErrorInvalidEndpoint, endpoint);
             }
+
+            ServiceConfig = new ServiceConfiguration(serviceNamespace);
+            _channel = HttpChannel.CreateDefault(
+                serviceNamespace, items[Constants.SecretIssuerKey], items[Constants.SecretValueKey]);
         }
 
         /// <summary>
@@ -644,7 +641,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
             // services. 
             if (string.Equals((string)doc.FirstChild.NodeName, Constants.AtomFeedElementName, StringComparison.Ordinal))
             {
-                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorItemNotFound, response.Request.Uri);
+                string message = string.Format(CultureInfo.InvariantCulture, Resources.ErrorItemNotFound, response.Request.Uri);
                 throw new WindowsAzureException(message, (int)WindowsAzureErrorCode.HttpNotFound);
             }
 
@@ -771,6 +768,46 @@ namespace Microsoft.WindowsAzure.ServiceLayer.ServiceBus
                 }
             }
             return value;
+        }
+
+        /// <summary>
+        /// Finds the first missing key in the dictionary.
+        /// </summary>
+        /// <param name="keys">All keys.</param>
+        /// <param name="keyNames">Key names to check.</param>
+        /// <returns>Name of the missing key or null if not found.</returns>
+        private static string FindFirstMissingKey(Dictionary<string, string> keys, params string[] keyNames)
+        {
+            foreach (string keyName in keyNames)
+            {
+                if (!keys.ContainsKey(keyName))
+                {
+                    return keyName;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Generates an argument exception for connection string processing 
+        /// errors.
+        /// </summary>
+        /// <param name="argumentName">Name of the argument.</param>
+        /// <param name="errorMessage">Formatting string for the error message.</param>
+        /// <param name="args">Optional arguments for the error message.</param>
+        /// <returns>Exception to throw.</returns>
+        private static Exception CreateConnectionStringException(string argumentName, string errorMessage, params object[] args)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(argumentName));
+            Debug.Assert(!string.IsNullOrEmpty(errorMessage));
+
+            // Short error message:
+            errorMessage = string.Format(CultureInfo.InvariantCulture, errorMessage, args);
+
+            // Detailed error message:
+            errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.ErrorInvalidConnectionString, argumentName, errorMessage);
+
+            return new ArgumentException(errorMessage);
         }
     }
 }
