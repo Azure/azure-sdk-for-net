@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             }
 
             Dictionary<string, string> actualValues = new Dictionary<string,string>(StringComparer.Ordinal);
-            foreach (KeyValuePair<string, string> items in ConnectionStringParser.Parse(connectionString))
+            foreach (KeyValuePair<string, string> items in ConnectionStringParser.Parse("connectionString", connectionString))
             {
                 actualValues.Add(items.Key, items.Value);
             }
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             Assert.ThrowsException<ArgumentException>(
                 () =>
                 {
-                    foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse(value))
+                    foreach (KeyValuePair<string, string> item in ConnectionStringParser.Parse("connectionString", value))
                     {
                         // Do nothing.
                     }
@@ -175,6 +175,5 @@ namespace Microsoft.WindowsAzure.ServiceLayer.UnitTests
             TestFailure("'a'b=c");      // Extra character after single-quoted key;
             TestFailure("\"a\"b=c");    // Extra character after double-quoted key;
         }
-
     }
 }

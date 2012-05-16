@@ -57,8 +57,8 @@ namespace Microsoft.WindowsAzure.ServiceLayer.Http
         /// <returns>Error message.</returns>
         private static string GetHttpErrorMessage(string message, HttpResponse response)
         {
-            string details = string.Format(CultureInfo.CurrentUICulture, Resources.HttpDetails, response.StatusCode, response.ReasonPhrase);
-            return string.Format(CultureInfo.CurrentUICulture, Resources.HttpErrorMessage, message, details);
+            string details = string.Format(CultureInfo.InvariantCulture, Resources.HttpDetails, response.StatusCode, response.ReasonPhrase);
+            return string.Format(CultureInfo.InvariantCulture, Resources.HttpErrorMessage, message, details);
         }
 
         /// <summary>
