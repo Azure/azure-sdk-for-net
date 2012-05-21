@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -33,13 +34,14 @@ namespace Microsoft.WindowsAzure.Services.ServiceBus
         internal Uri ServiceBusUri { get; private set; }
 
         /// <summary>
-        /// Constructor with explicitly specified options.
+        /// Initializes the configuration object.
         /// </summary>
-        /// <param name="serviceNamespace">Service namespace.</param>
-        internal ServiceConfiguration(string serviceNamespace)
+        /// <param name="uri">Endpoint URI.</param>
+        internal ServiceConfiguration(Uri uri)
         {
-            string stringUri = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusServiceUri, serviceNamespace);
-            ServiceBusUri = new Uri(stringUri, UriKind.Absolute);
+            Debug.Assert(uri != null);
+
+            ServiceBusUri = uri;
         }
 
         /// <summary>

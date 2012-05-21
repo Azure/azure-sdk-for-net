@@ -62,21 +62,20 @@ namespace Microsoft.WindowsAzure.Services.ServiceBus.Http
         }
 
         /// <summary>
-        /// Creates a default HTTP channel.
+        /// Creates an HTTP channel with WRAP authentication.
         /// </summary>
-        /// <remarks>The default channel includes only WRAP authentication
-        /// handler, which uses private HTTP channel for processing its own 
-        /// requests.</remarks>
+        /// <remarks>The channel includes only WRAP authentication handler, 
+        /// which uses private HTTP channel for processing its own requests.</remarks>
         /// <param name="serviceNamespace">Service namespace.</param>
         /// <param name="issuerName">Issuer name.</param>
-        /// <param name="issuerPassword">Issuer password.</param>
-        public static HttpChannel CreateDefault(string serviceNamespace, string issuerName, string issuerPassword)
+        /// <param name="secretValue">Issuer password.</param>
+        public static HttpChannel CreateWithWrapAuthentication(string serviceNamespace, string issuerName, string secretValue)
         {
             Validator.ArgumentIsValidPath("serviceNamespace", serviceNamespace);
             Validator.ArgumentIsNotNull("issuerName", issuerName);
-            Validator.ArgumentIsNotNull("issuerPassword", issuerPassword);
+            Validator.ArgumentIsNotNull("secretValue", secretValue);
 
-            WrapAuthenticationHandler wrapHandler = new WrapAuthenticationHandler(serviceNamespace, issuerName, issuerPassword);
+            WrapAuthenticationHandler wrapHandler = new WrapAuthenticationHandler(serviceNamespace, issuerName, secretValue);
             return new HttpChannel(wrapHandler);
         }
 
