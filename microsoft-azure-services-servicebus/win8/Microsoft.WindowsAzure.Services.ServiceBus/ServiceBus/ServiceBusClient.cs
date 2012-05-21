@@ -71,10 +71,12 @@ namespace Microsoft.WindowsAzure.Services.ServiceBus
             Validator.ArgumentIsNotNullOrEmptyString("issuerName", issuerName);
             Validator.ArgumentIsNotNull("issuerPassword", issuerPassword);
 
-            ServiceConfig = new ServiceConfiguration(serviceNamespace);
+            string endPointString = string.Format(CultureInfo.InvariantCulture, Constants.ServiceBusServiceUri, serviceNamespace);
+            Uri endPoint = new Uri(endPointString, UriKind.Absolute);
+            ServiceConfig = new ServiceConfiguration(endPoint);
 
             // Create the default HTTP channel.
-            _channel = HttpChannel.CreateDefault(serviceNamespace, issuerName, issuerPassword);
+            _channel = HttpChannel.CreateWithWrapAuthentication(serviceNamespace, issuerName, issuerPassword);
         }
 
         /// <summary>
@@ -109,9 +111,38 @@ namespace Microsoft.WindowsAzure.Services.ServiceBus
                 throw CreateConnectionStringException(connectionStringArgumentName, Resources.ErrorInvalidEndpoint, endpoint);
             }
 
-            ServiceConfig = new ServiceConfiguration(serviceNamespace);
-            _channel = HttpChannel.CreateDefault(
+            ServiceConfig = new ServiceConfiguration(new Uri(endpoint, UriKind.Absolute));
+            _channel = HttpChannel.CreateWithWrapAuthentication(
                 serviceNamespace, items[Constants.SecretIssuerKey], items[Constants.SecretValueKey]);
+        }
+
+        /// <summary>
+        /// Initializes the client with a custom URI and handlers.
+        /// </summary>
+        /// <param name="endPoint">Endpoint URI.</param>
+        /// <param name="handlers">HTTP handlers.</param>
+        /// <remarks>This constructor is used to instantiate a servie bus
+        /// client in non-standard environments with custom URIs and 
+        /// authentication schemes.</remarks>
+        public ServiceBusClient(Uri endPoint, params IHttpHandler[] handlers)
+        {
+            Validator.ArgumentIsNotNull("endPoint", endPoint);
+            Validator.ArgumentIsNotNull("handlers", handlers);
+
+            ServiceConfig = new ServiceConfiguration(endPoint);
+            _channel = new HttpChannel(handlers);
+        }
+
+        /// <summary>
+        /// Creates a copy of the Service Bus client with extra HTTP handlers.
+        /// </summary>
+        /// <param name="handlers">List of HTTP handlers.</param>
+        /// <returns>Service Bus client with extra handlers.</returns>
+        public ServiceBusClient AddHandlers(params IHttpHandler[] handlers)
+        {
+            Validator.ArgumentIsNotNull("handlers", handlers);
+
+            return new ServiceBusClient(this, handlers);
         }
 
         /// <summary>
@@ -120,7 +151,7 @@ namespace Microsoft.WindowsAzure.Services.ServiceBus
         /// </summary>
         /// <param name="client">Source service bus client.</param>
         /// <param name="handlers">Extra HTTP handlers.</param>
-        public ServiceBusClient(ServiceBusClient client, params IHttpHandler[] handlers)
+        private ServiceBusClient(ServiceBusClient client, params IHttpHandler[] handlers)
         {
             Validator.ArgumentIsNotNull("client", client);
             Validator.ArgumentIsNotNull("handlers", handlers);

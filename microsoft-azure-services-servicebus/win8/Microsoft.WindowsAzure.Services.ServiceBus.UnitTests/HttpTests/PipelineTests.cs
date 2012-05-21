@@ -83,6 +83,15 @@ namespace Microsoft.WindowsAzure.Services.ServiceBus.UnitTests.HttpTests
         }
 
         /// <summary>
+        /// Tests passing invalid arguments in AddHandlers method.
+        /// </summary>
+        [TestMethod]
+        public void InvalidArgsInAddHandlers()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => Configuration.ServiceBus.AddHandlers((IHttpHandler[])null));
+        }
+
+        /// <summary>
         /// Tests specifying pipeline handlers.
         /// </summary>
         [TestMethod]
@@ -90,13 +99,13 @@ namespace Microsoft.WindowsAzure.Services.ServiceBus.UnitTests.HttpTests
         {
             TestHttpHandler handler1 = new TestHttpHandler();
             TestHttpHandler handler2 = new TestHttpHandler();
-            ServiceBusClient serviceBus = new ServiceBusClient(Configuration.ServiceBus, handler1);
+            ServiceBusClient serviceBus = Configuration.ServiceBus.AddHandlers(handler1);
 
             serviceBus.ListQueuesAsync().AsTask().Wait();
             Assert.AreEqual(handler1.RequestCount, 1);
             Assert.AreEqual(handler1.ResponseCount, 1);
 
-            serviceBus = new ServiceBusClient(serviceBus, handler2);
+            serviceBus = serviceBus.AddHandlers(handler2);
             serviceBus.ListQueuesAsync().AsTask().Wait();
             Assert.AreEqual(handler1.RequestCount, 2);
             Assert.AreEqual(handler1.ResponseCount, 2);
