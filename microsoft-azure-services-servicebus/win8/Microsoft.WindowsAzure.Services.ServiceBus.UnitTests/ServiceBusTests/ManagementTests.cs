@@ -945,8 +945,8 @@ namespace Microsoft.WindowsAzure.Services.ServiceBus.UnitTests.ServiceBusTests
             Assert.ThrowsException<ArgumentException>(() => new ServiceBusClient("namespace", " ", "password"));
             Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient("namespace", "user", null));
 
-            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient((ServiceBusClient)null));
-            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient(Configuration.ServiceBus, null));
+            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient((Uri)null));
+            Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient(new Uri("http://foo.bar"), (IHttpHandler[])null));
 
             Assert.ThrowsException<ArgumentNullException>(() => new ServiceBusClient((string)null));
             string[] invalidConnectionStrings = new string[] 
