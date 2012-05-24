@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  This targets file allows you to regenerate T4-generated files using MsBuild.
+  Files can be regenerated either as part of a normal build, or by calling a specific
+  build target directly.
+
+
+  Using this targets file
+  - - - - - - - - - - - -
+  To use this targets file: 
+
+  1) Import this targets file into your project by adding the appropriate <Import ...>
+       e.g. <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\TextTemplating\v10.0\Microsoft.TextTemplating.targets" />
+
+     This import statement must be included *after* the standard VB/C# targets
+     import, as it appends itself to the $(BuildDependsOn) property.
+
+  2) Set the properties to control how the build is carried out e.g.
+
+      <TransformOnBuild>true</TransformOnBuild>
+        : files should be transformation automatically as part of the build.
+  
+      <TransformOutOfDateOnly>true</TransformOutOfDateOnly>
+        : only out-of-date files should be tranformed.    
+
+      <OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
+        : whether read-only output files should be over-written or not.
+
+      <IncludeDslT4Settings>true</IncludeDslT4Settings>
+        : set the additional properties required to transform DSL text templates
+          (i.e. add PublicAssemblies to the reference search path, 
+           specify the include folder location for the DSL .tt files, and 
+           specify the settings for the DSL directive processor).
+
+
+  User-callable targets:
+  - - - - - - - - - - - -
+  This file also contains the following targets that you can call directly
+  (e.g. using msbuild /t:TransformAll) :
+
+  * Transform: transforms a single T4 template.
+  * TransformAll: transforms all T4 templates.
+  
+  
+  Specifying the output file
+  - - - - - - - - - - - - - -
+  By default, the generated file will have the same file name and location as if
+  it were created by the TextTransformationFileGenerator tool i.e. the generated
+  file will be in the same location and will have the same name but with a different
+  file extension.
+  
+  However, you can specify in metadata the location and file name to use instead e.g.
+ 
+    <None Include="GeneratedCode\SerializationHelper.tt">
+      ...
+      <OutputFilePath>SomeOtherDir</OutputFilePath>
+      <OutputFileName>SomeOtherFileName</OutputFileName>
+      ...
+    </None>
+
+  The output path can be absolute or relative. Either the output path or file name or
+  both can be supplied.
+  
+
+  Transforming custom model files
+  - - - - - - - - - - - - - - - -
+  This target file contains the settings and properties to transform DSL definition model files.
+  To transform model files for your custom DSLs, you will need to add a <DirectiveProcessor>
+  item specifying the details of the generated directive processor. See the example for the 
+  DslDirectiveProcessor below.
+
+
+  Source control integration
+  - - - - - - - - - - - - - -
+  There is no source control integration as such. If the task enounters a read-only output file,
+  it's behaviour is determined by the $(OverwriteReadOnlyOutputFiles) property. If the property is
+  true, the file is overwritten and the metadata is added to the GeneratedFiles task entry to
+  indicate this.
+  
+  If the property is false, the file is not over-written, and an entry is added to
+  othe NonGeneratedFiles list.
+  
+  By default, warnings will be logged for non-writable / over-written files, and the task 
+  will fail if there are non-writable files.
+  
+  You can customise this behaviour e.g. to check files out before or after transformation.
+  See the section "Customising the transformation process" below for more information.
+  
+
+  What is an "out of date" file?
+  - - - - - - - - - - - - - - - -
+  An out-of-date file is one where any of the input files used to generated the file were
+  modified more recently than the file itself. The input files are any "include" files that
+  were used (i.e. those imported into the template using the <#@ include ... #> directive
+  processor), and any files reference by custom directive processors. This includes any 
+  directive processors generated for target DSLs by the DSL Tools.
+
+  In addition, a file that contains only invalid T4 output (i.e. the message "ErrorGeneratingOutput"
+  that is written to the file when transformation fails) is treated as being out of date.
+
+  The targets use the file tracking feature in MsBuild. This works by logging all of the file
+  read / writes that occur when generating an output file. If the tracking logs do not exist for
+  a project, the task will not be able to determine whether a file is out of date or not. In this case,
+  the file will be tranformed.
+  
+-->
+
+  <!-- ################################################################################ -->
+  <!-- Defaults -->
+  <!-- ################################################################################ -->
+  <!-- Set default properties -->
+  <PropertyGroup>
+
+    <!-- Location of the assembly containing the tasks. -->
+    <!-- Currently, the assembly is in the same folder as this targets file, so the $(T4BuildTasksPath) does not need to be set. -->
+    <T4BuildTasksAssemblyFile>$(T4BuildTasksPath)Microsoft.TextTemplating.Build.Tasks.dll</T4BuildTasksAssemblyFile>
+
+    <!-- Indicates whether T4 templates should be transformed automatically as part of the build. -->
+    <TransformOnBuild Condition=" $(TransformOnBuild)=='' ">false</TransformOnBuild>
+
+    <!-- Indicates whether only out of date templates should be transformed, or whether all
+         templates should be transformed. -->
+    <TransformOutOfDateOnly Condition=" $(TransformOutOfDateOnly)=='' ">true</TransformOutOfDateOnly>
+
+    <!-- Specifies how read-only output files will be handled. -->
+    <OverwriteReadOnlyOutputFiles Condition=" $(OverwriteReadOnlyOutputFiles)=='' ">false</OverwriteReadOnlyOutputFiles>
+
+    <!-- Whether to include the additional settings required to transform standard DSL projects -->
+    <IncludeDslT4Settings Condition=" $(IncludeDslT4Settings)=='' ">false</IncludeDslT4Settings>
+
+    <!-- Directory into which .tlog files will be written. -->
+    <TrackerLogDirectory Condition=" $(TrackerLogDirectory)=='' ">$(IntermediateOutputPath)</TrackerLogDirectory>
+
+    <TrackFileAccess Condition=" $(TrackFileAccess)=='' ">true</TrackFileAccess>
+
+  </PropertyGroup>
+
+  <!-- Set default metadata item for GeneratedFiles.
+        This enables conditions to refer to this metadata, even if it hasn't be set by the task. -->
+  <ItemDefinitionGroup>
+    <GeneratedFiles>
+      <ReadOnlyFileOverwritten>false</ReadOnlyFileOverwritten>
+    </GeneratedFiles>
+  </ItemDefinitionGroup>
+
+
+
+  <!-- ################################################################################ -->
+  <!-- Dsl Tools properties -->
+  <!-- ################################################################################ -->
+  <!-- Add settings so that ".dsl" files can be transformed -->
+
+  <PropertyGroup Condition=" $(IncludeDslT4Settings)=='true' ">
+    <!-- Path to VS\Common7\IDE -->
+    <!-- Check the 32bit location first ; if that is empty, use the 64bit location. -->
+    <VsIdePath>$(Registry:HKEY_LOCAL_MACHINE\Software\Microsoft\VisualStudio\10.0@InstallDir)</VsIdePath>
+    <VsIdePath Condition=" $(VsIdePath) == ''" >$(Registry:HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\VisualStudio\10.0@InstallDir)</VsIdePath>
+
+    <!-- Set the default location for the Dsl Designer install. -->
+    <DslDesignerInstallPath Condition=" $(DslDesignerInstallPath)=='' ">$(VsIdePath)Extensions\Microsoft\DSL SDK\Dsl Designer\10.0\</DslDesignerInstallPath>
+
+    <!-- Add the standard DSL templates folder -->
+    <IncludeFolders>$(IncludeFolders);$(DslDesignerInstallPath)TextTemplates\</IncludeFolders>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" $(IncludeDslT4Settings)=='true' ">
+    <!-- Add a ref to the DSL directive processor. -->
+    <DirectiveProcessor Include="DslDirectiveProcessor" >
+      <Class>Microsoft.VisualStudio.Modeling.DslDefinition.DslDirectiveProcessor</Class>
+      <!-- Specify the default install location of the DslDesigner assembly -->
+      <CodeBase>$(Registry:HKEY_LOCAL_MACHINE\Software\Microsoft\VisualStudio\10.0@InstallDir)Extensions\Microsoft\DSL SDK\DSL Designer\10.0\Microsoft.VisualStudio.Modeling.Sdk.DslDefinition.10.0.dll</CodeBase>
+    </DirectiveProcessor>
+    <!-- Add VS\...\PublicAssemblies to the list of places to look for assemblies used by templates. -->
+    <T4ReferencePath Include="$(VsIdePath)PublicAssemblies\" />
+  </ItemGroup>
+
+  <!-- Set the default namespace to use for T4 Transformations.
+       The DSL Defintition directive processor asks the host for the project namespace,
+       so it needs to be specified here as a paramater value.
+       By default, the root project namespace will be returned. If you want to use
+       a different value, set the MSBuild property $(T4DslToolsNamespace).
+  -->
+  <PropertyGroup Condition=" $(IncludeDslT4Settings)=='true' ">
+    <T4DslToolsNamespace Condition=" $(T4DslToolsNamespace) == '' ">$(RootNamespace)</T4DslToolsNamespace>
+  </PropertyGroup>
+  <ItemGroup Condition=" $(IncludeDslT4Settings)=='true' ">
+    <!-- Set the value to return as the project namespace -->
+    <T4ParameterValues Include="ProjectDefaultNamespace" >
+      <Value>$(T4DslToolsNamespace)</Value>
+    </T4ParameterValues>
+  </ItemGroup>
+
+  <!-- ################################################################################ -->
+  <!-- Task definitions -->
+  <!-- ################################################################################ -->
+  <!-- Uses Assembly.LoadFrom -->
+  <UsingTask TaskName="TransformTemplates" AssemblyFile="$(T4BuildTasksAssemblyFile)" />
+  <UsingTask TaskName="PreprocessTemplates" AssemblyFile="$(T4BuildTasksAssemblyFile)" />
+
+
+  <!-- ################################################################################ -->
+  <!-- User-callable targets / customisation points -->
+  <!-- ################################################################################ -->
+
+  <!-- Customising the transformation process:
+       The transformation process can be customised by specifying targets to execute before
+       and after the transformation. This is done by setting the properties $(BeforeTransform)
+       and $(AfterTransform).
+       
+       The transformation task sets the output item lists
+       @(GeneratedFiles) and @(NonGeneratedFiles). These list contain respectively the
+       list of files that were generated by transformation, and the list of files that could
+       not be generated because a read-only version of the output file already existed.
+       
+       The default post-processing target "ProcessTransformResults" shows how these lists can be manipulated.
+       -->
+
+  <PropertyGroup>
+    <!-- List of targets that should be run before the transforming. 
+    By default, no pre-processing is carried out.
+    The next line is effectively a no-op: it is only here as placeholder to document this
+    customisation point. -->
+    <BeforeTransform Condition=" $(BeforeTransform) == '' "></BeforeTransform>
+
+    <!-- List of targets that should be run after transforming.
+    By default, a target is called that will issue warnings for all read-only files that 
+    were overwritten, and for all files that were not overwritten.
+    You can override this behaviour by providing a custom target to handle post-processing
+    e.g. in a source code control scenario, you could check out files that have been overwritten.
+    -->
+    <AfterTransform Condition=" $(AfterTransform) == '' ">ProcessTransformResults</AfterTransform>
+  </PropertyGroup>
+
+
+  <!--
+  ================================================================
+                         Tranform
+  ================================================================
+  Description: Transforms the specified T4 templates.
+    The $(TransformFile) property is used to specify the file or files
+    to transform. It can contain wildcards.
+  Examples:
+    (1) transform file "foo.tt"
+      msbuild myproj.proj /t:Transform /p:TransformFile=foo.tt
+    
+    (2) transform all .tt files start with "domain" under the folder "GeneratedCode", recursively
+      msbuild dsl.csproj /t:Transform /p:TransformFile="GeneratedCode\**\domain*.tt"
+
+  The actual work of the transformations is carried out by ExecuteTransformations. This target 
+  calls @(CreateCandidateT4ItemList) then @(SelectItemsForTransform) to detemine which files should
+  be transformed/pre-processed.
+  -->
+  <Target Name="Transform" DependsOnTargets="CreateCandidateT4ItemList;SelectItemsForTransform;$(BeforeTransform);ExecuteTransformations;$(AfterTransform)">
+  </Target>
+
+  <!--
+  ================================================================
+                         SelectItemsForTransform
+  ================================================================
+  Description: Selects the items that will be passed as inputs to 
+    the CreateT4ItemLists target.
+    The TransformFile property is used to select the file or files
+    to transform. It can contain wildcards.
+  -->
+  <Target Name="SelectItemsForTransform" >
+    <Error Condition="$(TransformFile)==''" Text="Specify the file to be transformed in the property 'TransformFile'" />
+
+    <!-- Convert the property into an item. This is done so that any
+         wildcards in the property are expanded.-->
+    <ItemGroup>
+      <ExpandedTransformFile Include="$(TransformFile)" />
+    </ItemGroup>
+
+    <!-- However, the TransformFileItem task items are newly-created, and they may or may not
+    refer to files that are in the project. Also, the newly-created items will not have any
+    custom metadata. We want to (1) limit this to files that are in the project and (2) get 
+    the corresponding task items from the project (since they may have custom metadata).    
+    -->
+    <FilterCandidatesBasedOnItemSpec CandidateItemList="@(CandidateT4ItemList)" ItemSpecList="@(ExpandedTransformFile)" >
+      <Output ItemName="CreateT4ItemListsInputs" TaskParameter="Result" />
+    </FilterCandidatesBasedOnItemSpec>
+
+  </Target>
+
+  <!--
+  ================================================================
+                         TransformAll
+  ================================================================
+  Description: Transforms all T4 templates in the project
+
+  The actual work of the transformations is carried out by ExecuteTransformations. This target 
+  calls @(CreateCandidateT4ItemList) then @(SelectItemsForTransformAll) to detemine which files should
+  be transformed/pre-processed.
+  -->
+  <Target Name="TransformAll" DependsOnTargets="CreateCandidateT4ItemList;SelectItemsForTransformAll;$(BeforeTransform);ExecuteTransformations;$(AfterTransform)">
+  </Target>
+
+  <!--
+  ================================================================
+                         SelectItemsForTransformAll
+  ================================================================
+  Description: Selects the items that will be passed as inputs to 
+    the CreateT4ItemLists target. This target selects all of the
+    items in the groups commonly generated with T4.
+  -->
+  <Target Name="SelectItemsForTransformAll" >
+    <!-- Create a list of all files (we need this to work out which file are generated and which
+         files they depend on. -->
+    <CreateItem Condition="@(CreateT4ItemListsInputs)==''" Include="@(CandidateT4ItemList)">
+      <Output ItemName="CreateT4ItemListsInputs" TaskParameter="Include"/>
+    </CreateItem>
+
+  </Target>
+
+
+
+  <!-- ################################################################################ -->
+  <!-- Internal target(s) -->
+  <!-- ################################################################################ 
+       These targets would not normally be called directly from outside this file. 
+  -->
+
+  <!--
+  ================================================================
+                         CreateCandidateT4ItemList
+  ================================================================
+  Description: creates an item list @(CandidateT4ItemList) that contains
+  all of the items that should be considered when deciding which ones
+  should be processed by T4.
+  -->
+  <Target Name="CreateCandidateT4ItemList" >
+    <Message Importance="low" Text="Creating a list of candidate items that might need to be processed by T4 items" />
+
+    <!-- Create a list of all files if only hasn't been created already (we need this to
+          work out which file are generated and which files they depend on. -->
+    <CreateItem Condition="@(CandidateT4ItemList)==''" Include="@(Compile);@(None);@(Content);@(EmbeddedResource)">
+      <Output ItemName="CandidateT4ItemList" TaskParameter="Include"/>
+    </CreateItem>
+  </Target>
+
+
+  <!--
+  ================================================================
+                         CreateT4ItemLists
+  ================================================================
+  Description: filters the items in @(CreateT4ItemListsInputs) to select those that 
+  have a T4 custom tool as the custom tool for the item. The matching items will 
+  be placed in either the $(T4TransformInputs) or $(T4PreprocessInputs) item groups, 
+  depending on the custom tool that is specified.
+  
+  The @(T4TransformInputs) group will contain the items that are use the T4 transform
+  custom tool, together with any items that in in the @(T4Transform) group.
+
+  Similarly, the @(T4TransformInputs) group will contain the items that are use the T4
+  preprocess custom tool, together with any items that in in the @(T4Preprocess) group.
+
+  The item groups, @(T4TranformInputs) and @(T4PreprocessInputs) will be passed to 
+  the transform and preprocess targets, respectively.
+
+  -->
+  <Target Name="CreateT4ItemLists" >
+    <Message Importance="low" Text="Creating T4 items lists for project $(ProjectName) ($(ProjectPath))..." />
+
+    <!-- Specify the names of the T4 custom tools if they haven't already been set elsewhere. -->
+    <PropertyGroup>
+      <T4TransformCustomToolName Condition=" $(T4TransformCustomToolName)=='' ">TextTemplatingFileGenerator</T4TransformCustomToolName>
+      <T4PreprocessCustomToolName Condition=" $(T4PreprocessCustomToolName)=='' ">TextTemplatingFilePreprocessor</T4PreprocessCustomToolName>
+    </PropertyGroup>
+
+    <!-- Work out which of the files in the @(CreateT4ItemListsInputs) group are T4 files. -->
+    <ItemGroup>
+      <!-- Add any files that have the T4 transformation custom tool-->
+      <T4TransformInputs Include="@(CreateT4ItemListsInputs)" Condition=" %(CreateT4ItemListsInputs.Generator) == $(T4TransformCustomToolName) " />
+      <!-- Add any files that are in the gruop T4Transform -->
+      <T4TransformInputs Include="@(T4Transform)" />
+
+      <!-- Now repeat for the pre-processed files -->
+      <T4PreprocessInputs Include="@(CreateT4ItemListsInputs)" Condition=" %(CreateT4ItemListsInputs.Generator) == $(T4PreprocessCustomToolName) " />
+      <T4PreprocessInputs Include="@(T4Preprocess)" />
+    </ItemGroup>
+
+  </Target>
+
+
+  <!--
+  ================================================================
+                         ExecuteTransformations
+  ================================================================
+  Description: Transforms the T4 templates in the item groups T4TransformInputs and
+    T4PreProcessInputs. The item groups are created by the target "CreateT4ItemLists".
+    Includes both transformation and preprocess templates.
+  -->
+  <Target Name="ExecuteTransformations" DependsOnTargets="CreateT4ItemLists">
+
+    <TransformTemplates
+      TemplatesToProcess="@(T4TransformInputs)"
+      IncludeFolders="$(IncludeFolders)"
+      DirectiveProcessors="@(DirectiveProcessor)"
+      AssemblyReferences="@(T4AssemblyReference)"
+      ReferencePaths="@(T4ReferencePath)"
+      TrackerLogDirectory="$(TrackerLogDirectory)"
+      TrackFileAccess="$(TrackFileAccess)"
+      MinimalRebuildFromTracking="$(TransformOutOfDateOnly)"
+      OverwriteReadOnlyOutputFiles="$(OverwriteReadOnlyOutputFiles)"
+      ParameterValues="@(T4ParameterValues)"
+      >
+
+      <!-- List of output files that were generated by the task.
+      If a read-only version of the file was overwritten by the task, the
+      task item for that file will have the following metadata entry:
+        <ReadOnlyFileOverwritten>true<ReadOnlyFileOverwritten>
+      -->
+      <Output ItemName="GeneratedFiles" TaskParameter="GeneratedFiles"/>
+
+      <!-- List of output files that could not be generated because the file file
+      already exists and is read-only. -->
+      <Output ItemName="NonGeneratedFiles" TaskParameter="NonGeneratedFiles"/>
+    </TransformTemplates>
+
+
+    <PropertyGroup>
+      <!-- Unless another namespace has been specified, use the project namespace as the
+      default namespace from pre-processed files. -->
+      <PreprocessTemplateDefaultNamespace Condition=" $(PreprocessTemplateDefaultNamespace)=='' ">$(RootNamespace)</PreprocessTemplateDefaultNamespace>
+    </PropertyGroup>
+
+    <PreprocessTemplates
+      DefaultNamespace="$(PreprocessTemplateDefaultNamespace)"
+      TemplatesToProcess="@(T4PreprocessInputs)"
+      IncludeFolders="$(IncludeFolders)"
+      DirectiveProcessors="@(DirectiveProcessor)"
+      AssemblyReferences="@(T4AssemblyReference)"
+      ReferencePaths="@(T4ReferencePath)"
+      TrackerLogDirectory="$(TrackerLogDirectory)"
+      TrackFileAccess="$(TrackFileAccess)"
+      MinimalRebuildFromTracking="$(TransformOutOfDateOnly)"
+      OverwriteReadOnlyOutputFiles="$(OverwriteReadOnlyOutputFiles)"
+      ParameterValues="@(T4ParameterValues)"
+      >
+
+      <!-- List of output files that were generated by the task.
+      If a read-only version of the file was overwritten by the task, the
+      task item for that file will have the following metadata entry:
+        <ReadOnlyFileOverwritten>true<ReadOnlyFileOverwritten>
+      -->
+      <Output ItemName="GeneratedFiles" TaskParameter="GeneratedFiles"/>
+
+      <!-- List of output files that could not be generated because the file file
+      already exists and is read-only. -->
+      <Output ItemName="NonGeneratedFiles" TaskParameter="NonGeneratedFiles"/>
+
+      <!-- List of assemblies that are required to run the processed code. -->
+      <Output ItemName="T4RequiredAssemblies" TaskParameter="RequiredAssemblies"/>
+    </PreprocessTemplates>
+
+  </Target>
+
+  <!--
+  ================================================================
+                         FilterCandidatesBasedOnItemSpec
+  ================================================================
+  Description: 
+   Returns the items from the CandidateItemList for which there is
+   an item with the same itemspec in the ItemSpecList.
+  -->
+  <UsingTask TaskName="FilterCandidatesBasedOnItemSpec" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" >
+    <ParameterGroup>
+      <CandidateItemList ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <ItemSpecList ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <Result ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+    </ParameterGroup>
+
+    <Task>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+              var matches = from candidate in CandidateItemList
+              join spec in ItemSpecList
+              on candidate.ItemSpec.ToUpperInvariant() equals spec.ItemSpec.ToUpperInvariant()
+              select candidate;
+              
+              Result = matches.ToArray();]]>
+      </Code>
+    </Task>
+
+  </UsingTask>
+
+
+  <!--
+  ================================================================
+                         ProcessTransformResults
+  ================================================================
+  Description: processes the results of a transformation to log
+  warnings for any read-only output files that were *not* overwritten, and
+  for any read-only files that *were* overwritten. In addition, if there
+  were any read-only files that were not overwritten, the target will log
+  an error, causing the build to fail.
+  -->
+  <Target Name="ProcessTransformResults">
+
+    <Warning Condition=" %(GeneratedFiles.ReadOnlyFileOverwritten) == true "
+       Text="Over-writing read-only output file: %(GeneratedFiles.Identity)" />
+
+    <Warning Condition=" %(NonGeneratedFiles.Identity) != '' "
+      Text="Output file is read-only: %(NonGeneratedFiles.Identity)"/>
+
+    <Error Condition=" @(NonGeneratedFiles) != '' "
+           Text="One or more output files were read-only" />
+
+  </Target>
+
+
+
+  <!-- ################################################################################ -->
+  <!-- Integration into the normal build process -->
+  <!-- ################################################################################ -->
+
+  <PropertyGroup>
+    <!-- Insert the transform task into the normal project build sequence -->
+    <BuildDependsOn>TransformDuringBuild;$(BuildDependsOn)</BuildDependsOn>
+  </PropertyGroup>
+
+  <!--
+  ================================================================
+                         TransformDuringBuild
+  ================================================================
+  Description: if TransformOnBuild is true, this target will be executed as part of the normal 
+  build process, and will transform all of the templates in the project.
+  -->
+  <Target Name="TransformDuringBuild" Condition=" $(TransformOnBuild)==true">
+    <CallTarget Targets="TransformAll"/>
+  </Target>
+
+
+</Project>

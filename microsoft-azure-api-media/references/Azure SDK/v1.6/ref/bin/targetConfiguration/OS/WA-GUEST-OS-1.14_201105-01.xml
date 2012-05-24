@@ -1,0 +1,1123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ExpectedConfiguration xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/windowsazure">
+  <InstalledAssemblies>
+    <InstalledAssembly>
+      <Identity>blbproxy, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>CustomMarshalers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>ISymWrapper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.CertificateServices.Setup.Interop, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.GroupPolicy.Interop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Interop.Security.AzRoles, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Transactions.Bridge.Dtc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>napcrypt, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>naphlpr, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Policy.1.0.Microsoft.Interop.Security.AzRoles, Version=6.0.6001.18000, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Policy.1.2.Microsoft.Interop.Security.AzRoles, Version=6.0.6001.18000, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>srmlib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.EnterpriseServices, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Printing, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Transactions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>CustomMarshalers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>ISymWrapper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.CertificateServices.Setup.Interop, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.GroupPolicy.Interop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Interop.Security.AzRoles, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Transactions.Bridge.Dtc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>napcrypt, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>naphlpr, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Policy.1.0.Microsoft.Interop.Security.AzRoles, Version=6.0.6001.18000, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Policy.1.2.Microsoft.Interop.Security.AzRoles, Version=6.0.6001.18000, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>srmlib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.EnterpriseServices, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Printing, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Transactions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Accessibility, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>blbmmc, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>blbmmc.resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>blbproxy.resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>blbwizfx, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>blbwizfx.resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>CfsCommonUIFx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>CfsCommonUIFx.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>ComSvcConfig, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>cscompmgd, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>DfsMgmt, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>DfsMgmt.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>DfsObjectModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>DfsObjectModel.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>dfsvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>EventViewer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>EventViewer.Resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>IEExecRemote, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>IEHost, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>IIEHost, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Conversion.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Engine, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Engine, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Tasks, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Tasks.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Utilities, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Utilities.v3.5, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.GroupPolicy.Reporting, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.GroupPolicy.Reporting.Resources, Version=2.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.JScript, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.ManagementConsole, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.ManagementConsole.Resources, Version=3.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.PowerShell.Commands.Management, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.PowerShell.Commands.Management.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.PowerShell.Commands.Utility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.PowerShell.Commands.Utility.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.PowerShell.ConsoleHost, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.PowerShell.ConsoleHost.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.PowerShell.Security, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.PowerShell.Security.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Storage.NfsCommon, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Storage.NfsCommon.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Storage.SanCommon, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Storage.SanCommon.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Storage.SanCommon.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Storage.SanCommon.UI.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Storage.Vds, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Tpm, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Tpm.Resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Transactions.Bridge, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualBasic, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualBasic.Compatibility, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualBasic.Compatibility.Data, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualBasic.Vsa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualC, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualC.STLCLR, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Vsa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Vsa.Vb.CodeDOMProcessor, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Administration.Resources, Version=7.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Iis.Rewrite, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Aspnet, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Aspnet.Resources, Version=7.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.AspnetClient, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.AspnetClient.Resources, Version=7.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Iis, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Iis.Resources, Version=7.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.IisClient, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.IisClient.Resources, Version=7.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Remoting, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Remoting.Resources, Version=7.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Resources, Version=7.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Rewrite, Version=7.2.2.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Rewrite.Client, Version=7.2.2.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Rewrite.Client.resources, Version=7.2.2.1, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Web.Management.Rewrite.resources, Version=7.2.2.1, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Windows.ServerManager, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Windows.ServerManager.Resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft_VsaVb, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>MiguiControls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>MiguiControls.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>MMCEx, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>MMCEx.Resources, Version=3.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>MMCFxCommon, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>MMCFxCommon.Resources, Version=3.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>napinit, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>napinit.resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>napsnap, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>napsnap.resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Narrator, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>NfsConfigGuide, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>NfsConfigGuide.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationBuildTasks, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationCFFRasterizer, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFontCache, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework.Aero, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework.Classic, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework.Royale, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationUI, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>ReachFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>rmConfigHelper, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>rmConfigHelper.Resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Sentinel.v3.5Client, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>ServerManagerCmd.Resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>ServiceModelReg, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>SetupNfsIdMap, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>SMDiagnostics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>SMSvcHost, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>srmgui, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>srmgui.resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>srmreports, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>srmreports.resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>StorageMgmt, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Storagemgmt.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>sysglobl, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.AddIn, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.AddIn.Contract, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ComponentModel.DataAnnotations, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Configuration.Install, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Entity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Entity.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Services, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Services.Client, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Services.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.SqlXml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.DirectoryServices, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.DirectoryServices.AccountManagement, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.DirectoryServices.Protocols, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Drawing.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.IdentityModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.IdentityModel.Selectors, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.IO.Log, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Management, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Management.Automation.Resources, Version=1.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Management.Instrumentation, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Messaging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Net, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Runtime.Remoting, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Runtime.Serialization, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Runtime.Serialization.Formatters.Soap, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.Install, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.WasHosting, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.Web, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceProcess, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Speech, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Abstractions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.DynamicData, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.DynamicData.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Entity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Entity.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Extensions.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Mobile, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.RegularExpressions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Routing, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Services, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Windows.Presentation, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Workflow.Activities, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Workflow.Runtime, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.WorkflowServices, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>TaskScheduler, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>TaskScheduler.Resources, Version=6.0.0.0, Culture=en, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>UIAutomationClient, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>UIAutomationClientsideProviders, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>UIAutomationProvider, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>UIAutomationTypes, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>WindowsBase, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>WindowsFormsIntegration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>WsatConfig, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>CustomMarshalers, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>ISymWrapper, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Transactions.Bridge.Dtc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualBasic.Activities.Compiler, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.OracleClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.EnterpriseServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Printing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Transactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>CustomMarshalers, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>ISymWrapper, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Transactions.Bridge.Dtc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualBasic.Activities.Compiler, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.OracleClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.EnterpriseServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Printing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Transactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Accessibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>AspNetMMCExt, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Conversion.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Engine, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Tasks.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Build.Utilities.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.JScript, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Transactions.Bridge, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualBasic.Compatibility, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualBasic.Compatibility.Data, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualC, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.VisualC.STLCLR, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Windows.ApplicationServer.Applications, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>Microsoft.Workflow.Compiler, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationBuildTasks, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework.Aero, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework.Classic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework.Luna, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationFramework.Royale, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>ReachFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>SMDiagnostics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>sysglobl, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Activities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Activities.Core.Presentation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Activities.DurableInstancing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Activities.Presentation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.AddIn, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.AddIn.Contract, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ComponentModel.Composition, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Configuration.Install, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.DataSetExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Entity.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Services.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.Services.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Data.SqlXml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Deployment, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Device, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.DirectoryServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.DirectoryServices.AccountManagement, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.DirectoryServices.Protocols, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Drawing.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Dynamic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.IdentityModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.IdentityModel.Selectors, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.IO.Log, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Management, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Management.Instrumentation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Messaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Numerics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Runtime.Caching, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Runtime.DurableInstancing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Runtime.Remoting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Runtime.Serialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Runtime.Serialization.Formatters.Soap, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.Activation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.Activities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.Channels, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.Discovery, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.Routing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.ServiceMoniker40, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.WasHosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceModel.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.ServiceProcess, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Speech, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Abstractions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.ApplicationServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.DataVisualization.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.DynamicData, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.DynamicData.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Entity.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Extensions.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Mobile, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.RegularExpressions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Routing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Web.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Windows.Forms.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Windows.Forms.DataVisualization.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Windows.Input.Manipulations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Windows.Presentation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Workflow.Activities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Workflow.ComponentModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Workflow.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.WorkflowServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Xaml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Xaml.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>UIAutomationClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>UIAutomationClientsideProviders, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>UIAutomationProvider, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>UIAutomationTypes, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>WindowsFormsIntegration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>XamlBuildTask, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+  </InstalledAssemblies>
+  <InstalledFrameworks>
+    <InstalledFramework>
+      <Moniker>.NETFramework,Version=v4.0</Moniker>
+    </InstalledFramework>
+    <InstalledFramework>
+      <Moniker>.NETFramework,Version=v4.0,Profile=Client</Moniker>
+    </InstalledFramework>
+    <InstalledFramework>
+      <Moniker>.NETFramework,Version=v4.0.1</Moniker>
+    </InstalledFramework>
+    <InstalledFramework>
+      <Moniker>.NETFramework,Version=v4.0.1,Profile=Client</Moniker>
+    </InstalledFramework>
+  </InstalledFrameworks>
+</ExpectedConfiguration>

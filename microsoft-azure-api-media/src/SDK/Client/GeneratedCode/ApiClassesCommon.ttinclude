@@ -1,0 +1,32 @@
+﻿<#+
+string GetApiPropertyType(PropInfo propInfo)
+{
+    if((propInfo.Type =="Guid" || propInfo.Type =="Guid?") && GetODataPropertyType(propInfo) == "string")
+    {
+        return "string";
+    }
+    return propInfo.Type;
+}
+
+void GenerateODataProperties(List<PropInfo> properties, bool suppressUncalledCalled)
+{
+    foreach(PropInfo propInfo in properties) 
+    {
+        if(propInfo.ApiHidden)
+        {
+            continue;
+        }
+        string finalType = GetODataPropertyType(propInfo);
+        string finalName = GetODataPropertyName(propInfo);
+        if(suppressUncalledCalled)
+        {
+#>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+<#+
+        }
+#>
+        public <#=finalType#> <#=finalName#> {get;set;}
+<#+
+    }
+}
+#>

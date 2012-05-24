@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<RoleModule 
+  xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition"
+  namespace="Microsoft.WindowsAzure.Plugins.Connect">
+  <Startup>
+    <Task commandLine="installendpoint.cmd" executionContext="elevated" taskType="simple" />
+    <Task commandLine="launchconfigreader.cmd" executionContext="elevated" taskType="background" />
+  </Startup>
+  <ConfigurationSettings>
+      <!-- Activation Plugin -->
+      <Setting name="ActivationToken"/>
+      <Setting name="Refresh"/>
+      <Setting name="WaitForConnectivity"/>
+      <Setting name="Upgrade"/>
+      
+      <!-- DomainJoin Plugin -->
+      <Setting name="EnableDomainJoin"/>
+      <Setting name="DomainFQDN"/>
+      <Setting name="DomainControllerFQDN"/>
+      <Setting name="DomainAccountName"/>
+      <Setting name="DomainPassword"/>
+      <Setting name="DomainOU"/>
+      <Setting name="Administrators"/>
+      <Setting name="DomainSiteName"/>
+  </ConfigurationSettings>
+  <Endpoints>
+  </Endpoints>
+  <Certificates>
+  </Certificates>
+</RoleModule>
