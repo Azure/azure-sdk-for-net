@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<RoleModule 
+  xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition"
+  namespace="Microsoft.WindowsAzure.Plugins.Diagnostics">
+  <Startup priority="-2">
+    <Task commandLine="DiagnosticsAgent.exe" executionContext="limited" taskType="background" />
+    <Task commandLine="DiagnosticsAgent.exe /blockStartup" executionContext="limited" taskType="simple" />
+  </Startup>
+  <ConfigurationSettings>
+    <Setting name="ConnectionString" />
+  </ConfigurationSettings>
+</RoleModule>

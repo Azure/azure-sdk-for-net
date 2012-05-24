@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExpectedConfiguration xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/windowsazure">
+  <InstalledAssemblies>
+    <InstalledAssembly>
+      <Identity>Microsoft.WindowsAzure.ServiceRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>msshrtmi, Version=1.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>mswacdmi, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64</Identity>
+    </InstalledAssembly>
+    <InstalledAssembly>
+      <Identity>msshrtmi, Version=1.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86</Identity>
+    </InstalledAssembly>
+   </InstalledAssemblies>
+</ExpectedConfiguration>

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<RoleModule namespace="Microsoft.WindowsAzure.Plugins.RemoteForwarder"
+ xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <Startup priority="-1">
+    <Task commandLine="RemoteForwarderAgent.exe" executionContext="elevated" taskType="simple" />
+  </Startup>
+  <ConfigurationSettings>
+    <Setting name="Enabled" />
+  </ConfigurationSettings>
+  <Endpoints>
+    <InputEndpoint name="RdpInput" protocol="tcp" port="3389" localPort="*" ignoreRoleInstanceStatus="true" />
+  </Endpoints>
+</RoleModule>
