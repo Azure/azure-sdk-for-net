@@ -1,0 +1,11 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PackageName>$(AssemblyName).cspkg</PackageName>
+    <PackageForComputeEmulator>true</PackageForComputeEmulator>
+  </PropertyGroup>
+  <Target Name="AzureDeploy" AfterTargets="Build" DependsOnTargets="Publish" Condition="$(AzurePublishProfile)!=''">
+    <Message Text="Executing target AzureDeploy from AzureDeploy.targets file"/>
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)" 
+         Command="$(windir)\system32\WindowsPowerShell\v1.0\powershell.exe -f c:\build\AzureDeploy.ps1 $(PublishDir) $(PackageName) &quot;Profiles\$(AzurePublishProfile)&quot;" />
+  </Target>
+</Project>

@@ -1,0 +1,912 @@
+<?xml version="1.0"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:include schemaLocation="query.xsd"/>
+
+  <!-- TODO: add restriction so that the name cannot start with MA -->
+  <xs:simpleType name="MonNameType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([^Mm].*)|([Mm][^Dd].*)|([Mm][Dd][^Ss].*)" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!--
+  From MSDN
+  The queue name must be a valid DNS name, conforming to the following naming rules:
+  1.A queue name must start with a letter or number, and may contain only letters, numbers and the dash (-) character.
+  2.The first and last letters in the queue name must be alphanumeric. The dash (-) character may not be the first or last letter.
+  3.All letters in a queue name must be lowercase.
+  4.A queue name must be from 3 through 63 characters long.
+  -->
+  <xs:simpleType name="XstoreQueueNameType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-z0-9][a-z0-9\-]{1,61}[a-z0-9]" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!--
+  From MSDN
+  1. Table names may contain only alphanumeric characters.
+  2. A table name may not begin with a numeric character.
+  3. Table names are case-insensitive.
+  4. Table names must be from 3 through 63 characters long.
+  -->
+  <xs:simpleType name="XstoreTableNameType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z][a-zA-Z0-9]{2,62}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- we enforce the same restriction as xtable for all our tables
+       the difference between this type and XstoreTableNameType is that
+       this one derives from xs:ID
+  -->
+  <xs:simpleType name="MonTableNameType">
+    <xs:restriction base="MonIDType">
+      <xs:pattern value="[a-zA-Z][a-zA-Z0-9]{2,62}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EtwLevelType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PriorityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Low"/>
+      <xs:enumeration value="High"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="TaskDelayRangeType">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0.0"/>
+      <xs:maxInclusive value="0.99"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="MonTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="mt:int8"/>
+      <xs:enumeration value="mt:int16"/>
+      <xs:enumeration value="mt:int32"/>
+      <xs:enumeration value="mt:int64"/>
+      <xs:enumeration value="mt:uint8"/>
+      <xs:enumeration value="mt:uint16"/>
+      <xs:enumeration value="mt:uint32"/>
+      <xs:enumeration value="mt:uint64"/>
+      <xs:enumeration value="mt:bool"/>
+      <xs:enumeration value="mt:char"/>
+      <xs:enumeration value="mt:wchar"/>
+      <xs:enumeration value="mt:float32"/>
+      <xs:enumeration value="mt:float64"/>
+      <xs:enumeration value="mt:utc"/>
+      <xs:enumeration value="mt:cstr"/>
+      <xs:enumeration value="mt:wstr"/>
+      <xs:enumeration value="mt:blob"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="MdsMonTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="mt:int32"/>
+      <xs:enumeration value="mt:int64"/>
+      <xs:enumeration value="mt:bool"/>
+      <xs:enumeration value="mt:float64"/>
+      <xs:enumeration value="mt:utc"/>
+      <xs:enumeration value="mt:wstr"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EventFormatType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="XML"/>
+      <xs:enumeration value="manifest"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- The time stamp policy refers to the query time.  For example if you specify
+       IntervalStartTime, that means the time stamp of the row(s) returned to the
+       task's data site will have the start time of the query.  If you use
+       PreserveRowTime, the time stamp of each row returned is the same time stamp
+       the query returns for each row. -->
+  <xs:simpleType name="MonTimestampPolicyType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="IntervalStartTime"/>
+      <xs:enumeration value="IntervalEndTime"/>
+      <xs:enumeration value="PreserveRowTime"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EtwProviderGuidType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+      <xs:pattern value="MonitoringAgentSourceEvents" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CompressionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none"/>
+      <xs:enumeration value="gzip"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="ColumnType">
+    <xs:attribute name="name" type="ValidColumnNameType" use="required" />
+    <xs:attribute name="type" type="MonTypeType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="SchemaType">
+    <xs:sequence>
+      <xs:element name="Column" type="ColumnType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="MonIDType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="SchemasType">
+    <xs:sequence>
+      <xs:element name="Schema" type="SchemaType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TableDeclarationType">
+    <xs:attribute name="name" type="MonTableNameType" use="required" />
+    <xs:attribute name="schema" type="xs:IDREF" use="optional" />
+    <xs:attribute name="partitionKeyLoadSpreadIndexMax" type="xs:positiveInteger" use="optional"  default="1" />
+    <xs:attribute name="dontUsePerNDayTable" type="xs:boolean" use="optional" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="TableDeclarationsType">
+    <xs:sequence>
+      <xs:element name="Table" type="TableDeclarationType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MetaDataType" mixed="true">
+    <xs:sequence>
+      <xs:any processContents="skip" minOccurs="0"/>
+    </xs:sequence>
+    <xs:anyAttribute processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="TableType">
+    <xs:complexContent>
+      <xs:extension base="TableDeclarationType">
+        <xs:sequence>
+          <xs:element name="MetaData" type="MetaDataType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="priority" type="PriorityType" use="required" />
+        <xs:attribute name="retentionInSeconds" type="xs:positiveInteger" use="optional" />
+        <xs:attribute name="diskQuotaInMB" type="xs:positiveInteger" use="optional" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="TablesType">
+    <xs:sequence>
+      <xs:element name="Table" type="TableType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- If the <Table> element is supplied, that table is the one used as the destination table.  The
+       table specified in the name attribute is used to define the schema for the result of the
+       expression evaluated in the <Table> element.  The expression must evaluate to a wstr.
+       The partitionKeyLoadSpreadIndexMax is the number of partitions in the destination xtable the task is uploading to.
+       -->
+  <xs:complexType name="DestinationTableType">
+    <xs:sequence>
+      <xs:element name="Table" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:IDREF" use="optional"/>
+    <xs:attribute name="dataSite" type="xs:IDREF" use="optional"/>
+    <xs:attribute name="matchPrefix" type="xs:string" use="optional"/>
+    <xs:attribute name="matchSuffix" type="xs:string" use="optional"/>
+    <xs:attribute name="partitionKeyLoadSpreadIndexMax" type="xs:positiveInteger" use="optional"  default="1" />
+  </xs:complexType>
+
+  <xs:simpleType name="DurationType">
+    <xs:restriction base="xs:string">
+      <!-- This duration type is an extension of the xs:duration type to allow positive
+           floating number -->
+      <xs:pattern value="P((((([0-9])+\.){0,1}([0-9])+Y){1}((([0-9])+\.){0,1}([0-9])+M){0,1}((([0-9])+\.){0,1}([0-9])+D){0,1})|(((([0-9])+\.){0,1}([0-9])+Y){0,1}((([0-9])+\.){0,1}([0-9])+M){1}((([0-9])+\.){0,1}([0-9])+D){0,1})|(((([0-9])+\.){0,1}([0-9])+Y){0,1}((([0-9])+\.){0,1}([0-9])+M){0,1}((([0-9])+\.){0,1}([0-9])+D){1}))|PT((((([0-9])+\.){0,1}([0-9])+H){1}((([0-9])+\.){0,1}([0-9])+M){0,1}((([0-9])+\.){0,1}([0-9])+S){0,1})|(((([0-9])+\.){0,1}([0-9])+H){0,1}((([0-9])+\.){0,1}([0-9])+M){1}((([0-9])+\.){0,1}([0-9])+S){0,1})|(((([0-9])+\.){0,1}([0-9])+H){0,1}((([0-9])+\.){0,1}([0-9])+M){0,1}((([0-9])+\.){0,1}([0-9])+S){1}))|P(((((([0-9])+\.){0,1}([0-9])+Y){1}((([0-9])+\.){0,1}([0-9])+M){0,1}((([0-9])+\.){0,1}([0-9])+D){0,1})|(((([0-9])+\.){0,1}([0-9])+Y){0,1}((([0-9])+\.){0,1}([0-9])+M){1}((([0-9])+\.){0,1}([0-9])+D){0,1})|(((([0-9])+\.){0,1}([0-9])+Y){0,1}((([0-9])+\.){0,1}([0-9])+M){0,1}((([0-9])+\.){0,1}([0-9])+D){1}))T((((([0-9])+\.){0,1}([0-9])+H){1}((([0-9])+\.){0,1}([0-9])+M){0,1}((([0-9])+\.){0,1}([0-9])+S){0,1})|(((([0-9])+\.){0,1}([0-9])+H){0,1}((([0-9])+\.){0,1}([0-9])+M){1}((([0-9])+\.){0,1}([0-9])+S){0,1})|(((([0-9])+\.){0,1}([0-9])+H){0,1}((([0-9])+\.){0,1}([0-9])+M){0,1}((([0-9])+\.){0,1}([0-9])+S){1})))" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DateTimeType">
+    <xs:restriction base="xs:dateTime">
+      <!-- enforce the time to be in UTC -->
+      <xs:pattern value=".*Z" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="NotificationQueueActionType">
+    <xs:sequence>
+      <xs:element name="Message" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="QueueDataSite" type="xs:IDREF" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- SignalEventAction string are named events that the agent signals when a task completes successfully.  If the
+       event is not created before MA starts it is opened as auto reset event. -->
+  <xs:complexType name="PostTaskActionsType">
+    <xs:sequence>
+      <xs:element name="NotificationQueueAction" type="NotificationQueueActionType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="SignalEventAction" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+<!-- In MA (MDS is different) the attributes have the following meaning:
+ * priority - The priority of the task.
+ * repeat - How many times to execute the task.
+ * startTime - At what fixed UTC time should the task start.  This allows you to go back in time to
+               execute tasks on older stored data.
+ * startTimeDeltaInSeconds - Sets the start time to the current time (time of MA startup) minus the delta.
+ * endTime - If combined with startTime, it specifies an exact query range for the task; implies repeat count of 1
+ * duration - The duration of each task.  Must be on a minute boundary.
+ * offset - The offset from the normalized duration.  If the duration is 5 and the offset is 0, the task runs every
+            five minutes on a five minute boundary (i.e. 0,5,10,...).  If the offset is 1 the task runs on this
+            schedule 1,6,11,....  The query bounds correspond to the duration and offset.
+ * queryDelay - How long to delay running the task.  The task query bounds are not effected by when the task is run.
+
+NOTE: In MDS offset and queryDelay have the opposite meanings.  We should obsolete offset and query delay and fix this
+      by creating a new attribute "taskDelay" to mean delaying the task without changing the query interval times and
+      "durationOffset" to offset the duration times.
+
+ * taskDelayRange - Give the scheduler some flexibility in when it can run a query.  For example if the range is set
+                    to 0.5 and the duration is every hour, it can run the query between the specified queryDelay and
+                    30 minutes past the hour.  This is required to spread the data upload load over many MA instances.
+ * timestampPolicy - Determines time placed in the header of the data packet sent to the remote store.
+ * retryTimeout - If a task fails to complete this determines how long after that task was initially scheduled to run
+                  to keep retrying.
+ * overwriteDestTable - If this is set to true, if a new row is added to a table that already exists the row is updated.
+                        Setting this to true is not recommended for performance reasons, but overwrite is the default
+                        if you are writing to one partition for backward compatibility.
+-->
+  <xs:complexType name="ScheduledTaskType">
+    <xs:all>
+      <xs:element name="Description" type="xs:string"/>
+      <xs:element name="DestinationTable" type="DestinationTableType"/>
+      <xs:element name="PostTaskActions" type="PostTaskActionsType" minOccurs="0" maxOccurs="1" />
+    </xs:all>
+    <xs:attribute name="sourceTableMatch" type="xs:string" use="optional" />
+    <xs:attribute name="priority" type="PriorityType" use="required" />
+    <xs:attribute name="repeat" type="xs:int" use="optional"/>
+    <xs:attribute name="startTime" type="DateTimeType" use="optional" />
+    <xs:attribute name="startTimeDeltaInSeconds" type="xs:int" use="optional" default="0" />
+    <xs:attribute name="endTime" type="DateTimeType" use="optional"/>
+    <xs:attribute name="duration" type="DurationType" use="required"/>
+    <xs:attribute name="offset" type="xs:duration" use="optional"/>
+    <xs:attribute name="query" type="xs:IDREF" use="required"/>
+    <xs:attribute name="queryDelay" type="xs:duration" use="optional"/>
+    <xs:attribute name="taskPercentDelayRange" type="TaskDelayRangeType" use="optional" default="0.0" />
+    <xs:attribute name="timestampPolicy" type="MonTimestampPolicyType" use="required" />
+    <xs:attribute name="retryTimeout" type="DurationType" use="optional" default="PT1H" />
+    <xs:attribute name="overwriteDestTable" type="xs:boolean" use="optional" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="ScheduledTasksType">
+    <xs:sequence>
+      <xs:element name="ScheduledTask" type="ScheduledTaskType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="QueriesType">
+    <xs:sequence>
+      <xs:element name="Query" type="QueryType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RootElementType">
+    <xs:sequence>
+      <xs:element name="Schemas" type="SchemasType" minOccurs="0"/>
+      <xs:element name="TableDeclarations" type="TableDeclarationsType" minOccurs="0"/>
+      <xs:element name="Queries" type="QueriesType" minOccurs="0"/>
+      <xs:element name="ScheduledTasks" type="ScheduledTasksType" minOccurs="0"/>
+      <xs:element name="MdsConfigServers" type="MdsConfigServers" minOccurs="0" maxOccurs="1" />
+      <xs:element name="XstoreAccountInfos" type="XstoreAccountInfosType" minOccurs="0"/>
+      <xs:element name="DataSites" type="DataSitesType" minOccurs="0"/>
+      <xs:element name="AuthorizationPolicy" type="AuthorizationPolicyType" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ColumnAssignmentType">
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="value" type="xs:string" use="required" />
+    <xs:attribute name="defaultAssignment" type="xs:string" use="optional" />
+    <xs:attribute name="type" type="MonTypeType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="TableAssignmentType">
+    <xs:sequence>
+      <xs:element name="Column" type="ColumnAssignmentType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:ID" use="required" />
+    <xs:attribute name="table" type="xs:IDREF" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="TableAssignmentsType">
+    <xs:sequence>
+      <xs:element name="TableAssignment" type="TableAssignmentType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PerformanceCounterType">
+    <xs:attribute name="counter" type="xs:string" use="required" />
+    <xs:attribute name="sampleRate" type="xs:int" use="required" />
+    <xs:attribute name="tableAssignment" type="xs:IDREF" use="required" />
+  </xs:complexType>
+
+  <xs:simpleType name="CounterTypeType">
+    <xs:restriction base="MonTypeType">
+      <xs:enumeration value="mt:int32"/>
+      <xs:enumeration value="mt:int64"/>
+      <xs:enumeration value="mt:float64"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="CounterBlockType">
+    <xs:sequence>
+      <xs:element name="Counter" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="sampleRate" type="xs:int" use="required" />
+    <xs:attribute name="tableName" type="xs:IDREF" use="required" />
+    <xs:attribute name="valueType" type="CounterTypeType" use="required" />
+  </xs:complexType>
+
+  <xs:simpleType name="HeaderFieldNameType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Version"/>
+      <xs:enumeration value="EventVersion"/>
+      <xs:enumeration value="Level"/>
+      <xs:enumeration value="LevelName"/>
+      <xs:enumeration value="Pid"/>
+      <xs:enumeration value="Tid"/>
+      <xs:enumeration value="ProviderGuid"/>
+      <xs:enumeration value="ProviderName"/>
+      <xs:enumeration value="EventId"/>
+      <xs:enumeration value="Task"/>
+      <xs:enumeration value="TaskName"/>
+      <xs:enumeration value="KeywordMask"/>
+      <xs:enumeration value="KeywordName"/>
+      <xs:enumeration value="EventMessage"/>
+      <xs:enumeration value="Opcode"/>
+      <xs:enumeration value="OpcodeName"/>
+      <xs:enumeration value="ActivityId"/>
+      <xs:enumeration value="RelatedActivityId"/>
+      <xs:enumeration value="Channel"/>
+      <xs:enumeration value="ChannelName"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="HeaderFieldType">
+    <xs:sequence>
+      <xs:element name="Field" type="HeaderFieldNameType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <!-- You can configure the provider to log any events not listed with an EventType to a default table.
+       You can define a default table with either a table assignment or using a DefaultEventType.  Using
+       the later element does not require a table assignment or schema definition for the table.
+       The user data directed towards a default event table are placed in a single unstructured
+       column, using a Tag="<value>" format.
+
+       If you want events to logged to an event specific AND default table, use the "logToDefaultTable"
+       attribute in the EventType  -->
+  <xs:complexType name="EventType">
+    <xs:attribute name="id" type="xs:int" use="required"/>
+    <xs:attribute name="tableAssignment" type="xs:IDREF" use="optional"/>
+    <xs:attribute name="tableName" type="xs:IDREF" use="optional"/>
+    <xs:attribute name="logToDefaultTable" type="xs:boolean" use="optional" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="DefaultEventType">
+    <xs:attribute name="tableName" type="xs:IDREF" use="required"/>
+  </xs:complexType>
+
+  <!-- If the EventHeaderFields element is not specified, MA includes the event id, level, provider guid, process id,
+       and thread id; opcode and keyword mask fields are included by default for manifest based events only. -->
+
+  <!-- See http://msdn.microsoft.com/en-us/library/ff190968(v=VS.85).aspx (xperf -providers K).  We support a subset
+       of the providers xperf supports.
+       You can specify the enableFlags as any supported kernel group and/or flag.  Combine flags
+       and groups using + (enableFlags="base+VIRT_ALLOC")
+
+       A guid for a user provider or enableFlags for the kernel provider must be specified.
+  -->
+  <xs:complexType name="ETWProviderType">
+    <xs:sequence>
+      <xs:element name="EventHeaderFields" type="HeaderFieldType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="DefaultEvent" type="DefaultEventType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="Event" type="EventType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="guid" type="EtwProviderGuidType" use="optional" />
+    <xs:attribute name="enableFlags" type="xs:string" use="optional" />
+    <xs:attribute name="format" type="EventFormatType" use="required" />
+    <xs:attribute name="defaultTableAssignment" type="xs:string" use="optional" />
+    <!-- This option could be dangerous. Once it's set to true, MA could write a event to multiple table that matches the schema.
+         The config file writer has to specifically turn on this feature to confirm he/she understands the consequence.
+
+         This is only supported for backward compatibility with EventType's that use table assignments.  If any event
+         in the provider list does not use table assignments (i.e. you specify a table name to write the event to directly),
+         this option must be left at false.
+    -->
+    <xs:attribute name="allowDuplicateEventID" type="xs:boolean" use="optional" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="ETWSessionType">
+    <xs:sequence>
+      <xs:element name="ETWProvider" type="ETWProviderType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="optional" />
+    <xs:attribute name="attachToName" type="xs:string" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="SystemEventsSubscriptionType">
+    <xs:attribute name="eventQuery" type="xs:string" use="required" />
+    <xs:attribute name="tableAssignment" type="xs:IDREF" use="required"/>
+  </xs:complexType>
+
+  <!--
+    Directory - The directory tree to monitor.
+    filter - FindFirstFile filter (not implemented)
+    lastChangeOffsetInSeconds - When the file listener first starts go back this far in time to pick
+                                up modified files.
+    startTime - When the listener starts pick up files modified after the start time.  The default start time
+                is the current time.
+    endTime - Do not pick up file modifications after the end time.
+    contextParam - String that matches the table assignment for "ContextParam()".  Allows you to specify something
+                   in the configuration that is entered directly into the table column for the modified file.
+    tableAssignment - How to enter the modification data into the MA table.
+    diskQuota - GC the directory being watched down to this quota.
+    removeEmptyDirectories - If GC'ing a watched directories, delete empty directories.
+   -->
+  <xs:complexType name="FileListenerWatchItemType">
+    <xs:sequence>
+      <xs:element name="Directory" type="xs:string" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="filter" type="xs:string" use="optional" />
+    <xs:attribute name="lastChangeOffsetInSeconds" type="xs:int" use="optional" default="0"/>
+    <xs:attribute name="startTime" type="DateTimeType" use="optional" />
+    <xs:attribute name="endTime" type="xs:string" use="optional" />
+    <xs:attribute name="contextParam" type="xs:string" use="optional" />
+    <xs:attribute name="tableAssignment" type="xs:IDREF" use="required" />
+    <xs:attribute name="diskQuota" type="xs:int" use="optional" />
+    <xs:attribute name="removeEmptyDirectories" type="xs:boolean" use="optional" default="true"/>
+  </xs:complexType>
+
+  <!-- Enumerates the available detection metrics-->
+  <xs:simpleType name="EwsDetectorType">
+    <xs:restriction base="xs:string">
+
+      <!-- Check for processes -->
+      <xs:enumeration value="ActiveProcesses" />
+
+      <!-- Check for Win32 services and installed drivers -->
+      <xs:enumeration value="ServicesAndDrivers" />
+
+      <!-- Check for user login sessions -->
+      <xs:enumeration value="LocalGroups" />
+
+      <!-- Check for local user accounts -->
+      <xs:enumeration value="LocalUsers" />
+
+      <!-- Check for changes in firewall configuration -->
+      <xs:enumeration value="FirewallSettings" />
+
+      <!-- Check for interface policies -->
+      <xs:enumeration value="InterfacePolicies" />
+
+      <!-- Check system settings, e.g., DNS/DHCP servers, RDOS build version, etc. -->
+      <xs:enumeration value="SystemSettings" />
+
+      <!-- Check Ip4 connections -->
+      <xs:enumeration value="Ip4Connections" />
+
+      <!-- Check Ip4 statistics -->
+      <xs:enumeration value="Ip4Statistics" />
+
+      <!-- Check TCP statistics -->
+      <xs:enumeration value="TcpStatistics" />
+
+      <!-- Check UDP statistics -->
+      <xs:enumeration value="UdpStatistics" />
+
+      <!-- Check IP filter rules -->
+      <xs:enumeration value="NetFilterRules" />
+
+      <!-- Detect DoS clients -->
+      <xs:enumeration value="DosDetect" />
+
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Indicates the EWS detection mode to use -->
+  <xs:simpleType name="EwsDetectorMode">
+    <xs:restriction base="xs:string">
+
+      <!-- Enumerates and logs the metric values, but doesn't check for discrepancies -->
+      <xs:enumeration value="Query" />
+
+      <!-- Enumerate metric values and alert on unexpected values not present in AllowedValue
+           collection or missing values not present in the RequiredValue collection.
+      -->
+      <xs:enumeration value="CompareBaseline" />
+
+      <!-- Enumerate metric values and diff this snapshot against previous snapshot and
+          alarm on discrepancies.
+      -->
+      <xs:enumeration value ="DetectChanges" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!--
+    Specifies settings for an EWS detection metric
+      AllowedValue - The collection of allowed values for the metric. All acceptable values
+          should be provided. Any detected values not present in this collection will trigger
+          an alert when using CompareBaseline mode. Values ignored in other modes.
+      RequiredValue - The collection of required values for the metric. Any value in this
+          collection not detected in a snapshot will trigger an alert when running in
+          CompareBaseline mode. Values ignored in other modes.
+      type - specifies the metric
+      mode - specifies the detection mode
+      intervalMillisecs - milliseconds to wait taking snapshots for reporting and/or diff'ing.
+          The timer is reset after current snapshot processing completes.
+      anomalyTableAssignment - reference to the description of the table to use for recording
+          anomalies discovered during detection processing. These records are used to generate
+          EWS alerts.
+      baselineTableAssignment - reference to the description of the table to use for recording
+          snapshot values. If not present, snapshot values will not be recorded and only
+          diff'ing and (mode-appropriate) alert generation is performed. This must be present for
+          Query mode to provide any value.
+  -->
+  <xs:complexType name="EwsDetectorInfoType">
+    <xs:sequence>
+      <xs:element name="AllowedValue" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="RequiredValue" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="EwsDetectorType" use="required" />
+    <xs:attribute name="mode" type="EwsDetectorMode" use="required" />
+    <xs:attribute name="intervalMillisecs" type="xs:integer" use="required" />
+    <xs:attribute name="anomalyTableAssignment" type="xs:IDREF" use="optional" />
+    <xs:attribute name="baselineTableAssignment" type="xs:IDREF" use="optional" />
+  </xs:complexType>
+
+  <!--
+    The EventLoggerType is associated with the MonTestServer listener.  This schema
+    is used to specify what events are logged by the server and what values to
+    map to each column in the event.  When more than one value is specified, the
+    test server randomly chooses which of those values to use with each event
+    logged.
+
+    Value columns are used to specify a list of exact values to log.
+
+    Range columns specify a range of numerical values to log.  The range columns are only
+    used with integer and float types.
+
+    The boolean value is randomly mapped to true or false. The value and range constraints
+    don't apply.
+  -->
+  <xs:complexType name="EventLoggerColumnType">
+    <xs:choice>
+      <xs:element name="Value" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="Range" type="xs:string" minOccurs="2" maxOccurs="2"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string"   use="required" />
+    <xs:attribute name="type" type="MdsMonTypeType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="EventLoggerEventType">
+    <xs:sequence>
+      <xs:element name="Column" type="EventLoggerColumnType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:integer" use="required" />
+    <xs:attribute name="count" type="xs:nonNegativeInteger" use="required" />
+    <xs:attribute name="level" type="EtwLevelType" use="optional" default="4" />
+  </xs:complexType>
+
+  <!-- All events in the sequence must be in the same provider group.  Use different event loggers
+       if you want to write to events in different groups even if the duration is the same. -->
+  <xs:complexType name="EventLoggerType">
+    <xs:sequence>
+      <xs:element name="Event" type="EventLoggerEventType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="duration" type="DurationType" use="required" />
+    <xs:attribute name="format" type="EventFormatType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="ListenerType">
+    <xs:choice>
+      <xs:element name="CounterBlock" type="CounterBlockType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="PerformanceCounter" type="PerformanceCounterType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="ETWSession" type="ETWSessionType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="ETWProvider" type="ETWProviderType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="SystemEventsSubscription" type="SystemEventsSubscriptionType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="FileListenerWatchItem" type="FileListenerWatchItemType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="EwsDetector" type="EwsDetectorInfoType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="EventLogger" type="EventLoggerType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:choice>
+    <xs:attribute name="module" type="xs:string" use="required" />
+    <xs:attribute name="priority" type="PriorityType" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="ListenersType">
+    <xs:sequence>
+      <xs:element name="Listener" type="ListenerType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ManagementType">
+   <xs:sequence>
+      <xs:element name="MAHeartBeatIdentity" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="commandDataSite" type="xs:IDREF" use="required"/>
+    <xs:attribute name="checkIntervalInSeconds" type="xs:int" use="required"/>
+    <xs:attribute name="heartBeatQueryName" type="xs:string" use="required"/>
+    <xs:attribute name="statusReportQueryName" type="xs:string" use="required"/>
+    <xs:attribute name="notificationChannelEntrypoint" type="xs:string" use="optional"/>
+   </xs:complexType>
+
+  <xs:complexType name="ResourceUsageType">
+    <xs:attribute name="diskQuotaInMB" type="xs:int" use="required"/>
+    <xs:attribute name="networkQuotaInKbps" type="xs:int" use="optional"/>
+    <xs:attribute name="cpuPercentUsage" type="xs:int" use="optional"/>
+  </xs:complexType>
+
+<!-- If the certificateStore attribute is present the accountSharedKey is encrypted.  If it is not present
+     the key is in plain text.  See CertOpenSystemStore in MSDN for more details.  -->
+  <xs:complexType name="XstoreAccountInfoType">
+    <xs:attribute name="name" type="xs:ID" use="required" />
+    <xs:attribute name="usePathStyleUris" type="xs:boolean" use="required" />
+    <xs:attribute name="accountName" type="xs:string" use="required"/>
+    <xs:attribute name="accountSharedKey" type="xs:string" use="required"/>
+    <xs:attribute name="tableUri" type="xs:string" use="required"/>
+    <xs:attribute name="queueUri" type="xs:string" use="required"/>
+    <xs:attribute name="blobUri" type="xs:string" use="required"/>
+    <xs:attribute name="certificateStore" type="xs:string" use="optional"/>
+    <xs:attribute name="placeholder" type="xs:boolean" use="optional" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="XstoreAccountInfosType">
+    <xs:sequence>
+      <xs:element name="XstoreAccountInfo" type="XstoreAccountInfoType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="XstoreDataSiteBaseType">
+    <xs:attribute name="name" type="xs:ID" use="required" />
+    <xs:attribute name="xstoreAccountInfoName" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="XstoreQueueDataSiteType">
+    <xs:complexContent>
+      <xs:extension base="XstoreDataSiteBaseType">
+        <xs:attribute name="queueName" type="XstoreQueueNameType" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XstoreTableDataSiteType">
+    <xs:complexContent>
+      <xs:extension base="XstoreDataSiteBaseType">
+        <xs:attribute name="associatedBlobDataSite" type="xs:IDREF" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+<!--
+    compressType - The type of compression to use when uploading data to the data site.
+                   The recommened compression type is "gzip".
+-->
+  <xs:complexType name="XstoreBlobDataSiteType">
+    <xs:complexContent>
+      <xs:extension base="XstoreDataSiteBaseType">
+        <xs:attribute name="containerName" type="XstoreQueueNameType" use="required"/>
+        <xs:attribute name="compressionType" type="CompressionType" use="optional" default="none"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DataSitesType">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="QueueDataSite" type="XstoreQueueDataSiteType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="TableDataSite" type="XstoreTableDataSiteType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="BlobDataSite" type="XstoreBlobDataSiteType" minOccurs="0" maxOccurs="1" />
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="EmbeddedMdsConfigType">
+   <xs:sequence>
+      <xs:any processContents="skip" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="MdsConfigurationsType">
+   <xs:sequence>
+      <xs:element name="MdsConfigEmbedded"  type="EmbeddedMdsConfigType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DataSiteDeclarationType">
+    <xs:attribute name="name" type="xs:ID" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="DataSiteDeclarationsType">
+    <xs:sequence>
+      <xs:element name="DataSite" type="DataSiteDeclarationType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MonitoringAgentConfig">
+    <xs:complexContent>
+      <xs:extension base="RootElementType">
+        <xs:sequence>
+          <xs:element name="DataSiteDeclarations" type="DataSiteDeclarationsType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="Management" type="ManagementType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="ResourceUsage" type="ResourceUsageType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="Tables" type="TablesType" minOccurs="0" />
+          <xs:element name="TableAssignments" type="TableAssignmentsType" minOccurs="0" />
+          <xs:element name="Listeners" type="ListenersType" minOccurs="0" />
+          <xs:element name="MdsConfigurations" type="MdsConfigurationsType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="version" type="xs:string" use="required" />
+        <!-- dateTime format: YYYY-MM-DDThh:mm:ss folowed by an optional time-zone suffix, such as Z for UTC -->
+        <xs:attribute name="timestamp" type="xs:dateTime" use="optional" default="2000-01-01T00:00:00.000Z" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="MdsClusterTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="prod"/>
+      <xs:enumeration value="stage"/>
+      <xs:enumeration value="int"/>
+      <xs:enumeration value="test"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="MdsConfigServerType">
+    <xs:attribute name="url" type="xs:string" use="required" />
+    <xs:attribute name="clusterType" type="MdsClusterTypeEnum" use="required" />
+    <xs:attribute name="ipRange" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="MdsConfigServers">
+    <xs:sequence>
+      <xs:element name="MdsConfigServer" type="MdsConfigServerType" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="XTableSettingType">
+    <xs:sequence>
+      <xs:element name="ToXTableMapping" type="SelectColumnsType" />
+      <xs:element name="FromXTableMapping" type="SelectColumnsType" />
+    </xs:sequence>
+    <xs:attribute name="name" type="XstoreTableNameType" use="optional" />
+    <xs:attribute name="schema" type="xs:string" use="required"/>
+    <xs:attribute name="xstoreAccountInfoName" type="xs:string" use="required" />
+    <xs:attribute name="partitionKeyLoadSpreadIndexMax" type="xs:int" use="optional" />
+  </xs:complexType>
+
+  <!--
+  Cannot inherit this from TableType and TableDeclarationType because we don't want name to be restricted to
+  Xstore name length requirements
+  -->
+  <xs:complexType name="XstoreTableType">
+    <xs:sequence>
+      <xs:element name="MetaData" type="MetaDataType" minOccurs="0"/>
+      <xs:element name="AdditionalIndex" type="ValidColumnNameType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="XTableSetting" type="XTableSettingType"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:ID" use="required" />
+    <xs:attribute name="schema" type="xs:IDREF" use="required" />
+    <xs:attribute name="partitionKeyLoadSpreadIndexMax" type="xs:positiveInteger" use="optional"  default="1" />
+    <xs:attribute name="dontUsePerNDayTable" type="xs:boolean" use="optional" default="false" />
+    <xs:attribute name="priority" type="PriorityType" use="required" />
+    <xs:attribute name="retentionInSeconds" type="xs:positiveInteger" use="optional" />
+    <xs:attribute name="diskQuotaInMB" type="xs:positiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="MdsTablesType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:choice>
+        <xs:element name="XstoreTable" type="XstoreTableType" maxOccurs="unbounded"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MdsConfig">
+    <xs:complexContent>
+      <xs:extension base="RootElementType">
+        <xs:sequence>
+          <xs:element name="Tables" type="MdsTablesType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="version" type="xs:string" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="FakeConfigType">
+    <xs:sequence>
+      <xs:element name="Ma" type="MonitoringAgentConfig"/>
+      <xs:element name ="Mds" type ="MdsConfig"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="FakeConfig" type ="FakeConfigType"/>
+
+  <xs:complexType name="AuthorizationPolicyType">
+    <xs:sequence>
+      <xs:element name="UserRole" type="UserRoleType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserRoleType">
+    <xs:sequence>
+      <xs:element name="Accounts" type="AccountsType" minOccurs="0"/>
+      <xs:element name="Claims" type="ClaimsType" minOccurs="0"/>
+      <xs:element name="ClientCerts" type="ClientCertsType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="AccountsType">
+    <xs:sequence>
+      <xs:element name="Account" type="AccountType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AccountType">
+    <xs:attribute name="Name" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="ClaimsType">
+    <xs:sequence>
+      <xs:element name="Claim" type="ClaimType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ClaimType">
+    <xs:attribute name="Kind" type="ClaimKindType"/>
+    <xs:attribute name="Resource" type="xs:string"/>
+    <xs:attribute name="Right" type="ClaimRightType"/>
+  </xs:complexType>
+
+  <xs:complexType name="ClientCertsType">
+    <xs:sequence>
+      <xs:element name="ClientCert" type="ClientCertType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ClientCertType">
+    <xs:attribute name="ThumbPrint" type="xs:string"/>
+    <xs:attribute name="IssuerName" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:simpleType name="ClaimKindType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Operation"/>
+      <xs:enumeration value="Table"/>
+      <xs:enumeration value="File"/>
+      <xs:enumeration value="Directory"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ClaimRightType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Execute"/>
+      <xs:enumeration value="Create"/>
+      <xs:enumeration value="Read"/>
+      <xs:enumeration value="Update"/>
+      <xs:enumeration value="Delete"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+</xs:schema>

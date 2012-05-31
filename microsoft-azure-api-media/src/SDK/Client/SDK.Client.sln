@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK.Client", "SDK.Client.csproj", "{E194B46E-9063-4CFA-85FC-51E5AAD55586}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Coverage|Any CPU = Coverage|Any CPU
+		Coverage|x64 = Coverage|x64
+		Coverage|x86 = Coverage|x86
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		IncrementVersion|Any CPU = IncrementVersion|Any CPU
+		IncrementVersion|x64 = IncrementVersion|x64
+		IncrementVersion|x86 = IncrementVersion|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Coverage|Any CPU.ActiveCfg = Coverage|Any CPU
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Coverage|Any CPU.Build.0 = Coverage|Any CPU
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Coverage|x64.ActiveCfg = Coverage|x64
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Coverage|x64.Build.0 = Coverage|x64
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Coverage|x86.ActiveCfg = Coverage|x86
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Coverage|x86.Build.0 = Coverage|x86
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Debug|x64.ActiveCfg = Debug|x64
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Debug|x64.Build.0 = Debug|x64
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Debug|x86.ActiveCfg = Debug|x86
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Debug|x86.Build.0 = Debug|x86
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.IncrementVersion|Any CPU.ActiveCfg = IncrementVersion|Any CPU
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.IncrementVersion|Any CPU.Build.0 = IncrementVersion|Any CPU
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.IncrementVersion|x64.ActiveCfg = IncrementVersion|x64
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.IncrementVersion|x64.Build.0 = IncrementVersion|x64
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.IncrementVersion|x86.ActiveCfg = IncrementVersion|x86
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.IncrementVersion|x86.Build.0 = IncrementVersion|x86
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Release|x64.ActiveCfg = Release|x64
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Release|x64.Build.0 = Release|x64
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Release|x86.ActiveCfg = Release|x86
+		{E194B46E-9063-4CFA-85FC-51E5AAD55586}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
