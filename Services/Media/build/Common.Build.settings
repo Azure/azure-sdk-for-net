@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         InitialTargets="SetActualOutputPath;CopyToOutputDirectoryAlwaysError" >
+
+  <!-- Ensures that if this file changes it forces a rebuild -->
+  <PropertyGroup>
+    <MSBuildAllProjects>
+      $(MSBuildAllProjects);$(MSBuildThisFileFullPath)
+    </MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BuildRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))</BuildRoot>
+    <TargetsPath>$(BuildRoot)\Build</TargetsPath>
+    <OutDirIsInCommandLine Condition="'$(OutDirIsInCommandLine)'=='' AND '$(OutDir)'!=''">true</OutDirIsInCommandLine>
+    <OutDirIsInCommandLine Condition="'$(OutDirIsInCommandLine)'=='' AND '$(OutDir)'==''">false</OutDirIsInCommandLine>
+    <ServiceHostingSDKInstallDir>$(BuildRoot)\references\Azure SDK\v1.6</ServiceHostingSDKInstallDir>
+  </PropertyGroup>
+
+  <!-- Azure Projects build settings -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <CloudExtensionsDir>$(TargetsPath)\Azure SDK\v1.6\</CloudExtensionsDir>
+  </PropertyGroup>
+  <!-- End Azure Projects settings -->
+  
+  <!-- Enable FXCop -->
+  <PropertyGroup>
+    <RunCodeAnalysis Condition="'$(NimbusExcludeCodeAnalysis)'==''">$(NimbusRunCodeAnalysis)</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>$(TargetsPath)\NimbusFXCopRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup> 
+    <CodeAnalysisDictionary Include="$(TargetsPath)\CustomDictionary.xml" /> 
+  </ItemGroup> 
+  <!-- End FXCop -->
+
+  <Target Name="SetActualOutputPath">
+    <CreateProperty Condition="'$(OutDirIsInCommandLine)' == 'true'" Value="$(OutDir)">
+      <Output TaskParameter="Value" PropertyName="ActualOutputPath" />
+    </CreateProperty>
+    <CreateProperty Condition="'$(OutDirIsInCommandLine)' != 'true'" Value="$(OutputPath)">
+      <Output TaskParameter="Value" PropertyName="ActualOutputPath" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="CopyToOutputDirectoryAlwaysError"
+          Condition="'@(Content)'!='' or '@(None)'!=''">
+    <Error Condition="'%(Content.CopyToOutputDirectory)'=='Always'" Text="CopyToOutputDirectory is not allowed to be 'Always'.  Use 'PreserveNewest' instead." File="$(MSBuildProjectFile)" />
+    <Error Condition="'%(None.CopyToOutputDirectory)'=='Always'" Text="CopyToOutputDirectory is not allowed to be 'Always'.  Use 'PreserveNewest' instead." File="$(MSBuildProjectFile)" />
+  </Target>
+
+  <PropertyGroup>
+    <BinaryDependencies>$(TargetsPath)\BinaryDependencies</BinaryDependencies>
+    <Configuration Condition="'$(Configuration)'==''">Debug</Configuration>
+	<Platform>AnyCPU</Platform>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    
+	<OutputPath>bin\$(Configuration)</OutputPath>
+	
+	<!--For C#:-->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <!-- RunCodeAnalysis, false by default, is set true as necessary from the msbuild command line. -->
+    <!-- This is normally done for the gated checkin build. -->
+    <RunCodeAnalysis Condition="'$(RunCodeAnalysis)'==''">false</RunCodeAnalysis>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <!-- This eliminates the warning CA0060, EnvDTE Version=7.0 not found, for VS 10 installations. -->
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <InstallerPlatform>AnyCPU</InstallerPlatform>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <InstallerPlatform>x86</InstallerPlatform>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;X64</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <InstallerPlatform>AnyCPU</InstallerPlatform>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <InstallerPlatform>x86</InstallerPlatform>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;X64</DefineConstants>
+  </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Coverage|AnyCPU' ">
+        <OutputPath>bin\Coverage\</OutputPath>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Coverage|x86' ">
+        <OutputPath>bin\Coverage\x86\</OutputPath>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Coverage|x64' ">
+        <OutputPath>bin\Coverage\x64\</OutputPath>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+  <!-- Nothing is built here.  Version number is incremented.-->
+  <PropertyGroup Condition=" '$(Configuration)' == 'IncrementVersion' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <!--Dummy path setting resolves warnings.  Nothing is copied here.-->
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutDir>$(OutputPath)</OutDir>
+    <OutDir Condition="'$(OutDir)' != '' and !HasTrailingSlash('$(OutDir)')">$(OutDir)\</OutDir>
+  </PropertyGroup>
+  
+</Project>
+

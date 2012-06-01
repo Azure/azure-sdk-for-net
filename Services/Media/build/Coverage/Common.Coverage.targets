@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="SetActualOutputPath;CopyToOutputDirectoryAlwaysError" >
+    <Target Name="InstrumentCloudProjectBinaries" AfterTargets="ResolveRoleReferences" BeforeTargets="PrepareForCsPack" Condition=" '$(Configuration)' == 'Coverage' ">
+        <Exec Command="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))\tools\AzureCC\tool\azurecc instrumentcloudproject /p:$(ProjectDir) /co:$(Configuration) /it:binary /cl:$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))\Build\coverage\nimbusvod.covlist" />
+    </Target>
+    <Target Name="InstrumentCloudServiceDefinition" AfterTargets="DeleteValidationIssuesFile" BeforeTargets="ResolveServiceDefinition" Condition=" '$(Configuration)' == 'Coverage' ">
+        <Exec Command="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), build.root))\tools\azurecc\tool\azurecc instrumentcloudproject /p:$(ProjectDir) /it:servicedefinition" />
+    </Target>
+</Project>

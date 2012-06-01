@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ApplicationRuntime>
+  <Prerequisites>
+    <!-- Setup needed for base components -->
+    <EnsureDirectoryInPath relativePath="base\x64"/>
+    <EnsureDirectoryInPath relativePath="base\x86"/>
+    
+    <!-- Done by SDK installer -->
+    <!--
+    <EnsureAssemblyInGAC relativePath="base\x64\msshrtmi.dll"/>
+    <EnsureAssemblyInGAC relativePath="base\x86\msshrtmi.dll"/>
+    <EnsureAssemblyInGAC relativePath="base\Microsoft.WindowsAzure.ServiceRuntime.dll"/>
+    -->
+    
+    <!-- Setup needed for diagnostic components -->
+    <EnsureDirectoryInPath relativePath="diagnostics\x64"/>
+    <!-- Setup needed for storage components -->
+    <!-- Done by SDK installer -->
+    <!--
+    <EnsureAssemblyInGAC   relativePath="storage\cloud\x64\mswacdmi.dll"/>
+    -->
+
+  </Prerequisites>
+  <DefaultLocalResources>
+    <DefaultLocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false"/>
+  </DefaultLocalResources>
+</ApplicationRuntime>

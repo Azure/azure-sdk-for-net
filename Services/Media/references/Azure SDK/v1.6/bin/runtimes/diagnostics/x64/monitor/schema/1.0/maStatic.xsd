@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:include schemaLocation="shared.xsd"/>
+
+  <xs:complexType name="WcfEndpointType">
+    <xs:attribute name="path" type="xs:string" use="required"/>
+    <xs:attribute name="port" type="xs:unsignedInt" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="EndpointType">
+    <xs:choice>
+      <xs:element name="WcfEndpoint" type="WcfEndpointType"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:ID" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="EndpointsType">
+    <xs:sequence>
+      <xs:element name="Endpoint" type="EndpointType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+<!-- The agent name must be unique for every MA instance running on a single system or VM.  If
+     it is not unique different MA instances will be running the same named ETW sessions.
+
+     Optionally you can explicitly specify the ETW consumer session name.  If this name is
+     specified MA will assume the session is already open and use it.  It will not close
+     it.
+-->
+
+  <xs:complexType name="MonitoringAgentStaticConfigType">
+    <xs:all>
+      <xs:element name="Endpoints" type="EndpointsType" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+    <xs:attribute name="agentVersion" type="xs:string" use="required"/>
+    <xs:attribute name="agentName" type="xs:string" use="required" />
+    <xs:attribute name="localResourcePath" type="xs:string" use="required"/>
+    <xs:attribute name="sessionName" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:element name="MonitoringAgentStaticConfig" type="MonitoringAgentStaticConfigType"/>
+
+</xs:schema>

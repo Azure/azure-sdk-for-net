@@ -1,0 +1,21 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Returns target framework moniker. E.g. ".NETFramework,Version=v4.0.1" -->
+  <Target Name="WatGetTargetFrameworkMoniker"
+          Returns="$(TargetFrameworkMoniker)">
+  </Target>
+
+  <!-- Returns target framework moniker display name. E.g. ".NET Framework 4 Platform Update 1 (KB2478063)" -->
+  <Target Name="WatGetTargetFrameworkMonikerDisplayName"
+          DependsOnTargets="GetFrameworkPaths;GetReferenceAssemblyPaths"
+          Returns="$(TargetFrameworkMonikerDisplayName)">
+  </Target>
+
+  <!-- Returns semicolon separated list of target framework directories.
+  E.g "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0.1\;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\" -->
+  <Target Name="WatGetTargetFrameworkDirectories"
+          DependsOnTargets="GetFrameworkPaths;GetReferenceAssemblyPaths"
+          Returns="$(TargetFrameworkDirectory)">
+  </Target>
+
+</Project>
