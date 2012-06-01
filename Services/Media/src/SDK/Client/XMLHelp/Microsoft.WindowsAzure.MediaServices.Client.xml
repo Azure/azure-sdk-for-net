@@ -1,0 +1,675 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+	<assembly>
+		<name>Microsoft.WindowsAzure.MediaServices.Client</name>
+	</assembly>
+	<members>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.AccessPermissions">
+			<summary> Specifies the permissions that an <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAccessPolicy"></see> may grant. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AccessPermissions.Delete">
+			<summary> Specifies deletes should be allowed. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AccessPermissions.List">
+			<summary> Specifies listing of children should be allowed. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AccessPermissions.None">
+			<summary> Specifies no access permissions. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AccessPermissions.Read">
+			<summary> Specifies reading content should be allowed. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AccessPermissions.Write">
+			<summary> Specifies the writing of content should be allowed. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.AccessPolicyCollection">
+			<summary> Represents a collection of access policies. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.AccessPolicyCollection.Create(System.String,System.TimeSpan,Microsoft.WindowsAzure.MediaServices.Client.AccessPermissions)">
+			<summary> Creates an access policy with the provided name and permissions, valid for the provided duration. </summary>
+			<returns>An access policy with the provided name, duration, and permissions.</returns>
+			<param name="duration">Specifies the duration that locators created from this access policy will be valid for.</param>
+			<param name="name">Specifies a friendly name for the access policy.</param>
+			<param name="permissions">Specifies permissions for the created access policy.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.AccessPolicyCollection.Delete(Microsoft.WindowsAzure.MediaServices.Client.IAccessPolicy)">
+			<summary> Deletes an access policy. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCollection">
+			<summary>Represents a collection of assets for a <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext"></see>. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.AssetCollection.Create(System.String[],System.String,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Creates an asset containing the provided files. </summary>
+			<returns>An asset that represents the provided files created according to the specified creation options.</returns>
+			<param name="options">A <see cref="T:System.Threading.CancellationToken"></see> to cancel Create operation.</param>
+			<param name="files">The files that make up an asset.</param>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.AssetCollection.Create(System.String[],System.String,System.TimeSpan,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Creates an asset containing the provided files. </summary>
+			<returns>An asset that represents the provided files created according to the specified creation options.</returns>
+			<param name="uploadAccessDuration">The duration for which the asset will be writable. This is used to grant access to upload the specified files to the asset.</param>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="files">The files that make up an asset.</param>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.AssetCollection.CreateAsync(System.String[],System.String,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions,System.Threading.CancellationToken)">
+			<summary> Asynchronously creates an asset containing the provided files. </summary>
+			<returns>An <see cref="T:System.Threading.Tasks.Task"></see> of type <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see>, where IAsset represents the provided  files created according to the specified creation options.</returns>
+			<param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"></see> to cancel CreateAsync operation.</param>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="files">The files that make up an asset.</param>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.AssetCollection.CreateAsync(System.String[],System.String,System.TimeSpan,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions,System.Threading.CancellationToken)">
+			<summary> Asynchronously creates an asset containing the provided files. </summary>
+			<returns>An <see cref="T:System.Threading.Tasks.Task"></see> of type <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see>, where IAsset represents the provided files created according to the specified creation options.</returns>
+			<param name="uploadAccessDuration">The duration for which the asset will be writable. This is used to grant access to upload the specified files to the asset.</param>
+			<param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"></see> to cancel CreateAsync operation.</param>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="files">The files that make up an asset.</param>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.AssetCollection.CreateEmptyAsset(System.String,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Creates an asset that does not contain any files and its <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetState"></see> is  initialized.</summary>
+			<param name="options">An <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> that will be associated with created asset.</param>
+			<param name="assetName">Asset name.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.AssetCollection.Delete(Microsoft.WindowsAzure.MediaServices.Client.IAsset)">
+			<summary>Deletes an asset and its associated <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.ILocator"></see> objects.</summary>
+			<param name="asset">The asset to delete.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.AssetCollection.Update(Microsoft.WindowsAzure.MediaServices.Client.IAsset)">
+			<summary>Updates an asset.</summary>
+			<param name="asset">The asset to be updated.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions">
+			<summary> Specifies the different options that an <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see> can be created with. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions.CommonEncryptionProtected">
+			<summary> Specifies that an asset's files are protected using a common encryption method (such as Play Ready). </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions.None">
+			<summary> Specifies no asset creation options. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions.StorageEncrypted">
+			<summary> Specifies that an asset's files should be encrypted on for upload and storage when creating the asset. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.AssetState">
+			<summary> Specifies the allowed states of an asset. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AssetState.Deleted">
+			<summary> Specifies that the asset has been deleted. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AssetState.Initialized">
+			<summary> Specifies that the asset is in initialized state. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.AssetState.Published">
+			<summary> Specifies that the asset is published. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection">
+			<summary> Represents the base of all asset collections. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.#ctor">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection"></see> class.</summary>
+		</member>
+		<member name="E:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.OnUploadProgress">
+			<summary> Occurs when uploading a file. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.Create(System.String)">
+			<summary> Creates an asset containing the provided file. </summary>
+			<returns>An asset representing the provided file.</returns>
+			<param name="file">The file to create an asset from.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.Create(System.String,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Creates an asset containing the provided file. </summary>
+			<returns>An asset representing the provided file created according to the specified options.</returns>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="file">The file to create an Asset from.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.Create(System.String[])">
+			<summary> Creates an asset containing the provided files. </summary>
+			<returns>An asset representing composed of the provided files.</returns>
+			<param name="files">The files that make up an asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.Create(System.String[],Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Creates an asset containing the provided files. </summary>
+			<returns>An asset representing the provided files created according to the specified options.</returns>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="files">The files that make up an asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.Create(System.String[],System.String,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Creates an asset containing the provided files. </summary>
+			<returns>An asset representing the provided files created according to the specified creation options.</returns>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="files">The files that make up an asset.</param>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.Create(System.String[],System.String,System.TimeSpan,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Creates an asset containing the provided files. </summary>
+			<returns> An asset representing the provided files created according to the specified creation options. </returns>
+			<param name="uploadAccessDuration">The duration for which the asset will be writable. This is used to grant access to upload the specified files to the asset.</param>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="files">The files that make up an asset.</param>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.CreateAsync(System.String[],System.String,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions,System.Threading.CancellationToken)">
+			<summary> Asynchronously creates an asset containing the provided files. </summary>
+			<returns>An <see cref="T:System.Threading.Tasks.Task"></see> of type <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see>, where IAsset representing the provided representing the provided files created according to the specified creation options.</returns>
+			<param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"></see> to cancel CreateAsync operation.</param>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="files">The files that make up an asset.</param>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.CreateAsync(System.String[],System.String,System.TimeSpan,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions,System.Threading.CancellationToken)">
+			<summary> Asynchronously creates an asset containing the provided files. </summary>
+			<returns>An <see cref="T:System.Threading.Tasks.Task"></see> of type <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see>, where IAsset represents the provided files created according to the specified creation options.</returns>
+			<param name="uploadAccessDuration">The duration for which the asset will be writable. This is used to grant access to upload the specified files to the asset.</param>
+			<param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"></see> to cancel CreateAsync operation.</param>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="files">The files that make up an asset.</param>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.CreateEmptyAsset(System.String,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Creates the empty asset in initialized state. </summary>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="assetName">Name of the asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.CreateFromDirectory(System.String,System.String)">
+			<summary> Creates an asset from the files in a directory. </summary>
+			<returns>An asset representing the files in the provided directory with the specified primaryFile.</returns>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+			<param name="directory">The directory containing the files making up an asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.CreateFromDirectory(System.String,System.String,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Creates an asset from the files in a directory. </summary>
+			<returns>An asset representing the files in the provided directory with the specified primaryFile,  creating according to the specified creation options.</returns>
+			<param name="primaryFile">The name of the file to be used as the primary file when creating the asset.</param>
+			<param name="options">A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions"></see> value that specifies how to create an asset.</param>
+			<param name="directory">The directory containing the files making up an asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.Delete(Microsoft.WindowsAzure.MediaServices.Client.IAsset)">
+			<summary> Deletes provided asset and the associated locators. </summary>
+			<param name="asset">The asset to delete from the underlying collection.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseAssetCollection.Update(Microsoft.WindowsAzure.MediaServices.Client.IAsset)">
+			<summary> Updates an asset.  </summary>
+			<param name="asset">The asset to be updated.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BaseCloudCollection`1">
+			<summary> Represents a base collection that has a <see cref="T:System.Data.Services.Client.DataServiceContext"></see>. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseCloudCollection`1.#ctor(System.Data.Services.Client.DataServiceContext,System.Linq.IQueryable{`0})">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BaseCloudCollection`1"></see> class.</summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BaseCollection`1">
+			<summary> Represents a base media collection. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseCollection`1.#ctor">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BaseCollection`1"></see> class.</summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BaseContentKeyCollection">
+			<summary> Represents a collection of content keys. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseContentKeyCollection.#ctor">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BaseContentKeyCollection"></see> class.</summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseContentKeyCollection.Create(System.Guid,System.Byte[])">
+			<summary> Creates a content key with the specified key identifier and value. </summary>
+			<returns>A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IContentKey"></see> that can be associated with an <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see>.</returns>
+			<param name="contentKey">The value of the content key.</param>
+			<param name="keyId">The key identifier.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseContentKeyCollection.Create(System.Guid,System.Byte[],System.String)">
+			<summary> Creates a content key with the specified key identifier and value. </summary>
+			<returns>A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IContentKey"></see> that can be associated with an <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see>.</returns>
+			<param name="name">A friendly name for the content key.</param>
+			<param name="contentKey">The value of the content key.</param>
+			<param name="keyId">The key identifier.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseContentKeyCollection.Delete(Microsoft.WindowsAzure.MediaServices.Client.IContentKey)">
+			<summary> Deletes the specified content key. </summary>
+			<param name="contentKey">The content key to delete.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BaseFileInfoCollection">
+			<summary> Provides a base class for all <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IFileInfo"></see> collections.</summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseFileInfoCollection.#ctor">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BaseFileInfoCollection"></see> class.</summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BaseFileInfoCollection.Update(Microsoft.WindowsAzure.MediaServices.Client.IFileInfo)">
+			<summary> Updates the provided file.  </summary>
+			<param name="file">The file information to be updated.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferClient">
+			<summary> Represents a client to operate on Windows Azure blobs. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferClient.#ctor">
+			<summary> Constructs a <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferClient"></see> object. </summary>
+		</member>
+		<member name="E:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferClient.TransferCompleted">
+			<summary> Occurs when an upload or download operation has been completed or cancelled. </summary>
+		</member>
+		<member name="E:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferClient.TransferProgressChanged">
+			<summary> Occurs when file transfer progress changed. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferClient.OnTaskProgressChanged(Microsoft.WindowsAzure.MediaServices.Client.BlobTransferProgressChangedEventArgs)">
+			<summary> Occurs when the progress of a blob transfer operation changes. </summary>
+			<param name="e">An <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferProgressChangedEventArgs"></see> that contains the progress information.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferCompleteEventArgs">
+			<summary> Represents the information for blob transfer completion event. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferCompleteEventArgs.#ctor(System.Exception,System.Boolean,System.Object,System.String,System.Uri,Microsoft.WindowsAzure.MediaServices.Client.BlobTransferType)">
+			<summary> Initializes a new instance of <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferCompleteEventArgs"></see></summary>
+			<param name="transferType">The blob transfer type.</param>
+			<param name="localFileName">The name of the local file.</param>
+			<param name="error">The error, if any, that occurred. Nulls allowed.</param>
+			<param name="isCanceled">Is true if the operation was canceled; false otherwise.</param>
+			<param name="url">A <see cref="T:System.Uri"></see> representing the location of the blob.</param>
+			<param name="userState">The user state provided for the operation.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferProgressChangedEventArgs">
+			<summary> Describes the progress of a blob transfer, used by &lt;see cref="!:TransferProgressChanged" /&gt; event. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferProgressChangedEventArgs.#ctor(System.Int64,System.Int64,System.Int32,System.Double,System.Uri,System.String,System.Object)">
+			<summary> Constructs a BlobTransferProgressChangedEventArgs object. </summary>
+			<param name="bytesSent">Number of bytes transferred.</param>
+			<param name="speed">Average speed of transfer in bytes per second.</param>
+			<param name="progressPercentage">Percentage of bytes that finished transferring.</param>
+			<param name="localfile">Name of the file being transferred.</param>
+			<param name="totalBytesToSend">Total number of bytes to transfer.</param>
+			<param name="uri">Uri of the blob location to transfer the data.</param>
+			<param name="userState">User state information to be passed through.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferType">
+			<summary> Specifies the type of the transfer. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferType.Download">
+			<summary> Specifies a download transfer. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferType.Upload">
+			<summary> Specifies an upload transfer. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext">
+			<summary>Describes the context from which all entities in the AMLong platform can be accessed. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext.#ctor(System.String,System.String)">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext"></see> class. </summary>
+			<param name="accountName">The AMShort account name to authenticate with.</param>
+			<param name="accountKey">The AMShort account key to authenticate with.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext.#ctor(System.Uri,System.String,System.String)">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext"></see> class. </summary>
+			<param name="apiServer">A <see cref="T:System.Uri"></see> representing the API endpoint.</param>
+			<param name="accountName">The AMShort account name to authenticate with.</param>
+			<param name="accountKey">The AMShort account key to authenticate with.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext.#ctor(System.Uri,System.String,System.String,System.String,System.String)">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext"></see> class. </summary>
+			<param name="apiServer">A <see cref="T:System.Uri"></see> representing the API endpoint.</param>
+			<param name="accountName">The Microsoft WindowsAzure Media Services account name to authenticate with.</param>
+			<param name="scope">The scope of authorization.</param>
+			<param name="acsBaseAddress">The access control endpoint to authenticate against.</param>
+			<param name="accountKey">The Microsoft WindowsAzure Media Services account key to authenticate with.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext.Detach(System.Object)">
+			<summary>Detaches an object tracked by the media context. </summary>
+			<param name="entity">The object to detach from this media context.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext.DetachAll">
+			<summary>Stops tracking all of the links and entities retrieved from this media context.</summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.ContentKeyCollection">
+			<summary> Represents a collection of content keys. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.ContentKeyCollection.Create(System.Guid,System.Byte[],System.String)">
+			<summary> Creates a content key with the specified key identifier and value. </summary>
+			<returns>A <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IContentKey"></see> that can be associated with an <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see>.</returns>
+			<param name="name">A friendly name for the content key.</param>
+			<param name="contentKey">The value of the content key.</param>
+			<param name="keyId">The key identifier.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.ContentKeyCollection.Delete(Microsoft.WindowsAzure.MediaServices.Client.IContentKey)">
+			<summary> Deletes a content key from the content key collection. </summary>
+			<param name="contentKey">The content key to be deleted.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.ContentKeyType">
+			<summary> Specifies the type of a content key. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.ContentKeyType.CommonEncryption">
+			<summary> Specifies a content key for common encryption. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.ContentKeyType.ConfigurationEncryption">
+			<summary> Specifies a content key for configuration encryption. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.ContentKeyType.StorageEncryption">
+			<summary> Specifies a content key for storage encryption. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.DownloadProgressEventArgs">
+			<summary> Describes the status of a download operation. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.DownloadProgressEventArgs.#ctor(System.Int64,System.Int64)">
+			<summary> Constructs a DownloadProgressEventArgs object that describes the status of downloading files. </summary>
+			<param name="totalBytes">Total number of bytes to download.</param>
+			<param name="bytesDownloaded">Number of bytes downloaded.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.ErrorDetail">
+			<summary> Describes an error encountered during the execution of a task. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.ErrorDetail.#ctor">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.ErrorDetail"></see> class.</summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.IAccessPolicy">
+			<summary> Defines an access policy to an <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see> in the system. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset">
+			<summary> Represents an asset that can be an input to jobs or tasks. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.IAsset.Publish">
+			<summary> Publishes this asset instance. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.IAsset.UploadFilesAsync(System.String[],Microsoft.WindowsAzure.MediaServices.Client.BlobTransferClient,Microsoft.WindowsAzure.MediaServices.Client.ILocator,System.Threading.CancellationToken)">
+			<summary> Uploads the files asynchronously to an asset. </summary>
+			<param name="token">A <see cref="T:System.Threading.CancellationToken"></see> to use for canceling upload operation. </param>
+			<param name="locator">An asset <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.ILocator"></see> which defines permissions associated with the asset.</param>
+			<param name="files">The files.</param>
+			<param name="blobTransferClient">The <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BlobTransferClient"></see> which is used to upload files.</param>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.IAsset.ContentKeys">
+			<summary> Gets the content keys associated with the asset.</summary>
+			<returns><see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IContentKey"></see></returns>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.IAsset.Files">
+			<summary> Gets a collection of files contained by the asset. </summary>
+			<returns>A collection of files contained by the asset.</returns>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.IAsset.Locators">
+			<summary> Gets the locators associated with this asset. </summary>
+			<returns><see cref="T:Microsoft.WindowsAzure.MediaServices.Client.ILocator"></see></returns>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.IAsset.ParentAssets">
+			<summary> Gets the parent assets that were used to create the asset. </summary>
+			<returns><see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see></returns>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.IContentKey">
+			<summary> Represents a content key that can be used for encryption and decryption. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.IContentKey.GetClearKeyValue">
+			<summary> Gets the decrypted content key value. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.IContentKey.GetEncryptedKeyValue(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+			<summary> Gets the encrypted content key value. </summary>
+			<param name="certToEncryptTo">The <see cref="T:System.Security.Cryptography.X509Certificates.X509Certificate2"></see> to protect the key with.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.IFileInfo">
+			<summary> Represents an file belonging to an asset. </summary>
+		</member>
+		<member name="E:Microsoft.WindowsAzure.MediaServices.Client.IFileInfo.OnDownloadProgress">
+			<summary> Occurs when a file download progresses. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.IFileInfo.DownloadToFile(System.String)">
+			<summary>Downloads the represented file to the specified file path. </summary>
+			<param name="file">The file name and path to download the file to.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.IFileInfo.DownloadToFileAsync(System.String,System.Threading.CancellationToken)">
+			<summary> Asynchronously downloads the represented file to the specified file path. </summary>
+			<param name="cancellationToken">The cancellation token.</param>
+			<param name="file">The file name and path to download the file to.</param>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.IFileInfo.Asset">
+			<summary> Gets the asset that this file belongs to. </summary>
+			<returns><see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see></returns>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.IJob">
+			<summary> Describes a job in the system. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.IJob.Cancel">
+			<summary> Sends request to cancel a job. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.IJob.Delete">
+			<summary> Deletes this job instance. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.IJob.Submit">
+			<summary> Submits this job instance. </summary>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.IJob.InputMediaAssets">
+			<summary> Gets a collection of asset identifiers that are inputs to the job. </summary>
+			<returns>A collection of asset identifiers.</returns>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.IJob.OutputMediaAssets">
+			<summary> Gets a collection of asset identifiers that are outputs of the job. </summary>
+			<returns>A collection of asset identifiers.</returns>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.IJob.Tasks">
+			<summary> Gets a collection of tasks that compose the job. </summary>
+			<returns>An enumerable of tasks.</returns>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.ILocator">
+			<summary> Represents the application of an access policy to an asset. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.InputAssetCollection`1">
+			<summary> Enumerable for task input assets. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.InputAssetCollection`1.#ctor">
+			<summary> Initializes a new instance of the &lt;see cref="!:InputAssetCollection" /&gt; class. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.InputAssetCollection`1.Add(`0)">
+			<summary> Adds the specified item to a collection. </summary>
+			<param name="item">The asset.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.InputAssetCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+			<summary> Adds the range of assets to a collection. </summary>
+			<param name="assets">The assets to add.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.InputAssetCollection`1.GetEnumerator">
+			<summary> Returns an enumerator that iterates through the collection. </summary>
+			<returns> A &lt;see cref="T:System.Collections.Generic.IEnumerator`1" /&gt; that can be used to iterate through the collection. </returns>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.InputAssetCollection`1.Item(System.Int32)">
+			<summary> Gets the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see> at the specified index. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.ITask">
+			<summary> Describes a task within a job in the system. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.ITask.GetClearConfiguration">
+			<summary> Gets the unencrypted configuration data. </summary>
+			<returns>A string containing the configuration data. If the data was encrypted, the configuration returned is decrypted.</returns>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.JobCollection">
+			<summary>   Represents a collection of jobs. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.JobState">
+			<summary> Specifies the possible job states. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.JobState.Canceled">
+			<summary> Specifies that the job was canceled. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.JobState.Canceling">
+			<summary> Specifies that cancel job has been requested and should stop processing. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.JobState.Error">
+			<summary> Specifies that an error occurred while processing the job. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.JobState.Finished">
+			<summary> Specifies that the job is finished processing and outputs have been produced. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.JobState.Processing">
+			<summary> Specifies that the job is currently processing. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.JobState.Queued">
+			<summary> Specifies that the job is queued and waiting to be scheduled. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.JobState.Scheduled">
+			<summary> Specifies that the job is scheduled for processing when resources become available. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection">
+			<summary> Collection of <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.ILocator"></see> objects. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection.CreateOriginLocator(Microsoft.WindowsAzure.MediaServices.Client.IAsset,Microsoft.WindowsAzure.MediaServices.Client.IAccessPolicy)">
+			<summary>Creates an origin locator for streaming from origin servers, with the specified access policy and asset. </summary>
+			<returns> A locator enabling streaming access to the specified asset. </returns>
+			<param name="asset"> The asset to create a SAS locator for. </param>
+			<param name="accessPolicy"> The access policy that governs access for the locator. </param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection.CreateOriginLocator(Microsoft.WindowsAzure.MediaServices.Client.IAsset,Microsoft.WindowsAzure.MediaServices.Client.IAccessPolicy,System.Nullable{System.DateTime})">
+			<summary> Creates an origin locator for streaming from origin servers, with the specified access policy and asset. </summary>
+			<returns> A locator enabling streaming access to the specified asset. </returns>
+			<param name="asset"> The asset to create a SAS locator for. </param>
+			<param name="accessPolicy"> The access policy that governs access for the locator. </param>
+			<param name="startTime"> The access start time of the locator. </param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection.CreateSasLocator(Microsoft.WindowsAzure.MediaServices.Client.IAsset,Microsoft.WindowsAzure.MediaServices.Client.IAccessPolicy)">
+			<summary>     Creates a SAS locator with the specified access policy and asset. </summary>
+			<returns> A locator granting access specified by accessPolicy to the provided asset. </returns>
+			<param name="asset"> The asset to create a SAS locator for. </param>
+			<param name="accessPolicy"> The access policy that governs access for the locator. </param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection.CreateSasLocator(Microsoft.WindowsAzure.MediaServices.Client.IAsset,Microsoft.WindowsAzure.MediaServices.Client.IAccessPolicy,System.Nullable{System.DateTime})">
+			<summary>     Creates a SAS locator with the specified access policy and asset. </summary>
+			<returns> A locator granting access specified by accessPolicy to the provided asset. </returns>
+			<param name="asset"> The asset to create a SAS locator for. </param>
+			<param name="accessPolicy"> The access policy that governs access for the locator. </param>
+			<param name="startTime"> The access start time of the locator. </param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection.CreateWindowsAzureCdnLocator(Microsoft.WindowsAzure.MediaServices.Client.IAsset,Microsoft.WindowsAzure.MediaServices.Client.IAccessPolicy)">
+			<summary>Creates a WindowsAzure CDN Locator for streaming from origin servers, with the specified access policy and asset. </summary>
+			<returns> A locator enabling streaming access to the specified asset. </returns>
+			<param name="asset"> The asset to create a SAS locator for. </param>
+			<param name="accessPolicy"> The access policy that governs access for the locator. </param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection.CreateWindowsAzureCdnLocator(Microsoft.WindowsAzure.MediaServices.Client.IAsset,Microsoft.WindowsAzure.MediaServices.Client.IAccessPolicy,System.DateTime)">
+			<summary>Creates a Windows Azure CDN locator for streaming from origin servers, starting at the specified start time, with the specified access policy and asset. </summary>
+			<returns> A locator enabling streaming access to the specified asset. </returns>
+			<param name="asset"> The asset to create a SAS locator for. </param>
+			<param name="accessPolicy"> The access policy that governs access for the locator. </param>
+			<param name="startTime"> The start time of the created locator. </param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection.Revoke(Microsoft.WindowsAzure.MediaServices.Client.ILocator)">
+			<summary> Revokes the specified locator, denying any access it provided. </summary>
+			<param name="locator"> The locator to revoke access for. </param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection.Update(Microsoft.WindowsAzure.MediaServices.Client.ILocator,System.DateTime)">
+			<summary> Updates the expiration time of an origin locator. </summary>
+			<param name="expiryTime">The new expiration time for the origin locator.</param>
+			<param name="locator">The origin locator to update.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection.Update(Microsoft.WindowsAzure.MediaServices.Client.ILocator,System.Nullable{System.DateTime},System.DateTime)">
+			<summary> Updates the start time or expiration time of an origin locator. </summary>
+			<param name="expiryTime">The new expiration time for the origin locator.</param>
+			<param name="locator">The origin locator to update.</param>
+			<param name="startTime">The new start time for the origin locator.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.LocatorType">
+			<summary> Specifies the available types locator.</summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.LocatorType.None">
+			<summary> Specifies no locator type. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.LocatorType.Origin">
+			<summary> Specifies a locator type which refers to an origin streaming endpoint. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.LocatorType.Sas">
+			<summary> Specifies a locator type which contains a shared access signature Url. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.LocatorType.WindowsAzureCdn">
+			<summary> Specifies a locator type which uses the Windows Azure CDN to stream. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.MediaContextBase">
+			<summary>   Represents a base media context containing collections to operate on. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.MediaContextBase.#ctor">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.MediaContextBase"></see> class.</summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.OutputAssetCollection.#ctor">
+			<summary> Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.OutputAssetCollection"></see> class. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.OutputAssetCollection.AddNew(System.String,System.Boolean,Microsoft.WindowsAzure.MediaServices.Client.AssetCreationOptions)">
+			<summary> Adds the new output asset.</summary>
+			<param name="shouldPersistOutputOnCompletion">if set to true output asset will be persisted in a system after job execution.</param>
+			<param name="options">The options.</param>
+			<param name="assetName">The asset name.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.OutputAssetCollection.GetEnumerator">
+			<summary> Returns an enumerator that iterates through the collection. </summary>
+			<returns> A &lt;see cref="T:System.Collections.Generic.IEnumerator`1" /&gt; that can be used to iterate through the collection. </returns>
+		</member>
+		<member name="P:Microsoft.WindowsAzure.MediaServices.Client.OutputAssetCollection.IsReadOnly">
+			<summary> Gets a value indicating whether this collection is read only. </summary>
+			<returns>truefalse</returns>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.ProtectionKeyType">
+			<summary> Describes the types of protection keys. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.ProtectionKeyType.X509CertificateThumbprint">
+			<summary> The protection key is an X.509 certificate thumbprint. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.TaskCollection.#ctor">
+			<summary>Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.TaskCollection"></see> class.</summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.TaskCollection.AddNew(System.String,Microsoft.WindowsAzure.MediaServices.Client.IMediaProcessor,System.String,Microsoft.WindowsAzure.MediaServices.Client.TaskCreationOptions)">
+			<summary> Adds the new. </summary>
+			<param name="configuration">The configuration.</param>
+			<param name="taskName">The task name.</param>
+			<param name="options">The options.</param>
+			<param name="mediaProcessor">The media processor id.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.TaskCollection.AddNew(System.String,Microsoft.WindowsAzure.MediaServices.Client.IMediaProcessor,System.String,Microsoft.WindowsAzure.MediaServices.Client.TaskCreationOptions,Microsoft.WindowsAzure.MediaServices.Client.ITask)">
+			<summary> Adds the new task. </summary>
+			<param name="parentTask">The parent task.</param>
+			<param name="configuration">The configuration.</param>
+			<param name="taskName">The task name.</param>
+			<param name="options">The options.</param>
+			<param name="mediaProcessor">The media processor.</param>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.TaskCreationOptions">
+			<summary> Specifies the options for creating tasks. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.TaskCreationOptions.None">
+			<summary> Specifies no creation options. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.TaskCreationOptions.ProtectedConfiguration">
+			<summary> Specifies that the task's configuration should be encrypted. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.TemplateType">
+			<summary> Describes the types of job templates based on the accessibility level. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.TemplateType.AccountLevel">
+			<summary> Templates that can only be used by the account that created the template. </summary>
+		</member>
+		<member name="F:Microsoft.WindowsAzure.MediaServices.Client.TemplateType.SystemLevel">
+			<summary> Templates that can be used by everyone. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.UploadProgressEventArgs">
+			<summary> Describes the status of an upload operation. </summary>
+		</member>
+		<member name="T:Microsoft.WindowsAzure.MediaServices.Client.BulkIngest.BulkIngestMediaContext">
+			<summary> Provides the ability to generate manifest files that describe Microsoft.Cloud.Media constructs. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BulkIngest.BulkIngestMediaContext.#ctor(System.String[])">
+			<summary> Initializes a new instance of <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BulkIngest.BulkIngestMediaContext"></see>. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BulkIngest.BulkIngestMediaContext.#ctor(System.String[],System.String)">
+			<summary> Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BulkIngest.BulkIngestMediaContext"></see>. </summary>
+			<param name="outputFolder">The folder in which generated content such as manifests and encrypted <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see> will be saved.</param>
+			<param name="protectionKeyIds">An array containing the key IDs to use for different possible encryption types for created assets. The index  of the array corresponds to the values of the enum type <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.ContentKeyType"></see>.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BulkIngest.BulkIngestMediaContext.#ctor(System.Uri,System.String,System.String,System.String,System.String,System.String)">
+			<summary> Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.BulkIngest.BulkIngestMediaContext"></see>. </summary>
+			<param name="clientId">The client id to authenticate with.</param>
+			<param name="clientSecret">The client secret to authenticate with.</param>
+			<param name="apiServer">A <see cref="T:System.Uri"></see> representing a the API endpoint.</param>
+			<param name="outputFolder">The folder in which generated content such as manifests and encrypted <see cref="T:Microsoft.WindowsAzure.MediaServices.Client.IAsset"></see> will be saved.</param>
+			<param name="scope">The scope of authorization.</param>
+			<param name="acsBaseAddress">The access control endpoint to authenticate against.</param>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BulkIngest.BulkIngestMediaContext.SaveChanges">
+			<summary> Saves the bulk ingest output manifest to the provided output folder. </summary>
+		</member>
+		<member name="M:Microsoft.WindowsAzure.MediaServices.Client.BulkIngest.BulkIngestMediaContext.SaveTo(System.Xml.XmlWriter)">
+			<summary> Saves the ingest manifest to an output. </summary>
+			<returns>The ID of this bulk ingest operation.</returns>
+			<param name="output">The <see cref="T:System.Xml.XmlWriter"></see> object used to write the output to.</param>
+		</member>
+	</members>
+</doc>

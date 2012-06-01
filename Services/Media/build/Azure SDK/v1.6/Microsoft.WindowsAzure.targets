@@ -1,0 +1,3504 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <CloudToolsVersion>1.6</CloudToolsVersion>
+    <CloudToolsVersionSettingName>CloudToolsDiagnosticAgentVersion</CloudToolsVersionSettingName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildThisFileDirectory)</CloudExtensionsDir>
+    <CloudExtensionsImportBeforeDir>$(MSBuildThisFileDirectory)ImportBefore\</CloudExtensionsImportBeforeDir>
+    <CloudExtensionsImportAfterDir>$(MSBuildThisFileDirectory)ImportAfter\</CloudExtensionsImportAfterDir>
+
+    <ImportByWildcardBeforeMicrosoftCloudServiceTargets Condition=" '$(ImportByWildcardBeforeMicrosoftCloudServiceTargets)' == '' ">true</ImportByWildcardBeforeMicrosoftCloudServiceTargets>
+    <ImportByWildcardAfterMicrosoftCloudServiceTargets Condition=" '$(ImportByWildcardAfterMicrosoftCloudServiceTargets)' == '' ">true</ImportByWildcardAfterMicrosoftCloudServiceTargets>
+
+    <CustomBeforeCloudServiceTargets Condition=" '$(CustomBeforeCloudServiceTargets)' == '' ">$(CloudExtensionsDir)Custom.Before.$(MSBuildThisFile)</CustomBeforeCloudServiceTargets>
+    <CustomAfterCloudServiceTargets Condition=" '$(CustomAfterCloudServiceTargets)' == '' ">$(CloudExtensionsDir)Custom.After.$(MSBuildThisFile)</CustomAfterCloudServiceTargets>
+    <PackageForComputeEmulator Condition=" '$(PackageForComputeEmulator)' == '' ">false</PackageForComputeEmulator>
+  </PropertyGroup>
+
+  <Import Project="$(CloudExtensionsImportBeforeDir)*" Condition=" '$(ImportByWildcardBeforeMicrosoftCloudServiceTargets)' == 'true' and Exists('$(CloudExtensionsImportBeforeDir)') "/>
+
+  <Import Project="$(CustomBeforeCloudServiceTargets)" Condition=" Exists('$(CustomBeforeCloudServiceTargets)') "/>
+
+  <!-- =========================================================== 
+       Setup the place where we look for the Windows Azure SDK 
+       =========================================================== -->
+
+  <!-- Set installation properties. These properties can be overriden to support non-default installation -->
+  <PropertyGroup>
+    <ActiveAzureSdkVersion Condition=" '$(ActiveAzureSdkVersion)' == '' ">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Azure Tools for Microsoft Visual Studio\10.0\v1.6', 'ActiveWindowsAzureVersion', null, RegistryView.Registry32))</ActiveAzureSdkVersion>
+    <ActiveAzureSdkVersion Condition=" '$(ActiveAzureSdkVersion)' == '' ">1.6</ActiveAzureSdkVersion>
+    <ServiceHostingSDKRegistryKey>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\ServiceHosting\v$(ActiveAzureSdkVersion)</ServiceHostingSDKRegistryKey>
+    <ServiceHostingSDKInstallDir Condition=" '$(ServiceHostingSDKInstallDir)' == '' ">$([MSBuild]::GetRegistryValueFromView('$(ServiceHostingSDKRegistryKey)', 'InstallPath', null, RegistryView.Registry32))</ServiceHostingSDKInstallDir>
+ 
+    <!-- Ensure ServiceHostingSDKInstallDir has a trailing slash, so it can be concatenated -->
+    <ServiceHostingSDKInstallDir Condition=" '$(ServiceHostingSDKInstallDir)' != '' and !HasTrailingSlash('$(ServiceHostingSDKInstallDir)')">$(ServiceHostingSDKInstallDir)\</ServiceHostingSDKInstallDir>
+
+    <ServiceHostingSDKBinDir     Condition=" '$(ServiceHostingSDKBinDir)' == '' ">$(ServiceHostingSDKInstallDir)bin\</ServiceHostingSDKBinDir>
+
+    <ServiceHostingSDKTaskPath   Condition=" '$(ServiceHostingSDKTaskPath)' == '' ">$(ServiceHostingSDKBinDir)Microsoft.ServiceHosting.Tools.MSBuildTasks.dll</ServiceHostingSDKTaskPath>
+
+    <StorageClientAssemblyFullPath Condition=" '$(StorageClientAssemblyFullPath)' == '' ">$(ServiceHostingSDKBinDir)Microsoft.WindowsAzure.StorageClient.dll</StorageClientAssemblyFullPath>
+  </PropertyGroup>
+
+  <!-- IntelliTrace related properties that should be overriden externally to enable IntelliTrace. -->
+  <PropertyGroup>
+    <EnableIntelliTrace Condition="'$(EnableIntelliTrace)' == ''">false</EnableIntelliTrace>
+    <IntelliTraceConnectionString Condition="'$(IntelliTraceConnectionString)' == ''">UseDevelopmentStorage=true</IntelliTraceConnectionString>
+  </PropertyGroup>
+
+  <!-- Profiling related properties that should be overriden externally to enable Profiling. -->
+  <PropertyGroup>
+    <EnableProfiling Condition="'$(EnableProfiling)' == ''">false</EnableProfiling>
+    <ProfilingConnectionString Condition="'$(ProfilingConnectionString)' == ''">UseDevelopmentStorage=true</ProfilingConnectionString>
+    <ProfilingMode Condition="'$(ProfilingMode)' == ''" >Sampling</ProfilingMode>
+    <EnableTierInteractionProfiling Condition="'$(EnableTierInteractionProfiling)' == ''" >false</EnableTierInteractionProfiling>
+  </PropertyGroup>
+
+  <!-- WebDeploy related properties that should be overriden externally to enable WebDeploy. -->
+  <PropertyGroup>
+    <EnableWebDeploy Condition="'$(EnableWebDeploy)' == ''">false</EnableWebDeploy>
+    <WebDeployPorts Condition="'$(WebDeployPorts)' == ''"></WebDeployPorts>
+  </PropertyGroup>
+  
+  <!-- RemoteDesktop related properties that should be overriden externally to enable RemoteDesktop. -->
+  <PropertyGroup>
+    <EnableRemoteDesktop Condition="$(EnableRemoteDesktop) == ''"></EnableRemoteDesktop>
+  </PropertyGroup>
+  
+  <!-- =========================================================== 
+       Bring in the CSPack MSBuild task 
+       =========================================================== -->
+  <UsingTask TaskName="CSPack"                AssemblyFile="$(ServiceHostingSDKTaskPath)" Condition=" Exists('$(ServiceHostingSDKTaskPath)') " />
+  <UsingTask TaskName="ValidateServiceFiles"  AssemblyFile="$(ServiceHostingSDKTaskPath)" Condition=" Exists('$(ServiceHostingSDKTaskPath)') " />
+
+  <!-- SDK related properties. -->
+  <PropertyGroup>
+    <!-- Set to True to suppress warnings generated by the SDK when packaging web roles using the (legacy) Hostable Web Core. -->
+    <AllowLegacyWebRoles Condition=" '$(AllowLegacyWebRoles)' == '' ">False</AllowLegacyWebRoles>
+  </PropertyGroup>
+  
+  <!-- =========================================================== 
+       Bring in our tasks
+       =========================================================== -->
+  <PropertyGroup>
+    <CloudExtensionsTaskPath  Condition=" '$(CloudExtensionsTaskPath)' == '' ">$(CloudExtensionsDir)Microsoft.VisualStudio.WindowsAzure.Tasks.$(CloudToolsVersion).dll</CloudExtensionsTaskPath>
+  </PropertyGroup>
+
+  <UsingTask TaskName="FindTargetPath"                              AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="DeleteCurrentDeployment"                     AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="WATMessage"                                  AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="AddSettingToServiceDefinition"               AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="AddIntelliTraceToServiceConfiguration"       AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="SetProfilerPath"                             AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="AddGeneratedXmlComment"                      AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="XPathQuery"                                  AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="EnableWebDeploy"                             AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="UpdateProfilingPluginManifest"               AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="AddSettingToServiceConfiguration"            AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="FindWindowsAzureAssemblies"                  AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="ProvideGacAssemblyInfo"                      AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="ProvideAssemblyProcessorArchitecture"        AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="WriteValidationIssues"                       AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="GetDevelopmentStorageInServiceConfiguration" AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="ParseSqlConnectionString"                    AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="SetServiceConfigurationSetting"              AssemblyFile="$(CloudExtensionsTaskPath)" />
+  <UsingTask TaskName="ConfigureRemoteDesktop"              	      AssemblyFile="$(CloudExtensionsTaskPath)" />
+
+  <!-- ===========================================================  
+       Import the Common targets file and override the standard 
+       tasks that VS expects to perform a build 
+       =========================================================== -->
+
+  <!-- Import the Common targets file -->
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+
+  <!-- =========================================================== 
+       Property Declarations
+       =========================================================== -->
+
+  <PropertyGroup>
+
+    <!-- Example, bin\Debug\Compute.csx\  -->
+    <ServiceOutputDirectory Condition=" '$(ServiceOutputDirectory)' == '' ">csx\$(Configuration)\</ServiceOutputDirectory>
+
+    <!-- The local path where Windows Azure compiler outputs the roles -->
+    <ServiceHosting_HardcodedDirectory Condition =" '$(ServiceHosting_HardcodedDirectory)' == '' ">roles\</ServiceHosting_HardcodedDirectory>
+
+    <!-- The namespace of the service definition and service configuration xml files -->
+    <ServiceDefinitionNamespace>http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition</ServiceDefinitionNamespace>
+    <ServiceConfigurationNamespace>http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration</ServiceConfigurationNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+
+    <!-- Packages the web role into an intermediate folder.
+         - When building from inside Visual Studio, we don't want to package the web role. This provides edit/refresh 
+           capability on web pages.
+         - When building from the command line (or when publishing) we want to package the web role.
+    -->
+    <PackageWebRole Condition="'$(PackageWebRole)' == '' And '$(BuildingInsideVisualStudio)' == 'True'">False</PackageWebRole>
+    <PackageWebRole Condition="'$(PackageWebRole)' == '' And '$(BuildingInsideVisualStudio)' != 'True'">True</PackageWebRole>
+
+    <!-- Warn whether any roles have an instance count of zero at publish.  A package containing a role with an instance count of
+       0 will not work when deployed to Windows Azure. To disable check, set WarnOnRolesWithZeroInstance to false in the
+       Windows Azure Project -->
+    <WarnOnRolesWithZeroInstance Condition="'$(WarnOnRolesWithZeroInstance)' == ''">True</WarnOnRolesWithZeroInstance>
+  </PropertyGroup>
+
+  <!-- Path to VsInstr.exe used for instrumenting Role outputs for profilng -->
+  <PropertyGroup>
+    <CCTVSInstrPath>$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0\InstalledProducts\Instrumentation', 'Location', null, RegistryView.Registry32))x64\</CCTVSInstrPath>
+    <VSInstrName>$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0\InstalledProducts\Instrumentation', 'VSInstr', null, RegistryView.Registry32))</VSInstrName>
+    <VSInstrCommand>$(CCTVSInstrPath)$(VSInstrName)</VSInstrCommand>
+  </PropertyGroup>
+
+  <PropertyGroup>
+
+    <!--
+      Set to true when publishing. Defaults to False.
+      It is true during the whole publish workflow that consists of executing Build and Publish targets one after another.
+      This property may be useful for validation and plug-in configuration targets that need to distinguish between normal builds and publishing builds.
+    -->
+    <IsPublishing Condition=" '$(IsPublishing)' == '' ">False</IsPublishing>
+
+    <!--
+      This property is set to true only when we execute the Publish target.
+      Compare it with the IsPublishing property that is set for the whole publish workflow that executes Build target first and Publish target after that.
+      Build target is executed before publish: $(IsPublishing) == True   $(IsExecutingPublishTarget) == False
+      Publish target is executed:              $(IsPublishing) == True   $(IsExecutingPublishTarget) == True
+    -->
+    <IsExecutingPublishTarget Condition=" '$(IsExecutingPublishTarget)' == '' ">False</IsExecutingPublishTarget>
+
+    <!-- The profile being built or packaged. Defaults to Cloud. -->
+    <TargetProfile Condition=" '$(TargetProfile)' == '' ">Cloud</TargetProfile>
+
+    <!-- The typical extension for service definition files in the project. -->
+    <ServiceDefinitionExtension>.csdef</ServiceDefinitionExtension>
+
+    <!-- The typical prefix for service configuration files in the project. -->
+    <ServiceConfigurationPrefix>ServiceConfiguration</ServiceConfigurationPrefix>
+
+    <!-- The typical extension for service configuration files in the project. -->
+    <ServiceConfigurationExtension>.cscfg</ServiceConfigurationExtension>
+
+    <!-- The default name for a service configuration file (e.g. used in v1.4 and earlier projects). -->
+    <DefaultServiceConfiguration>$(ServiceConfigurationPrefix)$(ServiceConfigurationExtension)</DefaultServiceConfiguration>
+
+  </PropertyGroup>
+
+  <PropertyGroup>
+
+    <!-- Name of the file to collect validation issues. -->
+    <ValidationIssuesFullPath>$(OutDir)ValidationIssues.xml</ValidationIssuesFullPath>
+
+    <!-- Should we treat the validation issues as errors? -->
+    <ValidationIssuesAreErrors Condition=" '$(ValidationIssuesAreErrors)' == '' ">False</ValidationIssuesAreErrors>
+
+    <!-- Full path of the the Microsoft.Common.targets extension file. -->
+    <CommonTargetsExtensionFile>$(MSBuildExtensionsPath)\4.0\Microsoft.Common.targets\ImportAfter\Microsoft.WindowsAzure.Common.targets</CommonTargetsExtensionFile>
+
+  </PropertyGroup>
+
+  <!-- 
+  ===============GenerateServiceModel===========================================
+
+    Drives the generation of the service model files.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <GenerateServiceModelDependsOn>
+      ResolveServiceModel;
+      FindServiceDefinition;
+      FindServiceConfiguration;
+      PreValidateServiceModel;
+      CopyServiceModel;
+      TransformServiceModel;
+      ValidateServiceModel;
+    </GenerateServiceModelDependsOn>
+  </PropertyGroup>
+  <Target Name="GenerateServiceModel"
+          DependsOnTargets="$(GenerateServiceModelDependsOn)" />
+
+  <!-- 
+  ===============ResolveServiceModel============================================
+
+    Drives the resolution (i.e. selection) of the service model files.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ResolveServiceModelDependsOn>
+      BeforeResolveServiceModel;
+      CoreResolveServiceModel;
+      AfterResolveServiceModel;
+    </ResolveServiceModelDependsOn>
+  </PropertyGroup>
+  <Target Name="ResolveServiceModel"
+          DependsOnTargets="$(ResolveServiceModelDependsOn)" />
+
+  <!-- 
+  ===============BeforeResolveServiceModel======================================
+
+    Override to perform tasks before the service model files have been resolved (i.e. selected).
+    
+  ==============================================================================
+  -->
+  <Target Name="BeforeResolveServiceModel" />
+
+  <!-- 
+  ===============CoreResolveServiceModel======================================
+
+    Drives the internal resolution (i.e. selection) of the service model files.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <CoreResolveServiceModelDependsOn>
+      ResolveServiceDefinition;
+      ResolveServiceConfiguration;
+    </CoreResolveServiceModelDependsOn>
+  </PropertyGroup>
+  <Target Name="CoreResolveServiceModel"
+          DependsOnTargets="$(CoreResolveServiceModelDependsOn)" />
+
+  <!-- 
+  ===============AfterResolveServiceModel=======================================
+
+    Override to perform tasks after the service model files have been resolved (i.e. selected).
+    
+  ==============================================================================
+  -->
+  <Target Name="AfterResolveServiceModel" />
+
+  <!-- 
+  ===============ResolveServiceDefinition=======================================
+
+    Given the service definition files in the project, selects one to be published.
+  
+    [IN]
+  
+    ServiceDefinition: (item) The collection of service definition files in the project.
+  
+    [OUT]
+  
+    SourceServiceDefinition: (item) The service definition file in the project file that will be published.
+    TargetServiceDefinition: (item) The service definition file that is actually published.
+  
+  ==============================================================================
+  -->
+  <Target Name="ResolveServiceDefinition">
+
+    <ItemGroup>
+
+      <!-- We assume there is only a single, non-profile-specific service definition file in the project. -->
+      <SourceServiceDefinition Include="@(ServiceDefinition)" />
+
+      <!-- The target service definition is in the same folder (for CSPack reasons), but renamed <Filename>.build.<Extension>. -->
+      <TargetServiceDefinition Include="@(SourceServiceDefinition->'%(RecursiveDirectory)%(Filename).build%(Extension)')" />
+
+    </ItemGroup>
+
+    <Message Text="Source Service Definition: @(SourceServiceDefinition)" />
+    <Message Text="Target Service Definition: @(TargetServiceDefinition)" />
+
+    <!-- NOTE: Later tasks will verify that one and only one service definition file was found. -->
+
+  </Target>
+
+  <!-- 
+  ===============ResolveServiceConfiguration====================================
+
+    Given the service configuration files in the project, selects one to be published.
+  
+    [IN]
+  
+    ServiceConfiguration: (item) The collection of service configuration files in the project.
+  
+    [OUT]
+  
+    SourceServiceConfiguration: (item) The service configuration file in the project file that will be published.
+    TargetServiceConfiguration: (item) The service configuration file that is actually published.
+  
+  ==============================================================================
+  -->
+  <Target Name="ResolveServiceConfiguration">
+
+    <Message Text="Target Profile: $(TargetProfile)" />
+    <Message Text="Service Configurations: @(ServiceConfiguration)" />
+
+    <Message Text="Looking for a service configuration file named: $(ServiceConfigurationPrefix).$(TargetProfile)$(ServiceConfigurationExtension)" />
+
+    <FindInList CaseSensitive="false"
+                Condition=" '@(SourceServiceConfiguration)' == '' "
+                ItemSpecToFind="$(ServiceConfigurationPrefix).$(TargetProfile)$(ServiceConfigurationExtension)"
+                List="@(ServiceConfiguration)">
+      <Output TaskParameter="ItemFound" ItemName="SourceServiceConfiguration" />
+    </FindInList>
+
+    <Message Text="Looking for a service configuration file named: $(DefaultServiceConfiguration)" Condition=" '@(SourceServiceConfiguration)' == '' " />
+
+    <!-- If still not found, try to find a service configuration file with the default name (e.g. like used in 1.4 and earlier projects). -->
+
+    <FindInList CaseSensitive="false"
+                Condition=" '@(SourceServiceConfiguration)' == '' "
+                ItemSpecToFind="$(DefaultServiceConfiguration)"
+                List="@(ServiceConfiguration)">
+      <Output TaskParameter="ItemFound" ItemName="SourceServiceConfiguration" />
+    </FindInList>
+
+    <WATMessage Arguments="$(DefaultServiceConfiguration)"
+                Code="WAT200"
+                Condition=" '@(SourceServiceConfiguration)' == '' "
+                HelpKeyword="NoDefaultServiceConfiguration"
+                Type="Error"/>
+
+    <ItemGroup>
+
+      <!-- The target service configuration has the default name in order to be picked up during debugging, but is in the output directory. -->
+      <TargetServiceConfiguration Include="@(SourceServiceConfiguration->'$(OutDir)$(DefaultServiceConfiguration)')">
+        <!-- We save the source filename in order to restore the original filename during publish. -->
+        <SourceFilename>%(Filename)%(Extension)</SourceFilename>
+      </TargetServiceConfiguration>
+
+    </ItemGroup>
+
+    <Message Text="Source Service Configuration: @(SourceServiceConfiguration)" />
+    <Message Text="Target Service Configuration: @(TargetServiceConfiguration)" />
+
+    <!-- NOTE: Later tasks will verify that one and only one service configuration file was found. -->
+
+  </Target>
+
+  <!-- 
+  ===============TransformServiceModel==========================================
+
+    Drives the transformation (i.e. modification) of the service model files.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <TransformServiceModelDependsOn>
+      BeforeTransformServiceModel;
+      CoreTransformServiceModel;
+      AfterTransformServiceModel;
+    </TransformServiceModelDependsOn>
+  </PropertyGroup>
+  <Target Name="TransformServiceModel"
+          DependsOnTargets="$(TransformServiceModelDependsOn)" />
+
+  <!-- 
+  ===============BeforeTransformServiceModel====================================
+
+    Override to perform tasks before the service model files have been transformed.
+    
+  ==============================================================================
+  -->
+  <Target Name="BeforeTransformServiceModel" />
+
+  <!-- 
+  ===============CoreTransformServiceModel======================================
+
+    Target to drive internal transformation of service model files.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <CoreTransformServiceModelDependsOn>
+      UpdateDiagnosticsConnectionStringOnPublish;
+    </CoreTransformServiceModelDependsOn>
+  </PropertyGroup>
+  <Target Name="CoreTransformServiceModel"
+          DependsOnTargets="$(CoreTransformServiceModelDependsOn)" />
+
+  <!-- 
+  ===============UpdateDiagnosticsConnectionStringOnPublish=====================
+
+    Updates the diagnostics connection string for each role during publication.
+    
+    The connection string will be pointed towards the Windows Azure storage
+    account selected prior to publication. This prevents "development" DevFabric
+    connection strings from being used in Windows Azure (which would
+    then generate errors).
+    
+    [IN]
+    
+    DiagnosticsConnectionStringRoles: (property) The roles ('|' delimited) for which the diagnostics connection string should be updated.
+    DiagnosticsConnectionStringName: (property) The name of the service model property that identifies the diagnostics connection string. 
+    DiagnosticsConnectionStringValue: (property) The value of the service model diagnostics connection string.
+    ProjectReferenceWithConfiguration: (item) The collection of project references in the project.
+    TargetServiceConfiguration: (item) The service configuration file that is actually published.
+  
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ShouldUpdateDiagnosticsConnectionStringOnPublish Condition=" '$(ShouldUpdateDiagnosticsConnectionStringOnPublish)' == '' ">False</ShouldUpdateDiagnosticsConnectionStringOnPublish>
+  </PropertyGroup>
+  <Target Name="UpdateDiagnosticsConnectionStringOnPublish"
+          Condition=" '$(ShouldUpdateDiagnosticsConnectionStringOnPublish)' == 'True' ">
+
+    <Message Text="Updating setting $(DiagnosticsConnectionStringName) of role(s) '$(DiagnosticsConnectionStringRoles)'..." />
+
+    <SetServiceConfigurationSetting Roles="$(DiagnosticsConnectionStringRoles)"
+                                    ServiceConfigurationFile="@(TargetServiceConfiguration)"
+                                    Setting="$(DiagnosticsConnectionStringName)"
+                                    Value="$(DiagnosticsConnectionStringValue)" />
+  </Target>
+
+  <!-- 
+  ===============AfterTransformServiceModel=====================================
+
+    Override to perform tasks after the service model files have been transformed.
+    
+  ==============================================================================
+  -->
+  <Target Name="AfterTransformServiceModel" />
+
+  <!-- 
+  ===============PreValidateServiceModel========================================
+
+    Validates the original, source service definition and configuration files.
+   
+    [IN]
+  
+    SourceServiceDefinition: (item) The service definition file in the project that will be published.
+    SourceServiceConfiguration: (item) The service configuration file in the project that will be published.
+  
+  ==============================================================================
+  -->
+  <Target
+      Name="PreValidateServiceModel">
+
+    <ValidateServiceFiles
+        AllowLegacyWebRoles="$(AllowLegacyWebRoles)"
+        ServiceDefinitionFile="@(SourceServiceDefinition)"
+        ServiceConfigurationFile="@(SourceServiceConfiguration)">
+    </ValidateServiceFiles>
+
+  </Target>
+
+  <!-- 
+  ===============ValidateServiceModel===========================================
+
+    Drives the validation of the service model files.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ValidateServiceModelDependsOn>
+      BeforeValidateServiceModel;
+      CoreValidateServiceModel;
+      AfterValidateServiceModel;
+    </ValidateServiceModelDependsOn>
+  </PropertyGroup>
+  <Target Name="ValidateServiceModel"
+          DependsOnTargets="$(ValidateServiceModelDependsOn)" />
+
+  <!-- 
+  ===============BeforeValidateServiceModel=====================================
+
+    Override to perform tasks before the service model files have been validated.
+    
+  ==============================================================================
+  -->
+  <Target Name="BeforeValidateServiceModel" />
+
+  <!-- 
+  ===============CoreValidateServiceModel=======================================
+
+    Drives internal validation of the service model files.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ValidateServiceModelRules>
+      ValidateRoleProjects;
+      ValidateServiceFiles;
+      CheckRoleInstanceCount;
+      CheckDevelopmentStorage;
+    </ValidateServiceModelRules>
+    <CoreValidateServiceModelDependsOn>
+      $(ValidateServiceModelRules);
+      IgnoreKnownValidationIssues;
+      ReportValidationIssues;
+    </CoreValidateServiceModelDependsOn>
+  </PropertyGroup>
+  <Target Name="CoreValidateServiceModel"
+          DependsOnTargets="$(CoreValidateServiceModelDependsOn)" />
+
+  <!-- 
+  ===============AfterValidateServiceModel======================================
+
+    Override to perform tasks after the service model files have been validated.
+    
+  ==============================================================================
+  -->
+  <Target Name="AfterValidateServiceModel" />
+
+  <!-- 
+  ===============ConfigurePlugins===============================================
+
+    Drives configuration of Windows Azure plugins.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ConfigurePluginsDependsOn>
+      BeforeConfigurePlugins;
+      CoreConfigurePlugins;
+      AfterConfigurePlugins;
+    </ConfigurePluginsDependsOn>
+  </PropertyGroup>
+  <Target Name="ConfigurePlugins"
+          DependsOnTargets="$(ConfigurePluginsDependsOn)"
+          Condition="'$(PackageForComputeEmulator)' == 'true' 
+                     Or '$(IsExecutingPublishTarget)' == 'true' " />
+
+  <!-- 
+  ===============BeforeConfigurePlugins=========================================
+
+    Override to perform tasks before plugins have been configured.
+    
+  ==============================================================================
+  -->
+  <Target Name="BeforeConfigurePlugins" />
+
+  <!-- 
+  ===============CoreConfigurePlugins===========================================
+
+    Drives internal configuration of Windows Azure plugins.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <CoreConfigurePluginsDependsOn>
+      ConfigureRemoteDesktop;
+      ConfigureIntelliTrace;
+      ConfigureWebDeploy;
+      ConfigureProfiling;
+    </CoreConfigurePluginsDependsOn>
+  </PropertyGroup>
+  <Target Name="CoreConfigurePlugins"
+          DependsOnTargets="$(CoreConfigurePluginsDependsOn)">
+
+    <AddSettingToServiceDefinition ServiceDefinitionFile="@(TargetServiceDefinition)"
+                                   Setting ="$(CloudToolsVersionSettingName)"
+                                   Roles="@(DiagnosticAgentRoles)"
+                                   Condition="'$(EnableProfiling)'=='true' or '$(EnableIntelliTrace)'=='true'" />
+
+    <AddSettingToServiceConfiguration ServiceConfigurationFile="@(TargetServiceConfiguration)"
+                                      Setting ="$(CloudToolsVersionSettingName)"
+                                      Value="$(CloudToolsVersion)"
+                                      Roles="@(DiagnosticAgentRoles)"
+                                      Condition="'$(EnableProfiling)'=='true' or '$(EnableIntelliTrace)'=='true'" />
+
+  </Target>
+
+  <!-- 
+  ===============AfterConfigurePlugins==========================================
+
+    Override to perform tasks after plugins have been configured.
+    
+  ==============================================================================
+  -->
+  <Target Name="AfterConfigurePlugins" />
+
+  <!-- =========================================================== 
+       Override the CoreBuildDependsOn property from Microsoft.Common.targets
+       to the targets that are needed for the WindowsAzure targets.
+       =========================================================== -->
+
+  <PropertyGroup>
+    <CoreBuildDependsOn>
+      BuildOnlySettings;
+      PrepareForBuild;
+      PreBuildEvent;
+      ResolveReferences;
+      PackageComputeService;
+      GetTargetPath;
+      IncrementalClean;
+      PostBuildEvent
+    </CoreBuildDependsOn>
+  </PropertyGroup>
+
+  <!-- =========================================================== 
+       Override the ResolveReferencesDependsOn property from Microsoft.Common.targets
+       to the targets that are needed for the WindowsAzure targets.
+       We only use project references in Windows Azure projects.
+       =========================================================== -->
+
+  <PropertyGroup>
+    <ResolveReferencesDependsOn>
+      BeforeResolveReferences;
+      AssignProjectConfiguration;
+      ResolveProjectReferences;
+      AfterResolveReferences
+    </ResolveReferencesDependsOn>
+  </PropertyGroup>
+
+  <!--
+  ===============PackageComputeService==========================================
+
+    Packages the compute service project.
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <PackageComputeServiceDependsOn>
+      BeforePackageComputeService;
+      CorePackageComputeService;
+      AfterPackageComputeService;
+    </PackageComputeServiceDependsOn>
+  </PropertyGroup>
+  <Target
+      Name="PackageComputeService"
+      DependsOnTargets="$(PackageComputeServiceDependsOn)" />
+
+  <!-- 
+  ===============BeforePackageComputeService====================================
+
+    Override to perform tasks before the service has been packaged.
+    
+  ==============================================================================
+  -->
+  <Target Name="BeforePackageComputeService" />
+
+  <!-- 
+  ===============AfterPackageComputeService=====================================
+
+    Override to perform tasks after the service has been packaged.
+    
+  ==============================================================================
+  -->
+  <Target Name="AfterPackageComputeService" />
+
+  <!-- 
+  ===============CorePackageComputeService======================================
+
+    This is the core packaging target. It uses CSPack task to package the compute project. 
+
+    [IN]
+  
+    TargetServiceDefinition: (item) The service definition file that will be packaged.
+    TargetServiceConfiguration: (item) The service configuration file that will be packaged.
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <CorePackageComputeServiceDependsOn>
+      VerifySDKInstallation;
+      DeleteValidationIssuesFile;
+      GenerateServiceModel;
+      ResetTargetNames;
+      DeleteCurrentDeployment;
+      ResolveRoleReferences;
+      ConfigurePlugins;
+      RegisterCleanValidationIssuesFile;
+      StopOnValidationErrors;
+      PrepareForCsPack;
+      CsPackForDevFabric;
+    </CorePackageComputeServiceDependsOn>
+  </PropertyGroup>
+  <Target
+      Name="CorePackageComputeService"
+      DependsOnTargets="$(CorePackageComputeServiceDependsOn)" />
+
+  <!-- 
+  ===============PrepareForCsPack======================================
+
+    Prepares the input for CsPack task
+
+    [IN]
+  
+    RoleReferences: (item) List of all project references for web role and worker roles.
+    WebRoleReferences: (item) List of all project references for web roles.
+
+  ==============================================================================
+  -->
+  <Target Name ="PrepareForCsPack"
+          Condition="'$(PackageForComputeEmulator)' == 'true'
+                      Or '$(IsExecutingPublishTarget)' == 'true' ">
+
+    <Message Text="ServiceHostingSDKInstallDir is $(ServiceHostingSDKInstallDir)" />
+    <Message Text="EnableIntelliTrace is $(EnableIntelliTrace)" />
+    <Message Text="EnableProfiling is $(EnableProfiling)" />
+
+    <ItemGroup>
+      <Roles Include="@(RoleReferences->'%(OutputDir)')" >
+        <RoleName>%(RoleName)</RoleName>
+        <EntryPoint>%(EntryPoint)</EntryPoint>
+        <SourceDir>%(SourceDir)</SourceDir>
+      </Roles>
+      <RoleProperties Include="@(RoleReferences->'%(RoleName)')">
+        <EntryPoint>%(EntryPoint)</EntryPoint>
+        <TargetFrameworkVersion>%(RoleTargetFramework)</TargetFrameworkVersion>
+        <RolePlugins Condition="'$(EnableIntelliTrace)'=='true' And $([System.String]::new('%(RoleTargetFramework)').StartsWith('v4.0'))">$(IntelliTraceTargetDir)</RolePlugins>
+        <RolePlugins Condition="'$(EnableProfiling)'=='true'">$(ProfilingTargetDir)</RolePlugins>
+      </RoleProperties>
+    </ItemGroup>
+
+    <ItemGroup>
+      <SiteMapping Condition="'@(WebRoleReferences)' != ''"
+                   Include="Web:%(RoleName)">
+        <PhysicalPath>%(SitePhysicalPath)</PhysicalPath>
+      </SiteMapping>
+    </ItemGroup>
+  </Target>
+
+  <!-- 
+  ===============CsPackForDevFabric======================================
+
+    Calls CsPack for deployment on Dev-Fabric
+
+    [IN]
+  
+    Roles: (item) List of all roles.
+    TargetServiceDefinition: (item) The service definition file that will be packaged.
+    TargetServiceConfiguration: (item) The service configuration file that will be packaged.
+    RoleProperties: (item) Properties for each role.
+    SiteMapping: (item) Mappings for web roles
+
+  ==============================================================================
+  -->
+  <Target Name="CsPackForDevFabric"
+          Condition="'$(PackageForComputeEmulator)' == 'true'
+                      Or '$(IsExecutingPublishTarget)' == 'true' ">
+
+    <Message Text="Start - CsPackForDevFabric" />
+
+    <Message Condition="'@(SiteMapping)' != ''" Text="SiteMapping: %(Identity) -> %(PhysicalPath)" />
+
+    <Message Text="OutputDirectory      is $(ServiceOutputDirectory)" />
+    <Message Text="PackRoles            is @(Roles), Name=%(RoleName), EntryPoint=%(EntryPoint), SourceDir=%(SourceDir)" />
+    <Message Text="RoleProperties       is @(RoleProperties), EntryPoint=%(EntryPoint), TargetFrameworkVersion=%(TargetFrameworkVersion)" />
+    <Message Text="TargetServiceDefinition is @(TargetServiceDefinition)" />
+    <Message Text="TargetServiceConfiguration is @(TargetServiceConfiguration)" />
+
+    <Message Text="Calling ServicePack" />
+
+    <CSPack
+      AllowLegacyWebRoles="$(AllowLegacyWebRoles)"
+      ServiceDefinitionFile="@(TargetServiceDefinition)"
+      Output="$(ServiceOutputDirectory)"
+      PackRoles="@(Roles)"
+      SiteMapping="@(SiteMapping)"
+      RoleProperties="@(RoleProperties)"
+      CopyOnly="true"
+     >
+      <Output TaskParameter="OutputFiles" ItemName="FileWrites" />
+    </CSPack>
+
+    <!-- Add generated policy files and others to the FileWrites list -->
+    <ItemGroup>
+      <FileWrites Include=" $(ServiceOutputDirectory)**\__entrypoint.txt " />
+    </ItemGroup>
+
+    <Message Text="End - CsPackForDevFabric" />
+
+  </Target>
+
+
+  <!-- 
+  ===============VerifySDKInstallation==========================================
+
+    Verify that the Computing SDK is installed and it is compatible with this version of tools. 
+
+  ==============================================================================
+  -->
+  <Target
+      Name="VerifySDKInstallation">
+
+    <WATMessage Condition=" !Exists('$(ServiceHostingSDKInstallDir)') or 
+                            !Exists('$(ServiceHostingSDKBinDir)') or 
+                            !Exists('$(ServiceHostingSDKTaskPath)') "
+                Type="Error"
+                Code="WAT080" />
+
+  </Target>
+
+  <!-- 
+  ===============FindServiceDefinition==========================================
+
+    Finds the service definition in the project and raises an error if it is not found. 
+
+    [IN]
+  
+    TargetServiceDefinition: (item) The service definition file that will be packaged.
+
+  ==============================================================================
+  -->
+  <Target
+      Name="FindServiceDefinition">
+
+    <!--Find the Compute Application Model File -->
+    <Message Text="ServiceDefinition in @(TargetServiceDefinition)" Importance="normal"/>
+
+    <WATMessage Condition=" '@(TargetServiceDefinition)' == '' "
+           Type="Error"
+           Code="WAT010"
+           HelpKeyword="MissingModelFile"/>
+
+    <!-- Only one active service definition can be active, check for that and throw an error -->
+    <WATMessage Condition=" '@(TargetServiceDefinition)' == '' or '@(TargetServiceDefinition->'%(dummy)')' != '' "
+           Type="Error"
+           Code="WAT020"
+           HelpKeyword="OneActiveModelFile" />
+
+  </Target>
+
+  <!-- 
+  ===============FindServiceConfiguration=======================================
+
+    Finds the Service Configuration file in the project and raises an error if it is not found. 
+
+    [IN]
+  
+    TargetServiceConfiguration: (item) The service configuration file that will be packaged.
+
+  ==============================================================================
+  -->
+  <Target
+      Name="FindServiceConfiguration">
+
+    <Message Text="ServiceConfigurationFile is @(TargetServiceConfiguration)" />
+
+    <!-- Compute project must contain at least one service configuration file -->
+    <WATMessage Condition=" '@(TargetServiceConfiguration)' == '' "
+                Type="Error"
+                Code="WAT030"
+                HelpKeyword="MissingServiceConfiguration" />
+
+    <!-- Only one service configuration per compute project, check for that and throw an error -->
+    <WATMessage Condition=" '@(TargetServiceConfiguration)' == '' or '@(TargetServiceConfiguration->'%(dummy)')' != '' "
+           Type="Error"
+           Code="WAT040"
+           HelpKeyword="OneServiceConfigurationFile" />
+
+  </Target>
+
+  <!-- 
+  ===============ResetTargetNames===============================================
+
+    Resets the $(TargetName) and $(TargetExt) to be compute specific.
+
+    [IN]
+  
+    SourceServiceDefinition: (item) The original service definition file.
+    
+    [OUT]
+    
+    TargetDir: (property) The directory of the  compute app model file.
+    TargetName: (property) The name of the compute app model file.
+    TargetExt: (property) The extension of the compute app model file.
+    TargetFileName: (property) The complete filename of the compute app model file.
+    TargetPath: (property) The full path of the compute app model file.
+
+  ==============================================================================
+  -->
+  <Target
+      Name="ResetTargetNames">
+
+    <PropertyGroup>
+      <TargetDir>$(ServiceOutputDirectory)</TargetDir>
+      <TargetName>@(SourceServiceDefinition->'%(filename)')</TargetName>
+      <TargetExt>.rd</TargetExt>
+      <TargetFileName>$(TargetName)$(TargetExt)</TargetFileName>
+      <TargetPath>$(TargetDir)$(TargetFileName)</TargetPath>
+    </PropertyGroup>
+
+    <Message Text="Reset the targetDir      to $(TargetDir)" />
+    <Message Text="Reset the TargetName     to $(TargetName)" />
+    <Message Text="Reset the TargetExt      to $(TargetExt)" />
+    <Message Text="Reset the TargetFileName to $(TargetFileName)" />
+    <Message Text="Reset the TargetPath     to $(TargetPath)" />
+
+  </Target>
+
+  <!-- 
+  ===============DeleteCurrentDeployment========================================
+
+    Delete the current running deployment that is attached with the project.
+
+  ==============================================================================
+  -->
+  <Target
+      Name="DeleteCurrentDeployment"
+      Condition="'$(PackageForComputeEmulator)' == 'true'
+                  Or '$(IsPublishing)' == 'true' ">
+
+    <!-- This task runs only under Visual Studio -->
+    <DeleteCurrentDeployment Condition="'$(BuildingInsideVisualStudio)' == 'true' " />
+
+  </Target>
+
+  <!--
+  ===============DeleteValidationIssuesFile=====================================
+
+    Delete previously created file with validation issues.
+
+  ==============================================================================
+  -->
+  <Target Name="DeleteValidationIssuesFile">
+
+    <Delete Files="$(ValidationIssuesFullPath)"
+            Condition="Exists('$(ValidationIssuesFullPath)')" />
+
+  </Target>
+
+  <!--
+  ===============RegisterCleanValidationIssuesFile==============================
+
+    Register the validation issues file for cleaning.
+
+  ==============================================================================
+  -->
+  <Target Name="RegisterCleanValidationIssuesFile">
+
+    <ItemGroup>
+      <FileWrites Include="$(ValidationIssuesFullPath)" Condition="Exists('$(ValidationIssuesFullPath)')" />
+    </ItemGroup>
+
+  </Target>
+
+  <!-- 
+  ===============ResolveRoleReferences==========================================
+
+    Delete the current running deployment that is attached with the project.
+
+    Finds the role projects defined in the project file.  
+    
+    [IN]
+    
+    WebRoleReferences: (item) List of all project references for web roles.
+    WorkerRoleReferences: (item) List of all project references for worker roles.
+
+    [OUT]
+       
+    RoleReferences: (item) List of all project references for web and worker. 
+                           
+       Each item contains these properties:
+       
+       - @         : Path to the project file.
+       - RoleType  : The type of the role: Web, or Worker.
+       - RoleName  : The name of the role.
+       - ProjectName: The project name of the role.
+       - Platform  : CPU Platform of the role project.
+       - OutputDir : The path where we can find the outputs of the role.
+       - SourceDir : (web specific) The source location of the web role.
+       - EntryPoint: The entry point assembly file name for web/worker role.
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ResolveRoleReferencesDependsOn>
+      VerifyRoleReferences;
+      ResolveWebRoleReferences;
+      ResolveWorkerRoleReferences;
+    </ResolveRoleReferencesDependsOn>
+  </PropertyGroup>
+  <Target
+      Name="ResolveRoleReferences"
+      DependsOnTargets="$(ResolveRoleReferencesDependsOn)">
+
+    <!-- Combine WebRoleReferences and WorkerRoleReferences -->
+    <ItemGroup>
+      <RoleReferences Include="@(WebRoleReferences); @(WorkerRoleReferences)" />
+    </ItemGroup>
+
+    <Message Text="Role = @(RoleReferences), role=%(RoleType), projname=%(ProjectName), output=%(OutputDir)" />
+
+  </Target>
+
+  <!-- 
+  ===============VerifyRoleReferences===========================================
+
+    Verifies that the key output exists for all role references.
+   
+    [IN]
+   
+    _ResolvedProjectReferencePaths: (item) The paths to resolved project references.
+
+  ==============================================================================
+  -->
+  <Target
+      Name="VerifyRoleReferences" Condition=" '@(_ResolvedProjectReferencePaths)' != '' ">
+
+    <WATMessage
+      Condition=" !Exists('%(_ResolvedProjectReferencePaths.Identity)')"
+      Type="Error"
+      Arguments="%(_ResolvedProjectReferencePaths.Identity)"
+      Code="WAT070"
+      />
+  </Target>
+
+  <!-- 
+  ===============ResolveWebRoleReferences=======================================
+
+    Resolves the web role references
+
+    [IN]
+       
+    TargetServiceDefinition: (item) The service definition file that will be actually packaged.
+
+    [OUT]
+       
+    WebRoleReferences: (item) list of all project references for web
+          - @         : Path to the project file.
+          - RoleType  : The type of the role: Web
+          - RoleName  : The name of the role.
+          - ProjectName: The project name of the role.
+          - Platform  : CPU Platform of the role project.
+          - OutputDir : The path where we can find the outputs of the role.
+          - SourceDir : The source location of the web role
+          - EntryPoint: The entry point assembly file name for web.
+          - SitePhysicalPath: The physical path for the main site
+
+  ==============================================================================
+  -->
+  <Target
+      Name="ResolveWebRoleReferences"
+      Condition="'$(PackageForComputeEmulator)' == 'true' 
+                  Or '$(IsExecutingPublishTarget)' == 'true' ">
+
+    <!-- Get all the roles from the project references section -->
+    <ItemGroup>
+      <WebRoleProjects Include="@(ProjectReferenceWithConfiguration->'%(Identity)')" Condition=" '%(ProjectReferenceWithConfiguration.RoleType)' == 'Web' " >
+        <ProjectName>%(Name)</ProjectName>
+        <Configuration>%(ProjectReferenceWithConfiguration.Configuration)</Configuration>
+        <Platform>%(ProjectReferenceWithConfiguration.Platform)</Platform>
+      </WebRoleProjects>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_WebRoleServiceDefinition>@(TargetServiceDefinition)</_WebRoleServiceDefinition>
+    </PropertyGroup>
+
+    <MSBuild
+      Condition=" '@(WebRoleProjects)' != '' "
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="ResolveSingleWebRoleReference"
+      Properties="WebRoleProject=%(Identity);WebRoleProjectName=%(Name);WebRoleConfiguration=%(Configuration);WebRolePlatform=%(Platform);WebRoleServiceDefinition=$(_WebRoleServiceDefinition);PackageWebRole=$(PackageWebRole);IsExecutingPublishTarget=$(IsExecutingPublishTarget)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="WebRoleReferences" />
+    </MSBuild>
+
+    <Message Text="WebRoleReferences=@(WebRoleReferences) %(RoleType), %(RoleName), %(ProjectName), %(Configuration), %(Platform), %(SourceDir), %(OutputDir), %(EntryPoint), %(SitePhysicalPath)" />
+
+    <!-- Register intermediate published web role for Clean -->
+    <ItemGroup Condition=" '@(WebRoleReferences)' != '' ">
+      <FileWrites Include="%(WebRoleReferences.OutputDir)**\*.*" />
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============ResolveSingleWebRoleReference==================================
+
+    Resolves a single web role reference. This target publishes the web
+    role into an intermediate folder making it ready for CSPack.
+
+    [IN]
+
+    $(WebRoleProject)           : the propject of web role
+    $(WebRoleProjectName)       : the project name of the web role
+    $(WebRoleConfiguration)     : the configuration of the web role
+    $(WebRolePlatform)          : the platform of the web role
+    $(WebRoleServiceDefinition) : the service definition to be used by the web role
+    $(PackageWebRole)           : a flag to indicate if we need to package the web role
+    $(IsExecutingPublishTarget) : a flag indicating that code is executed as a part of Publish target call
+
+    [OUT]
+
+    @(WebRoleReference): Contains information about the web role
+          - @                : Path to the project file, same as $(WebRoleProject)
+          - RoleType         : The type of the role: Web
+          - RoleName         : The name of the role.
+          - ProjectName      : The project name of the role, same as $(WebRoleProjectName)
+          - Configuration    : The configuration used on the role project.
+          - Platform         : CPU Platform of the role project.
+          - OutputDir        : The path where we can find the outputs of the role.
+          - EntryPoint       : The entry point assembly file name for the role.
+          - SourceDir        : The source location of the web role
+          - SitePhysicalPath : The physical path for the main site
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ResolveSingleWebRoleReferenceDependsOn>
+      CollectWebRoleFiles;
+      ValidateRoleTargetFramework;
+      ValidateWebRoleFiles;
+      CopyWebRoleFiles;
+      PostProcessWebRoleFiles;
+    </ResolveSingleWebRoleReferenceDependsOn>
+  </PropertyGroup>
+  <Target Name="ResolveSingleWebRoleReference"
+          Condition=" '$(WebRoleProject)' != '' and '$(WebRoleProjectName)' != '' "
+          DependsOnTargets="$(ResolveSingleWebRoleReferenceDependsOn)"
+          Returns="@(WebRoleReference)" />
+
+  <!--
+  ===============CollectWebRoleFiles============================================
+
+    Collects the the web role files.
+
+  ==============================================================================
+  -->
+  <Target Name="CollectWebRoleFiles"
+          Condition=" '$(WebRoleProject)' != '' and '$(WebRoleProjectName)' != '' "
+          Returns="@(WebRoleReference)">
+
+    <Message Text="PackageWebRole=$(PackageWebRole)" />
+    <Message Text="WebRoleProject=$(WebRoleProject)" />
+    <Message Text="WebRoleProjectName=$(WebRoleProjectName)" />
+    <Message Text="WebRoleConfiguration=$(WebRoleConfiguration)" />
+    <Message Text="WebRolePlatform=$(WebRolePlatform)" />
+    <Message Text="WebRoleServiceDefinition=$(WebRoleServiceDefinition)" />
+
+    <ItemGroup>
+      <Namespaces Include="$(ServiceDefinitionNamespace)">
+        <Prefix>csd</Prefix>
+      </Namespaces>
+      <_WebRoleServiceDefinition Include="$(WebRoleServiceDefinition)" />
+    </ItemGroup>
+
+    <!-- 
+      Find if the web role has a site.
+    -->
+    <XPathQuery
+        Condition=" '@(_WebRoleServiceDefinition)' != '' "
+        Namespaces="@(Namespaces)"
+        XPath="csd:ServiceDefinition/csd:WebRole[@name='$(WebRoleProjectName)']/csd:Sites/csd:Site/@name"
+        XmlFile="@(_WebRoleServiceDefinition)"
+        >
+
+      <Output TaskParameter="QueryResult" ItemName="Sites" />
+    </XPathQuery>
+
+    <Message Condition=" '@(Sites)' == '' and '$(PackageWebRole)' == 'false' " Text="Turning on packagewebrole because no sites found." />
+    <PropertyGroup>
+      <PackageWebRole Condition=" '@(Sites)' == '' and '$(PackageWebRole)' == 'false' ">True</PackageWebRole>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <!-- If the role configuration wasn't passed, use the current cloud service project configuration -->
+      <WebRoleConfiguration Condition="'$(WebRoleConfiguration)' == ''">$(Configuration)</WebRoleConfiguration>
+      <!-- If the role platform wasn't passed, use the current cloud service project platform -->
+      <WebRolePlatform Condition="'$(WebRolePlatform)' == ''">$(Platform)</WebRolePlatform>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <WebRoleReference Include="$(WebRoleProject)" >
+        <RoleType>Web</RoleType>
+        <RoleName>$(WebRoleProjectName)</RoleName>
+        <ProjectName>$(WebRoleProjectName)</ProjectName>
+        <Configuration>$(WebRoleConfiguration)</Configuration>
+        <Platform>$(WebRolePlatform)</Platform>
+      </WebRoleReference>
+    </ItemGroup>
+
+    <Message Text="WebRoleReference=@(WebRoleReference) %(RoleType), %(RoleName), %(ProjectName), %(Configuration), %(Platform)" />
+
+    <!-- ===============================
+         Create role type independent properties
+         =============================== -->
+    <ItemGroup>
+      <RoleReference Include="@(WebRoleReference)" />
+    </ItemGroup>
+    <PropertyGroup>
+      <RoleProjectName>$(WebRoleProjectName)</RoleProjectName>
+    </PropertyGroup>
+
+    <!-- ===============================
+         Get the target path for the role 
+         =============================== -->
+    <MSBuild
+      Projects="@(WebRoleReference)"
+      Targets="GetTargetPath"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="WebTargetPathItem" />
+    </MSBuild>
+
+    <PropertyGroup>
+      <!-- Stores the assembly file name (no path) of the web role -->
+      <WebEntryPoint Condition="'@(WebTargetPathItem)'!=''">%(Filename)%(Extension)</WebEntryPoint>
+      <!-- The full target dir of the web role binary folder -->
+      <WebTargetDir Condition="'@(WebTargetPathItem)'!=''">%(RootDir)%(Directory)</WebTargetDir>
+      <!-- The fullpath to the source directory. This is derived from where the project is located -->
+      <WebSourceDir Condition="'@(WebRoleReference)'!=''">%(RootDir)%(Directory)</WebSourceDir>
+      <!-- To exclude or not to exclude the pdb files. By default they are not excluded. Set this to true to exclude them -->
+      <WebExcludeGeneratedDebugSymbol Condition="'$(ExcludeWebRoleGeneratedDebugSymbol)' == ''">False</WebExcludeGeneratedDebugSymbol>
+    </PropertyGroup>
+
+    <Message Text="WebEntryPoint=$(WebEntryPoint)" />
+    <Message Text="WebTargetDir=$(WebTargetDir)" />
+    <Message Text="WebSourceDir=$(WebSourceDir)" />
+    <Message Text="WebExcludeGeneratedDebugSymbol=$(WebExcludeGeneratedDebugSymbol)" />
+
+    <!-- ===============================
+         Collect the TargetFrameworkVersion 
+         property from web project 
+         =============================== -->
+    <MSBuild
+      Projects="@(WebRoleReference)"
+      Targets="GetTargetFrameworkVersion"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" PropertyName="RoleTargetFramework" />
+    </MSBuild>
+
+    <Message Text="WebTargetFramework = $(RoleTargetFramework)" />
+
+    <!-- ===============================
+         Collect the web files from web project 
+         =============================== -->
+    <MSBuild
+      Condition=" '$(PackageWebRole)' == 'True' "
+      Projects="@(WebRoleReference)"
+      Targets="PipelineTransformPhase"
+      Properties="Configuration=%(Configuration); Platform=%(Platform); ExcludeGeneratedDebugSymbol=$(WebExcludeGeneratedDebugSymbol); PipelineDependsOnBuild=False"
+      ContinueOnError="false">
+      <Output TaskParameter="TargetOutputs" ItemName="TransformedWebFiles" />
+    </MSBuild>
+
+    <Message Condition=" '$(PackageWebRole)' == 'True' "
+             Text="TransformedWebFiles = @(TransformedWebFiles), DestinationRelativePath=%(DestinationRelativePath), Exclude=%(Exclude), FromTarget=%(FromTarget), Category=%(Category), ProjectFileType=%(ProjectFileType)" />
+
+    <ItemGroup Condition=" '$(PackageWebRole)' == 'True' ">
+      <WebFiles Condition="'@(TransformedWebFiles)' != '' and '%(Exclude)' == 'False'"
+                      Include="$([System.IO.Path]::Combine(`$(WebSourceDir)`, '%(Identity)'))">
+        <TargetPath>%(DestinationRelativePath)</TargetPath>
+      </WebFiles>
+    </ItemGroup>
+
+    <!-- ===============================
+         Get all the CopyToOutput items from the role 
+         =============================== -->
+    <MSBuild
+      Condition=" '$(PackageWebRole)' == 'True' "
+      Projects="@(WebRoleReference)"
+      Targets="GetCopyToOutputDirectoryItems"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="CopyToOutputItems" />
+    </MSBuild>
+
+    <Message Condition=" '$(PackageWebRole)' == 'True' "
+             Text="CopyToOutputItems=%(CopyToOutputItems.Identity) -> %(TargetPath)" />
+
+    <ItemGroup Condition=" '$(PackageWebRole)' == 'True' ">
+      <WebFiles Include="$(WebTargetDir)%(TargetPath)" Condition=" '@(CopyToOutputItems)' != '' ">
+        <TargetPath>bin\%(TargetPath)</TargetPath>
+      </WebFiles>
+    </ItemGroup>
+
+    <!-- ===============================
+         Get all files in the bin folder
+         =============================== -->
+
+    <ItemGroup Condition=" '$(PackageWebRole)' == 'False'">
+      <FilesInBin Include="$(WebTargetDir)**\*" />
+      <WebFiles Include="@(FilesInBin)">
+        <TargetPath>bin\%(FilesInBin.RecursiveDir)%(FilesInBin.Filename)%(FilesInBin.Extension)</TargetPath>
+      </WebFiles>
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============ValidateWebRoleFiles============================================
+
+    Validates the Web Roles files.
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ValidateWebRoleFilesRules>
+      GetTargetFrameworkProperties;
+      ValidateRoleTargetFrameworkMoniker;
+      ValidateWebRoleFilesMissedDependencies;
+      ValidateWebRoleFiles64bitAssemblies;
+      ValidateWebRoleWebConfig;
+    </ValidateWebRoleFilesRules>
+    <ValidateWebRoleFilesDependsOn>
+      $(ValidateWebRoleFilesRules);
+      IgnoreKnownValidationIssues;
+      ReportValidationIssues;
+    </ValidateWebRoleFilesDependsOn>
+  </PropertyGroup>
+  <Target Name="ValidateWebRoleFiles"
+          Condition=" '$(IsExecutingPublishTarget)' == 'True' "
+          DependsOnTargets="$(ValidateWebRoleFilesDependsOn)" />
+
+  <!--
+  ===============GetTargetFrameworkProperties===================================
+
+    Gets target framework properties.
+
+    [IN]
+
+    @(RoleReference) - role's project.
+
+    [OUT]
+
+    $(RoleTargetFrameworkDirectories)        - target framework reference directories.
+    $(RoleTargetFrameworkMoniker)            - target framework moniker.
+    $(RoleTargetFrameworkMonikerDisplayName) - target framework moniker display name.
+
+  ==============================================================================
+  -->
+  <Target Name="GetTargetFrameworkProperties">
+
+    <WATMessage Condition=" !Exists('$(CommonTargetsExtensionFile)') "
+                Type="Error"
+                Code="WAT220"
+                Arguments="$(CommonTargetsExtensionFile)" />
+
+    <MSBuild Projects="@(RoleReference)"
+             Targets="WatGetTargetFrameworkDirectories;WatGetTargetFrameworkMoniker;WatGetTargetFrameworkMonikerDisplayName"
+             Properties="Configuration=%(Configuration); Platform=%(Platform)"
+             ContinueOnError="True" >
+      <Output TaskParameter="TargetOutputs" ItemName="_RoleTargetOutputs" />
+    </MSBuild>
+
+    <PropertyGroup>
+      <RoleTargetFrameworkDirectories Condition="'%(_RoleTargetOutputs.MSBuildSourceTargetName)' == 'WatGetTargetFrameworkDirectories' ">@(_RoleTargetOutputs)</RoleTargetFrameworkDirectories>
+      <RoleTargetFrameworkMoniker Condition="'%(_RoleTargetOutputs.MSBuildSourceTargetName)' == 'WatGetTargetFrameworkMoniker' ">@(_RoleTargetOutputs)</RoleTargetFrameworkMoniker>
+      <RoleTargetFrameworkMonikerDisplayName Condition="'%(_RoleTargetOutputs.MSBuildSourceTargetName)' == 'WatGetTargetFrameworkMonikerDisplayName' ">@(_RoleTargetOutputs)</RoleTargetFrameworkMonikerDisplayName>
+    </PropertyGroup>
+
+    <Message Text="RoleTargetFrameworkDirectories = $(RoleTargetFrameworkDirectories)" />
+    <Message Text="RoleTargetFrameworkMoniker = $(RoleTargetFrameworkMoniker)" />
+    <Message Text="RoleTargetFrameworkMonikerDisplayName = $(RoleTargetFrameworkMonikerDisplayName)" />
+
+  </Target>
+
+  <!--
+  ===============ValidateRoleTargetFrameworkMoniker=============================
+
+    Validates the role's target framework moniker.
+
+    [IN]
+
+    $(RoleTargetFrameworkMoniker) - role's target framework moniker.
+
+  ==============================================================================
+  -->
+
+  <!-- List of .Net framework monikers installed on the Windows Azure OS -->
+  <ItemGroup>
+    <WindowsAzureFrameworkMoniker Include=".NETFramework,Version=v3.5" />
+    <WindowsAzureFrameworkMoniker Include=".NETFramework,Version=v3.5,Profile=Client" />
+    <WindowsAzureFrameworkMoniker Include=".NETFramework,Version=v4.0" />
+    <WindowsAzureFrameworkMoniker Include=".NETFramework,Version=v4.0,Profile=Client" />
+  </ItemGroup>
+
+  <Target Name="ValidateRoleTargetFrameworkMoniker">
+
+    <Message Text="RoleTargetFrameworkMoniker=$(RoleTargetFrameworkMoniker)" />
+
+    <PropertyGroup>
+      <RoleTargetFrameworkMonikerIsValid>False</RoleTargetFrameworkMonikerIsValid>
+      <RoleTargetFrameworkMonikerIsValid
+          Condition=" '$(RoleTargetFrameworkMoniker)' == ''
+                   Or '$(RoleTargetFrameworkMoniker)' == '%(WindowsAzureFrameworkMoniker.Identity)'">True</RoleTargetFrameworkMonikerIsValid>
+    </PropertyGroup>
+
+    <Message Text="RoleTargetFrameworkMonikerIsValid=$(RoleTargetFrameworkMonikerIsValid)" />
+
+    <ItemGroup>
+      <ValidationIssue Include="$(RoleProjectName)|$(RoleProjectName)|WAT190"
+                       Condition=" '$(RoleTargetFrameworkMonikerIsValid)' != 'True' ">
+        <ProjectName>$(RoleProjectName)</ProjectName>
+        <FilenameWithExtension>$(RoleProjectName)</FilenameWithExtension>
+        <Code>WAT190</Code>
+        <FileFullPath>$(RoleProjectName)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(RoleProjectName);$(RoleTargetFrameworkMonikerDisplayName)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============ValidateWebRoleFilesMissedDependencies============================
+
+    Validates that the Web project has all the dependency assembly as a part of the package
+    or they are either part of OS image or Windows Azure SDK.
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ValidateWebRoleFilesMissedDependenciesDependsOn>
+      GetWebProjectDependencies;
+      FindKnownWebProjectDependencies;
+      GenerateWebProjectMvcDependenciesValidationIssues;
+      GenerateWebProjectDependenciesValidationIssues;
+    </ValidateWebRoleFilesMissedDependenciesDependsOn>
+  </PropertyGroup>
+  <Target Name="ValidateWebRoleFilesMissedDependencies"
+          DependsOnTargets="$(ValidateWebRoleFilesMissedDependenciesDependsOn)" />
+
+  <!--
+  ===============GetWebProjectDependencies======================================
+
+    Gets a list of all dependencies for a web project.
+
+    [IN]
+
+    @(WebRoleReference) - list of web projects.
+
+    [OUT]
+
+    @(WebProjectDependency) - list of web project dependencies
+
+  ==============================================================================
+  -->
+  <Target Name="GetWebProjectDependencies">
+
+    <MSBuild
+      Projects="@(WebRoleReference)"
+      Targets="BuiltProjectOutputGroupDependencies"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="WebProjectDependency" />
+    </MSBuild>
+
+    <Message Text="Identified WebProjectDependency=@(WebProjectDependency)" />
+  </Target>
+
+  <!--
+  ===============FindKnownWebProjectDependencies============================
+
+    Removes from the WebProjectDependency any known dependent assembly that
+    are either part of .Net Framework, part of Windows Azure SDK, or already 
+    included in the package.
+
+  ==============================================================================
+  -->
+  <!-- This is a list of known Windows Azure SDK assemblies -->
+  <ItemGroup>
+    <WindowsAzureAssemblyName Include="Microsoft.WindowsAzure.ServiceRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL" />
+    <WindowsAzureAssemblyName Include="msshrtmi, Version=1.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=AMD64" />
+    <WindowsAzureAssemblyName Include="msshrtmi, Version=1.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=x86" />
+    <WindowsAzureAssemblyName Include="mswacdmi, Version=1.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=AMD64" />
+    <WindowsAzureAssemblyName Include="mswacdmi, Version=1.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=x86" />
+  </ItemGroup>
+  <Target Name="FindKnownWebProjectDependencies">
+
+    <!-- ===============================
+         Find the .Net framework reference directories
+         =============================== -->
+    <ItemGroup>
+      <TargetFrameworkDirectories Include="$(RoleTargetFrameworkDirectories)"/>
+    </ItemGroup>
+
+    <Message Text="TargetFrameworkDirectories=@(TargetFrameworkDirectories)" />
+
+    <!-- Remove any .Net Framework assembly from the list of dependencies. -->
+    <ItemGroup>
+      <!-- Some framework directories have the trailing slash and some don't. Do the removal for both cases. -->
+      <WebProjectDependency Remove="%(TargetFrameworkDirectories.Identity)**\*" Condition=" %(TargetFrameworkDirectories.Identity) != '' "/>
+      <WebProjectDependency Remove="%(TargetFrameworkDirectories.Identity)\**\*" Condition=" %(TargetFrameworkDirectories.Identity) != '' "/>
+    </ItemGroup>
+
+    <!-- ===============================
+         Find the Windows Azure OS or SDK assemblies
+         =============================== -->
+
+    <FindWindowsAzureAssemblies AssemblyFiles="@(WebProjectDependency)"
+                                WindowsAzureAssemblyNames="@(WindowsAzureAssemblyName)">
+      <Output TaskParameter="FoundWindowsAzureAssemblyFiles" ItemName="_FoundWindowsAzureAssemblyFiles" />
+    </FindWindowsAzureAssemblies>
+
+    <ItemGroup>
+      <WebProjectDependency Remove="%(_FoundWindowsAzureAssemblyFiles.Identity)" />
+    </ItemGroup>
+
+    <!-- ===============================
+         Find the assemblies that are being copied to output
+         =============================== -->
+
+    <ItemGroup>
+      <WebProjectDependency Remove="%(WebFiles.Identity)" />
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============GenerateWebProjectMvcDependenciesValidationIssues============================
+
+    Generates validation issues for missed MVC dependencies.
+
+    [IN]
+
+    @(WebProjectDependency): List of assemblies the web project depends on.
+
+    [OUT]
+
+    @(WebProjectDependency): List of assemblies the web project depends on with removed MVC assemblies.
+
+    @(ValidationIssue): list of generated validation issues
+          - @                     : The ID of the issue that consists from 3 parts separated by pipeline:
+                                    <ProjectName>|<FilenameWithExtension>|<Code>
+          - ProjectName           : The name of the web project
+          - FilenameWithExtension : The name of the file with its extension.
+          - Code                  : The validation issue code.
+          - FileFullPath          : The file's full path.
+          - WATMessage            : True if we should generate WATMessage. Otherwise we generate the MSBuild Warning.
+          - Arguments             : Used for WATMessage if WATMessage==True
+          - Text                  : Used for Warning if WATMessage==False
+          - HelpKeyword           : The help keyword.
+
+  ==============================================================================
+  -->
+  <ItemGroup>
+    <MvcAssemblyFileName Include="System.Web.Mvc.dll" />
+    <MvcAssemblyFileName Include="System.Web.Helpers.dll" />
+    <MvcAssemblyFileName Include="System.Web.Razor.dll" />
+    <MvcAssemblyFileName Include="System.Web.WebPages.Deployment.dll" />
+    <MvcAssemblyFileName Include="System.Web.WebPages.dll" />
+    <MvcAssemblyFileName Include="System.Web.WebPages.Razor.dll" />
+    <MvcAssemblyFileName Include="Microsoft.Web.Infrastructure.dll" />
+  </ItemGroup>
+  <Target Name="GenerateWebProjectMvcDependenciesValidationIssues">
+
+    <!-- ===============================
+         Create list of WebProjectMvcDependency.
+         =============================== -->
+    <ItemGroup>
+      <!-- Create WebProjectMvcDependency list as a copy of WebProjectDependency list -->
+      <WebProjectMvcDependency Include="@(WebProjectDependency)" />
+
+      <!-- Prepare files to remove from the WebProjectDependency list -->
+      <_WebProjectDependencyToRemove Include="@(WebProjectDependency)">
+        <MvcAssemblyFileName>%(MvcAssemblyFileName.Identity)</MvcAssemblyFileName>
+      </_WebProjectDependencyToRemove>
+
+      <!-- Remove MVC files from the WebProjectDependency list -->
+      <WebProjectDependency Remove="%(_WebProjectDependencyToRemove.Identity)"
+                            Condition="'%(_WebProjectDependencyToRemove.MvcAssemblyFileName)' == '%(_WebProjectDependencyToRemove.FileName)%(_WebProjectDependencyToRemove.Extension)'" />
+
+      <!-- Remove from the WebProjectMvcDependency list items remained in the WebProjectDependency list -->
+      <WebProjectMvcDependency Remove="@(WebProjectDependency)" />
+
+      <!-- Remove the intermediate items -->
+      <_WebProjectDependencyToRemove Remove="@(_WebProjectDependencyToRemove)" />
+    </ItemGroup>
+
+    <!-- ===============================
+         Create the ValidationIssue items for the missed MVC dependency assemblies.
+         =============================== -->
+    <ItemGroup>
+
+      <ValidationIssue Include="@(WebProjectMvcDependency->'$(WebRoleProjectName)|%(Filename)%(Extension)|WAT153')">
+        <ProjectName>$(WebRoleProjectName)</ProjectName>
+        <FilenameWithExtension>%(WebProjectMvcDependency.Filename)%(WebProjectMvcDependency.Extension)</FilenameWithExtension>
+        <Code>WAT153</Code>
+        <FileFullPath>%(WebProjectMvcDependency.FullPath)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(WebRoleProjectName);%(WebProjectMvcDependency.Identity)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============GenerateWebProjectDependenciesValidationIssues============================
+
+    Validates that the Web project has all the dependency assembly as a part of the package
+    or they are either part of OS image or Windows Azure SDK.
+
+    [IN]
+
+    @(WebProjectDependency): List of assemblies the web project depends on.
+
+    [OUT]
+
+    @(ValidationIssue): list of generated validation issues
+          - @                     : The ID of the issue that consists from 3 parts separated by pipeline:
+                                    <ProjectName>|<FilenameWithExtension>|<Code>
+          - ProjectName           : The name of the web project
+          - FilenameWithExtension : The name of the file with its extension.
+          - Code                  : The validation issue code.
+          - FileFullPath          : The file's full path.
+          - WATMessage            : True if we should generate WATMessage. Otherwise we generate the MSBuild Warning.
+          - Arguments             : Used for WATMessage if WATMessage==True
+          - Text                  : Used for Warning if WATMessage==False
+          - HelpKeyword           : The help keyword.
+
+  ==============================================================================
+  -->
+  <Target Name="GenerateWebProjectDependenciesValidationIssues">
+
+    <!-- Get the additional information about GAC assemblies -->
+    <ProvideGacAssemblyInfo
+      AssemblyFiles="@(WebProjectDependency)"
+      TargetProcessorArchitecture="AMD64">
+      <Output TaskParameter="GacAssemblyFiles" ItemName="_GacAssemblyFiles" />
+    </ProvideGacAssemblyInfo>
+
+    <!-- Replace the Web project dependencies with the assemblies found in the GAC -->
+    <ItemGroup>
+      <WebProjectDependency Remove="%(_GacAssemblyFiles.Identity)" />
+      <WebProjectDependency Include="@(_GacAssemblyFiles)" />
+    </ItemGroup>
+
+    <!-- ===============================
+         Create the ValidationIssue items for the missed dependency assemblies.
+         =============================== -->
+    <ItemGroup>
+
+      <!-- Missed dependency assembly not in the GAC -->
+      <ValidationIssue Include="@(WebProjectDependency->'$(WebRoleProjectName)|%(Filename)%(Extension)|WAT150')"
+                       Condition=" '%(WebProjectDependency.GacPath)' == '' ">
+        <ProjectName>$(WebRoleProjectName)</ProjectName>
+        <FilenameWithExtension>%(WebProjectDependency.Filename)%(WebProjectDependency.Extension)</FilenameWithExtension>
+        <Code>WAT150</Code>
+        <FileFullPath>%(WebProjectDependency.FullPath)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(WebRoleProjectName);%(WebProjectDependency.Identity)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+      <!-- Missed dependency assembly in the GAC, but not installed by MSI -->
+      <ValidationIssue Include="@(WebProjectDependency->'$(WebRoleProjectName)|%(Filename)%(Extension)|WAT151')"
+                       Condition=" '%(WebProjectDependency.GacPath)' != '' And '%(WebProjectDependency.ReferenceScheme)' != 'MSI' ">
+        <ProjectName>$(WebRoleProjectName)</ProjectName>
+        <FilenameWithExtension>%(WebProjectDependency.Filename)%(WebProjectDependency.Extension)</FilenameWithExtension>
+        <Code>WAT151</Code>
+        <FileFullPath>%(WebProjectDependency.GacPath)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(WebRoleProjectName);%(WebProjectDependency.Identity)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+      <!-- Missed dependency assembly in the GAC and installed by MSI -->
+      <ValidationIssue Include="@(WebProjectDependency->'$(WebRoleProjectName)|%(Filename)%(Extension)|WAT152')"
+                       Condition=" '%(WebProjectDependency.GacPath)' != '' And '%(WebProjectDependency.ReferenceScheme)' == 'MSI' ">
+        <ProjectName>$(WebRoleProjectName)</ProjectName>
+        <FilenameWithExtension>%(WebProjectDependency.Filename)%(WebProjectDependency.Extension)</FilenameWithExtension>
+        <Code>WAT152</Code>
+        <FileFullPath>%(WebProjectDependency.GacPath)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(WebRoleProjectName);%(WebProjectDependency.Identity)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============ValidateWebRoleFiles64bitAssemblies============================
+
+    Validates that the Web project either have the MSIL or AMD64 assemblies.
+
+    [IN]
+
+    @(WebFiles): The web project files to be copied to the CS package.
+
+    [OUT]
+
+    @(ValidationIssue): list of generated validation issues
+          - @                     : The ID of the issue that consists from 3 parts separated by pipeline:
+                                    <ProjectName>|<FilenameWithExtension>|<Code>
+          - ProjectName           : The name of the web project
+          - FilenameWithExtension : The name of the file with its extension.
+          - Code                  : The validation issue code.
+          - FileFullPath          : The file's full path.
+          - WATMessage            : True if we should generate WATMessage. Otherwise we generate the MSBuild Warning.
+          - Arguments             : Used for WATMessage if WATMessage==True
+          - Text                  : Used for Warning if WATMessage==False
+          - HelpKeyword           : The help keyword.
+
+  ==============================================================================
+  -->
+  <Target Name="ValidateWebRoleFiles64bitAssemblies">
+
+    <!-- Collect all files from bin folder with the DLL extension -->
+    <ItemGroup>
+      <_AssembliesToValidate Include="@(WebFiles)" Condition=" '%(WebFiles.Extension)' == '.dll' " />
+    </ItemGroup>
+
+    <!-- Augment the assembly files with the ProcessorArchitecture metadata -->
+    <ProvideAssemblyProcessorArchitecture
+      AssemblyFiles="@(_AssembliesToValidate)">
+      <Output TaskParameter="AssemblyFilesWithProcessorArchitecture" ItemName="_AssembliesToValidateExt" />
+    </ProvideAssemblyProcessorArchitecture>
+
+    <ItemGroup>
+      <!-- Generate Validation issues for assemblies which do not have the MSIL or AMD64 processor architecture -->
+      <ValidationIssue Include="@(_AssembliesToValidateExt->'$(WebRoleProjectName)|%(Filename)%(Extension)|WAT160')"
+                       Condition=" '%(_AssembliesToValidateExt.ProcessorArchitecture)' != 'MSIL' And '%(_AssembliesToValidateExt.ProcessorArchitecture)' != 'AMD64' ">
+        <ProjectName>$(WebRoleProjectName)</ProjectName>
+        <FilenameWithExtension>%(_AssembliesToValidateExt.Filename)%(_AssembliesToValidateExt.Extension)</FilenameWithExtension>
+        <Code>WAT160</Code>
+        <FileFullPath>%(_AssembliesToValidateExt.FullPath)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(WebRoleProjectName);%(_AssembliesToValidateExt.Identity)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============ValidateWebRoleWebConfig=======================================
+
+    Validates that SQL connection string in web.config does not use '.\SQLExpress' data source.
+
+    [IN]
+
+    @(WebFiles): The web project files to be copied to the CS package.
+
+    [OUT]
+
+    @(ValidationIssue): list of generated validation issues
+          - @                     : The ID of the issue that consists from 3 parts separated by pipeline:
+                                    <ProjectName>|<FilenameWithExtension>|<Code>
+          - ProjectName           : The name of the web project
+          - FilenameWithExtension : web.config
+          - Code                  : The validation issue code.
+          - FileFullPath          : web.config
+          - WATMessage            : True if we should generate WATMessage. Otherwise we generate the MSBuild Warning.
+          - Arguments             : Used for WATMessage if WATMessage==True
+          - Text                  : Used for Warning if WATMessage==False
+          - HelpKeyword           : The help keyword.
+
+  ==============================================================================
+  -->
+  <Target Name="ValidateWebRoleWebConfig">
+
+    <!-- Collect all web.config files -->
+    <ItemGroup>
+      <_WebConfigFiles Include="@(WebFiles)" Condition=" '%(WebFiles.Filename)%(WebFiles.Extension)' == 'web.config' " />
+    </ItemGroup>
+
+    <Message Text="Web.Config file: %(_WebConfigFiles.Identity)" />
+
+    <!-- Get the 'DefaultConnection' database connection strings-->
+    <XPathQuery Condition=" '@(_WebConfigFiles)' != '' "
+                XPath="/configuration/connectionStrings/add[@name='DefaultConnection' and @providerName='System.Data.SqlClient']/@connectionString"
+                XmlFile="%(_WebConfigFiles.Identity)" >
+      <Output TaskParameter="QueryResult" ItemName="_ConnectionStrings" />
+    </XPathQuery>
+
+    <!-- Parse the SQL connection strings -->
+    <ParseSqlConnectionString Condition=" '@(_ConnectionStrings)' != '' "
+                              ConnectionString="%(_ConnectionStrings.Identity)">
+      <Output TaskParameter="ParsedConnectionString" ItemName="_ParsedConnectionString" />
+    </ParseSqlConnectionString>
+
+    <ItemGroup>
+      <!-- Generate Validation issues for connection strings that have '.\SQLExpress' data source -->
+      <ValidationIssue Include="$(WebRoleProjectName)|web.config|WAT230"
+                       Condition=" '%(_ParsedConnectionString.DataSource)' == '.\SQLExpress' ">
+        <ProjectName>$(WebRoleProjectName)</ProjectName>
+        <FilenameWithExtension>web.config</FilenameWithExtension>
+        <Code>WAT230</Code>
+        <FileFullPath>web.config</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>DefaultConnection;%(_ParsedConnectionString.DataSource);$(WebRoleProjectName)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============IgnoreKnownValidationIssues====================================
+
+    Ignores known validation issues by removing items from the ValidationIssue item list.
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <IgnoreKnownValidationIssuesDependsOn>
+      IgnoreSpecificValidationIssues;
+      IgnoreValidationIssuesWithCode;
+    </IgnoreKnownValidationIssuesDependsOn>
+  </PropertyGroup>
+  <Target Name="IgnoreKnownValidationIssues"
+          DependsOnTargets="$(IgnoreKnownValidationIssuesDependsOn)" />
+
+  <!--
+  ===============IgnoreSpecificValidationIssues=================================
+
+    Removes Validation issues with identities provided by @(IgnoreValidationIssue) items.
+
+  ==============================================================================
+  -->
+  <Target Name="IgnoreSpecificValidationIssues">
+
+    <ItemGroup Condition=" '@(IgnoreValidationIssue)' != '' ">
+      <ValidationIssue Remove="%(IgnoreValidationIssue.Identity)" />
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============IgnoreValidationIssuesWithCode=================================
+
+    Removes Validation issues with codes provided by $(IgnoreValidationIssueCodes) property.
+
+  ==============================================================================
+  -->
+  <Target Name="IgnoreValidationIssuesWithCode">
+
+    <ItemGroup Condition=" '$(IgnoreValidationIssueCodes)' != '' ">
+      <!-- Convert the IgnoreValidationIssueCodes property to an item list -->
+      <_IgnoreValidationIssueCodesItem Include="$(IgnoreValidationIssueCodes)" />
+
+      <!-- Prepare validation issues for deletion. -->
+      <_ValidationIssueToIgnore Include="@(ValidationIssue)">
+        <IgnoreCode>%(_IgnoreValidationIssueCodesItem.Identity)</IgnoreCode>
+      </_ValidationIssueToIgnore>
+
+      <!-- Remove any validation issue that has a code provided in $(IgnoreValidationIssueCodes) property -->
+      <ValidationIssue Remove="%(_ValidationIssueToIgnore.Identity)"
+                       Condition="'%(_ValidationIssueToIgnore.Code)' == '%(_ValidationIssueToIgnore.IgnoreCode)'" />
+
+      <!-- Remove the intermediate items -->
+      <_IgnoreValidationIssueCodesItem Remove="@(_IgnoreValidationIssueCodesItem)" />
+      <_ValidationIssueToIgnore Remove="@(_ValidationIssueToIgnore)" />
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============ReportValidationIssues=========================================
+
+    Generates the validation warnings based on the list of ValidationIssue items.
+    It generates either the WATMessage or MSBuild Warning depending on the
+    ValidationIssue.WATMessage metadata value.
+
+    [IN]
+
+    @(ValidationIssue): The identified validation issues.
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ReportValidationIssuesDependsOn>
+      WriteValidationIssues;
+      CreateValidationIssueWarningsOrErrors;
+    </ReportValidationIssuesDependsOn>
+  </PropertyGroup>
+
+  <Target Name="ReportValidationIssues"
+          Condition=" '@(ValidationIssue)' != '' "
+          DependsOnTargets="$(ReportValidationIssuesDependsOn)" />
+
+  <!--
+  ===============WriteValidationIssues=========================================
+
+    Save all validation issues to the ValidationIssues.xml file
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+
+    <!-- These metadata entries are part of the ValidationIssue items and will be saved to the validation issues file -->
+    <ValidationIssueMetadata>ProjectName;FilenameWithExtension;Code;FileFullPath;WATMessage;Arguments;Text;HelpKeyword</ValidationIssueMetadata>
+
+  </PropertyGroup>
+
+  <Target Name="WriteValidationIssues" >
+
+    <WriteValidationIssues ValidationIssues="@(ValidationIssue)"
+                           File="$(ValidationIssuesFullPath)"
+                           MetadataNames="$(ValidationIssueMetadata)"/>
+
+  </Target>
+
+  <!--
+  ===============CreateValidationIssueWarningsOrErrors==========================
+
+    Create warnings or errors for the validation issues.
+
+  ==============================================================================
+  -->
+  <Target Name="CreateValidationIssueWarningsOrErrors" >
+
+    <PropertyGroup>
+      <_WATMessageType>Warning</_WATMessageType>
+      <_WATMessageType Condition=" '$(ValidationIssuesAreErrors)' == 'True' ">Error</_WATMessageType>
+    </PropertyGroup>
+
+    <WATMessage Condition=" '%(ValidationIssue.WATMessage)' == 'True' "
+                Type="$(_WATMessageType)"
+                File="%(ValidationIssue.ProjectName)"
+                ContinueAfterLogError="True"
+                Code="%(ValidationIssue.Code)"
+                Arguments="%(ValidationIssue.Arguments)"
+                HelpKeyword="%(ValidationIssue.HelpKeyword)" />
+
+    <Warning Condition=" '%(ValidationIssue.WATMessage)' != 'True' And '$(ValidationIssuesAreErrors)' != 'True' "
+             File="%(ValidationIssue.ProjectName)"
+             Code="%(ValidationIssue.Code)"
+             Text="%(ValidationIssue.Text)"
+             HelpKeyword="%(ValidationIssue.HelpKeyword)" />
+
+    <Error Condition=" '%(ValidationIssue.WATMessage)' != 'True' And '$(ValidationIssuesAreErrors)' == 'True' "
+           File="%(ValidationIssue.ProjectName)"
+           Code="%(ValidationIssue.Code)"
+           Text="%(ValidationIssue.Text)"
+           HelpKeyword="%(ValidationIssue.HelpKeyword)" />
+
+  </Target>
+
+  <!--
+  ===============StopOnValidationErrors=========================================
+
+    Create an error that stops the build if there were any validation errors.
+
+  ==============================================================================
+  -->
+  <Target Name="StopOnValidationErrors"
+          Condition=" '$(ValidationIssuesAreErrors)' == 'True' And Exists('$(ValidationIssuesFullPath)')">
+
+    <WATMessage Type="Error"
+                File="$(MSBuildProjectName)"
+                Code="WAT180"
+                HelpKeyword="WATValidationIssueWarning" />
+  </Target>
+
+  <!--
+  ===============CopyWebRoleFiles===============================================
+
+    Copies web roles files to an intermediate folder for packaging.
+
+  ==============================================================================
+  -->
+  <Target Name="CopyWebRoleFiles">
+    <!-- ===============================
+         At this point the WebFiles list is ready, just publish it
+         =============================== -->
+
+    <Message Text="WebFiles=%(WebFiles.Identity) -> %(TargetPath)" />
+
+    <ItemGroup>
+      <IntermediateWebOutputPathItem Include="$(IntermediateOutputPath)%(WebRoleReference.ProjectName)\" />
+    </ItemGroup>
+
+    <Message Text="IntermediateWebOutputPathItem=@(IntermediateWebOutputPathItem)" ></Message>
+
+    <PropertyGroup>
+      <IntermediateWebOutputPath>@(IntermediateWebOutputPathItem->'%(Fullpath)')</IntermediateWebOutputPath>
+    </PropertyGroup>
+
+    <!-- Setup the intermediate path and site pysical path in the case of packaging of webrole -->
+    <PropertyGroup Condition=" '$(PackageWebRole)' == 'True' ">
+      <SitePhysicalPath>$(IntermediateWebOutputPath)</SitePhysicalPath>
+    </PropertyGroup>
+
+    <!-- Setup the intermediate path and site pysical path in the case of no packaging of webrole -->
+    <PropertyGroup Condition=" '$(PackageWebRole)' != 'True' ">
+      <SitePhysicalPath>$(WebSourceDir)</SitePhysicalPath>
+    </PropertyGroup>
+
+    <!-- Make sure the intermediate web ouput folder is created -->
+    <MakeDir Directories="$(IntermediateWebOutputPath)" />
+
+    <!-- Remove the files located under the intermediate output folder that are orphaned.
+         In other words, remove those files that are not part of the web project anymore.
+         For example, the user renamed a file from test1.dll to test2.dll.
+    -->
+    <ItemGroup>
+      <OrphanedWebFiles Include="$(IntermediateWebOutputPath)**\*.*" Exclude="@(WebFiles->'$(IntermediateWebOutputPath)%(TargetPath)')" />
+    </ItemGroup>
+    <Delete Files="@(OrphanedWebFiles)" ContinueOnError="true" />
+
+    <!-- Publish the web to the intermediate folder -->
+    <Copy
+      Condition=" '@(WebFiles)' != '' "
+      SourceFiles="@(WebFiles)"
+      DestinationFiles="@(WebFiles->'$(IntermediateWebOutputPath)%(TargetPath)')"
+      SkipUnchangedFiles="true" />
+
+    <!-- Add OutputDir, EntryPoint and SourceDir metadata to the WebRoleReference item group -->
+    <ItemGroup>
+      <WebRoleReference Condition="'@(WebRoleReference)' != ''">
+        <OutputDir>$(IntermediateWebOutputPath)</OutputDir>
+        <EntryPoint>$(WebEntryPoint)</EntryPoint>
+        <SourceDir>$(WebSourceDir)</SourceDir>
+        <RoleTargetFramework>$(RoleTargetFramework)</RoleTargetFramework>
+        <SitePhysicalPath>$(SitePhysicalPath)</SitePhysicalPath>
+      </WebRoleReference>
+    </ItemGroup>
+
+    <Message Text="WebRoleReference=@(WebRoleReference) %(RoleType), %(RoleName), %(ProjectName), %(Configuration), %(Platform), %(SourceDir), %(OutputDir), %(EntryPoint)" />
+  </Target>
+
+  <!--
+  ===============PostProcessWebRoleFiles========================================
+
+    Changes the web role files after they are copied to an intermediate folder for packaging.
+
+  ==============================================================================
+  -->
+  <Target Name="PostProcessWebRoleFiles">
+
+    <Exec Condition="'$(EnableProfiling)'=='true' and '$(ProfilingMode)'=='Instrumentation'" Command="&quot;$(VSInstrCommand)&quot; &quot;$(IntermediateWebOutputPath)bin\$(WebEntryPoint)&quot;"></Exec>
+
+    <!-- Copy the role assembly and symbols if ProfilingSymbolsPath is specified-->
+    <ItemGroup>
+      <RoleSymbolsFiles Include="$(IntermediateWebOutputPath)**\*.pdb" />
+      <RoleSymbolsFiles Include="$(IntermediateWebOutputPath)bin\$(WebEntryPoint)" />
+    </ItemGroup>
+
+    <MakeDir Condition="'$(EnableProfiling)' == 'true' and '$(ProfilingSymbolsPath)' != '' " Directories="$(ProfilingSymbolsPath)" />
+
+    <Copy
+      Condition="'$(EnableProfiling)' == 'true' and '$(ProfilingSymbolsPath)' != '' "
+      SourceFiles="@(RoleSymbolsFiles)"
+      DestinationFolder="$(ProfilingSymbolsPath)"
+      SkipUnchangedFiles="true" />
+
+  </Target>
+
+  <!--
+  ===============ValidateRoleTargetFramework====================================
+
+    Validates the role target framework version.
+    This target is executed every time we do a build.
+    This is why it is not part of the validate role files target which is executed only while publishing.
+
+    [IN]
+
+    $(RoleTargetFramework) - role's target framework version.
+
+  ==============================================================================
+  -->
+  <Target Name="ValidateRoleTargetFramework">
+
+    <PropertyGroup>
+      <_IsValidRoleTargetFramework>False</_IsValidRoleTargetFramework>
+      <_IsValidRoleTargetFramework
+        Condition="$(RoleTargetFramework) == 'v3.5' Or $(RoleTargetFramework.StartsWith('v4.0'))">True</_IsValidRoleTargetFramework>
+
+      <_RoleProject Condition=" '$(WebRoleProject)'    != '' ">$(WebRoleProject)</_RoleProject>
+      <_RoleProject Condition=" '$(WorkerRoleProject)' != '' ">$(WorkerRoleProject)</_RoleProject>
+
+      <_RoleProjectName Condition=" '$(WebRoleProjectName)'    != '' ">$(WebRoleProjectName)</_RoleProjectName>
+      <_RoleProjectName Condition=" '$(WorkerRoleProjectName)' != '' ">$(WorkerRoleProjectName)</_RoleProjectName>
+    </PropertyGroup>
+
+    <WATMessage Condition=" '$(_IsValidRoleTargetFramework)' != 'True' "
+                Type="Error"
+                Code="WAT210"
+                File="$(_RoleProject)"
+                Arguments="$(_RoleProjectName)" />
+
+  </Target>
+
+  <!-- 
+  ===============ResolveWorkerRoleReferences====================================
+
+    Resolves the worker role references
+
+    [OUT]
+    
+    WorkerRoleReferences: (item) list of all project references for worker
+          - @         : Path to the project file.
+          - RoleType  : The type of the role: Worker
+          - RoleName  : The name of the role.
+          - ProjectName: The project name of the role.
+          - Platform  : CPU Platform of the role project.
+          - OutputDir : The path where we can find the outputs of the role.
+          - SourceDir : not used
+          - SitePhysicalPath: not used
+
+  ==============================================================================
+  -->
+  <Target
+      Name="ResolveWorkerRoleReferences"
+      Condition="'$(PackageForComputeEmulator)' == 'true' 
+                  Or '$(IsExecutingPublishTarget)' == 'true' ">
+
+    <!-- Get all the roles from the project references section -->
+    <ItemGroup>
+      <WorkerRoleProjects Include="@(ProjectReferenceWithConfiguration->'%(Identity)')" Condition=" '%(ProjectReferenceWithConfiguration.RoleType)' == 'Worker' " >
+        <ProjectName>%(Name)</ProjectName>
+        <Configuration>%(ProjectReferenceWithConfiguration.Configuration)</Configuration>
+        <Platform>%(ProjectReferenceWithConfiguration.Platform)</Platform>
+      </WorkerRoleProjects>
+    </ItemGroup>
+
+    <MSBuild
+      Condition=" '@(WorkerRoleProjects)' != '' "
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="ResolveSingleWorkerRoleReference"
+      Properties="WorkerRoleProject=%(Identity);WorkerRoleProjectName=%(Name);WorkerRoleConfiguration=%(Configuration);WorkerRolePlatform=%(Platform);IsExecutingPublishTarget=$(IsExecutingPublishTarget)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="WorkerRoleReferences" />
+    </MSBuild>
+
+    <Message Text="WorkerRoleReferences=@(WorkerRoleReferences) %(RoleType), %(RoleName), %(ProjectName), %(Configuration), %(Platform), %(OutputDir), %(EntryPoint)" />
+
+    <!-- Register intermediate published worker role for Clean -->
+    <ItemGroup Condition=" '@(WorkerRoleReferences)' != '' ">
+      <FileWrites Include="%(WorkerRoleReferences.OutputDir)**\*.*" />
+    </ItemGroup>
+
+  </Target>
+
+  <!-- 
+  ===============ResolveSingleWorkerRoleReference===============================
+
+    Resolves a single worker role reference. This target publishes the worker
+    role into an intermediate folder making it ready for CSPack.
+
+    [IN]
+
+    $(WorkerRoleProject)        : the propject of worker role
+    $(WorkerRoleProjectName)    : the project name of the worker role
+    $(WorkerRoleConfiguration)  : the configuration of the worker role
+    $(WorkerRolePlatform)       : the platform of the worker role
+    $(IsExecutingPublishTarget) : a flag indicating that code is executed as a part of Publish target call
+
+    [OUT]
+       
+    WorkerRoleReference: (item) Contains information about the worker role
+          - @         : Path to the project file, same as $(WorkerRoleProject)
+          - RoleType  : The type of the role: Worker
+          - RoleName  : The name of the role.
+          - ProjectName: The project name of the role, same as $(WorkerRoleProjectName)
+          - Configuration: The configuration used on the role project.
+          - Platform  : CPU Platform of the role project.
+          - OutputDir : The path where we can find the outputs of the role.
+          - EntryPoint: The entry point assembly file name for the role.
+          - SourceDir : not used
+          - SitePhysicalPath: not used
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ResolveSingleWorkerRoleReferenceDependsOn>
+      CollectWorkerRoleFiles;
+      ValidateRoleTargetFramework;
+      ValidateWorkerRoleFiles;
+      CopyWorkerRoleFiles;
+      PostProcessWorkerRoleFiles;
+    </ResolveSingleWorkerRoleReferenceDependsOn>
+  </PropertyGroup>
+  <Target Name="ResolveSingleWorkerRoleReference"
+          Condition=" '$(WorkerRoleProject)' != '' and '$(WorkerRoleProjectName)' != '' "
+          DependsOnTargets="$(ResolveSingleWorkerRoleReferenceDependsOn)"
+          Returns="@(WorkerRoleReference)" />
+
+  <!--
+  ===============CollectWorkerRoleFiles============================================
+
+    Collects the the worker role files.
+
+  ==============================================================================
+  -->
+  <Target
+      Name="CollectWorkerRoleFiles"
+      Condition=" '$(WorkerRoleProject)' != '' and '$(WorkerRoleProjectName)' != '' "
+      Returns="@(WorkerRoleReference)">
+
+    <Message Text="WorkerRoleProject=$(WorkerRoleProject)" />
+    <Message Text="WorkerRoleProjectName=$(WorkerRoleProjectName)" />
+    <Message Text="WorkerRoleConfiguration=$(WorkerRoleConfiguration)" />
+    <Message Text="WorkerRolePlatform=$(WorkerRolePlatform)" />
+
+    <PropertyGroup>
+      <!-- If the role configuration wasn't passed, use the current cloud service project configuration -->
+      <WorkerRoleConfiguration Condition="'$(WorkerRoleConfiguration)' == ''">$(Configuration)</WorkerRoleConfiguration>
+      <!-- If the role platform wasn't passed, use the current cloud service project platform -->
+      <WorkerRolePlatform Condition="'$(WorkerRolePlatform)' == ''">$(Platform)</WorkerRolePlatform>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <WorkerRoleReference Include="$(WorkerRoleProject)">
+        <RoleType>Worker</RoleType>
+        <RoleName>$(WorkerRoleProjectName)</RoleName>
+        <ProjectName>$(WorkerRoleProjectName)</ProjectName>
+        <Configuration>$(WorkerRoleConfiguration)</Configuration>
+        <Platform>$(WorkerRolePlatform)</Platform>
+        <!-- worker doesn't use SourceDir, set it to empty as default -->
+        <SourceDir></SourceDir>
+        <SitePhysicalPath></SitePhysicalPath>
+      </WorkerRoleReference>
+    </ItemGroup>
+
+    <!-- ===============================
+         Create role type independent properties
+         =============================== -->
+    <ItemGroup>
+      <RoleReference Include="@(WorkerRoleReference)" />
+    </ItemGroup>
+    <PropertyGroup>
+      <RoleProjectName>$(WorkerRoleProjectName)</RoleProjectName>
+    </PropertyGroup>
+
+    <!-- Setup the intermediate path where we want to publish the worker role -->
+    <ItemGroup>
+      <IntermediateWorkerOutputPathItem Include="$(IntermediateOutputPath)%(WorkerRoleReference.ProjectName)\" />
+    </ItemGroup>
+    <PropertyGroup>
+      <IntermediateWorkerOutputPath>@(IntermediateWorkerOutputPathItem->'%(Fullpath)')</IntermediateWorkerOutputPath>
+    </PropertyGroup>
+
+    <!-- ===============================
+         Get the target path for the role 
+         =============================== -->
+    <MSBuild
+      Projects="@(WorkerRoleReference)"
+      Targets="GetTargetPath"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="WorkerTargetPathItem" />
+    </MSBuild>
+
+    <PropertyGroup>
+      <!-- Stores the worker target directory -->
+      <WorkerTargetDir Condition="'@(WorkerTargetPathItem)'!=''">%(RootDir)%(Directory)</WorkerTargetDir>
+      <!-- Stores the assembly file name (no path) of the worker role -->
+      <WorkerEntryPoint Condition="'@(WorkerTargetPathItem)'!=''">%(Filename)%(Extension)</WorkerEntryPoint>
+    </PropertyGroup>
+
+    <Message Text="WorkerTargetDir = $(WorkerTargetDir)" />
+    <Message Text="WorkerEntryPoint = $(WorkerEntryPoint)" />
+
+    <!--  =============================== 
+          Get all the output groups for the role 
+           =============================== -->
+    <MSBuild
+      Projects="@(WorkerRoleReference)"
+      Targets="
+        BuiltProjectOutputGroup;
+        DebugSymbolsProjectOutputGroup;
+        DocumentationProjectOutputGroup;
+        SatelliteDllsProjectOutputGroup;
+        SGenFilesOutputGroup"
+      Properties="AddAppConfigToBuildOutputs=true; Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="OutputGroups" />
+    </MSBuild>
+
+    <Message Text="Output=%(OutputGroups.Identity) -> %(TargetPath)" />
+
+    <ItemGroup>
+      <WorkerFiles Include="@(OutputGroups)" Condition=" '@(OutputGroups)' != '' " >
+        <TargetPath>%(TargetPath)</TargetPath>
+      </WorkerFiles>
+    </ItemGroup>
+
+    <!-- ===============================
+         Get all the dependency output groups for the role 
+         =============================== -->
+    <MSBuild
+      Projects="@(WorkerRoleReference)"
+      Targets="
+        BuiltProjectOutputGroupDependencies;
+        DebugSymbolsProjectOutputGroupDependencies;
+        DocumentationProjectOutputGroupDependencies;
+        SGenFilesOutputGroupDependencies"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="OutputGroupsDependencies" />
+    </MSBuild>
+
+    <Message Text="OutputDependencies=%(OutputGroupsDependencies.Identity)" />
+
+    <!-- Figure out the dependencies that need to be copied by checking if the dependency exists
+         in the worker target directory. -->
+    <ItemGroup>
+      <CopyLocalDependencies Include="@(OutputGroupsDependencies)" Condition="Exists('$(WorkerTargetDir)%(Filename)%(Extension)')" />
+    </ItemGroup>
+    <Message Text="CopyLocalDependencies=%(CopyLocalDependencies.Identity)" />
+    <ItemGroup>
+      <WorkerFiles Include="@(CopyLocalDependencies)" Condition=" '@(CopyLocalDependencies)' != '' " >
+        <TargetPath>%(Filename)%(Extension)</TargetPath>
+      </WorkerFiles>
+    </ItemGroup>
+
+    <!--  ===============================
+          Get all Satellite dependecies 
+          =============================== -->
+    <MSBuild
+      Projects="@(WorkerRoleReference)"
+      Targets="
+        SatelliteDllsProjectOutputGroupDependencies"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="SatelliteOutputGroupsDependencies" />
+    </MSBuild>
+
+    <FindTargetPath
+      Files="@(SatelliteOutputGroupsDependencies)"
+      FindUnderTargetDir="$(WorkerTargetDir)"
+      >
+      <Output TaskParameter="ItemWithTargetPath" ItemName="SatelliteOutputGroupsDependenciesWithTargetPath" />
+    </FindTargetPath>
+
+    <Message Text="SatelliteOutputGroupsDependenciesWithTargetPath=@(SatelliteOutputGroupsDependenciesWithTargetPath), %(TargetPath)" />
+
+    <ItemGroup>
+      <WorkerFiles Include="@(SatelliteOutputGroupsDependenciesWithTargetPath)" Condition=" '@(SatelliteOutputGroupsDependenciesWithTargetPath)' != '' ">
+        <TargetPath>%(TargetPath)</TargetPath>
+      </WorkerFiles>
+    </ItemGroup>
+
+    <!-- ===============================
+         Get TargetFrameworkVersion for the role project
+         =============================== -->
+    <MSBuild
+      Projects="@(WorkerRoleReference)"
+      Targets="GetTargetFrameworkVersion"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" PropertyName="RoleTargetFramework" />
+    </MSBuild>
+    <Message Text="WorkerTargetFramework = $(RoleTargetFramework)" />
+
+    <!-- ===============================
+         Get all the CopyToOutput items from the role 
+         =============================== -->
+    <MSBuild
+      Projects="@(WorkerRoleReference)"
+      Targets="
+        GetCopyToOutputDirectoryItems"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="CopyToOutputItems" />
+    </MSBuild>
+  </Target>
+
+  <!--
+  ===============ValidateWorkerRoleFiles============================================
+
+    Validates the Worker Roles files.
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ValidateWorkerRoleFilesRules>
+      GetTargetFrameworkProperties;
+      ValidateRoleTargetFrameworkMoniker;
+      ValidateWorkerRoleFilesMissedDependencies;
+      ValidateWorkerRoleFiles64bitAssemblies;
+    </ValidateWorkerRoleFilesRules>
+    <ValidateWorkerRoleFilesDependsOn>
+      $(ValidateWorkerRoleFilesRules);
+      IgnoreKnownValidationIssues;
+      ReportValidationIssues;
+    </ValidateWorkerRoleFilesDependsOn>
+  </PropertyGroup>
+  <Target Name="ValidateWorkerRoleFiles"
+          Condition=" '$(IsExecutingPublishTarget)' == 'True' "
+          DependsOnTargets="$(ValidateWorkerRoleFilesDependsOn)" />
+
+  <!--
+  ===============ValidateWorkerRoleFilesMissedDependencies============================
+
+    Validates that the Worker project has all the dependency assembly as a part of the package
+    or they are either part of OS image or Windows Azure SDK.
+
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <ValidateWorkerRoleFilesMissedDependenciesDependsOn>
+      GetWorkerProjectDependencies;
+      FindKnownWorkerProjectDependencies;
+      GenerateWorkerProjectDependenciesValidationIssues;
+    </ValidateWorkerRoleFilesMissedDependenciesDependsOn>
+  </PropertyGroup>
+  <Target Name="ValidateWorkerRoleFilesMissedDependencies"
+          DependsOnTargets="$(ValidateWorkerRoleFilesMissedDependenciesDependsOn)" />
+
+  <!--
+  ===============GetWorkerProjectDependencies======================================
+
+    Gets a list of all dependencies for a worker project.
+
+    [IN]
+
+    @(WorkerRoleReference) - list of worker projects.
+
+    [OUT]
+
+    @(WorkerProjectDependency) - list of worker project dependencies
+
+  ==============================================================================
+  -->
+  <Target Name="GetWorkerProjectDependencies">
+
+    <MSBuild
+      Projects="@(WorkerRoleReference)"
+      Targets="BuiltProjectOutputGroupDependencies"
+      Properties="Configuration=%(Configuration); Platform=%(Platform)"
+      ContinueOnError="false"
+      >
+      <Output TaskParameter="TargetOutputs" ItemName="WorkerProjectDependency" />
+    </MSBuild>
+
+    <Message Text="Identified WorkerProjectDependency=@(WorkerProjectDependency)" />
+  </Target>
+
+  <!--
+  ===============FindKnownWorkerProjectDependencies============================
+
+    Removes from the WorkerProjectDependency any known dependent assembly that
+    are either part of .Net Framework, part of Windows Azure SDK, or already
+    included in the package.
+
+  ==============================================================================
+  -->
+  <Target Name="FindKnownWorkerProjectDependencies">
+
+    <!-- ===============================
+         Find the .Net framework reference directories
+         =============================== -->
+    <ItemGroup>
+      <TargetFrameworkDirectories Include="$(RoleTargetFrameworkDirectories)"/>
+    </ItemGroup>
+
+    <Message Text="TargetFrameworkDirectories=@(TargetFrameworkDirectories)" />
+
+    <!-- Remove any .Net Framework assembly from the list of dependencies. -->
+    <ItemGroup>
+      <!-- Some framework directories have the trailing slash and some don't. Do the removal for both cases. -->
+      <WorkerProjectDependency Remove="%(TargetFrameworkDirectories.Identity)**\*" Condition=" %(TargetFrameworkDirectories.Identity) != '' "/>
+      <WorkerProjectDependency Remove="%(TargetFrameworkDirectories.Identity)\**\*" Condition=" %(TargetFrameworkDirectories.Identity) != '' "/>
+    </ItemGroup>
+
+    <!-- ===============================
+         Find the Windows Azure OS or SDK assemblies
+         =============================== -->
+
+    <FindWindowsAzureAssemblies AssemblyFiles="@(WorkerProjectDependency)"
+                                WindowsAzureAssemblyNames="@(WindowsAzureAssemblyName)">
+      <Output TaskParameter="FoundWindowsAzureAssemblyFiles" ItemName="_FoundWindowsAzureAssemblyFiles" />
+    </FindWindowsAzureAssemblies>
+
+    <ItemGroup>
+      <WorkerProjectDependency Remove="%(_FoundWindowsAzureAssemblyFiles.Identity)" />
+    </ItemGroup>
+
+    <!-- ===============================
+         Find the assemblies that are being copied to output
+         =============================== -->
+
+    <ItemGroup>
+      <WorkerProjectDependency Remove="%(WorkerFiles.Identity)" />
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============GenerateWorkerProjectDependenciesValidationIssues============================
+
+    Validates that the Worker project has all the dependency assembly as a part of the package
+    or they are either part of OS image or Windows Azure SDK.
+
+    [IN]
+
+    @(WorkerProjectDependency): List of assemblies the worker project depends on.
+
+    [OUT]
+
+    @(ValidationIssue): list of generated validation issues
+          - @                     : The ID of the issue that consists from 3 parts separated by pipeline:
+                                    <ProjectName>|<FilenameWithExtension>|<Code>
+          - ProjectName           : The name of the worker project
+          - FilenameWithExtension : The name of the file with its extension.
+          - Code                  : The validation issue code.
+          - FileFullPath          : The file's full path.
+          - WATMessage            : True if we should generate WATMessage. Otherwise we generate the MSBuild Warning.
+          - Arguments             : Used for WATMessage if WATMessage==True
+          - Text                  : Used for Warning if WATMessage==False
+          - HelpKeyword           : The help keyword.
+
+  ==============================================================================
+  -->
+  <Target Name="GenerateWorkerProjectDependenciesValidationIssues">
+
+    <!-- Get the additional information about GAC assemblies -->
+    <ProvideGacAssemblyInfo
+      AssemblyFiles="@(WorkerProjectDependency)"
+      TargetProcessorArchitecture="AMD64">
+      <Output TaskParameter="GacAssemblyFiles" ItemName="_GacAssemblyFiles" />
+    </ProvideGacAssemblyInfo>
+
+    <!-- Replace the Worker project dependencies with the assemblies found in the GAC -->
+    <ItemGroup>
+      <WorkerProjectDependency Remove="%(_GacAssemblyFiles.Identity)" />
+      <WorkerProjectDependency Include="@(_GacAssemblyFiles)" />
+    </ItemGroup>
+
+    <!-- ===============================
+         Create the ValidationIssue items for the missed dependency assemblies.
+         =============================== -->
+    <ItemGroup>
+
+      <!-- Missed dependency assembly not in the GAC -->
+      <ValidationIssue Include="@(WorkerProjectDependency->'$(WorkerRoleProjectName)|%(Filename)%(Extension)|WAT150')"
+                       Condition=" '%(WorkerProjectDependency.GacPath)' == '' ">
+        <ProjectName>$(WorkerRoleProjectName)</ProjectName>
+        <FilenameWithExtension>%(WorkerProjectDependency.Filename)%(WorkerProjectDependency.Extension)</FilenameWithExtension>
+        <Code>WAT150</Code>
+        <FileFullPath>%(WorkerProjectDependency.FullPath)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(WorkerRoleProjectName);%(WorkerProjectDependency.Identity)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+      <!-- Missed dependency assembly in the GAC, but not installed by MSI -->
+      <ValidationIssue Include="@(WorkerProjectDependency->'$(WorkerRoleProjectName)|%(Filename)%(Extension)|WAT151')"
+                       Condition=" '%(WorkerProjectDependency.GacPath)' != '' And '%(WorkerProjectDependency.ReferenceScheme)' != 'MSI' ">
+        <ProjectName>$(WorkerRoleProjectName)</ProjectName>
+        <FilenameWithExtension>%(WorkerProjectDependency.Filename)%(WorkerProjectDependency.Extension)</FilenameWithExtension>
+        <Code>WAT151</Code>
+        <FileFullPath>%(WorkerProjectDependency.GacPath)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(WorkerRoleProjectName);%(WorkerProjectDependency.Identity)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+      <!-- Missed dependency assembly in the GAC and installed by MSI -->
+      <ValidationIssue Include="@(WorkerProjectDependency->'$(WorkerRoleProjectName)|%(Filename)%(Extension)|WAT152')"
+                       Condition=" '%(WorkerProjectDependency.GacPath)' != '' And '%(WorkerProjectDependency.ReferenceScheme)' == 'MSI' ">
+        <ProjectName>$(WorkerRoleProjectName)</ProjectName>
+        <FilenameWithExtension>%(WorkerProjectDependency.Filename)%(WorkerProjectDependency.Extension)</FilenameWithExtension>
+        <Code>WAT152</Code>
+        <FileFullPath>%(WorkerProjectDependency.GacPath)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(WorkerRoleProjectName);%(WorkerProjectDependency.Identity)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============ValidateWorkerRoleFiles64bitAssemblies============================
+
+    Validates that the Worker project either have the MSIL or AMD64 assemblies.
+
+    [IN]
+
+    @(WorkerFiles): The worker project files to be copied to the CS package.
+
+    [OUT]
+
+    @(ValidationIssue): list of generated validation issues
+          - @                     : The ID of the issue that consists from 3 parts separated by pipeline:
+                                    <ProjectName>|<FilenameWithExtension>|<Code>
+          - ProjectName           : The name of the worker project
+          - FilenameWithExtension : The name of the file with its extension.
+          - Code                  : The validation issue code.
+          - FileFullPath          : The file's full path.
+          - WATMessage            : True if we should generate WATMessage. Otherwise we generate the MSBuild Warning.
+          - Arguments             : Used for WATMessage if WATMessage==True
+          - Text                  : Used for Warning if WATMessage==False
+          - HelpKeyword           : The help keyword.
+
+  ==============================================================================
+  -->
+  <Target Name="ValidateWorkerRoleFiles64bitAssemblies">
+
+    <!-- Collect all files from bin folder with the DLL extension -->
+    <ItemGroup>
+      <_AssembliesToValidate Include="@(WorkerFiles)" Condition=" '%(WorkerFiles.Extension)' == '.dll' " />
+    </ItemGroup>
+
+    <!-- Augment the assembly files with the ProcessorArchitecture metadata -->
+    <ProvideAssemblyProcessorArchitecture
+      AssemblyFiles="@(_AssembliesToValidate)">
+      <Output TaskParameter="AssemblyFilesWithProcessorArchitecture" ItemName="_AssembliesToValidateExt" />
+    </ProvideAssemblyProcessorArchitecture>
+
+    <ItemGroup>
+      <!-- Generate Validation issues for assemblies which do not have the MSIL or AMD64 processor architecture -->
+      <ValidationIssue Include="@(_AssembliesToValidateExt->'$(WorkerRoleProjectName)|%(Filename)%(Extension)|WAT160')"
+                       Condition=" '%(_AssembliesToValidateExt.ProcessorArchitecture)' != 'MSIL' And '%(_AssembliesToValidateExt.ProcessorArchitecture)' != 'AMD64' ">
+        <ProjectName>$(WorkerRoleProjectName)</ProjectName>
+        <FilenameWithExtension>%(_AssembliesToValidateExt.Filename)%(_AssembliesToValidateExt.Extension)</FilenameWithExtension>
+        <Code>WAT160</Code>
+        <FileFullPath>%(_AssembliesToValidateExt.FullPath)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>$(WorkerRoleProjectName);%(_AssembliesToValidateExt.Identity)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+    </ItemGroup>
+
+  </Target>
+
+  <!--
+  ===============CopyWorkerRoleFiles===============================================
+
+    Copies worker roles files to an intermediate folder for packaging.
+
+  ==============================================================================
+  -->
+  <Target Name="CopyWorkerRoleFiles">
+
+    <Message Text="CopyToOutputItems=%(CopyToOutputItems.Identity) -> %(TargetPath)" />
+
+    <ItemGroup>
+      <WorkerFiles Include="$(WorkerTargetDir)%(TargetPath)" Condition=" '@(CopyToOutputItems)' != '' ">
+        <TargetPath>%(TargetPath)</TargetPath>
+      </WorkerFiles>
+    </ItemGroup>
+
+    <Message Text="WorkerFiles=%(WorkerFiles.Identity) -> %(TargetPath)" />
+
+    <!-- ===============================
+         At this point the WorkerFiles list is ready, just publish the Worker
+         =============================== -->
+
+    <!-- Make sure the intermediate worker ouput folder is created -->
+    <MakeDir Directories="$(IntermediateWorkerOutputPath)" />
+
+    <!-- Remove the files located under the intermediate output folder that are orphaned.
+         In other words, remove those files that are not part of the worker project anymore.
+         For example, the user renamed a file from test1.dll to test2.dll.
+    -->
+    <ItemGroup>
+      <OrphanedWorkerFiles Include="$(IntermediateWorkerOutputPath)**\*.*" Exclude="@(WorkerFiles->'$(IntermediateWorkerOutputPath)%(TargetPath)')" />
+    </ItemGroup>
+    <Delete Files="@(OrphanedWorkerFiles)" ContinueOnError="true" />
+
+    <!-- Publish the worker to the intermediate folder -->
+    <Copy
+      Condition=" '@(WorkerFiles)' != '' "
+      SourceFiles="@(WorkerFiles)"
+      DestinationFiles="@(WorkerFiles->'$(IntermediateWorkerOutputPath)%(TargetPath)')"
+      SkipUnchangedFiles="true" />
+
+    <!-- Add OutputDir and EntryPoint metadata to the WorkerRoleReference item group -->
+    <ItemGroup>
+      <WorkerRoleReference>
+        <OutputDir>$(IntermediateWorkerOutputPath)</OutputDir>
+        <EntryPoint>$(WorkerEntryPoint)</EntryPoint>
+        <RoleTargetFramework>$(RoleTargetFramework)</RoleTargetFramework>
+      </WorkerRoleReference>
+    </ItemGroup>
+
+    <Message Text="WorkerRoleReference=@(WorkerRoleReference) %(RoleType), %(RoleName), %(ProjectName), %(Platform), %(OutputDir), %(EntryPoint)" />
+  </Target>
+
+  <!--
+  ===============PostProcessWorkerRoleFiles========================================
+
+    Changes the worker role files after they are copied to an intermediate folder for packaging.
+
+  ==============================================================================
+  -->
+  <Target Name="PostProcessWorkerRoleFiles">
+
+    <Exec Condition="'$(EnableProfiling)' == 'true' and '$(ProfilingMode)' == 'Instrumentation'" Command="&quot;$(VSInstrCommand)&quot; &quot;$(IntermediateWorkerOutputPath)$(WorkerEntryPoint)&quot;"></Exec>
+
+    <!-- Copy the role assembly and symbols if ProfilingSymbolsPath is specified-->
+    <ItemGroup>
+      <RoleSymbolsFiles Include="$(IntermediateWorkerOutputPath)**\*.pdb" />
+      <RoleSymbolsFiles Include="$(IntermediateWorkerOutputPath)$(WorkerEntryPoint)" />
+    </ItemGroup>
+
+    <MakeDir Condition="'$(EnableProfiling)' == 'true' and '$(ProfilingSymbolsPath)' != ''" Directories="$(ProfilingSymbolsPath)" />
+
+    <Copy
+      Condition="'$(EnableProfiling)' == 'true' and '$(ProfilingSymbolsPath)' != '' "
+      SourceFiles="@(RoleSymbolsFiles)"
+      DestinationFolder="$(ProfilingSymbolsPath)"
+      SkipUnchangedFiles="true" />
+
+  </Target>
+
+  <!-- 
+  ===============ValidateRoleProjects===========================================
+
+    Validates that we have the right number of role projects to match the 
+    declared application architecture. Generates errors if these are not correct.
+    
+    [IN]
+  
+    ProjectReference: (item) The project references (roles) of the project.
+    VMRoles: (item) The VM roles of the project.
+
+  ==============================================================================
+  -->
+  <Target
+      Name="ValidateRoleProjects" DependsOnTargets="GetVMRoleCounts">
+
+    <CreateItem Include="@(ProjectReference)" Condition=" '%(ProjectReference.RoleType)' == 'Web' " >
+      <Output TaskParameter="Include" ItemName="WebRoles" />
+    </CreateItem>
+
+    <CreateItem Include="@(ProjectReference)" Condition=" '%(ProjectReference.RoleType)' == 'Worker' " >
+      <Output TaskParameter="Include" ItemName="WorkerRoles" />
+    </CreateItem>
+
+    <Message Text="Web Project        is @(WebRoles)" />
+    <Message Text="Worker Project     is @(WorkerRoles)" />
+    <Message Text="VM Project         is @(VMRoles)" />
+
+    <!-- Error out if unknown architecture or we don't have enough role projects for the architecture type -->
+    <WATMessage Condition=" '@(WebRoles)'=='' And '@(WorkerRoles)'=='' And '@(VMRoles)'=='' " Type="Error" Code="WAT001" HelpKeyword="MissingWebOrWorkerRole"/>
+
+  </Target>
+
+
+  <!-- 
+  ===============ValidateServiceFiles===========================================
+
+    Validates the integrity of both the target service definition and service configuration files.
+    
+    [IN]
+  
+    TargetServiceDefinition: (item) The service definition file in the project that is actually packaged.
+    TargetServiceConfiguration: (item) The service configuration file in the project that is actually packaged.
+
+  ==============================================================================
+  -->
+  <Target
+      Name="ValidateServiceFiles">
+
+    <ValidateServiceFiles
+        AllowLegacyWebRoles="$(AllowLegacyWebRoles)"
+        ServiceDefinitionFile="@(TargetServiceDefinition)"
+        ServiceConfigurationFile="@(TargetServiceConfiguration)">
+    </ValidateServiceFiles>
+
+  </Target>
+
+  <!-- 
+  ===============CreateManifestResourceNames====================================
+
+    The IDE is calling into this target. We don't have any resource files. 
+    So, implement this target to do nothing.
+    
+  ==============================================================================
+  -->
+  <Target Name="CreateManifestResourceNames" />
+
+  <!--
+  ===============PrepareForPublishing===========================================
+
+    Initializes values specific to the publish process.  
+
+    [OUT]
+
+    IsExecutingPublishTarget: (property) Whether the Publish target is being executed.
+    IsPublishing: (property) Whether publishing is being performed.
+    PackageWebRole: (property) Whether web roles should be packaged.
+
+  ==============================================================================
+  -->
+  <Target Name="PrepareForPublishing">
+
+    <!-- Make sure we package the web role -->
+    <PropertyGroup>
+      <IsExecutingPublishTarget>True</IsExecutingPublishTarget>
+      <IsPublishing>True</IsPublishing>
+      <PackageWebRole>True</PackageWebRole>
+    </PropertyGroup>
+
+  </Target>
+
+  <!-- Overriding the PublishDependsOn list from common targets. -->
+  <PropertyGroup>
+    <PublishDependsOn>
+      BeforePublish;
+      CorePublish;
+      AfterPublish
+    </PublishDependsOn>
+  </PropertyGroup>
+
+  <!-- 
+  ===============CorePublish====================================================
+
+    Builds the project(s) but in single-file-package mode (i.e., does not specify
+    the /copyonly parameter to cspack) and copies the generated output to the 
+    publish folder.  
+    
+    [IN]
+  
+    TargetServiceDefinition: (item) The service definition file that will be packaged.
+    TargetServiceConfiguration: (item) The service configuration file that will be published.
+    
+    [OUT]
+    
+    PublishServicePackage: (item) The service package file that is actually published.
+    PublishServiceConfiguration: (item) The service configuration file that is actually published.
+    
+  ==============================================================================
+  -->
+  <PropertyGroup>
+    <CorePublishDependsOn>
+      PrepareForPublishing;
+      CleanPublishFolder;
+      Build;
+    </CorePublishDependsOn>
+  </PropertyGroup>
+  <Target
+      Name="CorePublish"
+      DependsOnTargets="$(CorePublishDependsOn)">
+
+    <ItemGroup>
+      <PublishServicePackage Include="$(PublishDir)$(ProjectName).cspkg" />
+      <PublishServiceConfiguration Include="@(TargetServiceConfiguration->'$(PublishDir)%(SourceFilename)')" />
+    </ItemGroup>
+
+    <Message Text="CorePublish: PackageWebRole = $(PackageWebRole)" />
+
+    <Message Text="Publishing starting..." />
+
+    <Message Text="RolePlugins       is @(RoleProperties->'%(RolePlugins)')" />
+
+    <Message Text="Publishing to '$(PublishDir)'" />
+
+    <MakeDir Directories=" $(PublishDir) " />
+
+    <Message Text="TargetServiceDefinition is @(TargetServiceDefinition)" />
+
+    <Message Text="TargetServiceConfiguration is @(TargetServiceConfiguration)" />
+
+    <Message Text="Roles is @(Roles)" />
+
+    <CSPack
+      AllowLegacyWebRoles="$(AllowLegacyWebRoles)"     
+      ServiceDefinitionFile="@(TargetServiceDefinition)"
+      Output="@(PublishServicePackage)"
+      PackRoles="@(Roles)"
+      SiteMapping="@(SiteMapping)"
+      RoleProperties="@(RoleProperties)"
+      CopyOnly="false"
+      >
+    </CSPack>
+
+    <!-- Copy service configuration to output directory -->
+    <Message Text="Copying the service configuration file." />
+
+    <Copy SourceFiles="@(TargetServiceConfiguration)" DestinationFiles="@(PublishServiceConfiguration)" />
+
+    <Message Text="Publishing process has completed."/>
+
+  </Target>
+
+  <!-- =========================================================== 
+       Override CoreCleanDependsOn property from Microsoft.Common.targets
+       to allow us to Delete the current deployment
+       =========================================================== -->
+
+  <PropertyGroup>
+    <CoreCleanDependsOn>
+      DeleteCurrentDeployment;
+      $(CoreCleanDependsOn)
+    </CoreCleanDependsOn>
+  </PropertyGroup>
+
+  <!--
+  =============== CleanServiceOutputDirectory =================================
+
+    Removes the ServiceOutputDirectory when the publish folder is removed.
+
+  =============================================================================
+  -->
+  <Target Name="CleanServiceOutputDirectory"
+          AfterTargets="CleanPublishFolder">
+
+    <RemoveDir Directories="$(ServiceOutputDirectory)"
+               Condition="Exists('$(ServiceOutputDirectory)')" />
+
+  </Target>
+
+  <!-- =============== IntelliTrace ================================================= 
+       IntelliTrace properties
+       ============================================================================== -->
+
+  <PropertyGroup>
+    <KB983301Installed Condition=" '$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Updates\Microsoft Visual Studio 2010 IntelliTrace Collection (x64)\KB983301@ThisVersionInstalled)' != '' ">true</KB983301Installed>
+    <VisualStudioProductPath Condition=" '$(VisualStudioProductPath)' == '' ">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0\Setup\VS@ProductDir)</VisualStudioProductPath>
+    <VisualStudioIDEPath Condition=" '$(VisualStudioIDEPath)' == '' ">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0@InstallDir)</VisualStudioIDEPath>
+    <VSDataCollectorsPath Condition=" '$(VSDataCollectorsPath)' == '' ">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0\TraceDebugger@VSTraceCollector)</VSDataCollectorsPath>
+    <VSReferencedAssembliesPath Condition=" '$(VSReferencedAssembliesPath)' == '' ">$(VisualStudioIDEPath)ReferenceAssemblies\v2.0\</VSReferencedAssembliesPath>
+    <VSPrivateAssembliesPath Condition=" '$(VSPrivateAssembliesPath)' == '' ">$(VisualStudioIDEPath)PrivateAssemblies\</VSPrivateAssembliesPath>
+    <VSPublicAssembliesPath Condition=" '$(VSPublicAssembliesPath)' == '' ">$(VisualStudioIDEPath)PublicAssemblies\</VSPublicAssembliesPath>
+    <CloudToolsInstallPath Condition=" '$(CloudToolsInstallPath)' == '' ">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Azure Tools for Microsoft Visual Studio\10.0\1.6@InstallPath)</CloudToolsInstallPath>
+
+    <!-- In order to enable testing without tools installed, fallback to default path if InstallPath is not set in the Registry. 
+         The files are copied there by CctPackage project build. $(ProgramFiles) is set to Program Files (x86) by MSBuild. -->
+    <DefaultCloudToolsPath Condition=" '$(DefaultCloudToolsPath)' == '' ">$(ProgramFiles)\Windows Azure Tools\$(CloudToolsVersion)\Visual Studio 10.0\</DefaultCloudToolsPath>
+    <CloudToolsInstallPath Condition=" '$(CloudToolsInstallPath)' == '' ">$(DefaultCloudToolsPath)</CloudToolsInstallPath>
+    <CloudToolsDiagnosticsPath Condition=" '$(CloudToolsDiagnosticsPath)' == '' ">$(CloudToolsInstallPath)VsDiagnostics\</CloudToolsDiagnosticsPath>
+
+    <IntelliTraceTargetDir>$(BaseIntermediateOutputPath)\$(Configuration)\IntelliTrace</IntelliTraceTargetDir>
+    <IntelliTraceRuntimeDir>$(IntelliTraceTargetDir)\Runtime</IntelliTraceRuntimeDir>
+    <IntelliTraceLoggerDir>$(IntelliTraceRuntimeDir)\64</IntelliTraceLoggerDir>
+    <IntelliTraceAddonManifestPath>$(CloudToolsDiagnosticsPath)\IntelliTrace.csplugin</IntelliTraceAddonManifestPath>
+    <UserIntelliTraceCollectionPlanPath>$(AppData)\Microsoft\VisualStudio\10.0\Cloud Tools\collectionplan.xml</UserIntelliTraceCollectionPlanPath>
+    <DefaultIntelliTraceCollectionPlanPath>$(CloudToolsDiagnosticsPath)\collectionplan.xml</DefaultIntelliTraceCollectionPlanPath>
+    <IntelliTraceCollectionPlanPath Condition="Exists('$(UserIntelliTraceCollectionPlanPath)')">$(UserIntelliTraceCollectionPlanPath)</IntelliTraceCollectionPlanPath>
+    <IntelliTraceCollectionPlanPath Condition=" '$(IntelliTraceCollectionPlanPath)' == '' ">$(DefaultIntelliTraceCollectionPlanPath)</IntelliTraceCollectionPlanPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <IntelliTraceFiles
+      Include= "$(CloudToolsDiagnosticsPath)\Microsoft.VisualStudio.WindowsAzure.Diagnostics.dll;
+                $(CloudToolsDiagnosticsPath)\Microsoft.VisualStudio.WindowsAzure.Diagnostics.Agent.dll;
+                $(CloudToolsDiagnosticsPath)\WindowsAzureDiagnosticsAgent.exe;
+                $(CloudToolsDiagnosticsPath)\WindowsAzureDiagnosticsAgent.exe.config;
+                $(CloudToolsDiagnosticsPath)\WindowsAzureDiagnosticsStartup.exe;
+                $(CloudToolsDiagnosticsPath)\WindowsAzureDiagnosticsStartup.exe.config;
+                $(IntelliTraceAddonManifestPath);
+                $(ServiceHostingSDKInstallDir)\ref\Microsoft.WindowsAzure.StorageClient.dll;
+                "/>
+
+    <IntelliTraceRuntimeFiles
+      Include= "$(VSDataCollectorsPath)\IntelliTrace.exe;
+                $(VSDataCollectorsPath)\IntelliTrace.exe.config;
+                $(VSDataCollectorsPath)\Microsoft.VisualStudio.DefaultDataQueries.dll;
+                $(VSDataCollectorsPath)\Microsoft.VisualStudio.VIL.NotifyPointInProcHost.dll;
+                $(VSPublicAssembliesPath)\Microsoft.VisualStudio.IntelliTrace.dll;
+                $(VSPrivateAssembliesPath)\Microsoft.VisualStudio.VIL.Host.dll;
+                $(SYSTEMROOT)\assembly\GAC_MSIL\Microsoft.VisualStudio.VIL\10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.VIL.dll;
+                "/>
+
+    <VSTraceProfiler64Path
+      Condition=" '@(VSTraceProfiler64Path)' == '' and ('$(PROCESSOR_ARCHITECTURE)' == 'AMD64' or $(PROCESSOR_ARCHITEW6432) == 'AMD64' ) "
+      Include="$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{301EC75B-AD5A-459C-A4C4-911C878FA196}\InprocServer32', '', '', RegistryView.Registry64))" />
+
+    <!-- On 32 bit machines the TraceLogProfiler is installed to different location and has different file name. It is not being registered. -->
+    <VSTraceProfiler64Path
+      Condition=" '@(VSTraceProfiler64Path)' == '' "
+      Include="$(VisualStudioProductPath)Team Tools\TraceDebugger Tools\TraceLogProfiler.dll" />
+
+    <VSTraceProfiler32Path
+      Condition=" '@(VSTraceProfiler32Path)' == '' "
+      Include="$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{301EC75B-AD5A-459C-A4C4-911C878FA196}\InprocServer32@)" />
+
+  </ItemGroup>
+
+  <!-- 
+  ===============ConfigureIntelliTrace==========================================
+
+    Prepares files needed for IntelliTrace support.
+  
+    [IN]
+  
+    TargetServiceConfiguration: (item) The service configuration file that is actually published.
+   
+    [OUT]
+    
+    DiagnosticAgentRoles: (item) List of roles for which IntelliTrace was enabled.
+    
+  ==============================================================================
+  -->
+  <Target Name="ConfigureIntelliTrace" Condition="'$(EnableIntelliTrace)'=='true'">
+
+    <Message Text="EnableIntelliTrace is $(EnableIntelliTrace)" />
+    <Message Text="KB983301Installed is $(KB983301Installed)" />
+    <Message Text="IntelliTraceFiles is @(IntelliTraceFiles)" />
+    <Message Text="IntelliTraceRuntimeFiles is @(IntelliTraceRuntimeFiles)" />
+    <Message Text="IntelliTraceTargetDir is $(IntelliTraceTargetDir)" />
+    <Message Text="IntelliTraceRuntimeDir is $(IntelliTraceRuntimeDir)" />
+    <Message Text="IntelliTraceCollectionPlanPath is $(IntelliTraceCollectionPlanPath)" />
+    <Message Text="VSTraceProfiler64Path is @(VSTraceProfiler64Path)" />
+    <Message Text="VSTraceProfiler32Path is @(VSTraceProfiler32Path)" />
+    <Message Text="PROCESSOR_ARCHITECTURE is $(PROCESSOR_ARCHITECTURE)" />
+    <Message Text="PROCESSOR_ARCHITEW6432 is $(PROCESSOR_ARCHITEW6432)" />
+
+    <WATMessage Condition="'@(VSTraceProfiler64Path)' == '' or !Exists('@(VSTraceProfiler64Path)')" Type="Error" Code="WAT090" />
+
+    <Message Text="Adding IntelliTrace components..." />
+
+    <MakeDir Directories="$(IntelliTraceTargetDir);$(IntelliTraceRuntimeDir)" />
+
+    <!-- Copy the Cloud Tools IntelliTrace support files (agent, startup task, etc) -->
+    <Copy
+      SourceFiles="@(IntelliTraceFiles)"
+      DestinationFolder="$(IntelliTraceTargetDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <!-- Copy the IntelliTrace runtime files -->
+    <Copy
+      SourceFiles="@(IntelliTraceRuntimeFiles)"
+      DestinationFolder="$(IntelliTraceRuntimeDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <!-- 
+      ===============================================================
+          BEGIN (When KB983301 is installed)
+      ===============================================================
+    -->
+
+    <!-- Copy the 32 bit TraceLogProfiler.dll. -->
+    <Copy
+      Condition=" '$(KB983301Installed)' == 'true' "
+      SourceFiles="@(VSTraceProfiler32Path)"
+      DestinationFolder="$(IntelliTraceRuntimeDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <!-- Copy the 64 bit TraceLogProfiler.dll. -->
+    <Copy
+      Condition=" '$(KB983301Installed)' == 'true' "
+      SourceFiles="@(VSTraceProfiler64Path)"
+      DestinationFiles="$(IntelliTraceRuntimeDir)\TraceLogProfiler64.dll"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <!-- 
+      ===============================================================
+          BEGIN (When KB983301 is NOT installed)
+      ===============================================================
+    -->
+
+    <MakeDir
+      Condition=" '$(KB983301Installed)' != 'true' "
+      Directories="$(IntelliTraceLoggerDir)" />
+
+    <!-- Copy the IntelliTrace runtime files to the logger directory. Workaround to enable xcopy deployable IntelliTrace if KB983301 is not installed. (see explanation below)  -->
+    <Copy
+      Condition=" '$(KB983301Installed)' != 'true' "
+      SourceFiles="@(IntelliTraceRuntimeFiles)"
+      DestinationFolder="$(IntelliTraceLoggerDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <!-- Copy the 32 bit TraceLogProfiler.dll.
+      The logger (IntelliTrace.exe) is a 32bit process, and it requires 32bit TraceLogProfiler in the same directory. 
+      Azure host processes, however, 64 bit and use 64 bit version of TraceLogProfiler. Therefore, we need a separate directory for the logger. -->
+    <Copy
+      Condition=" '$(KB983301Installed)' != 'true' "
+      SourceFiles="@(VSTraceProfiler32Path)"
+      DestinationFolder="$(IntelliTraceLoggerDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <!-- Copy the 64 bit TraceLogProfiler.dll and rename it to 64TraceLogProfiler.dll. 
+      This is a workaround to enable xcopy-deployable IntelliTrace. 
+      At runtime the TraceLogProfiler discovers the path to the logger using COR_PROFILER_PATH environment variable, and assumes it ends with "TraceLogProfiler.dll".
+      It treats everything before "TraceLogProfiler.dll" as a directory name.Therefore when the profiler executable is named "64TraceLogProfiler.dll", 
+      the calculated logger path would be "64" (This needs to match IntelliTraceLoggerDir property).
+    -->
+    <Copy
+      Condition=" '$(KB983301Installed)' != 'true' "
+      SourceFiles="@(VSTraceProfiler64Path)"
+      DestinationFiles="$(IntelliTraceRuntimeDir)\64TraceLogProfiler.dll"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <SetProfilerPath
+      Condition=" '$(KB983301Installed)' != 'true' "
+      PluginManifestFile="$(IntelliTraceTargetDir)\IntelliTrace.csplugin"
+      ProfilerPath="%RdRoleRoot%\plugins\IntelliTrace\Runtime\64TraceLogProfiler.dll"
+      />
+
+    <!-- 
+      ===============================================================
+          END (When KB983301 is NOT installed)
+      ===============================================================
+    -->
+
+    <!-- Copy the IntelliTrace collection plan file.  -->
+    <Copy
+      SourceFiles="$(IntelliTraceCollectionPlanPath)"
+      DestinationFolder="$(IntelliTraceRuntimeDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <ItemGroup>
+      <DiagnosticAgentRoles Include="@(RoleReferences->'%(RoleName)')" Condition="$([System.String]::new('%(RoleReferences.RoleTargetFramework)').StartsWith('v4.0'))" />
+    </ItemGroup>
+
+    <Message Text="IntelliTrace roles = @(DiagnosticAgentRoles)" />
+
+    <!-- Add IntelliTrace related settings to .cscfg file  -->
+    <AddIntelliTraceToServiceConfiguration
+      ServiceConfigurationFile="@(TargetServiceConfiguration)"
+      IntelliTraceConnectionString="$(IntelliTraceConnectionString)"
+      Roles="@(DiagnosticAgentRoles)"/>
+
+  </Target>
+
+  <!-- =============== Profiling ================================================= 
+       Profiling properties
+       ============================================================================== -->
+  <PropertyGroup>
+    <CloudToolsProfilingPath>$(CloudToolsInstallPath)VsDiagnostics</CloudToolsProfilingPath>
+    <ProfilingAddonManifestPath>$(CloudToolsProfilingPath)\Profiling.csplugin</ProfilingAddonManifestPath>
+    <ProfilingTargetDir>$(BaseIntermediateOutputPath)\$(Configuration)\Profiling</ProfilingTargetDir>
+    <ProfilingInstallerPath>$(CloudToolsProfilingPath)\vs_profiler_x64.exe</ProfilingInstallerPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProfilingFiles
+      Include= "$(CloudToolsDiagnosticsPath)\Microsoft.VisualStudio.WindowsAzure.Diagnostics.dll;
+                  $(CloudToolsDiagnosticsPath)\Microsoft.VisualStudio.WindowsAzure.Diagnostics.Agent.dll;
+                  $(CloudToolsDiagnosticsPath)\WindowsAzureDiagnosticsAgent.exe;
+                  $(CloudToolsDiagnosticsPath)\WindowsAzureDiagnosticsAgent.exe.config;
+                  $(CloudToolsDiagnosticsPath)\WindowsAzureDiagnosticsStartup.exe;
+                  $(CloudToolsDiagnosticsPath)\WindowsAzureDiagnosticsStartup.exe.config;
+                  $(ProfilingAddonManifestPath);
+                  $(ServiceHostingSDKInstallDir)\ref\Microsoft.WindowsAzure.StorageClient.dll;
+                  "/>
+  </ItemGroup>
+
+  <!-- 
+  ===============EnsureCanProfile===============================================
+
+    Verifies that if the user opted to profile:
+        1. IntelliTrace and profiling are not enabled together
+        2. If the ProfilingMode is "instrument" then we can locate the vsInstr.exe to instrument role references.
+      
+  ==============================================================================
+  -->
+  <Target Name="EnsureCanProfile" Condition ="'$(EnableProfiling)' == 'true' ">
+
+    <WATMessage Condition="'$(EnableIntelliTrace)' == 'true'" Type="Error" Code="WAT120" />
+
+    <WATMessage Condition="'$(ProfilingMode)' == 'Instrumentation' and !Exists('$(VSInstrCommand)')"
+                Type="Error"
+                Code="WAT110" />
+  </Target>
+
+  <!-- 
+  ===============ConfigureProfiling=============================================
+
+    Includes Profiling files in the package.
+  
+    [IN]
+  
+    ProfilingFiles: (item) The list of profiling-related files to include in the package.
+    TargetServiceConfiguration: (item) The service configuration file that is actually published.
+    
+    [OUT]
+    
+    DiagnosticAgentRoles: (item) List of roles for which Profiling was enabled.
+    
+  ==============================================================================
+  -->
+  <Target Name="ConfigureProfiling" Condition="'$(EnableProfiling)'=='true'">
+    <Message Text="EnableProfiling is $(EnableProfiling)" />
+    <Message Text="ProfilingFiles is @(ProfilingFiles)" />
+    <Message Text="ProfilingTargetDir is $(ProfilingTargetDir)" />
+    <Message Text="Adding Profiling components..." />
+
+    <MakeDir Directories="$(ProfilingTargetDir)" />
+
+    <!-- Copy the Cloud Tools Profiling support files (agent, startup task, etc) -->
+    <Copy
+      SourceFiles="@(ProfilingFiles)"
+      DestinationFolder="$(ProfilingTargetDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <!-- Copy the Profiler Installer file.  -->
+    <Copy
+      SourceFiles="$(ProfilingInstallerPath)"
+      DestinationFolder="$(ProfilingTargetDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <!-- Update Plugin manifest to include proper environment variables.  -->
+    <UpdateProfilingPluginManifest
+      PluginManifestFile="$(ProfilingTargetDir)\Profiling.csplugin"
+      ProfilingMode="$(ProfilingMode)"
+      EnableTierInteractionProfiling="$(EnableTierInteractionProfiling)"/>
+
+    <ItemGroup>
+      <DiagnosticAgentRoles Include="@(RoleReferences->'%(RoleName)')" />
+    </ItemGroup>
+    
+    <!-- Add Profiling related settings to service configuration file.  -->
+    <AddSettingToServiceConfiguration
+      ServiceConfigurationFile="@(TargetServiceConfiguration)"
+      Setting ="Profiling.ProfilingConnectionString"
+      Value="$(ProfilingConnectionString)"
+      Roles="@(DiagnosticAgentRoles)" />
+  </Target>
+
+  <!-- 
+  ===============ConfigureWebDeploy=============================================
+
+    Enables WebDeploy on web roles if the user chooses to do so.
+  
+    [IN]
+  
+    TargetServiceDefinition: (item) The service definition file that is actually published.
+    TargetServiceConfiguration: (item) The service configuration file that is actually published.
+    WebRoleReferences: (item) The web roles being published.
+    
+  ==============================================================================
+  -->
+  <Target Name="ConfigureWebDeploy" Condition="'$(EnableWebDeploy)'=='true'">
+
+    <ItemGroup>
+      <RolesToConfigure Include="@(WebRoleReferences->'%(RoleName)')" />
+    </ItemGroup>
+
+    <Message Text="Adding WebDeploy component..." />
+    <Message Text="EnableWebDeploy is $(EnableWebDeploy)" />
+    <Message Text="WebDeployPorts = $(WebDeployPorts)" />
+    <Message Text="WebDeploy roles = @(RolesToConfigure)" />
+    <Message Text="TargetServiceDefinition is @(TargetServiceDefinition)" />
+
+    <!-- Add WebDeploy Plugin -->
+    <EnableWebDeploy
+      ServiceConfigurationFile="@(TargetServiceConfiguration)"
+      ServiceDefinitionFile="@(TargetServiceDefinition)"
+      RolesAndPorts="$(WebDeployPorts)" />
+  </Target>
+
+  <!-- 
+  ===============ConfigureRemoteDesktop=============================================
+
+    Enables/Disables remote desktop on web roles if the user chooses to do so.
+  
+    [IN]
+    TargetServiceConfiguration: (item) The service configuration file that is actually published.
+    TargetServiceDefinition: (item) The service definition file to find the Remote Forwarder role.
+    Roles: (item) The roles being published.
+    EnableRemoteDesktop: (property) The new state for remote desktop.
+  ==============================================================================
+  -->
+  <Target Name="ConfigureRemoteDesktop" Condition="'$(EnableRemoteDesktop)'=='true' or '$(EnableRemoteDesktop)'=='false'">
+  
+    <Message Text="Modifying remote desktop state..." />
+    <Message Text="EnableRemoteDesktop is $(EnableRemoteDesktop)" /> 
+    <Message Text="Editing roles = @(RoleReferences)" />
+    <Message Text="TargetServiceConfiguration is @(TargetServiceConfiguration)" />
+    <Message Text="TargetServiceDefinition is @(TargetServiceDefinition)" />
+    
+    <!--Edit Remote Desktop "Enabled" state-->
+    <ConfigureRemoteDesktop
+      ServiceConfigurationFile="@(TargetServiceConfiguration)"
+      ServiceDefinitionFile="@(TargetServiceDefinition)"
+      Roles="@(RoleReferences)" 
+      RemoteDesktopIsEnabled="$(EnableRemoteDesktop)"
+      />  
+  </Target>
+
+  <!-- 
+  ===============CopyServiceModel===============================================
+
+    Copies the service definition and configuration files from their source to their target locations.
+  
+    [IN]
+  
+    SourceServiceDefinition: (item) The service definition file in the project file that will be published.
+    TargetServiceDefinition: (item) The service definition file that is actually published.
+    SourceServiceConfiguration: (item) The service configuration file in the project file that will be published.
+    TargetServiceConfiguration: (item) The service configuration file that is actually published.
+    
+  ==============================================================================
+  -->
+  <Target Name="CopyServiceModel">
+
+    <Message Text="Running CopyServiceModel target" />
+
+    <!-- Create a copy of service configuration -->
+    <Message Text="Copying the service configuration." />
+    <Copy
+      SourceFiles="@(SourceServiceConfiguration)"
+      DestinationFiles="@(TargetServiceConfiguration)" >
+      <Output TaskParameter="CopiedFiles" ItemName="FileWrites" />
+    </Copy>
+
+    <!-- Add the "file generated, do not edit" style comment to the new copy. -->
+    <AddGeneratedXmlComment
+      GeneratedFile="@(TargetServiceConfiguration)"
+      SourceFile="@(SourceServiceConfiguration)" />
+
+    <!-- Create a copy of service definition -->
+    <Message Text="Copying the service definition." />
+    <Copy
+      SourceFiles="@(SourceServiceDefinition)"
+      DestinationFiles="@(TargetServiceDefinition)" />
+
+    <!-- Add the "file generated, do not edit" style comment to the new copy. -->
+    <AddGeneratedXmlComment
+      GeneratedFile="@(TargetServiceDefinition)"
+      SourceFile="@(SourceServiceDefinition)" />
+
+  </Target>
+
+  <!-- 
+  ===============CheckRoleInstanceCount=========================================
+
+    Checks each role and generates an error if any have an instance count of zero.
+  
+    [IN]
+  
+    TargetServiceConfiguration: (item) The service configuration file that is actually packaged.
+       
+  ==============================================================================
+  -->
+  <Target Name="CheckRoleInstanceCount" Condition=" '$(WarnOnRolesWithZeroInstance)' == 'True' ">
+
+    <ItemGroup>
+      <Namespaces Include="$(ServiceConfigurationNamespace)">
+        <Prefix>csc</Prefix>
+      </Namespaces>
+    </ItemGroup>
+
+
+    <!-- Find roles where the instance count is 0 -->
+    <XPathQuery
+        Condition=" '@(TargetServiceConfiguration)' != '' "
+        Namespaces="@(Namespaces)"
+        XPath="csc:ServiceConfiguration/csc:Role/csc:Instances[@count='0']/../@name"
+        XmlFile="@(TargetServiceConfiguration)"
+        >
+
+      <Output TaskParameter="QueryResult" ItemName="RolesWithZeroInstanceCount" />
+    </XPathQuery>
+
+    <Message Condition=" '@(RolesWithZeroInstanceCount)'!='' " Text="RolesWithZeroInstanceCount = @(RolesWithZeroInstanceCount)" />
+
+    <WATMessage Condition=" '@(RolesWithZeroInstanceCount)'!='' " Type="Error" Code="WAT100" Arguments="@(RolesWithZeroInstanceCount,',')" />
+
+  </Target>
+
+  <!--
+  ===============CheckDevelopmentStorage========================================
+
+    Checks if any role has a setting with UseDevelopmentStorage=true.
+
+    [IN]
+
+    @(TargetServiceConfiguration): The service configuration file that is actually packaged.
+
+    [OUT]
+
+    @(ValidationIssue): list of generated validation issues
+          - @                     : The ID of the issue that consists from 3 parts separated by pipeline:
+                                    <RoleName>|<FilenameWithExtension>|<Code>
+          - RoleName              : The role name
+          - SettingName           : The setting name
+          - SettingValue          : The setting value
+          - ProjectName           : The role name
+          - FilenameWithExtension : The name of the service configuration file with extension.
+          - Code                  : The validation issue code.
+          - FileFullPath          : The file's full path.
+          - WATMessage            : True if we should generate WATMessage. Otherwise we generate the MSBuild Warning.
+          - Arguments             : Used for WATMessage if WATMessage==True
+          - Text                  : Used for Warning if WATMessage==False
+          - HelpKeyword           : The help keyword.
+
+  ==============================================================================
+  -->
+  <Target Name="CheckDevelopmentStorage"
+          Condition=" '$(IsExecutingPublishTarget)' == 'True' And '@(TargetServiceConfiguration)' != '' ">
+
+    <GetDevelopmentStorageInServiceConfiguration ServiceConfigurationFile="%(TargetServiceConfiguration.Identity)"
+                                                 StorageClientAssemblyFullPath="$(StorageClientAssemblyFullPath)">
+      <Output TaskParameter="FoundDevelopmentStorageSettings" ItemName="_DevelopmentStorageSettings" />
+    </GetDevelopmentStorageInServiceConfiguration>
+
+    <PropertyGroup>
+      <_TargetServiceConfigurationFileName>@(TargetServiceConfiguration->'%(SourceFilename)')</_TargetServiceConfigurationFileName>
+    </PropertyGroup>
+
+    <ItemGroup Condition=" '@(_DevelopmentStorageSettings)' != '' ">
+      <!-- Generate Validation issues for service configuration settings where UseDevelopmentStorage=true -->
+      <ValidationIssue Include="@(_DevelopmentStorageSettings->'%(RoleName)|$(_TargetServiceConfigurationFileName)|WAT170')">
+        <RoleName>%(_DevelopmentStorageSettings.RoleName)</RoleName>
+        <SettingName>%(_DevelopmentStorageSettings.SettingName)</SettingName>
+        <SettingValue>%(_DevelopmentStorageSettings.SettingValue)</SettingValue>
+        <ProjectName>%(_DevelopmentStorageSettings.RoleName)</ProjectName>
+        <FilenameWithExtension>$(_TargetServiceConfigurationFileName)</FilenameWithExtension>
+        <Code>WAT170</Code>
+        <FileFullPath>@(TargetServiceConfiguration)</FileFullPath>
+        <WATMessage>True</WATMessage>
+        <Arguments>%(_DevelopmentStorageSettings.SettingName);%(_DevelopmentStorageSettings.RoleName);$(_TargetServiceConfigurationFileName)</Arguments>
+        <HelpKeyword>WATValidationIssueWarning</HelpKeyword>
+      </ValidationIssue>
+
+    </ItemGroup>
+
+  </Target>
+
+  <!-- 
+  ===============GetVMRoleCounts================================================
+
+    Returns the list of VM roles defined by a service model.
+  
+    [IN]
+  
+    TargetServiceDefinition: (item) The service definition file that is actually packaged.
+    
+    [OUT]
+    
+    VMRoles: (item) The list of VM roles as defined within the service definition file.
+    
+  ==============================================================================
+  -->
+  <Target Name="GetVMRoleCounts">
+
+    <ItemGroup>
+      <Namespaces Include="$(ServiceDefinitionNamespace)">
+        <Prefix>csd</Prefix>
+      </Namespaces>
+    </ItemGroup>
+
+
+    <!-- Find all Virtual Machine roles -->
+    <XPathQuery
+        Condition=" '@(TargetServiceDefinition)' != '' "
+        Namespaces="@(Namespaces)"
+        XPath="csd:ServiceDefinition/csd:VirtualMachineRole/@name"
+        XmlFile="@(TargetServiceDefinition)"
+        >
+
+      <Output TaskParameter="QueryResult" ItemName="VMRoles" />
+    </XPathQuery>
+
+  </Target>
+
+  <Import Project="$(CustomAfterCloudServiceTargets)" Condition=" Exists('$(CustomAfterCloudServiceTargets)') "/>
+
+  <Import Project="$(CloudExtensionsImportAfterDir)*" Condition=" '$(ImportByWildcardAfterMicrosoftCloudServiceTargets)' == 'true' and Exists('$(CloudExtensionsImportAfterDir)') "/>
+
+</Project>
