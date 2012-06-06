@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="StorageCredentialsAccountAndKey.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure
     /// <summary>
     /// Represents storage account credentials for accessing the Windows Azure storage services.
     /// </summary>
-    public sealed class StorageCredentialsAccountAndKey : StorageCredentials
+    public class StorageCredentialsAccountAndKey : StorageCredentials
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageCredentialsAccountAndKey"/> class, using the storage account name and 
@@ -104,6 +104,15 @@ namespace Microsoft.WindowsAzure
         public override bool CanComputeHmac
         {
             get { return true; }
+        }
+
+        /// <summary>
+        /// Sets the account name that owns the key to use when signing requests.
+        /// </summary>
+        /// <value>The name of the account that owns the key to use when signing requests.</value>
+        protected string SigningAccountName
+        {
+            set { Credentials.SigningAccountName = value; }
         }
 
         /// <summary>

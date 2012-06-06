@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
 // <copyright file="AssemblyInfo.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ using System;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Security;
+using System.Reflection;
 
 #if UNSIGNED
 [assembly: InternalsVisibleTo("Microsoft.WindowsAzure.StorageClient.Internal")]
@@ -90,6 +91,7 @@ using System.Security;
     "08055da9")]
 
 #endif
+[assembly: AssemblyVersion("1.7.0.0")]
 [assembly: CLSCompliant(true)]
 [assembly: AllowPartiallyTrustedCallers]
 [assembly: SecurityTransparent]

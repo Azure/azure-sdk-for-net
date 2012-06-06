@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="BlobReadStream.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -683,6 +683,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         {
             try
             {
+                // TODO: - FetchAttributes should be an async task and so should DownloadBlockList
                 this.Blob.FetchAttributes(this.options);
             }
             catch (System.Exception ex)
@@ -747,6 +748,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <remarks>This calculates the bounds based on the blocklist, not any existing data.</remarks>
         private void CalculateReadAheadBounds(long gapStart, long gapEnd, int count, out long startReadAhead, out long readAheadCount)
         {
+            // TODO: optimizing this for page blobs
             readAheadCount = startReadAhead = -1;
             var minReadCount = Math.Min(gapEnd - gapStart, count + this.readAheadSize);
 
@@ -834,7 +836,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
-        /// Calculates if the currently held data is less than <see cref="ReadAheadThreshold"/> percentage depleted.
+        /// Calculates if the currently held data is less than <paramref name="ReadAheadThreshold"/> percentage depleted.
         /// </summary>
         /// <param name="gapStart">The start position for any ReadAhead based on the last block.</param>
         /// <returns>True if more data is needed.</returns>
