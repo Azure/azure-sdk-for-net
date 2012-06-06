@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
 // <copyright file="CloudTableClient.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -35,6 +35,11 @@ namespace Microsoft.WindowsAzure.StorageClient
     /// </summary>
     public class CloudTableClient
     {
+        /// <summary>
+        /// The default server and client timeout interval.
+        /// </summary>
+        private TimeSpan timeout;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudTableClient"/> class using the specified Table service endpoint
         /// and account credentials.
@@ -108,7 +113,19 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Gets or sets the default server timeout for requests made by the Table service client.
         /// </summary>
         /// <value>The server timeout interval.</value>
-        public TimeSpan Timeout { get; set; }
+        public TimeSpan Timeout
+        {
+            get
+            {
+                return this.timeout;
+            }
+
+            set
+            {
+                Utilities.CheckTimeoutBounds(value);
+                this.timeout = value;
+            }
+        }
 
         /// <summary>
         /// Gets the account credentials used to create the Table service client.

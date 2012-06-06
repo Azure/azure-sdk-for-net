@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Credentials.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             }
 
             this.AccountName = accountName;
+            this.SigningAccountName = accountName;
             this.Key = new StorageKey(key);
         }
 
@@ -63,6 +64,12 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// </summary>
         /// <value>The name of the account.</value>
         public string AccountName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the account name whose key is used to sign requests.
+        /// </summary>
+        /// <value>The name of the account whose key is used to sign requests.</value>
+        internal string SigningAccountName { get; set; }
 
         /// <summary>
         /// Gets the access key to be used in signing the request.

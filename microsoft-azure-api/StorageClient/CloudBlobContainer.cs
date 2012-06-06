@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
 // <copyright file="CloudBlobContainer.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -871,6 +871,17 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
+        /// Retrieve ETag and LastModified date time from response.
+        /// </summary>
+        /// <param name="response">The response to parse.</param>
+        protected void ParseETagAndLastModified(HttpWebResponse response)
+        {
+            BlobContainerAttributes newProperties = ContainerResponse.GetAttributes(response);
+            this.Properties.ETag = newProperties.Properties.ETag;
+            this.Properties.LastModifiedUtc = newProperties.Properties.LastModifiedUtc;
+        }
+
+        /// <summary>
         /// Converts the ACL string to a <see cref="BlobContainerPermissions"/> object.
         /// </summary>
         /// <param name="aclstring">The string to convert.</param>
@@ -1141,6 +1152,7 @@ namespace Microsoft.WindowsAzure.StorageClient
 
             using (var webResponse = task.Result as HttpWebResponse)
             {
+                this.ParseETagAndLastModified(webResponse);
             }
         }
 
@@ -1188,6 +1200,7 @@ namespace Microsoft.WindowsAzure.StorageClient
 
             using (var webResponse = task.Result as HttpWebResponse)
             {
+                this.ParseETagAndLastModified(webResponse);
             }
         }
 
@@ -1217,6 +1230,8 @@ namespace Microsoft.WindowsAzure.StorageClient
                 {
                     containerAcl.SharedAccessPolicies.Add(item.Key, item.Value);
                 }
+
+                this.ParseETagAndLastModified(webResponse);
 
                 setResult(containerAcl);
             }
