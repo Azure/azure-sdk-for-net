@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
 // <copyright file="CloudBlob.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -1765,18 +1765,30 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
-        /// Uploads the full blob with a retry sequence.
+        /// Uploads the full blob with a retry sequence. The stream must be seekable.
         /// </summary>
-        /// <param name="source">The source stream.</param>
+        /// <param name="source">The source stream, which must be seekable.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="TaskSequence"/> that uploads the blob.</returns>
         private TaskSequence UploadFullBlobWithRetrySequenceImpl(Stream source, BlobRequestOptions options)
         {
-            var task = this.UploadFullBlobWithRetryImpl(source, options);
+            // Save the stream position
+            long streamPos = source.Position;
 
-            yield return task;
+            // Compute the MD5
+            Task<string> md5Task = new InvokeTaskSequenceTask<string>(source.ComputeMD5);
+            yield return md5Task;
 
-            var scratch = task.Result;
+            // Store the MD5 and rewind the stream
+            this.Properties.ContentMD5 = md5Task.Result;
+            source.Seek(streamPos, SeekOrigin.Begin);
+
+            // Upload the blob
+            Task<NullTaskReturn> uploadTask = this.UploadFullBlobWithRetryImpl(source, options);
+            yield return uploadTask;
+
+            // Materialize any exceptions
+            NullTaskReturn scratch = uploadTask.Result;
         }
 
         /// <summary>

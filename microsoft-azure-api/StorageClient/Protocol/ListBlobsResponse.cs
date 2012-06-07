@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="ListBlobsResponse.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -361,6 +361,12 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                         }
                                         else if (reader.NodeType == XmlNodeType.EndElement && reader.Name == Constants.BlobElement)
                                         {
+                                            // Add quotes to the ETag
+                                            if (!string.IsNullOrEmpty(etag))
+                                            {
+                                                etag = string.Format("\"{0}\"", etag);
+                                            }
+
                                             blob = new BlobAttributes();
                                             blob.Properties = new BlobProperties();
                                             blob.Properties.ContentEncoding = contentEncoding;
