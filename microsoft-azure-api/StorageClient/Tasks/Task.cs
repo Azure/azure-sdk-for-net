@@ -18,8 +18,6 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-// define DEBUG_LEAK to debug finalization issues
-// #define DEBUG_LEAK 
 namespace Microsoft.WindowsAzure.StorageClient.Tasks
 {
     using System;
@@ -57,26 +55,6 @@ namespace Microsoft.WindowsAzure.StorageClient.Tasks
         /// </summary>
         private T result;
 
-#if DEBUG_LEAK // define DEBUG_LEAK to be true to debug finalization issues
-        /// <summary>
-        /// True if Result was called.
-        /// </summary>
-        private bool materialized;
-        private StackTrace stack;
-
-        public Task()
-        {
-            stack = new StackTrace(true);
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
-        ~Task()
-        {
-            if (!this.materialized)
-                throw new InvalidOperationException(stack.ToString());
-        }
-
-#endif
         /// <summary>
         /// Gets or sets the result of the operation and throws any exceptions raised by the operation.
         /// </summary>
@@ -85,10 +63,6 @@ namespace Microsoft.WindowsAzure.StorageClient.Tasks
         {
             get
             {
-#if DEBUG_LEAK
-                this.materialized = true;
-#endif
-
                 TraceHelper.WriteLine("Task, Result");
                 if (!this.Completed)
                 {
@@ -136,9 +110,6 @@ namespace Microsoft.WindowsAzure.StorageClient.Tasks
             [DebuggerStepThrough]
             get
             {
-#if DEBUG_LEAK
-                this.materialized = true;
-#endif
                 return this.exception;
             }
 
@@ -258,11 +229,6 @@ namespace Microsoft.WindowsAzure.StorageClient.Tasks
                     Debug.Assert(false, "task: continuation threw exception: " + ex);
                 }
             }
-
-#if DEBUG_LEAK
-            // Ignore non-materialization because this task is aborted
-            this.materialized = true;
-#endif
         }
 
         /// <summary>
