@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
 // <copyright file="CloudQueueClient.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -34,6 +34,11 @@ namespace Microsoft.WindowsAzure.StorageClient
     /// </summary>
     public class CloudQueueClient
     {
+        /// <summary>
+        /// The default server and client timeout interval.
+        /// </summary>
+        private TimeSpan timeout;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudQueueClient"/> class using the specified
         /// Queue service endpoint and account credentials.
@@ -131,7 +136,19 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Gets or sets the server timeout for requests made via the Queue service client.
         /// </summary>
         /// <value>The server timeout interval.</value>
-        public TimeSpan Timeout { get; set; }
+        public TimeSpan Timeout
+        {
+            get
+            {
+                return this.timeout;
+            }
+
+            set
+            {
+                Utilities.CheckTimeoutBounds(value);
+                this.timeout = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the lifetime of the approximate message count cache. Obsolete.

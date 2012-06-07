@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="AccessCondition.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Returns an access condition such that an operation will be performed only if the resource's ETag value matches the ETag value provided.
         /// </summary>
-        /// <param name="etag">The ETag value to check.</param>
+        /// <param name="etag">The quoted ETag value to check.</param>
         /// <returns>A structure specifying the if-match condition.</returns>
         public static AccessCondition IfMatch(string etag)
         {
@@ -94,7 +94,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Returns an access condition such that an operation will be performed only if the resource's ETag value does not match the ETag value provided.
         /// </summary>
-        /// <param name="etag">The ETag value to check.</param>
+        /// <param name="etag">The quoted ETag value to check.</param>
         /// <returns>A structure specifying the if-none-match condition.</returns>
         public static AccessCondition IfNoneMatch(string etag)
         {

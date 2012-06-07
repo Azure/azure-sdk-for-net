@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
-// <copyright file="StorageCredentials.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+// <copyright file="SR.Designer.cs" company="Microsoft">
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.

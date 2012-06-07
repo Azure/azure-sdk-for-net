@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="StreamExtensions.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Tasks
     using System;
     using System.Diagnostics;
     using System.IO;
+    using System.Security.Cryptography;
 
     using TaskSequence = System.Collections.Generic.IEnumerable<ITask>;
 
@@ -122,6 +123,31 @@ namespace Microsoft.WindowsAzure.StorageClient.Tasks
                 var scratch = writeTask.Result;
             }
             while (readCount != 0);
+        }
+
+        /// <summary>
+        /// Compute the MD5 hash of the stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="setResult">A delegate for setting the resulting MD5 hash as a string.</param>
+        /// <returns>The sequence that when invoked results in an asynchronous MD5 computation.</returns>
+        [DebuggerNonUserCode]
+        internal static TaskSequence ComputeMD5(this Stream stream, Action<string> setResult)
+        {
+            int readCount;
+            MD5 md5 = MD5.Create();
+            do
+            {
+                byte[] buffer = new byte[BufferSize];
+                var readTask = stream.ReadAsync(buffer, 0, buffer.Length);
+                yield return readTask;
+                readCount = readTask.Result;
+
+                StreamUtilities.ComputeHash(buffer, 0, readCount, md5);
+            }
+            while (readCount != 0);
+
+            setResult(StreamUtilities.GetHashValue(md5));
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="BlobRequestOptions.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -27,6 +27,11 @@ namespace Microsoft.WindowsAzure.StorageClient
     /// </summary>
     public class BlobRequestOptions
     {
+        /// <summary>
+        /// The server and client timeout interval for the request.
+        /// </summary>
+        private TimeSpan? timeout;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobRequestOptions"/> class.
         /// </summary>
@@ -72,7 +77,23 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Gets or sets the server and client timeout for the request. 
         /// </summary>
         /// <value>The server and client timeout interval for the request.</value>
-        public TimeSpan? Timeout { get; set; }
+        public TimeSpan? Timeout
+        {
+            get
+            {
+                return this.timeout;
+            }
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Utilities.CheckTimeoutBounds(value.Value);
+                }
+
+                this.timeout = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the access condition for the request.

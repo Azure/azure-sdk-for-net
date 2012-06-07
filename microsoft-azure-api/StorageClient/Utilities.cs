@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Utilities.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -416,6 +416,16 @@ namespace Microsoft.WindowsAzure.StorageClient
             Convert.ToBase64String(tempArray);
             
             return String.Format(Protocol.Constants.V2MD5blockIdFormat, Convert.ToBase64String(tempArray), hashVal);                  
+        }
+
+        /// <summary>
+        /// Checks that the given timeout in within allowed bounds.
+        /// </summary>
+        /// <param name="timeout">The timeout to check.</param>
+        /// <exception cref="ArgumentOutOfRangeException">The timeout is not within allowed bounds.</exception>
+        internal static void CheckTimeoutBounds(TimeSpan timeout)
+        {
+            CommonUtils.AssertInBounds("Timeout", timeout, TimeSpan.FromSeconds(1), Constants.MaximumAllowedTimeout);
         }
 
         /// <summary>

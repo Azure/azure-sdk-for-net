@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
 // <copyright file="CloudBlobClient.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -60,6 +60,11 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Default is 4 MB.
         /// </summary>
         private long writeBlockSizeInBytes = Constants.DefaultWriteBlockSizeBytes;
+
+        /// <summary>
+        /// The default server and client timeout interval.
+        /// </summary>
+        private TimeSpan timeout;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudBlobClient"/> class to be used for anonymous access.
@@ -158,7 +163,19 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Gets or sets the default server and client timeout for requests made by the Blob service client.
         /// </summary>
         /// <value>The server and client timeout interval.</value>
-        public TimeSpan Timeout { get; set; }
+        public TimeSpan Timeout
+        {
+            get
+            {
+                return this.timeout;
+            }
+
+            set
+            {
+                Utilities.CheckTimeoutBounds(value);
+                this.timeout = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the default delimiter that may be used to create a virtual directory structure of blobs.

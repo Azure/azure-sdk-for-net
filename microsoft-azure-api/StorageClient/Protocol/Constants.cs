@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
 // <copyright file="Constants.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -36,6 +36,11 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// Default client side timeout for all service clients.
         /// </summary>
         public static readonly TimeSpan DefaultClientSideTimeout = TimeSpan.FromSeconds(90);
+
+        /// <summary>
+        /// Maximum allowed timeout for any request.
+        /// </summary>
+        public static readonly TimeSpan MaximumAllowedTimeout = TimeSpan.FromSeconds(int.MaxValue);
 
         /// <summary>
         /// Default Write Block Size used by Blob stream.
@@ -695,7 +700,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             /// <summary>
             /// Specifies the value to use for UserAgent header.
             /// </summary>
-            internal const string UserAgent = "WA-Storage/1.6.0";
+            internal const string UserAgent = "WA-Storage/1.7.0";
 
             /// <summary>
             /// Specifies the pop receipt for a message.
