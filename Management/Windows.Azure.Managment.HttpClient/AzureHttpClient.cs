@@ -249,6 +249,16 @@ namespace Windows.Azure.Management.v1_7
             return StartSendTask(message, token);
         }
 
+        public Task<Boolean> IsCloudServiceNameAvailable(String cloudServiceName, CancellationToken token = default(CancellationToken))
+        {
+            Validation.ValidateStringArg(cloudServiceName, "cloudServiceName");
+
+            HttpRequestMessage message = CreateBaseMessage(HttpMethod.Get, CreateTargetUri(UriFormatStrings.HostedServiceIsAvailable, cloudServiceName));
+
+            return StartGetTask<AvailabilityResponse>(message, token)
+                     .ContinueWith<Boolean>((resultTask) => resultTask.Result.Result, token, options, TaskScheduler.Current);
+        }
+
         //TODO: Reboot Role Instance
         //TODO: Reimage Role Instance
         //TODO: Rollback Update or Upgrade

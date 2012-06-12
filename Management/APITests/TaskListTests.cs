@@ -257,5 +257,19 @@ namespace APITests
             this.TestContext.WriteLine("Ending ListServiceCertificates test.");
         }
 
+        [TestMethod]
+        public void CheckServiceNameAvailable()
+        {
+            this.TestContext.WriteLine("Beginning CheckServiceNameAvailable test.");
+
+            String name = Guid.NewGuid().ToString("N");
+
+            this.TestContext.WriteLine("Checking availability of name {0}", name);
+
+            Boolean isAvailable = this.TestClient.IsCloudServiceNameAvailable(name).Result;
+
+            Assert.IsTrue(isAvailable, "Name {0} is not available!", name);
+        }
+
     }
 }

@@ -11,14 +11,27 @@ using System.Xml.Linq;
 
 namespace Windows.Azure.Management.v1_7
 {
-    //TODO: Add this back when I know what the values are!
-    //[DataContract(Name = "Status")]
-    //public enum CloudServiceStatus
-    //{
-    //    //not sure what the other values are here...
-    //    [EnumMember]
-    //    Created,
-    //}
+    [DataContract(Name = "Status")]
+    public enum CloudServiceStatus
+    {
+        [EnumMember]
+        Creating,
+
+        [EnumMember]
+        Created,
+
+        [EnumMember]
+        Deleting,
+ 
+        [EnumMember]
+        Deleted,
+        
+        [EnumMember]
+        Changing,
+        
+        [EnumMember]
+        ResolvingDns
+    }
 
     [CollectionDataContract(Name="HostedServices", Namespace=AzureConstants.AzureSchemaNamespace)]
     public class CloudServiceCollection : List<CloudService>
@@ -66,9 +79,8 @@ namespace Windows.Azure.Management.v1_7
         //TODO: store decoded value?
         public String Label { get { return _props.Label.DecodeBase64(); } }
 
-        //public CloudServiceStatus Status { get { return _props.Status; } }
-        public String Status { get { return _props.Status; } }
-
+        public CloudServiceStatus Status { get { return _props.Status; } }
+        
         public DateTime DateCreated { get { return _props.DateCreated; } }
 
         public DateTime DateLastModified { get { return _props.DateLastModified; } }
@@ -121,9 +133,8 @@ namespace Windows.Azure.Management.v1_7
             internal String Label { get; set; }
 
             [DataMember(Order = 3)]
-            //internal CloudServiceStatus Status { get; set; }
-            internal String Status { get; set; } //this is a String for now since I don't know what all of the values are...
-
+            internal CloudServiceStatus Status { get; set; }
+            
             [DataMember(Order = 4)]
             internal DateTime DateCreated { get; set; }
 
@@ -133,5 +144,16 @@ namespace Windows.Azure.Management.v1_7
             [DataMember(Order = 6)]
             internal ExtendedPropertyCollection ExtendedProperties { get; set; }
         }
+    }
+
+    //this class is internal because it is basically an envelope for a Boolean
+    //so the calls that use it retrieve the value from this and just
+    //return it.
+
+    [DataContract(Name = "AvailabilityResponse", Namespace = AzureConstants.AzureSchemaNamespace)]
+    internal class AvailabilityResponse : AzureDataContractBase
+    {
+        [DataMember(Order=0, IsRequired=true)]
+        public Boolean Result { get; set; }
     }
 }

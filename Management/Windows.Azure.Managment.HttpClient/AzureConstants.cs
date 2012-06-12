@@ -37,6 +37,7 @@ namespace Windows.Azure.Management
         internal const string CompConfigQuery = "/?comp=config";
         internal const string CompUpgradeQuery = "/?comp=upgrade";
         internal const string CompWalkUpgradeDomainQuery = "/?comp=walkupgradedomain";
+        internal const string IsAvailable = "/operations/isavailable";
         internal const string Production = "Production";
         internal const string Staging = "Staging";
         internal const string VersionHeader = "x-ms-version";
@@ -54,6 +55,7 @@ namespace Windows.Azure.Management
     {
         internal const string HostedServices = "{0}" + UriFragments.HostedServicesPath;
         internal const string HostedServicesAndService = HostedServices + "/{1}";
+        internal const string HostedServiceIsAvailable = HostedServices + UriFragments.IsAvailable + "/{1}";
         internal const string DeploymentSlot = HostedServicesAndService + UriFragments.DeploymentSlotsPath + "/{2}";
         internal const string GetHostedServicePropertiesEmbedDetail = HostedServicesAndService + UriFragments.EmbedDetailQuery;
         internal const string DeploymentSlotChangeConfig = DeploymentSlot + UriFragments.CompConfigQuery;
