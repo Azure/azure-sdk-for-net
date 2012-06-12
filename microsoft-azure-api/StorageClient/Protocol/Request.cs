@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
 // <copyright file="Request.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -279,7 +279,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Headers.Add(
                 "Authorization",
-                string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", "SharedKey", credentials.AccountName, computedBase64Signature));
+                string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", "SharedKey", credentials.SigningAccountName, computedBase64Signature));
         }
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Headers.Add(
                 "Authorization",
-                string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", "SharedKey", credentials.AccountName, computedBase64Signature));
+                string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", "SharedKey", credentials.SigningAccountName, computedBase64Signature));
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Headers.Add(
                 "Authorization",
-                string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", "SharedKeyLite", credentials.AccountName, computedBase64Signature));
+                string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", "SharedKeyLite", credentials.SigningAccountName, computedBase64Signature));
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Headers.Add(
                 "Authorization",
-                string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", "SharedKeyLite", credentials.AccountName, computedBase64Signature));
+                string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", "SharedKeyLite", credentials.SigningAccountName, computedBase64Signature));
         }
 
         /// <summary>

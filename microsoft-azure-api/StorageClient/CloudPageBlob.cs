@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
 // <copyright file="CloudPageBlob.cs" company="Microsoft">
-//    Copyright 2011 Microsoft Corporation
+//    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -670,7 +670,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             // The first attempt will have SourceStreamPosition = -1, which means the first iteration on a non seekable stream.
             // The second attempt will have SourceStreamPosition = -2, anything below -1 is considered an abort. Since the Impl method
             // does not have an execution context to be aware of what iteration is used the SourceStreamPosition is utilized as counter to
-            // differentiate between the first attempt and a retry.
+            // differentiate between the first attempt and a retry. 
             if (sourceStreamPosition >= 0 && pageData.CanSeek)
             {
                 if (sourceStreamPosition != pageData.Position)
@@ -680,6 +680,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             }
             else if (sourceStreamPosition < -1)
             {
+                // TODO : Need to rewrite this to support buffering in XSCL2 so that retries can work on non seekable streams              
                 throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, SR.CannotRetryNonSeekableStreamError));
             }
 
@@ -687,7 +688,8 @@ namespace Microsoft.WindowsAzure.StorageClient
             {
                 CommonUtils.ArgumentOutOfRange("startOffset", startOffset);
             }
-            
+           
+            // TODO should reuse sourceStreamPoisition when the HACK above is removed, for readability using a new local variable
             long rangeStreamOffset = pageData.CanSeek ? pageData.Position : 0;
 
             PutPageProperties properties = new PutPageProperties()
