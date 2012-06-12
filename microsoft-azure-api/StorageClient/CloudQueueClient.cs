@@ -94,11 +94,6 @@ namespace Microsoft.WindowsAzure.StorageClient
             CommonUtils.AssertNotNull("baseAddress", baseAddressUri);
             CommonUtils.AssertNotNull("credentials", credentials);
 
-            if (!credentials.CanSignRequest)
-            {
-                throw new ArgumentException(SR.CredentialsCantSignRequest, "credentials");
-            }
-
             this.BaseUri = baseAddressUri;
 
             if (!this.BaseUri.IsAbsoluteUri)
@@ -402,6 +397,29 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
+        /// Generates a task sequence for accessing the queue service.
+        /// </summary>
+        /// <param name="webRequest">A web request for accessing the queue service.</param>
+        /// <param name="writeRequestAction">An action for writing data to the body of a web request.</param>
+        /// <param name="processResponseAction">An action for processing the response received.</param>
+        /// <param name="readResponseAction">An action for reading the response stream.</param>
+        /// <returns>A task sequence for the operation.</returns>
+        internal TaskSequence GenerateWebTask(
+            HttpWebRequest webRequest,
+            Action<Stream> writeRequestAction,
+            Action<HttpWebResponse> processResponseAction,
+            Action<Stream> readResponseAction)
+        {
+            return ProtocolHelper.GenerateServiceTask(
+                webRequest,
+                writeRequestAction,
+                (request) => this.Credentials.SignRequest(request),
+                (request) => request.GetResponseAsyncWithTimeout(this, this.Timeout),
+                processResponseAction,
+                readResponseAction);
+        }
+
+        /// <summary>
         /// Lists the queues impl.
         /// </summary>
         /// <param name="prefix">The prefix.</param>
@@ -500,29 +518,11 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A task sequence that gets the properties of the queue service.</returns>
         private TaskSequence GetServicePropertiesImpl(Action<ServiceProperties> setResult)
         {
-            HttpWebRequest request = QueueRequest.GetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds());
-            CommonUtils.ApplyRequestOptimizations(request, -1);
-            this.Credentials.SignRequest(request);
-
-            // Get the web response.
-            Task<WebResponse> responseTask = request.GetResponseAsyncWithTimeout(this, this.Timeout);
-            yield return responseTask;
-
-            using (HttpWebResponse response = responseTask.Result as HttpWebResponse)
-            using (Stream responseStream = response.GetResponseStream())
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                // Download the service properties.
-                Task<NullTaskReturn> downloadTask = new InvokeTaskSequenceTask(() => { return responseStream.WriteTo(memoryStream); });
-                yield return downloadTask;
-
-                // Materialize any exceptions.
-                NullTaskReturn scratch = downloadTask.Result;
-
-                // Get the result from the memory stream.
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                setResult(QueueResponse.ReadServiceProperties(memoryStream));
-            }
+            return this.GenerateWebTask(
+                QueueRequest.GetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds()),
+                null /* no request body */,
+                null /* no response header processing */,
+                (stream) => setResult(QueueResponse.ReadServiceProperties(stream)));
         }
 
         /// <summary>
@@ -534,45 +534,21 @@ namespace Microsoft.WindowsAzure.StorageClient
         {
             CommonUtils.AssertNotNull("properties", properties);
 
-            HttpWebRequest request = QueueRequest.SetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds());
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                try
+            return this.GenerateWebTask(
+                QueueRequest.SetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds()),
+                (stream) =>
                 {
-                    QueueRequest.WriteServiceProperties(properties, memoryStream);
-                }
-                catch (InvalidOperationException invalidOpException)
-                {
-                    throw new ArgumentException(invalidOpException.Message, "properties");
-                }
-
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                CommonUtils.ApplyRequestOptimizations(request, memoryStream.Length);
-                this.Credentials.SignRequest(request);
-
-                // Get the request stream
-                Task<Stream> getStreamTask = request.GetRequestStreamAsync();
-                yield return getStreamTask;
-
-                using (Stream requestStream = getStreamTask.Result)
-                {
-                    // Upload the service properties.
-                    Task<NullTaskReturn> uploadTask = new InvokeTaskSequenceTask(() => { return (memoryStream as Stream).WriteTo(requestStream); });
-                    yield return uploadTask;
-
-                    // Materialize any exceptions.
-                    NullTaskReturn scratch = uploadTask.Result;
-                }
-            }
-
-            // Get the web response.
-            Task<WebResponse> responseTask = request.GetResponseAsyncWithTimeout(this, this.Timeout);
-            yield return responseTask;
-
-            // Materialize any exceptions.
-            using (HttpWebResponse response = responseTask.Result as HttpWebResponse)
-            {
-            }
+                    try
+                    {
+                        QueueRequest.WriteServiceProperties(properties, stream);
+                    }
+                    catch (InvalidOperationException invalidOpException)
+                    {
+                        throw new ArgumentException(invalidOpException.Message, "properties");
+                    }
+                },
+                null /* no response header processing */,
+                null /* no response body */);
         }
     }
 }

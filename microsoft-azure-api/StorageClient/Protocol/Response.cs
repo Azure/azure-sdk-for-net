@@ -21,6 +21,7 @@
 namespace Microsoft.WindowsAzure.StorageClient.Protocol
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.IO;
     using System.Net;
@@ -152,6 +153,166 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
+        /// Extracts the lease ID header from a web response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>The lease ID.</returns>
+        internal static string GetLeaseId(HttpWebResponse response)
+        {
+            return response.Headers[Constants.HeaderConstants.LeaseIdHeader];
+        }
+
+        /// <summary>
+        /// Extracts the remaining lease time from a web response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>The remaining lease time, in seconds.</returns>
+        internal static int? GetRemainingLeaseTime(HttpWebResponse response)
+        {
+            int remainingLeaseTime;
+            if (int.TryParse(response.Headers[Constants.HeaderConstants.LeaseTimeHeader], out remainingLeaseTime))
+            {
+                return remainingLeaseTime;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Extracts the lease status from a web response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>A <see cref="LeaseStatus"/> enumeration from the web response.</returns>
+        /// <remarks>If the appropriate header is not present, a status of <see cref="LeaseStatus.Unspecified"/> is returned.</remarks>
+        /// <exception cref="System.ArgumentException">The header contains an unrecognized value.</exception>
+        internal static LeaseStatus GetLeaseStatus(HttpWebResponse response)
+        {
+            string leaseStatus = response.Headers[Constants.HeaderConstants.LeaseStatus];
+
+            return GetLeaseStatus(leaseStatus);
+        }
+
+        /// <summary>
+        /// Gets a <see cref="LeaseStatus"/> from a string.
+        /// </summary>
+        /// <param name="leaseStatus">The lease status string.</param>
+        /// <returns>A <see cref="LeaseStatus"/> enumeration.</returns>
+        /// <remarks>If a null or empty string is supplied, a status of <see cref="LeaseStatus.Unspecified"/> is returned.</remarks>
+        /// <exception cref="System.ArgumentException">The string contains an unrecognized value.</exception>
+        internal static LeaseStatus GetLeaseStatus(string leaseStatus)
+        {
+            if (!string.IsNullOrEmpty(leaseStatus))
+            {
+                switch (leaseStatus)
+                {
+                    case Constants.LockedValue:
+                        return LeaseStatus.Locked;
+
+                    case Constants.UnlockedValue:
+                        return LeaseStatus.Unlocked;
+
+                    default:
+                        throw new ArgumentException(string.Format("Invalid lease status in response: {0}", leaseStatus), "response");
+                }
+            }
+
+            return LeaseStatus.Unspecified;
+        }
+
+        /// <summary>
+        /// Extracts the lease state from a web response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>A <see cref="LeaseState"/> enumeration from the web response.</returns>
+        /// <remarks>If the appropriate header is not present, a status of <see cref="LeaseState.Unspecified"/> is returned.</remarks>
+        /// <exception cref="System.ArgumentException">The header contains an unrecognized value.</exception>
+        internal static LeaseState GetLeaseState(HttpWebResponse response)
+        {
+            string leaseState = response.Headers[Constants.HeaderConstants.LeaseState];
+
+            return GetLeaseState(leaseState);
+        }
+
+        /// <summary>
+        /// Gets a <see cref="LeaseState"/> from a string.
+        /// </summary>
+        /// <param name="leaseState">The lease state string.</param>
+        /// <returns>A <see cref="LeaseState"/> enumeration.</returns>
+        /// <remarks>If a null or empty string is supplied, a status of <see cref="LeaseState.Unspecified"/> is returned.</remarks>
+        /// <exception cref="System.ArgumentException">The string contains an unrecognized value.</exception>
+        internal static LeaseState GetLeaseState(string leaseState)
+        {
+            if (!string.IsNullOrEmpty(leaseState))
+            {
+                switch (leaseState)
+                {
+                    case Constants.LeaseAvailableValue:
+                        return LeaseState.Available;
+
+                    case Constants.LeasedValue:
+                        return LeaseState.Leased;
+
+                    case Constants.LeaseExpiredValue:
+                        return LeaseState.Expired;
+
+                    case Constants.LeaseBreakingValue:
+                        return LeaseState.Breaking;
+
+                    case Constants.LeaseBrokenValue:
+                        return LeaseState.Broken;
+
+                    default:
+                        throw new ArgumentException(string.Format("Invalid lease state in response: {0}", leaseState), "response");
+                }
+            }
+
+            return LeaseState.Unspecified;
+        }
+
+        /// <summary>
+        /// Extracts the lease duration from a web response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>A <see cref="LeaseDuration"/> enumeration from the web response.</returns>
+        /// <remarks>If the appropriate header is not present, a status of <see cref="LeaseDuration.Unspecified"/> is returned.</remarks>
+        /// <exception cref="System.ArgumentException">The header contains an unrecognized value.</exception>
+        internal static LeaseDuration GetLeaseDuration(HttpWebResponse response)
+        {
+            string leaseDuration = response.Headers[Constants.HeaderConstants.LeaseDurationHeader];
+
+            return GetLeaseDuration(leaseDuration);
+        }
+
+        /// <summary>
+        /// Gets a <see cref="LeaseDuration"/> from a string.
+        /// </summary>
+        /// <param name="leaseDuration">The lease duration string.</param>
+        /// <returns>A <see cref="LeaseDuration"/> enumeration.</returns>
+        /// <remarks>If a null or empty string is supplied, a status of <see cref="LeaseDuration.Unspecified"/> is returned.</remarks>
+        /// <exception cref="System.ArgumentException">The string contains an unrecognized value.</exception>
+        internal static LeaseDuration GetLeaseDuration(string leaseDuration)
+        {
+            if (!string.IsNullOrEmpty(leaseDuration))
+            {
+                switch (leaseDuration)
+                {
+                    case Constants.LeaseFixedValue:
+                        return LeaseDuration.Fixed;
+
+                    case Constants.LeaseInfiniteValue:
+                        return LeaseDuration.Infinite;
+
+                    default:
+                        throw new ArgumentException(string.Format("Invalid lease duration in response: {0}", leaseDuration), "response");
+                }
+            }
+
+            return LeaseDuration.Unspecified;
+        }
+
+        /// <summary>
         /// Reads service properties from a stream.
         /// </summary>
         /// <param name="inputStream">The stream from which to read the service properties.</param>
@@ -164,6 +325,31 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
                 return ServiceProperties.FromServiceXml(servicePropertyDocument);
             }
+        }
+
+        /// <summary>
+        /// Reads a collection of shared access policies from the specified <see cref="AccessPolicyResponseBase&lt;T&gt;"/> object.
+        /// </summary>
+        /// <param name="sharedAccessPolicies">A collection of shared access policies to be filled.</param>
+        /// <param name="policyResponse">A policy response object for reading the stream.</param>
+        /// <typeparam name="T">The type of policy to read.</typeparam>
+        internal static void ReadSharedAccessIdentifiers<T>(Dictionary<string, T> sharedAccessPolicies, AccessPolicyResponseBase<T> policyResponse)
+            where T : new()
+        {
+            foreach (KeyValuePair<string, T> pair in policyResponse.AccessIdentifiers)
+            {
+                sharedAccessPolicies.Add(pair.Key, pair.Value);
+            }
+        }
+
+        /// <summary>
+        /// Gets an ETag from a response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>A quoted ETag string.</returns>
+        internal static string GetETag(HttpWebResponse response)
+        {
+            return response.Headers[HttpResponseHeader.ETag];
         }
 
         /// <summary>

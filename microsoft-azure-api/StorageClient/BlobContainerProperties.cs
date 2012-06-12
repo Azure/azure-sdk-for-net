@@ -44,5 +44,23 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <value>The container's last-modified time.</value>
         public DateTime LastModifiedUtc { get; internal set; }
+
+        /// <summary>
+        /// Gets the container's lease status.
+        /// </summary>
+        /// <value>A <see cref="LeaseStatus"/> object that indicates the container's lease status.</value>
+        public LeaseStatus LeaseStatus { get; internal set; }
+
+        /// <summary>
+        /// Gets the container's lease state.
+        /// </summary>
+        /// <value>A <see cref="LeaseState"/> object that indicates the container's lease state.</value>
+        public LeaseState LeaseState { get; internal set; }
+
+        /// <summary>
+        /// Gets the container's lease duration.
+        /// </summary>
+        /// <value>A <see cref="LeaseDuration"/> object that indicates the container's lease duration.</value>
+        public LeaseDuration LeaseDuration { get; internal set; }
     }
 }

@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="baseAddress">The Table service endpoint to use to create the client.</param>
         /// <param name="credentials">The account credentials.</param>
         public CloudTableClient(string baseAddress, StorageCredentials credentials)
-            : this(new Uri(baseAddress), credentials)
+            : this(null /* usePathStyleUris */, new Uri(baseAddress), credentials)
         {
         }
 
@@ -58,6 +58,18 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="baseAddressUri">The Table service endpoint to use to create the client.</param>
         /// <param name="credentials">The account credentials.</param>
         public CloudTableClient(Uri baseAddressUri, StorageCredentials credentials)
+            : this(null /* usePathStyleUris */, baseAddressUri, credentials)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CloudTableClient"/> class using the specified Table service endpoint
+        /// and account credentials.
+        /// </summary>
+        /// <param name="usePathStyleUris">Whether to expect path-style URIs.</param>
+        /// <param name="baseAddressUri">The Table service endpoint to use to create the client.</param>
+        /// <param name="credentials">The account credentials.</param>
+        internal CloudTableClient(bool? usePathStyleUris, Uri baseAddressUri, StorageCredentials credentials)
         {
             if (baseAddressUri == null)
             {
@@ -69,15 +81,20 @@ namespace Microsoft.WindowsAzure.StorageClient
                 throw new ArgumentNullException("credentials");
             }
 
-            if ((!credentials.CanSignRequest) || (!credentials.CanSignRequestLite))
-            {
-                throw new ArgumentException(SR.CredentialsCantSignRequest, "credentials");
-            }
-
             this.BaseUri = baseAddressUri;
             this.Credentials = credentials;
             this.RetryPolicy = RetryPolicies.RetryExponential(RetryPolicies.DefaultClientRetryCount, RetryPolicies.DefaultClientBackoff);
             this.Timeout = TimeSpan.FromSeconds(90);
+
+            if (usePathStyleUris.HasValue)
+            {
+                this.UsePathStyleUris = usePathStyleUris.Value;
+            }
+            else
+            {
+                // Automatically decide whether to use host style uri or path style uri
+                this.UsePathStyleUris = CommonUtils.UsePathStyleAddressing(this.BaseUri);
+            }
         }
 
         /// <summary>
@@ -134,19 +151,39 @@ namespace Microsoft.WindowsAzure.StorageClient
         public StorageCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Gets a value indicating whether to use path-style URIs or not.
+        /// </summary>
+        /// <value>True if path-style URIs are used; false otherwise.</value>
+        internal bool UsePathStyleUris { get; private set; }
+
+        /// <summary>
         /// Creates the tables needed for the specified service context.
         /// </summary>
         /// <param name="serviceContextType">The type of service context.</param>
         /// <param name="baseAddress">The Table service endpoint to use to create the client.</param>
         /// <param name="credentials">The account credentials.</param>
+        [Obsolete]
         public static void CreateTablesFromModel(Type serviceContextType, string baseAddress, StorageCredentials credentials)
         {
-            var client = new CloudTableClient(baseAddress, credentials);
+            CloudTableClient client = new CloudTableClient(baseAddress, credentials);
 
-            foreach (var table in TableServiceUtilities.EnumerateEntitySetNames(serviceContextType))
+            foreach (string tableName in TableServiceUtilities.EnumerateEntitySetNames(serviceContextType))
             {
-                client.CreateTableIfNotExist(table);
+                CloudTable table = client.GetTableReference(tableName);
+                table.CreateIfNotExist();
             }
+        }
+
+        /// <summary>
+        /// Gets a reference to the table at the specified address.
+        /// </summary>
+        /// <param name="tableAddress">Either the name of the table, or the absolute URI to the table.</param>
+        /// <returns>A reference to the table.</returns>
+        public CloudTable GetTableReference(string tableAddress)
+        {
+            Uri tableUri = NavigationHelper.AppendPathToUri(this.BaseUri, tableAddress);
+
+            return new CloudTable(tableUri, this);
         }
 
         /// <summary>
@@ -297,63 +334,63 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
-        /// Returns an enumerable collection of table names in the storage account.
+        /// Returns an enumerable collection of tables in the storage account.
         /// </summary>
-        /// <returns>An enumerable collection of table names.</returns>
-        public IEnumerable<string> ListTables()
+        /// <returns>An enumerable collection of tables.</returns>
+        public IEnumerable<CloudTable> ListTables()
         {
             return this.ListTables(String.Empty);
         }
 
         /// <summary>
-        /// Returns an enumerable collection of table names that begin with the specified prefix and that are retrieved lazily.
+        /// Returns an enumerable collection of tables that begin with the specified prefix and that are retrieved lazily.
         /// </summary>
         /// <param name="prefix">The table name prefix.</param>
-        /// <returns>An enumerable collection of table names that are retrieved lazily.</returns>
-        public IEnumerable<string> ListTables(string prefix)
+        /// <returns>An enumerable collection of tables that are retrieved lazily.</returns>
+        public IEnumerable<CloudTable> ListTables(string prefix)
         {
-            return CommonUtils.LazyEnumerateSegmented<string>(
+            return CommonUtils.LazyEnumerateSegmented<CloudTable>(
                 (setResult) => this.ListTablesSegmentedImpl(prefix, null, null, setResult),
                 this.RetryPolicy);
         }
 
         /// <summary>
-        /// Returns a result segment containing a collection of table names in the storage account.
+        /// Returns a result segment containing a collection of tables in the storage account.
         /// </summary>
-        /// <returns>A result segment containing table names.</returns>
-        public ResultSegment<string> ListTablesSegmented()
+        /// <returns>A result segment containing tables.</returns>
+        public ResultSegment<CloudTable> ListTablesSegmented()
         {
             return this.ListTablesSegmented(0, null);
         }
 
         /// <summary>
-        /// Returns a result segment containing a collection of table names in the storage account.
+        /// Returns a result segment containing a collection of tables in the storage account.
         /// </summary>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is zero, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
-        /// <returns>A result segment containing table names.</returns>
-        public ResultSegment<string> ListTablesSegmented(int maxResults, ResultContinuation continuationToken)
+        /// <returns>A result segment containing tables.</returns>
+        public ResultSegment<CloudTable> ListTablesSegmented(int maxResults, ResultContinuation continuationToken)
         {
             return this.ListTablesSegmented(String.Empty, maxResults, continuationToken);
         }
 
         /// <summary>
-        /// Returns a result segment containing a collection of table names beginning with the specified prefix.
+        /// Returns a result segment containing a collection of tables beginning with the specified prefix.
         /// </summary>
         /// <param name="prefix">The table name prefix.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is zero, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
-        /// <returns>A result segment containing table names.</returns>
-        public ResultSegment<string> ListTablesSegmented(string prefix, int maxResults, ResultContinuation continuationToken)
+        /// <returns>A result segment containing tables.</returns>
+        public ResultSegment<CloudTable> ListTablesSegmented(string prefix, int maxResults, ResultContinuation continuationToken)
         {
             return this.EndListTablesSegmented(
                 this.BeginListTablesSegmented(prefix, maxResults, continuationToken, null, null));
         }
 
         /// <summary>
-        /// Begins an asynchronous operation to return a result segment containing a collection of table names 
+        /// Begins an asynchronous operation to return a result segment containing a collection of tables 
         /// in the storage account.
         /// </summary>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -366,7 +403,7 @@ namespace Microsoft.WindowsAzure.StorageClient
 
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection 
-        /// of table names beginning with the specified prefix.
+        /// of tables beginning with the specified prefix.
         /// </summary>
         /// <param name="prefix">The table name prefix.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -379,7 +416,7 @@ namespace Microsoft.WindowsAzure.StorageClient
 
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection 
-        /// of table names beginning with the specified prefix.
+        /// of tables beginning with the specified prefix.
         /// </summary>
         /// <param name="prefix">The table name prefix.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
@@ -390,7 +427,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginListTablesSegmented(string prefix, int maxResults, ResultContinuation continuationToken, AsyncCallback callback, object state)
         {
-            return TaskImplHelper.BeginImplWithRetry<ResultSegment<string>>(
+            return TaskImplHelper.BeginImplWithRetry<ResultSegment<CloudTable>>(
                 (setResult) => this.ListTablesSegmentedImpl(
                     prefix,
                     maxResults,
@@ -403,17 +440,17 @@ namespace Microsoft.WindowsAzure.StorageClient
 
         /// <summary>
         /// Ends an asynchronous operation to return a result segment containing a collection 
-        /// of table names. 
+        /// of tables. 
         /// </summary>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
-        /// <returns>A result segment containing table names.</returns>
+        /// <returns>A result segment containing tables.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This is a member-operation.")]
-        public ResultSegment<string> EndListTablesSegmented(IAsyncResult asyncResult)
+        public ResultSegment<CloudTable> EndListTablesSegmented(IAsyncResult asyncResult)
         {
-            return TaskImplHelper.EndImplWithRetry<ResultSegment<string>>(asyncResult);
+            return TaskImplHelper.EndImplWithRetry<ResultSegment<CloudTable>>(asyncResult);
         }
 
         /// <summary>
@@ -550,24 +587,13 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
-        /// Ends the asynchronous GetResponse operation.
-        /// </summary>
-        /// <param name="asyncresult">An <see cref="IAsyncResult"/> that references the asynchronous operation.</param>
-        /// <param name="req">The request to end the operation on.</param>
-        /// <returns>The <see cref="WebResponse"/> from the asynchronous request.</returns>
-        internal WebResponse EndGetResponse(IAsyncResult asyncresult, WebRequest req)
-        {
-            return EventHelper.ProcessWebResponse(req, asyncresult, this.ResponseReceived, this);
-        }
-
-        /// <summary>
         /// Gets the result or default.
         /// </summary>
         /// <typeparam name="T">The type of the result.</typeparam>
         /// <param name="task">The task to retrieve the result from.</param>
         /// <param name="result">Receives result of the task.</param>
         /// <returns><c>true</c> if the result was returned; otherwise, <c>false</c>.</returns>
-        private static bool GetResultOrDefault<T>(Task<T> task, out T result)
+        internal static bool GetResultOrDefault<T>(Task<T> task, out T result)
         {
             try
             {
@@ -602,6 +628,40 @@ namespace Microsoft.WindowsAzure.StorageClient
 
                 throw Utilities.TranslateDataServiceClientException(ex);
             }
+        }
+
+        /// <summary>
+        /// Ends the asynchronous GetResponse operation.
+        /// </summary>
+        /// <param name="asyncresult">An <see cref="IAsyncResult"/> that references the asynchronous operation.</param>
+        /// <param name="req">The request to end the operation on.</param>
+        /// <returns>The <see cref="WebResponse"/> from the asynchronous request.</returns>
+        internal WebResponse EndGetResponse(IAsyncResult asyncresult, WebRequest req)
+        {
+            return EventHelper.ProcessWebResponse(req, asyncresult, this.ResponseReceived, this);
+        }
+
+        /// <summary>
+        /// Generates a task sequence for accessing the table service.
+        /// </summary>
+        /// <param name="webRequest">A web request for accessing the table service.</param>
+        /// <param name="writeRequestAction">An action for writing data to the body of a web request.</param>
+        /// <param name="processResponseAction">An action for processing the response received.</param>
+        /// <param name="readResponseAction">An action for reading the response stream.</param>
+        /// <returns>A task sequence for the operation.</returns>
+        internal TaskSequence GenerateWebTask(
+            HttpWebRequest webRequest,
+            Action<Stream> writeRequestAction,
+            Action<HttpWebResponse> processResponseAction,
+            Action<Stream> readResponseAction)
+        {
+            return ProtocolHelper.GenerateServiceTask(
+                webRequest,
+                writeRequestAction,
+                (request) => this.Credentials.SignRequestLite(request),
+                (request) => request.GetResponseAsyncWithTimeout(this, this.Timeout),
+                processResponseAction,
+                readResponseAction);
         }
 
         /// <summary>
@@ -704,6 +764,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         private TaskSequence DoesTableExistImpl(string tableName, Action<bool> setResult)
         {
             CommonUtils.CheckStringParameter(tableName, false, "tableName", Protocol.Constants.TableServiceMaxStringPropertySizeInChars);
+
             TableServiceUtilities.CheckTableName(tableName, "tableName");
 
             var svc = this.GetDataServiceContext();
@@ -766,7 +827,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             string prefix,
             int? maxResults,
             ResultContinuation continuationToken,
-            Action<ResultSegment<string>> setResult)
+            Action<ResultSegment<CloudTable>> setResult)
         {
             ResultPagination pagination = new ResultPagination(maxResults.GetValueOrDefault());
 
@@ -787,7 +848,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             ResultContinuation continuationToken,
             ResultPagination pagination,
             ResultSegment<TableServiceTable> lastResult,
-            Action<ResultSegment<string>> setResult)
+            Action<ResultSegment<CloudTable>> setResult)
         {
             CommonUtils.AssertContinuationType(continuationToken, ResultContinuation.ContinuationType.Table);
 
@@ -795,8 +856,8 @@ namespace Microsoft.WindowsAzure.StorageClient
 
             if (lastResult == null)
             {
-                var svc = this.GetDataServiceContext();
-                var query = from table in svc.CreateQuery<TableServiceTable>(Protocol.Constants.TableServiceTablesName)                           
+                TableServiceContext serviceContext = this.GetDataServiceContext();
+                IQueryable<TableServiceTable> query = from table in serviceContext.CreateQuery<TableServiceTable>(Protocol.Constants.TableServiceTablesName)
                             select table;
 
                 if (prefix != string.Empty)
@@ -812,7 +873,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                     query = query.Take(pagination.GetNextRequestPageSize().Value);
                 }
 
-                var listTablesQuery = query.AsTableServiceQuery();
+                CloudTableQuery<TableServiceTable> listTablesQuery = query.AsTableServiceQuery();
 
                 listTablesSegmentedTask = new InvokeTaskSequenceTask<ResultSegment<TableServiceTable>>(
                                     (setResultInner) =>
@@ -827,8 +888,8 @@ namespace Microsoft.WindowsAzure.StorageClient
 
             if (GetResultOrDefault<ResultSegment<TableServiceTable>>(listTablesSegmentedTask, out lastResult))
             {
-                setResult(new ResultSegment<string>(
-                    lastResult.Results.Select((table) => table.TableName),
+                setResult(new ResultSegment<CloudTable>(
+                    lastResult.Results.Select((table) => this.GetTableReference(table.TableName)),
                     lastResult.HasMoreResults,
                     (setResultInner) =>
                         this.ListTablesSegmentedImplCore(prefix, lastResult.ContinuationToken, pagination, lastResult, setResultInner),
@@ -839,7 +900,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             }
             else
             {
-                setResult(new ResultSegment<string>(new List<string>(), false, null, RetryPolicy));
+                setResult(new ResultSegment<CloudTable>(new List<CloudTable>(), false, null, RetryPolicy));
             }
         }
 
@@ -908,29 +969,11 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A task sequence that gets the properties of the table service.</returns>
         private TaskSequence GetServicePropertiesImpl(Action<ServiceProperties> setResult)
         {
-            HttpWebRequest request = TableRequest.GetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds());
-            CommonUtils.ApplyRequestOptimizations(request, -1);
-            this.Credentials.SignRequestLite(request);
-
-            // Get the web response.
-            Task<WebResponse> responseTask = request.GetResponseAsyncWithTimeout(this, this.Timeout);
-            yield return responseTask;
-
-            using (HttpWebResponse response = responseTask.Result as HttpWebResponse)
-            using (Stream responseStream = response.GetResponseStream())
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                // Download the service properties.
-                Task<NullTaskReturn> downloadTask = new InvokeTaskSequenceTask(() => { return responseStream.WriteTo(memoryStream); });
-                yield return downloadTask;
-
-                // Materialize any exceptions.
-                NullTaskReturn scratch = downloadTask.Result;
-
-                // Get the result from the memory stream.
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                setResult(TableResponse.ReadServiceProperties(memoryStream));
-            }
+            return this.GenerateWebTask(
+                TableRequest.GetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds()),
+                null /* no request body */,
+                null /* no response header processing */,
+                (stream) => setResult(TableResponse.ReadServiceProperties(stream)));
         }
 
         /// <summary>
@@ -942,45 +985,21 @@ namespace Microsoft.WindowsAzure.StorageClient
         {
             CommonUtils.AssertNotNull("properties", properties);
 
-            HttpWebRequest request = TableRequest.SetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds());
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                try
+            return this.GenerateWebTask(
+                TableRequest.SetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds()),
+                (stream) =>
                 {
-                    TableRequest.WriteServiceProperties(properties, memoryStream);
-                }
-                catch (InvalidOperationException invalidOpException)
-                {
-                    throw new ArgumentException(invalidOpException.Message, "properties");
-                }
-
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                CommonUtils.ApplyRequestOptimizations(request, memoryStream.Length);
-                this.Credentials.SignRequestLite(request);
-
-                // Get the request stream
-                Task<Stream> getStreamTask = request.GetRequestStreamAsync();
-                yield return getStreamTask;
-
-                using (Stream requestStream = getStreamTask.Result)
-                {
-                    // Upload the service properties.
-                    Task<NullTaskReturn> uploadTask = new InvokeTaskSequenceTask(() => { return (memoryStream as Stream).WriteTo(requestStream); });
-                    yield return uploadTask;
-
-                    // Materialize any exceptions.
-                    NullTaskReturn scratch = uploadTask.Result;
-                }
-            }
-
-            // Get the web response.
-            Task<WebResponse> responseTask = request.GetResponseAsyncWithTimeout(this, this.Timeout);
-            yield return responseTask;
-
-            // Materialize any exceptions.
-            using (HttpWebResponse response = responseTask.Result as HttpWebResponse)
-            {
-            }
+                    try
+                    {
+                        TableRequest.WriteServiceProperties(properties, stream);
+                    }
+                    catch (InvalidOperationException invalidOpException)
+                    {
+                        throw new ArgumentException(invalidOpException.Message, "properties");
+                    }
+                },
+                null /* no response header processing */,
+                null /* no response body */);
         }
     }
 }

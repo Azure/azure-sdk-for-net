@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.StorageClient
     using System.ComponentModel;
 
     /// <summary>
-    /// The lease status of the blob.
+    /// The lease status of a resource.
     /// </summary>
     public enum LeaseStatus
     {
@@ -33,12 +33,12 @@ namespace Microsoft.WindowsAzure.StorageClient
         Unspecified,
 
         /// <summary>
-        /// The blob is locked for exclusive-write access.
+        /// The resource is locked.
         /// </summary>
         Locked,
 
         /// <summary>
-        /// The blob is available to be locked for exclusive write access.
+        /// The resource is available to be locked.
         /// </summary>
         Unlocked
     }

@@ -31,6 +31,22 @@ namespace Microsoft.WindowsAzure.StorageClient
     using TaskSequence = System.Collections.Generic.IEnumerable<Microsoft.WindowsAzure.StorageClient.Tasks.ITask>;
 
     /// <summary>
+    /// Delegate for generating a task to perform a single block upload of a parallel operation.
+    /// </summary>
+    /// <param name="stream">The stream to upload.</param>
+    /// <param name="blockId">The ID of the block to upload to.</param>
+    /// <param name="blockHash">The hash of the content.</param>
+    /// <param name="accessCondition">An access condition to use for the upload, or null if no access condition is to be used.</param>
+    /// <param name="options">Options for the request.</param>
+    /// <returns>A task implementing the upload operation.</returns>
+    internal delegate Task<NullTaskReturn> BlockUploadFunc(
+        SmallBlockMemoryStream stream,
+        string blockId,
+        string blockHash,
+        AccessCondition accessCondition,
+        BlobRequestOptions options);
+
+    /// <summary>
     /// Class used to upload blocks for a blob in parallel.
     /// </summary>
     /// <remarks>The parallelism factor is configurable at the CloudBlobClient.</remarks>
@@ -50,6 +66,11 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Stores the request options to use.
         /// </summary>
         private BlobRequestOptions options;
+
+        /// <summary>
+        /// Stores the access condition to use.
+        /// </summary>
+        private AccessCondition accessCondition;
 
         /// <summary>
         /// Stores the blob's hash.
@@ -95,14 +116,16 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Initializes a new instance of the <see cref="ParallelUpload"/> class.
         /// </summary>
         /// <param name="source">The source stream.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">The request options.</param>
         /// <param name="blockSize">The block size to use.</param>
         /// <param name="blob">The blob to upload to.</param>
-        internal ParallelUpload(Stream source, BlobRequestOptions options, long blockSize, CloudBlockBlob blob)
+        internal ParallelUpload(Stream source, AccessCondition accessCondition, BlobRequestOptions options, long blockSize, CloudBlockBlob blob)
         {
             this.sourceStream = source;
             this.blockSize = blockSize;
             this.options = options;
+            this.accessCondition = accessCondition;
             this.dispensizedStreamSize = 0;
             this.blob = blob;
             this.blobHash = MD5.Create();
@@ -122,8 +145,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// for at least one consumer task to finish before adding more producer tasks. The producer thread quits when no
         /// more data can be read from the stream and no other pending consumer tasks.
         /// </remarks>
-        internal TaskSequence ParallelExecute(
-            Func<SmallBlockMemoryStream, string, string, BlobRequestOptions, Task<NullTaskReturn>> uploadFunc)
+        internal TaskSequence ParallelExecute(BlockUploadFunc uploadFunc)
         {
             bool moreToUpload = true;
             List<IAsyncResult> asyncResults = new List<IAsyncResult>();
@@ -170,7 +192,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                     {
                         // Step 2
                         // Fire off consumer tasks that may finish on other threads;                        
-                        var task = uploadFunc(blockAsStream, blockId, blockHash, this.options);
+                        var task = uploadFunc(blockAsStream, blockId, blockHash, this.accessCondition, this.options);
                         IAsyncResult asyncresult = task.ToAsyncResult(null, null);
                         this.consumerTasksCreated++;
                         
@@ -192,7 +214,7 @@ namespace Microsoft.WindowsAzure.StorageClient
 
                     if (waitResult == WaitHandle.WaitTimeout)
                     {
-                        throw TimeoutHelper.ThrowTimeoutError(this.options.Timeout.Value);
+                        throw TimeoutHelper.GenerateTimeoutError(this.options.Timeout.Value);
                     }
 
                     CompleteAsyncresult(asyncResults, waitResult);
@@ -339,7 +361,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                 putBlockList.Add(new PutBlockListItem(id, BlockSearchMode.Uncommitted));
             }
 
-            return this.blob.UploadBlockList(putBlockList, this.options);
+            return this.blob.UploadBlockList(putBlockList, this.accessCondition, this.options);
         }
     }
 }

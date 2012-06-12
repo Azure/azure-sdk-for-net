@@ -36,91 +36,315 @@ namespace Microsoft.WindowsAzure
         /// Get the signature hash embedded inside the Shared Access Signature.
         /// </summary>
         /// <param name="policy">The shared access policy to hash.</param>
-        /// <param name="groupPolicyIdentifier">An optional identifier for the policy.</param>
+        /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
         /// <param name="resourceName">The canonical resource string, unescaped.</param>
         /// <param name="client">The client whose credentials are to be used for signing.</param>
         /// <returns>The signed hash.</returns>
         internal static string GetSharedAccessSignatureHashImpl(
-            SharedAccessPolicy policy,
-            string groupPolicyIdentifier,
+            SharedAccessBlobPolicy policy,
+            string accessPolicyIdentifier,
             string resourceName,
             CloudBlobClient client)
         {
-            CommonUtils.AssertNotNullOrEmpty("resourceName", resourceName);
-            CommonUtils.AssertNotNull("client", client);
-
-            string stringToSign = null;
-            if (policy != null)
+            if (policy == null)
             {
-                ////StringToSign = signedpermissions + "\n"
-                ////               signedstart + "\n"
-                ////               signedexpiry + "\n"
-                ////               canonicalizedresource + "\n"
-                ////               signedidentifier
-                ////HMAC-SHA256(URL.Decode(UTF8.Encode(StringToSign)))
-
-                stringToSign = string.Format(
-                    "{0}\n{1}\n{2}\n{3}\n{4}",
-                    SharedAccessPolicy.PermissionsToString(policy.Permissions),
-                    GetDateTimeOrEmpty(policy.SharedAccessStartTime),
-                    GetDateTimeOrEmpty(policy.SharedAccessExpiryTime),
+                return GetSharedAccessSignatureHashImpl(
+                    null /* policy.Permissions */,
+                    null /* policy.SharedAccessStartTime */,
+                    null /* policy.SharedAccessExpiryTime */,
+                    null /* startPatitionKey (table only) */,
+                    null /* startRowKey (table only) */,
+                    null /* endPatitionKey (table only) */,
+                    null /* endRowKey (table only) */,
+                    false /* not using table SAS */,
+                    accessPolicyIdentifier,
                     resourceName,
-                    groupPolicyIdentifier);
+                    client.Credentials);
             }
-            else
+
+            return GetSharedAccessSignatureHashImpl(
+                SharedAccessBlobPolicy.PermissionsToString(policy.Permissions),
+                policy.SharedAccessStartTime,
+                policy.SharedAccessExpiryTime,
+                null /* startPatitionKey (table only) */,
+                null /* startRowKey (table only) */,
+                null /* endPatitionKey (table only) */,
+                null /* endRowKey (table only) */,
+                false /* not using table SAS */,
+                accessPolicyIdentifier,
+                resourceName,
+                client.Credentials);
+        }
+
+        /// <summary>
+        /// Get the signature hash embedded inside the Shared Access Signature.
+        /// </summary>
+        /// <param name="policy">The shared access policy to hash.</param>
+        /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
+        /// <param name="resourceName">The canonical resource string, unescaped.</param>
+        /// <param name="client">The client whose credentials are to be used for signing.</param>
+        /// <returns>The signed hash.</returns>
+        internal static string GetSharedAccessSignatureHashImpl(
+            SharedAccessQueuePolicy policy,
+            string accessPolicyIdentifier,
+            string resourceName,
+            CloudQueueClient client)
+        {
+            if (policy == null)
             {
-                stringToSign = string.Format(
-                    "{0}\n{1}\n{2}\n{3}\n{4}",
-                    string.Empty,
-                    string.Empty,
-                    string.Empty,
+                return GetSharedAccessSignatureHashImpl(
+                    null /* policy.Permissions */,
+                    null /* policy.SharedAccessStartTime */,
+                    null /* policy.SharedAccessExpiryTime */,
+                    null /* startPatitionKey (table only) */,
+                    null /* startRowKey (table only) */,
+                    null /* endPatitionKey (table only) */,
+                    null /* endRowKey (table only) */,
+                    false /* not using table SAS */,
+                    accessPolicyIdentifier,
                     resourceName,
-                    groupPolicyIdentifier);
+                    client.Credentials);
             }
-            
-            string signature = client.Credentials.ComputeHmac(stringToSign);
 
-            return signature;
+            return GetSharedAccessSignatureHashImpl(
+                SharedAccessQueuePolicy.PermissionsToString(policy.Permissions),
+                policy.SharedAccessStartTime,
+                policy.SharedAccessExpiryTime,
+                null /* startPatitionKey (table only) */,
+                null /* startRowKey (table only) */,
+                null /* endPatitionKey (table only) */,
+                null /* endRowKey (table only) */,
+                false /* not using table SAS */,
+                accessPolicyIdentifier,
+                resourceName,
+                client.Credentials);
+        }
+
+        /// <summary>
+        /// Get the signature hash embedded inside the Shared Access Signature.
+        /// </summary>
+        /// <param name="policy">The shared access policy to hash.</param>
+        /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
+        /// <param name="startPartitionKey">The start partition key, or null.</param>
+        /// <param name="startRowKey">The start row key, or null.</param>
+        /// <param name="endPartitionKey">The end partition key, or null.</param>
+        /// <param name="endRowKey">The end row key, or null.</param>
+        /// <param name="resourceName">The canonical resource string, unescaped.</param>
+        /// <param name="client">The client whose credentials are to be used for signing.</param>
+        /// <returns>The signed hash.</returns>
+        internal static string GetSharedAccessSignatureHashImpl(
+            SharedAccessTablePolicy policy,
+            string accessPolicyIdentifier,
+            string startPartitionKey,
+            string startRowKey,
+            string endPartitionKey,
+            string endRowKey,
+            string resourceName,
+            CloudTableClient client)
+        {
+            if (policy == null)
+            {
+                return GetSharedAccessSignatureHashImpl(
+                    null /* policy.Permissions */,
+                    null /* policy.SharedAccessStartTime */,
+                    null /* policy.SharedAccessExpiryTime */,
+                    startPartitionKey,
+                    startRowKey,
+                    endPartitionKey,
+                    endRowKey,
+                    true /* using table SAS */,
+                    accessPolicyIdentifier,
+                    resourceName,
+                    client.Credentials);
+            }
+
+            return GetSharedAccessSignatureHashImpl(
+                SharedAccessTablePolicy.PermissionsToString(policy.Permissions),
+                policy.SharedAccessStartTime,
+                policy.SharedAccessExpiryTime,
+                startPartitionKey,
+                startRowKey,
+                endPartitionKey,
+                endRowKey,
+                true /* using table SAS */,
+                accessPolicyIdentifier,
+                resourceName,
+                client.Credentials);
         }
 
         /// <summary>
         /// Get the complete query builder for creating the Shared Access Signature query.
         /// </summary>
         /// <param name="policy">The shared access policy to hash.</param>
-        /// <param name="groupPolicyIdentifier">An optional identifier for the policy.</param>
+        /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
         /// <param name="resourceType">Either "b" for blobs or "c" for containers.</param>
         /// <param name="signature">The signature to use.</param>
+        /// <param name="accountKeyName">The name of the key used to create the signature, or null if the key is implicit.</param>
         /// <returns>The finished query builder.</returns>
-        internal static UriQueryBuilder GetShareAccessSignatureImpl(
-            SharedAccessPolicy policy,
-            string groupPolicyIdentifier,
+        internal static UriQueryBuilder GetSharedAccessSignatureImpl(
+            SharedAccessBlobPolicy policy,
+            string accessPolicyIdentifier,
             string resourceType,
-            string signature)
+            string signature,
+            string accountKeyName)
         {
             CommonUtils.AssertNotNullOrEmpty("resourceType", resourceType);
             CommonUtils.AssertNotNull("signature", signature);
 
-            UriQueryBuilder builder = new UriQueryBuilder();
-
-            // FUTURE blob for blob and container for container
-            if (policy != null)
+            if (policy == null)
             {
-                string permissions = SharedAccessPolicy.PermissionsToString(policy.Permissions);
-                if (String.IsNullOrEmpty(permissions))
-                {
-                    permissions = null;
-                }
-
-                AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedStart, GetDateTimeOrNull(policy.SharedAccessStartTime));
-                AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedExpiry, GetDateTimeOrNull(policy.SharedAccessExpiryTime));
-                AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedPermissions, permissions);
+                return GetSharedAccessSignatureImpl(
+                    null /* policy.Permissions */,
+                    null /* policy.SharedAccessStartTime */,
+                    null /* policy.SharedAccessExpiryTime */,
+                    null /* startPatitionKey (table only) */,
+                    null /* startRowKey (table only) */,
+                    null /* endPatitionKey (table only) */,
+                    null /* endRowKey (table only) */,
+                    accessPolicyIdentifier,
+                    resourceType,
+                    null /* tableName (table only) */,
+                    signature,
+                    accountKeyName);
             }
 
-            builder.Add(Constants.QueryConstants.SignedResource, resourceType);
-            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedIdentifier, groupPolicyIdentifier);
-            AddEscapedIfNotNull(builder, Constants.QueryConstants.Signature, signature);
+            string permissions = SharedAccessBlobPolicy.PermissionsToString(policy.Permissions);
+            if (String.IsNullOrEmpty(permissions))
+            {
+                permissions = null;
+            }
 
-            return builder;
+            return GetSharedAccessSignatureImpl(
+                permissions,
+                policy.SharedAccessStartTime,
+                policy.SharedAccessExpiryTime,
+                null /* startPatitionKey (table only) */,
+                null /* startRowKey (table only) */,
+                null /* endPatitionKey (table only) */,
+                null /* endRowKey (table only) */,
+                accessPolicyIdentifier,
+                resourceType,
+                null /* tableName (table only) */,
+                signature,
+                accountKeyName);
+        }
+
+        /// <summary>
+        /// Get the complete query builder for creating the Shared Access Signature query.
+        /// </summary>
+        /// <param name="policy">The shared access policy to hash.</param>
+        /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
+        /// <param name="signature">The signature to use.</param>
+        /// <param name="accountKeyName">The name of the key used to create the signature, or null if the key is implicit.</param>
+        /// <returns>The finished query builder.</returns>
+        internal static UriQueryBuilder GetSharedAccessSignatureImpl(
+            SharedAccessQueuePolicy policy,
+            string accessPolicyIdentifier,
+            string signature,
+            string accountKeyName)
+        {
+            CommonUtils.AssertNotNull("signature", signature);
+
+            if (policy == null)
+            {
+                return GetSharedAccessSignatureImpl(
+                    null /* policy.Permissions */,
+                    null /* policy.SharedAccessStartTime */,
+                    null /* policy.SharedAccessExpiryTime */,
+                    null /* startPatitionKey (table only) */,
+                    null /* startRowKey (table only) */,
+                    null /* endPatitionKey (table only) */,
+                    null /* endRowKey (table only) */,
+                    accessPolicyIdentifier,
+                    null /* resourceType (blob only) */,
+                    null /* tableName (table only) */,
+                    signature,
+                    accountKeyName);
+            }
+
+            string permissions = SharedAccessQueuePolicy.PermissionsToString(policy.Permissions);
+            if (string.IsNullOrEmpty(permissions))
+            {
+                permissions = null;
+            }
+
+            return GetSharedAccessSignatureImpl(
+                permissions,
+                policy.SharedAccessStartTime,
+                policy.SharedAccessExpiryTime,
+                null /* startPatitionKey (table only) */,
+                null /* startRowKey (table only) */,
+                null /* endPatitionKey (table only) */,
+                null /* endRowKey (table only) */,
+                accessPolicyIdentifier,
+                null /* resourceType (blob only) */,
+                null /* tableName (table only) */,
+                signature,
+                accountKeyName);
+        }
+
+        /// <summary>
+        /// Get the complete query builder for creating the Shared Access Signature query.
+        /// </summary>
+        /// <param name="policy">The shared access policy to hash.</param>
+        /// <param name="tableName">The name of the table associated with this shared access signature.</param>
+        /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
+        /// <param name="startPartitionKey">The start partition key, or null.</param>
+        /// <param name="startRowKey">The start row key, or null.</param>
+        /// <param name="endPartitionKey">The end partition key, or null.</param>
+        /// <param name="endRowKey">The end row key, or null.</param>
+        /// <param name="signature">The signature to use.</param>
+        /// <param name="accountKeyName">The name of the key used to create the signature, or null if the key is implicit.</param>
+        /// <returns>The finished query builder.</returns>
+        internal static UriQueryBuilder GetSharedAccessSignatureImpl(
+            SharedAccessTablePolicy policy,
+            string tableName,
+            string accessPolicyIdentifier,
+            string startPartitionKey,
+            string startRowKey,
+            string endPartitionKey,
+            string endRowKey,
+            string signature,
+            string accountKeyName)
+        {
+            CommonUtils.AssertNotNull("signature", signature);
+
+            if (policy == null)
+            {
+                return GetSharedAccessSignatureImpl(
+                    null /* policy.Permissions */,
+                    null /* policy.SharedAccessStartTime */,
+                    null /* policy.SharedAccessExpiryTime */,
+                    startPartitionKey,
+                    startRowKey,
+                    endPartitionKey,
+                    endRowKey,
+                    accessPolicyIdentifier,
+                    null /* resourceType (blob only) */,
+                    tableName,
+                    signature,
+                    accountKeyName);
+            }
+
+            string permissions = SharedAccessTablePolicy.PermissionsToString(policy.Permissions);
+            if (String.IsNullOrEmpty(permissions))
+            {
+                permissions = null;
+            }
+
+            return GetSharedAccessSignatureImpl(
+                permissions,
+                policy.SharedAccessStartTime,
+                policy.SharedAccessExpiryTime,
+                startPartitionKey,
+                startRowKey,
+                endPartitionKey,
+                endRowKey,
+                accessPolicyIdentifier,
+                null /* resourceType (blob only) */,
+                tableName,
+                signature,
+                accountKeyName);
         }
 
         /// <summary>
@@ -244,6 +468,127 @@ namespace Microsoft.WindowsAzure
                 string token = builder.ToString();
                 credentials = new StorageCredentialsSharedAccessSignature(token);
             }
+        }
+
+        /// <summary>
+        /// Get the signature hash embedded inside the Shared Access Signature.
+        /// </summary>
+        /// <param name="permissions">The permissions string for the resource, or null.</param>
+        /// <param name="startTime">The start time, or null.</param>
+        /// <param name="expiryTime">The expiration time, or null.</param>
+        /// <param name="startPatitionKey">The start partition key, or null.</param>
+        /// <param name="startRowKey">The start row key, or null.</param>
+        /// <param name="endPatitionKey">The end partition key, or null.</param>
+        /// <param name="endRowKey">The end row key, or null.</param>
+        /// <param name="useTableSas">Whether to use the table string-to-sign.</param>
+        /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
+        /// <param name="resourceName">The canonical resource string, unescaped.</param>
+        /// <param name="credentials">The credentials to be used for signing.</param>
+        /// <returns>The signed hash.</returns>
+        private static string GetSharedAccessSignatureHashImpl(
+            string permissions,
+            DateTime? startTime,
+            DateTime? expiryTime,
+            string startPatitionKey,
+            string startRowKey,
+            string endPatitionKey,
+            string endRowKey,
+            bool useTableSas,
+            string accessPolicyIdentifier,
+            string resourceName,
+            StorageCredentials credentials)
+        {
+            CommonUtils.AssertNotNullOrEmpty("resourceName", resourceName);
+            CommonUtils.AssertNotNull("credentials", credentials);
+
+            //// StringToSign =      signedpermissions + "\n" +
+            ////                     signedstart + "\n" +
+            ////                     signedexpiry + "\n" +
+            ////                     canonicalizedresource + "\n" +
+            ////                     signedidentifier + "\n" +
+            ////                     signedversion
+            ////
+            //// TableStringToSign = StringToSign + "\n" +
+            ////                     startpk + "\n" +
+            ////                     startrk + "\n" +
+            ////                     endpk + "\n" +
+            ////                     endrk
+            ////
+            //// HMAC-SHA256(UTF8.Encode(StringToSign))
+
+            string stringToSign = string.Format(
+                "{0}\n{1}\n{2}\n{3}\n{4}\n{5}",
+                permissions,
+                GetDateTimeOrEmpty(startTime),
+                GetDateTimeOrEmpty(expiryTime),
+                resourceName,
+                accessPolicyIdentifier,
+                Constants.HeaderConstants.TargetStorageVersion);
+
+            if (useTableSas)
+            {
+                stringToSign = string.Format(
+                    "{0}\n{1}\n{2}\n{3}\n{4}",
+                    stringToSign,
+                    startPatitionKey,
+                    startRowKey,
+                    endPatitionKey,
+                    endRowKey);
+            }
+
+            string signature = credentials.ComputeHmac(stringToSign);
+
+            return signature;
+        }
+
+        /// <summary>
+        /// Get the complete query builder for creating the Shared Access Signature query.
+        /// </summary>
+        /// <param name="permissions">The permissions string for the resource, or null.</param>
+        /// <param name="startTime">The start time, or null.</param>
+        /// <param name="expiryTime">The expiration time, or null.</param>
+        /// <param name="startPatitionKey">The start partition key, or null.</param>
+        /// <param name="startRowKey">The start row key, or null.</param>
+        /// <param name="endPatitionKey">The end partition key, or null.</param>
+        /// <param name="endRowKey">The end row key, or null.</param>
+        /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
+        /// <param name="resourceType">Either "b" for blobs or "c" for containers, or null if neither.</param>
+        /// <param name="tableName">The name of the table this signature is associated with,
+        ///     or null if not using table SAS.</param>
+        /// <param name="signature">The signature to use.</param>
+        /// <param name="accountKeyName">The name of the key used to create the signature, or null if the key is implicit.</param>
+        /// <returns>The finished query builder.</returns>
+        private static UriQueryBuilder GetSharedAccessSignatureImpl(
+            string permissions,
+            DateTime? startTime,
+            DateTime? expiryTime,
+            string startPatitionKey,
+            string startRowKey,
+            string endPatitionKey,
+            string endRowKey,
+            string accessPolicyIdentifier,
+            string resourceType,
+            string tableName,
+            string signature,
+            string accountKeyName)
+        {
+            UriQueryBuilder builder = new UriQueryBuilder();
+
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedVersion, Constants.HeaderConstants.TargetStorageVersion);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedStart, GetDateTimeOrNull(startTime));
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedExpiry, GetDateTimeOrNull(expiryTime));
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedResource, resourceType);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.SasTableName, tableName);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedPermissions, permissions);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.StartPartitionKey, startPatitionKey);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.StartRowKey, startRowKey);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.EndPartitionKey, endPatitionKey);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.EndRowKey, endRowKey);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedIdentifier, accessPolicyIdentifier);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedKey, accountKeyName);
+            AddEscapedIfNotNull(builder, Constants.QueryConstants.Signature, signature);
+
+            return builder;
         }
     }
 }

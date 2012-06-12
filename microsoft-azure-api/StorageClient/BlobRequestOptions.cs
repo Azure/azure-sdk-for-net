@@ -37,7 +37,6 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         public BlobRequestOptions()
         {
-            this.AccessCondition = AccessCondition.None;
         }
 
         /// <summary>
@@ -49,12 +48,6 @@ namespace Microsoft.WindowsAzure.StorageClient
         {
             this.Timeout = other.Timeout;
             this.RetryPolicy = other.RetryPolicy;
-            this.AccessCondition = other.AccessCondition;
-
-            this.CopySourceAccessCondition = other.CopySourceAccessCondition;
-            this.DeleteSnapshotsOption = other.DeleteSnapshotsOption;
-            this.BlobListingDetails = other.BlobListingDetails;
-            this.UseFlatBlobListing = other.UseFlatBlobListing;
         }
 
         /// <summary>
@@ -94,49 +87,6 @@ namespace Microsoft.WindowsAzure.StorageClient
                 this.timeout = value;
             }
         }
-
-        /// <summary>
-        /// Gets or sets the access condition for the request.
-        /// </summary>
-        /// <value>A structure that specifies any conditional parameters on the request.</value>
-        public AccessCondition AccessCondition { get; set; }
-
-        /// <summary>
-        /// Gets or sets the access condition on the source blob, when the request is to copy a blob.
-        /// </summary>
-        /// <value>A structure that specifies any conditional parameters on the request.</value>
-        /// <remarks>
-        /// This property is applicable only to a request that will copy a blob.
-        /// </remarks>
-        public AccessCondition CopySourceAccessCondition { get; set; }
-
-        /// <summary>
-        /// Gets or sets options for deleting snapshots when a blob is to be deleted.
-        /// </summary>
-        /// <value>One of the enumeration values that specifies whether to delete blobs and snapshots, delete blobs only, or delete snapshots only.</value>
-        /// <remarks>
-        /// This property is applicable only to a request that will delete a blob.
-        /// </remarks>
-        public DeleteSnapshotsOption DeleteSnapshotsOption { get; set; }
-
-        /// <summary>
-        /// Gets or sets options for listing blobs.
-        /// </summary>
-        /// <value>One of the enumeration values that indicates what items a listing operation will return.</value>
-        /// <remarks>
-        /// This property is applicable only to a request to list blobs.
-        /// </remarks>
-        public BlobListingDetails BlobListingDetails { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the blob listing operation will list all blobs in a container in a flat listing,
-        /// or whether it will list blobs hierarchically, by virtual directory.
-        /// </summary>
-        /// <value><c>True</c> if blobs will be listed in a flat listing; otherwise, <c>false</c>. The default value is <c>false</c>.</value>
-        /// <remarks>
-        /// This property is applicable only to a request to list blobs.
-        /// </remarks>
-        public bool UseFlatBlobListing { get; set; }
 
         /// <summary>
         /// Creates the full modifier.

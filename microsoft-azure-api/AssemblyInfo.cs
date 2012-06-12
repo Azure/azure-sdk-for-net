@@ -91,8 +91,8 @@ using System.Reflection;
     "08055da9")]
 
 #endif
-[assembly: AssemblyVersion("1.7.0.0")]
 [assembly: CLSCompliant(true)]
 [assembly: AllowPartiallyTrustedCallers]
 [assembly: SecurityTransparent]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
+[assembly: AssemblyVersion("1.7.1.0")]

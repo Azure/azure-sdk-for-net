@@ -52,6 +52,28 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
+        /// Constructs a web request to return the ACL for a table.
+        /// </summary>
+        /// <param name="uri">The absolute URI to the table.</param>
+        /// <param name="timeout">The server timeout interval.</param>
+        /// <returns><returns>A web request to use to perform the operation.</returns></returns>
+        public static HttpWebRequest GetAcl(Uri uri, int timeout)
+        {
+            return Request.GetAcl(uri, timeout, null);
+        }
+
+        /// <summary>
+        /// Constructs a web request to set the ACL for a table.
+        /// </summary>
+        /// <param name="uri">The absolute URI to the table.</param>
+        /// <param name="timeout">The server timeout interval.</param>
+        /// <returns><returns>A web request to use to perform the operation.</returns></returns>
+        public static HttpWebRequest SetAcl(Uri uri, int timeout)
+        {
+            return Request.SetAcl(uri, timeout, null);
+        }
+
+        /// <summary>
         /// Writes service properties to a stream, formatted in XML.
         /// </summary>
         /// <param name="properties">The service properties to format and write to the stream.</param>
@@ -59,6 +81,30 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         public static void WriteServiceProperties(ServiceProperties properties, Stream outputStream)
         {
             Request.WriteServiceProperties(properties, outputStream);
+        }
+
+        /// <summary>
+        /// Writes a collection of shared access policies to the specified stream in XML format.
+        /// </summary>
+        /// <param name="sharedAccessPolicies">A collection of shared access policies.</param>
+        /// <param name="outputStream">An output stream.</param>
+        public static void WriteSharedAccessIdentifiers(SharedAccessTablePolicies sharedAccessPolicies, Stream outputStream)
+        {
+            Request.WriteSharedAccessIdentifiers(
+                sharedAccessPolicies,
+                outputStream,
+                (policy, writer) =>
+                {
+                    writer.WriteElementString(
+                        Constants.Start,
+                        SharedAccessSignatureHelper.GetDateTimeOrEmpty(policy.SharedAccessStartTime));
+                    writer.WriteElementString(
+                        Constants.Expiry,
+                        SharedAccessSignatureHelper.GetDateTimeOrEmpty(policy.SharedAccessExpiryTime));
+                    writer.WriteElementString(
+                        Constants.Permission,
+                        SharedAccessTablePolicy.PermissionsToString(policy.Permissions));
+                });
         }
 
         /// <summary>

@@ -60,10 +60,39 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Credentials"/> class.
+        /// </summary>
+        /// <param name="accountName">The storage account name.</param>
+        /// <param name="keyValue">The access key value, as a byte array.</param>
+        /// <param name="keyName">The key name, or null if the key is implicit.</param>
+        internal Credentials(string accountName, byte[] keyValue, string keyName)
+            : this(accountName, keyValue)
+        {
+            this.KeyName = keyName;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Credentials"/> class.
+        /// </summary>
+        /// <param name="accountName">The storage account name.</param>
+        /// <param name="base64EncodedkeyValue">The access key value, as a base 64 encoded string.</param>
+        /// <param name="keyName">The key name, or null if the key is implicit.</param>
+        internal Credentials(string accountName, string base64EncodedkeyValue, string keyName)
+            : this(accountName, Convert.FromBase64String(base64EncodedkeyValue), keyName)
+        {
+        }
+
+        /// <summary>
         /// Gets the account name to be used in signing the request.
         /// </summary>
         /// <value>The name of the account.</value>
         public string AccountName { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the access key to be used when signing the request.
+        /// </summary>
+        /// <value>The name of the key, or null if the key is implicit.</value>
+        internal string KeyName { get; private set; }
 
         /// <summary>
         /// Gets or sets the account name whose key is used to sign requests.

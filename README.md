@@ -1,4 +1,4 @@
-<h1>Windows Azure SDK for .NET (1.7.0.0)</h1>
+<h1>Windows Azure SDK for .NET</h1>
 <p>This SDK allows you to build Windows Azure applications that take advantage of
 Azure scalable cloud computing resources: table and blob storage, messaging through
 Service Bus, distributed caching through cache.</p>

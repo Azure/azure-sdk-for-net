@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         public BlobContainerPermissions()
         {
             this.PublicAccess = BlobContainerPublicAccessType.Off;
-            SharedAccessPolicies = new SharedAccessPolicies();
+            this.SharedAccessPolicies = new SharedAccessBlobPolicies();
         }
 
         /// <summary>
@@ -47,6 +47,6 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Gets the set of shared access policies for the container.
         /// </summary>
         /// <value>The set of shared access policies for the container.</value>
-        public SharedAccessPolicies SharedAccessPolicies { get; private set; }
+        public SharedAccessBlobPolicies SharedAccessPolicies { get; private set; }
     }
 }

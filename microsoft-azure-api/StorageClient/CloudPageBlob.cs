@@ -127,7 +127,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudPageBlob"/> class using the specified blob Uri.
         /// Note that this is just a reference to a blob instance and no requests are issued to the service
-        /// yet to update the blob properties, attribute or metaddata. FetchAttributes is the API that 
+        /// yet to update the blob properties, attribute or metadata. FetchAttributes is the API that 
         /// issues such request to the service.
         /// </summary>
         /// <param name="blobAddress">The blob address.</param>
@@ -142,7 +142,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Initializes a new instance of the <see cref="CloudPageBlob"/> class using the specified blob Uri.
         /// If snapshotTime is not null, the blob instance represents a Snapshot.
         /// Note that this is just a reference to a blob instance and no requests are issued to the service
-        /// yet to update the blob properties, attribute or metaddata. FetchAttributes is the API that 
+        /// yet to update the blob properties, attribute or metadata. FetchAttributes is the API that 
         /// issues such request to the service.
         /// </summary>
         /// <param name="blobAddress">The blob address.</param>
@@ -161,19 +161,20 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="size">The maximum size of the page blob, in bytes.</param>
         public void Create(long size)
         {
-            this.Create(size, null);
+            this.Create(size, null, null);
         }
 
         /// <summary>
         /// Creates a page blob.
         /// </summary>
         /// <param name="size">The maximum size of the page blob, in bytes.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        public void Create(long size, BlobRequestOptions options)
+        public void Create(long size, AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            TaskImplHelper.ExecuteImplWithRetry(() => this.CreateImpl(fullModifiers, size), fullModifiers.RetryPolicy);
+            TaskImplHelper.ExecuteImplWithRetry(() => this.CreateImpl(accessCondition, fullModifiers, size), fullModifiers.RetryPolicy);
         }
 
         /// <summary>
@@ -185,22 +186,23 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginCreate(long size, AsyncCallback callback, object state)
         {
-            return this.BeginCreate(size, null, callback, state);
+            return this.BeginCreate(size, null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous operation to create a page blob.
         /// </summary>
         /// <param name="size">The maximum size of the blob, in bytes.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginCreate(long size, BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginCreate(long size, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            return TaskImplHelper.BeginImplWithRetry(() => this.CreateImpl(fullModifiers, size), fullModifiers.RetryPolicy, callback, state);
+            return TaskImplHelper.BeginImplWithRetry(() => this.CreateImpl(accessCondition, fullModifiers, size), fullModifiers.RetryPolicy, callback, state);
         }
 
         /// <summary>
@@ -223,7 +225,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="startOffset">The offset at which to begin writing, in bytes. The offset must be a multiple of 512.</param>
         public void WritePages(Stream pageData, long startOffset)
         {
-            this.WritePages(pageData, startOffset, null);
+            this.WritePages(pageData, startOffset, null, null);
         }
 
         /// <summary>
@@ -231,8 +233,9 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <param name="pageData">A stream providing the page data.</param>
         /// <param name="startOffset">The offset at which to begin writing, in bytes. The offset must be a multiple of 512.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        public void WritePages(Stream pageData, long startOffset, BlobRequestOptions options)
+        public void WritePages(Stream pageData, long startOffset, AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
@@ -246,7 +249,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                     sourcePosition--;
                 }
 
-                return this.WritePageImpl(pageData, startOffset, sourcePosition, fullModifiers);
+                return this.WritePageImpl(pageData, startOffset, sourcePosition, accessCondition, fullModifiers);
             },
             fullModifiers.RetryPolicy);
         }
@@ -261,7 +264,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginWritePages(Stream pageData, long startOffset, AsyncCallback callback, object state)
         {
-            return this.BeginWritePages(pageData, startOffset, null, callback, state);
+            return this.BeginWritePages(pageData, startOffset, null, null, callback, state);
         }
 
         /// <summary>
@@ -269,11 +272,12 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <param name="pageData">A stream providing the page data.</param>
         /// <param name="startOffset">The offset at which to begin writing, in bytes. The offset must be a multiple of 512.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginWritePages(Stream pageData, long startOffset, BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginWritePages(Stream pageData, long startOffset, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
@@ -287,7 +291,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                         sourcePosition--;
                     }
 
-                    return this.WritePageImpl(pageData, startOffset, sourcePosition, fullModifiers);
+                    return this.WritePageImpl(pageData, startOffset, sourcePosition, accessCondition, fullModifiers);
                 },
                 fullModifiers.RetryPolicy,
                 callback,
@@ -311,7 +315,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="length">The length of the data range to be cleared, in bytes. The length must be a multiple of 512.</param>
         public void ClearPages(long startOffset, long length)
         {
-            this.ClearPages(startOffset, length, null);
+            this.ClearPages(startOffset, length, null, null);
         }
 
         /// <summary>
@@ -319,12 +323,13 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <param name="startOffset">The offset at which to begin clearing pages, in bytes. The offset must be a multiple of 512.</param>
         /// <param name="length">The length of the data range to be cleared, in bytes. The length must be a multiple of 512.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        public void ClearPages(long startOffset, long length, BlobRequestOptions options)
+        public void ClearPages(long startOffset, long length, AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            TaskImplHelper.ExecuteImplWithRetry(() => this.ClearPageImpl(startOffset, length, fullModifiers), fullModifiers.RetryPolicy);
+            TaskImplHelper.ExecuteImplWithRetry(() => this.ClearPageImpl(startOffset, length, accessCondition, fullModifiers), fullModifiers.RetryPolicy);
         }
 
         /// <summary>
@@ -337,7 +342,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginClearPages(long startOffset, long length, AsyncCallback callback, object state)
         {
-            return this.BeginClearPages(startOffset, length, null, callback, state);
+            return this.BeginClearPages(startOffset, length, null, null, callback, state);
         }
 
         /// <summary>
@@ -345,16 +350,17 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <param name="startOffset">The offset at which to begin clearing pages, in bytes. The offset must be a multiple of 512.</param>
         /// <param name="length">The length of the data range to be cleared, in bytes. The length must be a multiple of 512.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginClearPages(long startOffset, long length, BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginClearPages(long startOffset, long length, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.BeginImplWithRetry(
-                () => this.ClearPageImpl(startOffset, length, fullModifiers),
+                () => this.ClearPageImpl(startOffset, length, accessCondition, fullModifiers),
                 fullModifiers.RetryPolicy,
                 callback,
                 state);
@@ -376,20 +382,21 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An enumerable collection of page ranges.</returns>
         public IEnumerable<PageRange> GetPageRanges()
         {
-            return this.GetPageRanges(null);
+            return this.GetPageRanges(null, null);
         }
 
         /// <summary>
         /// Gets a collection of page ranges and their starting and ending bytes.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>An enumerable collection of page ranges.</returns>
-        public IEnumerable<PageRange> GetPageRanges(BlobRequestOptions options)
+        public IEnumerable<PageRange> GetPageRanges(AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.ExecuteImplWithRetry<IEnumerable<PageRange>>(
-                (setResult) => this.GetPageRangesImpl(fullModifiers, setResult),
+                (setResult) => this.GetPageRangesImpl(accessCondition, fullModifiers, setResult),
                 fullModifiers.RetryPolicy);
         }
 
@@ -401,22 +408,23 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginGetPageRanges(AsyncCallback callback, object state)
         {
-            return this.BeginGetPageRanges(null, callback, state);
+            return this.BeginGetPageRanges(null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous operation to return a collection of page ranges and their starting and ending bytes.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginGetPageRanges(BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginGetPageRanges(AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.BeginImplWithRetry<IEnumerable<PageRange>>(
-                (setResult) => this.GetPageRangesImpl(fullModifiers, setResult),
+                (setResult) => this.GetPageRangesImpl(accessCondition, fullModifiers, setResult),
                 fullModifiers.RetryPolicy,
                 callback,
                 state);
@@ -449,10 +457,11 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Opens a stream for writing to the blob.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A stream for writing to the blob.</returns>
         /// <exception cref="NotSupportedException">This operation is not supported on objects of type <see cref="CloudPageBlob"/>.</exception>
-        public override BlobStream OpenWrite(BlobRequestOptions options)
+        public override BlobStream OpenWrite(AccessCondition accessCondition, BlobRequestOptions options)
         {
             throw ThisCreationMethodNotSupportedException();
         }
@@ -471,9 +480,10 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Uploads a blob from a stream.
         /// </summary>
         /// <param name="source">A stream that provides the blob content.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <exception cref="NotSupportedException">This operation is not supported on objects of type <see cref="CloudPageBlob"/>.</exception>
-        public override void UploadFromStream(Stream source, BlobRequestOptions options)
+        public override void UploadFromStream(Stream source, AccessCondition accessCondition, BlobRequestOptions options)
         {
             throw ThisCreationMethodNotSupportedException();
         }
@@ -495,12 +505,13 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Begins an asynchronous operation to upload a blob from a stream.
         /// </summary>
         /// <param name="source">The data stream to upload.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         /// <exception cref="NotSupportedException">This operation is not supported on objects of type <see cref="CloudPageBlob"/>.</exception>
-        public override IAsyncResult BeginUploadFromStream(Stream source, BlobRequestOptions options, AsyncCallback callback, object state)
+        public override IAsyncResult BeginUploadFromStream(Stream source, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             throw ThisCreationMethodNotSupportedException();
         }
@@ -530,9 +541,10 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <param name="content">The text to upload.</param>
         /// <param name="encoding">An object indicating the text encoding to use.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <exception cref="NotSupportedException">This operation is not supported on objects of type <see cref="CloudPageBlob"/>.</exception>
-        public override void UploadText(string content, Encoding encoding, BlobRequestOptions options)
+        public override void UploadText(string content, Encoding encoding, AccessCondition accessCondition, BlobRequestOptions options)
         {
             throw ThisCreationMethodNotSupportedException();
         }
@@ -551,9 +563,10 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Uploads a file from the file system to a blob.
         /// </summary>
         /// <param name="fileName">The path and file name of the file to upload.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <exception cref="NotSupportedException">This operation is not supported on objects of type <see cref="CloudPageBlob"/>.</exception>
-        public override void UploadFile(string fileName, BlobRequestOptions options)
+        public override void UploadFile(string fileName, AccessCondition accessCondition, BlobRequestOptions options)
         {
             throw ThisCreationMethodNotSupportedException();
         }
@@ -572,9 +585,10 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Uploads an array of bytes to a blob.
         /// </summary>
         /// <param name="content">The array of bytes to upload.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <exception cref="NotSupportedException">This operation is not supported on objects of type <see cref="CloudPageBlob"/>.</exception>
-        public override void UploadByteArray(byte[] content, BlobRequestOptions options)
+        public override void UploadByteArray(byte[] content, AccessCondition accessCondition, BlobRequestOptions options)
         {
             throw ThisCreationMethodNotSupportedException();
         }
@@ -592,10 +606,11 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Implements the Create method.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="sizeInBytes">The size in bytes.</param>
         /// <returns>A <see cref="TaskSequence"/> that creates the blob.</returns>
-        private TaskSequence CreateImpl(BlobRequestOptions options, long sizeInBytes)
+        private TaskSequence CreateImpl(AccessCondition accessCondition, BlobRequestOptions options, long sizeInBytes)
         {
             CommonUtils.AssertNotNull("options", options);
 
@@ -604,7 +619,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             var webRequest = ProtocolHelper.GetWebRequest(
                 this.ServiceClient,
                 options,
-                (timeout) => BlobRequest.Put(this.TransformedAddress, timeout, this.Properties, BlobType.PageBlob, null, sizeInBytes));
+                (timeout) => BlobRequest.Put(this.TransformedAddress, timeout, this.Properties, BlobType.PageBlob, sizeInBytes, accessCondition));
 
             BlobRequest.AddMetadata(webRequest, this.Metadata);
 
@@ -624,14 +639,22 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Gets the page ranges impl.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="setResult">The set result.</param>
         /// <returns>A <see cref="TaskSequence"/> for getting the page ranges.</returns>
-        private TaskSequence GetPageRangesImpl(BlobRequestOptions options, Action<IEnumerable<PageRange>> setResult)
+        private TaskSequence GetPageRangesImpl(AccessCondition accessCondition, BlobRequestOptions options, Action<IEnumerable<PageRange>> setResult)
         {
             CommonUtils.AssertNotNull("options", options);
 
-            var webRequest = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => BlobRequest.GetPageRanges(this.TransformedAddress, timeout, this.SnapshotTime, null));
+            HttpWebRequest webRequest = ProtocolHelper.GetWebRequest(
+                this.ServiceClient,
+                options,
+                (timeout) => BlobRequest.GetPageRanges(
+                    this.TransformedAddress,
+                    timeout,
+                    this.SnapshotTime,
+                    accessCondition));
             BlobRequest.AddMetadata(webRequest, this.Metadata);
             this.ServiceClient.Credentials.SignRequest(webRequest);
             var task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
@@ -657,19 +680,20 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="pageData">The page data.</param>
         /// <param name="startOffset">The start offset.</param> 
         /// <param name="sourceStreamPosition">The beginning position of the source stream prior to execution, negative if stream is unseekable.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="TaskSequence"/> that writes the pages.</returns>
-        private TaskSequence WritePageImpl(Stream pageData, long startOffset, long sourceStreamPosition, BlobRequestOptions options)
+        private TaskSequence WritePageImpl(Stream pageData, long startOffset, long sourceStreamPosition, AccessCondition accessCondition, BlobRequestOptions options)
         {
             CommonUtils.AssertNotNull("options", options);
 
             long length = pageData.Length;
 
             // Logic to rewind stream on a retry
-            // For non seekable streams we need a way to detect the retry iteration so as to only attempt to execute once.
+            // HACK : for non seekable streams we need a way to detect the retry iteration so as to only attempt to execute once.
             // The first attempt will have SourceStreamPosition = -1, which means the first iteration on a non seekable stream.
             // The second attempt will have SourceStreamPosition = -2, anything below -1 is considered an abort. Since the Impl method
-            // does not have an execution context to be aware of what iteration is used the SourceStreamPosition is utilized as counter to
+            // does not have an executino context to be aware of what iteration is used the SourceStreamPosition is utilized as counter to
             // differentiate between the first attempt and a retry. 
             if (sourceStreamPosition >= 0 && pageData.CanSeek)
             {
@@ -704,10 +728,10 @@ namespace Microsoft.WindowsAzure.StorageClient
                 CommonUtils.ArgumentOutOfRange("pageData", pageData);
             }
 
-            var webRequest = ProtocolHelper.GetWebRequest(
+            HttpWebRequest webRequest = ProtocolHelper.GetWebRequest(
                 this.ServiceClient,
                 options,
-                (timeout) => BlobRequest.PutPage(this.TransformedAddress, timeout, properties, null));
+                (timeout) => BlobRequest.PutPage(this.TransformedAddress, timeout, properties, accessCondition));
 
             ////BlobRequest.AddMetadata(webRequest, this.Metadata);
 
@@ -744,9 +768,10 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <param name="startOffset">The start offset. Must be multiples of 512.</param>
         /// <param name="length">Length of the data range to be cleared. Must be multiples of 512.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="TaskSequence"/> that writes the pages.</returns>
-        private TaskSequence ClearPageImpl(long startOffset, long length, BlobRequestOptions options)
+        private TaskSequence ClearPageImpl(long startOffset, long length, AccessCondition accessCondition, BlobRequestOptions options)
         {
             CommonUtils.AssertNotNull("options", options);
 
@@ -766,10 +791,10 @@ namespace Microsoft.WindowsAzure.StorageClient
                 PageWrite = PageWrite.Clear,
             };
 
-            var webRequest = ProtocolHelper.GetWebRequest(
+            HttpWebRequest webRequest = ProtocolHelper.GetWebRequest(
                 this.ServiceClient,
                 options,
-                (timeout) => BlobRequest.PutPage(this.TransformedAddress, timeout, properties, null));
+                (timeout) => BlobRequest.PutPage(this.TransformedAddress, timeout, properties, accessCondition));
 
             webRequest.ContentLength = 0;
 

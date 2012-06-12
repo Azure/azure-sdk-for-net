@@ -197,7 +197,7 @@
     <value>Cannot attach to a TableStorageDataServiceContext object. These objects already contain the functionality for accessing the table storage service.</value>
   </data>
   <data name="CannotCreateSASWithoutAccountKey" xml:space="preserve">
-    <value>Cannot create Shared Access Signature unless the Account Key credentials are used by the BlobServiceClient.</value>
+    <value>Cannot create Shared Access Signature unless Account Key credentials are used.</value>
   </data>
   <data name="CannotModifySnapshot" xml:space="preserve">
     <value>Cannot perform this operation on a blob representing a snapshot.</value>
@@ -215,7 +215,7 @@
     <value>Multiple different snapshot times provided as part of query '{0}' and as constructor parameter '{1}'.</value>
   </data>
   <data name="TooManyPolicyIdentifiers" xml:space="preserve">
-    <value>Too many '{0}' shared access policy identifiers provided. Server does not support setting more than '{1}' on a single container.</value>
+    <value>Too many '{0}' shared access policy identifiers provided. Server does not support setting more than '{1}' on a single container, queue, or table.</value>
   </data>
   <data name="MessageTooLarge" xml:space="preserve">
     <value>Messages cannot be larger than {0} bytes.</value>
@@ -266,7 +266,7 @@
     <value>SetConfigurationSettingPublisher needs to be called before FromConfigurationSetting can be used</value>
   </data>
   <data name="ListSnapshotsWithDelimiterError" xml:space="preserve">
-    <value>Listing snapshots is only supported in flat mode (no delimiter). Consider setting BlobRequestOptions.UseFlatBlobListing property to true.</value>
+    <value>Listing snapshots is only supported in flat mode (no delimiter). Consider setting the useFlatBlobListing parameter to true.</value>
   </data>
   <data name="ServerReturnedMoreThanMaxResults" xml:space="preserve">
     <value>Server returned more that MaxResults requested</value>
@@ -285,5 +285,14 @@
   </data>
   <data name="SnapshotTimePassedTwice" xml:space="preserve">
     <value>Snapshot query parameter is already defined in the blobUri. Either pass in a snapshotTime parameter or use a full URL with a snapshot query parameter.</value>
+  </data>
+  <data name="CopyAborted" xml:space="preserve">
+    <value>The copy operation has been aborted by the user.</value>
+  </data>
+  <data name="CopyUnknownId" xml:space="preserve">
+    <value>No copy with the given ID was found. Either the copy was never started or the copy status was deleted or overwritten by a subsequent copy.</value>
+  </data>
+  <data name="CopyFailed" xml:space="preserve">
+    <value>The copy operation failed with the following error message: {0}</value>
   </data>
 </root>

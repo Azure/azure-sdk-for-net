@@ -124,5 +124,90 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// The request version header is not supported (client-side error).
         /// </summary>
         HttpVersionNotSupported,
+
+        /// <summary>
+        /// A lease is required to perform the operation.
+        /// </summary>
+        LeaseIdMissing,
+
+        /// <summary>
+        /// The given lease ID does not match the current lease.
+        /// </summary>
+        LeaseIdMismatch,
+
+        /// <summary>
+        /// A lease ID was used when no lease currently is held.
+        /// </summary>
+        LeaseNotPresent,
+
+        /// <summary>
+        /// The given lease ID has expired.
+        /// </summary>
+        LeaseLost,
+
+        /// <summary>
+        /// The lease is already present when trying to acquire.
+        /// </summary>
+        LeaseAlreadyPresent,
+        
+        /// <summary>
+        /// The lease is already broken with a lower break period.
+        /// </summary>
+        LeaseAlreadyBroken,
+
+        /// <summary>
+        /// The lease cannot be renewed because it is broken.
+        /// </summary>
+        LeaseIsBrokenAndCannotBeRenewed,
+
+        /// <summary>
+        /// The lease cannot be acquired because it is breaking.
+        /// </summary>
+        LeaseIsBreakingAndCannotBeAcquired,
+
+        /// <summary>
+        /// The lease cannot be changed because it is breaking.
+        /// </summary>
+        LeaseIsBreakingAndCannotBeChanged,
+
+        /// <summary>
+        /// The current copy was aborted.
+        /// </summary>
+        CopyAborted,
+
+        /// <summary>
+        /// The pending copy failed.
+        /// </summary>
+        CopyFailed,
+
+        /// <summary>
+        /// The given copy ID is no longer stored in the <see cref="CopyState"/>.
+        /// </summary>
+        CopyIdLost,
+
+        /// <summary>
+        /// The copy can't be aborted because the copy ID does not match.
+        /// </summary>
+        CopyIdMismatch,
+
+        /// <summary>
+        /// There is currently no pending copy operation to abort.
+        /// </summary>
+        NoPendingCopyOperation,
+
+        /// <summary>
+        /// The operation is not allowed because of a pending copy operation.
+        /// </summary>
+        PendingCopyOperation,
+
+        /// <summary>
+        /// The source of the copy is inaccessible.
+        /// </summary>
+        CannotVerifyCopySource,
+
+        /// <summary>
+        /// The destination of a copy operation must not have an active lease of fixed duration.
+        /// </summary>
+        InfiniteLeaseDurationRequired
     }
 }

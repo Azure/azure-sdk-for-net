@@ -24,6 +24,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.IO;
+    using System.Linq;
     using System.Xml;
     
     /// <summary>
@@ -263,9 +264,19 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                     string contentLanguage = null;
                                     string contentMD5 = null;
                                     BlobType? blobType = null;
-                                    LeaseStatus? leaseStatus = null;
+                                    LeaseStatus leaseStatus = LeaseStatus.Unspecified;
+                                    LeaseState leaseState = LeaseState.Unspecified;
+                                    LeaseDuration leaseDuration = LeaseDuration.Unspecified;
                                     DateTime? snapshot = null;
                                     NameValueCollection metadata = null;
+
+                                    // copy blob attribute strings
+                                    string copyId = null;
+                                    string copyStatus = null;
+                                    string copyCompletionTime = null;
+                                    string copyProgress = null;
+                                    string copySource = null;
+                                    string copyStatusDescription = null;
 
                                     // Go until we are out of the blob.
                                     bool blobNeedToRead = true;
@@ -335,19 +346,16 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
                                                     break;
                                                 case Constants.LeaseStatusElement:
-                                                    string leaseStatusString = reader.ReadElementContentAsString();
+                                                    leaseStatus = Response.GetLeaseStatus(reader.ReadElementContentAsString());
                                                     blobNeedToRead = false;
-
-                                                    switch (leaseStatusString)
-                                                    {
-                                                        case Constants.LockedValue:
-                                                            leaseStatus = LeaseStatus.Locked;
-                                                            break;
-                                                        case Constants.UnlockedValue:
-                                                            leaseStatus = LeaseStatus.Unlocked;
-                                                            break;
-                                                    }
-
+                                                    break;
+                                                case Constants.LeaseStateElement:
+                                                    leaseState = Response.GetLeaseState(reader.ReadElementContentAsString());
+                                                    blobNeedToRead = false;
+                                                    break;
+                                                case Constants.LeaseDurationElement:
+                                                    leaseDuration = Response.GetLeaseDuration(reader.ReadElementContentAsString());
+                                                    blobNeedToRead = false;
                                                     break;
                                                 case Constants.SnapshotElement:
                                                     snapshot = reader.ReadElementContentAsString().ToUTCTime();
@@ -355,6 +363,30 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                                     break;
                                                 case Constants.MetadataElement:
                                                     metadata = Response.ParseMetadata(reader);
+                                                    blobNeedToRead = false;
+                                                    break;
+                                                case Constants.CopyIdElement:
+                                                    copyId = reader.ReadElementContentAsString();
+                                                    blobNeedToRead = false;
+                                                    break;
+                                                case Constants.CopyCompletionTimeElement:
+                                                    copyCompletionTime = reader.ReadElementContentAsString();
+                                                    blobNeedToRead = false;
+                                                    break;
+                                                case Constants.CopyStatusElement:
+                                                    copyStatus = reader.ReadElementContentAsString();
+                                                    blobNeedToRead = false;
+                                                    break;
+                                                case Constants.CopyProgressElement:
+                                                    copyProgress = reader.ReadElementContentAsString();
+                                                    blobNeedToRead = false;
+                                                    break;
+                                                case Constants.CopySourceElement:
+                                                    copySource = reader.ReadElementContentAsString();
+                                                    blobNeedToRead = false;
+                                                    break;
+                                                case Constants.CopyStatusDescriptionElement:
+                                                    copyStatusDescription = reader.ReadElementContentAsString();
                                                     blobNeedToRead = false;
                                                     break;
                                             }
@@ -394,7 +426,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
                                             blob.Uri = ub.Uri;
                                             
-                                            blob.Properties.LeaseStatus = leaseStatus ?? LeaseStatus.Unspecified;
+                                            blob.Properties.LeaseStatus = leaseStatus;
+                                            blob.Properties.LeaseState = leaseState;
+                                            blob.Properties.LeaseDuration = leaseDuration;
 
                                             if (snapshot != null)
                                             {
@@ -406,6 +440,17 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                             if (metadata != null)
                                             {
                                                 blob.Metadata = metadata;
+                                            }
+
+                                            if (!string.IsNullOrEmpty(copyStatus))
+                                            {
+                                                blob.CopyState = BlobResponse.GetCopyAttributes(
+                                                    copyStatus,
+                                                    copyId,
+                                                    copySource,
+                                                    copyProgress,
+                                                    copyCompletionTime,
+                                                    copyStatusDescription);
                                             }
 
                                             break;

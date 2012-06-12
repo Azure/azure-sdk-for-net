@@ -367,6 +367,17 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
+        /// Extracts a table name from the table's Uri.
+        /// </summary>
+        /// <param name="uri">The queue Uri.</param>
+        /// <param name="usePathStyleUris">If set to <c>true</c> use path style Uris.</param>
+        /// <returns>The queue name.</returns>
+        internal static string GetTableNameFromUri(Uri uri, bool usePathStyleUris)
+        {
+            return GetContainerNameFromContainerAddress(uri, usePathStyleUris);
+        }
+
+        /// <summary>
         /// Retrieve the container address and address.
         /// </summary>
         /// <param name="blobAddress">The BLOB address.</param>

@@ -63,7 +63,7 @@
       </Rules>
       <AnalyzerSettings>
         <StringProperty Name="CompanyName">Microsoft</StringProperty>
-        <StringProperty Name="Copyright">Copyright (c)2012 Microsoft. All rights reserved.</StringProperty>
+        <StringProperty Name="Copyright">Copyright (c)2010 Microsoft. All rights reserved.</StringProperty>
       </AnalyzerSettings>
     </Analyzer>
   </Analyzers>

@@ -55,6 +55,11 @@ namespace Microsoft.WindowsAzure.StorageClient
         private BlobRequestOptions options;
 
         /// <summary>
+        /// The access condition applied to the stream.
+        /// </summary>
+        private AccessCondition accessCondition;
+
+        /// <summary>
         /// True if the AccessCondition has been changed to match a single ETag.
         /// </summary>
         private bool setEtagCondition;
@@ -79,10 +84,11 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Initializes a new instance of the BlobReadStream class. 
         /// </summary>
         /// <param name="blob">The blob used for downloads.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">Modifiers to be applied to the blob. After first request, the ETag is always applied.</param>
         /// <param name="readAheadInBytes">The number of bytes to read ahead.</param>
         /// <param name="verifyBlocks">Controls whether block's signatures are verified.</param>
-        internal BlobReadStream(CloudBlob blob, BlobRequestOptions options, long readAheadInBytes, bool verifyBlocks)
+        internal BlobReadStream(CloudBlob blob, AccessCondition accessCondition, BlobRequestOptions options, long readAheadInBytes, bool verifyBlocks)
         {
             CommonUtils.AssertNotNull("blob", blob);
             CommonUtils.AssertNotNull("options", options);
@@ -91,6 +97,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             this.Blob = blob;
             this.IntegrityControlVerificationEnabled = verifyBlocks;
             this.options = options;
+            this.accessCondition = accessCondition;
             this.ReadAheadSize = readAheadInBytes;
 
             this.downloadedBlocksList = new DownloadedBlockCollection();
@@ -145,9 +152,9 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
-        /// Gets or sets a value, in miliseconds, that determines how long the stream will attempt to read before timing out.
+        /// Gets or sets a value, in milliseconds, that determines how long the stream will attempt to read before timing out.
         /// </summary>
-        /// <value>A value, in miliseconds, that determines how long the stream will attempt to read before timing out.</value>
+        /// <value>A value, in milliseconds, that determines how long the stream will attempt to read before timing out.</value>
         public override int ReadTimeout
         {
             get
@@ -433,7 +440,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         {
             if (this.Blob.Properties.BlobType == BlobType.Unspecified)
             {
-                this.Blob.FetchAttributes(this.options);
+                this.Blob.FetchAttributes(this.accessCondition, this.options);
             }
 
             var origCount = count;
@@ -446,6 +453,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                     {
                         return this.Blob.ToBlockBlob.GetDownloadBlockList(
                             BlockListingFilter.Committed,
+                            this.accessCondition,
                             this.options,
                             result);
                     },
@@ -552,9 +560,9 @@ namespace Microsoft.WindowsAzure.StorageClient
                 this.setEtagCondition = true;
 
                 // If we have any existing conditions, see if they failed.
-                if (!this.options.AccessCondition.Equals(AccessCondition.None))
+                if (this.accessCondition != null)
                 {
-                    if (!this.options.AccessCondition.VerifyConditionHolds(
+                    if (!this.accessCondition.VerifyConditionHolds(
                         this.Blob.Properties.ETag,
                         this.Blob.Properties.LastModifiedUtc))
                     {
@@ -567,7 +575,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                     }
                 }
 
-                this.options.AccessCondition = AccessCondition.IfMatch(this.Blob.Properties.ETag);
+                this.accessCondition = AccessCondition.GenerateIfMatchCondition(this.Blob.Properties.ETag);
             }
         }
 
@@ -579,7 +587,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns> An TaskSequence that represents the asynchronous read action. </returns>
         private TaskSequence ReadAheadImpl(long startPosition, long length)
         {
-            var webResponseTask = new InvokeTaskSequenceTask<Stream>((result) => { return this.Blob.GetStreamImpl(options, startPosition, length, result); });
+            var webResponseTask = new InvokeTaskSequenceTask<Stream>((result) => { return this.Blob.GetStreamImpl(accessCondition, options, startPosition, length, result); });
             yield return webResponseTask;
 
             using (var stream = webResponseTask.Result)
@@ -684,7 +692,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             try
             {
                 // TODO: - FetchAttributes should be an async task and so should DownloadBlockList
-                this.Blob.FetchAttributes(this.options);
+                this.Blob.FetchAttributes(this.accessCondition, this.options);
             }
             catch (System.Exception ex)
             {
@@ -836,7 +844,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
-        /// Calculates if the currently held data is less than <paramref name="ReadAheadThreshold"/> percentage depleted.
+        /// Calculates if the currently held data is less than <see cref="ReadAheadThreshold"/> percentage depleted.
         /// </summary>
         /// <param name="gapStart">The start position for any ReadAhead based on the last block.</param>
         /// <returns>True if more data is needed.</returns>

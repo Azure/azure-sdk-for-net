@@ -184,7 +184,7 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         protected internal override string ToString(bool exportSecrets)
         {
-            return String.Format("{0}={1}", CloudStorageAccount.SharedAccessSignatureName, exportSecrets ? this.token : "[signature hidden]");
+            return String.Format("{0}={1}", CloudStorageAccount.SharedAccessSignatureSettingString, exportSecrets ? this.token : "[signature hidden]");
         }
     }
 }

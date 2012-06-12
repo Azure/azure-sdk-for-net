@@ -77,21 +77,21 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             properties.ContentLanguage = response.Headers[HttpResponseHeader.ContentLanguage];
             properties.ContentMD5 = response.Headers[HttpResponseHeader.ContentMd5];
             properties.ContentType = response.Headers[HttpResponseHeader.ContentType];
-            properties.ETag = response.Headers[HttpResponseHeader.ETag];
+            properties.ETag = Response.GetETag(response);
             properties.LastModifiedUtc = response.LastModified.ToUniversalTime();
             
             string blobType = response.Headers[Constants.HeaderConstants.BlobType];
-            string leaseStatus = response.Headers[Constants.HeaderConstants.LeaseStatus];
 
+            // Get blob type
             if (!string.IsNullOrEmpty(blobType))
             {
                 properties.BlobType = (BlobType)Enum.Parse(typeof(BlobType), blobType, true);
             }
 
-            if (!string.IsNullOrEmpty(leaseStatus))
-            {
-                properties.LeaseStatus = (LeaseStatus)Enum.Parse(typeof(LeaseStatus), leaseStatus, true);
-            }
+            // Get lease properties
+            properties.LeaseStatus = Response.GetLeaseStatus(response);
+            properties.LeaseState = Response.GetLeaseState(response);
+            properties.LeaseDuration = Response.GetLeaseDuration(response);
 
             // Get the content length. Prioritize range and x-ms over content length for the special cases.
             var rangeHeader = response.Headers[HttpResponseHeader.ContentRange];
@@ -127,6 +127,13 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             attributes.Metadata = GetMetadata(response);
 
+            // Get the copy attributes, if any
+            CopyState copyAttributes = GetCopyAttributes(response);
+            if (copyAttributes != null)
+            {
+                attributes.CopyState = copyAttributes;
+            }
+
             return attributes;
         }
 
@@ -152,6 +159,26 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         public static string GetSnapshotTime(HttpWebResponse response)
         {
             return response.Headers[Constants.HeaderConstants.SnapshotHeader];
+        }
+
+        /// <summary>
+        /// Extracts the lease ID header from a web response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>The lease ID.</returns>
+        public static string GetLeaseId(HttpWebResponse response)
+        {
+            return Response.GetLeaseId(response);
+        }
+
+        /// <summary>
+        /// Extracts the remaining lease time from a web response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>The remaining lease time, in seconds.</returns>
+        public static int? GetRemainingLeaseTime(HttpWebResponse response)
+        {
+            return Response.GetRemainingLeaseTime(response);
         }
         
         /// <summary>
@@ -228,6 +255,93 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         public static ServiceProperties ReadServiceProperties(Stream inputStream)
         {
             return Response.ReadServiceProperties(inputStream);
+        }
+
+        /// <summary>
+        /// Extracts a <see cref="CopyState"/> object from the headers of a web response.
+        /// </summary>
+        /// <param name="response">The HTTP web response.</param>
+        /// <returns>A <see cref="CopyState"/> object, or null if the web response does not contain a copy status.</returns>
+        internal static CopyState GetCopyAttributes(HttpWebResponse response)
+        {
+            string copyStatusString = response.Headers[Constants.HeaderConstants.CopyStatusHeader];
+            if (!string.IsNullOrEmpty(copyStatusString))
+            {
+                return GetCopyAttributes(
+                    copyStatusString,
+                    response.Headers[Constants.HeaderConstants.CopyIdHeader],
+                    response.Headers[Constants.HeaderConstants.CopySourceHeader],
+                    response.Headers[Constants.HeaderConstants.CopyProgressHeader],
+                    response.Headers[Constants.HeaderConstants.CopyCompletionTimeHeader],
+                    response.Headers[Constants.HeaderConstants.CopyDescriptionHeader]);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Builds a <see cref="CopyState"/> object from the given strings containing formatted copy information.
+        /// </summary>
+        /// <param name="copyStatusString">The copy status, as a string.</param>
+        /// <param name="copyId">The copy ID.</param>
+        /// <param name="copySourceString">The source URI of the copy, as a string.</param>
+        /// <param name="copyProgressString">A string formatted as progressBytes/TotalBytes.</param>
+        /// <param name="copyCompletionTimeString">The copy completion time, as a string, or null.</param>
+        /// <param name="copyStatusDescription">The copy status description, if any.</param>
+        /// <returns>A <see cref="CopyState"/> object populated from the given strings.</returns>
+        internal static CopyState GetCopyAttributes(
+            string copyStatusString,
+            string copyId,
+            string copySourceString,
+            string copyProgressString,
+            string copyCompletionTimeString,
+            string copyStatusDescription)
+        {
+            CopyState copyAttributes = new CopyState
+            {
+                CopyId = copyId,
+                StatusDescription = copyStatusDescription
+            };
+
+            switch (copyStatusString)
+            {
+                case Constants.CopySuccessValue:
+                    copyAttributes.Status = CopyStatus.Success;
+                    break;
+                case Constants.CopyPendingValue:
+                    copyAttributes.Status = CopyStatus.Pending;
+                    break;
+                case Constants.CopyAbortedValue:
+                    copyAttributes.Status = CopyStatus.Aborted;
+                    break;
+                case Constants.CopyFailedValue:
+                    copyAttributes.Status = CopyStatus.Failed;
+                    break;
+                default:
+                    copyAttributes.Status = CopyStatus.Invalid;
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(copyProgressString))
+            {
+                string[] progressSequence = copyProgressString.Split('/');
+                copyAttributes.BytesCopied = long.Parse(progressSequence[0]);
+                copyAttributes.TotalBytes = long.Parse(progressSequence[1]);
+            }
+
+            if (!string.IsNullOrEmpty(copySourceString))
+            {
+                copyAttributes.Source = new Uri(copySourceString);
+            }
+
+            if (!string.IsNullOrEmpty(copyCompletionTimeString))
+            {
+                copyAttributes.CompletionTime = copyCompletionTimeString.ToUTCTime();
+            }
+
+            return copyAttributes;
         }
     }
 }

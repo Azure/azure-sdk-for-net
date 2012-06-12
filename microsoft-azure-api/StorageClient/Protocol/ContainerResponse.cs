@@ -22,6 +22,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 {
     using System;
     using System.Collections.Specialized;
+    using System.IO;
     using System.Net;
 
     /// <summary>
@@ -67,15 +68,26 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <returns>The container's attributes.</returns>
         public static BlobContainerAttributes GetAttributes(HttpWebResponse response)
         {
-            var containerAttributes = new BlobContainerAttributes();
+            BlobContainerAttributes containerAttributes = new BlobContainerAttributes();
+
+            // Set the container URI
             containerAttributes.Uri = new Uri(response.ResponseUri.GetLeftPart(UriPartial.Path));
-            var segments = containerAttributes.Uri.Segments;
+
+            // Set the container name
+            string[] segments = containerAttributes.Uri.Segments;
             containerAttributes.Name = segments[segments.Length - 1];
 
-            var containerProperties = containerAttributes.Properties;
-            containerProperties.ETag = response.Headers[HttpResponseHeader.ETag];
+            // Set the container properties
+            BlobContainerProperties containerProperties = containerAttributes.Properties;
+            containerProperties.ETag = Response.GetETag(response);
             containerProperties.LastModifiedUtc = response.LastModified.ToUniversalTime();
 
+            // Get lease properties
+            containerProperties.LeaseStatus = Response.GetLeaseStatus(response);
+            containerProperties.LeaseState = Response.GetLeaseState(response);
+            containerProperties.LeaseDuration = Response.GetLeaseDuration(response);
+
+            // Set the container metadata
             containerAttributes.Metadata = GetMetadata(response);
 
             return containerAttributes;
@@ -99,6 +111,36 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         public static string GetAcl(HttpWebResponse response)
         {
             return Response.GetHeaders(response)[Constants.HeaderConstants.BlobPublicAccess];
+        }
+
+        /// <summary>
+        /// Reads the share access policies from a stream in XML.
+        /// </summary>
+        /// <param name="inputStream">The stream of XML policies.</param>
+        /// <param name="permissions">The permissions object to which the policies are to be written.</param>
+        public static void ReadSharedAccessIdentifiers(Stream inputStream, BlobContainerPermissions permissions)
+        {
+            Response.ReadSharedAccessIdentifiers(permissions.SharedAccessPolicies, new BlobAccessPolicyResponse(inputStream));
+        }
+
+        /// <summary>
+        /// Extracts the lease ID header from a web response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>The lease ID.</returns>
+        public static string GetLeaseId(HttpWebResponse response)
+        {
+            return Response.GetLeaseId(response);
+        }
+
+        /// <summary>
+        /// Extracts the remaining lease time from a web response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>The remaining lease time, in seconds.</returns>
+        public static int? GetRemainingLeaseTime(HttpWebResponse response)
+        {
+            return Response.GetRemainingLeaseTime(response);
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Copyright 2012 Microsoft Corporation
+<!--Copyright 2011 Microsoft Corporation
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -83,9 +83,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AssemblyInfo.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="CloudStorageAccount.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MutableStorageCredentials.cs" />
     <Compile Include="SharedAccessSignatureHelper.cs" />
     <Compile Include="SR.Designer.cs">
@@ -118,13 +119,18 @@
     <Compile Include="StorageClient\CloudQueueClient.cs" />
     <Compile Include="StorageClient\CloudQueueMessage.cs" />
     <Compile Include="StorageClient\CloudStorageAccountStorageClientExtensions.cs" />
+    <Compile Include="StorageClient\CloudTable.cs" />
     <Compile Include="StorageClient\CloudTableClient.cs" />
     <Compile Include="StorageClient\CloudTableQuery.cs" />
     <Compile Include="StorageClient\CommonUtils.cs" />
     <Compile Include="StorageClient\ContainerListingDetails.cs" />
+    <Compile Include="StorageClient\CopyState.cs" />
+    <Compile Include="StorageClient\CopyStatus.cs" />
     <Compile Include="StorageClient\DeleteSnapshotsOption.cs" />
     <Compile Include="StorageClient\EventHelper.cs" />
     <Compile Include="StorageClient\IListBlobItem.cs" />
+    <Compile Include="StorageClient\LeaseDuration.cs" />
+    <Compile Include="StorageClient\LeaseState.cs" />
     <Compile Include="StorageClient\LeaseStatus.cs" />
     <Compile Include="StorageClient\ListBlockItem.cs" />
     <Compile Include="StorageClient\MessageUpdateFields.cs" />
@@ -132,7 +138,8 @@
     <Compile Include="StorageClient\PageRange.cs" />
     <Compile Include="StorageClient\ParallelUpload.cs" />
     <Compile Include="StorageClient\ProtocolHelper.cs" />
-    <Compile Include="StorageClient\Protocol\AccessPolicyResponse.cs" />
+    <Compile Include="StorageClient\Protocol\AccessPolicyResponseBase.cs" />
+    <Compile Include="StorageClient\Protocol\BlobAccessPolicyResponse.cs" />
     <Compile Include="StorageClient\Protocol\BlobContainerEntry.cs" />
     <Compile Include="StorageClient\Protocol\BlobEntry.cs" />
     <Compile Include="StorageClient\Protocol\BlobListingContext.cs" />
@@ -143,7 +150,6 @@
     <Compile Include="StorageClient\Protocol\CanonicalizationStrategy.cs" />
     <Compile Include="StorageClient\Protocol\CanonicalizationStrategyFactory.cs" />
     <Compile Include="StorageClient\Protocol\CanonicalizedString.cs" />
-    <Compile Include="StorageClient\Protocol\ConditionHeaderKind.cs" />
     <Compile Include="StorageClient\Protocol\Constants.cs" />
     <Compile Include="StorageClient\Protocol\ContainerRequest.cs" />
     <Compile Include="StorageClient\Protocol\ContainerResponse.cs" />
@@ -166,6 +172,7 @@
     <Compile Include="StorageClient\Protocol\PeekMessagesResponse.cs" />
     <Compile Include="StorageClient\Protocol\PutBlockListItem.cs" />
     <Compile Include="StorageClient\Protocol\PutPageProperties.cs" />
+    <Compile Include="StorageClient\Protocol\QueueAccessPolicyResponse.cs" />
     <Compile Include="StorageClient\Protocol\QueueEntry.cs" />
     <Compile Include="StorageClient\Protocol\QueueMessage.cs" />
     <Compile Include="StorageClient\Protocol\QueueRequest.cs" />
@@ -180,12 +187,14 @@
     <Compile Include="StorageClient\Protocol\SharedKeyLiteTableCanonicalizer.cs" />
     <Compile Include="StorageClient\Protocol\SharedKeyTableCanonicalizer.cs" />
     <Compile Include="StorageClient\Protocol\StorageKey.cs" />
+    <Compile Include="StorageClient\Protocol\TableAccessPolicyResponse.cs" />
     <Compile Include="StorageClient\Protocol\TableRequest.cs" />
     <Compile Include="StorageClient\Protocol\TableResponse.cs" />
     <Compile Include="StorageClient\Protocol\UriQueryBuilder.cs" />
     <Compile Include="StorageClient\QueueAttributes.cs" />
     <Compile Include="StorageClient\QueueErrorCodeStrings.cs" />
     <Compile Include="StorageClient\QueueListingDetails.cs" />
+    <Compile Include="StorageClient\QueuePermissions.cs" />
     <Compile Include="StorageClient\RequestWithRetry.cs" />
     <Compile Include="StorageClient\ResponseReceivedEventArgs.cs" />
     <Compile Include="StorageClient\ResultContinuation.cs" />
@@ -193,9 +202,15 @@
     <Compile Include="StorageClient\ResultSegment.cs" />
     <Compile Include="StorageClient\RetryPolicies.cs" />
     <Compile Include="StorageClient\RetryPolicy.cs" />
-    <Compile Include="StorageClient\SharedAccessPermissions.cs" />
-    <Compile Include="StorageClient\SharedAccessPolicies.cs" />
-    <Compile Include="StorageClient\SharedAccessPolicy.cs" />
+    <Compile Include="StorageClient\SharedAccessBlobPermissions.cs" />
+    <Compile Include="StorageClient\SharedAccessBlobPolicies.cs" />
+    <Compile Include="StorageClient\SharedAccessBlobPolicy.cs" />
+    <Compile Include="StorageClient\SharedAccessQueuePermissions.cs" />
+    <Compile Include="StorageClient\SharedAccessQueuePolicies.cs" />
+    <Compile Include="StorageClient\SharedAccessQueuePolicy.cs" />
+    <Compile Include="StorageClient\SharedAccessTablePermissions.cs" />
+    <Compile Include="StorageClient\SharedAccessTablePolicies.cs" />
+    <Compile Include="StorageClient\SharedAccessTablePolicy.cs" />
     <Compile Include="StorageClient\ShouldRetry.cs" />
     <Compile Include="StorageClient\SmallBlockMemoryStream.cs" />
     <Compile Include="StorageClient\StorageClientException.cs" />
@@ -207,6 +222,7 @@
     <Compile Include="StorageClient\StorageServerException.cs" />
     <Compile Include="StorageClient\StreamUtilities.cs" />
     <Compile Include="StorageClient\TableErrorCodeStrings.cs" />
+    <Compile Include="StorageClient\TablePermissions.cs" />
     <Compile Include="StorageClient\TableServiceContext.cs" />
     <Compile Include="StorageClient\TableServiceEntity.cs" />
     <Compile Include="StorageClient\TableServiceExtensionMethods.cs" />
@@ -238,12 +254,6 @@
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <CodeAnalysisDictionary Include="FxcopCustomDictionary.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Migrated rules for StorageClient.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

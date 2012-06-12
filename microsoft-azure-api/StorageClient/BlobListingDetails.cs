@@ -49,8 +49,13 @@ namespace Microsoft.WindowsAzure.StorageClient
         UncommittedBlobs = 0x4,
 
         /// <summary>
-        /// List all available committed blobs, uncommitted blobs, and snapshots, and return all metadata for those blobs.
+        /// Include copy properties in the listing.
         /// </summary>
-        All = 0x7
+        Copy = 0x8,
+
+        /// <summary>
+        /// List all available committed blobs, uncommitted blobs, and snapshots, and return all metadata and copy status for those blobs.
+        /// </summary>
+        All = 0xF
     }
 }

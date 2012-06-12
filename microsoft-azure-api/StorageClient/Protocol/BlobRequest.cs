@@ -42,11 +42,11 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="properties">The properties to set for the blob.</param>
         /// <param name="blobType">The type of the blob.</param>
-        /// <param name="leaseId">The lease ID, if the blob has an active lease.</param>
         /// <param name="pageBlobSize">For a page blob, the size of the blob. This parameter is ignored
         /// for block blobs.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest Put(Uri uri, int timeout, BlobProperties properties, BlobType blobType, string leaseId, long pageBlobSize)
+        public static HttpWebRequest Put(Uri uri, int timeout, BlobProperties properties, BlobType blobType, long pageBlobSize, AccessCondition accessCondition)
         {
             if (blobType == BlobType.Unspecified)
             {
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                 request.Headers.Add(Constants.HeaderConstants.BlobType, Constants.HeaderConstants.BlockBlob);
             }
 
-            Request.AddLeaseId(request, leaseId);
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
@@ -107,9 +107,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="snapshot">The snapshot timestamp, if the blob is a snapshot.</param>
         /// <param name="deleteSnapshotsOption">A set of options indicating whether to delete only blobs, only snapshots, or both.</param>
-        /// <param name="leaseId">The lease ID, if the blob has an active lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest Delete(Uri uri, int timeout, DateTime? snapshot, DeleteSnapshotsOption deleteSnapshotsOption, string leaseId)
+        public static HttpWebRequest Delete(Uri uri, int timeout, DateTime? snapshot, DeleteSnapshotsOption deleteSnapshotsOption, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
 
@@ -121,8 +121,6 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             BlobRequest.AddSnapshot(builder, snapshot);
 
             var request = Request.Delete(uri, timeout, builder);
-
-            Request.AddLeaseId(request, leaseId);
 
             switch (deleteSnapshotsOption)
             {
@@ -140,6 +138,8 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                     break;
             }
 
+            Request.ApplyAccessCondition(accessCondition, request, false);
+
             return request;
         }
 
@@ -149,15 +149,15 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="snapshot">The snapshot timestamp, if the blob is a snapshot.</param>
-        /// <param name="leaseId">The lease ID, if the blob has an active lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request for performing the operiaton.</returns>
-        public static HttpWebRequest GetMetadata(Uri uri, int timeout, DateTime? snapshot, string leaseId)
+        public static HttpWebRequest GetMetadata(Uri uri, int timeout, DateTime? snapshot, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
             BlobRequest.AddSnapshot(builder, snapshot);
 
-            var request = Request.GetMetadata(uri, timeout, builder);
-            Request.AddLeaseId(request, leaseId);
+            HttpWebRequest request = Request.GetMetadata(uri, timeout, builder);
+            Request.ApplyAccessCondition(accessCondition, request, false);
             return request;
         }
 
@@ -166,12 +166,12 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
-        /// <param name="leaseId">The lease ID, if the blob has an active lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request for performing the operation.</returns>
-        public static HttpWebRequest SetMetadata(Uri uri, int timeout, string leaseId)
+        public static HttpWebRequest SetMetadata(Uri uri, int timeout, AccessCondition accessCondition)
         {
             var request = Request.SetMetadata(uri, timeout, null);
-            Request.AddLeaseId(request, leaseId);
+            Request.ApplyAccessCondition(accessCondition, request, false);
             return request;
         }
 
@@ -212,16 +212,16 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="snapshot">The snapshot timestamp, if the blob is a snapshot.</param>
-        /// <param name="leaseId">The lease ID.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request for performing the operation.</returns>
-        public static HttpWebRequest GetProperties(Uri uri, int timeout, DateTime? snapshot, string leaseId)
+        public static HttpWebRequest GetProperties(Uri uri, int timeout, DateTime? snapshot, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
 
             BlobRequest.AddSnapshot(builder, snapshot);
 
             var request = Request.GetProperties(uri, timeout, builder);
-            Request.AddLeaseId(request, leaseId);
+            Request.ApplyAccessCondition(accessCondition, request, false);
             return request;
         }
 
@@ -236,31 +236,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
-        /// Adds a conditional header to the request.
+        /// Generates a web request to return a listing of all blobs in the container.
         /// </summary>
-        /// <param name="request">The web request.</param>
-        /// <param name="header">The type of conditional header to add.</param>
-        /// <param name="etag">The blob's ETag.</param>
-        public static void AddConditional(HttpWebRequest request, ConditionHeaderKind header, string etag)
-        {
-            Request.AddConditional(request, header, etag);
-        }
-
-        /// <summary>
-        /// Adds a conditional header to the request.
-        /// </summary>
-        /// <param name="request">The web request.</param>
-        /// <param name="header">The type of conditional header to add.</param>
-        /// <param name="dateTime">The date and time specification for the request.</param>
-        public static void AddConditional(HttpWebRequest request, ConditionHeaderKind header, DateTime dateTime)
-        {
-            Request.AddConditional(request, header, dateTime);
-        }
-        
-        /// <summary>
-        /// Constructs a web request to return a listing of all blobs in the container.
-        /// </summary>
-        /// <param name="uri">The absolute URI to the blob.</param>
+        /// <param name="uri">The absolute URI to the container.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="listingContext">A set of parameters for the listing operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
@@ -339,6 +317,20 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                         sb.Append("metadata");
                     }
 
+                    if ((listingContext.Include & BlobListingDetails.Copy) == BlobListingDetails.Copy)
+                    {
+                        if (!started)
+                        {
+                            started = true;
+                        }
+                        else
+                        {
+                            sb.Append(",");
+                        }
+
+                        sb.Append("copy");
+                    }
+
                     builder.Add("include", sb.ToString());
                 }
             }
@@ -351,50 +343,50 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
-        /// Constructs a web request to copy a blob.
+        /// Generates a web request to copy a blob.
         /// </summary>
         /// <param name="uri">The absolute URI to the destination blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
-        /// <param name="source">The canonical path to the source blob, in the form /&lt;account-name&gt;/&lt;container-name&gt;/&lt;blob-name&gt;.</param>
-        /// <param name="sourceSnapshot">The snapshot version, if the source blob is a snapshot.</param>
-        /// <param name="sourceConditions">A type of condition to check on the source blob.</param>
-        /// <param name="sourceConditionsValue">The value of the condition to check on the source blob.</param>
-        /// <param name="leaseId">The lease ID for the source blob, if it has an active lease.</param>
+        /// <param name="source">The absolute URI to the source blob, including any necessary authentication parameters.</param>
+        /// <param name="sourceAccessCondition">The access condition to apply to the source blob.</param>
+        /// <param name="destAccessCondition">The access condition to apply to the destination blob.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest CopyFrom(Uri uri, int timeout, string source, DateTime? sourceSnapshot, ConditionHeaderKind sourceConditions, string sourceConditionsValue, string leaseId)
+        public static HttpWebRequest CopyFrom(Uri uri, int timeout, Uri source, AccessCondition sourceAccessCondition, AccessCondition destAccessCondition)
         {
-            if (sourceSnapshot != null)
-            {
-                // User needs to construct the proper canonical path string.
-                source += "?snapshot=" + Request.ConvertDateTimeToSnapshotString(sourceSnapshot.Value.ToUniversalTime());
-            }
-
             HttpWebRequest request = CreateWebRequest(uri, timeout, null);
 
             request.ContentLength = 0;
             request.Method = "PUT";
 
-            request.Headers.Add(Constants.HeaderConstants.CopySourceHeader, source);
+            request.Headers.Add(Constants.HeaderConstants.CopySourceHeader, source.AbsoluteUri);
+            Request.ApplyAccessCondition(destAccessCondition, request, false);
+            Request.ApplyAccessCondition(sourceAccessCondition, request, true);
 
-            switch (sourceConditions)
-            {
-                case ConditionHeaderKind.IfMatch:
-                    request.Headers.Add(Constants.HeaderConstants.SourceIfMatchHeader, sourceConditionsValue);
-                    break;
-                case ConditionHeaderKind.IfModifiedSince:
-                    request.Headers.Add(Constants.HeaderConstants.SourceIfModifiedSinceHeader, sourceConditionsValue);
-                    break;
-                case ConditionHeaderKind.IfNoneMatch:
-                    request.Headers.Add(Constants.HeaderConstants.SourceIfNoneMatchHeader, sourceConditionsValue);
-                    break;
-                case ConditionHeaderKind.IfUnmodifiedSince:
-                    request.Headers.Add(Constants.HeaderConstants.SourceIfUnmodifiedSinceHeader, sourceConditionsValue);
-                    break;
-                case ConditionHeaderKind.None:
-                    break;
-            }
+            return request;
+        }
 
-            Request.AddLeaseId(request, leaseId);
+        /// <summary>
+        /// Generates a web request to abort a copy operation.
+        /// </summary>
+        /// <param name="uri">The absolute URI to the blob.</param>
+        /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="copyId">The ID string of the copy operation to be aborted.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.
+        ///     Only lease conditions are supported for this operation.</param>
+        /// <returns>A web request for performing the operation.</returns>
+        public static HttpWebRequest AbortCopy(Uri uri, int timeout, string copyId, AccessCondition accessCondition)
+        {
+            UriQueryBuilder builder = new UriQueryBuilder();
+            builder.Add(Constants.QueryConstants.Component, "copy");
+            builder.Add(Constants.QueryConstants.CopyId, copyId);
+
+            HttpWebRequest request = CreateWebRequest(uri, timeout, builder);
+
+            request.ContentLength = 0;
+            request.Method = "PUT";
+
+            request.Headers.Add(Constants.HeaderConstants.CopyActionHeader, Constants.HeaderConstants.CopyActionAbort);
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
@@ -405,9 +397,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="snapshot">The snapshot version, if the blob is a snapshot.</param>
-        /// <param name="leaseId">The lease ID for the blob, if it has an active lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request for performing the operation.</returns>
-        public static HttpWebRequest Get(Uri uri, int timeout, DateTime? snapshot, string leaseId)
+        public static HttpWebRequest Get(Uri uri, int timeout, DateTime? snapshot, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
 
@@ -417,10 +409,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Method = "GET";
 
-            if (leaseId != null)
-            {
-                Request.AddLeaseId(request, leaseId);
-            }
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
@@ -433,11 +422,11 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="snapshot">The snapshot version, if the blob is a snapshot.</param>
         /// <param name="offset">The byte offset at which to begin returning content.</param>
         /// <param name="count">The number of bytes to return, or null to return all bytes through the end of the blob.</param>
-        /// <param name="leaseId">The lease ID for the blob if it has an active lease, or null if there is no lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest Get(Uri uri, int timeout, DateTime? snapshot, long offset, long? count, string leaseId)
+        public static HttpWebRequest Get(Uri uri, int timeout, DateTime? snapshot, long offset, long? count, AccessCondition accessCondition)
         {
-            HttpWebRequest request = Get(uri, timeout, snapshot, leaseId);
+            HttpWebRequest request = Get(uri, timeout, snapshot, accessCondition);
 
             string rangeStart = offset.ToString();
             string rangeEnd = string.Empty;
@@ -464,9 +453,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="snapshot">The snapshot timestamp, if the blob is a snapshot.</param>
         /// <param name="typesOfBlocks">The types of blocks to include in the list: committed, uncommitted, or both.</param>
-        /// <param name="leaseId">The lease ID for the blob, if it has an active lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest GetBlockList(Uri uri, int timeout, DateTime? snapshot, BlockListingFilter typesOfBlocks, string leaseId)
+        public static HttpWebRequest GetBlockList(Uri uri, int timeout, DateTime? snapshot, BlockListingFilter typesOfBlocks, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
             builder.Add(Constants.QueryConstants.Component, "blocklist");
@@ -479,7 +468,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Method = "GET";
 
-            Request.AddLeaseId(request, leaseId);
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
@@ -490,9 +479,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="snapshot">The snapshot timestamp, if the blob is a snapshot.</param>
-        /// <param name="leaseId">The lease ID, if the blob has an active lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest GetPageRanges(Uri uri, int timeout, DateTime? snapshot, string leaseId)
+        public static HttpWebRequest GetPageRanges(Uri uri, int timeout, DateTime? snapshot, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
             builder.Add(Constants.QueryConstants.Component, "pagelist");
@@ -503,20 +492,26 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Method = "GET";
 
-            Request.AddLeaseId(request, leaseId);
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
 
         /// <summary>
-        /// Constructs a web request to use to acquire, renew, release or break the lease for the blob.
+        /// Generates a web request to use to acquire, renew, change, release or break the lease for the blob.
         /// </summary>
         /// <param name="uri">The absolute URI to the blob.</param>
-        /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="timeout">The server timeout interval, in seconds.</param>
         /// <param name="action">The lease action to perform.</param>
-        /// <param name="leaseId">The lease ID.</param>
+        /// <param name="proposedLeaseId">A lease ID to propose for the result of an acquire or change operation,
+        /// or null if no ID is proposed for an acquire operation. This should be null for renew, release, and break operations.</param>
+        /// <param name="leaseDuration">The lease duration, in seconds, for acquire operations.
+        /// If this is -1 then an infinite duration is specified. This should be null for renew, change, release, and break operations.</param>
+        /// <param name="leaseBreakPeriod">The amount of time to wait, in seconds, after a break operation before the lease is broken.
+        /// If this is null then the default time is used. This should be null for acquire, renew, change, and release operations.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest Lease(Uri uri, int timeout, LeaseAction action, string leaseId)
+        public static HttpWebRequest Lease(Uri uri, int timeout, LeaseAction action, string proposedLeaseId, int? leaseDuration, int? leaseBreakPeriod, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
             builder.Add(Constants.QueryConstants.Component, "lease");
@@ -526,10 +521,13 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             request.ContentLength = 0;
             request.Method = "PUT";
 
-            Request.AddLeaseId(request, leaseId);
+            // Add Headers
+            Request.AddLeaseAction(request, action);
+            Request.AddLeaseDuration(request, leaseDuration);
+            Request.AddProposedLeaseId(request, proposedLeaseId);
+            Request.AddLeaseBreakPeriod(request, leaseBreakPeriod);
 
-            // acquire, renew, release, or break; required
-            request.Headers.Add("x-ms-lease-action", action.ToString());
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
@@ -540,9 +538,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="blockId">The block ID for this block.</param>
-        /// <param name="leaseId">The lease ID for the blob, if it has an active lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest PutBlock(Uri uri, int timeout, string blockId, string leaseId)
+        public static HttpWebRequest PutBlock(Uri uri, int timeout, string blockId, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
             builder.Add(Constants.QueryConstants.Component, "block");
@@ -553,7 +551,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Method = "PUT";
 
-            Request.AddLeaseId(request, leaseId);
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
@@ -564,13 +562,13 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="properties">The properties to set for the blob.</param>
-        /// <param name="leaseId">The lease ID, if the blob has an active lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request for performing the operation.</returns>
         public static HttpWebRequest PutBlockList(
             Uri uri,
             int timeout,
             BlobProperties properties,
-            string leaseId)
+            AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
             builder.Add(Constants.QueryConstants.Component, "blocklist");
@@ -579,13 +577,13 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Method = "PUT";
 
-            Request.AddLeaseId(request, leaseId);
-
             Request.AddOptionalHeader(request, Constants.HeaderConstants.CacheControlHeader, properties.CacheControl);
             Request.AddOptionalHeader(request, Constants.HeaderConstants.ContentTypeHeader, properties.ContentType);
             Request.AddOptionalHeader(request, Constants.HeaderConstants.BlobContentMD5Header, properties.ContentMD5);
             Request.AddOptionalHeader(request, Constants.HeaderConstants.ContentLanguageHeader, properties.ContentLanguage);
             Request.AddOptionalHeader(request, Constants.HeaderConstants.ContentEncodingHeader, properties.ContentEncoding);
+
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
@@ -629,9 +627,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="properties">The blob's properties.</param>
-        /// <param name="leaseId">The lease ID, if the blob has an active lease.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest PutPage(Uri uri, int timeout, PutPageProperties properties, string leaseId)
+        public static HttpWebRequest PutPage(Uri uri, int timeout, PutPageProperties properties, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
             builder.Add(Constants.QueryConstants.Component, "page");
@@ -640,12 +638,12 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.Method = "PUT";
 
-            Request.AddLeaseId(request, leaseId);
-
             Request.AddOptionalHeader(request, Constants.HeaderConstants.RangeHeader, properties.Range.ToString());
 
             // Page write is either update or clean; required
             request.Headers.Add(Constants.HeaderConstants.PageWrite, properties.PageWrite.ToString());
+
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
@@ -656,10 +654,10 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="properties">The blob's properties.</param>
-        /// <param name="leaseId">The lease ID, if the blob has an active lease.</param>
         /// <param name="newBlobSize">The new blob size, if the blob is a page blob. Set this parameter to <c>null</c> to keep the existing blob size.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest SetProperties(Uri uri, int timeout, BlobProperties properties, string leaseId, long? newBlobSize)
+        public static HttpWebRequest SetProperties(Uri uri, int timeout, BlobProperties properties, long? newBlobSize, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
             builder.Add(Constants.QueryConstants.Component, "properties");
@@ -668,8 +666,6 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.ContentLength = 0;
             request.Method = "PUT";
-
-            Request.AddLeaseId(request, leaseId);
 
             if (newBlobSize.HasValue)
             {
@@ -683,6 +679,8 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             Request.AddOptionalHeader(request, Constants.HeaderConstants.BlobContentMD5Header, properties.ContentMD5);
             Request.AddOptionalHeader(request, Constants.HeaderConstants.ContentTypeHeader, properties.ContentType);
 
+            Request.ApplyAccessCondition(accessCondition, request, false);
+
             return request;
         }
 
@@ -691,8 +689,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest Snapshot(Uri uri, int timeout)
+        public static HttpWebRequest Snapshot(Uri uri, int timeout, AccessCondition accessCondition)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
             builder.Add(Constants.QueryConstants.Component, "snapshot");
@@ -701,6 +700,8 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             request.ContentLength = 0;
             request.Method = "PUT";
+
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }

@@ -65,11 +65,6 @@ namespace Microsoft.WindowsAzure.StorageClient
                 throw new InvalidOperationException("No credentials provided.");
             }
 
-            if (!account.Credentials.CanSignRequest)
-            {
-                throw new InvalidOperationException("CloudQueueClient requires a credential that can sign request");
-            }
-
             return new CloudQueueClient(account.QueueEndpoint, account.Credentials);
         }
 
@@ -88,11 +83,6 @@ namespace Microsoft.WindowsAzure.StorageClient
             if (account.Credentials == null)
             {
                 throw new InvalidOperationException("No credentials provided.");
-            }
-
-            if (!account.Credentials.CanSignRequest || !account.Credentials.CanSignRequestLite)
-            {
-                throw new InvalidOperationException("CloudTableClient requires a credential that can sign request");
             }
 
             return new CloudTableClient(account.TableEndpoint, account.Credentials);

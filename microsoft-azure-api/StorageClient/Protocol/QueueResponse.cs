@@ -184,5 +184,15 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         {
             return Response.ReadServiceProperties(inputStream);
         }
+
+        /// <summary>
+        /// Reads the share access policies from a stream in XML.
+        /// </summary>
+        /// <param name="inputStream">The stream of XML policies.</param>
+        /// <param name="permissions">The permissions object to which the policies are to be written.</param>
+        public static void ReadSharedAccessIdentifiers(Stream inputStream, QueuePermissions permissions)
+        {
+            Response.ReadSharedAccessIdentifiers(permissions.SharedAccessPolicies, new QueueAccessPolicyResponse(inputStream));
+        }
     }
 }

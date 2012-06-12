@@ -52,6 +52,32 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StorageCredentialsAccountAndKey"/> class, using the storage account name and 
+        /// access key.
+        /// </summary>
+        /// <param name="accountName">The name of the storage account.</param>
+        /// <param name="keyValue">The access key value, as a byte array.</param>
+        /// <param name="keyName">The name of the access key, or null if the key is implicit.</param>
+        protected internal StorageCredentialsAccountAndKey(string accountName, byte[] keyValue, string keyName)
+            : this(accountName, keyValue)
+        {
+            this.Credentials = new Credentials(accountName, keyValue, keyName);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StorageCredentialsAccountAndKey"/> class, using the storage account name and 
+        /// access key.
+        /// </summary>
+        /// <param name="accountName">The name of the storage account.</param>
+        /// <param name="keyValue">The access key value, as a Base64-encoded string.</param>
+        /// <param name="keyName">The name of the access key, or null if the key is implicit.</param>
+        protected internal StorageCredentialsAccountAndKey(string accountName, string keyValue, string keyName)
+            : this(accountName, keyValue)
+        {
+            this.Credentials = new Credentials(accountName, keyValue, keyName);
+        }
+
+        /// <summary>
         /// Gets a <see cref="Credentials"/> object that references the storage account name and access key.
         /// </summary>
         /// <value>An object containing a reference to the storage account name and access key.</value>
@@ -71,7 +97,7 @@ namespace Microsoft.WindowsAzure
         /// to transform a resource URI to a URI that includes a token for a shared access signature.
         /// </summary>
         /// <value><c>False</c> for objects of type <see cref="StorageCredentialsAccountAndKey"/>.</value>
-         public override bool NeedsTransformUri
+        public override bool NeedsTransformUri
         {
             get { return false; }
         }
@@ -104,6 +130,15 @@ namespace Microsoft.WindowsAzure
         public override bool CanComputeHmac
         {
             get { return true; }
+        }
+
+        /// <summary>
+        /// Gets the name of the key used by these credentials.
+        /// </summary>
+        /// <value>The name of the key, or null if the key is implicit.</value>
+        protected internal string AccountKeyName
+        {
+            get { return Credentials.KeyName; }
         }
 
         /// <summary>
@@ -185,9 +220,9 @@ namespace Microsoft.WindowsAzure
         {
             return String.Format(
                 "{0}={1};{2}={3}",
-                CloudStorageAccount.AccountNameName,
+                CloudStorageAccount.AccountNameSettingString,
                 this.AccountName,
-                CloudStorageAccount.AccountKeyName,
+                CloudStorageAccount.AccountKeySettingString,
                 exportSecrets ? this.GetBase64EncodedKey() : "[key hidden]");
         }
     }

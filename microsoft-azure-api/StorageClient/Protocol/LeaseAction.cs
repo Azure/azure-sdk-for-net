@@ -43,6 +43,11 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// <summary>
         /// Break the lease.
         /// </summary>
-        Break
+        Break,
+
+        /// <summary>
+        /// Change the lease ID.
+        /// </summary>
+        Change
     }
 }

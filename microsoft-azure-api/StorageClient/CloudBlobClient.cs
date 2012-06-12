@@ -620,21 +620,23 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An enumerable collection of objects that implement <see cref="IListBlobItem"/>.</returns>
         public IEnumerable<IListBlobItem> ListBlobsWithPrefix(string prefix)
         {
-            return this.ListBlobsWithPrefix(prefix, null);
+            return this.ListBlobsWithPrefix(prefix, false, BlobListingDetails.None, null);
         }
 
         /// <summary>
         /// Returns an enumerable collection of blob items whose names begin with the specified prefix and that are retrieved lazily. 
         /// </summary>
         /// <param name="prefix">The blob name prefix. This value must be preceded either by the name of the container or by the absolute URI to the container.</param>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>An enumerable collection of objects that implement <see cref="IListBlobItem"/> and are retrieved lazily.</returns>
-        public IEnumerable<IListBlobItem> ListBlobsWithPrefix(string prefix, BlobRequestOptions options)
+        public IEnumerable<IListBlobItem> ListBlobsWithPrefix(string prefix, bool useFlatBlobListing, BlobListingDetails blobListingDetails, BlobRequestOptions options)
         {
             var fullModifier = BlobRequestOptions.CreateFullModifier(this, options);
 
             return CommonUtils.LazyEnumerateSegmented<IListBlobItem>(
-                (setResult) => this.ListBlobImpl(prefix, null, null, fullModifier, setResult),
+                (setResult) => this.ListBlobImpl(prefix, null, null, useFlatBlobListing, blobListingDetails, fullModifier, setResult),
                 this.RetryPolicy);
         }
 
@@ -646,7 +648,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
         public ResultSegment<IListBlobItem> ListBlobsWithPrefixSegmented(string prefix)
         {
-            return this.ListBlobsWithPrefixSegmented(prefix, 0, null, null);
+            return this.ListBlobsWithPrefixSegmented(prefix, 0, null);
         }
 
         /// <summary>
@@ -654,11 +656,12 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// begin with the specified prefix.
         /// </summary>
         /// <param name="prefix">The blob name prefix. This value must be preceded either by the name of the container or by the absolute path to the container.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
-        public ResultSegment<IListBlobItem> ListBlobsWithPrefixSegmented(string prefix, BlobRequestOptions options)
+        public ResultSegment<IListBlobItem> ListBlobsWithPrefixSegmented(string prefix, bool useFlatBlobListing, BlobListingDetails blobListingDetails)
         {
-            return this.ListBlobsWithPrefixSegmented(prefix, 0, null, options);
+            return this.ListBlobsWithPrefixSegmented(prefix, 0, null, useFlatBlobListing, blobListingDetails, null);
         }
 
         /// <summary>
@@ -675,7 +678,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             int maxResults,
             ResultContinuation continuationToken)
         {
-            return this.ListBlobsWithPrefixSegmented(prefix, maxResults, continuationToken, null);
+            return this.ListBlobsWithPrefixSegmented(prefix, maxResults, continuationToken, false, BlobListingDetails.None, null);
         }
 
         /// <summary>
@@ -686,18 +689,22 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the per-operation limit of 5000. 
         /// If this value is zero, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
         public ResultSegment<IListBlobItem> ListBlobsWithPrefixSegmented(
             string prefix,
             int maxResults,
             ResultContinuation continuationToken,
+            bool useFlatBlobListing,
+            BlobListingDetails blobListingDetails,
             BlobRequestOptions options)
         {
             var fullModifier = BlobRequestOptions.CreateFullModifier(this, options);
 
             return TaskImplHelper.ExecuteImplWithRetry<ResultSegment<IListBlobItem>>(
-               (setResult) => this.ListBlobImpl(prefix, continuationToken, maxResults, fullModifier, setResult),
+               (setResult) => this.ListBlobImpl(prefix, continuationToken, maxResults, useFlatBlobListing, blobListingDetails, fullModifier, setResult),
                this.RetryPolicy);
         }
 
@@ -733,7 +740,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             object state)
         {
             return TaskImplHelper.BeginImplWithRetry<ResultSegment<IListBlobItem>>(
-                (setResult) => this.ListBlobImpl(prefix, continuationToken, maxResults, null, setResult),
+                (setResult) => this.ListBlobImpl(prefix, continuationToken, maxResults, false, BlobListingDetails.None, null, setResult),
                 this.RetryPolicy,
                 callback,
                 state);
@@ -820,6 +827,31 @@ namespace Microsoft.WindowsAzure.StorageClient
         internal WebResponse GetResponse(WebRequest req)
         {
             return EventHelper.ProcessWebResponseSync(req, this.ResponseReceived, this);
+        }
+
+        /// <summary>
+        /// Generates a task sequence for accessing the blob service.
+        /// </summary>
+        /// <param name="webRequestFunction">A function from timeout values to web requests.</param>
+        /// <param name="writeRequestAction">An action for writing data to the body of a web request.</param>
+        /// <param name="processResponseAction">An action for processing the response received.</param>
+        /// <param name="readResponseAction">An action for reading the response stream.</param>
+        /// <param name="options">The blob request options.</param>
+        /// <returns>A task sequence for the operation.</returns>
+        internal TaskSequence GenerateWebTask(
+            Func<int, HttpWebRequest> webRequestFunction,
+            Action<Stream> writeRequestAction,
+            Action<HttpWebResponse> processResponseAction,
+            Action<Stream> readResponseAction,
+            BlobRequestOptions options)
+        {
+            return ProtocolHelper.GenerateServiceTask(
+                ProtocolHelper.GetWebRequest(this, options, webRequestFunction),
+                writeRequestAction,
+                (request) => this.Credentials.SignRequest(request),
+                (request) => request.GetResponseAsyncWithTimeout(this, options.Timeout),
+                processResponseAction,
+                readResponseAction);
         }
 
         /// <summary>
@@ -964,6 +996,8 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="prefix">The blob prefix.</param>
         /// <param name="continuationToken">The continuation token.</param>
         /// <param name="maxResults">The max results.</param>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="setResult">The result report delegate.</param>
         /// <returns>
@@ -973,6 +1007,8 @@ namespace Microsoft.WindowsAzure.StorageClient
             string prefix,
             ResultContinuation continuationToken,
             int? maxResults,
+            bool useFlatBlobListing,
+            BlobListingDetails blobListingDetails,
             BlobRequestOptions options,
             Action<ResultSegment<IListBlobItem>> setResult)
         {
@@ -986,7 +1022,7 @@ namespace Microsoft.WindowsAzure.StorageClient
 
             var fullModifier = BlobRequestOptions.CreateFullModifier(this, options);
 
-            return containerInfo.ListBlobsImpl(listingPrefix, fullModifier, continuationToken, maxResults, setResult);
+            return containerInfo.ListBlobsImpl(listingPrefix, useFlatBlobListing, blobListingDetails, fullModifier, continuationToken, maxResults, setResult);
         }
 
         /// <summary>
@@ -996,29 +1032,12 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A task sequence that gets the properties of the blob service.</returns>
         private TaskSequence GetServicePropertiesImpl(Action<ServiceProperties> setResult)
         {
-            HttpWebRequest request = BlobRequest.GetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds());
-            CommonUtils.ApplyRequestOptimizations(request, -1);
-            this.Credentials.SignRequest(request);
-
-            // Get the web response.
-            Task<WebResponse> responseTask = request.GetResponseAsyncWithTimeout(this, this.Timeout);
-            yield return responseTask;
-
-            using (HttpWebResponse response = responseTask.Result as HttpWebResponse)
-            using (Stream responseStream = response.GetResponseStream())
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                // Download the service properties.
-                Task<NullTaskReturn> downloadTask = new InvokeTaskSequenceTask(() => { return responseStream.WriteTo(memoryStream); });
-                yield return downloadTask;
-
-                // Materialize any exceptions.
-                NullTaskReturn scratch = downloadTask.Result;
-
-                // Get the result from the memory stream.
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                setResult(BlobResponse.ReadServiceProperties(memoryStream));
-            }
+            return this.GenerateWebTask(
+                (timeout) => BlobRequest.GetServiceProperties(this.BaseUri, timeout),
+                null /* no request body */,
+                null /* no response header processing */,
+                (stream) => setResult(BlobResponse.ReadServiceProperties(stream)),
+                BlobRequestOptions.CreateFullModifier<BlobRequestOptions>(this, null));
         }
 
         /// <summary>
@@ -1030,45 +1049,22 @@ namespace Microsoft.WindowsAzure.StorageClient
         {
             CommonUtils.AssertNotNull("properties", properties);
 
-            HttpWebRequest request = BlobRequest.SetServiceProperties(this.BaseUri, this.Timeout.RoundUpToSeconds());
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                try
+            return this.GenerateWebTask(
+                (timeout) => BlobRequest.SetServiceProperties(this.BaseUri, timeout),
+                (stream) =>
                 {
-                    BlobRequest.WriteServiceProperties(properties, memoryStream);
-                }
-                catch (InvalidOperationException invalidOpException)
-                {
-                    throw new ArgumentException(invalidOpException.Message, "properties");
-                }
-
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                CommonUtils.ApplyRequestOptimizations(request, memoryStream.Length);
-                this.Credentials.SignRequest(request);
-
-                // Get the request stream
-                Task<Stream> getStreamTask = request.GetRequestStreamAsync();
-                yield return getStreamTask;
-
-                using (Stream requestStream = getStreamTask.Result)
-                {
-                    // Upload the service properties.
-                    Task<NullTaskReturn> uploadTask = new InvokeTaskSequenceTask(() => { return (memoryStream as Stream).WriteTo(requestStream); });
-                    yield return uploadTask;
-
-                    // Materialize any exceptions.
-                    NullTaskReturn scratch = uploadTask.Result;
-                }
-            }
-
-            // Get the web response.
-            Task<WebResponse> responseTask = request.GetResponseAsyncWithTimeout(this, this.Timeout);
-            yield return responseTask;
-
-            // Materialize any exceptions.
-            using (HttpWebResponse response = responseTask.Result as HttpWebResponse)
-            {
-            }
+                    try
+                    {
+                        BlobRequest.WriteServiceProperties(properties, stream);
+                    }
+                    catch (InvalidOperationException invalidOpException)
+                    {
+                        throw new ArgumentException(invalidOpException.Message, "properties");
+                    }
+                },
+                null /* no response header processing */,
+                null /* no response body */,
+                BlobRequestOptions.CreateFullModifier<BlobRequestOptions>(this, null));
         }
     }
 }

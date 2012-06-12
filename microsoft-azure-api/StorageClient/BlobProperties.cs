@@ -126,5 +126,17 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <value>A <see cref="LeaseStatus"/> object that indicates the blob's lease status.</value>
         public LeaseStatus LeaseStatus { get; internal set; }
+
+        /// <summary>
+        /// Gets the blob's lease state.
+        /// </summary>
+        /// <value>A <see cref="LeaseState"/> object that indicates the blob's lease state.</value>
+        public LeaseState LeaseState { get; internal set; }
+
+        /// <summary>
+        /// Gets the blob's lease duration.
+        /// </summary>
+        /// <value>A <see cref="LeaseDuration"/> object that indicates the blob's lease duration.</value>
+        public LeaseDuration LeaseDuration { get; internal set; }
     }
 }

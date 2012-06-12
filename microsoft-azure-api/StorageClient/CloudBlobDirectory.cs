@@ -221,13 +221,24 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Returns an enumerable collection of blob items in this virtual directory that is lazily retrieved, either as a flat listing or by virtual subdirectory.
         /// </summary>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>An enumerable collection of objects that implement <see cref="IListBlobItem"/> and are retrieved lazily.</returns>
-        public IEnumerable<IListBlobItem> ListBlobs(BlobRequestOptions options)
+        public IEnumerable<IListBlobItem> ListBlobs(bool useFlatBlobListing, BlobListingDetails blobListingDetails, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            return CommonUtils.LazyEnumerateSegmented<IListBlobItem>((setResult) => this.Container.ListBlobsImpl(this.Prefix, fullModifiers, null, null, setResult), fullModifiers.RetryPolicy);
+            return CommonUtils.LazyEnumerateSegmented<IListBlobItem>(
+                (setResult) => this.Container.ListBlobsImpl(
+                    this.Prefix,
+                    useFlatBlobListing,
+                    blobListingDetails,
+                    fullModifiers,
+                    null,
+                    null,
+                    setResult),
+                fullModifiers.RetryPolicy);
         }
 
         /// <summary>
@@ -236,7 +247,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An enumerable collection of objects that implement <see cref="IListBlobItem"/>.</returns>
         public IEnumerable<IListBlobItem> ListBlobs()
         {
-            return this.ListBlobs(null);
+            return this.ListBlobs(false, BlobListingDetails.None, null);
         }
 
         /// <summary>
@@ -246,7 +257,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
         public ResultSegment<IListBlobItem> ListBlobsSegmented(BlobRequestOptions options)
         {
-            return this.ListBlobsSegmented(0, null, options);
+            return this.ListBlobsSegmented(0, null, false, BlobListingDetails.None, options);
         }
 
         /// <summary>
@@ -255,13 +266,29 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is zero, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
-        public ResultSegment<IListBlobItem> ListBlobsSegmented(int maxResults, ResultContinuation continuationToken, BlobRequestOptions options)
+        public ResultSegment<IListBlobItem> ListBlobsSegmented(
+            int maxResults,
+            ResultContinuation continuationToken, 
+            bool useFlatBlobListing,
+            BlobListingDetails blobListingDetails,
+            BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            return TaskImplHelper.ExecuteImplWithRetry<ResultSegment<IListBlobItem>>((setResult) => this.Container.ListBlobsImpl(this.Prefix, fullModifiers, continuationToken, maxResults, setResult), fullModifiers.RetryPolicy);
+            return TaskImplHelper.ExecuteImplWithRetry<ResultSegment<IListBlobItem>>(
+                (setResult) => this.Container.ListBlobsImpl(
+                    this.Prefix,
+                    useFlatBlobListing,
+                    blobListingDetails,
+                    fullModifiers,
+                    continuationToken,
+                    maxResults,
+                    setResult),
+                fullModifiers.RetryPolicy);
         }
 
         /// <summary>
@@ -284,7 +311,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginListBlobsSegmented(BlobRequestOptions options, AsyncCallback callback, object state)
         {
-            return this.BeginListBlobsSegmented(0, null, options, callback, state);
+            return this.BeginListBlobsSegmented(0, null, false, BlobListingDetails.None, options, callback, state);
         }
 
         /// <summary>
@@ -293,15 +320,35 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is zero, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginListBlobsSegmented(int maxResults, ResultContinuation continuationToken, BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginListBlobsSegmented(
+            int maxResults,
+            ResultContinuation continuationToken,
+            bool useFlatBlobListing,
+            BlobListingDetails blobListingDetails,
+            BlobRequestOptions options,
+            AsyncCallback callback,
+            object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            return TaskImplHelper.BeginImplWithRetry<ResultSegment<IListBlobItem>>((setResult) => this.Container.ListBlobsImpl(this.Prefix, fullModifiers, continuationToken, maxResults, setResult), fullModifiers.RetryPolicy, callback, state);
+            return TaskImplHelper.BeginImplWithRetry<ResultSegment<IListBlobItem>>(
+                (setResult) => this.Container.ListBlobsImpl(
+                    this.Prefix,
+                    useFlatBlobListing,
+                    blobListingDetails,
+                    fullModifiers,
+                    continuationToken,
+                    maxResults,
+                    setResult),
+                fullModifiers.RetryPolicy,
+                callback,
+                state);
         }
 
         /// <summary>

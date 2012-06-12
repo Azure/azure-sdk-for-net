@@ -274,20 +274,33 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An enumerable collection of objects that implement <see cref="IListBlobItem"/>.</returns>
         public IEnumerable<IListBlobItem> ListBlobs()
         {
-            return this.ListBlobs(null);
+            return this.ListBlobs(false, BlobListingDetails.None, null);
         }
 
         /// <summary>
         /// Returns an enumerable collection of the blobs in the container that are retrieved lazily.
         /// </summary>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
+        /// <returns>An enumerable collection of objects that implement <see cref="IListBlobItem"/> and are retrieved lazily.</returns>
+        public IEnumerable<IListBlobItem> ListBlobs(bool useFlatBlobListing, BlobListingDetails blobListingDetails)
+        {
+            return this.ListBlobs(useFlatBlobListing, blobListingDetails, null);
+        }
+        
+        /// <summary>
+        /// Returns an enumerable collection of the blobs in the container that are retrieved lazily.
+        /// </summary>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>An enumerable collection of objects that implement <see cref="IListBlobItem"/> and are retrieved lazily.</returns>
-        public IEnumerable<IListBlobItem> ListBlobs(BlobRequestOptions options)
+        public IEnumerable<IListBlobItem> ListBlobs(bool useFlatBlobListing, BlobListingDetails blobListingDetails, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return CommonUtils.LazyEnumerateSegmented<IListBlobItem>(
-                (setResult) => this.ListBlobsImpl(null, fullModifiers, null, null, setResult),
+                (setResult) => this.ListBlobsImpl(null, useFlatBlobListing, blobListingDetails, fullModifiers, null, null, setResult),
                 fullModifiers.RetryPolicy);
         }
 
@@ -295,32 +308,41 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Returns a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
-        public ResultSegment<IListBlobItem> ListBlobsSegmented(BlobRequestOptions options)
+        public ResultSegment<IListBlobItem> ListBlobsSegmented()
         {
-            var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
-
-            return TaskImplHelper.ExecuteImplWithRetry<ResultSegment<IListBlobItem>>(
-                (setResult) => this.ListBlobsImpl(null, fullModifiers, null, null, setResult),
-                fullModifiers.RetryPolicy);
+            return this.ListBlobsSegmented(false, BlobListingDetails.None);
         }
 
         /// <summary>
         /// Returns a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
+        /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
+        public ResultSegment<IListBlobItem> ListBlobsSegmented(bool useFlatBlobListing, BlobListingDetails blobListingDetails)
+        {
+            return this.ListBlobsSegmented(useFlatBlobListing, blobListingDetails, 0, null, null);
+        }
+
+        /// <summary>
+        /// Returns a result segment containing a collection of blob items 
+        /// in the container.
+        /// </summary>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is zero, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
-        public ResultSegment<IListBlobItem> ListBlobsSegmented(int maxResults, ResultContinuation continuationToken, BlobRequestOptions options)
+        public ResultSegment<IListBlobItem> ListBlobsSegmented(bool useFlatBlobListing, BlobListingDetails blobListingDetails, int maxResults, ResultContinuation continuationToken, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.ExecuteImplWithRetry<ResultSegment<IListBlobItem>>(
-                (setResult) => this.ListBlobsImpl(null, fullModifiers, continuationToken, maxResults, setResult),
+                (setResult) => this.ListBlobsImpl(null, useFlatBlobListing, blobListingDetails, fullModifiers, continuationToken, maxResults, setResult),
                 fullModifiers.RetryPolicy);
         }
 
@@ -333,26 +355,29 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginListBlobsSegmented(AsyncCallback callback, object state)
         {
-            return this.BeginListBlobsSegmented(null, callback, state);
+            return this.BeginListBlobsSegmented(false, BlobListingDetails.None, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginListBlobsSegmented(BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginListBlobsSegmented(bool useFlatBlobListing, BlobListingDetails blobListingDetails, AsyncCallback callback, object state)
         {
-            return this.BeginListBlobsSegmented(0, null, options, callback, state);
+            return this.BeginListBlobsSegmented(useFlatBlobListing, blobListingDetails, 0, null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is zero, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
@@ -361,6 +386,8 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginListBlobsSegmented(
+            bool useFlatBlobListing,
+            BlobListingDetails blobListingDetails,
             int maxResults,
             ResultContinuation continuationToken,
             BlobRequestOptions options,
@@ -370,7 +397,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.BeginImplWithRetry<ResultSegment<IListBlobItem>>(
-                (setResult) => this.ListBlobsImpl(null, fullModifiers, continuationToken, maxResults, setResult),
+                (setResult) => this.ListBlobsImpl(null, useFlatBlobListing, blobListingDetails, fullModifiers, continuationToken, maxResults, setResult),
                 fullModifiers.RetryPolicy,
                 callback,
                 state);
@@ -522,18 +549,19 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         public void Delete()
         {
-            this.Delete(null);
+            this.Delete(null, null);
         }
 
         /// <summary>
         /// Deletes the container.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        public void Delete(BlobRequestOptions options)
+        public void Delete(AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            TaskImplHelper.ExecuteImplWithRetry(() => this.DeleteContainerImpl(fullModifiers), fullModifiers.RetryPolicy);
+            TaskImplHelper.ExecuteImplWithRetry(() => this.DeleteContainerImpl(accessCondition, fullModifiers), fullModifiers.RetryPolicy);
         }
 
         /// <summary>
@@ -544,21 +572,22 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginDelete(AsyncCallback callback, object state)
         {
-            return this.BeginDelete(null, callback, state);
+            return this.BeginDelete(null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous operation to delete a container.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginDelete(BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginDelete(AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            return TaskImplHelper.BeginImplWithRetry(() => this.DeleteContainerImpl(fullModifiers), fullModifiers.RetryPolicy, callback, state);
+            return TaskImplHelper.BeginImplWithRetry(() => this.DeleteContainerImpl(accessCondition, fullModifiers), fullModifiers.RetryPolicy, callback, state);
         }
 
         /// <summary>
@@ -580,19 +609,20 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="permissions">The permissions to apply to the container.</param>
         public void SetPermissions(BlobContainerPermissions permissions)
         {
-            this.SetPermissions(permissions, null);
+            this.SetPermissions(permissions, null, null);
         }
 
         /// <summary>
         /// Sets permissions for the container.
         /// </summary>
         /// <param name="permissions">The permissions to apply to the container.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        public void SetPermissions(BlobContainerPermissions permissions, BlobRequestOptions options)
+        public void SetPermissions(BlobContainerPermissions permissions, AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            TaskImplHelper.ExecuteImplWithRetry(() => this.SetPermissionsImpl(permissions, fullModifiers), fullModifiers.RetryPolicy);
+            TaskImplHelper.ExecuteImplWithRetry(() => this.SetPermissionsImpl(permissions, accessCondition, fullModifiers), fullModifiers.RetryPolicy);
         }
 
         /// <summary>
@@ -604,23 +634,24 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginSetPermissions(BlobContainerPermissions permissions, AsyncCallback callback, object state)
         {
-            return this.BeginSetPermissions(permissions, null, callback, state);
+            return this.BeginSetPermissions(permissions, null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous request to set permissions for the container.
         /// </summary>
         /// <param name="permissions">The permissions to apply to the container.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginSetPermissions(BlobContainerPermissions permissions, BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginSetPermissions(BlobContainerPermissions permissions, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.BeginImplWithRetry(
-                () => this.SetPermissionsImpl(permissions, fullModifiers),
+                () => this.SetPermissionsImpl(permissions, accessCondition, fullModifiers),
                 fullModifiers.RetryPolicy,
                 callback,
                 state);
@@ -645,20 +676,21 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>The container's permissions.</returns>
         public BlobContainerPermissions GetPermissions()
         {
-            return this.GetPermissions(null);
+            return this.GetPermissions(null, null);
         }
 
         /// <summary>
         /// Gets the permissions settings for the container.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>The container's permissions.</returns>
-        public BlobContainerPermissions GetPermissions(BlobRequestOptions options)
+        public BlobContainerPermissions GetPermissions(AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.ExecuteImplWithRetry<BlobContainerPermissions>(
-                (setResult) => this.GetPermissionsImpl(fullModifiers, setResult),
+                (setResult) => this.GetPermissionsImpl(accessCondition, fullModifiers, setResult),
                 fullModifiers.RetryPolicy);
         }
 
@@ -670,22 +702,23 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginGetPermissions(AsyncCallback callback, object state)
         {
-            return this.BeginGetPermissions(null, callback, state);
+            return this.BeginGetPermissions(null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous request to get the permissions settings for the container.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginGetPermissions(BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginGetPermissions(AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.BeginImplWithRetry<BlobContainerPermissions>(
-                (setResult) => this.GetPermissionsImpl(fullModifiers, setResult),
+                (setResult) => this.GetPermissionsImpl(accessCondition, fullModifiers, setResult),
                 fullModifiers.RetryPolicy,
                 callback,
                 state);
@@ -710,18 +743,19 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         public void FetchAttributes()
         {
-            this.FetchAttributes(null);
+            this.FetchAttributes(null, null);
         }
 
         /// <summary>
         /// Retrieves the container's attributes.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        public void FetchAttributes(BlobRequestOptions options)
+        public void FetchAttributes(AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            TaskImplHelper.ExecuteImplWithRetry(() => this.FetchAttributesImpl(fullModifiers), fullModifiers.RetryPolicy);
+            TaskImplHelper.ExecuteImplWithRetry(() => this.FetchAttributesImpl(accessCondition, fullModifiers), fullModifiers.RetryPolicy);
         }
 
         /// <summary>
@@ -732,21 +766,22 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginFetchAttributes(AsyncCallback callback, object state)
         {
-            return this.BeginFetchAttributes(null, callback, state);
+            return this.BeginFetchAttributes(null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous operation to retrieve the container's attributes.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginFetchAttributes(BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginFetchAttributes(AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            return TaskImplHelper.BeginImplWithRetry(() => this.FetchAttributesImpl(fullModifiers), fullModifiers.RetryPolicy, callback, state);
+            return TaskImplHelper.BeginImplWithRetry(() => this.FetchAttributesImpl(accessCondition, fullModifiers), fullModifiers.RetryPolicy, callback, state);
         }
 
         /// <summary>
@@ -767,17 +802,18 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         public void SetMetadata()
         {
-            this.SetMetadata(null);
+            this.SetMetadata(null, null);
         }
 
         /// <summary>
         /// Sets the container's user-defined metadata.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        public void SetMetadata(BlobRequestOptions options)
+        public void SetMetadata(AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
-            TaskImplHelper.ExecuteImplWithRetry(() => this.SetMetadataImpl(fullModifiers), fullModifiers.RetryPolicy);
+            TaskImplHelper.ExecuteImplWithRetry(() => this.SetMetadataImpl(accessCondition, fullModifiers), fullModifiers.RetryPolicy);
         }
 
         /// <summary>
@@ -788,21 +824,22 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginSetMetadata(AsyncCallback callback, object state)
         {
-            return this.BeginSetMetadata(null, callback, state);
+            return this.BeginSetMetadata(null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous operation to set user-defined metadata on the container.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginSetMetadata(BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginSetMetadata(AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
-            return TaskImplHelper.BeginImplWithRetry(() => this.SetMetadataImpl(fullModifiers), fullModifiers.RetryPolicy, callback, state);
+            return TaskImplHelper.BeginImplWithRetry(() => this.SetMetadataImpl(accessCondition, fullModifiers), fullModifiers.RetryPolicy, callback, state);
         }
 
         /// <summary>
@@ -820,7 +857,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <param name="policy">The access policy for the shared access signature.</param>
         /// <returns>A shared access signature.</returns>
-        public string GetSharedAccessSignature(SharedAccessPolicy policy)
+        public string GetSharedAccessSignature(SharedAccessBlobPolicy policy)
         {
             return this.GetSharedAccessSignature(policy, null);
         }
@@ -831,7 +868,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="policy">The access policy for the shared access signature.</param>
         /// <param name="groupPolicyIdentifier">A container-level access policy.</param>
         /// <returns>A shared access signature.</returns>
-        public string GetSharedAccessSignature(SharedAccessPolicy policy, string groupPolicyIdentifier)
+        public string GetSharedAccessSignature(SharedAccessBlobPolicy policy, string groupPolicyIdentifier)
         {
             if (!this.ServiceClient.Credentials.CanSignRequest)
             {
@@ -843,16 +880,397 @@ namespace Microsoft.WindowsAzure.StorageClient
 
             string signature = SharedAccessSignatureHelper.GetSharedAccessSignatureHashImpl(policy, groupPolicyIdentifier, resourceName, this.ServiceClient);
 
+            string accountKeyName = null;
+
+            if (this.ServiceClient.Credentials is StorageCredentialsAccountAndKey)
+            {
+                accountKeyName = (this.ServiceClient.Credentials as StorageCredentialsAccountAndKey).AccountKeyName;
+            }
+
             // Future resource type changes from "c" => "container"
-            var builder = SharedAccessSignatureHelper.GetShareAccessSignatureImpl(policy, groupPolicyIdentifier, "c", signature);
+            UriQueryBuilder builder = SharedAccessSignatureHelper.GetSharedAccessSignatureImpl(policy, groupPolicyIdentifier, "c", signature, accountKeyName);
 
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Acquires a lease on this container.
+        /// </summary>
+        /// <param name="leaseTime">A <see cref="TimeSpan"/> representing the span of time for which to acquire the lease,
+        /// which will be rounded down to seconds. If null, an infinite lease will be acquired. If not null, this must be
+        /// greater than zero.</param>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or null if no lease ID is proposed.</param>
+        /// <returns>The ID of the acquired lease.</returns>
+        public string AcquireLease(TimeSpan? leaseTime, string proposedLeaseId)
+        {
+            return this.AcquireLease(leaseTime, proposedLeaseId, null, null);
+        }
+
+        /// <summary>
+        /// Acquires a lease on this container.
+        /// </summary>
+        /// <param name="leaseTime">A <see cref="TimeSpan"/> representing the span of time for which to acquire the lease,
+        /// which will be rounded down to seconds. If null, an infinite lease will be acquired. If not null, this must be
+        /// greater than zero.</param>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or null if no lease ID is proposed.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        /// <returns>The ID of the acquired lease.</returns>
+        public string AcquireLease(TimeSpan? leaseTime, string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options)
+        {
+            CloudBlob.AcquireLeaseValidation(leaseTime, proposedLeaseId);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            return TaskImplHelper.ExecuteImplWithRetry<string>(
+                (setResult) => this.AcquireLeaseImpl(leaseTime, proposedLeaseId, accessCondition, fullModifiers, setResult),
+                fullModifiers.RetryPolicy);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous operation to acquire a lease on this container.
+        /// </summary>
+        /// <param name="leaseTime">A <see cref="TimeSpan"/> representing the span of time for which to acquire the lease,
+        /// which will be rounded down to seconds. If null, an infinite lease will be acquired. If not null, this must be
+        /// greater than zero.</param>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or null if no lease ID is proposed.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginAcquireLease(TimeSpan? leaseTime, string proposedLeaseId, AsyncCallback callback, object state)
+        {
+            return this.BeginAcquireLease(leaseTime, proposedLeaseId, null, null, callback, state);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous operation to acquire a lease on this container.
+        /// </summary>
+        /// <param name="leaseTime">A <see cref="TimeSpan"/> representing the span of time for which to acquire the lease,
+        /// which will be rounded down to seconds. If null, an infinite lease will be acquired. If not null, this must be
+        /// greater than zero.</param>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or null if no lease ID is proposed.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginAcquireLease(TimeSpan? leaseTime, string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
+        {
+            CloudBlob.AcquireLeaseValidation(leaseTime, proposedLeaseId);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            return TaskImplHelper.BeginImplWithRetry<string>(
+                (setResult) => this.AcquireLeaseImpl(leaseTime, proposedLeaseId, accessCondition, fullModifiers, setResult),
+                fullModifiers.RetryPolicy,
+                callback,
+                state);
+        }
+
+        /// <summary>
+        /// Ends an asynchronous operation to acquire a lease on this container.
+        /// </summary>
+        /// <param name="asyncResult">An IAsyncResult that references the pending asynchronous operation.</param>
+        /// <returns>The ID of the acquired lease.</returns>
+        public string EndAcquireLease(IAsyncResult asyncResult)
+        {
+            return TaskImplHelper.EndImpl<string>(asyncResult);
+        }
+
+        /// <summary>
+        /// Renews a lease on this container.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        public void RenewLease(AccessCondition accessCondition)
+        {
+            this.RenewLease(accessCondition, null);
+        }
+
+        /// <summary>
+        /// Renews a lease on this container.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        public void RenewLease(AccessCondition accessCondition, BlobRequestOptions options)
+        {
+            CloudBlob.RenewLeaseValidation(accessCondition);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            TaskImplHelper.ExecuteImplWithRetry(
+                () => this.RenewLeaseImpl(accessCondition, fullModifiers),
+                fullModifiers.RetryPolicy);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous operation to renew a lease on this container.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginRenewLease(AccessCondition accessCondition, AsyncCallback callback, object state)
+        {
+            return this.BeginRenewLease(accessCondition, null, callback, state);
+        }
+        
+        /// <summary>
+        /// Begins an asynchronous operation to renew a lease on this container.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginRenewLease(AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
+        {
+            CloudBlob.RenewLeaseValidation(accessCondition);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            return TaskImplHelper.BeginImplWithRetry(
+                () => this.RenewLeaseImpl(accessCondition, fullModifiers),
+                fullModifiers.RetryPolicy,
+                callback,
+                state);
+        }
+
+        /// <summary>
+        /// Ends an asynchronous operation to renew a lease on this container.
+        /// </summary>
+        /// <param name="asyncResult">An IAsyncResult that references the pending asynchronous operation.</param>
+        public void EndRenewLease(IAsyncResult asyncResult)
+        {
+            TaskImplHelper.EndImpl(asyncResult);
+        }
+
+        /// <summary>
+        /// Changes the lease ID on this container.
+        /// </summary>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease. This cannot be null.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <returns>The new lease ID.</returns>
+        public string ChangeLease(string proposedLeaseId, AccessCondition accessCondition)
+        {
+            return this.ChangeLease(proposedLeaseId, accessCondition, null);
+        }
+        
+        /// <summary>
+        /// Changes the lease ID on this container.
+        /// </summary>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease. This cannot be null.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        /// <returns>The new lease ID.</returns>
+        public string ChangeLease(string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options)
+        {
+            CloudBlob.ChangeLeaseValidation(proposedLeaseId, accessCondition);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            return TaskImplHelper.ExecuteImplWithRetry<string>(
+                (setResult) => this.ChangeLeaseImpl(proposedLeaseId, accessCondition, fullModifiers, setResult),
+                fullModifiers.RetryPolicy);
+        }
+
+         /// <summary>
+        /// Begins an asynchronous operation to change the lease on this container.
+        /// </summary>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease. This cannot be null.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginChangeLease(string proposedLeaseId, AccessCondition accessCondition, AsyncCallback callback, object state)
+        {
+            return this.BeginChangeLease(proposedLeaseId, accessCondition, null, callback, state);
+        }
+        
+        /// <summary>
+        /// Begins an asynchronous operation to change the lease on this container.
+        /// </summary>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease. This cannot be null.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginChangeLease(string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
+        {
+            CloudBlob.ChangeLeaseValidation(proposedLeaseId, accessCondition);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            return TaskImplHelper.BeginImplWithRetry<string>(
+                (setResult) => this.ChangeLeaseImpl(proposedLeaseId, accessCondition, fullModifiers, setResult),
+                fullModifiers.RetryPolicy,
+                callback,
+                state);
+        }
+
+        /// <summary>
+        /// Ends an asynchronous operation to change the lease on this container.
+        /// </summary>
+        /// <param name="asyncResult">An IAsyncResult that references the pending asynchronous operation.</param>
+        /// <returns>The new lease ID.</returns>
+        public string EndChangeLease(IAsyncResult asyncResult)
+        {
+            return TaskImplHelper.EndImpl<string>(asyncResult);
+        }
+
+         /// <summary>
+        /// Releases the lease on this container.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        public void ReleaseLease(AccessCondition accessCondition)
+        {
+            this.ReleaseLease(accessCondition, null);
+        }
+        
+        /// <summary>
+        /// Releases the lease on this container.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        public void ReleaseLease(AccessCondition accessCondition, BlobRequestOptions options)
+        {
+            CloudBlob.ReleaseLeaseValidation(accessCondition);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            TaskImplHelper.ExecuteImplWithRetry(
+                () => this.ReleaseLeaseImpl(accessCondition, fullModifiers),
+                fullModifiers.RetryPolicy);
+        }
+
+         /// <summary>
+        /// Begins an asynchronous operation to release the lease on this container.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginReleaseLease(AccessCondition accessCondition, AsyncCallback callback, object state)
+        {
+            return this.BeginReleaseLease(accessCondition, null, callback, state);
+        }
+        
+        /// <summary>
+        /// Begins an asynchronous operation to release the lease on this container.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container, including a required lease ID.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginReleaseLease(AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
+        {
+            CloudBlob.ReleaseLeaseValidation(accessCondition);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            return TaskImplHelper.BeginImplWithRetry(
+                () => this.ReleaseLeaseImpl(accessCondition, fullModifiers),
+                fullModifiers.RetryPolicy,
+                callback,
+                state);
+        }
+
+        /// <summary>
+        /// Ends an asynchronous operation to release the lease on this container.
+        /// </summary>
+        /// <param name="asyncResult">An IAsyncResult that references the pending asynchronous operation.</param>
+        public void EndReleaseLease(IAsyncResult asyncResult)
+        {
+            TaskImplHelper.EndImpl(asyncResult);
+        }
+
+         /// <summary>
+        /// Breaks the current lease on this container.
+        /// </summary>
+        /// <param name="breakPeriod">A <see cref="TimeSpan"/> representing the amount of time to allow the lease to remain,
+        /// which will be rounded down to seconds. If null, the break period is the remainder of the current lease,
+        /// or zero for infinite leases.</param>
+        /// <returns>A <see cref="TimeSpan"/> representing the amount of time before the lease ends, to the second.</returns>
+        public TimeSpan BreakLease(TimeSpan? breakPeriod)
+        {
+            return this.BreakLease(breakPeriod, null, null);
+        }
+        
+        /// <summary>
+        /// Breaks the current lease on this container.
+        /// </summary>
+        /// <param name="breakPeriod">A <see cref="TimeSpan"/> representing the amount of time to allow the lease to remain,
+        /// which will be rounded down to seconds. If null, the break period is the remainder of the current lease,
+        /// or zero for infinite leases.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        /// <returns>A <see cref="TimeSpan"/> representing the amount of time before the lease ends, to the second.</returns>
+        public TimeSpan BreakLease(TimeSpan? breakPeriod, AccessCondition accessCondition, BlobRequestOptions options)
+        {
+            CloudBlob.BreakLeaseValidation(breakPeriod);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            return TaskImplHelper.ExecuteImplWithRetry<TimeSpan>(
+                (setResult) => this.BreakLeaseImpl(breakPeriod, accessCondition, fullModifiers, setResult),
+                fullModifiers.RetryPolicy);
+        }
+
+          /// <summary>
+        /// Begins an asynchronous operation to break the current lease on this container.
+        /// </summary>
+        /// <param name="breakPeriod">A <see cref="TimeSpan"/> representing the amount of time to allow the lease to remain,
+        /// which will be rounded down to seconds. If null, the break period is the remainder of the current lease,
+        /// or zero for infinite leases.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginBreakLease(TimeSpan? breakPeriod, AsyncCallback callback, object state)
+        {
+            return this.BeginBreakLease(breakPeriod, null, null, callback, state);
+        }
+        
+        /// <summary>
+        /// Begins an asynchronous operation to break the current lease on this container.
+        /// </summary>
+        /// <param name="breakPeriod">A <see cref="TimeSpan"/> representing the amount of time to allow the lease to remain,
+        /// which will be rounded down to seconds. If null, the break period is the remainder of the current lease,
+        /// or zero for infinite leases.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
+        /// <param name="options">The options for this operation. If null, default options will be used.</param>
+        /// <param name="callback">An optional callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginBreakLease(TimeSpan? breakPeriod, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
+        {
+            CloudBlob.BreakLeaseValidation(breakPeriod);
+
+            BlobRequestOptions fullModifiers = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
+
+            return TaskImplHelper.BeginImplWithRetry<TimeSpan>(
+                (setResult) => this.BreakLeaseImpl(breakPeriod, accessCondition, fullModifiers, setResult),
+                fullModifiers.RetryPolicy,
+                callback,
+                state);
+        }
+
+        /// <summary>
+        /// Ends an asynchronous operation to break the current lease on this container.
+        /// </summary>
+        /// <param name="asyncResult">An IAsyncResult that references the pending asynchronous operation.</param>
+        /// <returns>A <see cref="TimeSpan"/> representing the amount of time before the lease ends, to the second.</returns>
+        public TimeSpan EndBreakLease(IAsyncResult asyncResult)
+        {
+            return TaskImplHelper.EndImpl<TimeSpan>(asyncResult);
         }
 
         /// <summary>
         /// Implementation for the ListBlobs method.
         /// </summary>
         /// <param name="prefix">The blob prefix.</param>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="continuationToken">The continuation token.</param>
         /// <param name="maxResults">The maximum result size.</param>
@@ -860,6 +1278,8 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A <see cref="TaskSequence"/> that lists the blobs.</returns>
         internal TaskSequence ListBlobsImpl(
             string prefix,
+            bool useFlatBlobListing,
+            BlobListingDetails blobListingDetails,
             BlobRequestOptions options,
             ResultContinuation continuationToken,
             int? maxResults,
@@ -867,7 +1287,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         {
             ResultPagination pagination = new ResultPagination(maxResults.GetValueOrDefault());
 
-            return this.ListBlobsImplCore(prefix, options, continuationToken, pagination, setResult);
+            return this.ListBlobsImplCore(prefix, useFlatBlobListing, blobListingDetails, options, continuationToken, pagination, setResult);
         }
 
         /// <summary>
@@ -879,6 +1299,222 @@ namespace Microsoft.WindowsAzure.StorageClient
             BlobContainerAttributes newProperties = ContainerResponse.GetAttributes(response);
             this.Properties.ETag = newProperties.Properties.ETag;
             this.Properties.LastModifiedUtc = newProperties.Properties.LastModifiedUtc;
+        }
+
+        /// <summary>
+        /// Generates a task sequence for acquiring a lease.
+        /// </summary>
+        /// <param name="leaseTime">A <see cref="TimeSpan"/> representing the span of time for which to acquire the lease,
+        /// which will be rounded down to seconds. If null, an infinite lease will be acquired. If not null, this must be
+        /// greater than zero.</param>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or null if no lease ID is proposed.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
+        /// <param name="options">The options for this operation. This parameter must not be null.</param>
+        /// <param name="setResult">A delegate for setting the result, which is the new lease ID.</param>
+        /// <returns>A task sequence implementing the acquire lease operation.</returns>
+        internal TaskSequence AcquireLeaseImpl(TimeSpan? leaseTime, string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options, Action<string> setResult)
+        {
+            // The client library should always supply default options.
+            CommonUtils.AssertNotNull("options", options);
+
+            int leaseDuration = -1;
+
+            if (leaseTime.HasValue)
+            {
+                // Lease duration is rounded down to seconds.
+                leaseDuration = (int)leaseTime.Value.TotalSeconds;
+            }
+
+            HttpWebRequest webRequest = ProtocolHelper.GetWebRequest(
+                this.ServiceClient,
+                options,
+                (timeout) => ContainerRequest.Lease(
+                    this.TransformedAddress,
+                    timeout,
+                    LeaseAction.Acquire,
+                    proposedLeaseId,
+                    leaseDuration,
+                    null /* break period */,
+                    accessCondition));
+
+            this.ServiceClient.Credentials.SignRequest(webRequest);
+
+            Task<WebResponse> task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
+
+            yield return task;
+
+            using (HttpWebResponse webResponse = task.Result as HttpWebResponse)
+            {
+                string leaseId = ContainerResponse.GetLeaseId(webResponse);
+
+                setResult(leaseId);
+            }
+        }
+
+        /// <summary>
+        /// Generates a task sequence for renewing a lease.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
+        /// <param name="options">The options for this operation, including the current lease ID.
+        /// This cannot be null.</param>
+        /// <returns>A task sequence implementing the renew lease operation.</returns>
+        internal TaskSequence RenewLeaseImpl(AccessCondition accessCondition, BlobRequestOptions options)
+        {
+            // The client library should always supply default options.
+            CommonUtils.AssertNotNull("options", options);
+
+            HttpWebRequest webRequest = ProtocolHelper.GetWebRequest(
+                this.ServiceClient,
+                options,
+                (timeout) => ContainerRequest.Lease(
+                    this.TransformedAddress,
+                    timeout,
+                    LeaseAction.Renew,
+                    null /* proposed lease ID */,
+                    null /* lease duration */,
+                    null /* break period */,
+                    accessCondition));
+
+            this.ServiceClient.Credentials.SignRequest(webRequest);
+
+            Task<WebResponse> task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
+
+            yield return task;
+
+            using (HttpWebResponse webResponse = task.Result as HttpWebResponse)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Generates a task sequence for changing a lease ID.
+        /// </summary>
+        /// <param name="proposedLeaseId">The proposed new lease ID.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
+        /// <param name="options">The options for this operation, including the current lease ID. This cannot be null.</param>
+        /// <param name="setResult">A delegate for setting the result, which is the new lease ID.</param>
+        /// <returns>A task sequence implementing the change lease ID operation.</returns>
+        internal TaskSequence ChangeLeaseImpl(string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options, Action<string> setResult)
+        {
+            // The client library should always supply default options.
+            CommonUtils.AssertNotNull("options", options);
+
+            // The client library should always set a proposed lease ID.
+            CommonUtils.AssertNotNull("proposedLeaseId", proposedLeaseId);
+
+            HttpWebRequest webRequest = ProtocolHelper.GetWebRequest(
+                this.ServiceClient,
+                options,
+                (timeout) => ContainerRequest.Lease(
+                    this.TransformedAddress,
+                    timeout,
+                    LeaseAction.Change,
+                    proposedLeaseId,
+                    null /* lease duration */,
+                    null /* break period */,
+                    accessCondition));
+
+            this.ServiceClient.Credentials.SignRequest(webRequest);
+
+            Task<WebResponse> task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
+
+            yield return task;
+
+            using (HttpWebResponse webResponse = task.Result as HttpWebResponse)
+            {
+                string leaseId = ContainerResponse.GetLeaseId(webResponse);
+
+                setResult(leaseId);
+            }
+        }
+
+        /// <summary>
+        /// Generates a task sequence for releasing a lease.
+        /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
+        /// <param name="options">The options for this operation, including the current lease ID.
+        /// This cannot be null.</param>
+        /// <returns>A task sequence implementing the release lease operation.</returns>
+        internal TaskSequence ReleaseLeaseImpl(AccessCondition accessCondition, BlobRequestOptions options)
+        {
+            // The client library should always supply default options.
+            CommonUtils.AssertNotNull("options", options);
+
+            HttpWebRequest webRequest = ProtocolHelper.GetWebRequest(
+                this.ServiceClient,
+                options,
+                (timeout) => ContainerRequest.Lease(
+                    this.TransformedAddress,
+                    timeout,
+                    LeaseAction.Release,
+                    null /* proposed lease ID */,
+                    null /* lease duration */,
+                    null /* break period */,
+                    accessCondition));
+
+            this.ServiceClient.Credentials.SignRequest(webRequest);
+
+            Task<WebResponse> task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
+
+            yield return task;
+
+            using (HttpWebResponse webResponse = task.Result as HttpWebResponse)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Generates a task sequence for breaking a lease.
+        /// </summary>
+        /// <param name="breakPeriod">The amount of time to allow the lease to remain, rounded down to seconds.
+        /// If null, the break period is the remainder of the current lease, or zero for infinite leases.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
+        /// <param name="options">The options for this operation. Cannot be null.</param>
+        /// <param name="setResult">A delegate for setting the result, which is the remaining time for the lease.</param>
+        /// <returns>A task sequence implementing the break lease operation.</returns>
+        internal TaskSequence BreakLeaseImpl(TimeSpan? breakPeriod, AccessCondition accessCondition, BlobRequestOptions options, Action<TimeSpan> setResult)
+        {
+            // The client library should always supply default options.
+            CommonUtils.AssertNotNull("options", options);
+
+            int? breakSeconds = null;
+
+            if (breakPeriod.HasValue)
+            {
+                // Break period is rounded down to seconds.
+                breakSeconds = (int)breakPeriod.Value.TotalSeconds;
+            }
+
+            HttpWebRequest webRequest = ProtocolHelper.GetWebRequest(
+                this.ServiceClient,
+                options,
+                (timeout) => ContainerRequest.Lease(
+                    this.TransformedAddress,
+                    timeout,
+                    LeaseAction.Break,
+                    null /* proposed lease ID */,
+                    null /* lease duration */,
+                    breakSeconds,
+                    accessCondition));
+
+            this.ServiceClient.Credentials.SignRequest(webRequest);
+
+            Task<WebResponse> task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
+
+            yield return task;
+
+            using (HttpWebResponse webResponse = task.Result as HttpWebResponse)
+            {
+                int? remainingLeaseTime = ContainerResponse.GetRemainingLeaseTime(webResponse);
+
+                if (!remainingLeaseTime.HasValue)
+                {
+                    // Unexpected result from service.
+                    throw new StorageClientException(StorageErrorCode.ServiceBadResponse, "Valid lease time expected but not received from the service.", webResponse.StatusCode, null, null);
+                }
+
+                setResult(TimeSpan.FromSeconds(remainingLeaseTime.Value));
+            }
         }
 
         /// <summary>
@@ -986,6 +1622,8 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Core implementation of the ListBlobs method.
         /// </summary>
         /// <param name="prefix">The blob prefix.</param>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="continuationToken">The continuation token.</param>
         /// <param name="pagination">The pagination.</param>
@@ -993,6 +1631,8 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A <see cref="TaskSequence"/> that lists the blobs.</returns>
         private TaskSequence ListBlobsImplCore(
             string prefix,
+            bool useFlatBlobListing,
+            BlobListingDetails blobListingDetails,
             BlobRequestOptions options,
             ResultContinuation continuationToken,
             ResultPagination pagination,
@@ -1001,15 +1641,15 @@ namespace Microsoft.WindowsAzure.StorageClient
             CommonUtils.AssertContinuationType(continuationToken, ResultContinuation.ContinuationType.Blob);
             CommonUtils.AssertNotNull("options", options);
 
-            if (!options.UseFlatBlobListing
-                && (options.BlobListingDetails & BlobListingDetails.Snapshots) == BlobListingDetails.Snapshots)
+            if (!useFlatBlobListing
+                && (blobListingDetails & BlobListingDetails.Snapshots) == BlobListingDetails.Snapshots)
             {
-                throw new ArgumentException(SR.ListSnapshotsWithDelimiterError, "options");
+                throw new ArgumentException(SR.ListSnapshotsWithDelimiterError, "blobListingDetails");
             }
 
-            var delimiter = options.UseFlatBlobListing ? null : this.ServiceClient.DefaultDelimiter;
+            var delimiter = useFlatBlobListing ? null : this.ServiceClient.DefaultDelimiter;
 
-            BlobListingContext listingContext = new BlobListingContext(prefix, pagination.GetNextRequestPageSize(), delimiter, options.BlobListingDetails)
+            BlobListingContext listingContext = new BlobListingContext(prefix, pagination.GetNextRequestPageSize(), delimiter, blobListingDetails)
             {
                 Marker = continuationToken != null ? continuationToken.NextMarker : null
             };
@@ -1040,7 +1680,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                 pagination,
                 options.RetryPolicy,
                 (paginationArg, continuationArg, resultSegmentArg) =>
-                    this.ListBlobsImplCore(prefix, options, continuationArg, paginationArg, resultSegmentArg));
+                    this.ListBlobsImplCore(prefix, useFlatBlobListing, blobListingDetails, options, continuationArg, paginationArg, resultSegmentArg));
         }
 
         /// <summary>
@@ -1099,13 +1739,14 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Implementation for the Delete method.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="TaskSequence"/> that deletes the container.</returns>
-        private TaskSequence DeleteContainerImpl(BlobRequestOptions options)
+        private TaskSequence DeleteContainerImpl(AccessCondition accessCondition, BlobRequestOptions options)
         {
             CommonUtils.AssertNotNull("options", options);
 
-            var webRequest = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => ContainerRequest.Delete(this.TransformedAddress, timeout));
+            var webRequest = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => ContainerRequest.Delete(this.TransformedAddress, timeout, accessCondition));
             this.ServiceClient.Credentials.SignRequest(webRequest);
             var task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
             yield return task;
@@ -1118,13 +1759,14 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Implementation for the FetchAttributes method.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="TaskSequence"/> that fetches the attributes.</returns>
-        private TaskSequence FetchAttributesImpl(BlobRequestOptions options)
+        private TaskSequence FetchAttributesImpl(AccessCondition accessCondition, BlobRequestOptions options)
         {
             CommonUtils.AssertNotNull("options", options);
 
-            var webRequest = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => ContainerRequest.GetProperties(this.TransformedAddress, timeout));
+            var webRequest = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => ContainerRequest.GetProperties(this.TransformedAddress, timeout, accessCondition));
             this.ServiceClient.Credentials.SignRequest(webRequest);
             var task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
             yield return task;
@@ -1138,13 +1780,14 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Implementation for the SetMetadata method.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="TaskSequence"/> that sets the metadata.</returns>
-        private TaskSequence SetMetadataImpl(BlobRequestOptions options)
+        private TaskSequence SetMetadataImpl(AccessCondition accessCondition, BlobRequestOptions options)
         {
             CommonUtils.AssertNotNull("options", options);
 
-            var webRequest = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => ContainerRequest.SetMetadata(this.TransformedAddress, timeout));
+            var webRequest = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => ContainerRequest.SetMetadata(this.TransformedAddress, timeout, accessCondition));
             ContainerRequest.AddMetadata(webRequest, this.Metadata);
             this.ServiceClient.Credentials.SignRequest(webRequest);
             var task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
@@ -1160,81 +1803,50 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Implementation for the SetPermissions method.
         /// </summary>
         /// <param name="acl">The permissions to set.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="TaskSequence"/> that sets the permissions.</returns>
-        private TaskSequence SetPermissionsImpl(BlobContainerPermissions acl, BlobRequestOptions options)
+        private TaskSequence SetPermissionsImpl(BlobContainerPermissions acl, AccessCondition accessCondition, BlobRequestOptions options)
         {
             CommonUtils.AssertNotNull("options", options);
 
-            var webRequest = ProtocolHelper.GetWebRequest(
-                this.ServiceClient,
-                options,
-                (timeout) => ContainerRequest.SetAcl(this.TransformedAddress, timeout, acl.PublicAccess));
-
-            using (var memoryStream = new SmallBlockMemoryStream(Constants.DefaultBufferSize))
-            {
-                ContainerRequest.WriteSharedAccessIdentifiers(acl.SharedAccessPolicies, memoryStream);
-
-                memoryStream.Seek(0, System.IO.SeekOrigin.Begin);
-
-                CommonUtils.ApplyRequestOptimizations(webRequest, memoryStream.Length);
-
-                this.ServiceClient.Credentials.SignRequest(webRequest);
-
-                var requestStreamTask = webRequest.GetRequestStreamAsync();
-                yield return requestStreamTask;
-
-                using (var requestStream = requestStreamTask.Result)
-                {
-                    // Copy the data
-                    var copyTask = new InvokeTaskSequenceTask(() => { return memoryStream.WriteTo(requestStream); });
-                    yield return copyTask;
-
-                    // Materialize any exceptions
-                    var scratch = copyTask.Result;
-                }
-            }
-
-            var task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
-            yield return task;
-
-            using (var webResponse = task.Result as HttpWebResponse)
-            {
-                this.ParseETagAndLastModified(webResponse);
-            }
+            return this.ServiceClient.GenerateWebTask(
+                (timeout) => ContainerRequest.SetAcl(this.TransformedAddress, timeout, acl.PublicAccess, accessCondition),
+                (stream) => ContainerRequest.WriteSharedAccessIdentifiers(acl.SharedAccessPolicies, stream),
+                (response) => this.ParseETagAndLastModified(response),
+                null /* no response body */,
+                options);
         }
 
         /// <summary>
         /// Implementation for the GetPermissions method.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="setResult">The result report delegate.</param>
         /// <returns>A <see cref="TaskSequence"/> that gets the permissions.</returns>
-        private TaskSequence GetPermissionsImpl(BlobRequestOptions options, Action<BlobContainerPermissions> setResult)
+        private TaskSequence GetPermissionsImpl(AccessCondition accessCondition, BlobRequestOptions options, Action<BlobContainerPermissions> setResult)
         {
             CommonUtils.AssertNotNull("options", options);
 
-            var webRequest = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => ContainerRequest.GetAcl(this.TransformedAddress, timeout));
-            this.ServiceClient.Credentials.SignRequest(webRequest);
-            var task = webRequest.GetResponseAsyncWithTimeout(this.ServiceClient, options.Timeout);
-            yield return task;
+            BlobContainerPermissions containerAcl = null;
 
-            using (var webResponse = task.Result as HttpWebResponse)
-            {
-                string publicAccess = ContainerResponse.GetAcl(webResponse);
-                var containerAcl = GetContainerAcl(publicAccess);
-
-                // Materialize results so that we can close the response
-                AccessPolicyResponse policyResponse = new AccessPolicyResponse(webResponse.GetResponseStream());
-                foreach (var item in policyResponse.AccessIdentifiers)
+            return this.ServiceClient.GenerateWebTask(
+                (timeout) => ContainerRequest.GetAcl(this.TransformedAddress, timeout, accessCondition),
+                null /* no request body */,
+                (response) => 
+                    {
+                        containerAcl = GetContainerAcl(ContainerResponse.GetAcl(response));
+                        this.ParseETagAndLastModified(response);
+                    },
+                (stream) => 
                 {
-                    containerAcl.SharedAccessPolicies.Add(item.Key, item.Value);
-                }
+                    // Get the policies from the web response.
+                    ContainerResponse.ReadSharedAccessIdentifiers(stream, containerAcl);                   
 
-                this.ParseETagAndLastModified(webResponse);
-
-                setResult(containerAcl);
-            }
+                    setResult(containerAcl);
+            },
+            options);
         }
     }
 }

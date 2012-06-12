@@ -34,52 +34,57 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The setting name for using the development storage.
         /// </summary>
-        internal const string UseDevelopmentStorageName = "UseDevelopmentStorage";
+        internal const string UseDevelopmentStorageSettingString = "UseDevelopmentStorage";
 
         /// <summary>
         /// The setting name for specifying a development storage proxy Uri.
         /// </summary>
-        internal const string DevelopmentStorageProxyUriName = "DevelopmentStorageProxyUri";
+        internal const string DevelopmentStorageProxyUriSettingString = "DevelopmentStorageProxyUri";
 
         /// <summary>
         /// The setting name for using the default storage endpoints with the specified protocol.
         /// </summary>
-        internal const string DefaultEndpointsProtocolName = "DefaultEndpointsProtocol";
+        internal const string DefaultEndpointsProtocolSettingString = "DefaultEndpointsProtocol";
 
         /// <summary>
         /// The setting name for the account name.
         /// </summary>
-        internal const string AccountNameName = "AccountName";
+        internal const string AccountNameSettingString = "AccountName";
+
+        /// <summary>
+        /// The setting name for the account key name.
+        /// </summary>
+        internal const string AccountKeyNameSettingString = "AccountKeyName";
 
         /// <summary>
         /// The setting name for the account key.
         /// </summary>
-        internal const string AccountKeyName = "AccountKey";
+        internal const string AccountKeySettingString = "AccountKey";
 
         /// <summary>
         /// The setting name for a custom blob storage endpoint.
         /// </summary>
-        internal const string BlobEndpointName = "BlobEndpoint";
+        internal const string BlobEndpointSettingString = "BlobEndpoint";
 
         /// <summary>
         /// The setting name for a custom queue endpoint.
         /// </summary>
-        internal const string QueueEndpointName = "QueueEndpoint";
+        internal const string QueueEndpointSettingString = "QueueEndpoint";
 
         /// <summary>
         /// The setting name for a custom table storage endpoint.
         /// </summary>
-        internal const string TableEndpointName = "TableEndpoint";
+        internal const string TableEndpointSettingString = "TableEndpoint";
 
         /// <summary>
         /// The setting name for a shared access key.
         /// </summary>
-        internal const string SharedAccessSignatureName = "SharedAccessSignature";
+        internal const string SharedAccessSignatureSettingString = "SharedAccessSignature";
 
         /// <summary>
         /// The default account name for the development storage.
         /// </summary>
-        private const string DevstoreAccountName = "devstoreaccount1";
+        private const string DevstoreAccountSettingString = "devstoreaccount1";
 
         /// <summary>
         /// The default account key for the development storage.
@@ -90,8 +95,8 @@ namespace Microsoft.WindowsAzure
         /// The credentials string used to test for the development storage credentials.
         /// </summary>
         private const string DevstoreCredentialInString = 
-            CloudStorageAccount.AccountNameName + "=" + DevstoreAccountName + ";" +
-            CloudStorageAccount.AccountKeyName + "=" + DevstoreAccountKey;
+            CloudStorageAccount.AccountNameSettingString + "=" + DevstoreAccountSettingString + ";" +
+            CloudStorageAccount.AccountKeySettingString + "=" + DevstoreAccountKey;
 
         /// <summary>
         /// The root blob storage DNS name.
@@ -111,47 +116,52 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// Validator for the UseDevelopmentStorage setting. Must be "true".
         /// </summary>
-        private static readonly AccountSetting UseDevelopmentStorageSetting = Setting(UseDevelopmentStorageName, "true");
+        private static readonly AccountSetting UseDevelopmentStorageSetting = Setting(UseDevelopmentStorageSettingString, "true");
 
         /// <summary>
         /// Validator for the DevelopmentStorageProxyUri setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting DevelopmentStorageProxyUriSetting = Setting(DevelopmentStorageProxyUriName, IsValidUri);
+        private static readonly AccountSetting DevelopmentStorageProxyUriSetting = Setting(DevelopmentStorageProxyUriSettingString, IsValidUri);
 
         /// <summary>
         /// Validator for the DefaultEndpointsProtocol setting. Must be either "http" or "https".
         /// </summary>
-        private static readonly AccountSetting DefaultEndpointsProtocolSetting = Setting(DefaultEndpointsProtocolName, "http", "https");
+        private static readonly AccountSetting DefaultEndpointsProtocolSetting = Setting(DefaultEndpointsProtocolSettingString, "http", "https");
         
         /// <summary>
         /// Validator for the AccountName setting. No restrictions.
         /// </summary>
-        private static readonly AccountSetting AccountNameSetting = Setting(AccountNameName);
+        private static readonly AccountSetting AccountNameSetting = Setting(AccountNameSettingString);
+
+        /// <summary>
+        /// Validator for the AccountKey setting. No restrictions.
+        /// </summary>
+        private static readonly AccountSetting AccountKeyNameSetting = Setting(AccountKeyNameSettingString);
 
         /// <summary>
         /// Validator for the AccountKey setting. Must be a valid base64 string.
         /// </summary>
-        private static readonly AccountSetting AccountKeySetting = Setting(AccountKeyName, IsValidBase64String);
+        private static readonly AccountSetting AccountKeySetting = Setting(AccountKeySettingString, IsValidBase64String);
 
         /// <summary>
         /// Validator for the BlobEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting BlobEndpointSetting = Setting(BlobEndpointName, IsValidUri);
+        private static readonly AccountSetting BlobEndpointSetting = Setting(BlobEndpointSettingString, IsValidUri);
 
         /// <summary>
         /// Validator for the QueueEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting QueueEndpointSetting = Setting(QueueEndpointName, IsValidUri);
+        private static readonly AccountSetting QueueEndpointSetting = Setting(QueueEndpointSettingString, IsValidUri);
 
         /// <summary>
         /// Validator for the TableEndpoint setting. Must be a valid Uri.
         /// </summary>
-        private static readonly AccountSetting TableEndpointSetting = Setting(TableEndpointName, IsValidUri);
+        private static readonly AccountSetting TableEndpointSetting = Setting(TableEndpointSettingString, IsValidUri);
 
         /// <summary>
         /// Validator for the SharedAccessSignature setting. No restrictions.
         /// </summary>
-        private static readonly AccountSetting SharedAccessSignatureSetting = Setting(SharedAccessSignatureName);
+        private static readonly AccountSetting SharedAccessSignatureSetting = Setting(SharedAccessSignatureSettingString);
 
         /// <summary>
         /// Stores the user-specified configuration setting publisher.
@@ -334,10 +344,10 @@ namespace Microsoft.WindowsAzure
 
             if (this == DevelopmentStorageAccount)
             {
-                settings.Add(String.Format("{0}=true", UseDevelopmentStorageName));
+                settings.Add(String.Format("{0}=true", UseDevelopmentStorageSettingString));
             }
             else if (this.Credentials != null &&
-                     this.Credentials.AccountName == DevstoreAccountName &&
+                     this.Credentials.AccountName == DevstoreAccountSettingString &&
                      this.Credentials.ToString(true) == DevstoreCredentialInString &&
                      this.BlobEndpoint != null && this.QueueEndpoint != null && this.TableEndpoint != null &&
                      this.BlobEndpoint.Host == this.QueueEndpoint.Host &&
@@ -345,8 +355,8 @@ namespace Microsoft.WindowsAzure
                      this.BlobEndpoint.Scheme == this.QueueEndpoint.Scheme &&
                      this.QueueEndpoint.Scheme == this.TableEndpoint.Scheme)
             {
-                settings.Add(String.Format("{0}=true", UseDevelopmentStorageName));
-                settings.Add(String.Format("{0}={1}://{2}", DevelopmentStorageProxyUriName, this.BlobEndpoint.Scheme, this.BlobEndpoint.Host));
+                settings.Add(String.Format("{0}=true", UseDevelopmentStorageSettingString));
+                settings.Add(String.Format("{0}={1}://{2}", DevelopmentStorageProxyUriSettingString, this.BlobEndpoint.Scheme, this.BlobEndpoint.Host));
             }
             else if (this.BlobEndpoint != null && this.QueueEndpoint != null && this.TableEndpoint != null &&
                      this.BlobEndpoint.Host.EndsWith(BlobBaseDnsName) &&
@@ -355,7 +365,7 @@ namespace Microsoft.WindowsAzure
                      this.BlobEndpoint.Scheme == this.QueueEndpoint.Scheme &&
                      this.QueueEndpoint.Scheme == this.TableEndpoint.Scheme)
             {
-                settings.Add(String.Format("{0}={1}", DefaultEndpointsProtocolName, this.BlobEndpoint.Scheme));
+                settings.Add(String.Format("{0}={1}", DefaultEndpointsProtocolSettingString, this.BlobEndpoint.Scheme));
 
                 if (this.Credentials != null)
                 {
@@ -366,17 +376,17 @@ namespace Microsoft.WindowsAzure
             {
                 if (this.BlobEndpoint != null)
                 {
-                    settings.Add(String.Format("{0}={1}", BlobEndpointName, this.BlobEndpoint));
+                    settings.Add(String.Format("{0}={1}", BlobEndpointSettingString, this.BlobEndpoint));
                 }
 
                 if (this.QueueEndpoint != null)
                 {
-                    settings.Add(String.Format("{0}={1}", QueueEndpointName, this.QueueEndpoint));
+                    settings.Add(String.Format("{0}={1}", QueueEndpointSettingString, this.QueueEndpoint));
                 }
 
                 if (this.TableEndpoint != null)
                 {
-                    settings.Add(String.Format("{0}={1}", TableEndpointName, this.TableEndpoint));
+                    settings.Add(String.Format("{0}={1}", TableEndpointSettingString, this.TableEndpoint));
                 }
 
                 if (this.Credentials != null)
@@ -403,7 +413,7 @@ namespace Microsoft.WindowsAzure
             string prefix = proxyUri.Scheme + "://" + proxyUri.Host;
 
             return new CloudStorageAccount(
-                new StorageCredentialsAccountAndKey(DevstoreAccountName, DevstoreAccountKey),
+                new StorageCredentialsAccountAndKey(DevstoreAccountSettingString, DevstoreAccountKey),
                 new Uri(prefix + ":10000/devstoreaccount1"),
                 new Uri(prefix + ":10001/devstoreaccount1"),
                 new Uri(prefix + ":10002/devstoreaccount1"));
@@ -434,7 +444,7 @@ namespace Microsoft.WindowsAzure
                 AllRequired(UseDevelopmentStorageSetting),
                 Optional(DevelopmentStorageProxyUriSetting)))
             {
-                var proxyUri = settings[DevelopmentStorageProxyUriName];
+                var proxyUri = settings[DevelopmentStorageProxyUriSettingString];
 
                 accountInformation = GetDevelopmentStorageAccount(proxyUri == null ? null : new Uri(proxyUri));
 
@@ -445,11 +455,11 @@ namespace Microsoft.WindowsAzure
             if (MatchesSpecification(
                 settings,
                 AllRequired(DefaultEndpointsProtocolSetting, AccountNameSetting, AccountKeySetting),
-                Optional(BlobEndpointSetting, QueueEndpointSetting, TableEndpointSetting)))
+                Optional(BlobEndpointSetting, QueueEndpointSetting, TableEndpointSetting, AccountKeyNameSetting)))
             {
-                var blobEndpoint = settings[BlobEndpointName];
-                var queueEndpoint = settings[QueueEndpointName];
-                var tableEndpoint = settings[TableEndpointName];
+                var blobEndpoint = settings[BlobEndpointSettingString];
+                var queueEndpoint = settings[QueueEndpointSettingString];
+                var tableEndpoint = settings[TableEndpointSettingString];
 
                 accountInformation = new CloudStorageAccount(
                     GetCredentials(settings),
@@ -466,9 +476,9 @@ namespace Microsoft.WindowsAzure
                 AtLeastOne(BlobEndpointSetting, QueueEndpointSetting, TableEndpointSetting),
                 ValidCredentials()))
             {
-                var blobUri = settings[BlobEndpointName] == null ? null : new Uri(settings[BlobEndpointName]);
-                var queueUri = settings[QueueEndpointName] == null ? null : new Uri(settings[QueueEndpointName]);
-                var tableUri = settings[TableEndpointName] == null ? null : new Uri(settings[TableEndpointName]);
+                var blobUri = settings[BlobEndpointSettingString] == null ? null : new Uri(settings[BlobEndpointSettingString]);
+                var queueUri = settings[QueueEndpointSettingString] == null ? null : new Uri(settings[QueueEndpointSettingString]);
+                var tableUri = settings[TableEndpointSettingString] == null ? null : new Uri(settings[TableEndpointSettingString]);
 
                 accountInformation = new CloudStorageAccount(GetCredentials(settings), blobUri, queueUri, tableUri);
 
@@ -687,10 +697,11 @@ namespace Microsoft.WindowsAzure
         {
             return (settings) =>
             {
-                var accountName = settings[AccountNameName];
-                var accountKey = settings[AccountKeyName];
-                var sharedAccessSignature = settings[SharedAccessSignatureName];
-                var result = settings;
+                string accountName = settings[AccountNameSettingString];
+                string accountKey = settings[AccountKeySettingString];
+                string accountKeyName = settings[AccountKeyNameSettingString];
+                string sharedAccessSignature = settings[SharedAccessSignatureSettingString];
+                NameValueCollection result = settings;
 
                 if (accountName != null && !AccountNameSetting.Value(accountName))
                 {
@@ -702,14 +713,20 @@ namespace Microsoft.WindowsAzure
                     return null;
                 }
 
+                if (accountKeyName != null && !AccountKeyNameSetting.Value(accountKeyName))
+                {
+                    return null;
+                }
+
                 if (sharedAccessSignature != null && !SharedAccessSignatureSetting.Value(sharedAccessSignature))
                 {
                     return null;
                 }
 
-                result.Remove(AccountNameName);
-                result.Remove(AccountKeyName);
-                result.Remove(SharedAccessSignatureName);
+                result.Remove(AccountNameSettingString);
+                result.Remove(AccountKeySettingString);
+                result.Remove(AccountKeyNameSettingString);
+                result.Remove(SharedAccessSignatureSettingString);
 
                 // AccountAndKey
                 if (accountName != null && accountKey != null && sharedAccessSignature == null)
@@ -718,13 +735,13 @@ namespace Microsoft.WindowsAzure
                 }
 
                 // SharedAccessSignature
-                if (accountName == null && accountKey == null && sharedAccessSignature != null)
+                if (accountName == null && accountKey == null && accountKeyName == null && sharedAccessSignature != null)
                 {
                     return result;
                 }
 
                 // Anonymous
-                if (accountName == null && accountKey == null && sharedAccessSignature == null)
+                if (accountName == null && accountKey == null && accountKeyName == null && sharedAccessSignature == null)
                 {
                     return result;
                 }
@@ -749,7 +766,7 @@ namespace Microsoft.WindowsAzure
         {
             foreach (var constraint in constraints)
             {
-                var remainingSettings = constraint(settings);
+                NameValueCollection remainingSettings = constraint(settings);
 
                 if (remainingSettings == null)
                 {
@@ -776,16 +793,17 @@ namespace Microsoft.WindowsAzure
         /// <returns>The StorageCredentials object specified in the settings.</returns>
         private static StorageCredentials GetCredentials(NameValueCollection settings)
         {
-            var accountName = settings[AccountNameName];
-            var accountKey = settings[AccountKeyName];
-            var sharedAccessSignature = settings[SharedAccessSignatureName];
+            string accountName = settings[AccountNameSettingString];
+            string accountKey = settings[AccountKeySettingString];
+            string accountKeyName = settings[AccountKeyNameSettingString];
+            string sharedAccessSignature = settings[SharedAccessSignatureSettingString];
 
             if (accountName != null && accountKey != null && sharedAccessSignature == null)
             {
-                return new StorageCredentialsAccountAndKey(accountName, Convert.FromBase64String(accountKey));
+                return new StorageCredentialsAccountAndKey(accountName, accountKey, accountKeyName);
             }
 
-            if (accountName == null && accountKey == null && sharedAccessSignature != null)
+            if (accountName == null && accountKey == null && accountKeyName == null && sharedAccessSignature != null)
             {
                 return new StorageCredentialsSharedAccessSignature(sharedAccessSignature);
             }
@@ -800,7 +818,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>The default blob endpoint.</returns>
         private static string GetDefaultBlobEndpoint(NameValueCollection settings)
         {
-            return GetDefaultBlobEndpoint(settings[DefaultEndpointsProtocolName], settings[AccountNameName]);
+            return GetDefaultBlobEndpoint(settings[DefaultEndpointsProtocolSettingString], settings[AccountNameSettingString]);
         }
 
         /// <summary>
@@ -821,7 +839,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>The default queue endpoint.</returns>
         private static string GetDefaultQueueEndpoint(NameValueCollection settings)
         {
-            return GetDefaultQueueEndpoint(settings[DefaultEndpointsProtocolName], settings[AccountNameName]);
+            return GetDefaultQueueEndpoint(settings[DefaultEndpointsProtocolSettingString], settings[AccountNameSettingString]);
         }
 
         /// <summary>
@@ -842,7 +860,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>The default table endpoint.</returns>
         private static string GetDefaultTableEndpoint(NameValueCollection settings)
         {
-            return GetDefaultTableEndpoint(settings[DefaultEndpointsProtocolName], settings[AccountNameName]);
+            return GetDefaultTableEndpoint(settings[DefaultEndpointsProtocolSettingString], settings[AccountNameSettingString]);
         }
 
         /// <summary>

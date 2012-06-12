@@ -124,7 +124,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudBlockBlob"/> class using the specified blob Uri.
         /// Note that this is just a reference to a blob instance and no requests are issued to the service
-        /// yet to update the blob properties, attribute or metaddata. FetchAttributes is the API that 
+        /// yet to update the blob properties, attribute or metadata. FetchAttributes is the API that 
         /// issues such request to the service.
         /// </summary>
         /// <param name="blobUri">Relative Uri to the blob.</param>
@@ -139,7 +139,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Initializes a new instance of the <see cref="CloudBlockBlob"/> class using the specified blob Uri.
         /// If snapshotTime is not null, the blob instance represents a Snapshot.
         /// Note that this is just a reference to a blob instance and no requests are issued to the service
-        /// yet to update the blob properties, attribute or metaddata. FetchAttributes is the API that 
+        /// yet to update the blob properties, attribute or metadata. FetchAttributes is the API that 
         /// issues such request to the service.
         /// </summary>
         /// <param name="blobUri">Relative Uri to the blob.</param>
@@ -158,17 +158,18 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An enumerable collection of objects implementing <see cref="ListBlockItem"/>.</returns>
         public IEnumerable<ListBlockItem> DownloadBlockList()
         {
-            return this.DownloadBlockList(null);
+            return this.DownloadBlockList(null, null);
         }
 
         /// <summary>
         /// Returns an enumerable collection of the committed blocks comprising the blob.
         /// </summary>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>An enumerable collection of objects implementing <see cref="ListBlockItem"/>.</returns>
-        public IEnumerable<ListBlockItem> DownloadBlockList(BlobRequestOptions options)
+        public IEnumerable<ListBlockItem> DownloadBlockList(AccessCondition accessCondition, BlobRequestOptions options)
         {
-            return this.DownloadBlockList(BlockListingFilter.Committed, options);
+            return this.DownloadBlockList(BlockListingFilter.Committed, accessCondition, options);
         }
 
         /// <summary>
@@ -179,7 +180,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An enumerable collection of objects implementing <see cref="ListBlockItem"/>.</returns>
         public IEnumerable<ListBlockItem> DownloadBlockList(BlockListingFilter blockListingFilter)
         {
-            return this.DownloadBlockList(blockListingFilter, null);
+            return this.DownloadBlockList(blockListingFilter, null, null);
         }
 
         /// <summary>
@@ -187,16 +188,17 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <param name="blockListingFilter">One of the enumeration values that indicates whether to return 
         /// committed blocks, uncommitted blocks, or both.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>An enumerable collection of objects implementing <see cref="ListBlockItem"/>.</returns>
-        public IEnumerable<ListBlockItem> DownloadBlockList(BlockListingFilter blockListingFilter, BlobRequestOptions options)
+        public IEnumerable<ListBlockItem> DownloadBlockList(BlockListingFilter blockListingFilter, AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifier = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.ExecuteImplWithRetry<IEnumerable<ListBlockItem>>(
                 (result) =>
                     {
-                        return this.GetDownloadBlockList(blockListingFilter, fullModifier, result);
+                        return this.GetDownloadBlockList(blockListingFilter, accessCondition, fullModifier, result);
                     },
                 fullModifier.RetryPolicy);
         }
@@ -212,7 +214,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginDownloadBlockList(BlockListingFilter blockListingFilter, AsyncCallback callback, object state)
         {
-            return this.BeginDownloadBlockList(blockListingFilter, null, callback, state);
+            return this.BeginDownloadBlockList(blockListingFilter, null, null, callback, state);
         }
 
         /// <summary>
@@ -221,18 +223,19 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// </summary>
         /// <param name="blockListingFilter">One of the enumeration values that indicates whether to return 
         /// committed blocks, uncommitted blocks, or both.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginDownloadBlockList(BlockListingFilter blockListingFilter, BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginDownloadBlockList(BlockListingFilter blockListingFilter, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifier = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             return TaskImplHelper.BeginImplWithRetry<IEnumerable<ListBlockItem>>(
                 (result) =>
                     {
-                        return this.GetDownloadBlockList(blockListingFilter, fullModifier, result);
+                        return this.GetDownloadBlockList(blockListingFilter, accessCondition, fullModifier, result);
                     },
                 fullModifier.RetryPolicy,
                 callback,
@@ -260,7 +263,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// on the blob. May be <c>null</c> or an empty string.</param>
         public void PutBlock(string blockId, Stream blockData, string contentMD5)
         {
-            this.PutBlock(blockId, blockData, contentMD5, null);
+            this.PutBlock(blockId, blockData, contentMD5, null, null);
         }
 
         /// <summary>
@@ -270,8 +273,9 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="blockData">A stream that provides the data for the block.</param>
         /// <param name="contentMD5">An optional hash value that will be used to set the <see cref="BlobProperties.ContentMD5"/> property
         /// on the blob. May be <c>null</c> or an empty string.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        public void PutBlock(string blockId, Stream blockData, string contentMD5, BlobRequestOptions options)
+        public void PutBlock(string blockId, Stream blockData, string contentMD5, AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifier = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
             var position = blockData.Position;
@@ -285,7 +289,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                             blockData.Position = position;
                         }
 
-                        return this.UploadBlock(blockData, blockId, contentMD5, fullModifier);
+                        return this.UploadBlock(blockData, blockId, contentMD5, accessCondition, fullModifier);
                     },
                 retryPolicy);
         }
@@ -302,7 +306,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginPutBlock(string blockId, Stream blockData, string contentMD5, AsyncCallback callback, object state)
         {
-            return this.BeginPutBlock(blockId, blockData, contentMD5, null, callback, state);
+            return this.BeginPutBlock(blockId, blockData, contentMD5, null, null, callback, state);
         }
 
         /// <summary>
@@ -312,11 +316,12 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="blockData">A stream that provides the data for the block.</param>
         /// <param name="contentMD5">An optional hash value that will be used to set the <see cref="BlobProperties.ContentMD5"/> property
         /// on the blob. May be <c>null</c> or an empty string.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginPutBlock(string blockId, Stream blockData, string contentMD5, BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginPutBlock(string blockId, Stream blockData, string contentMD5, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifier = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
             var position = blockData.Position;
@@ -330,7 +335,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                             blockData.Position = position;
                         }
 
-                        return this.UploadBlock(blockData, blockId, contentMD5, fullModifier);
+                        return this.UploadBlock(blockData, blockId, contentMD5, accessCondition, fullModifier);
                     },
                 retryPolicy,
                 callback,
@@ -353,21 +358,22 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <param name="blockList">An enumerable collection of block IDs, as base64-encoded strings.</param>
         public void PutBlockList(IEnumerable<string> blockList)
         {
-            this.PutBlockList(blockList, null);
+            this.PutBlockList(blockList, null, null);
         }
 
         /// <summary>
         /// Uploads a list of blocks to a new or existing blob. 
         /// </summary>
         /// <param name="blockList">An enumerable collection of block IDs, as base64-encoded strings.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        public void PutBlockList(IEnumerable<string> blockList, BlobRequestOptions options)
+        public void PutBlockList(IEnumerable<string> blockList, AccessCondition accessCondition, BlobRequestOptions options)
         {
             var fullModifier = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             List<PutBlockListItem> items = blockList.Select(i => { return new PutBlockListItem(i, BlockSearchMode.Latest); }).ToList();
 
-            TaskImplHelper.ExecuteImplWithRetry(() => { return this.UploadBlockList(items, fullModifier); }, fullModifier.RetryPolicy);
+            TaskImplHelper.ExecuteImplWithRetry(() => { return this.UploadBlockList(items, accessCondition, fullModifier); }, fullModifier.RetryPolicy);
         }
 
         /// <summary>
@@ -379,24 +385,25 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         public IAsyncResult BeginPutBlockList(IEnumerable<string> blockList, AsyncCallback callback, object state)
         {
-            return this.BeginPutBlockList(blockList, null, callback, state);
+            return this.BeginPutBlockList(blockList, null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous operation to upload a list of blocks to a new or existing blob. 
         /// </summary>
         /// <param name="blockList">An enumerable collection of block IDs, as base64-encoded strings.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
-        public IAsyncResult BeginPutBlockList(IEnumerable<string> blockList, BlobRequestOptions options, AsyncCallback callback, object state)
+        public IAsyncResult BeginPutBlockList(IEnumerable<string> blockList, AccessCondition accessCondition, BlobRequestOptions options, AsyncCallback callback, object state)
         {
             var fullModifier = BlobRequestOptions.CreateFullModifier(this.ServiceClient, options);
 
             List<PutBlockListItem> items = blockList.Select(i => { return new PutBlockListItem(i, BlockSearchMode.Latest); }).ToList();
 
-            return TaskImplHelper.BeginImplWithRetry(() => { return this.UploadBlockList(items, fullModifier); }, fullModifier.RetryPolicy, callback, state);
+            return TaskImplHelper.BeginImplWithRetry(() => { return this.UploadBlockList(items, accessCondition, fullModifier); }, fullModifier.RetryPolicy, callback, state);
         }
 
         /// <summary>
@@ -413,18 +420,22 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Uploads the block list.
         /// </summary>
         /// <param name="blocks">The blocks to upload.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="TaskSequence"/> that uploads the block list.</returns>
-        internal TaskSequence UploadBlockList(List<PutBlockListItem> blocks, BlobRequestOptions options)
+        internal TaskSequence UploadBlockList(List<PutBlockListItem> blocks, AccessCondition accessCondition, BlobRequestOptions options)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException("modifers");
-            }
+            CommonUtils.AssertNotNull("options", options);
 
-            var request = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => BlobRequest.PutBlockList(this.TransformedAddress, timeout, this.Properties, null));
+            HttpWebRequest request = ProtocolHelper.GetWebRequest(
+                this.ServiceClient,
+                options,
+                (timeout) => BlobRequest.PutBlockList(
+                    this.TransformedAddress,
+                    timeout,
+                    this.Properties,
+                    accessCondition));
 
-            options.AccessCondition.ApplyCondition(request);
             BlobRequest.AddMetadata(request, this.Metadata);
 
             using (var memoryStream = new SmallBlockMemoryStream(Constants.DefaultBufferSize))
@@ -474,12 +485,13 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// Gets the download block list.
         /// </summary>
         /// <param name="typesOfBlocks">The types of blocks.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="setResult">The result report delegate.</param>
         /// <returns>A <see cref="TaskSequence"/> that gets the download block list.</returns>
-        internal TaskSequence GetDownloadBlockList(BlockListingFilter typesOfBlocks, BlobRequestOptions options, Action<IEnumerable<ListBlockItem>> setResult)
+        internal TaskSequence GetDownloadBlockList(BlockListingFilter typesOfBlocks, AccessCondition accessCondition, BlobRequestOptions options, Action<IEnumerable<ListBlockItem>> setResult)
         {
-            var request = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => BlobRequest.GetBlockList(this.TransformedAddress, timeout, this.SnapshotTime, typesOfBlocks, null));
+            var request = ProtocolHelper.GetWebRequest(this.ServiceClient, options, (timeout) => BlobRequest.GetBlockList(this.TransformedAddress, timeout, this.SnapshotTime, typesOfBlocks, accessCondition));
             this.ServiceClient.Credentials.SignRequest(request);
 
             // Retrieve the stream

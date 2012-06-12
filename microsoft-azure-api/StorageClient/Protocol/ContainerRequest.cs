@@ -46,51 +46,106 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
-        /// Constructs a web request to delete the container and all of blobs within it.
+        /// Constructs a web request to delete the container and all of the blobs within it.
         /// </summary>
         /// <param name="uri">The absolute URI to the container.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest Delete(Uri uri, int timeout)
+        public static HttpWebRequest Delete(Uri uri, int timeout, AccessCondition accessCondition)
         {
             UriQueryBuilder containerBuilder = GetContainerUriQueryBuilder();
-            return Request.Delete(uri, timeout, containerBuilder);
+            HttpWebRequest request = Request.Delete(uri, timeout, containerBuilder);
+
+            Request.ApplyAccessCondition(accessCondition, request, false);
+
+            return request;
         }
 
         /// <summary>
-        /// Constructs a web request to retrieve the container's metadata.
+        /// Generates a web request to return the user-defined metadata for this container.
         /// </summary>
         /// <param name="uri">The absolute URI to the container.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest GetMetadata(Uri uri, int timeout)
+        public static HttpWebRequest GetMetadata(Uri uri, int timeout, AccessCondition accessCondition)
         {
             UriQueryBuilder containerBuilder = GetContainerUriQueryBuilder();
-            return Request.GetMetadata(uri, timeout, containerBuilder);
+            HttpWebRequest request = Request.GetMetadata(uri, timeout, containerBuilder);
+
+            Request.ApplyAccessCondition(accessCondition, request, false);
+
+            return request;
         }
 
         /// <summary>
-        /// Constructs a web request to return the user-defined metadata for this container.
+        /// Generates a web request to return the properties and user-defined metadata for this container.
         /// </summary>
         /// <param name="uri">The absolute URI to the container.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest GetProperties(Uri uri, int timeout)
+        public static HttpWebRequest GetProperties(Uri uri, int timeout, AccessCondition accessCondition)
         {
             UriQueryBuilder containerBuilder = GetContainerUriQueryBuilder();
-            return Request.GetProperties(uri, timeout, containerBuilder);
+            HttpWebRequest request = Request.GetProperties(uri, timeout, containerBuilder);
+
+            Request.ApplyAccessCondition(accessCondition, request, false);
+
+            return request;
         }
 
         /// <summary>
-        /// Constructs a web request to set user-defined metadata for the container.
+        /// Generates a web request to set user-defined metadata for the container.
         /// </summary>
         /// <param name="uri">The absolute URI to the container.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
-        public static HttpWebRequest SetMetadata(Uri uri, int timeout)
+        public static HttpWebRequest SetMetadata(Uri uri, int timeout, AccessCondition accessCondition)
         {
             UriQueryBuilder containerBuilder = GetContainerUriQueryBuilder();
-            return Request.SetMetadata(uri, timeout, containerBuilder);
+            HttpWebRequest request = Request.SetMetadata(uri, timeout, containerBuilder);
+
+            Request.ApplyAccessCondition(accessCondition, request, false);
+
+            return request;
+        }
+
+        /// <summary>
+        /// Generates a web request to use to acquire, renew, change, release or break the lease for the container.
+        /// </summary>
+        /// <param name="uri">The absolute URI to the container.</param>
+        /// <param name="timeout">The server timeout interval, in seconds.</param>
+        /// <param name="action">The lease action to perform.</param>
+        /// <param name="proposedLeaseId">A lease ID to propose for the result of an acquire or change operation,
+        /// or null if no ID is proposed for an acquire operation. This should be null for renew, release, and break operations.</param>
+        /// <param name="leaseDuration">The lease duration, in seconds, for acquire operations.
+        /// If this is -1 then an infinite duration is specified. This should be null for renew, change, release, and break operations.</param>
+        /// <param name="leaseBreakPeriod">The amount of time to wait, in seconds, after a break operation before the lease is broken.
+        /// If this is null then the default time is used. This should be null for acquire, renew, change, and release operations.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
+        /// <returns>A web request to use to perform the operation.</returns>
+        public static HttpWebRequest Lease(Uri uri, int timeout, LeaseAction action, string proposedLeaseId, int? leaseDuration, int? leaseBreakPeriod, AccessCondition accessCondition)
+        {
+            UriQueryBuilder builder = GetContainerUriQueryBuilder();
+            builder.Add(Constants.QueryConstants.Component, "lease");
+
+            HttpWebRequest request = CreateWebRequest(uri, timeout, builder);
+
+            request.ContentLength = 0;
+            request.Method = "PUT";
+
+            // Add Headers
+            Request.AddLeaseAction(request, action);
+            Request.AddLeaseDuration(request, leaseDuration);
+            Request.AddProposedLeaseId(request, proposedLeaseId);
+            Request.AddLeaseBreakPeriod(request, leaseBreakPeriod);
+
+            Request.ApplyAccessCondition(accessCondition, request, false);
+
+            return request;
         }
 
         /// <summary>
@@ -132,28 +187,6 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         public static void SignRequestForSharedKeyLite(HttpWebRequest request, Credentials credentials)
         {
             Request.SignRequestForBlobAndQueuesSharedKeyLite(request, credentials);
-        }
-
-        /// <summary>
-        /// Adds a conditional header to the request.
-        /// </summary>
-        /// <param name="request">The web request.</param>
-        /// <param name="header">The type of conditional header to add.</param>
-        /// <param name="etag">The container's ETag.</param>
-        public static void AddConditional(HttpWebRequest request, ConditionHeaderKind header, string etag)
-        {
-            Request.AddConditional(request, header, etag);
-        }
-
-        /// <summary>
-        /// Adds a conditional header to the request.
-        /// </summary>
-        /// <param name="request">The web request.</param>
-        /// <param name="header">The type of conditional header to add.</param>
-        /// <param name="dateTime">The date and time specification for the request.</param>
-        public static void AddConditional(HttpWebRequest request, ConditionHeaderKind header, DateTime dateTime)
-        {
-            Request.AddConditional(request, header, dateTime);
         }
 
         /// <summary>
@@ -200,90 +233,55 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
-        /// Constructs a web request to return the ACL for this container.
+        /// Constructs a web request to return the ACL for a container.
         /// </summary>
         /// <param name="uri">The absolute URI to the container.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns><returns>A web request to use to perform the operation.</returns></returns>
-        public static HttpWebRequest GetAcl(Uri uri, int timeout)
+        public static HttpWebRequest GetAcl(Uri uri, int timeout, AccessCondition accessCondition)
         {
-            UriQueryBuilder builder = GetContainerUriQueryBuilder();
-            builder.Add(Constants.QueryConstants.Component, "acl");
+            HttpWebRequest request = Request.GetAcl(uri, timeout, GetContainerUriQueryBuilder());
 
-            HttpWebRequest request = CreateWebRequest(uri, timeout, builder);
-
-            request.Method = "GET";
+            Request.ApplyAccessCondition(accessCondition, request, false);
 
             return request;
         }
 
         /// <summary>
-        /// Sets the ACL for the container.
+        /// Constructs a web request to set the ACL for a container.
         /// </summary>
         /// <param name="uri">The absolute URI to the container.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="publicAccess">The type of public access to allow for the container.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns><returns>A web request to use to perform the operation.</returns></returns>
-        public static HttpWebRequest SetAcl(Uri uri, int timeout, BlobContainerPublicAccessType publicAccess)
+        public static HttpWebRequest SetAcl(Uri uri, int timeout, BlobContainerPublicAccessType publicAccess, AccessCondition accessCondition)
         {
-            UriQueryBuilder builder = GetContainerUriQueryBuilder();
-            builder.Add(Constants.QueryConstants.Component, "acl");
-
-            HttpWebRequest request = CreateWebRequest(uri, timeout, builder);
-
-            request.ContentLength = 0;
-            request.Method = "PUT";
+            HttpWebRequest request = Request.SetAcl(uri, timeout, GetContainerUriQueryBuilder());
 
             if (publicAccess != BlobContainerPublicAccessType.Off)
             {
                 request.Headers.Add("x-ms-blob-public-access", publicAccess.ToString().ToLower());
             }
 
+            Request.ApplyAccessCondition(accessCondition, request, false);
+
             return request;
         }
-
-        ////public string SharedAccessAuthenticatedURI(Uri uri, string permission) { return ""; }
 
         /// <summary>
         /// Writes a collection of shared access policies to the specified stream in XML format.
         /// </summary>
         /// <param name="sharedAccessPolicies">A collection of shared access policies.</param>
         /// <param name="outputStream">An output stream.</param>
-        public static void WriteSharedAccessIdentifiers(SharedAccessPolicies sharedAccessPolicies, Stream outputStream)
+        public static void WriteSharedAccessIdentifiers(SharedAccessBlobPolicies sharedAccessPolicies, Stream outputStream)
         {
-            CommonUtils.AssertNotNull("sharedAccessPolicies", sharedAccessPolicies);
-            CommonUtils.AssertNotNull("outputStream", outputStream);
-
-            if (sharedAccessPolicies.Count > Constants.MaxSharedAccessPolicyIdentifiers)
-            {
-                string errorMessage = string.Format(
-                    CultureInfo.CurrentCulture,
-                    SR.TooManyPolicyIdentifiers,
-                    sharedAccessPolicies.Count,
-                    Constants.MaxSharedAccessPolicyIdentifiers);
-
-                throw new ArgumentOutOfRangeException("sharedAccessPolicies", errorMessage);
-            }
-
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Encoding = Encoding.UTF8;
-
-            using (XmlWriter writer = XmlWriter.Create(outputStream, settings))
-            {
-                writer.WriteStartElement(Constants.SignedIdentifiers);
-
-                foreach (var key in sharedAccessPolicies.Keys)
+            Request.WriteSharedAccessIdentifiers(
+                sharedAccessPolicies,
+                outputStream,
+                (policy, writer) =>
                 {
-                    writer.WriteStartElement(Constants.SignedIdentifier);
-
-                    // Set the identifier
-                    writer.WriteElementString(Constants.Id, key);
-
-                    // Set the permissions
-                    writer.WriteStartElement(Constants.AccessPolicy);
-
-                    var policy = sharedAccessPolicies[key];
-
                     writer.WriteElementString(
                         Constants.Start,
                         SharedAccessSignatureHelper.GetDateTimeOrEmpty(policy.SharedAccessStartTime));
@@ -292,13 +290,8 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                         SharedAccessSignatureHelper.GetDateTimeOrEmpty(policy.SharedAccessExpiryTime));
                     writer.WriteElementString(
                         Constants.Permission,
-                        SharedAccessPolicy.PermissionsToString(policy.Permissions));
-                    writer.WriteEndElement();
-                    writer.WriteEndElement();
-                }
-
-                writer.WriteEndDocument();
-            }
+                        SharedAccessBlobPolicy.PermissionsToString(policy.Permissions));
+                });
         }
 
         /// <summary>

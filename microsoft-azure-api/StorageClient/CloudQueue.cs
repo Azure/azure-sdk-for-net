@@ -52,6 +52,11 @@ namespace Microsoft.WindowsAzure.StorageClient
         private Uri messageRequestAddress;
 
         /// <summary>
+        /// Stores the queue's transformed address.
+        /// </summary>
+        private Uri transformedAddress;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CloudQueue"/> class.
         /// </summary>
         /// <param name="address">The absolute URI to the queue.</param>
@@ -82,11 +87,6 @@ namespace Microsoft.WindowsAzure.StorageClient
         {
             CommonUtils.AssertNotNullOrEmpty("address", address);
             CommonUtils.AssertNotNull("credentials", credentials);
-
-            if (!credentials.CanSignRequest)
-            {
-                throw new ArgumentException(SR.CredentialsCantSignRequest, "credentials");
-            }
 
             this.EncodeMessage = true;
             this.attributes = new QueueAttributes() { Uri = new Uri(address) };
@@ -205,10 +205,32 @@ namespace Microsoft.WindowsAzure.StorageClient
             {
                 if (this.messageRequestAddress == null)
                 {
-                    this.messageRequestAddress = NavigationHelper.AppendPathToUri(this.Uri, Constants.Messages);
+                    this.messageRequestAddress = NavigationHelper.AppendPathToUri(this.TransformedAddress, Constants.Messages);
                 }
 
                 return this.messageRequestAddress;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Uri after applying authentication transformation.
+        /// </summary>
+        internal Uri TransformedAddress
+        {
+            get
+            {
+                if (this.ServiceClient.Credentials.NeedsTransformUri)
+                {
+                    // This is required to support key rotation
+                    // Potential improvement: cache the value of credential and derived Uri to avoid recomputation
+                    this.transformedAddress = new Uri(this.ServiceClient.Credentials.TransformUri(this.Uri.AbsoluteUri));
+
+                    return this.transformedAddress;
+                }
+                else
+                {
+                    return this.Uri;
+                }
             }
         }
 
@@ -856,6 +878,115 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
+        /// Gets the permissions settings for the queue.
+        /// </summary>
+        /// <returns>The queue's permissions.</returns>
+        public QueuePermissions GetPermissions()
+        {
+            return TaskImplHelper.ExecuteImplWithRetry<QueuePermissions>(
+                (setResult) => this.GetPermissionsImpl(setResult),
+                this.ServiceClient.RetryPolicy);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous request to get the permissions settings for the queue.
+        /// </summary>
+        /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginGetPermissions(AsyncCallback callback, object state)
+        {
+            return TaskImplHelper.BeginImplWithRetry<QueuePermissions>(
+                (setResult) => this.GetPermissionsImpl(setResult),
+                this.ServiceClient.RetryPolicy,
+                callback,
+                state);
+        }
+
+        /// <summary>
+        /// Returns the asynchronous result of the request to get the permissions settings for the queue.
+        /// </summary>
+        /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
+        /// <returns>The queue's permissions.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This is a member-operation.")]
+        public QueuePermissions EndGetPermissions(IAsyncResult asyncResult)
+        {
+            return TaskImplHelper.EndImpl<QueuePermissions>(asyncResult);
+        }
+
+        /// <summary>
+        /// Sets permissions for the queue.
+        /// </summary>
+        /// <param name="permissions">The permissions to apply to the queue.</param>
+        public void SetPermissions(QueuePermissions permissions)
+        {
+            TaskImplHelper.ExecuteImplWithRetry(() => this.SetPermissionsImpl(permissions), this.ServiceClient.RetryPolicy);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous request to set permissions for the queue.
+        /// </summary>
+        /// <param name="permissions">The permissions to apply to the queue.</param>
+        /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
+        public IAsyncResult BeginSetPermissions(QueuePermissions permissions, AsyncCallback callback, object state)
+        {
+            return TaskImplHelper.BeginImplWithRetry(
+                () => this.SetPermissionsImpl(permissions),
+                this.ServiceClient.RetryPolicy,
+                callback,
+                state);
+        }
+
+        /// <summary>
+        /// Returns the result of an asynchronous request to set permissions for the queue.
+        /// </summary>
+        /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This is a member-operation.")]
+        public void EndSetPermissions(IAsyncResult asyncResult)
+        {
+            TaskImplHelper.EndImpl(asyncResult);
+        }
+
+        /// <summary>
+        /// Returns a shared access signature for the queue.
+        /// </summary>
+        /// <param name="policy">The access policy for the shared access signature.</param>
+        /// <param name="accessPolicyIdentifier">An access policy identifier.</param>
+        /// <returns>A shared access signature.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the current credentials don't support creating a shared access signature.</exception>
+        public string GetSharedAccessSignature(SharedAccessQueuePolicy policy, string accessPolicyIdentifier)
+        {
+            if (!this.ServiceClient.Credentials.CanSignRequest)
+            {
+                string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.CannotCreateSASWithoutAccountKey);
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            string resourceName = this.GetCanonicalName();
+
+            string signature = SharedAccessSignatureHelper.GetSharedAccessSignatureHashImpl(policy, accessPolicyIdentifier, resourceName, this.ServiceClient);
+
+            string accountKeyName = null;
+
+            if (this.ServiceClient.Credentials is StorageCredentialsAccountAndKey)
+            {
+                accountKeyName = (this.ServiceClient.Credentials as StorageCredentialsAccountAndKey).AccountKeyName;
+            }
+
+            UriQueryBuilder builder = SharedAccessSignatureHelper.GetSharedAccessSignatureImpl(policy, accessPolicyIdentifier, signature, accountKeyName);
+
+            return builder.ToString();
+        }
+
+        /// <summary>
         /// Gets the individual message address.
         /// </summary>
         /// <param name="messageId">The message id.</param>
@@ -863,7 +994,15 @@ namespace Microsoft.WindowsAzure.StorageClient
         internal Uri GetIndividualMessageAddress(string messageId)
         {
             Uri individualMessageUri = NavigationHelper.AppendPathToUri(this.Uri, Constants.Messages + NavigationHelper.Slash + messageId);
-            return individualMessageUri;
+
+            if (this.ServiceClient.Credentials.NeedsTransformUri)
+            {
+                return new Uri(this.ServiceClient.Credentials.TransformUri(individualMessageUri.AbsoluteUri));
+            }
+            else
+            {
+                return individualMessageUri;
+            }
         }
 
         /// <summary>
@@ -877,6 +1016,18 @@ namespace Microsoft.WindowsAzure.StorageClient
             List<CloudQueueMessage> messages = new List<CloudQueueMessage>();
             messages.AddRange(protocolList.Select(responseProjector));
             return messages;
+        }
+
+        /// <summary>
+        /// Gets the canonical name of the queue, formatted as /&lt;account-name&gt;/&lt;queue-name&gt;.
+        /// </summary>
+        /// <returns>The canonical name of the queue.</returns>
+        private string GetCanonicalName()
+        {
+            string accountName = this.ServiceClient.Credentials.AccountName;
+            string queueName = this.Name;
+
+            return string.Format("/{0}/{1}", accountName, queueName);
         }
 
         /// <summary>
@@ -975,7 +1126,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A <see cref="TaskSequence"/> that detects whether the queue exists.</returns>
         private TaskSequence ExistsImpl(Action<bool> setResult)
         {
-            var webRequest = QueueRequest.GetMetadata(this.Uri, this.ServiceClient.Timeout.RoundUpToSeconds());
+            var webRequest = QueueRequest.GetMetadata(this.TransformedAddress, this.ServiceClient.Timeout.RoundUpToSeconds());
             CommonUtils.ApplyRequestOptimizations(webRequest, -1);
 
             this.ServiceClient.Credentials.SignRequest(webRequest);
@@ -1009,7 +1160,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A <see cref="TaskSequence"/> that sets the metadata.</returns>
         private TaskSequence SetMetadataImpl()
         {
-            var webRequest = QueueRequest.SetMetadata(this.Uri, this.ServiceClient.Timeout.RoundUpToSeconds());
+            var webRequest = QueueRequest.SetMetadata(this.TransformedAddress, this.ServiceClient.Timeout.RoundUpToSeconds());
             CommonUtils.ApplyRequestOptimizations(webRequest, -1);
 
             QueueRequest.AddMetadata(webRequest, this.Metadata);
@@ -1028,7 +1179,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A <see cref="TaskSequence"/> that fetches the attributes.</returns>
         private TaskSequence FetchAttributesImpl()
         {
-            var webRequest = QueueRequest.GetMetadata(this.Uri, this.ServiceClient.Timeout.RoundUpToSeconds());
+            var webRequest = QueueRequest.GetMetadata(this.TransformedAddress, this.ServiceClient.Timeout.RoundUpToSeconds());
             CommonUtils.ApplyRequestOptimizations(webRequest, -1);
 
             this.ServiceClient.Credentials.SignRequest(webRequest);
@@ -1047,7 +1198,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A <see cref="TaskSequence"/> that creates the queue.</returns>
         private TaskSequence CreateImpl()
         {
-            var webRequest = QueueRequest.Create(this.Uri, this.ServiceClient.Timeout.RoundUpToSeconds());
+            var webRequest = QueueRequest.Create(this.TransformedAddress, this.ServiceClient.Timeout.RoundUpToSeconds());
             CommonUtils.ApplyRequestOptimizations(webRequest, -1);
 
             QueueRequest.AddMetadata(webRequest, this.Metadata);
@@ -1068,7 +1219,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A <see cref="TaskSequence"/> that creates the queue if it doesn't exist.</returns>
         private TaskSequence CreateIfNotExistImpl(Action<bool> setResult)
         {
-            var webRequest = QueueRequest.Create(this.Uri, this.ServiceClient.Timeout.RoundUpToSeconds());
+            var webRequest = QueueRequest.Create(this.TransformedAddress, this.ServiceClient.Timeout.RoundUpToSeconds());
             CommonUtils.ApplyRequestOptimizations(webRequest, -1);
 
             QueueRequest.AddMetadata(webRequest, this.Metadata);
@@ -1113,7 +1264,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         /// <returns>A <see cref="TaskSequence"/> that deletes the queue.</returns>
         private TaskSequence DeleteImpl()
         {
-            var webRequest = QueueRequest.Delete(this.Uri, this.ServiceClient.Timeout.RoundUpToSeconds());
+            var webRequest = QueueRequest.Delete(this.TransformedAddress, this.ServiceClient.Timeout.RoundUpToSeconds());
             CommonUtils.ApplyRequestOptimizations(webRequest, -1);
 
             this.ServiceClient.Credentials.SignRequest(webRequest);
@@ -1394,6 +1545,42 @@ namespace Microsoft.WindowsAzure.StorageClient
                 var parsedResponse = QueueResponse.GetMessages(webResponse);
                 setResult(MaterializeAndParseResponse(parsedResponse.Messages, this.SelectGetMessageResponse));
             }
+        }
+
+        /// <summary>
+        /// Generate a task sequence for setting the permissions.
+        /// </summary>
+        /// <param name="acl">The permissions to set.</param>
+        /// <returns>A <see cref="TaskSequence"/> that sets the permissions.</returns>
+        private TaskSequence SetPermissionsImpl(QueuePermissions acl)
+        {
+            return this.ServiceClient.GenerateWebTask(
+                QueueRequest.SetAcl(this.TransformedAddress, this.ServiceClient.Timeout.RoundUpToSeconds()),
+                (stream) => QueueRequest.WriteSharedAccessIdentifiers(acl.SharedAccessPolicies, stream),
+                null /* no response header processing */,
+                null /* no response body */);
+        }
+
+        /// <summary>
+        /// Generate a task sequence for getting the permissions.
+        /// </summary>
+        /// <param name="setResult">The result report delegate.</param>
+        /// <returns>A <see cref="TaskSequence"/> that gets the permissions.</returns>
+        private TaskSequence GetPermissionsImpl(Action<QueuePermissions> setResult)
+        {
+            return this.ServiceClient.GenerateWebTask(
+                QueueRequest.GetAcl(this.TransformedAddress, this.ServiceClient.Timeout.RoundUpToSeconds()),
+                null /* no request body */,
+                null /* no response header processing */,
+                (stream) =>
+                {
+                    QueuePermissions queueAcl = new QueuePermissions();
+
+                    // Get the policies from the web response.
+                    QueueResponse.ReadSharedAccessIdentifiers(stream, queueAcl);
+
+                    setResult(queueAcl);
+                });
         }
 
         /// <summary>

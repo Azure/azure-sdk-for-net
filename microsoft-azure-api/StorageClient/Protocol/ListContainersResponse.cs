@@ -220,6 +220,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                     string etag = null;
                                     string name = null;
                                     NameValueCollection metadata = null;
+                                    LeaseStatus leaseStatus = LeaseStatus.Unspecified;
+                                    LeaseState leaseState = LeaseState.Unspecified;
+                                    LeaseDuration leaseDuration = LeaseDuration.Unspecified;
 
                                     // Go until we are out of the container.
                                     bool containersNeedToRead = true;
@@ -257,6 +260,18 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                                     metadata = Response.ParseMetadata(reader);
                                                     containersNeedToRead = false;
                                                     break;
+                                                case Constants.LeaseStatusElement:
+                                                    leaseStatus = Response.GetLeaseStatus(reader.ReadElementContentAsString());
+                                                    containersNeedToRead = false;
+                                                    break;
+                                                case Constants.LeaseStateElement:
+                                                    leaseState = Response.GetLeaseState(reader.ReadElementContentAsString());
+                                                    containersNeedToRead = false;
+                                                    break;
+                                                case Constants.LeaseDurationElement:
+                                                    leaseDuration = Response.GetLeaseDuration(reader.ReadElementContentAsString());
+                                                    containersNeedToRead = false;
+                                                    break;
                                             }
                                         }
                                         else if (reader.NodeType == XmlNodeType.EndElement && reader.Name == Constants.ContainerElement)
@@ -270,13 +285,17 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                                 container.Metadata = metadata;
                                             }
 
-                                            var containerProperties = container.Properties;
+                                            BlobContainerProperties containerProperties = container.Properties;
                                             containerProperties.ETag = etag;
 
                                             if (lastModifiedTime != null)
                                             {
                                                 containerProperties.LastModifiedUtc = (DateTime)lastModifiedTime;
                                             }
+
+                                            containerProperties.LeaseStatus = leaseStatus;
+                                            containerProperties.LeaseState = leaseState;
+                                            containerProperties.LeaseDuration = leaseDuration;
 
                                             break;
                                         }

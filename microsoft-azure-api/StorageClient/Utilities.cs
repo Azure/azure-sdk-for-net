@@ -429,6 +429,89 @@ namespace Microsoft.WindowsAzure.StorageClient
         }
 
         /// <summary>
+        /// Copies the headers and properties from a request into a different request.
+        /// </summary>
+        /// <param name="destinationRequest">The request to copy into.</param>
+        /// <param name="sourceRequest">The request to copy from.</param>
+        internal static void CopyRequestData(HttpWebRequest destinationRequest, HttpWebRequest sourceRequest)
+        {
+            // Copy the request properties
+            destinationRequest.AllowAutoRedirect = sourceRequest.AllowAutoRedirect;
+            destinationRequest.AllowWriteStreamBuffering = sourceRequest.AllowWriteStreamBuffering;
+            destinationRequest.AuthenticationLevel = sourceRequest.AuthenticationLevel;
+            destinationRequest.AutomaticDecompression = sourceRequest.AutomaticDecompression;
+            destinationRequest.CachePolicy = sourceRequest.CachePolicy;
+            destinationRequest.ClientCertificates = sourceRequest.ClientCertificates;
+            destinationRequest.ConnectionGroupName = sourceRequest.ConnectionGroupName;
+            destinationRequest.ContinueDelegate = sourceRequest.ContinueDelegate;
+            destinationRequest.CookieContainer = sourceRequest.CookieContainer;
+            destinationRequest.Credentials = sourceRequest.Credentials;
+            destinationRequest.ImpersonationLevel = sourceRequest.ImpersonationLevel;
+            destinationRequest.KeepAlive = sourceRequest.KeepAlive;
+            destinationRequest.MaximumAutomaticRedirections = sourceRequest.MaximumAutomaticRedirections;
+            destinationRequest.MaximumResponseHeadersLength = sourceRequest.MaximumResponseHeadersLength;
+            destinationRequest.MediaType = sourceRequest.MediaType;
+            destinationRequest.Method = sourceRequest.Method;
+            destinationRequest.Pipelined = sourceRequest.Pipelined;
+            destinationRequest.PreAuthenticate = sourceRequest.PreAuthenticate;
+            destinationRequest.ProtocolVersion = sourceRequest.ProtocolVersion;
+            destinationRequest.Proxy = sourceRequest.Proxy;
+            destinationRequest.ReadWriteTimeout = sourceRequest.ReadWriteTimeout;
+            destinationRequest.SendChunked = sourceRequest.SendChunked;
+            destinationRequest.Timeout = sourceRequest.Timeout;
+            destinationRequest.UnsafeAuthenticatedConnectionSharing = sourceRequest.UnsafeAuthenticatedConnectionSharing;
+            destinationRequest.UseDefaultCredentials = sourceRequest.UseDefaultCredentials;
+
+            // Copy the headers.
+            // Some headers can't be copied over. We check for these headers.
+            foreach (string headerName in sourceRequest.Headers)
+            {
+                switch (headerName)
+                {
+                    case "Accept":
+                        destinationRequest.Accept = sourceRequest.Accept;
+                        break;
+
+                    case "Connection":
+                        destinationRequest.Connection = sourceRequest.Connection;
+                        break;
+
+                    case "Content-Length":
+                        destinationRequest.ContentLength = sourceRequest.ContentLength;
+                        break;
+
+                    case "Content-Type":
+                        destinationRequest.ContentType = sourceRequest.ContentType;
+                        break;
+
+                    case "Expect":
+                        destinationRequest.Expect = sourceRequest.Expect;
+                        break;
+
+                    case "If-Modified-Since":
+                        destinationRequest.IfModifiedSince = sourceRequest.IfModifiedSince;
+                        break;
+
+                    case "Referer":
+                        destinationRequest.Referer = sourceRequest.Referer;
+                        break;
+
+                    case "Transfer-Encoding":
+                        destinationRequest.TransferEncoding = sourceRequest.TransferEncoding;
+                        break;
+
+                    case "User-Agent":
+                        destinationRequest.UserAgent = sourceRequest.UserAgent;
+                        break;
+
+                    default:
+                        destinationRequest.Headers.Add(headerName, sourceRequest.Headers[headerName]);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Translates the extended error.
         /// </summary>
         /// <param name="details">The details.</param>
@@ -490,6 +573,52 @@ namespace Microsoft.WindowsAzure.StorageClient
                     break;
                 case BlobErrorCodeStrings.BlobAlreadyExists:
                     errorCode = StorageErrorCode.BlobAlreadyExists;
+                    break;
+                case BlobErrorCodeStrings.LeaseNotPresentWithBlobOperation:
+                case BlobErrorCodeStrings.LeaseNotPresentWithContainerOperation:
+                case BlobErrorCodeStrings.LeaseNotPresentWithLeaseOperation:
+                    errorCode = StorageErrorCode.LeaseNotPresent;
+                    break;
+                case BlobErrorCodeStrings.LeaseLost:
+                    errorCode = StorageErrorCode.LeaseLost;
+                    break;
+                case BlobErrorCodeStrings.LeaseIdMismatchWithBlobOperation:
+                case BlobErrorCodeStrings.LeaseIdMismatchWithContainerOperation:
+                case BlobErrorCodeStrings.LeaseIdMismatchWithLeaseOperation:
+                    errorCode = StorageErrorCode.LeaseIdMismatch;
+                    break;
+                case BlobErrorCodeStrings.LeaseIdMissing:
+                    errorCode = StorageErrorCode.LeaseIdMissing;
+                    break;
+                case BlobErrorCodeStrings.LeaseAlreadyPresent:
+                    errorCode = StorageErrorCode.LeaseAlreadyPresent;
+                    break;
+                case BlobErrorCodeStrings.LeaseAlreadyBroken:
+                    errorCode = StorageErrorCode.LeaseAlreadyBroken;
+                    break;
+                case BlobErrorCodeStrings.LeaseIsBrokenAndCannotBeRenewed:
+                    errorCode = StorageErrorCode.LeaseIsBrokenAndCannotBeRenewed;
+                    break;
+                case BlobErrorCodeStrings.LeaseIsBreakingAndCannotBeAcquired:
+                    errorCode = StorageErrorCode.LeaseIsBreakingAndCannotBeAcquired;
+                    break;
+                case BlobErrorCodeStrings.LeaseIsBreakingAndCannotBeChanged:
+                    errorCode = StorageErrorCode.LeaseIsBreakingAndCannotBeChanged;
+                    break;
+                case BlobErrorCodeStrings.CopyIdMismatch:
+                    errorCode = StorageErrorCode.CopyIdMismatch;
+                    break;
+                case BlobErrorCodeStrings.NoPendingCopyOperation:
+                    errorCode = StorageErrorCode.NoPendingCopyOperation;
+                    break;
+                case BlobErrorCodeStrings.PendingCopyOperation:
+                    errorCode = StorageErrorCode.PendingCopyOperation;
+                    break;
+                case BlobErrorCodeStrings.CannotVerifyCopySource:
+                    errorCode = StorageErrorCode.CannotVerifyCopySource;
+                    break;
+                case BlobErrorCodeStrings.InfiniteLeaseDurationRequired:
+                    errorCode = StorageErrorCode.InfiniteLeaseDurationRequired;
                     break;
             }
 

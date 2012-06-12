@@ -80,12 +80,18 @@ namespace Microsoft.WindowsAzure.StorageClient
         private BlobRequestOptions currentModifier;
 
         /// <summary>
+        /// The access condition to apply.
+        /// </summary>
+        private AccessCondition accessCondition;
+
+        /// <summary>
         /// Initializes a new instance of the BlobWriteStream class. 
         /// </summary>
         /// <param name="blob">The blob used for uploads.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">The options used for the stream.</param>
         /// <param name="blockSize">The size of the blocks to use.</param>
-        internal BlobWriteStream(CloudBlockBlob blob, BlobRequestOptions options, long blockSize)
+        internal BlobWriteStream(CloudBlockBlob blob, AccessCondition accessCondition, BlobRequestOptions options, long blockSize)
         {
             CommonUtils.AssertNotNull("blob", blob);
             CommonUtils.AssertNotNull("options", options);
@@ -95,6 +101,7 @@ namespace Microsoft.WindowsAzure.StorageClient
             ((BlobWriteStream)this).BlockSize = blockSize;
             this.blockList = new List<string>();
             this.currentModifier = options;
+            this.accessCondition = accessCondition;
             this.canWrite = true;
 
             Random rand = new Random();
@@ -591,7 +598,7 @@ namespace Microsoft.WindowsAzure.StorageClient
                            putBlockList.Add(new PutBlockListItem(id, BlockSearchMode.Uncommitted));
                        }
 
-                       return this.Blob.ToBlockBlob.UploadBlockList(putBlockList, this.currentModifier);
+                       return this.Blob.ToBlockBlob.UploadBlockList(putBlockList, this.accessCondition, this.currentModifier);
                    },
                    this.currentModifier.RetryPolicy);
                 yield return task;
@@ -613,7 +620,7 @@ namespace Microsoft.WindowsAzure.StorageClient
         {
             this.SetBlobMD5();
 
-            var task = this.Blob.ToBlockBlob.UploadFullBlobWithRetryImpl(this.blockBuffer, this.currentModifier);
+            var task = this.Blob.ToBlockBlob.UploadFullBlobWithRetryImpl(this.blockBuffer, this.accessCondition, this.currentModifier);
             yield return task;
             var result = task.Result;
 
@@ -642,7 +649,7 @@ namespace Microsoft.WindowsAzure.StorageClient
 
             // Upload the current data as block         
             string hash = Utilities.ExtractMD5ValueFromBlockID(blockID);
-            var task = this.Blob.ToBlockBlob.UploadBlockWithRetry(this.blockBuffer, blockID, hash, this.currentModifier);
+            var task = this.Blob.ToBlockBlob.UploadBlockWithRetry(this.blockBuffer, blockID, hash, this.accessCondition, this.currentModifier);
             yield return task;
             var result = task.Result;
 

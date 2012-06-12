@@ -21,6 +21,7 @@
 namespace Microsoft.WindowsAzure.StorageClient.Protocol
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Diagnostics;
     using System.Globalization;
@@ -231,6 +232,53 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
+        /// Constructs a web request to return the ACL for a cloud resource.
+        /// </summary>
+        /// <param name="uri">The absolute URI to the resource.</param>
+        /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="builder">An optional query builder to use.</param>
+        /// <returns><returns>A web request to use to perform the operation.</returns></returns>
+        internal static HttpWebRequest GetAcl(Uri uri, int timeout, UriQueryBuilder builder)
+        {
+            if (builder == null)
+            {
+                builder = new UriQueryBuilder();
+            }
+
+            builder.Add(Constants.QueryConstants.Component, "acl");
+
+            HttpWebRequest request = CreateWebRequest(uri, timeout, builder);
+
+            request.Method = "GET";
+
+            return request;
+        }
+
+        /// <summary>
+        /// Constructs a web request to set the ACL for a cloud resource.
+        /// </summary>
+        /// <param name="uri">The absolute URI to the resource.</param>
+        /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="builder">An optional query builder to use.</param>
+        /// <returns><returns>A web request to use to perform the operation.</returns></returns>
+        internal static HttpWebRequest SetAcl(Uri uri, int timeout, UriQueryBuilder builder)
+        {
+            if (builder == null)
+            {
+                builder = new UriQueryBuilder();
+            }
+
+            builder.Add(Constants.QueryConstants.Component, "acl");
+
+            HttpWebRequest request = CreateWebRequest(uri, timeout, builder);
+
+            request.ContentLength = 0;
+            request.Method = "PUT";
+
+            return request;
+        }
+
+        /// <summary>
         /// Writes service properties to a stream, formatted in XML.
         /// </summary>
         /// <param name="properties">The service properties to format and write to the stream.</param>
@@ -271,6 +319,12 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             string dateString = ConvertDateTimeToHttpString(DateTime.UtcNow);
             request.Headers.Add("x-ms-date", dateString);
 
+            // Add the key name header to the request, if applicable
+            if (!string.IsNullOrEmpty(credentials.KeyName))
+            {
+                request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, credentials.KeyName);
+            }
+
             // Compute the signature and add the authentication scheme
             CanonicalizationStrategy canonicalizer = CanonicalizationStrategyFactory.GetBlobQueueFullCanonicalizationStrategy(request);
 
@@ -292,6 +346,12 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             // Add the date header to the request
             string dateString = ConvertDateTimeToHttpString(DateTime.UtcNow);
             request.Headers.Add("x-ms-date", dateString);
+
+            // Add the key name header to the request, if applicable
+            if (!string.IsNullOrEmpty(credentials.KeyName))
+            {
+                request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, credentials.KeyName);
+            }
 
             // Compute the signature and add the authentication scheme
             CanonicalizationStrategy canonicalizer =
@@ -345,6 +405,12 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             string dateString = ConvertDateTimeToHttpString(DateTime.UtcNow);
             request.Headers.Add("x-ms-date", dateString);
 
+            // Add the key name header to the request, if applicable
+            if (!string.IsNullOrEmpty(credentials.KeyName))
+            {
+                request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, credentials.KeyName);
+            }
+
             // Compute the signature and add the authentication scheme
             CanonicalizationStrategy canonicalizer =
                 CanonicalizationStrategyFactory.GetTableLiteCanonicalizationStrategy(request);
@@ -369,6 +435,12 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             string dateString = ConvertDateTimeToHttpString(DateTime.UtcNow);
             request.Headers.Add("x-ms-date", dateString);
 
+            // Add the key name header to the request, if applicable
+            if (!string.IsNullOrEmpty(credentials.KeyName))
+            {
+                request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, credentials.KeyName);
+            }
+
             // Compute the signature and add the authentication scheme
             CanonicalizationStrategy canonicalizer =
                 CanonicalizationStrategyFactory.GetBlobQueueLiteCanonicalizationStrategy(request);
@@ -382,24 +454,51 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
-        /// Adds the lease id.
+        /// Adds a proposed lease id to a request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="leaseId">The lease id.</param>
-        internal static void AddLeaseId(HttpWebRequest request, string leaseId)
+        /// <param name="proposedLeaseId">The proposed lease id.</param>
+        internal static void AddProposedLeaseId(HttpWebRequest request, string proposedLeaseId)
         {
-            if (leaseId != null)
-            {
-                AddOptionalHeader(request, "x-ms-lease-id", leaseId);
-            }
+            AddOptionalHeader(request, Constants.HeaderConstants.ProposedLeaseIdHeader, proposedLeaseId);
         }
 
         /// <summary>
-        /// Adds the optional header.
+        /// Adds a lease duration to a request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="leaseDuration">The lease duration.</param>
+        internal static void AddLeaseDuration(HttpWebRequest request, int? leaseDuration)
+        {
+            AddOptionalHeader(request, Constants.HeaderConstants.LeaseDurationHeader, leaseDuration);
+        }
+
+        /// <summary>
+        /// Adds a lease break period to a request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="leaseBreakPeriod">The lease break period.</param>
+        internal static void AddLeaseBreakPeriod(HttpWebRequest request, int? leaseBreakPeriod)
+        {
+            AddOptionalHeader(request, Constants.HeaderConstants.LeaseBreakPeriodHeader, leaseBreakPeriod);
+        }
+
+        /// <summary>
+        /// Adds a lease action to a request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="leaseAction">The lease action.</param>
+        internal static void AddLeaseAction(HttpWebRequest request, LeaseAction leaseAction)
+        {
+            request.Headers.Add(Constants.HeaderConstants.LeaseActionHeader, leaseAction.ToString().ToLower());
+        }
+
+        /// <summary>
+        /// Adds an optional header to a request.
         /// </summary>
         /// <param name="request">The web request.</param>
-        /// <param name="name">The metadata name.</param>
-        /// <param name="value">The metadata value.</param>
+        /// <param name="name">The header name.</param>
+        /// <param name="value">The header value.</param>
         internal static void AddOptionalHeader(HttpWebRequest request, string name, string value)
         {
             if (!string.IsNullOrEmpty(value))
@@ -409,50 +508,82 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         }
 
         /// <summary>
-        /// Adds the conditional.
+        /// Adds an optional header to a request.
         /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="header">The header.</param>
-        /// <param name="etag">The resource ETag.</param>
-        internal static void AddConditional(HttpWebRequest request, ConditionHeaderKind header, string etag)
+        /// <param name="request">The web request.</param>
+        /// <param name="name">The header name.</param>
+        /// <param name="value">The header value.</param>
+        internal static void AddOptionalHeader(HttpWebRequest request, string name, int? value)
         {
-            if (header == ConditionHeaderKind.IfModifiedSince || header == ConditionHeaderKind.IfUnmodifiedSince)
+            if (value.HasValue)
             {
-                throw new InvalidOperationException(SR.ConditionalRequiresDateTime);
-            }
-
-            switch (header)
-            {
-                case ConditionHeaderKind.IfMatch:
-                    request.Headers[HttpRequestHeader.IfMatch] = etag;
-                    break;
-                case ConditionHeaderKind.IfNoneMatch:
-                    request.Headers[HttpRequestHeader.IfNoneMatch] = etag;
-                    break;
+                request.Headers.Add(name, value.Value.ToString());
             }
         }
 
         /// <summary>
-        /// Adds the conditional.
+        /// Applies an access condition to a web request.
         /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="header">The header.</param>
-        /// <param name="dateTime">The date time.</param>
-        internal static void AddConditional(HttpWebRequest request, ConditionHeaderKind header, DateTime dateTime)
+        /// <param name="accessCondition">The access condition to apply, or null if no access condition is to be applied.</param>
+        /// <param name="request">The web request to apply the condition to.</param>
+        /// <param name="applyToSource">Whether to apply the access condition to the source of an operation.</param>
+        internal static void ApplyAccessCondition(AccessCondition accessCondition, HttpWebRequest request, bool applyToSource)
         {
-            if (header == ConditionHeaderKind.IfMatch || header == ConditionHeaderKind.IfNoneMatch)
+            if (accessCondition != null)
             {
-                throw new InvalidOperationException(SR.ConditionalRequiresETag);
+                accessCondition.ApplyCondition(request, applyToSource);
+            }
+        }
+
+        /// <summary>
+        /// Writes a collection of shared access policies to the specified stream in XML format.
+        /// </summary>
+        /// <param name="sharedAccessPolicies">A collection of shared access policies.</param>
+        /// <param name="outputStream">An output stream.</param>
+        /// <param name="writePolicyXml">A delegate that writes a policy to an XML writer.</param>
+        /// <typeparam name="T">The type of policy to write.</typeparam>
+        internal static void WriteSharedAccessIdentifiers<T>(Dictionary<string, T> sharedAccessPolicies, Stream outputStream, Action<T, XmlWriter> writePolicyXml)
+        {
+            CommonUtils.AssertNotNull("sharedAccessPolicies", sharedAccessPolicies);
+            CommonUtils.AssertNotNull("outputStream", outputStream);
+
+            if (sharedAccessPolicies.Count > Constants.MaxSharedAccessPolicyIdentifiers)
+            {
+                string errorMessage = string.Format(
+                    CultureInfo.CurrentCulture,
+                    SR.TooManyPolicyIdentifiers,
+                    sharedAccessPolicies.Count,
+                    Constants.MaxSharedAccessPolicyIdentifiers);
+
+                throw new ArgumentOutOfRangeException("sharedAccessPolicies", errorMessage);
             }
 
-            switch (header)
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Encoding = Encoding.UTF8;
+
+            using (XmlWriter writer = XmlWriter.Create(outputStream, settings))
             {
-                case ConditionHeaderKind.IfModifiedSince:
-                    request.Headers[HttpRequestHeader.IfModifiedSince] = dateTime.ToString("R", CultureInfo.InvariantCulture);
-                    break;
-                case ConditionHeaderKind.IfUnmodifiedSince:
-                    request.Headers[HttpRequestHeader.IfUnmodifiedSince] = dateTime.ToString("R", CultureInfo.InvariantCulture);
-                    break;
+                writer.WriteStartElement(Constants.SignedIdentifiers);
+
+                foreach (string key in sharedAccessPolicies.Keys)
+                {
+                    writer.WriteStartElement(Constants.SignedIdentifier);
+
+                    // Set the identifier
+                    writer.WriteElementString(Constants.Id, key);
+
+                    // Set the permissions
+                    writer.WriteStartElement(Constants.AccessPolicy);
+
+                    T policy = sharedAccessPolicies[key];
+
+                    writePolicyXml(policy, writer);
+
+                    writer.WriteEndElement(); // AccessPolicy
+                    writer.WriteEndElement(); // SignedIdentifier
+                }
+
+                writer.WriteEndDocument();
             }
         }
 

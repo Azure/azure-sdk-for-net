@@ -26,7 +26,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
     /// Contains storage constants.
     /// </summary>
     internal class Constants
-    {        
+    {
         /// <summary>
         /// Maximum number of shared access policy identifiers supported by server.
         /// </summary>
@@ -303,25 +303,110 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         internal const string BlobElement = "Blob";
 
         /// <summary>
-        /// Constant signalling a page blob.
+        /// XML element for copy ID.
+        /// </summary>
+        internal const string CopyIdElement = "CopyId";
+
+        /// <summary>
+        /// XML element for copy status.
+        /// </summary>
+        internal const string CopyStatusElement = "CopyStatus";
+
+        /// <summary>
+        /// XML element for copy source.
+        /// </summary>
+        internal const string CopySourceElement = "CopySource";
+
+        /// <summary>
+        /// XML element for copy progress.
+        /// </summary>
+        internal const string CopyProgressElement = "CopyProgress";
+
+        /// <summary>
+        /// XML element for copy completion time.
+        /// </summary>
+        internal const string CopyCompletionTimeElement = "CopyCompletionTime";
+
+        /// <summary>
+        /// XML element for copy status description.
+        /// </summary>
+        internal const string CopyStatusDescriptionElement = "CopyStatusDescription";
+
+        /// <summary>
+        /// Constant signaling a page blob.
         /// </summary>
         internal const string PageBlobValue = "PageBlob";
 
         /// <summary>
-        /// Constant signalling a block blob.
+        /// Constant signaling a block blob.
         /// </summary>
         internal const string BlockBlobValue = "BlockBlob";
 
         /// <summary>
-        /// Constant signalling the blob is locked.
+        /// Constant signaling the blob is locked.
         /// </summary>
-        internal const string LockedValue = "Locked";
+        internal const string LockedValue = "locked";
 
         /// <summary>
-        /// Constant signalling the blob is unlocked.
+        /// Constant signaling the blob is unlocked.
         /// </summary>
-        internal const string UnlockedValue = "Unlocked";
+        internal const string UnlockedValue = "unlocked";
 
+        /// <summary>
+        /// Constant signaling the resource is available for leasing.
+        /// </summary>
+        internal const string LeaseAvailableValue = "available";
+
+        /// <summary>
+        /// Constant signaling the resource is leased.
+        /// </summary>
+        internal const string LeasedValue = "leased";
+
+        /// <summary>
+        /// Constant signaling the resource's lease has expired.
+        /// </summary>
+        internal const string LeaseExpiredValue = "expired";
+
+        /// <summary>
+        /// Constant signaling the resource's lease is breaking.
+        /// </summary>
+        internal const string LeaseBreakingValue = "breaking";
+
+        /// <summary>
+        /// Constant signaling the resource's lease is broken.
+        /// </summary>
+        internal const string LeaseBrokenValue = "broken";
+
+        /// <summary>
+        /// Constant signaling the resource's lease is infinite.
+        /// </summary>
+        internal const string LeaseInfiniteValue = "infinite";
+
+        /// <summary>
+        /// Constant signaling the resource's lease is fixed (finite).
+        /// </summary>
+        internal const string LeaseFixedValue = "fixed";
+
+        /// <summary>
+        /// Constant for a pending copy.
+        /// </summary>
+        internal const string CopyPendingValue = "pending";
+
+        /// <summary>
+        /// Constant for a successful copy.
+        /// </summary>
+        internal const string CopySuccessValue = "success";
+
+        /// <summary>
+        /// Constant for an aborted copy.
+        /// </summary>
+        internal const string CopyAbortedValue = "aborted";
+
+        /// <summary>
+        /// Constant for a failed copy.
+        /// </summary>
+        internal const string CopyFailedValue = "failed";
+        
         /// <summary>
         /// XML element for blob types.
         /// </summary>
@@ -331,6 +416,16 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         /// XML element for the lease status.
         /// </summary>
         internal const string LeaseStatusElement = "LeaseStatus";
+
+        /// <summary>
+        /// XML element for the lease status.
+        /// </summary>
+        internal const string LeaseStateElement = "LeaseState";
+
+        /// <summary>
+        /// XML element for the lease status.
+        /// </summary>
+        internal const string LeaseDurationElement = "LeaseDuration";
 
         /// <summary>
         /// XML element for snapshots.
@@ -641,11 +736,16 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             /// Header that specifies lease ID.
             /// </summary>
             internal const string LeaseIdHeader = PrefixForStorageHeader + "lease-id";
-
+            
             /// <summary>
             /// Header that specifies lease status.
             /// </summary>
             internal const string LeaseStatus = PrefixForStorageHeader + "lease-status";
+
+            /// <summary>
+            /// Header that specifies lease status.
+            /// </summary>
+            internal const string LeaseState = PrefixForStorageHeader + "lease-state";
 
             /// <summary>
             /// Header that specifies page write mode.
@@ -674,8 +774,9 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
 
             /// <summary>
             /// Current storage version header value.
+            /// Every time this version changes, assembly version needs to be updated as well.
             /// </summary>
-            internal const string TargetStorageVersion = "2011-08-18";
+            internal const string TargetStorageVersion = "2012-02-12";
 
             /// <summary>
             /// Specifies the page blob type.
@@ -700,17 +801,82 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             /// <summary>
             /// Specifies the value to use for UserAgent header.
             /// </summary>
-            internal const string UserAgent = "WA-Storage/1.7.0";
+            internal const string UserAgent = "WA-Storage/1.7.1";
 
             /// <summary>
-            /// Specifies the pop receipt for a message.
+            /// Header that specifies the pop receipt for a message.
             /// </summary>
             internal const string PopReceipt = PrefixForStorageHeader + "popreceipt";
 
             /// <summary>
-            /// Specifies the next visible time for a message.
+            /// Header that specifies the next visible time for a message.
             /// </summary>
             internal const string NextVisibleTime = PrefixForStorageHeader + "time-next-visible";
+
+            /// <summary>
+            /// Header that specifies the lease action to perform.
+            /// </summary>
+            internal const string LeaseActionHeader = PrefixForStorageHeader + "lease-action";
+
+            /// <summary>
+            /// Header that specifies the proposed lease ID for a leasing operation.
+            /// </summary>
+            internal const string ProposedLeaseIdHeader = PrefixForStorageHeader + "proposed-lease-id";
+
+            /// <summary>
+            /// Header that specifies the duration of a lease.
+            /// </summary>
+            internal const string LeaseDurationHeader = PrefixForStorageHeader + "lease-duration";
+
+            /// <summary>
+            /// Header that specifies the break period of a lease.
+            /// </summary>
+            internal const string LeaseBreakPeriodHeader = PrefixForStorageHeader + "lease-break-period";
+
+            /// <summary>
+            /// Header that specifies the remaining lease time.
+            /// </summary>
+            internal const string LeaseTimeHeader = PrefixForStorageHeader + "lease-time";
+
+            /// <summary>
+            /// Header that specifies the key name for explicit keys.
+            /// </summary>
+            internal const string KeyNameHeader = PrefixForStorageHeader + "key-name";
+
+            /// <summary>
+            /// Header that specifies the copy ID.
+            /// </summary>
+            internal const string CopyIdHeader = PrefixForStorageHeader + "copy-id";
+
+            /// <summary>
+            /// Header that specifies the copy last modified time.
+            /// </summary>
+            internal const string CopyCompletionTimeHeader = PrefixForStorageHeader + "copy-completion-time";
+
+            /// <summary>
+            /// Header that specifies the copy status.
+            /// </summary>
+            internal const string CopyStatusHeader = PrefixForStorageHeader + "copy-status";
+
+            /// <summary>
+            /// Header that specifies the copy progress.
+            /// </summary>
+            internal const string CopyProgressHeader = PrefixForStorageHeader + "copy-progress";
+
+            /// <summary>
+            /// Header that specifies a copy error message.
+            /// </summary>
+            internal const string CopyDescriptionHeader = PrefixForStorageHeader + "copy-status-description";
+
+            /// <summary>
+            /// Header that specifies the copy action.
+            /// </summary>
+            internal const string CopyActionHeader = PrefixForStorageHeader + "copy-action";
+
+            /// <summary>
+            /// The value of the copy action header that signifies an abort operation.
+            /// </summary>
+            internal const string CopyActionAbort = "abort";
         }
 
         /// <summary>
@@ -739,14 +905,44 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             internal const string SignedResource = "sr";
 
             /// <summary>
+            /// Query component for the SAS table name.
+            /// </summary>
+            internal const string SasTableName = "tn";
+
+            /// <summary>
             /// Query component for the signed SAS permissions.
             /// </summary>
             internal const string SignedPermissions = "sp";
 
             /// <summary>
+            /// Query component for the SAS start partition key.
+            /// </summary>
+            internal const string StartPartitionKey = "spk";
+
+            /// <summary>
+            /// Query component for the SAS start row key.
+            /// </summary>
+            internal const string StartRowKey = "srk";
+
+            /// <summary>
+            /// Query component for the SAS end partition key.
+            /// </summary>
+            internal const string EndPartitionKey = "epk";
+
+            /// <summary>
+            /// Query component for the SAS end row key.
+            /// </summary>
+            internal const string EndRowKey = "erk";
+
+            /// <summary>
             /// Query component for the signed SAS identifier.
             /// </summary>
             internal const string SignedIdentifier = "si";
+
+            /// <summary>
+            /// Query component for the signing SAS key.
+            /// </summary>
+            internal const string SignedKey = "sk";
 
             /// <summary>
             /// Query component for the signed SAS version.
@@ -782,6 +978,11 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
             /// Query component for the operation (component) to access.
             /// </summary>
             internal const string Component = "comp";
+
+            /// <summary>
+            /// Query component for the copy ID.
+            /// </summary>
+            internal const string CopyId = "copyid";
         }
     }
 }
