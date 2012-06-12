@@ -1,0 +1,11 @@
+*.exe
+*.dll
+*.pdb
+*.suo
+*.vsmdi
+*.vssscc
+*.vspscc
+bin/
+obj/
+TestResults/
+
