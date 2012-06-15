@@ -159,7 +159,7 @@ namespace APITests
             TestContext.WriteLine("To make sure the certificate works, the rest of the API calls in this test will use the new certificate.");
             TestContext.WriteLine("Instantiating new AzureHttpClient with cert with thumbprint: {0}", cert.Thumbprint);
             //make sure the cert works, call the rest of the APIs using this cert!
-            AzureHttpClient newClient = new AzureHttpClient(Utilities.SubscriptionId, cert);
+            AzureHttpClient newClient = new AzureHttpClient(new Guid(Utilities.subscriptionId), cert);
 
             TestContext.WriteLine("Calling ListManagmentCertificate with new certificate.");
             var task = newClient.ListManagementCertificatesAsync(token);

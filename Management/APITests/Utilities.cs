@@ -19,16 +19,17 @@ namespace APITests
     //create certs, etc.    
     static class Utilities
     {
-        internal static readonly Guid SubscriptionId = new Guid("c05a8d41-95fc-40f7-b16f-9a5b8e86a938");
+        internal const string subscriptionId = "[Your Subscription ID here.]";
+        internal const string certificateThumbprint = "[Your Management cert thumbprint here.]";
         internal static AzureHttpClient CreateAzureHttpClient()
         {
-            //TODO: Read this from somewhere, so it isn't just mine...
-            string thumbprint = "5d 32 e2 84 aa e5 a8 2b c9 85 64 9b ca c5 cf 91 f2 04 43 a5";
+            string thumbprint = certificateThumbprint;
+            Guid _subscriptionId = new Guid(subscriptionId);
 
             X509Certificate2 cert = LoadCertificate(thumbprint);
 
             //instantiate client
-            return new AzureHttpClient(SubscriptionId, cert);
+            return new AzureHttpClient(_subscriptionId, cert);
         }
 
         internal static X509Certificate2 LoadCertificate(string thumbprint)
