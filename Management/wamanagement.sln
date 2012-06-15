@@ -13,18 +13,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.WindowsAzure.ManagmentClient", "Microsoft.WindowsAzure.ManagementClient\Microsoft.WindowsAzure.ManagmentClient.csproj", "{A08AA245-3427-401E-88F2-96216289CFB8}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tq.tfspreview.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = APITests\\APITests.csproj
-		SccProjectName1 = APITests
-		SccLocalPath1 = APITests
-		SccProjectUniqueName2 = Microsoft.WindowsAzure.ManagementClient\\Microsoft.WindowsAzure.ManagmentClient.csproj
-		SccProjectName2 = Microsoft.WindowsAzure.ManagementClient
-		SccLocalPath2 = Microsoft.WindowsAzure.ManagementClient
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = wamanagement.vsmdi
 	EndGlobalSection
