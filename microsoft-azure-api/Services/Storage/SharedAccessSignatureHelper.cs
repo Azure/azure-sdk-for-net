@@ -46,25 +46,38 @@ namespace Microsoft.WindowsAzure
             string resourceName,
             CloudBlobClient client)
         {
-            CommonUtils.AssertNotNull("policy", policy);
             CommonUtils.AssertNotNullOrEmpty("resourceName", resourceName);
             CommonUtils.AssertNotNull("client", client);
 
-            ////StringToSign = signedpermissions + "\n"
-            ////               signedstart + "\n"
-            ////               signedexpiry + "\n"
-            ////               canonicalizedresource + "\n"
-            ////               signedidentifier
-            ////HMAC-SHA256(URL.Decode(UTF8.Encode(StringToSign)))
+            string stringToSign = null;
+            if (policy != null)
+            {
+                ////StringToSign = signedpermissions + "\n"
+                ////               signedstart + "\n"
+                ////               signedexpiry + "\n"
+                ////               canonicalizedresource + "\n"
+                ////               signedidentifier
+                ////HMAC-SHA256(URL.Decode(UTF8.Encode(StringToSign)))
 
-            string stringToSign = string.Format(
-                "{0}\n{1}\n{2}\n{3}\n{4}",
-                SharedAccessPolicy.PermissionsToString(policy.Permissions),
-                GetDateTimeOrEmpty(policy.SharedAccessStartTime),
-                GetDateTimeOrEmpty(policy.SharedAccessExpiryTime),
-                resourceName,
-                groupPolicyIdentifier);
-
+                stringToSign = string.Format(
+                    "{0}\n{1}\n{2}\n{3}\n{4}",
+                    SharedAccessPolicy.PermissionsToString(policy.Permissions),
+                    GetDateTimeOrEmpty(policy.SharedAccessStartTime),
+                    GetDateTimeOrEmpty(policy.SharedAccessExpiryTime),
+                    resourceName,
+                    groupPolicyIdentifier);
+            }
+            else
+            {
+                stringToSign = string.Format(
+                    "{0}\n{1}\n{2}\n{3}\n{4}",
+                    string.Empty,
+                    string.Empty,
+                    string.Empty,
+                    resourceName,
+                    groupPolicyIdentifier);
+            }
+            
             string signature = client.Credentials.ComputeHmac(stringToSign);
 
             return signature;
@@ -84,23 +97,26 @@ namespace Microsoft.WindowsAzure
             string resourceType,
             string signature)
         {
-            CommonUtils.AssertNotNull("policy", policy);
             CommonUtils.AssertNotNullOrEmpty("resourceType", resourceType);
             CommonUtils.AssertNotNull("signature", signature);
 
             UriQueryBuilder builder = new UriQueryBuilder();
 
             // FUTURE blob for blob and container for container
-            string permissions = SharedAccessPolicy.PermissionsToString(policy.Permissions);
-            if (String.IsNullOrEmpty(permissions))
+            if (policy != null)
             {
-                permissions = null;
+                string permissions = SharedAccessPolicy.PermissionsToString(policy.Permissions);
+                if (String.IsNullOrEmpty(permissions))
+                {
+                    permissions = null;
+                }
+
+                AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedStart, GetDateTimeOrNull(policy.SharedAccessStartTime));
+                AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedExpiry, GetDateTimeOrNull(policy.SharedAccessExpiryTime));
+                AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedPermissions, permissions);
             }
 
-            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedStart, GetDateTimeOrNull(policy.SharedAccessStartTime));
-            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedExpiry, GetDateTimeOrNull(policy.SharedAccessExpiryTime));
             builder.Add(Constants.QueryConstants.SignedResource, resourceType);
-            AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedPermissions, permissions);
             AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedIdentifier, groupPolicyIdentifier);
             AddEscapedIfNotNull(builder, Constants.QueryConstants.Signature, signature);
 
