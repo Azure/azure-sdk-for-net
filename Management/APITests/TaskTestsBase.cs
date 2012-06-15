@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
-using Windows.Azure.Management.v1_7;
+using Microsoft.WindowsAzure.ManagementClient.v1_7;
 
 namespace APITests
 {
@@ -36,23 +36,23 @@ namespace APITests
         [TestInitialize]
         public void BaseInit()
         {
-            this.TokenSource = new CancellationTokenSource();
-            this.TestClient = Utilities.CreateAzureHttpClient();
+            TokenSource = new CancellationTokenSource();
+            TestClient = Utilities.CreateAzureHttpClient();
         }
 
         [TestCleanup]
         public void BaseCleanup()
         {
-            if (this.TokenSource != null)
+            if (TokenSource != null)
             {
-                this.TokenSource.Dispose();
-                this.TokenSource = null;
+                TokenSource.Dispose();
+                TokenSource = null;
             }
 
-            if (this.TestClient != null)
+            if (TestClient != null)
             {
-                this.TestClient.Dispose();
-                this.TestClient = null;
+                TestClient.Dispose();
+                TestClient = null;
             }
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using Windows.Azure.Management.v1_7;
+using Microsoft.WindowsAzure.ManagementClient.v1_7;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
@@ -19,12 +19,11 @@ namespace APITests
     //create certs, etc.    
     static class Utilities
     {
-        internal static readonly Guid SubscriptionId = new Guid("[Your Subscription ID Goes Here]");
-        internal const string mgmtCertThumbprint = "[Thumbprint of your Mgmt Cert goes here]";
+        internal static readonly Guid SubscriptionId = new Guid("c05a8d41-95fc-40f7-b16f-9a5b8e86a938");
         internal static AzureHttpClient CreateAzureHttpClient()
         {
             //TODO: Read this from somewhere, so it isn't just mine...
-            String thumbprint = mgmtCertThumbprint;
+            string thumbprint = "5d 32 e2 84 aa e5 a8 2b c9 85 64 9b ca c5 cf 91 f2 04 43 a5";
 
             X509Certificate2 cert = LoadCertificate(thumbprint);
 
@@ -32,7 +31,7 @@ namespace APITests
             return new AzureHttpClient(SubscriptionId, cert);
         }
 
-        internal static X509Certificate2 LoadCertificate(String thumbprint)
+        internal static X509Certificate2 LoadCertificate(string thumbprint)
         {
             X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
 
@@ -40,17 +39,17 @@ namespace APITests
 
             X509Certificate2Collection certs = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, false);
 
-            if (certs.Count == 0) throw new FileNotFoundException(String.Format("Certificate with thumbprint {0} does not exist", thumbprint));
+            if (certs.Count == 0) throw new FileNotFoundException(string.Format("Certificate with thumbprint {0} does not exist", thumbprint));
 
             return certs[0];
         }
 
         //This *always* calls the GetOperationStatus API
-        internal static Action<Task<String>> PollUntilComplete(AzureHttpClient client, String operationName, TestContext context, CancellationToken token)
+        internal static Action<Task<string>> PollUntilComplete(AzureHttpClient client, string operationName, TestContext context, CancellationToken token)
         {
             return (resultTask) =>
                 {
-                    String requestId = resultTask.Result;
+                    string requestId = resultTask.Result;
                     context.WriteLine("Polling Operation: \"{0}.\" Request id is: {1}", operationName, requestId);
                     int curWaitTime = 1, lastWaitTime = 1;
                     Task<OperationStatusInfo> opStatus;
@@ -73,21 +72,21 @@ namespace APITests
         }
 
         //this *always* calls GetStorageAccountProperties and GetStorageAccountKeys
-        internal static Uri UploadToBlob(AzureHttpClient client, TestContext context, String storageAccountName, String fileToUpload, CancellationToken token)
+        internal static Uri UploadToBlob(AzureHttpClient client, TestContext context, string storageAccountName, string fileToUpload, CancellationToken token)
         {
             //container names must be all lowercase...
             //this is the same container vs uses...
             const string blobUploadContainer = "vsdeploy";
-            const Int32 MB = 1048576;
-            const Int32 kb = 1024;
-            const Int32 MaxMBs = 600; //package can't be larger than 600 MB
-            const Int64 MaxFileSize = MB * MaxMBs;
-            const Int32 MinsPerMB = 3;
+            const int MB = 1048576;
+            const int kb = 1024;
+            const int MaxMBs = 600; //package can't be larger than 600 MB
+            const long MaxFileSize = MB * MaxMBs;
+            const int MinsPerMB = 3;
 
             Uri blob, queue, table;
 
             context.WriteLine("Preparing to upload file {0} to storage account {1}.", fileToUpload, storageAccountName);
-            String fileName = Path.GetFileName(fileToUpload);
+            string fileName = Path.GetFileName(fileToUpload);
 
             context.WriteLine("Calling GetStorageAccountProperties and GetStorageAccountKeys for storage account {0}", storageAccountName);
             var storagePropsTask = client.GetStorageAccountPropertiesAsync(storageAccountName, token);
@@ -102,7 +101,7 @@ namespace APITests
 
             using (FileStream stream = File.Open(fileToUpload, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                Int64 fileSize = stream.Length;
+                long fileSize = stream.Length;
                 double MBs = ((double)fileSize) / MB;
 
                 context.WriteLine("Ready to upload file {0}, file size {1}", fileName, MBs.ToString("F6", CultureInfo.CurrentCulture));
@@ -111,7 +110,7 @@ namespace APITests
 
                 if (fileSize > MaxFileSize)
                 {
-                    throw new ArgumentException(String.Format("File {0} is too large.", fileName), "FileToUpload");
+                    throw new ArgumentException(string.Format("File {0} is too large.", fileName), "FileToUpload");
                 }
 
                 context.WriteLine("Instantiating Cloud Storage Account object.");
@@ -166,7 +165,7 @@ namespace APITests
             }
         }
 
-        internal static void DeleteBlob(String storageAccountName, Uri blobUri, AzureHttpClient client, TestContext context, CancellationToken token)
+        internal static void DeleteBlob(string storageAccountName, Uri blobUri, AzureHttpClient client, TestContext context, CancellationToken token)
         {
             //this *always* calls GetStorageAccountProperties and GetStorageAccountKeys
             Uri blob, queue, table;
@@ -225,7 +224,7 @@ namespace APITests
             Uri httpsUri = endpoint;
             if (endpoint.Scheme == "http")
             {
-                String newUri = endpoint.ToString();
+                string newUri = endpoint.ToString();
                 newUri = "https" + newUri.Substring(4);
                 httpsUri = new Uri(newUri);
             }

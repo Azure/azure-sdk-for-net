@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
-using Windows.Azure.Management.v1_7;
+using Microsoft.WindowsAzure.ManagementClient.v1_7;
 using System.Threading;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -33,22 +33,22 @@ namespace APITests
             //so subsequent calls in the rest of the test can use the same ones
             //It always exercises the CreateCloudService and
             //ListLocations APIs, and 50% of the time exercises the CreateAffinityGroup API
-            this.TestContext.WriteLine("Entering CreateCloudServiceForTest Method");
-            CancellationToken token = this.TokenSource.Token;
-            this.TestContext.WriteLine("Generating Name and Label for new cloud service");
-            this.CloudServiceName = Guid.NewGuid().ToString("N");
-            this.CloudServiceLabel = this.CloudServiceName + "_TestService";
-            this.TestContext.WriteLine("Generated Name and Label are: {0}, {1}", this.CloudServiceName, this.CloudServiceLabel);
+            TestContext.WriteLine("Entering CreateCloudServiceForTest Method");
+            CancellationToken token = TokenSource.Token;
+            TestContext.WriteLine("Generating Name and Label for new cloud service");
+            CloudServiceName = Guid.NewGuid().ToString("N");
+            CloudServiceLabel = CloudServiceName + "_TestService";
+            TestContext.WriteLine("Generated Name and Label are: {0}, {1}", CloudServiceName, CloudServiceLabel);
 
-            this.TestContext.WriteLine("Listing available locations:");
+            TestContext.WriteLine("Listing available locations:");
             var listTask = TestClient.ListLocationsAsync(token);
-            this.TestContext.WriteLine(listTask.Result.ToString());
+            TestContext.WriteLine(listTask.Result.ToString());
 
-            this.TestContext.WriteLine("Choosing a location at random");
+            TestContext.WriteLine("Choosing a location at random");
             Random r = new Random();
             int idx = r.Next(listTask.Result.Count);
-            String locationToUse = listTask.Result[idx].Name;
-            this.TestContext.WriteLine("Chose Location {0} randomly", locationToUse);
+            string locationToUse = listTask.Result[idx].Name;
+            TestContext.WriteLine("Chose Location {0} randomly", locationToUse);
 
             //TODO: Deal with affinity groups half the time...
             bool doAffinityGroup = r.Next(2) == 1;
@@ -56,33 +56,33 @@ namespace APITests
             if (doAffinityGroup)
             {
                 //create an affinity group with a unique name
-                String affinityGroupName = Guid.NewGuid().ToString("N");
-                String affinityGroupLabel = affinityGroupName + "_TestAffinityGroup";
-                this.TestContext.WriteLine("Randomly chose to create an affinity group, with name {0} and label {1}.", affinityGroupName, affinityGroupLabel);
+                string affinityGroupName = Guid.NewGuid().ToString("N");
+                string affinityGroupLabel = affinityGroupName + "_TestAffinityGroup";
+                TestContext.WriteLine("Randomly chose to create an affinity group, with name {0} and label {1}.", affinityGroupName, affinityGroupLabel);
 
-                var affinityGroupTask = this.TestClient.CreateAffinityGroupAsync(affinityGroupName, affinityGroupLabel, null, locationToUse);
+                var affinityGroupTask = TestClient.CreateAffinityGroupAsync(affinityGroupName, affinityGroupLabel, null, locationToUse);
                 affinityGroupTask.Wait();
-                this.TestContext.WriteLine("Affinity Group {0} created.", affinityGroupName);
+                TestContext.WriteLine("Affinity Group {0} created.", affinityGroupName);
 
-                this.TestContext.WriteLine("Getting properties for affinity group {0}", affinityGroupName);
-                var getAffinityGroupTask = this.TestClient.GetAffinityGroupAsync(affinityGroupName, token);
+                TestContext.WriteLine("Getting properties for affinity group {0}", affinityGroupName);
+                var getAffinityGroupTask = TestClient.GetAffinityGroupAsync(affinityGroupName, token);
 
-                this.TestContext.WriteLine(getAffinityGroupTask.Result.ToString());
+                TestContext.WriteLine(getAffinityGroupTask.Result.ToString());
 
-                this.AffinityGroup = getAffinityGroupTask.Result.Name;
+                AffinityGroup = getAffinityGroupTask.Result.Name;
             }
             else
             {
-                this.Location = locationToUse;
+                Location = locationToUse;
             }
 
-            this.TestContext.WriteLine("Creating Cloud Service");
+            TestContext.WriteLine("Creating Cloud Service");
             //TODO: Do something with description...
-            var createTask = TestClient.CreateCloudServiceAsync(this.CloudServiceName, this.CloudServiceLabel, null, this.Location, this.AffinityGroup, null, token);
+            var createTask = TestClient.CreateCloudServiceAsync(CloudServiceName, CloudServiceLabel, null, Location, AffinityGroup, null, token);
 
             createTask.Wait();
-            this.TestContext.WriteLine("Cloud Service Creation complete");
-            this.TestContext.WriteLine("Exiting CreateCloudServiceForTest method");
+            TestContext.WriteLine("Cloud Service Creation complete");
+            TestContext.WriteLine("Exiting CreateCloudServiceForTest method");
         }
 
         [TestCleanup()]
@@ -97,65 +97,65 @@ namespace APITests
             //api, in that case it also exercises GetOperationStatus
             try
             {
-                this.TestContext.WriteLine("Entering DeleteCloudServiceForTest method");
-                this.TestContext.WriteLine("Calling GetCloudServiceProperties, embedDetail=true for CloudService named {0}", this.CloudServiceName);
-                CancellationToken token = this.TokenSource.Token;
-                var propsTask = TestClient.GetCloudServicePropertiesAsync(this.CloudServiceName, true, token);
-                this.TestContext.WriteLine(propsTask.Result.ToString());
+                TestContext.WriteLine("Entering DeleteCloudServiceForTest method");
+                TestContext.WriteLine("Calling GetCloudServiceProperties, embedDetail=true for CloudService named {0}", CloudServiceName);
+                CancellationToken token = TokenSource.Token;
+                var propsTask = TestClient.GetCloudServicePropertiesAsync(CloudServiceName, true, token);
+                TestContext.WriteLine(propsTask.Result.ToString());
 
-                this.TestContext.WriteLine("Cloud Service {0} has {1} deployments.", propsTask.Result.ServiceName, propsTask.Result.Deployments == null ? 0 : propsTask.Result.Deployments.Count);
+                TestContext.WriteLine("Cloud Service {0} has {1} deployments.", propsTask.Result.ServiceName, propsTask.Result.Deployments == null ? 0 : propsTask.Result.Deployments.Count);
 
                 List<Task> deleteDeployments = new List<Task>();
 
                 foreach (var d in propsTask.Result.Deployments)
                 {
-                    this.TestContext.WriteLine("Deleting deployment with label {0} in slot {1}", d.Label, d.DeploymentSlot.ToString());
+                    TestContext.WriteLine("Deleting deployment with label {0} in slot {1}", d.Label, d.DeploymentSlot.ToString());
 
-                    var deleteDepTask = this.TestClient.DeleteDeploymentAsync(propsTask.Result.ServiceName, d.DeploymentSlot, token)
-                                                       .ContinueWith(Utilities.PollUntilComplete(this.TestClient, "Delete Deployment", this.TestContext, token));
+                    var deleteDepTask = TestClient.DeleteDeploymentAsync(propsTask.Result.ServiceName, d.DeploymentSlot, token)
+                                                       .ContinueWith(Utilities.PollUntilComplete(TestClient, "Delete Deployment", TestContext, token));
                     deleteDeployments.Add(deleteDepTask);
                 }
 
                 if (deleteDeployments.Count > 0)
                 {
-                    this.TestContext.WriteLine("Waiting for deployment deletion to complete...");
+                    TestContext.WriteLine("Waiting for deployment deletion to complete...");
                     Task.WaitAll(deleteDeployments.ToArray());
-                    this.TestContext.WriteLine("Deployments deleted.");
+                    TestContext.WriteLine("Deployments deleted.");
                 }
 
-                this.TestContext.WriteLine("Deleting Cloud Service {0}", propsTask.Result.ServiceName);
+                TestContext.WriteLine("Deleting Cloud Service {0}", propsTask.Result.ServiceName);
                 var deleteTask = TestClient.DeleteCloudServiceAsync(propsTask.Result.ServiceName, token);
                 deleteTask.Wait();
 
-                this.TestContext.WriteLine("Cloud Service {0} deleted.", this.CloudServiceName);
+                TestContext.WriteLine("Cloud Service {0} deleted.", CloudServiceName);
 
-                if (this.AffinityGroup != null)
+                if (AffinityGroup != null)
                 {
-                    this.TestContext.WriteLine("Deleting Affinity Group {0}", this.AffinityGroup);
+                    TestContext.WriteLine("Deleting Affinity Group {0}", AffinityGroup);
 
-                    var deleteAffinityGroupTask = this.TestClient.DeleteAffinityGroupAsync(this.AffinityGroup);
+                    var deleteAffinityGroupTask = TestClient.DeleteAffinityGroupAsync(AffinityGroup);
 
                     deleteAffinityGroupTask.Wait();
 
-                    this.TestContext.WriteLine("Affinity Group {0} deleted.", this.AffinityGroup);
+                    TestContext.WriteLine("Affinity Group {0} deleted.", AffinityGroup);
 
                 }
-                this.TestContext.WriteLine("Exiting DeleteCloudServiceForTest method");
+                TestContext.WriteLine("Exiting DeleteCloudServiceForTest method");
             }
             finally
             {
                 //clear out the members regardless of if we succeeded above, other test will want to use these...
-                this.CloudServiceName = null;
-                this.CloudServiceLabel = null;
-                this.AffinityGroup = null;
-                this.Location = null;
+                CloudServiceName = null;
+                CloudServiceLabel = null;
+                AffinityGroup = null;
+                Location = null;
             }
         }
         #region Per Test Members
-        private String CloudServiceName { get; set; }
-        private String CloudServiceLabel { get; set; }
-        private String Location { get; set; }
-        private String AffinityGroup { get; set; }
+        private string CloudServiceName { get; set; }
+        private string CloudServiceLabel { get; set; }
+        private string Location { get; set; }
+        private string AffinityGroup { get; set; }
 
         #endregion
         #endregion
@@ -165,11 +165,60 @@ namespace APITests
         private const string ConfigFileGood = "ServiceConfiguration.cscfg";
         private const string CertFile = "AzureTestCert.pfx";
 
+        private const string extendedPropNameMax = "ThisPropertyNameIs64CharactersLongThisPropertyNameIs64Characters";
+
+        private const string extendedPropValueMax = "ThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLong"+
+                                                    "ThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLong"+
+                                                    "ThisPropertyValueIs255CharactersLongThi";
+
+        private const string NewLabel = "Changed Label";
+        private const string NewDescription = "Changed Description";
+        private const string NewLocation = "East US";
+
+
+        #region CloudService tests
+        [TestMethod]
+        public void UpdateCloudService()
+        {
+            TestContext.WriteLine("Beginning UpdateCloudService test");
+
+            TestContext.WriteLine("Getting props for a baseline.");
+            var getTask = TestClient.GetCloudServicePropertiesAsync(CloudServiceName);
+
+            TestContext.WriteLine(getTask.Result.ToString());
+
+            TestContext.WriteLine("Updating Label to {0}, Description to {1}, Location to {2}, and adding extended property.", NewLabel, NewDescription, NewLocation);
+            var updateTask = TestClient.UpdateCloudServiceAsync(CloudServiceName, NewLabel, NewDescription, NewLocation, null,
+                new Dictionary<string, string> {{ extendedPropNameMax, extendedPropValueMax }});
+
+            updateTask.Wait();
+
+            TestContext.WriteLine("Getting new properties.");
+
+            getTask = TestClient.GetCloudServicePropertiesAsync(CloudServiceName);
+
+            TestContext.WriteLine(getTask.Result.ToString());
+
+            TestContext.WriteLine("Verifying Changes.");
+
+            Assert.AreEqual(getTask.Result.Label, NewLabel);
+            Assert.AreEqual(getTask.Result.Description, NewDescription);
+            Assert.AreEqual(getTask.Result.Location, NewLocation);
+            Assert.IsNull(getTask.Result.AffinityGroup);
+            Assert.AreEqual(getTask.Result.ExtendedProperties[extendedPropNameMax], extendedPropValueMax);
+
+            TestContext.WriteLine("Cloud Service Updated.");
+
+            TestContext.WriteLine("End UpdateCloudService test.");
+        }
+        #endregion
+
+        #region Deployment tests
         [TestMethod]
         public void CreateDeploymentNoStart()
         {
-            this.TestContext.WriteLine("Beginning CreateDeploymentNoStart test.");
-            CancellationToken token = this.TokenSource.Token;
+            TestContext.WriteLine("Beginning CreateDeploymentNoStart test.");
+            CancellationToken token = TokenSource.Token;
 
             string storageAccountName = null;
             Uri blob = null;
@@ -177,7 +226,7 @@ namespace APITests
             {
                 storageAccountName = CreateStorageAccountInternal();
 
-                blob = Utilities.UploadToBlob(this.TestClient, this.TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
+                blob = Utilities.UploadToBlob(TestClient, TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
 
                 Deployment dep = CreateDeploymentInternal(DeploymentSlot.Staging, blob);
 
@@ -187,7 +236,7 @@ namespace APITests
             {
                 if (blob != null)
                 {
-                    Utilities.DeleteBlob(storageAccountName, blob, this.TestClient, this.TestContext, token);
+                    Utilities.DeleteBlob(storageAccountName, blob, TestClient, TestContext, token);
                 }
 
                 if(storageAccountName != null)
@@ -196,15 +245,15 @@ namespace APITests
                 }
             }
 
-            this.TestContext.WriteLine("Ending CreateDeploymentNoStart test.");
+            TestContext.WriteLine("Ending CreateDeploymentNoStart test.");
  
         }
 
         [TestMethod]
         public void CreateDeploymentAutoStart()
         {
-            this.TestContext.WriteLine("Beginning CreateDeploymentAutoStart test.");
-            CancellationToken token = this.TokenSource.Token;
+            TestContext.WriteLine("Beginning CreateDeploymentAutoStart test.");
+            CancellationToken token = TokenSource.Token;
 
             string storageAccountName = null;
             Uri blob = null;
@@ -212,7 +261,7 @@ namespace APITests
             {
                 storageAccountName = CreateStorageAccountInternal();
 
-                blob = Utilities.UploadToBlob(this.TestClient, this.TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
+                blob = Utilities.UploadToBlob(TestClient, TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
 
                 Deployment dep = CreateDeploymentInternal(DeploymentSlot.Staging, blob, true);
 
@@ -222,7 +271,7 @@ namespace APITests
             {
                 if (blob != null)
                 {
-                    Utilities.DeleteBlob(storageAccountName, blob, this.TestClient, this.TestContext, token);
+                    Utilities.DeleteBlob(storageAccountName, blob, TestClient, TestContext, token);
                 }
 
                 if (storageAccountName != null)
@@ -231,15 +280,15 @@ namespace APITests
                 }
             }
 
-            this.TestContext.WriteLine("Ending CreateDeploymentAutoStart test.");
+            TestContext.WriteLine("Ending CreateDeploymentAutoStart test.");
 
         }
 
         [TestMethod]
         public void CreateDeploymentManualStart()
         {
-            this.TestContext.WriteLine("Beginning CreateDeploymentManualStart test.");
-            CancellationToken token = this.TokenSource.Token;
+            TestContext.WriteLine("Beginning CreateDeploymentManualStart test.");
+            CancellationToken token = TokenSource.Token;
 
             string storageAccountName = null;
             Uri blob = null;
@@ -247,26 +296,26 @@ namespace APITests
             {
                 storageAccountName = CreateStorageAccountInternal();
 
-                blob = Utilities.UploadToBlob(this.TestClient, this.TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
+                blob = Utilities.UploadToBlob(TestClient, TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
 
                 Deployment dep = CreateDeploymentInternal(DeploymentSlot.Staging, blob);
 
                 Assert.IsTrue(dep.Status == DeploymentStatus.Suspended);
 
-                this.TestContext.WriteLine("Manually starting deployment {0}.", dep.Name);
+                TestContext.WriteLine("Manually starting deployment {0}.", dep.Name);
 
-                var startTask = this.TestClient.StartDeploymentAsync(this.CloudServiceName, dep.DeploymentSlot, token)
-                               .ContinueWith(Utilities.PollUntilComplete(this.TestClient, "Start Deployment", this.TestContext, token));
+                var startTask = TestClient.StartDeploymentAsync(CloudServiceName, dep.DeploymentSlot, token)
+                               .ContinueWith(Utilities.PollUntilComplete(TestClient, "Start Deployment", TestContext, token));
 
-                this.TestContext.WriteLine("Start Deployment called for deployment {0}, waiting...", dep.Name);
+                TestContext.WriteLine("Start Deployment called for deployment {0}, waiting...", dep.Name);
 
                 startTask.Wait();
 
-                this.TestContext.WriteLine("Getting properties for deployment {0}", dep.Name);
+                TestContext.WriteLine("Getting properties for deployment {0}", dep.Name);
 
-                var getTask = this.TestClient.GetDeploymentAsync(this.CloudServiceName, dep.DeploymentSlot, token);
+                var getTask = TestClient.GetDeploymentAsync(CloudServiceName, dep.DeploymentSlot, token);
 
-                this.TestContext.WriteLine(getTask.Result.ToString());
+                TestContext.WriteLine(getTask.Result.ToString());
 
                 Assert.IsTrue(getTask.Result.Status == DeploymentStatus.Running);
             }
@@ -274,7 +323,7 @@ namespace APITests
             {
                 if (blob != null)
                 {
-                    Utilities.DeleteBlob(storageAccountName, blob, this.TestClient, this.TestContext, token);
+                    Utilities.DeleteBlob(storageAccountName, blob, TestClient, TestContext, token);
                 }
 
                 if (storageAccountName != null)
@@ -283,15 +332,15 @@ namespace APITests
                 }
             }
 
-            this.TestContext.WriteLine("Ending CreateDeploymentManualStart test.");
+            TestContext.WriteLine("Ending CreateDeploymentManualStart test.");
 
         }
 
         [TestMethod]
         public void CreateTwoDeploymentsAndVipSwap()
         {
-            this.TestContext.WriteLine("Beginning CreateTwoDeploymentsAndVipSwap test.");
-            CancellationToken token = this.TokenSource.Token;
+            TestContext.WriteLine("Beginning CreateTwoDeploymentsAndVipSwap test.");
+            CancellationToken token = TokenSource.Token;
 
             string storageAccountName = null;
             Uri blob = null;
@@ -299,10 +348,10 @@ namespace APITests
             {
                 storageAccountName = CreateStorageAccountInternal();
 
-                blob = Utilities.UploadToBlob(this.TestClient, this.TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
+                blob = Utilities.UploadToBlob(TestClient, TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
 
                 Random r = new Random();
-                this.TestContext.WriteLine("Creating two deployments, and randomly deciding whether to start them automatically.");
+                TestContext.WriteLine("Creating two deployments, and randomly deciding whether to start them automatically.");
 
                 //can only create one deployment at a time (or you get a 409), so have to do this serially...
                 bool start = r.Next(2) == 1;
@@ -311,56 +360,56 @@ namespace APITests
                 start = r.Next(2) == 1;
                 Deployment production = CreateDeploymentInternal(DeploymentSlot.Production, blob, start);
 
-                this.TestContext.WriteLine("Two deployments complete.");
+                TestContext.WriteLine("Two deployments complete.");
 
-                this.TestContext.WriteLine("Staging Deployment:");
-                this.TestContext.WriteLine(staging.ToString());
-                this.TestContext.WriteLine("Production Deployment:");
-                this.TestContext.WriteLine(production.ToString());
+                TestContext.WriteLine("Staging Deployment:");
+                TestContext.WriteLine(staging.ToString());
+                TestContext.WriteLine("Production Deployment:");
+                TestContext.WriteLine(production.ToString());
 
                 List<Task> startTasks = new List<Task>();
                 if (staging.Status == DeploymentStatus.Suspended)
                 {
-                    this.TestContext.WriteLine("Staging deployment is not started, randomly deciding whether to start it...");
+                    TestContext.WriteLine("Staging deployment is not started, randomly deciding whether to start it...");
                     start = r.Next(2) == 1;
                     if (start)
                     {
-                        this.TestContext.WriteLine("Starting staging deployment.");
-                        var startTask = this.TestClient.StartDeploymentAsync(this.CloudServiceName, DeploymentSlot.Staging)
-                                                       .ContinueWith(Utilities.PollUntilComplete(this.TestClient, "Start Deployment", this.TestContext, token));
+                        TestContext.WriteLine("Starting staging deployment.");
+                        var startTask = TestClient.StartDeploymentAsync(CloudServiceName, DeploymentSlot.Staging)
+                                                       .ContinueWith(Utilities.PollUntilComplete(TestClient, "Start Deployment", TestContext, token));
                         startTasks.Add(startTask);
                     }
                     else
                     {
-                        this.TestContext.WriteLine("Not starting staging deployment.");
+                        TestContext.WriteLine("Not starting staging deployment.");
                     }
                 }
 
                 if (production.Status == DeploymentStatus.Suspended)
                 {
-                    this.TestContext.WriteLine("Production deployment is not started, randomly deciding whether to start it...");
+                    TestContext.WriteLine("Production deployment is not started, randomly deciding whether to start it...");
                     start = r.Next(2) == 1;
                     if (start)
                     {
-                        this.TestContext.WriteLine("Starting production deployment.");
-                        var startTask = this.TestClient.StartDeploymentAsync(this.CloudServiceName, DeploymentSlot.Production)
-                                                       .ContinueWith(Utilities.PollUntilComplete(this.TestClient, "Start Deployment", this.TestContext, token));
+                        TestContext.WriteLine("Starting production deployment.");
+                        var startTask = TestClient.StartDeploymentAsync(CloudServiceName, DeploymentSlot.Production)
+                                                       .ContinueWith(Utilities.PollUntilComplete(TestClient, "Start Deployment", TestContext, token));
                         startTasks.Add(startTask);
                     }
                     else
                     {
-                        this.TestContext.WriteLine("Not starting production deployment.");
+                        TestContext.WriteLine("Not starting production deployment.");
                     }
                 }
 
                 if (startTasks.Count > 0)
                 {
-                    this.TestContext.WriteLine("Deployments starting, waiting...");
+                    TestContext.WriteLine("Deployments starting, waiting...");
                     Task.WaitAll(startTasks.ToArray());
 
                     //update the deployments...
-                    var stagingTask = this.TestClient.GetDeploymentAsync(this.CloudServiceName, DeploymentSlot.Staging, token);
-                    var productionTask = this.TestClient.GetDeploymentAsync(this.CloudServiceName, DeploymentSlot.Production, token);
+                    var stagingTask = TestClient.GetDeploymentAsync(CloudServiceName, DeploymentSlot.Staging, token);
+                    var productionTask = TestClient.GetDeploymentAsync(CloudServiceName, DeploymentSlot.Production, token);
 
                     Task.WaitAll(stagingTask, productionTask);
 
@@ -368,30 +417,30 @@ namespace APITests
                     production = productionTask.Result;
                 }
 
-                this.TestContext.WriteLine("Beginning Vip Swap operation on Cloud Service {0}", this.CloudServiceLabel);
+                TestContext.WriteLine("Beginning Vip Swap operation on Cloud Service {0}", CloudServiceLabel);
 
-                var vipSwapTask = this.TestClient.VipSwapAsync(this.CloudServiceName, token)
-                                                 .ContinueWith(Utilities.PollUntilComplete(this.TestClient, "Vip Swap", this.TestContext, token));
+                var vipSwapTask = TestClient.VipSwapAsync(CloudServiceName, token)
+                                                 .ContinueWith(Utilities.PollUntilComplete(TestClient, "Vip Swap", TestContext, token));
 
-                this.TestContext.WriteLine("Vip swap started, waiting...");
+                TestContext.WriteLine("Vip swap started, waiting...");
 
                 vipSwapTask.Wait();
 
-                this.TestContext.WriteLine("Vip swal complete.");
+                TestContext.WriteLine("Vip swal complete.");
 
-                this.TestContext.WriteLine("Getting current properties of the deployments.");
+                TestContext.WriteLine("Getting current properties of the deployments.");
 
-                var getdep1Task = this.TestClient.GetDeploymentAsync(this.CloudServiceName, DeploymentSlot.Staging, token);
-                var getdep2Task = this.TestClient.GetDeploymentAsync(this.CloudServiceName, DeploymentSlot.Production, token);
+                var getdep1Task = TestClient.GetDeploymentAsync(CloudServiceName, DeploymentSlot.Staging, token);
+                var getdep2Task = TestClient.GetDeploymentAsync(CloudServiceName, DeploymentSlot.Production, token);
 
                 Task.WaitAll(getdep2Task, getdep1Task);
                 Deployment newStaging = getdep1Task.Result;
                 Deployment newProduction = getdep2Task.Result;
 
-                this.TestContext.WriteLine("New staging Deployment:");
-                this.TestContext.WriteLine(newStaging.ToString());
-                this.TestContext.WriteLine("New production Deployment:");
-                this.TestContext.WriteLine(newProduction.ToString());
+                TestContext.WriteLine("New staging Deployment:");
+                TestContext.WriteLine(newStaging.ToString());
+                TestContext.WriteLine("New production Deployment:");
+                TestContext.WriteLine(newProduction.ToString());
 
                 Assert.AreEqual(production.Name, newStaging.Name);
                 Assert.AreEqual(production.Status, newStaging.Status);
@@ -403,7 +452,7 @@ namespace APITests
             {
                 if (blob != null)
                 {
-                    Utilities.DeleteBlob(storageAccountName, blob, this.TestClient, this.TestContext, token);
+                    Utilities.DeleteBlob(storageAccountName, blob, TestClient, TestContext, token);
                 }
 
                 if (storageAccountName != null)
@@ -412,99 +461,162 @@ namespace APITests
                 }
             }
 
-            this.TestContext.WriteLine("Ending CreateTwoDeploymentsAndVipSwap test.");
+            TestContext.WriteLine("Ending CreateTwoDeploymentsAndVipSwap test.");
 
         }
+        #endregion
 
-
+        #region Storage Accoutn Tests
         [TestMethod]
-        public void CreateStorageAccount()
+        public void CreateListGetUpdateRegenerateDeleteStorageAccount()
         {
-            this.TestContext.WriteLine("Beginning CreateStorageAccount test.");
+            TestContext.WriteLine("Beginning CreateListGetDeleteStorageAccount test.");
 
-            //just run the two internal methods...
-            String name = CreateStorageAccountInternal();
+            string name = CreateStorageAccountInternal();
 
-            DeleteStorageAccountInternal(name);
+            try
+            {
+                TestContext.WriteLine("Listing storage accounts and verifying the account is in there");
 
-            this.TestContext.WriteLine("Ending CreateStorageAccount test.");
+                var listTask = TestClient.ListStorageAccountsAsync();
+
+                TestContext.WriteLine(listTask.Result.ToString());
+
+                var account = (from a in listTask.Result
+                               where string.Compare(a.Name, name, StringComparison.Ordinal) == 0
+                               select a).FirstOrDefault();
+
+                Assert.IsNotNull(account);
+
+                TestContext.WriteLine("StorageAccount {0} is present in the list", account.Name);
+
+                TestContext.WriteLine("Getting properties and keys for storage account {0}", account.Name);
+
+                var propsTask = TestClient.GetStorageAccountPropertiesAsync(name);
+                var keysTask = TestClient.GetStorageAccountKeysAsync(name);
+
+                Task.WaitAll(propsTask, keysTask);
+
+                TestContext.WriteLine(propsTask.Result.ToString());
+                TestContext.WriteLine(keysTask.Result.ToString());
+
+                TestContext.WriteLine("Update Storage account with Label {0}, Description {1}, GeoReplicationEnabled {2}, and adding an extended property",
+                                                                               NewLabel, NewDescription, !propsTask.Result.GeoReplicationEnabled);
+
+                var updateTask = TestClient.UpdateStorageAccountAsync(name, NewLabel, NewDescription, !propsTask.Result.GeoReplicationEnabled, new Dictionary<string, string> { { extendedPropNameMax, extendedPropValueMax } });
+
+                updateTask.Wait();
+
+                var newProps = TestClient.GetStorageAccountPropertiesAsync(name).Result;
+
+                TestContext.WriteLine("New Properties:");
+                TestContext.WriteLine(newProps.ToString());
+
+                Assert.AreEqual(newProps.Label, NewLabel);
+                Assert.AreEqual(newProps.Description, NewDescription);
+                Assert.AreEqual(newProps.GeoReplicationEnabled, !propsTask.Result.GeoReplicationEnabled);
+
+                TestContext.WriteLine("Regenerate Primary Key");
+
+                var newKeys1 = TestClient.RegenerateStorageAccountKeys(name, StorageAccountKeyType.Primary).Result;
+
+                TestContext.WriteLine("New Keys:");
+                TestContext.WriteLine(newKeys1.ToString());
+
+                Assert.AreNotEqual(Convert.ToBase64String(newKeys1.Primary), Convert.ToBase64String(keysTask.Result.Primary));
+                Assert.AreEqual(Convert.ToBase64String(newKeys1.Secondary), Convert.ToBase64String(keysTask.Result.Secondary));
+
+                TestContext.WriteLine("Regenerate Secondary Key");
+
+                var newKeys2 = TestClient.RegenerateStorageAccountKeys(name, StorageAccountKeyType.Secondary).Result;
+
+                TestContext.WriteLine("New Keys:");
+                TestContext.WriteLine(newKeys2.ToString());
+
+                Assert.AreEqual(Convert.ToBase64String(newKeys1.Primary), Convert.ToBase64String(newKeys2.Primary));
+                Assert.AreNotEqual(Convert.ToBase64String(newKeys1.Secondary), Convert.ToBase64String(newKeys2.Secondary));
+            }
+            finally
+            {
+                DeleteStorageAccountInternal(name);
+
+                TestContext.WriteLine("Ending CreateListGetDeleteStorageAccount test.");
+            }
 
         }
+        #endregion
 
         [TestMethod]
         public void AddListGetDeleteServiceCertificate()
         {
-            this.TestContext.WriteLine("Beginning AddCertificate test.");
-            CancellationToken token = this.TokenSource.Token;
+            TestContext.WriteLine("Beginning AddCertificate test.");
+            CancellationToken token = TokenSource.Token;
 
-            this.TestContext.WriteLine("Loading test certificate.");
+            TestContext.WriteLine("Loading test certificate.");
 
             X509Certificate2 certPwd = Utilities.CreateCert(true);
 
             X509Certificate2 certNoPwd = Utilities.CreateCert(false);
 
-            this.TestContext.WriteLine("Calling AddServiceCertificateAsync with Cert {0} to Service {1}.", certPwd.Thumbprint, this.CloudServiceName);
+            TestContext.WriteLine("Calling AddServiceCertificateAsync with Cert {0} to Service {1}.", certPwd.Thumbprint, CloudServiceName);
 
-            var addCertTask = this.TestClient.AddServiceCertificateAsync(this.CloudServiceName, certPwd, Utilities.CertPassword, token)
-                                             .ContinueWith(Utilities.PollUntilComplete(this.TestClient, "Add Certificate", this.TestContext, token));
+            var addCertTask = TestClient.AddServiceCertificateAsync(CloudServiceName, certPwd, Utilities.CertPassword, token)
+                                             .ContinueWith(Utilities.PollUntilComplete(TestClient, "Add Certificate", TestContext, token));
 
-            this.TestContext.WriteLine("AddServiceCertificate called, waiting...");
-
-            addCertTask.Wait();
-
-            this.TestContext.WriteLine("Certificate Added to service {0}", this.CloudServiceName);
-
-            this.TestContext.WriteLine("Calling AddServiceCertificateAsync with Cert {0} to Service {1}.", certNoPwd.Thumbprint, this.CloudServiceName);
-
-            addCertTask = this.TestClient.AddServiceCertificateAsync(this.CloudServiceName, certNoPwd, null, token)
-                                             .ContinueWith(Utilities.PollUntilComplete(this.TestClient, "Add Certificate", this.TestContext, token));
-
-            this.TestContext.WriteLine("AddServiceCertificate called, waiting...");
+            TestContext.WriteLine("AddServiceCertificate called, waiting...");
 
             addCertTask.Wait();
 
-            this.TestContext.WriteLine("Certificate Added to service {0}", this.CloudServiceName);
-            this.TestContext.WriteLine("End AddCertificate test.");
+            TestContext.WriteLine("Certificate Added to service {0}", CloudServiceName);
 
-            this.TestContext.WriteLine("Calling List Certificates for service {0} to get all cert properties.", this.CloudServiceName);
+            TestContext.WriteLine("Calling AddServiceCertificateAsync with Cert {0} to Service {1}.", certNoPwd.Thumbprint, CloudServiceName);
 
-            var listCertsTask = this.TestClient.ListServiceCertificatesAsync(this.CloudServiceName);
+            addCertTask = TestClient.AddServiceCertificateAsync(CloudServiceName, certNoPwd, null, token)
+                                             .ContinueWith(Utilities.PollUntilComplete(TestClient, "Add Certificate", TestContext, token));
 
-            this.TestContext.WriteLine(listCertsTask.Result.ToString());
+            TestContext.WriteLine("AddServiceCertificate called, waiting...");
+
+            addCertTask.Wait();
+
+            TestContext.WriteLine("Certificate Added to service {0}", CloudServiceName);
+            TestContext.WriteLine("End AddCertificate test.");
+
+            TestContext.WriteLine("Calling List Certificates for service {0} to get all cert properties.", CloudServiceName);
+
+            var listCertsTask = TestClient.ListServiceCertificatesAsync(CloudServiceName);
+
+            TestContext.WriteLine(listCertsTask.Result.ToString());
 
             //should only be two certs, since we just created the service...
             Assert.IsTrue(listCertsTask.Result.Count == 2);
-            //X509Certificate2 listCert = listCertsTask.Result.First().Certificate;
 
-            //Assert.AreEqual(cert.Thumbprint, listCert.Thumbprint);
+            TestContext.WriteLine("Calling Get Certificate for cert {0} on Service {1}.", certPwd.Thumbprint, CloudServiceName);
 
-            this.TestContext.WriteLine("Calling Get Certificate for cert {0} on Service {1}.", certPwd.Thumbprint, this.CloudServiceName);
-
-            var getCertTask = this.TestClient.GetServiceCertificateAsync(this.CloudServiceName, certPwd.Thumbprint, token);
+            var getCertTask = TestClient.GetServiceCertificateAsync(CloudServiceName, certPwd.Thumbprint, token);
 
             X509Certificate2 getCert = getCertTask.Result;
 
-            this.TestContext.WriteLine("Got certificate with thumbprint {0} from Service {1}.", getCert.Thumbprint, this.CloudServiceName);
+            TestContext.WriteLine("Got certificate with thumbprint {0} from Service {1}.", getCert.Thumbprint, CloudServiceName);
 
             Assert.AreEqual(certPwd.Thumbprint, getCert.Thumbprint);
 
-            this.TestContext.WriteLine("Deleting certificate with thumbprint {0} from Service {1}.", certPwd.Thumbprint, this.CloudServiceName);
+            TestContext.WriteLine("Deleting certificate with thumbprint {0} from Service {1}.", certPwd.Thumbprint, CloudServiceName);
 
-            var deleteTask = this.TestClient.DeleteServiceCertificate(this.CloudServiceName, certPwd.Thumbprint, token);
-
-            deleteTask.Wait();
-
-            this.TestContext.WriteLine("Deleting certificate with thumbprint {0} from Service {1}.", certNoPwd.Thumbprint, this.CloudServiceName);
-
-            deleteTask = this.TestClient.DeleteServiceCertificate(this.CloudServiceName, certNoPwd.Thumbprint, token);
+            var deleteTask = TestClient.DeleteServiceCertificateAsync(CloudServiceName, certPwd.Thumbprint, token);
 
             deleteTask.Wait();
 
-            this.TestContext.WriteLine("Certificate deleted, calling ListCertificates again to confirm deletion.");
+            TestContext.WriteLine("Deleting certificate with thumbprint {0} from Service {1}.", certNoPwd.Thumbprint, CloudServiceName);
 
-            listCertsTask = this.TestClient.ListServiceCertificatesAsync(this.CloudServiceName);
+            deleteTask = TestClient.DeleteServiceCertificateAsync(CloudServiceName, certNoPwd.Thumbprint, token);
 
-            this.TestContext.WriteLine(listCertsTask.Result.ToString());
+            deleteTask.Wait();
+
+            TestContext.WriteLine("Certificate deleted, calling ListCertificates again to confirm deletion.");
+
+            listCertsTask = TestClient.ListServiceCertificatesAsync(CloudServiceName);
+
+            TestContext.WriteLine(listCertsTask.Result.ToString());
 
             //should be gone now, since we just created the service...
             Assert.IsTrue(listCertsTask.Result.Count == 0);
@@ -512,68 +624,68 @@ namespace APITests
         }
 
         //separating this out because it gets used in several places
-        private String CreateStorageAccountInternal()
+        private string CreateStorageAccountInternal()
         {
-            this.TestContext.WriteLine("Beginning CreateStorageAccount operation.");
+            TestContext.WriteLine("Beginning CreateStorageAccount operation.");
 
-            String storageAccountName = this.CloudServiceName.ToLower().Substring(0, 24);
+            string storageAccountName = CloudServiceName.ToLower().Substring(0, 24);
 
-            this.TestContext.WriteLine("Creating Storage account with name {0}", storageAccountName);
+            TestContext.WriteLine("Creating Storage account with name {0}", storageAccountName);
 
-            var createAndWaitTask = this.TestClient.CreateStorageAccountAsync(storageAccountName, this.CloudServiceName, null, this.Location, this.AffinityGroup, true, null)
-                .ContinueWith(Utilities.PollUntilComplete(this.TestClient, "Create Storage Account", this.TestContext, this.TokenSource.Token));
+            var createAndWaitTask = TestClient.CreateStorageAccountAsync(storageAccountName, CloudServiceName, null, Location, AffinityGroup, true, null)
+                .ContinueWith(Utilities.PollUntilComplete(TestClient, "Create Storage Account", TestContext, TokenSource.Token));
 
             createAndWaitTask.Wait();
 
-            this.TestContext.WriteLine("Storage account {0} created.", storageAccountName);
+            TestContext.WriteLine("Storage account {0} created.", storageAccountName);
 
-            this.TestContext.WriteLine("End CreateStorageAccount operation.");
+            TestContext.WriteLine("End CreateStorageAccount operation.");
 
-            this.TestContext.WriteLine("Get StorageAccountProperties on new account.");
+            TestContext.WriteLine("Get StorageAccountProperties on new account.");
 
-            var getTask = this.TestClient.GetStorageAccountPropertiesAsync(storageAccountName);
+            var getTask = TestClient.GetStorageAccountPropertiesAsync(storageAccountName);
 
-            this.TestContext.WriteLine(getTask.Result.ToString());
+            TestContext.WriteLine(getTask.Result.ToString());
 
             return storageAccountName;
         }
 
         //ditto
-        private void DeleteStorageAccountInternal(String storageAccountName)
+        private void DeleteStorageAccountInternal(string storageAccountName)
         {
-            this.TestContext.WriteLine("Beginning DeleteStorageAccount operation.");
-            this.TestContext.WriteLine("Deleting Storage account {0}.", storageAccountName);
+            TestContext.WriteLine("Beginning DeleteStorageAccount operation.");
+            TestContext.WriteLine("Deleting Storage account {0}.", storageAccountName);
             //create is a polling operation, delete is not...
-            var deleteTask = this.TestClient.DeleteStorageAccountAsync(storageAccountName);
+            var deleteTask = TestClient.DeleteStorageAccountAsync(storageAccountName);
 
             deleteTask.Wait();
-            this.TestContext.WriteLine("Storage account {0} deleted.", storageAccountName);
-            this.TestContext.WriteLine("End DeleteStorageAccount operation.");
+            TestContext.WriteLine("Storage account {0} deleted.", storageAccountName);
+            TestContext.WriteLine("End DeleteStorageAccount operation.");
         }
 
         private Deployment CreateDeploymentInternal(DeploymentSlot slot, Uri blobUri, bool startWithDeployment = false, bool treatWarningsAsError = false)
         {
-            this.TestContext.WriteLine("Beginning CreateDeployment operation");
-            CancellationToken token = this.TokenSource.Token;
+            TestContext.WriteLine("Beginning CreateDeployment operation");
+            CancellationToken token = TokenSource.Token;
 
-            String name = Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture);
-            String label = name + "_TestDeployment";
+            string name = Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture);
+            string label = name + "_TestDeployment";
 
-            this.TestContext.WriteLine("Creating Deployment with name {0} and label {1} in slot {2}", name, label, slot.ToString());
+            TestContext.WriteLine("Creating Deployment with name {0} and label {1} in slot {2}", name, label, slot.ToString());
 
-            var createAndWaitTask = this.TestClient.CreateDeploymentAsync(this.CloudServiceName, slot, name, blobUri, label, Path.Combine(DataPath, ConfigFileGood), startWithDeployment, treatWarningsAsError, token)
-                                    .ContinueWith(Utilities.PollUntilComplete(this.TestClient, "Create Deployment", this.TestContext, token));
+            var createAndWaitTask = TestClient.CreateDeploymentAsync(CloudServiceName, slot, name, blobUri, label, Path.Combine(DataPath, ConfigFileGood), startWithDeployment, treatWarningsAsError, null, token)
+                                    .ContinueWith(Utilities.PollUntilComplete(TestClient, "Create Deployment", TestContext, token));
 
 
-            this.TestContext.WriteLine("CreateDeployment called, waiting...");
+            TestContext.WriteLine("CreateDeployment called, waiting...");
 
             createAndWaitTask.Wait();
-            this.TestContext.WriteLine("Deployment in slot {0} created.", slot.ToString());
-            this.TestContext.WriteLine("End CreateDeployment operation");
-            this.TestContext.WriteLine("Getting properties of new Deployment");
-            var getTask = this.TestClient.GetDeploymentAsync(this.CloudServiceName, slot, token);
+            TestContext.WriteLine("Deployment in slot {0} created.", slot.ToString());
+            TestContext.WriteLine("End CreateDeployment operation");
+            TestContext.WriteLine("Getting properties of new Deployment");
+            var getTask = TestClient.GetDeploymentAsync(CloudServiceName, slot, token);
 
-            this.TestContext.WriteLine(getTask.Result.ToString());
+            TestContext.WriteLine(getTask.Result.ToString());
 
             return getTask.Result;
         }

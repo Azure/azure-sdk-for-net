@@ -71,9 +71,9 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Windows.Azure.Managment.HttpClient\Windows.Azure.Management.HttpClient.csproj">
+    <ProjectReference Include="..\Microsoft.WindowsAzure.ManagementClient\Microsoft.WindowsAzure.ManagmentClient.csproj">
       <Project>{A08AA245-3427-401E-88F2-96216289CFB8}</Project>
-      <Name>Windows.Azure.Management.HttpClient</Name>
+      <Name>Microsoft.WindowsAzure.ManagmentClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

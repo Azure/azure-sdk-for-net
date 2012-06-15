@@ -3,7 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Windows.Azure.Management.v1_7;
+using Microsoft.WindowsAzure.ManagementClient.v1_7;
 using System.IO;
 
 namespace APITests
@@ -52,6 +52,17 @@ namespace APITests
         private const string tooShortStorageAccountName = "ab";
         private const string storageAccountNameWithCaps = "StorageAccountMaxLenIs24";
         private const string storageAccountNameWithOtherChars = "storageaccountillegal`~!";
+        private const string extendedPropNameMax = "ThisPropertyNameIs64CharactersLong_ThisPropertyNameIs64Character";
+        private const string tooLongExtendedPropName = extendedPropNameMax + "X";
+        private const string extendedPropValueMax = "ThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLong" +
+                                                    "ThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLong" +
+                                                    "ThisPropertyValueIs255CharactersLongThi";
+        private const string tooLongExtendedPropValue = extendedPropValueMax + "X";
+
+        private const string extendedPropNameBad1 = "1thisStartsWithANumber";
+        private const string extendedPropNameBad2 = "_thisStartsWithUnderscore";
+        private const string extendedPropNameBad3 = "ThisHasInva!idCharacter$";
+
 
         #region Cloud Service Tests
         #region CreateCloudService Tests
@@ -63,11 +74,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateCloudServiceAsync(null, labelMax, descriptionMax, dummyLocation, null);
+                TestClient.CreateCloudServiceAsync(null, labelMax, descriptionMax, dummyLocation, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -78,11 +89,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateCloudServiceAsync(dummyServiceName, null, descriptionMax, null, dummyAffinityGroup);
+                TestClient.CreateCloudServiceAsync(dummyServiceName, null, descriptionMax, null, dummyAffinityGroup);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -93,11 +104,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateCloudServiceAsync(dummyServiceName, tooLongLabel, descriptionMax, dummyLocation, null);
+                TestClient.CreateCloudServiceAsync(dummyServiceName, tooLongLabel, descriptionMax, dummyLocation, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -108,11 +119,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, tooLongDescription, null, dummyAffinityGroup);
+                TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, tooLongDescription, null, dummyAffinityGroup);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -123,11 +134,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, null, null);
+                TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, null, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -138,11 +149,91 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, dummyAffinityGroup);
+                TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, dummyAffinityGroup);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CreateServiceExtendedPropKeyTooLong()
+        {
+            try
+            {
+                TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, null,
+                                                        new Dictionary<string, string> { { tooLongExtendedPropName, extendedPropValueMax } });
+            }
+            catch (Exception e)
+            {
+                TestContext.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CreateServiceExtendedPropKeyBad1()
+        {
+            try
+            {
+                TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, null,
+                                                        new Dictionary<string, string> { { extendedPropNameBad1, extendedPropValueMax } });
+            }
+            catch (Exception e)
+            {
+                TestContext.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CreateServiceExtendedPropKeyBad2()
+        {
+            try
+            {
+                TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, null,
+                                                        new Dictionary<string, string> { { extendedPropNameBad2, extendedPropValueMax } });
+            }
+            catch (Exception e)
+            {
+                TestContext.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CreateServiceExtendedPropKeyBad3()
+        {
+            try
+            {
+                TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, null,
+                                                        new Dictionary<string, string> { { extendedPropNameBad3, extendedPropValueMax } });
+            }
+            catch (Exception e)
+            {
+                TestContext.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void CreateServiceExtendedPropValueTooLong()
+        {
+            try
+            {
+                TestClient.CreateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, null, dummyAffinityGroup,
+                                                        new Dictionary<string, string> { { extendedPropNameMax, tooLongExtendedPropValue } });
+            }
+            catch (Exception e)
+            {
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -155,11 +246,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpdateCloudServiceAsync(null, labelMax, descriptionMax, dummyLocation, null);
+                TestClient.UpdateCloudServiceAsync(null, labelMax, descriptionMax, dummyLocation, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -172,11 +263,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpdateCloudServiceAsync(dummyServiceName, tooLongLabel, descriptionMax, dummyLocation, null);
+                TestClient.UpdateCloudServiceAsync(dummyServiceName, tooLongLabel, descriptionMax, dummyLocation, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -187,11 +278,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpdateCloudServiceAsync(dummyServiceName, labelMax, tooLongDescription, null, dummyAffinityGroup);
+                TestClient.UpdateCloudServiceAsync(dummyServiceName, labelMax, tooLongDescription, null, dummyAffinityGroup);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -204,11 +295,43 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpdateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, dummyAffinityGroup);
+                TestClient.UpdateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, dummyAffinityGroup);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UpdateServiceExtendedPropKeyTooLong()
+        {
+            try
+            {
+                TestClient.UpdateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, dummyAffinityGroup,
+                                                     new Dictionary<string, string> { { tooLongExtendedPropName, extendedPropValueMax } });
+            }
+            catch (Exception e)
+            {
+                TestContext.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UpdateServiceExtendedPropValueTooLong()
+        {
+            try
+            {
+                TestClient.UpdateCloudServiceAsync(dummyServiceName, labelMax, descriptionMax, dummyLocation, dummyAffinityGroup,
+                                                     new Dictionary<string, string> { { extendedPropNameMax, tooLongExtendedPropValue } });
+            }
+            catch (Exception e)
+            {
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -222,11 +345,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.DeleteCloudServiceAsync(null);
+                TestClient.DeleteCloudServiceAsync(null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -239,11 +362,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.GetCloudServicePropertiesAsync(null);
+                TestClient.GetCloudServicePropertiesAsync(null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -256,11 +379,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateDeploymentAsync(null, DeploymentSlot.Staging, dummyDeploymentName, dummyUri, labelMax, dummyConfigFilePath);
+                TestClient.CreateDeploymentAsync(null, DeploymentSlot.Staging, dummyDeploymentName, dummyUri, labelMax, dummyConfigFilePath);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -271,11 +394,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Staging, null, dummyUri, labelMax, dummyConfigFilePath);
+                TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Staging, null, dummyUri, labelMax, dummyConfigFilePath);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -286,11 +409,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Staging, dummyDeploymentName, null, labelMax, dummyConfigFilePath);
+                TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Staging, dummyDeploymentName, null, labelMax, dummyConfigFilePath);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -301,11 +424,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Production, dummyDeploymentName, dummyUri, null, dummyConfigFilePath);
+                TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Production, dummyDeploymentName, dummyUri, null, dummyConfigFilePath);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -316,11 +439,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Staging, dummyDeploymentName, dummyUri, tooLongLabel, dummyConfigFilePath);
+                TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Staging, dummyDeploymentName, dummyUri, tooLongLabel, dummyConfigFilePath);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -331,11 +454,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Production, dummyDeploymentName, dummyUri, labelMax, null);
+                TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Production, dummyDeploymentName, dummyUri, labelMax, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -346,11 +469,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Staging, dummyDeploymentName, dummyUri, labelMax, dummyConfigFilePath);
+                TestClient.CreateDeploymentAsync(dummyServiceName, DeploymentSlot.Staging, dummyDeploymentName, dummyUri, labelMax, dummyConfigFilePath);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -363,11 +486,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.GetDeploymentAsync(null, DeploymentSlot.Production);
+                TestClient.GetDeploymentAsync(null, DeploymentSlot.Production);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -380,11 +503,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.VipSwapAsync(null);
+                TestClient.VipSwapAsync(null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -397,11 +520,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.DeleteDeploymentAsync(null, DeploymentSlot.Staging);
+                TestClient.DeleteDeploymentAsync(null, DeploymentSlot.Staging);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -414,11 +537,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.ChangeDeploymentConfigurationAsync(null, DeploymentSlot.Staging, dummyConfigFilePath);
+                TestClient.ChangeDeploymentConfigurationAsync(null, DeploymentSlot.Staging, dummyConfigFilePath);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -429,11 +552,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.ChangeDeploymentConfigurationAsync(dummyServiceName, DeploymentSlot.Staging, null);
+                TestClient.ChangeDeploymentConfigurationAsync(dummyServiceName, DeploymentSlot.Staging, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -444,11 +567,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.ChangeDeploymentConfigurationAsync(dummyServiceName, DeploymentSlot.Staging, dummyConfigFilePath);
+                TestClient.ChangeDeploymentConfigurationAsync(dummyServiceName, DeploymentSlot.Staging, dummyConfigFilePath);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -461,11 +584,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.StartDeploymentAsync(null, DeploymentSlot.Production);
+                TestClient.StartDeploymentAsync(null, DeploymentSlot.Production);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -476,11 +599,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.StopDeploymentAsync(null, DeploymentSlot.Production);
+                TestClient.StopDeploymentAsync(null, DeploymentSlot.Production);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -493,11 +616,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpgradeDeploymentAsync(null, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, dummyConfigFilePath, labelMax);
+                TestClient.UpgradeDeploymentAsync(null, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, dummyConfigFilePath, labelMax);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -508,11 +631,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, null, dummyConfigFilePath, labelMax);
+                TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, null, dummyConfigFilePath, labelMax);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -523,11 +646,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, dummyConfigFilePath, null);
+                TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, dummyConfigFilePath, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -538,11 +661,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, dummyConfigFilePath, tooLongLabel);
+                TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, dummyConfigFilePath, tooLongLabel);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -553,11 +676,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, null, labelMax);
+                TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, null, labelMax);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -568,11 +691,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, dummyConfigFilePath, labelMax);
+                TestClient.UpgradeDeploymentAsync(dummyServiceName, DeploymentSlot.Production, UpgradeType.Auto, dummyUri, dummyConfigFilePath, labelMax);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -585,11 +708,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.WalkUpgradeDomainAsync(null, DeploymentSlot.Production, 0); ;
+                TestClient.WalkUpgradeDomainAsync(null, DeploymentSlot.Production, 0); ;
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -604,11 +727,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.GetStorageAccountPropertiesAsync(null);
+                TestClient.GetStorageAccountPropertiesAsync(null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -621,11 +744,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.GetStorageAccountKeysAsync(null);
+                TestClient.GetStorageAccountKeysAsync(null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -638,11 +761,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(null, labelMax, descriptionMax, dummyLocation, null);
+                TestClient.CreateStorageAccountAsync(null, labelMax, descriptionMax, dummyLocation, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -653,11 +776,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(tooLongStorageAccountName, labelMax, descriptionMax, null, dummyAffinityGroup);
+                TestClient.CreateStorageAccountAsync(tooLongStorageAccountName, labelMax, descriptionMax, null, dummyAffinityGroup);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -668,11 +791,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(tooShortStorageAccountName, labelMax, descriptionMax, dummyLocation, null);
+                TestClient.CreateStorageAccountAsync(tooShortStorageAccountName, labelMax, descriptionMax, dummyLocation, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -683,11 +806,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(storageAccountNameWithCaps, labelMax, descriptionMax, dummyLocation, null);
+                TestClient.CreateStorageAccountAsync(storageAccountNameWithCaps, labelMax, descriptionMax, dummyLocation, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -698,11 +821,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(storageAccountNameWithOtherChars, labelMax, descriptionMax, null, dummyAffinityGroup);
+                TestClient.CreateStorageAccountAsync(storageAccountNameWithOtherChars, labelMax, descriptionMax, null, dummyAffinityGroup);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -713,11 +836,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(storageAccountNameMax, labelMax, tooLongDescription, dummyLocation, null);
+                TestClient.CreateStorageAccountAsync(storageAccountNameMax, labelMax, tooLongDescription, dummyLocation, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -728,11 +851,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(storageAccountNameMax, null, descriptionMax, null, dummyAffinityGroup);
+                TestClient.CreateStorageAccountAsync(storageAccountNameMax, null, descriptionMax, null, dummyAffinityGroup);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -743,11 +866,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(storageAccountNameMax, tooLongLabel, descriptionMax, dummyLocation, null);
+                TestClient.CreateStorageAccountAsync(storageAccountNameMax, tooLongLabel, descriptionMax, dummyLocation, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -758,11 +881,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(storageAccountNameMax, labelMax, descriptionMax, null, null);
+                TestClient.CreateStorageAccountAsync(storageAccountNameMax, labelMax, descriptionMax, null, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -773,11 +896,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateStorageAccountAsync(storageAccountNameMax, labelMax, descriptionMax, dummyLocation, dummyAffinityGroup);
+                TestClient.CreateStorageAccountAsync(storageAccountNameMax, labelMax, descriptionMax, dummyLocation, dummyAffinityGroup);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -790,11 +913,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.DeleteStorageAccountAsync(null);
+                TestClient.DeleteStorageAccountAsync(null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -809,11 +932,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.GetOperationStatusAsync(null);
+                TestClient.GetOperationStatusAsync(null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -830,11 +953,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateAffinityGroupAsync(null, labelMax, descriptionMax, dummyLocation);
+                TestClient.CreateAffinityGroupAsync(null, labelMax, descriptionMax, dummyLocation);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -845,11 +968,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateAffinityGroupAsync(dummyAffinityGroup, null, descriptionMax, dummyLocation);
+                TestClient.CreateAffinityGroupAsync(dummyAffinityGroup, null, descriptionMax, dummyLocation);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -860,11 +983,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateAffinityGroupAsync(dummyAffinityGroup, tooLongLabel, descriptionMax, dummyLocation);
+                TestClient.CreateAffinityGroupAsync(dummyAffinityGroup, tooLongLabel, descriptionMax, dummyLocation);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -875,11 +998,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateAffinityGroupAsync(dummyAffinityGroup, labelMax, tooLongDescription, dummyLocation);
+                TestClient.CreateAffinityGroupAsync(dummyAffinityGroup, labelMax, tooLongDescription, dummyLocation);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -890,11 +1013,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.CreateAffinityGroupAsync(dummyAffinityGroup, labelMax, descriptionMax, null);
+                TestClient.CreateAffinityGroupAsync(dummyAffinityGroup, labelMax, descriptionMax, null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -907,11 +1030,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.DeleteAffinityGroupAsync(null);
+                TestClient.DeleteAffinityGroupAsync(null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
@@ -924,11 +1047,11 @@ namespace APITests
         {
             try
             {
-                this.TestClient.GetAffinityGroupAsync(null);
+                TestClient.GetAffinityGroupAsync(null);
             }
             catch (Exception e)
             {
-                this.TestContext.WriteLine(e.Message);
+                TestContext.WriteLine(e.Message);
                 throw;
             }
         }
