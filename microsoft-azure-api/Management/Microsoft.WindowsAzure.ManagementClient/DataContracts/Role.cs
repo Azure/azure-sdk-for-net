@@ -27,6 +27,7 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     /// Represents a role in a Windows Azure deployment.
     /// </summary>
     [DataContract(Name = "Role", Namespace = AzureConstants.AzureSchemaNamespace)]
+    [KnownType(typeof(PersistentVMRole))]
     public class Role : AzureDataContractBase
     {
         /// <summary>
@@ -37,14 +38,14 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
         /// <summary>
         /// The name of the role.
         /// </summary>
-        [DataMember(Name = "RoleName", Order = 0)]
+        [DataMember(Name = "RoleName", Order = 0, IsRequired = true)]
         public string Name { get; private set; }
 
         /// <summary>
         /// The version of the Windows Azure Guest Operating System 
         /// on which this role's instances are running.
         /// </summary>
-        [DataMember(Order = 1)]
+        [DataMember(Order = 1, IsRequired = false, EmitDefaultValue = false)]
         public string OsVersion { get; private set; }
 
         /// <summary>

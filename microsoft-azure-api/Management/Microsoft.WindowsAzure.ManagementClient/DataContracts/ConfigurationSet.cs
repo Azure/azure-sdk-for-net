@@ -14,7 +14,7 @@
 //    limitations under the License.
 // </copyright>
 // <summary>
-//    Contains code for the ConfigurationSet class and subclasses.
+//    Contains code for the ConfigurationSet and ProvisioningConfigurationSet.
 // </summary>
 //-----------------------------------------------------------------------
 
@@ -32,42 +32,17 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     [KnownType(typeof(ProvisioningConfigurationSet))]
     [KnownType(typeof(WindowsProvisioningConfigurationSet))]
     [KnownType(typeof(LinuxProvisioningConfigurationSet))]
-    [KnownType(typeof(GenericProvisioningConfigurationSet))]
     public abstract class ConfigurationSet : AzureDataContractBase
     {
         /// <summary>
         /// The name of the type of the configuration set.
         /// </summary>
         [DataMember(Order = 0)]
-        public string ConfigurationSetType { get; private set; }
+        public ConfigurationSetType ConfigurationSetType { get; private set; }
     }
 
-    /// <summary>
-    /// Represents a network configuration set for a role in a deployment.
-    /// </summary>
-    [DataContract(Name = "NetworkConfigurationSet", Namespace = AzureConstants.AzureSchemaNamespace)]
-    public sealed class NetworkConfigurationSet : ConfigurationSet
-    {
-        private NetworkConfigurationSet()
-        {
-        }
-
-        /// <summary>
-        /// The list of InputEndpoints for the role.
-        /// </summary>
-        [DataMember(Order = 0, IsRequired = false, EmitDefaultValue = false)]
-        public List<InputEndpoint> InputEndpoints { get; private set; }
-
-        /// <summary>
-        /// The list of subnet names for the role.
-        /// </summary>
-        [DataMember(Order = 1, IsRequired = false, EmitDefaultValue = false)]
-        public List<string> SubnetNames { get; private set; }
-    }
-
-    //there are other configuration set types, which I'm not going to fill in right now.
-    //they need to exist as known types if serialization is going to work, if they show up...
-    //TODO: Fill these in
+    //the two provisioning configuration sets derive from this. It only
+    //exists to distinguish them from the network configuration set.
     /// <summary>
     /// The abstract base class for all provisioning configuration sets.
     /// </summary>
@@ -76,14 +51,7 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     {
     }
 
-    /// <summary>
-    /// Represents the Windows provisioning configuration set.
-    /// </summary>
-    [DataContract(Name = "WindowsProvisioningConfigurationSet", Namespace = AzureConstants.AzureSchemaNamespace)]
-    public sealed class WindowsProvisioningConfigurationSet : ProvisioningConfigurationSet
-    {
-        private WindowsProvisioningConfigurationSet() { }
-    }
+    
 
     /// <summary>
     /// Represents the Linux provisioning configuration set.
@@ -92,14 +60,5 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     public sealed class LinuxProvisioningConfigurationSet : ProvisioningConfigurationSet
     {
         private LinuxProvisioningConfigurationSet() { }
-    }
-
-    /// <summary>
-    /// Represents a generic provisioning configuration set.
-    /// </summary>
-    [DataContract(Name = "GenericProvisioningConfigurationSet", Namespace = AzureConstants.AzureSchemaNamespace)]
-    public sealed class GenericProvisioningConfigurationSet : ProvisioningConfigurationSet
-    {
-        private GenericProvisioningConfigurationSet() { }
     }
 }

@@ -257,5 +257,71 @@ namespace APITests
             TestContext.WriteLine("Ending ListServiceCertificates test.");
         }
 
+        [TestMethod]
+        public void ListOSImages()
+        {
+            TestContext.WriteLine("Beginning ListOSImages test.");
+            CancellationToken token = TokenSource.Token;
+
+            var task = TestClient.ListVMOSImagesAsync(token);
+
+            TestContext.WriteLine(task.Result.ToString());
+
+            //TestContext.WriteLine("Enumerating Affinity Groups");
+            //foreach (var ag in task.Result)
+            //{
+            //    TestContext.WriteLine("Getting properties for Affinity Group {0}", ag.Name);
+            //    var propsTask = TestClient.GetAffinityGroupAsync(ag.Name);
+
+            //    TestContext.WriteLine(propsTask.Result.ToString());
+            //}
+            //TestContext.WriteLine("Done Enumerating properties of OSimages.");
+            TestContext.WriteLine("Ending ListOSImages test.");
+        }
+
+        [TestMethod]
+        public void GetPersistentVMRoles()
+        {
+            TestContext.WriteLine("Beginning GetPersistentVMRoles test.");
+            CancellationToken token = TokenSource.Token;
+
+            TestContext.WriteLine("Listing cloud services looking for VM roles");
+            var task = TestClient.ListCloudServicesAsync(token);
+
+            TestContext.WriteLine(task.Result.ToString());
+
+            TestContext.WriteLine("Enumerating properties of CloudServices looking for VM roles.");
+            foreach (var service in task.Result)
+            {
+                TestContext.WriteLine("Getting properties for Cloud Service with Label, and embedding detail: {0}", service.Label);
+
+                var propsTask2 = TestClient.GetCloudServicePropertiesAsync(service.ServiceName, true, token);
+
+                TestContext.WriteLine(propsTask2.Result.ToString());
+
+                TestContext.WriteLine("Looking for VM roles");
+
+                foreach(var dep in propsTask2.Result.Deployments)
+                {
+                    var vmRoles = from vm in dep.Roles
+                                 where vm.RoleType == "PersistentVMRole"
+                                 select vm;
+
+                    if (vmRoles != null && vmRoles.Count() > 0)
+                    {
+                        foreach (var v in vmRoles)
+                        {
+                            TestContext.WriteLine("Found VM Role with name: {0}. Calling GetRole", v.Name);
+
+                            var getRoleTask = TestClient.GetVirtualMachineRoleAsync(service.ServiceName, dep.Name, v.Name, token);
+                            TestContext.WriteLine(getRoleTask.Result.ToString());
+                        }
+                    }
+                }
+            }
+
+            TestContext.WriteLine("Done Enumerating properties of CloudServices.");
+
+        }
     }
 }

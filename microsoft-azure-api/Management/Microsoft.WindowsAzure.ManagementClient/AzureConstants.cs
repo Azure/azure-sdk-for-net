@@ -49,6 +49,8 @@ namespace Microsoft.WindowsAzure.ManagementClient
     {
         internal const string HostedServicesPath = "/services/hostedservices";
         internal const string DeploymentSlotsPath = "/deploymentslots";
+        internal const string DeploymentsPath = "/deployments";
+        internal const string RolesPath = "/roles";
         internal const string OperationsPath = "/operations";
         internal const string StorageServicesPath = "/services/storageservices";
         internal const string LocationsPath = "/locations";
@@ -61,6 +63,7 @@ namespace Microsoft.WindowsAzure.ManagementClient
         internal const string CompConfigQuery = "/?comp=config";
         internal const string CompUpgradeQuery = "/?comp=upgrade";
         internal const string CompWalkUpgradeDomainQuery = "/?comp=walkupgradedomain";
+        internal const string ImagesPath = "/services/images";
         internal const string Production = "Production";
         internal const string Staging = "Staging";
         internal const string VersionHeader = "x-ms-version";
@@ -81,11 +84,13 @@ namespace Microsoft.WindowsAzure.ManagementClient
         internal const string HostedServices = "{0}" + UriFragments.HostedServicesPath;
         internal const string HostedServicesAndService = HostedServices + "/{1}";
         internal const string DeploymentSlot = HostedServicesAndService + UriFragments.DeploymentSlotsPath + "/{2}";
+        internal const string Deployments = HostedServicesAndService + UriFragments.DeploymentsPath + "/{2}";
         internal const string GetHostedServicePropertiesEmbedDetail = HostedServicesAndService + UriFragments.EmbedDetailQuery;
         internal const string DeploymentSlotChangeConfig = DeploymentSlot + UriFragments.CompConfigQuery;
         internal const string DeploymentSlotUpdateStatus = DeploymentSlot + UriFragments.CompStatusQuery;
         internal const string DeploymentSlotUpgrade = DeploymentSlot + UriFragments.CompUpgradeQuery;
         internal const string DeploymentSlotWalkUpgradeDomain = DeploymentSlot + UriFragments.CompWalkUpgradeDomainQuery;
+        internal const string RolesAndRole = Deployments + UriFragments.RolesPath + "/{3}";
         internal const string StorageServices = "{0}" + UriFragments.StorageServicesPath;
         internal const string StorageServicesAndAccount = StorageServices + "/{1}";
         internal const string GetStorageAccountKeys = StorageServicesAndAccount + UriFragments.KeysPath;
@@ -98,5 +103,6 @@ namespace Microsoft.WindowsAzure.ManagementClient
         internal const string ServiceCertificatesAndCertificate = ServiceCertificates + "/{2}-{3}";
         internal const string ManagementCertificates = "{0}" + UriFragments.CertificatesPath;
         internal const string ManagementCertificatesAndCertificate = ManagementCertificates + "/{1}";
+        internal const string OSImages = "{0}" + UriFragments.ImagesPath;
     }
 }

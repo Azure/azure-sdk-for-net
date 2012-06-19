@@ -57,6 +57,8 @@
     <Compile Include="AzureHttpClient.CertificateOperations.cs" />
     <Compile Include="AzureHttpClient.CloudServiceOperations.cs" />
     <Compile Include="AzureHttpClient.StorageAccountOperations.cs" />
+    <Compile Include="AzureHttpClient.VirtualMachineOperations.cs" />
+    <Compile Include="AzureHttpClient.VMImageOperations.cs" />
     <Compile Include="DataContracts\AddCertificateInfo.cs" />
     <Compile Include="DataContracts\AffinityGroup.cs" />
     <Compile Include="AzureConstants.cs" />
@@ -65,15 +67,24 @@
     <Compile Include="DataContracts\AvailableService.cs" />
     <Compile Include="DataContracts\ChangeDeploymentConfigurationInfo.cs" />
     <Compile Include="DataContracts\ConfigurationSet.cs" />
+    <Compile Include="DataContracts\ConfigurationSetType.cs" />
     <Compile Include="DataContracts\CreateCloudServiceInfo.cs" />
     <Compile Include="DataContracts\CreateDeploymentInfo.cs" />
     <Compile Include="DataContracts\CreateStorageAccountInfo.cs" />
+    <Compile Include="DataContracts\DataVirtualHardDisk.cs" />
     <Compile Include="DataContracts\DeploymentEnumerations.cs" />
     <Compile Include="DataContracts\ErrorInfo.cs" />
+    <Compile Include="DataContracts\HostCaching.cs" />
     <Compile Include="DataContracts\InputEndpoint.cs" />
     <Compile Include="DataContracts\InstanceEndpoint.cs" />
     <Compile Include="DataContracts\ManagementCertificateInfo.cs" />
+    <Compile Include="DataContracts\NetworkConfigurationSet.cs" />
+    <Compile Include="DataContracts\OperatingSystemType.cs" />
     <Compile Include="DataContracts\OperationStatus.cs" />
+    <Compile Include="DataContracts\OSImage.cs" />
+    <Compile Include="DataContracts\OSVirtualHardDisk.cs" />
+    <Compile Include="DataContracts\PersistentVMRole.cs" />
+    <Compile Include="DataContracts\Protocol.cs" />
     <Compile Include="DataContracts\RegenerateStorageAccountKeysInfo.cs" />
     <Compile Include="DataContracts\Role.cs" />
     <Compile Include="DataContracts\RoleInstance.cs" />
@@ -95,9 +106,11 @@
     <Compile Include="DataContracts\VipSwapInfo.cs" />
     <Compile Include="DataContracts\WalkUpgradeDomainInfo.cs" />
     <Compile Include="DataContracts\Deployment.cs" />
+    <Compile Include="DataContracts\WindowsProvisioningConfigurationSet.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="DataContracts\Location.cs" />
     <Compile Include="DataContracts\OperationStatusInfo.cs" />
+    <Compile Include="DataContracts\LoadBalancerProbe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

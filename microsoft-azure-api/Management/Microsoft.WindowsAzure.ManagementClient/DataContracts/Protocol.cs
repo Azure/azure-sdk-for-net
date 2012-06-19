@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="RegenerateStorageAccountKeysInfo.cs" company="Microsoft">
+// <copyright file="InputEndpoint.cs" company="Microsoft">
 //    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 //    limitations under the License.
 // </copyright>
 // <summary>
-//    Contains code for the RegenerateStorageAccountKeysInfo class.
+//    Contains code for the InputEndpoint class.
 // </summary>
 //-----------------------------------------------------------------------
 
@@ -22,20 +22,19 @@ using System.Runtime.Serialization;
 
 namespace Microsoft.WindowsAzure.ManagementClient.v1_7
 {
-    [DataContract(Name="RegenerateKeys", Namespace = AzureConstants.AzureSchemaNamespace)]
-    internal class RegenerateStorageAccountKeysInfo
+    [DataContract]
+    public enum Protocol
     {
-        private RegenerateStorageAccountKeysInfo() { }
+        [EnumMember(Value="tcp")]
+        Tcp,
 
-        internal static RegenerateStorageAccountKeysInfo Create(StorageAccountKeyType keyType)
-        {
-            return new RegenerateStorageAccountKeysInfo
-            {
-                KeyType = keyType
-            };
-        }
+        [EnumMember(Value="udp")]
+        Udp,
 
-        [DataMember]
-        internal StorageAccountKeyType KeyType { get; private set; }
+        [EnumMember(Value="http")]
+        Http,
+
+        [EnumMember(Value="https")]
+        Https
     }
 }

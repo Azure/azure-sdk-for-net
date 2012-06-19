@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="RegenerateStorageAccountKeysInfo.cs" company="Microsoft">
+// <copyright file="Location.cs" company="Microsoft">
 //    Copyright 2012 Microsoft Corporation
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,28 +14,33 @@
 //    limitations under the License.
 // </copyright>
 // <summary>
-//    Contains code for the RegenerateStorageAccountKeysInfo class.
+//    Contains code for the Location and LocationCollection classes.
 // </summary>
 //-----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Microsoft.WindowsAzure.ManagementClient.v1_7
 {
-    [DataContract(Name="RegenerateKeys", Namespace = AzureConstants.AzureSchemaNamespace)]
-    internal class RegenerateStorageAccountKeysInfo
+    [CollectionDataContract(Name = "Images", Namespace = AzureConstants.AzureSchemaNamespace)]
+    public class OSImageCollection : List<OSImage>
     {
-        private RegenerateStorageAccountKeysInfo() { }
-
-        internal static RegenerateStorageAccountKeysInfo Create(StorageAccountKeyType keyType)
+        /// <summary>
+        /// Overrides the base ToString method to return the XML serialization
+        /// of the data contract represented by the class.
+        /// </summary>
+        /// <returns>
+        /// XML serialized representation of this class as a string.
+        /// </returns>
+        public override string ToString()
         {
-            return new RegenerateStorageAccountKeysInfo
-            {
-                KeyType = keyType
-            };
+            return AzureDataContractBase.ToStringWorker(this);
         }
+    }
 
-        [DataMember]
-        internal StorageAccountKeyType KeyType { get; private set; }
+    [DataContract(Name = "OSImage", Namespace = AzureConstants.AzureSchemaNamespace)]
+    public class OSImage : AzureDataContractBase
+    {
     }
 }

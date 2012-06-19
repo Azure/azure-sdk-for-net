@@ -197,7 +197,25 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
         /// The role is unresponsive.
         /// </summary>
         [EnumMember]
-        UnresponsiveRole
+        UnresponsiveRole,
+
+        /// <summary>
+        /// The PersistentVMRole is provisioning.
+        /// </summary>
+        [EnumMember]
+        Provisioning,
+
+        /// <summary>
+        /// The PersistentVMRole provisioning failed.
+        /// </summary>
+        [EnumMember]
+        ProvisioningFailed,
+
+        /// <summary>
+        /// The role failed to start.
+        /// </summary>
+        [EnumMember]
+        FailedStartingRole
     }
 
     /// <summary>
