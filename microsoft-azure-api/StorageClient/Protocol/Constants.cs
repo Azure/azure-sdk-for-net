@@ -253,6 +253,11 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
         internal const string ContentLengthElement = "Content-Length";
 
         /// <summary>
+        /// XML element for cache control fields.
+        /// </summary>
+        internal const string CacheControlElement = "Cache-Control";
+
+        /// <summary>
         /// XML element for content MD5 fields.
         /// </summary>
         internal const string ContentMD5Element = "Content-MD5";

@@ -262,6 +262,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                     string contentType = null;
                                     string contentEncoding = null;
                                     string contentLanguage = null;
+                                    string cacheControl = null;
                                     string contentMD5 = null;
                                     BlobType? blobType = null;
                                     LeaseStatus leaseStatus = LeaseStatus.Unspecified;
@@ -324,6 +325,10 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                                     break;
                                                 case Constants.ContentLanguageElement:
                                                     contentLanguage = reader.ReadElementContentAsString();
+                                                    blobNeedToRead = false;
+                                                    break;
+                                                case Constants.CacheControlElement:
+                                                    cacheControl = reader.ReadElementContentAsString();
                                                     blobNeedToRead = false;
                                                     break;
                                                 case Constants.ContentMD5Element:
@@ -403,6 +408,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Protocol
                                             blob.Properties = new BlobProperties();
                                             blob.Properties.ContentEncoding = contentEncoding;
                                             blob.Properties.ContentLanguage = contentLanguage;
+                                            blob.Properties.CacheControl = cacheControl;
                                             blob.Properties.ContentMD5 = contentMD5;
                                             blob.Properties.Length = contentLength ?? 0;
                                             blob.Properties.ContentType = contentType;
