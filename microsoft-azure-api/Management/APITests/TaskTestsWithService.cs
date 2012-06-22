@@ -9,6 +9,9 @@ using Microsoft.WindowsAzure.ManagementClient.v1_7;
 using System.Threading;
 using System.Globalization;
 using System.Threading.Tasks;
+using System.Security;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.StorageClient;
 
 namespace APITests
 {
@@ -36,46 +39,21 @@ namespace APITests
             TestContext.WriteLine("Entering CreateCloudServiceForTest Method");
             CancellationToken token = TokenSource.Token;
             TestContext.WriteLine("Generating Name and Label for new cloud service");
-            CloudServiceName = Guid.NewGuid().ToString("N");
-            CloudServiceLabel = CloudServiceName + "_TestService";
+            string name, label;
+            Utilities.CreateUniqueNameAndLabel(out name, out label);
+            CloudServiceName = name;
+            CloudServiceLabel = label;
             TestContext.WriteLine("Generated Name and Label are: {0}, {1}", CloudServiceName, CloudServiceLabel);
 
-            TestContext.WriteLine("Listing available locations:");
-            var listTask = TestClient.ListLocationsAsync(token);
-            TestContext.WriteLine(listTask.Result.ToString());
+            string location, affinityGroup;
 
-            TestContext.WriteLine("Choosing a location at random");
-            Random r = new Random();
-            int idx = r.Next(listTask.Result.Count);
-            string locationToUse = listTask.Result[idx].Name;
-            TestContext.WriteLine("Chose Location {0} randomly", locationToUse);
+            AvailableServices requiredServices = Utilities.DetermineRequiredServices(this.GetType(), TestContext.TestName);
 
-            //TODO: Deal with affinity groups half the time...
-            bool doAffinityGroup = r.Next(2) == 1;
+            Utilities.GetLocationOrAffinityGroup(TestContext, TestClient, out location, out affinityGroup, requiredServices);
 
-            if (doAffinityGroup)
-            {
-                //create an affinity group with a unique name
-                string affinityGroupName = Guid.NewGuid().ToString("N");
-                string affinityGroupLabel = affinityGroupName + "_TestAffinityGroup";
-                TestContext.WriteLine("Randomly chose to create an affinity group, with name {0} and label {1}.", affinityGroupName, affinityGroupLabel);
-
-                var affinityGroupTask = TestClient.CreateAffinityGroupAsync(affinityGroupName, affinityGroupLabel, null, locationToUse);
-                affinityGroupTask.Wait();
-                TestContext.WriteLine("Affinity Group {0} created.", affinityGroupName);
-
-                TestContext.WriteLine("Getting properties for affinity group {0}", affinityGroupName);
-                var getAffinityGroupTask = TestClient.GetAffinityGroupAsync(affinityGroupName, token);
-
-                TestContext.WriteLine(getAffinityGroupTask.Result.ToString());
-
-                AffinityGroup = getAffinityGroupTask.Result.Name;
-            }
-            else
-            {
-                Location = locationToUse;
-            }
-
+            Location = location;
+            AffinityGroup = affinityGroup;
+            
             TestContext.WriteLine("Creating Cloud Service");
             //TODO: Do something with description...
             var createTask = TestClient.CreateCloudServiceAsync(CloudServiceName, CloudServiceLabel, null, Location, AffinityGroup, null, token);
@@ -178,6 +156,7 @@ namespace APITests
 
         #region CloudService tests
         [TestMethod]
+        [RequiredServices(AvailableServices.Compute)]
         public void UpdateCloudService()
         {
             TestContext.WriteLine("Beginning UpdateCloudService test");
@@ -215,6 +194,7 @@ namespace APITests
 
         #region Deployment tests
         [TestMethod]
+        [RequiredServices(AvailableServices.Compute | AvailableServices.Storage)]
         public void CreateDeploymentNoStart()
         {
             TestContext.WriteLine("Beginning CreateDeploymentNoStart test.");
@@ -250,6 +230,7 @@ namespace APITests
         }
 
         [TestMethod]
+        [RequiredServices(AvailableServices.Compute | AvailableServices.Storage)]
         public void CreateDeploymentAutoStart()
         {
             TestContext.WriteLine("Beginning CreateDeploymentAutoStart test.");
@@ -285,6 +266,7 @@ namespace APITests
         }
 
         [TestMethod]
+        [RequiredServices(AvailableServices.Compute | AvailableServices.Storage)]
         public void CreateDeploymentManualStart()
         {
             TestContext.WriteLine("Beginning CreateDeploymentManualStart test.");
@@ -337,6 +319,7 @@ namespace APITests
         }
 
         [TestMethod]
+        [RequiredServices(AvailableServices.Compute | AvailableServices.Storage)]
         public void CreateTwoDeploymentsAndVipSwap()
         {
             TestContext.WriteLine("Beginning CreateTwoDeploymentsAndVipSwap test.");
@@ -466,8 +449,9 @@ namespace APITests
         }
         #endregion
 
-        #region Storage Accoutn Tests
+        #region Storage Account Tests
         [TestMethod]
+        [RequiredServices(AvailableServices.Storage)]
         public void CreateListGetUpdateRegenerateDeleteStorageAccount()
         {
             TestContext.WriteLine("Beginning CreateListGetDeleteStorageAccount test.");
@@ -546,7 +530,150 @@ namespace APITests
         }
         #endregion
 
+        #region PersistentVMTests
         [TestMethod]
+        [RequiredServices(AvailableServices.Compute | AvailableServices.Storage | AvailableServices.PersistentVMRole)]
+        public void CreatePersistentVMDeploymentTests()
+        {
+            TestContext.WriteLine("Beginning CreatePersistentVMDeployment test.");
+            CancellationToken token = TokenSource.Token;
+
+            TestContext.WriteLine("Getting OS Images");
+            var images = TestClient.ListVMOSImagesAsync(token).Result;
+
+            TestContext.WriteLine("Getting a windows image (for now).");
+            OSImage image = (from i in images
+                             where i.OSType == OperatingSystemType.Windows
+                             select i).First();
+
+            TestContext.WriteLine("Selected OS Image:");
+            TestContext.WriteLine(image.ToString());
+
+            string name = Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture);
+            string label = name + "_TestDeployment";
+
+            TestContext.WriteLine("Need a place to put the image, create a StorageAccount");
+
+            string storageAccountName = CreateStorageAccountInternal();
+
+            try
+            {
+
+                TestContext.WriteLine("Get storage account properties and keys");
+
+                var stgacct = TestClient.GetStorageAccountPropertiesAsync(storageAccountName);
+                var stgacctKeys = TestClient.GetStorageAccountKeysAsync(storageAccountName);
+
+                Task.WaitAll(stgacct, stgacctKeys);
+
+                TestContext.WriteLine(stgacct.ToString());
+                TestContext.WriteLine(stgacctKeys.ToString());
+
+                TestContext.WriteLine("Create CloudStorageAccount");
+
+                Uri blob, table, queue;
+
+                Utilities.FixupEndpoints(stgacct.Result, out blob, out queue, out table);
+
+                CloudStorageAccount account = new CloudStorageAccount(
+                                                    new StorageCredentialsAccountAndKey(
+                                                        stgacct.Result.Name,
+                                                        stgacctKeys.Result.Primary),
+                                                        blob, queue, table);
+
+                TestContext.WriteLine("Create container for disk");
+
+                CloudBlobClient client = account.CreateCloudBlobClient();
+
+                CloudBlobContainer container = client.GetContainerReference("disks");
+
+                container.CreateIfNotExist();
+
+                CloudBlob blobRef = container.GetBlobReference(string.Format("{0}-{1}-0-{2}", CloudServiceName, name, DateTime.Now.ToString("yyyyMMddhhmmss")));
+
+                //create password
+                SecureString pwd = new SecureString();
+                pwd.AppendChar('P');
+                pwd.AppendChar('a');
+                pwd.AppendChar('$');
+                pwd.AppendChar('$');
+                pwd.AppendChar('w');
+                pwd.AppendChar('0');
+                pwd.AppendChar('r');
+                pwd.AppendChar('d');
+                pwd.MakeReadOnly();
+
+                string rolename = "testrolename";
+                var createVMDeploymentTask = TestClient.CreateVirtualMachineDeploymentAsync(CloudServiceName, name, label, new PersistentVMRole(rolename, new WindowsProvisioningConfigurationSet("testcompname", pwd),
+                                                                                            OSVirtualHardDisk.OSDiskFromImage(image.Name, image.OSType, blobRef.Uri)), token)
+                                                                                            .ContinueWith(Utilities.PollUntilComplete(TestClient, "Create PersistentVM Deployment", TestContext, token));
+
+                createVMDeploymentTask.Wait();
+
+                TestContext.WriteLine("Calling GetCloudServiceProperties for this new VM Hosted Service");
+
+                var getProps = TestClient.GetCloudServicePropertiesAsync(CloudServiceName, true).Result;
+
+                TestContext.WriteLine(getProps.ToString());
+
+                TestContext.WriteLine("Calling GetRole for the VM role we just created.");
+
+                var getRole = TestClient.GetVirtualMachineRoleAsync(CloudServiceName, name, rolename).Result;
+
+                TestContext.WriteLine(getRole.ToString());
+
+                TestContext.WriteLine("Save off the osdisk media link: {0} and name {1}.", getRole.OSVirtualHardDisk.MediaLink, getRole.OSVirtualHardDisk.DiskName);
+
+                Uri OSDiskMediaLink = getRole.OSVirtualHardDisk.MediaLink;
+                string OSDiskName = getRole.OSVirtualHardDisk.DiskName;
+
+                TestContext.WriteLine("Delete the deployment");
+
+                var deleteDeploymentTask = TestClient.DeleteDeploymentAsync(CloudServiceName, DeploymentSlot.Production)
+                                                                           .ContinueWith(Utilities.PollUntilComplete(TestClient, "Create PersistentVM Deployment", TestContext, token));
+
+                deleteDeploymentTask.Wait();
+
+                TestContext.WriteLine("Deployment deleted, now delete the disk");
+
+                var deleteOSDisk = TestClient.DeleteDiskAsync(OSDiskName);
+
+                deleteOSDisk.Wait();
+
+                TestContext.WriteLine("OS Disk Deleted");
+
+                TestContext.WriteLine("Re-create VM from media link to OS disk");
+
+                createVMDeploymentTask = TestClient.CreateVirtualMachineDeploymentAsync(CloudServiceName, name, label, new PersistentVMRole(rolename, null /*new WindowsProvisioningConfigurationSet("testcompname", pwd)*/,
+                                                                                            OSVirtualHardDisk.OSDiskFromLink(OSDiskMediaLink, OperatingSystemType.Windows)), token)
+                                                                                            .ContinueWith(Utilities.PollUntilComplete(TestClient, "Create PersistentVM Deployment", TestContext, token));
+
+                createVMDeploymentTask.Wait();
+
+                TestContext.WriteLine("Calling GetCloudServiceProperties for this new VM Hosted Service");
+
+                getProps = TestClient.GetCloudServicePropertiesAsync(CloudServiceName, true).Result;
+
+                TestContext.WriteLine(getProps.ToString());
+
+                TestContext.WriteLine("Calling GetRole for the VM role we just created.");
+
+                getRole = TestClient.GetVirtualMachineRoleAsync(CloudServiceName, name, rolename).Result;
+
+                TestContext.WriteLine(getRole.ToString());
+
+            }
+            finally
+            {
+                DeleteStorageAccountInternal(storageAccountName);
+
+                TestContext.WriteLine("Ending CreatePersistentVMDeployment test.");
+            }
+        }
+        #endregion
+
+        [TestMethod]
+        [RequiredServices(AvailableServices.Compute)]
         public void AddListGetDeleteServiceCertificate()
         {
             TestContext.WriteLine("Beginning AddCertificate test.");

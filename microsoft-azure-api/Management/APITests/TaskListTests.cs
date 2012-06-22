@@ -280,6 +280,28 @@ namespace APITests
         }
 
         [TestMethod]
+        public void ListVirtualHardDisks()
+        {
+            TestContext.WriteLine("Beginning ListVirtualHardDisks test.");
+            CancellationToken token = TokenSource.Token;
+
+            var task = TestClient.ListDisksAsync(token);
+
+            TestContext.WriteLine(task.Result.ToString());
+
+            //TestContext.WriteLine("Enumerating Affinity Groups");
+            //foreach (var ag in task.Result)
+            //{
+            //    TestContext.WriteLine("Getting properties for Affinity Group {0}", ag.Name);
+            //    var propsTask = TestClient.GetAffinityGroupAsync(ag.Name);
+
+            //    TestContext.WriteLine(propsTask.Result.ToString());
+            //}
+            //TestContext.WriteLine("Done Enumerating properties of OSimages.");
+            TestContext.WriteLine("Ending ListVirtualHardDisks test.");
+        }
+
+        [TestMethod]
         public void GetPersistentVMRoles()
         {
             TestContext.WriteLine("Beginning GetPersistentVMRoles test.");

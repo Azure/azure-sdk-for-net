@@ -12,9 +12,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Globalization;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.StorageClient;
+using System.Reflection;
 
 namespace APITests
 {
+    //this attribute lets the test methods decide which services they require
+    [AttributeUsage(AttributeTargets.Method)]
+    public class RequiredServicesAttribute : Attribute
+    {
+        public RequiredServicesAttribute(AvailableServices requiredServices)
+        {
+            this.RequiredServices = requiredServices;
+        }
+
+        public AvailableServices RequiredServices { get; private set; }
+    }
+
     //class that does basic function for each class
     //create certs, etc.    
     static class Utilities
@@ -209,7 +222,7 @@ namespace APITests
         
         }
 
-        private static void FixupEndpoints(StorageAccountProperties info, out Uri blob, out Uri queue, out Uri table)
+        internal static void FixupEndpoints(StorageAccountProperties info, out Uri blob, out Uri queue, out Uri table)
         {
             blob = FixupEndpoint(info.Endpoints[0]);
             queue = FixupEndpoint(info.Endpoints[1]);
@@ -247,6 +260,103 @@ namespace APITests
             var ret = new X509Certificate2(certBytes, password, X509KeyStorageFlags.Exportable);
 
             return ret;
+        }
+
+        internal static void CreateUniqueNameAndLabel(out string name, out string label)
+        {
+            name = Guid.NewGuid().ToString("N");
+            label = name + "_TestLabel";
+        }
+
+        internal static AvailableServices DetermineRequiredServices(Type testClass, string methodName)
+        {
+            AvailableServices ret = AvailableServices.None;
+
+            MethodInfo method = testClass.GetMethod(methodName);
+
+            if (method != null)
+            {
+                object[] attrs = method.GetCustomAttributes(typeof(RequiredServicesAttribute), false);
+
+                if (attrs != null && attrs.Length > 0)
+                {
+                    RequiredServicesAttribute attr = (RequiredServicesAttribute)attrs[0];
+
+                    ret = attr.RequiredServices;
+                }
+            }
+
+            return ret;
+        }
+
+        //this method chooses a location at random, makes sure it supports the required services, and then
+        //randomly decides whether to create an affinity group or not.
+        internal static void GetLocationOrAffinityGroup(TestContext testContext, AzureHttpClient testClient, out string locationName, out string affinityGroup, AvailableServices requiredServices)
+        {
+            locationName = null;
+            affinityGroup = null;
+
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken token = source.Token;
+
+            testContext.WriteLine("Listing available locations:");
+            var listTask = testClient.ListLocationsAsync(token);
+            testContext.WriteLine(listTask.Result.ToString());
+            
+            string locationToUse = null;
+            bool appropriateLocationFound = false;
+            Random r = new Random();
+
+            while (!appropriateLocationFound)
+            {
+                testContext.WriteLine("Choosing a location at random");
+                int idx = r.Next(listTask.Result.Count);
+                var location = listTask.Result[idx];
+                
+                testContext.WriteLine("Chose Location {0} randomly", location.Name);
+
+                testContext.WriteLine("Checking to see if it supports required services.");
+                testContext.WriteLine("Asking for {0}, locations supports {1}", requiredServices.ToString(), location.AvailableServices.ToString());
+
+                if ((requiredServices & location.AvailableServices) == requiredServices)
+                {
+                    testContext.WriteLine("Found appropriate location {0}", location.Name);
+                    locationToUse = location.Name;
+                    appropriateLocationFound = true;
+                }
+                else
+                {
+                    testContext.WriteLine("Location {0} is not appropriate, it does not support {1} service.", location.Name, (requiredServices ^ location.AvailableServices).ToString());
+                }
+            }
+
+            bool doAffinityGroup = r.Next(2) == 1;
+
+            if (doAffinityGroup)
+            {
+                //create an affinity group with a unique name
+                string affinityGroupName;
+                string affinityGroupLabel;
+
+                CreateUniqueNameAndLabel(out affinityGroupName, out affinityGroupLabel);
+
+                testContext.WriteLine("Randomly chose to create an affinity group, with name {0} and label {1}.", affinityGroupName, affinityGroupLabel);
+
+                var affinityGroupTask = testClient.CreateAffinityGroupAsync(affinityGroupName, affinityGroupLabel, null, locationToUse);
+                affinityGroupTask.Wait();
+                testContext.WriteLine("Affinity Group {0} created.", affinityGroupName);
+
+                testContext.WriteLine("Getting properties for affinity group {0}", affinityGroupName);
+                var getAffinityGroupTask = testClient.GetAffinityGroupAsync(affinityGroupName, token);
+
+                testContext.WriteLine(getAffinityGroupTask.Result.ToString());
+
+                affinityGroup = getAffinityGroupTask.Result.Name;
+            }
+            else
+            {
+                locationName = locationToUse;
+            }
         }
     }
 }

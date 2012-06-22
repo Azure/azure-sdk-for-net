@@ -34,6 +34,15 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     [KnownType(typeof(LinuxProvisioningConfigurationSet))]
     public abstract class ConfigurationSet : AzureDataContractBase
     {
+        protected ConfigurationSet() { }
+
+        //called when the subclass is used to serialize info to the server
+        //to set the type
+        protected ConfigurationSet(ConfigurationSetType configurationSetType)
+        {
+            this.ConfigurationSetType = configurationSetType;
+        }
+
         /// <summary>
         /// The name of the type of the configuration set.
         /// </summary>
@@ -49,6 +58,14 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     [DataContract(Name = "ProvisioningConfigurationSet", Namespace = AzureConstants.AzureSchemaNamespace)]
     public abstract class ProvisioningConfigurationSet : ConfigurationSet
     {
+        protected ProvisioningConfigurationSet() { }
+
+         //called when the subclass is used to serialize info to the server
+        //to set the type
+        protected ProvisioningConfigurationSet(ConfigurationSetType configurationSetType)
+            : base(configurationSetType)
+        {
+        }
     }
 
     

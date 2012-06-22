@@ -10,6 +10,9 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     public enum OperatingSystemType
     {
         [EnumMember]
+        None,
+
+        [EnumMember]
         Windows,
 
         [EnumMember]

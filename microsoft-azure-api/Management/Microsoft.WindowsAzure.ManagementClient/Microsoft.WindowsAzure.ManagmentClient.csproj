@@ -65,14 +65,18 @@
     <Compile Include="AzureHttpClient.cs" />
     <Compile Include="AzureHttpRequestException.cs" />
     <Compile Include="DataContracts\AvailableService.cs" />
+    <Compile Include="AzureHttpClient.VirtualHardDiskOperations.cs" />
+    <Compile Include="DataContracts\CertificateSetting.cs" />
     <Compile Include="DataContracts\ChangeDeploymentConfigurationInfo.cs" />
     <Compile Include="DataContracts\ConfigurationSet.cs" />
     <Compile Include="DataContracts\ConfigurationSetType.cs" />
     <Compile Include="DataContracts\CreateCloudServiceInfo.cs" />
     <Compile Include="DataContracts\CreateDeploymentInfo.cs" />
     <Compile Include="DataContracts\CreateStorageAccountInfo.cs" />
+    <Compile Include="DataContracts\CreateVirtualMachineDeploymentInfo.cs" />
     <Compile Include="DataContracts\DataVirtualHardDisk.cs" />
     <Compile Include="DataContracts\DeploymentEnumerations.cs" />
+    <Compile Include="DataContracts\DomainJoinInfo.cs" />
     <Compile Include="DataContracts\ErrorInfo.cs" />
     <Compile Include="DataContracts\HostCaching.cs" />
     <Compile Include="DataContracts\InputEndpoint.cs" />
@@ -104,6 +108,7 @@
     <Compile Include="DataContracts\UpgradeDeploymentInfo.cs" />
     <Compile Include="DataContracts\UpgradeStatus.cs" />
     <Compile Include="DataContracts\VipSwapInfo.cs" />
+    <Compile Include="DataContracts\VirtualMachineDisk.cs" />
     <Compile Include="DataContracts\WalkUpgradeDomainInfo.cs" />
     <Compile Include="DataContracts\Deployment.cs" />
     <Compile Include="DataContracts\WindowsProvisioningConfigurationSet.cs" />

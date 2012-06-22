@@ -39,10 +39,10 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
         public string DiskName { get; private set; }
 
         [DataMember(Name="Lun", Order = 3, IsRequired = false, EmitDefaultValue=false)]
-        public int? LogicalUnitNumber { get; private set; }
+        public int LogicalUnitNumber { get; private set; }
 
         [DataMember(Name="LogicalDiskSizeInGB", Order = 4, IsRequired = true)]
-        public int LogicalDiskSize { get; private set; }
+        public int LogicalSize { get; private set; }
 
         [DataMember(Order = 5, IsRequired = false, EmitDefaultValue = false)]
         public Uri MediaLink { get; private set; }

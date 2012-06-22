@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
         /// The name of the role.
         /// </summary>
         [DataMember(Name = "RoleName", Order = 0, IsRequired = true)]
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
 
         /// <summary>
         /// The version of the Windows Azure Guest Operating System 
@@ -52,13 +52,13 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
         /// The type of the role.
         /// </summary>
         [DataMember(Order = 2, IsRequired = false, EmitDefaultValue = false)]
-        public string RoleType { get; private set; } //TODO: Enum?
+        public string RoleType { get; protected set; } //TODO: Enum?
 
         /// <summary>
         /// The list of <see cref="ConfigurationSet">ConfigurationSets</see> in this role.
         /// </summary>
         [DataMember(Order = 3, IsRequired = false, EmitDefaultValue = false)]
-        public List<ConfigurationSet> ConfigurationSets { get; private set; }
+        public List<ConfigurationSet> ConfigurationSets { get; protected set; }
     }
 
 }

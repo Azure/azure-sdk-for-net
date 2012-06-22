@@ -11,6 +11,40 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     {
         private OSVirtualHardDisk() { }
 
+        public static OSVirtualHardDisk OSDiskFromVirtualDisk(string diskName, OperatingSystemType osType, string label = null, HostCaching caching = HostCaching.ReadWrite)
+        {
+            return new OSVirtualHardDisk
+            {
+                HostCaching = caching,
+                DiskLabel = label,
+                DiskName = diskName,
+                OSType = osType
+            };
+        }
+
+        public static OSVirtualHardDisk OSDiskFromImage(string imageName, OperatingSystemType osType, Uri targetBlob, string label = null, HostCaching caching = HostCaching.ReadWrite)
+        {
+            return new OSVirtualHardDisk
+            {
+                HostCaching = caching,
+                DiskLabel = label,
+                SourceImageName = imageName,
+                OSType = osType,
+                MediaLink = targetBlob
+            };
+        }
+
+        public static OSVirtualHardDisk OSDiskFromLink(Uri mediaLink, OperatingSystemType osType, string label = null, HostCaching caching = HostCaching.ReadWrite)
+        {
+            return new OSVirtualHardDisk
+            {
+                HostCaching = caching,
+                DiskLabel = label,
+                MediaLink = mediaLink,
+                OSType = osType
+            };
+        }
+
         [DataMember(Order = 0, IsRequired = false, EmitDefaultValue = false)]
         public HostCaching HostCaching { get; private set; }
 

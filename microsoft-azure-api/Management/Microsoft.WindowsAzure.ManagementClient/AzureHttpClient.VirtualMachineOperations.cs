@@ -21,5 +21,30 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
 
             return StartGetTask<PersistentVMRole>(message, token);
         }
+
+        //ShutdownVirtualMachineRoleAsync
+        //RestartVirtualMachineRoleAsync
+        //StartVirtualMachineRoleAsync
+        //UpdateVirtualMachineRoleAsync
+
+        public Task<string> CreateVirtualMachineDeploymentAsync(string cloudServiceName, string deploymentName, string deploymentLabel, PersistentVMRole vmRole, CancellationToken token = default(CancellationToken))
+        {
+            CreateVirtualMachineDeploymentInfo info = CreateVirtualMachineDeploymentInfo.Create(deploymentName, deploymentLabel, vmRole);
+
+            HttpRequestMessage message = CreateBaseMessage(HttpMethod.Post, CreateTargetUri(UriFormatStrings.Deployments, cloudServiceName), info);
+
+            return StartSendTask(message, token);
+        }
+
+        public Task<string> CreateVirtualMachineDeploymentAsync(string cloudServiceName, string deploymentName, string deploymentLabel, List<PersistentVMRole> vmRoles, 
+                                                               string virtualNetworkName = null /*, DnsServerCollection dns = null*/, CancellationToken token = default(CancellationToken))
+        {
+            CreateVirtualMachineDeploymentInfo info = CreateVirtualMachineDeploymentInfo.Create(deploymentName, deploymentLabel, vmRoles, virtualNetworkName);
+
+            HttpRequestMessage message = CreateBaseMessage(HttpMethod.Post, CreateTargetUri(UriFormatStrings.Deployments, cloudServiceName), info);
+
+            return StartSendTask(message, token);
+
+        }
     }
 }

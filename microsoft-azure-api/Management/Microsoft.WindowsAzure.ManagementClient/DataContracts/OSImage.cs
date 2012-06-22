@@ -42,5 +42,10 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     [DataContract(Name = "OSImage", Namespace = AzureConstants.AzureSchemaNamespace)]
     public class OSImage : AzureDataContractBase
     {
+        [DataMember(Order=6, IsRequired=true)]
+        public string Name { get; private set; }
+
+        [DataMember(Name = "OS", Order = 7, IsRequired = true)]
+        public OperatingSystemType OSType { get; private set; }
     }
 }

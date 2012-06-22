@@ -20,14 +20,16 @@
 
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System;
 
 namespace Microsoft.WindowsAzure.ManagementClient.v1_7
 {
+    //class is only used during serialization, hence internal
     /// <summary>
     /// Represents a collection of AffinityGroups
     /// </summary>
     [CollectionDataContract(Name = "AvailableServices", Namespace = AzureConstants.AzureSchemaNamespace)]
-    public class AvailableServiceCollection : List<AvailableService>
+    internal class AvailableServiceCollection : List<AvailableServices>
     {
         private AvailableServiceCollection() { }
 
@@ -47,25 +49,31 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
     /// <summary>
     /// Represents the available services in a particular data center location.
     /// </summary>
-    [DataContract]
-    public enum AvailableService
+    [DataContract(Name="AvailableService")]
+    [Flags]
+    public enum AvailableServices
     {
+        /// <summary>
+        /// No service available, included for completeness
+        /// </summary>
+        None = 0,
+
         /// <summary>
         /// Compute service is available.
         /// </summary>
         [EnumMember]
-        Compute,
+        Compute = 1,
 
         /// <summary>
         /// Storage service is available.
         /// </summary>
         [EnumMember]
-        Storage,
+        Storage = 2,
 
         /// <summary>
         /// PersistentVMRole service is available
         /// </summary>
         [EnumMember]
-        PersistentVMRole
+        PersistentVMRole = 4
     }
 }

@@ -24,6 +24,8 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security;
+using System.Runtime.InteropServices;
 
 namespace Microsoft.WindowsAzure.ManagementClient
 {
@@ -68,8 +70,57 @@ namespace Microsoft.WindowsAzure.ManagementClient
         {
             Byte[] strBytes = Encoding.UTF8.GetBytes(input);
 
-            return Convert.ToBase64String(strBytes);
+            string ret = Convert.ToBase64String(strBytes);
+            return ret;
         }
+    }
+
+    //SecureString only goes *to* base64...
+    internal static class SecureStringExtensions
+    {
+        internal static string EncodeBase64(this SecureString input)
+        {
+            IntPtr pwdBstr = IntPtr.Zero;
+            char[] chars = null;
+            byte[] bytes = null;
+            try
+            {
+                //pull the rawstring out of the secure string
+                int charCount = input.Length;
+                pwdBstr = Marshal.SecureStringToBSTR(input);
+                chars = new char[input.Length];
+                for (int i = 0; i < charCount; i++)
+                {
+                    chars[i] = Convert.ToChar(Marshal.ReadInt16(pwdBstr, i * sizeof(short)));
+                }
+                bytes = Encoding.UTF8.GetBytes(chars, 0, charCount);
+                return Convert.ToBase64String(bytes);
+            }
+            finally
+            {
+                if (pwdBstr != IntPtr.Zero)
+                {
+                    Marshal.ZeroFreeBSTR(pwdBstr);
+                }
+
+                if (chars != null)
+                {
+                    for (int i = 0; i < chars.Length; i++)
+                    {
+                        chars[i] = '\0';
+                    }
+                }
+
+                if (bytes != null)
+                {
+                    for (int i = 0; i < bytes.Length; i++)
+                    {
+                        bytes[i] = 0;
+                    }
+                }
+            }
+        }
+
     }
 }
 

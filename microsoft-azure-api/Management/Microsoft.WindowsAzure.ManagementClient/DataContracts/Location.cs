@@ -61,9 +61,20 @@ namespace Microsoft.WindowsAzure.ManagementClient.v1_7
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// The list of available services in this data center.
+        /// The available services in this data center.
         /// </summary>
-        [DataMember(Order=2)]
-        public AvailableServiceCollection AvailableServices { get; private set; }
+        public AvailableServices AvailableServices { get; private set; }
+
+        [DataMember(Name="AvailableServices", Order = 2)]
+        private AvailableServiceCollection _availableServicesList;
+
+        [OnDeserialized]
+        private void SetServices(StreamingContext context)
+        {
+            foreach (AvailableServices s in _availableServicesList)
+            {
+                this.AvailableServices |= s;
+            }
+        }
     }
 }
