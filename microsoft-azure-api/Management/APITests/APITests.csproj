@@ -73,6 +73,7 @@
     <Compile Include="TaskTestsWithService.cs" />
     <Compile Include="TaskListTests.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities.Personal.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.WindowsAzure.ManagementClient\Microsoft.WindowsAzure.ManagmentClient.csproj">

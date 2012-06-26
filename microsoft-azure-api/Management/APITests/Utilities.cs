@@ -30,16 +30,36 @@ namespace APITests
 
     //class that does basic function for each class
     //create certs, etc.    
-    static class Utilities
+    //In a separate file called Utilities.Personal.cs (which is not checked in, see .gitignore in this directory
+    //create another part of this partial class that defines the following strings related to your account
+    //you intend to test with
+    //static partial class Utilities
+    //{
+    //    //The subscription id, looks like a guid, e.g. "12345678-1234-5678-abcd-123456789abc";
+    //    internal const string subscriptionId = "[Your Subscription ID here.]";
+    //    //The thumbprint of you managment certificate. We look for it in the local cert store,
+    //    //so it must be installed there
+    //    internal const string certificateThumbprint = "[Your Management cert thumbprint here.]";
+
+    //    //the name of storage account to use for storing vhds for
+    //    //tests around persistent VMs. They take a while to upload,
+    //    //so we look for them first rather than uploading every time.
+    //    internal const string OSImageStorageAccount = "images";
+        
+    //    //the name of a blob storage constainer where the vhds are stored.
+    //    internal const string OSImageStoreContainer = "vhds";
+
+    //    //the name of a vhd file to use to create persistent vm roles
+    //    //we look for it in the "data" folder in this project. It won't
+    //    //get checked in due to .gitignore
+    //    internal const string OSVHDFile = "[VHDFileName.vhd]";
+    //}
+    static partial class Utilities
     {
-        internal const string subscriptionId = "c05a8d41-95fc-40f7-b16f-9a5b8e86a938";
-        internal const string certificateThumbprint = "5d 32 e2 84 aa e5 a8 2b c9 85 64 9b ca c5 cf 91 f2 04 43 a5";
-        //internal const string subscriptionId = "[Your Subscription ID here.]";
-        //internal const string certificateThumbprint = "[Your Management cert thumbprint here.]";
         internal static AzureHttpClient CreateAzureHttpClient()
         {
-            string thumbprint = certificateThumbprint;
-            Guid _subscriptionId = new Guid(subscriptionId);
+            string thumbprint = MgmtCertificateThumbprint;
+            Guid _subscriptionId = new Guid(SubscriptionId);
 
             X509Certificate2 cert = LoadCertificate(thumbprint);
 
@@ -88,11 +108,16 @@ namespace APITests
         }
 
         //this *always* calls GetStorageAccountProperties and GetStorageAccountKeys
-        internal static Uri UploadToBlob(AzureHttpClient client, TestContext context, string storageAccountName, string fileToUpload, CancellationToken token)
+        internal static Uri UploadToBlob(AzureHttpClient client, TestContext context, string storageAccountName, string containerName, string fileToUpload, CancellationToken token)
         {
             //container names must be all lowercase...
             //this is the same container vs uses...
-            const string blobUploadContainer = "vsdeploy";
+            string blobUploadContainer = "vsdeploy";
+            if (!string.IsNullOrEmpty(containerName))
+            {
+                blobUploadContainer = containerName.ToLowerInvariant();
+            }
+
             const int MB = 1048576;
             const int kb = 1024;
             const int MaxMBs = 600; //package can't be larger than 600 MB
@@ -102,7 +127,7 @@ namespace APITests
             Uri blob, queue, table;
 
             context.WriteLine("Preparing to upload file {0} to storage account {1}.", fileToUpload, storageAccountName);
-            string fileName = Path.GetFileName(fileToUpload);
+            string fileName = Path.GetFileName(fileToUpload).ToLowerInvariant();
 
             context.WriteLine("Calling GetStorageAccountProperties and GetStorageAccountKeys for storage account {0}", storageAccountName);
             var storagePropsTask = client.GetStorageAccountPropertiesAsync(storageAccountName, token);
@@ -157,7 +182,7 @@ namespace APITests
                 BlobContainerPermissions perms = new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Off };
                 container.SetPermissions(perms);
 
-                CloudBlob blobRef = container.GetBlobReference(Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture));
+                CloudBlob blobRef = container.GetBlobReference(fileName);
 
                 DateTime startTime = DateTime.Now;
                 context.WriteLine("Beginning upload of file {0} to blob {1} at time: {2}", fileName, blobRef.Uri, startTime.ToString("T", CultureInfo.CurrentCulture));

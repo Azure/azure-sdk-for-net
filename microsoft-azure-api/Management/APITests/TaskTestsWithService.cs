@@ -642,26 +642,6 @@ namespace APITests
 
                 TestContext.WriteLine("OS Disk Deleted");
 
-                TestContext.WriteLine("Re-create VM from media link to OS disk");
-
-                createVMDeploymentTask = TestClient.CreateVirtualMachineDeploymentAsync(CloudServiceName, name, label, new PersistentVMRole(rolename, null /*new WindowsProvisioningConfigurationSet("testcompname", pwd)*/,
-                                                                                            OSVirtualHardDisk.OSDiskFromLink(OSDiskMediaLink, OperatingSystemType.Windows)), token)
-                                                                                            .ContinueWith(Utilities.PollUntilComplete(TestClient, "Create PersistentVM Deployment", TestContext, token));
-
-                createVMDeploymentTask.Wait();
-
-                TestContext.WriteLine("Calling GetCloudServiceProperties for this new VM Hosted Service");
-
-                getProps = TestClient.GetCloudServicePropertiesAsync(CloudServiceName, true).Result;
-
-                TestContext.WriteLine(getProps.ToString());
-
-                TestContext.WriteLine("Calling GetRole for the VM role we just created.");
-
-                getRole = TestClient.GetVirtualMachineRoleAsync(CloudServiceName, name, rolename).Result;
-
-                TestContext.WriteLine(getRole.ToString());
-
             }
             finally
             {
