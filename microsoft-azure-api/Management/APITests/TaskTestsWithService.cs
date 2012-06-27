@@ -138,11 +138,6 @@ namespace APITests
         #endregion
         #endregion
 
-        private const string DataPath = @"..\..\..\ApiTests\Data";
-        private const string PackageName = "CloudProjectForDeploying.cspkg";
-        private const string ConfigFileGood = "ServiceConfiguration.cscfg";
-        private const string CertFile = "AzureTestCert.pfx";
-
         private const string extendedPropNameMax = "ThisPropertyNameIs64CharactersLongThisPropertyNameIs64Characters";
 
         private const string extendedPropValueMax = "ThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLongThisPropertyValueIs255CharactersLong"+
@@ -200,14 +195,12 @@ namespace APITests
             TestContext.WriteLine("Beginning CreateDeploymentNoStart test.");
             CancellationToken token = TokenSource.Token;
 
-            string storageAccountName = null;
+            string storageAccountName = CloudServiceName; //start with this name, it will change though...
             Uri blob = null;
             try
             {
-                storageAccountName = CreateStorageAccountInternal();
-
-                blob = Utilities.UploadToBlob(TestClient, TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
-
+                blob = Utilities.CreateStorageAccountAndUploadTestPackage(TestContext, TestClient, ref storageAccountName, Location, AffinityGroup);
+  
                 Deployment dep = CreateDeploymentInternal(DeploymentSlot.Staging, blob);
 
                 Assert.IsTrue(dep.Status == DeploymentStatus.Suspended);
@@ -221,7 +214,7 @@ namespace APITests
 
                 if(storageAccountName != null)
                 {
-                    DeleteStorageAccountInternal(storageAccountName);
+                    Utilities.DeleteStorageAccount(TestContext, TestClient, storageAccountName);
                 }
             }
 
@@ -236,13 +229,11 @@ namespace APITests
             TestContext.WriteLine("Beginning CreateDeploymentAutoStart test.");
             CancellationToken token = TokenSource.Token;
 
-            string storageAccountName = null;
+            string storageAccountName = CloudServiceName; //start with this name, it will change though...
             Uri blob = null;
             try
             {
-                storageAccountName = CreateStorageAccountInternal();
-
-                blob = Utilities.UploadToBlob(TestClient, TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
+                blob = Utilities.CreateStorageAccountAndUploadTestPackage(TestContext, TestClient, ref storageAccountName, Location, AffinityGroup);
 
                 Deployment dep = CreateDeploymentInternal(DeploymentSlot.Staging, blob, true);
 
@@ -257,7 +248,7 @@ namespace APITests
 
                 if (storageAccountName != null)
                 {
-                    DeleteStorageAccountInternal(storageAccountName);
+                    Utilities.DeleteStorageAccount(TestContext, TestClient, storageAccountName);
                 }
             }
 
@@ -272,13 +263,11 @@ namespace APITests
             TestContext.WriteLine("Beginning CreateDeploymentManualStart test.");
             CancellationToken token = TokenSource.Token;
 
-            string storageAccountName = null;
+            string storageAccountName = CloudServiceName; //start with this name, it will change though...
             Uri blob = null;
             try
             {
-                storageAccountName = CreateStorageAccountInternal();
-
-                blob = Utilities.UploadToBlob(TestClient, TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
+                blob = Utilities.CreateStorageAccountAndUploadTestPackage(TestContext, TestClient, ref storageAccountName, Location, AffinityGroup);
 
                 Deployment dep = CreateDeploymentInternal(DeploymentSlot.Staging, blob);
 
@@ -310,7 +299,7 @@ namespace APITests
 
                 if (storageAccountName != null)
                 {
-                    DeleteStorageAccountInternal(storageAccountName);
+                    Utilities.DeleteStorageAccount(TestContext, TestClient, storageAccountName);
                 }
             }
 
@@ -325,13 +314,11 @@ namespace APITests
             TestContext.WriteLine("Beginning CreateTwoDeploymentsAndVipSwap test.");
             CancellationToken token = TokenSource.Token;
 
-            string storageAccountName = null;
+            string storageAccountName = CloudServiceName; //start with this name, it will change though...
             Uri blob = null;
             try
             {
-                storageAccountName = CreateStorageAccountInternal();
-
-                blob = Utilities.UploadToBlob(TestClient, TestContext, storageAccountName, Path.Combine(DataPath, PackageName), token);
+                blob = Utilities.CreateStorageAccountAndUploadTestPackage(TestContext, TestClient, ref storageAccountName, Location, AffinityGroup);
 
                 Random r = new Random();
                 TestContext.WriteLine("Creating two deployments, and randomly deciding whether to start them automatically.");
@@ -440,7 +427,7 @@ namespace APITests
 
                 if (storageAccountName != null)
                 {
-                    DeleteStorageAccountInternal(storageAccountName);
+                    Utilities.DeleteStorageAccount(TestContext, TestClient, storageAccountName);
                 }
             }
 
@@ -456,7 +443,7 @@ namespace APITests
         {
             TestContext.WriteLine("Beginning CreateListGetDeleteStorageAccount test.");
 
-            string name = CreateStorageAccountInternal();
+            string name = Utilities.CreateStorageAccount(TestContext, TestClient, CloudServiceName, Location, AffinityGroup);
 
             try
             {
@@ -522,7 +509,7 @@ namespace APITests
             }
             finally
             {
-                DeleteStorageAccountInternal(name);
+                Utilities.DeleteStorageAccount(TestContext, TestClient, name);
 
                 TestContext.WriteLine("Ending CreateListGetDeleteStorageAccount test.");
             }
@@ -554,7 +541,7 @@ namespace APITests
 
             TestContext.WriteLine("Need a place to put the image, create a StorageAccount");
 
-            string storageAccountName = CreateStorageAccountInternal();
+            string storageAccountName = Utilities.CreateStorageAccount(TestContext, TestClient, CloudServiceName, Location, AffinityGroup);
 
             try
             {
@@ -645,7 +632,7 @@ namespace APITests
             }
             finally
             {
-                DeleteStorageAccountInternal(storageAccountName);
+                Utilities.DeleteStorageAccount(TestContext, TestClient, storageAccountName);
 
                 TestContext.WriteLine("Ending CreatePersistentVMDeployment test.");
             }
@@ -730,47 +717,7 @@ namespace APITests
 
         }
 
-        //separating this out because it gets used in several places
-        private string CreateStorageAccountInternal()
-        {
-            TestContext.WriteLine("Beginning CreateStorageAccount operation.");
-
-            string storageAccountName = CloudServiceName.ToLower().Substring(0, 24);
-
-            TestContext.WriteLine("Creating Storage account with name {0}", storageAccountName);
-
-            var createAndWaitTask = TestClient.CreateStorageAccountAsync(storageAccountName, CloudServiceName, null, Location, AffinityGroup, true, null)
-                .ContinueWith(Utilities.PollUntilComplete(TestClient, "Create Storage Account", TestContext, TokenSource.Token));
-
-            createAndWaitTask.Wait();
-
-            TestContext.WriteLine("Storage account {0} created.", storageAccountName);
-
-            TestContext.WriteLine("End CreateStorageAccount operation.");
-
-            TestContext.WriteLine("Get StorageAccountProperties on new account.");
-
-            var getTask = TestClient.GetStorageAccountPropertiesAsync(storageAccountName);
-
-            TestContext.WriteLine(getTask.Result.ToString());
-
-            return storageAccountName;
-        }
-
-        //ditto
-        private void DeleteStorageAccountInternal(string storageAccountName)
-        {
-            TestContext.WriteLine("Beginning DeleteStorageAccount operation.");
-            TestContext.WriteLine("Deleting Storage account {0}.", storageAccountName);
-            //create is a polling operation, delete is not...
-            var deleteTask = TestClient.DeleteStorageAccountAsync(storageAccountName);
-
-            deleteTask.Wait();
-            TestContext.WriteLine("Storage account {0} deleted.", storageAccountName);
-            TestContext.WriteLine("End DeleteStorageAccount operation.");
-        }
-
-        private Deployment CreateDeploymentInternal(DeploymentSlot slot, Uri blobUri, bool startWithDeployment = false, bool treatWarningsAsError = false)
+         private Deployment CreateDeploymentInternal(DeploymentSlot slot, Uri blobUri, bool startWithDeployment = false, bool treatWarningsAsError = false)
         {
             TestContext.WriteLine("Beginning CreateDeployment operation");
             CancellationToken token = TokenSource.Token;
@@ -780,7 +727,7 @@ namespace APITests
 
             TestContext.WriteLine("Creating Deployment with name {0} and label {1} in slot {2}", name, label, slot.ToString());
 
-            var createAndWaitTask = TestClient.CreateDeploymentAsync(CloudServiceName, slot, name, blobUri, label, Path.Combine(DataPath, ConfigFileGood), startWithDeployment, treatWarningsAsError, null, token)
+            var createAndWaitTask = TestClient.CreateDeploymentAsync(CloudServiceName, slot, name, blobUri, label, Path.Combine(Utilities.DataPath, Utilities.CSCfgFile), startWithDeployment, treatWarningsAsError, null, token)
                                     .ContinueWith(Utilities.PollUntilComplete(TestClient, "Create Deployment", TestContext, token));
 
 

@@ -49,6 +49,16 @@ namespace APITests
     //    //the name of a blob storage constainer where the vhds are stored.
     //    internal const string OSImageStoreContainer = "vhds";
 
+    //    //the local path to the data files. These are excluded, if you name the
+    //    //directory Data (or the files are .vhd, .cspkg, .cscfg), see .gitignore
+    //    internal const string DataPath = @"..\..\..\ApiTests\Data";
+
+    //    //this is the cspkg used in normal deployments
+    //    //internal const string CSPkgFile = "[cspkgfile.cspkg]";
+
+    //    //this is the corresponding cscfg file
+    //    internal const string CSCfgFile = "[cscfgfile.cspkg]";
+
     //    //the name of a vhd file to use to create persistent vm roles
     //    //we look for it in the "data" folder in this project. It won't
     //    //get checked in due to .gitignore
@@ -382,6 +392,57 @@ namespace APITests
             {
                 locationName = locationToUse;
             }
+        }
+
+        internal static string CreateStorageAccount(TestContext testContext, AzureHttpClient testClient, string accountName, string location, string affinityGroup)
+        {
+            testContext.WriteLine("Beginning CreateStorageAccount operation.");
+
+            string storageAccountName = accountName.ToLower().Substring(0, 24);
+
+            testContext.WriteLine("Creating Storage account with name {0}", storageAccountName);
+
+            var createAndWaitTask = testClient.CreateStorageAccountAsync(storageAccountName, accountName, null, location, affinityGroup, true, null)
+                .ContinueWith(Utilities.PollUntilComplete(testClient, "Create Storage Account", testContext, default(CancellationToken)));
+
+            createAndWaitTask.Wait();
+
+            testContext.WriteLine("Storage account {0} created.", storageAccountName);
+
+            testContext.WriteLine("End CreateStorageAccount operation.");
+
+            testContext.WriteLine("Get StorageAccountProperties on new account.");
+
+            var getTask = testClient.GetStorageAccountPropertiesAsync(storageAccountName);
+
+            testContext.WriteLine(getTask.Result.ToString());
+
+            return storageAccountName;
+        }
+
+        //uploads the test package to a newly created storage account
+        //and returns the storage account name
+        internal static Uri CreateStorageAccountAndUploadTestPackage(TestContext testContext, AzureHttpClient testClient, ref string accountName, string location, string affinityGroup)
+        {
+            string retAccountName = CreateStorageAccount(testContext, testClient, accountName, location, affinityGroup);
+
+            accountName = retAccountName;
+
+            string fileToUpload = Path.Combine(DataPath, CSPkgFile);
+
+            return UploadToBlob(testClient, testContext, accountName, null, fileToUpload, default(CancellationToken));
+        }
+
+        internal static void DeleteStorageAccount(TestContext testContext, AzureHttpClient testClient, string storageAccountName)
+        {
+            testContext.WriteLine("Beginning DeleteStorageAccount operation.");
+            testContext.WriteLine("Deleting Storage account {0}.", storageAccountName);
+            //create is a polling operation, delete is not...
+            var deleteTask = testClient.DeleteStorageAccountAsync(storageAccountName);
+
+            deleteTask.Wait();
+            testContext.WriteLine("Storage account {0} deleted.", storageAccountName);
+            testContext.WriteLine("End DeleteStorageAccount operation.");
         }
     }
 }
