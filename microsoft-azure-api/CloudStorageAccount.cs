@@ -460,7 +460,7 @@ namespace Microsoft.WindowsAzure
             if (MatchesSpecification(
                 settings,
                 AllRequired(DefaultEndpointsProtocolSetting, AccountNameSetting, AccountKeySetting),
-                Optional(BlobEndpointSetting, QueueEndpointSetting, TableEndpointSetting)))
+                Optional(BlobEndpointSetting, QueueEndpointSetting, TableEndpointSetting, AccountKeyNameSetting)))
             {
                 blobEndpoint = settings[BlobEndpointSettingString] ?? GetDefaultBlobEndpoint(settings);
                 queueEndpoint = settings[QueueEndpointSettingString] ?? GetDefaultQueueEndpoint(settings);
@@ -469,7 +469,7 @@ namespace Microsoft.WindowsAzure
             }
 
             // explicit case
-            else if (MatchesSpecification(
+            if (MatchesSpecification(
                 settings,
                 AtLeastOne(BlobEndpointSetting, QueueEndpointSetting, TableEndpointSetting),
                 ValidCredentials()))
