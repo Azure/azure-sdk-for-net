@@ -451,23 +451,21 @@ namespace Microsoft.WindowsAzure
                 return true;
             }
 
+            string blobEndpoint = null;
+            string queueEndpoint = null;
+            string tableEndpoint = null;
+            var shouldParse = false;
+
             // automatic case
             if (MatchesSpecification(
                 settings,
                 AllRequired(DefaultEndpointsProtocolSetting, AccountNameSetting, AccountKeySetting),
                 Optional(BlobEndpointSetting, QueueEndpointSetting, TableEndpointSetting, AccountKeyNameSetting)))
             {
-                var blobEndpoint = settings[BlobEndpointSettingString];
-                var queueEndpoint = settings[QueueEndpointSettingString];
-                var tableEndpoint = settings[TableEndpointSettingString];
-
-                accountInformation = new CloudStorageAccount(
-                    GetCredentials(settings),
-                    new Uri(blobEndpoint ?? GetDefaultBlobEndpoint(settings)),
-                    new Uri(queueEndpoint ?? GetDefaultQueueEndpoint(settings)),
-                    new Uri(tableEndpoint ?? GetDefaultTableEndpoint(settings)));
-
-                return true;
+                blobEndpoint = settings[BlobEndpointSettingString] ?? GetDefaultBlobEndpoint(settings);
+                queueEndpoint = settings[QueueEndpointSettingString] ?? GetDefaultQueueEndpoint(settings);
+                tableEndpoint = settings[TableEndpointSettingString] ?? GetDefaultTableEndpoint(settings);
+                shouldParse = true;
             }
 
             // explicit case
@@ -476,13 +474,29 @@ namespace Microsoft.WindowsAzure
                 AtLeastOne(BlobEndpointSetting, QueueEndpointSetting, TableEndpointSetting),
                 ValidCredentials()))
             {
-                var blobUri = settings[BlobEndpointSettingString] == null ? null : new Uri(settings[BlobEndpointSettingString]);
-                var queueUri = settings[QueueEndpointSettingString] == null ? null : new Uri(settings[QueueEndpointSettingString]);
-                var tableUri = settings[TableEndpointSettingString] == null ? null : new Uri(settings[TableEndpointSettingString]);
-
-                accountInformation = new CloudStorageAccount(GetCredentials(settings), blobUri, queueUri, tableUri);
-
-                return true;
+                blobEndpoint = settings[BlobEndpointSettingString];
+                queueEndpoint = settings[QueueEndpointSettingString];
+                tableEndpoint = settings[TableEndpointSettingString];
+                shouldParse = true;
+            }
+            if (shouldParse)
+            {
+                try
+                {
+                    accountInformation = new CloudStorageAccount(
+                        GetCredentials(settings),
+                        blobEndpoint == null ? null : new Uri(blobEndpoint),
+                        queueEndpoint == null ? null : new Uri(queueEndpoint),
+                        tableEndpoint == null ? null : new Uri(tableEndpoint)
+                    );
+                    return true;
+                }
+                catch (UriFormatException)
+                {
+                    error("One or more endpoints specified are not valid URIs, or account name is malformed.");
+                    accountInformation = null;
+                    return false;
+                }
             }
 
             // not valid
