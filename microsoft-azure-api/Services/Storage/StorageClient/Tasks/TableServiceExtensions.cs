@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.StorageClient.Tasks
 
             TraceHelper.WriteLine("Unexpected internal storage client error.");
 
-            throw new StorageClientException(
+            throw new StorageServerException(
                 StorageErrorCode.None,
                 "The operation has exceeded the default maximum time allowed for Windows Azure Table service operations.", 
                 System.Net.HttpStatusCode.Unused,
