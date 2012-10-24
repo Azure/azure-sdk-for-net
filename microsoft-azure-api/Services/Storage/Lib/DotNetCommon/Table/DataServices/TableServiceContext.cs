@@ -197,10 +197,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// Begins an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
         /// <param name="options">Additional options for saving changes.</param>
-        /// <param name="operationContext"> </param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
-        /// <param name="requestOptions"> </param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         [DoesServiceRequest]
         public ICancellableAsyncResult BeginSaveChangesWithRetries(SaveChangesOptions options, AsyncCallback callback, object state)
@@ -212,7 +210,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// Begins an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
         /// <param name="options">Additional options for saving changes.</param>
-        /// <param name="operationContext"> </param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <param name="requestOptions"> </param>
@@ -293,6 +291,9 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             return resp;
         }
 
+        /// <summary>
+        /// Releases unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);  

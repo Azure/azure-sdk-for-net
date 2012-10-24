@@ -17,15 +17,35 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Util
 {
+    using System.Threading;
+
     /// <summary>
     /// Provides properties to keep track of Md5 / Length of a stream as it is being copied.
     /// </summary>
     internal class StreamDescriptor
     {
-        public long Length { get; set; }
+        private long length = 0;
 
-        public string Md5 { get; set; }
+        public long Length
+        {
+            get { return Interlocked.Read(ref this.length); }
+            set { Interlocked.Exchange(ref this.length, value); }
+        }
 
-        public MD5Wrapper Md5HashRef { get; set; }
+        private volatile string md5 = null;
+
+        public string Md5
+        {
+            get { return this.md5; }
+            set { this.md5 = value; }
+        }
+
+        private volatile MD5Wrapper md5HashRef = null;
+
+        public MD5Wrapper Md5HashRef
+        {
+            get { return this.md5HashRef; }
+            set { this.md5HashRef = value; }
+        }
     }
 }

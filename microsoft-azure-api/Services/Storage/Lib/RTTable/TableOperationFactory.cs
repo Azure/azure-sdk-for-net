@@ -19,14 +19,18 @@ namespace Microsoft.WindowsAzure.Storage.Table
 {
     using Microsoft.WindowsAzure.Storage.Core.Util;
 
+    /// <summary>
+    /// Contains factory methods for creating <see cref="TableOperation"/> objects.
+    /// </summary>
     public static class TableOperationFactory
     {
         /// <summary>
-        /// Creates a new table operation that replaces the contents of
-        /// the given entity in a table.
+        /// Creates a new <see cref="TableOperation"/> object that retrieves an entity with the specified partition key and row key. The entity will be de-serialized into the specified class type which extends <see cref="ITableEntity"/>.
         /// </summary>
-        /// <param name="entity">The entity whose contents are being replaced.</param>
-        /// <returns>The table operation.</returns>
+        /// <param name="partitionKey">A string containing the partition key of the entity to be retrieved.</param>
+        /// <param name="rowkey">A string containing the row key of the entity to be retrieved.</param>
+        /// <typeparam name="TElement">The class of type for the entity to retrieve.</typeparam>
+        /// <returns>A new <see cref="TableOperation"/> object.</returns>
         public static TableOperation Retrieve<TElement>(string partitionKey, string rowkey) where TElement : ITableEntity
         {
             CommonUtils.AssertNotNull("partitionKey", partitionKey);
@@ -37,11 +41,13 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Creates a new table operation that replaces the contents of
-        /// the given entity in a table.
+        /// Creates a new <see cref="TableOperation"/> object that retrieves an entity with the specified partition key and row key.
         /// </summary>
-        /// <param name="entity">The entity whose contents are being replaced.</param>
-        /// <returns>The table operation.</returns>
+        /// <param name="partitionKey">A string containing the partition key of the entity to be retrieved.</param>
+        /// <param name="rowkey">A string containing the row key of the entity to be retrieved.</param>
+        /// <param name="resolver">The <see cref="EntityResolver{R}"/> implementation to project the entity to retrieve as a particular type in the result.</param>
+        /// <typeparam name="R">The return type which the specified <see cref="EntityResolver"/> will resolve the given entity to.</typeparam>
+        /// <returns>A new <see cref="TableOperation"/> object.</returns>
         public static TableOperation Retrieve<R>(string partitionKey, string rowkey, EntityResolver<R> resolver)
         {
             CommonUtils.AssertNotNull("partitionKey", partitionKey);

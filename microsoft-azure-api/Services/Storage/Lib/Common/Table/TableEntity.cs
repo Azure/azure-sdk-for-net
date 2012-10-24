@@ -26,8 +26,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// <summary>
     /// Represents the base object type for a table entity in the Table Storage service.
     /// </summary>
-    /// <remarks><see cref="TableEntity"/> provides a base implementation for the <see cref="ITableEntity"/> interface that provides <see cref="readEntity"/> and <see cref="writeEntity"/> methods that by default serialize and 
-    /// deserialize all properties via reflection. A table entity class may extend this class and override the <see cref="readEntity"/> and <see cref="writeEntity"/> methods to provide customized or more performant serialization logic.</remarks>
+    /// <remarks><see cref="TableEntity"/> provides a base implementation for the <see cref="ITableEntity"/> interface that provides <see cref="ReadEntity(IDictionary{string, EntityProperty}, OperationContext)"/> and <see cref="WriteEntity(OperationContext)"/> methods that by default serialize and 
+    /// de-serialize all properties via reflection. A table entity class may extend this class and override the <see cref="ITableEntity.ReadEntity(IDictionary{string, EntityProperty}, OperationContext)"/> and <see cref="ITableEntity.WriteEntity(OperationContext)"/> methods to provide customized or better performing serialization logic.</remarks>
     public class TableEntity : ITableEntity
     {
         /// <summary>
@@ -73,9 +73,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public string ETag { get; set; }
 
         /// <summary>
-        /// Deserializes this <see cref="TableEntity"/> instance using the specified <see cref="Dictionary{TKey,TValue}"/> of property names to <see cref="EntityProperty"/> data typed values. 
+        /// De-serializes this <see cref="TableEntity"/> instance using the specified <see cref="Dictionary{TKey,TValue}"/> of property names to <see cref="EntityProperty"/> data typed values. 
         /// </summary>
-        /// <param name="properties">The map of string property names to <see cref="EntityProperty"/> data values to deserialize and store in this table entity instance.</param>
+        /// <param name="properties">The map of string property names to <see cref="EntityProperty"/> data values to de-serialize and store in this table entity instance.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object used to track the execution of the operation.</param>
         [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1121:UseBuiltInTypeAlias", Justification = "Needed for object type checking.")]
         public virtual void ReadEntity(IDictionary<string, EntityProperty> properties, OperationContext operationContext)
@@ -107,7 +107,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     continue;
                 }
 
-                // only proceed with properties that have a cooresponding entry in the dictionary
+                // only proceed with properties that have a corresponding entry in the dictionary
                 if (!properties.ContainsKey(property.Name))
                 {
                     continue;
@@ -239,7 +239,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                 EntityProperty newProperty = EntityProperty.CreateEntityPropertyFromObject(property.GetValue(this, null), false);
 
-                // property will be null if uknown type
+                // property will be null if unknown type
                 if (newProperty != null)
                 {
                     retVals.Add(property.Name, newProperty);

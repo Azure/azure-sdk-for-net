@@ -36,7 +36,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Clones an instance of QueueRequestOptions so that we can apply defaults.
         /// </summary>
         /// <param name="other">QueueRequestOptions instance to be cloned.</param>
-        /// <param name="serviceClient">The queue service client.</param>
         internal QueueRequestOptions(QueueRequestOptions other)
             : this()
         {

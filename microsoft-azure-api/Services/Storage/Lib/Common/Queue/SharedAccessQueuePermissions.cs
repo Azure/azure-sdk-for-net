@@ -36,18 +36,18 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         Read = 0x1,
 
         /// <summary>
-        /// Permission to get and delete messages granted.
-        /// </summary>
-        ProcessMessages = 0x2,
-
-        /// <summary>
         /// Permission to add messages granted.
         /// </summary>
-        Add = 0x4,
+        Add = 0x2,
 
         /// <summary>
         /// Permissions to update messages granted.
         /// </summary>
-        Update = 0x8
+        Update = 0x4,
+
+        /// <summary>
+        /// Permission to get and delete messages granted.
+        /// </summary>
+        ProcessMessages = 0x8
     }
 }

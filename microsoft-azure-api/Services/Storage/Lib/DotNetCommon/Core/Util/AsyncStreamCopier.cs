@@ -29,9 +29,10 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         // Note two buffers to do overlapped read and write. Once ReadBuffer is full it will be swapped over to writeBuffer and a write issued.
         private byte[] currentReadBuff = null;
         private byte[] currentWriteBuff = null;
-        private int lastReadCount = -1;
-        private int currentWriteCount = -1;
+        private volatile int lastReadCount = -1;
+        private volatile int currentWriteCount = -1;
         private OperationContext operationContext = null;
+        private StreamDescriptor streamCopyState = null;
 
         private DateTime? maxCopyTime = null;
         private long? maxLength = null;
@@ -40,27 +41,20 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         private Action<ExecutionState<T>> completedDel;
 
         // these locals enforce a lock
-        private IAsyncResult readRes;
-        private IAsyncResult writeRes;
+        private volatile IAsyncResult readRes;
+        private volatile IAsyncResult writeRes;
         private object lockerObj = new object();
 
         // Used for cooperative cancellation
-        private bool cancelRequested = false;
-        private bool readBufferFull = false;
+        private volatile bool cancelRequested = false;
         private ExecutionState<T> state = null;
         private Action previousCancellationDelegate = null;
 
-        /// <summary>
-        /// Flag to store completion status, 0 = non complete, 1 = complete
-        /// </summary>
-        private int completed = 0;
+        // Used to signal copy completion
+        private ManualResetEvent completedEvent = new ManualResetEvent(false);
+        private int completionProcessed = 0;
 
-        /// <summary>
-        /// Stores the native timer used to trigger after the specified delay.
-        /// </summary>
-        private Timer timer;
-
-        public AsyncStreamCopier(Stream src, Stream dest, ExecutionState<T> state, int buffSize, bool calculateMd5, OperationContext operationContext)
+        public AsyncStreamCopier(Stream src, Stream dest, ExecutionState<T> state, int buffSize, bool calculateMd5, OperationContext operationContext, StreamDescriptor streamCopyState)
         {
             this.src = src;
             this.dest = dest;
@@ -69,11 +63,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             this.currentWriteBuff = new byte[buffSize];
 
             this.operationContext = operationContext;
+            this.streamCopyState = streamCopyState;
 
-            if (operationContext.StreamCopyState == null)
+            if (streamCopyState != null && calculateMd5 && streamCopyState.Md5HashRef == null)
             {
-                operationContext.StreamCopyState = new StreamDescriptor();
-                operationContext.StreamCopyState.Md5HashRef = calculateMd5 ? new MD5Wrapper() : null;
+                streamCopyState.Md5HashRef = new MD5Wrapper();
             }
         }
         #endregion
@@ -88,8 +82,18 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             // If there is a max time specified start timeout timer.
             if (maxCopyTime.HasValue)
             {
-                this.timer = new Timer((t) => this.ForceAbort());
-                this.timer.Change(maxCopyTime.Value - DateTime.Now, TimeSpan.FromMilliseconds(-1));
+                ThreadPool.RegisterWaitForSingleObject(
+                    this.completedEvent,
+                    (_, isTimedOut) =>
+                    {
+                        if (isTimedOut)
+                        {
+                            this.ForceAbort(true);
+                        }
+                    },
+                    null,
+                    maxCopyTime.Value - DateTime.Now,
+                    true);
             }
 
             lock (this.state.CancellationLockerObject)
@@ -104,8 +108,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         public void Abort()
         {
-            this.state.ExceptionRef = Exceptions.GenerateCancellationException(this.state.OperationContext.CurrentResult, null);
-            this.cancelRequested = true;
+            this.ForceAbort(false);
         }
         #endregion
 
@@ -124,10 +127,26 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             }
             catch (Exception ex)
             {
-                this.state.ExceptionRef = ex;
+                if (this.state.ReqTimedOut)
+                {
+                    this.state.ExceptionRef = Exceptions.GenerateTimeoutException(this.state.Cmd != null ? this.state.Cmd.CurrentResult : null, ex);
+                }
+                else if (this.cancelRequested)
+                {
+                    this.state.ExceptionRef = Exceptions.GenerateCancellationException(this.state.Cmd != null ? this.state.Cmd.CurrentResult : null, ex);
+                }
+                else
+                {
+                    this.state.ExceptionRef = ex;
+                }
+
                 lock (this.lockerObj)
                 {
-                    this.SignalCompletion();
+                    // if there is an outstanding read/write let it signal completion since we populated the exception. 
+                    if (this.readRes == null && this.writeRes == null)
+                    {
+                        this.SignalCompletion();
+                    }
                 }
             }
         }
@@ -142,8 +161,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             {
                 if (readWriteFlag)
                 {
-                    this.readRes = null;
-
                     // Update length & count if this isn't the first run (res == null)
                     if (res != null)
                     {
@@ -165,33 +182,24 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                         }
 
                         // No outstanding reads & writes, schedule write current and read next
-                        if (this.writeRes == null)
+
+                        // will swap buffers, set currentWriteCount
+                        if (this.ReadBufferFull && this.ConsumeReadBuffer() > 0)
                         {
-                            if (this.readBufferFull)
+                            this.writeRes = this.dest.BeginWrite(this.currentWriteBuff, 0, this.currentWriteCount, this.EndOpWithCatch, false /* write */);
+
+                            // if this completes synchronously, then it doesnt matter, the next reads callback will init the next write and we are about to kick off the next read.
+                            if (this.writeRes.CompletedSynchronously)
                             {
-                                // will swap buffers, set currentWriteCount
-                                this.ConsumeReadBuffer();
-
-                                this.writeRes = this.dest.BeginWrite(this.currentWriteBuff, 0, this.currentWriteCount, this.EndOpWithCatch, false /* write */);
-
-                                // if this completes synchronously, then it doesnt matter, the next reads callback will init the next write and we are about to kick off the next read.
-                                if (this.writeRes.CompletedSynchronously)
-                                {
-                                    this.ProcessEndWrite(this.writeRes, this.currentWriteBuff, 0, this.currentWriteCount);
-                                }
-                            }
-
-                            this.readRes = this.src.BeginRead(this.currentReadBuff, 0, this.currentReadBuff.Length, this.EndOpWithCatch, true /* read */);
-
-                            if (this.readRes.CompletedSynchronously)
-                            {
-                                this.ProcessEndRead(this.readRes);
+                                this.ProcessEndWrite(this.writeRes, this.currentWriteBuff, 0, this.currentWriteCount);
                             }
                         }
-                        else
+
+                        this.readRes = this.src.BeginRead(this.currentReadBuff, 0, this.currentReadBuff.Length, this.EndOpWithCatch, true /* read */);
+
+                        if (this.readRes.CompletedSynchronously)
                         {
-                            // write outstanding, read buffer is full && write buffer is in use. Wait for its callback to get data  
-                            break;
+                            this.ProcessEndRead(this.readRes);
                         }
                     }
                 }
@@ -211,19 +219,20 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                     }
 
                     // read is done, check to see if we need to dispatch write
-                    if (this.readBufferFull)
+                    if (this.ReadBufferFull)
                     {
                         // Schedule write if data is available
-                        this.ConsumeReadBuffer();
-
-                        this.writeRes = this.dest.BeginWrite(this.currentWriteBuff, 0, this.currentWriteCount, this.EndOpWithCatch, false /* write */);
-
-                        if (this.writeRes.CompletedSynchronously)
+                        if (this.ConsumeReadBuffer() > 0)
                         {
-                            this.ProcessEndWrite(this.writeRes, this.currentWriteBuff, 0, this.currentWriteCount);
+                            this.writeRes = this.dest.BeginWrite(this.currentWriteBuff, 0, this.currentWriteCount, this.EndOpWithCatch, false /* write */);
 
-                            // kick off next op
-                            this.EndOpWithCatch(null);
+                            if (this.writeRes.CompletedSynchronously)
+                            {
+                                this.ProcessEndWrite(this.writeRes, this.currentWriteBuff, 0, this.currentWriteCount);
+
+                                // kick off next op
+                                this.EndOpWithCatch(null);
+                            }
                         }
                     }
                     else if (this.readRes == null)
@@ -250,40 +259,39 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             }
         }
 
-        // Used when timer timeout fires to force completion
-        private void ForceAbort()
+        private void ForceAbort(bool timeout)
         {
-            // Enter Force completed state
-            if (Interlocked.CompareExchange(ref this.completed, 1, 0) == 0)
-            {
-                this.cancelRequested = true;
+            this.cancelRequested = true;
 
+            if (this.state.Req != null)
+            {
                 try
                 {
+                    this.state.ReqTimedOut = timeout;
                     this.state.Req.Abort();
                 }
                 catch (Exception)
                 {
                     // no op
                 }
-
-                this.state.ExceptionRef = Exceptions.GenerateTimeoutException(this.state.OperationContext.CurrentResult, null);
-                this.ProcessCompletion();
             }
+
+            this.state.ExceptionRef = timeout ?
+                Exceptions.GenerateTimeoutException(this.state.Cmd != null ? this.state.Cmd.CurrentResult : null, null) :
+                Exceptions.GenerateCancellationException(this.state.Cmd != null ? this.state.Cmd.CurrentResult : null, null);
         }
 
         private void SignalCompletion()
         {
             // If already completed return
-            if (Interlocked.CompareExchange(ref this.completed, 1, 0) != 0)
+            if (Interlocked.CompareExchange(ref this.completionProcessed, 1, 0) == 0)
             {
-                return;
+                this.completedEvent.Set();
+                this.ProcessCompletion();
             }
-
-            this.ProcessCompletion();
         }
 
-        // only called by SignalCompletion & ForceAbort
+        // only called by SignalCompletion
         private void ProcessCompletion()
         {
             // Re hookup cancellation delegate
@@ -295,26 +303,13 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             this.currentReadBuff = null;
             this.currentWriteBuff = null;
 
-            try
-            {
-                if (this.timer != null)
-                {
-                    this.timer.Dispose();
-                    this.timer = null;
-                }
-            }
-            catch (Exception)
-            {
-                // no op
-            }
-
             if (this.state.ExceptionRef == null &&
-                this.operationContext.StreamCopyState != null &&
-                this.operationContext.StreamCopyState.Md5HashRef != null)
+                this.streamCopyState != null &&
+                this.streamCopyState.Md5HashRef != null)
             {
                 try
                 {
-                    this.operationContext.StreamCopyState.Md5 = this.operationContext.StreamCopyState.Md5HashRef.ComputeHash();
+                    this.streamCopyState.Md5 = this.streamCopyState.Md5HashRef.ComputeHash();
                 }
                 catch (Exception)
                 {
@@ -322,7 +317,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 }
                 finally
                 {
-                    this.operationContext.StreamCopyState.Md5HashRef = null;
+                    this.streamCopyState.Md5HashRef = null;
                 }
             }
 
@@ -341,17 +336,17 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         private bool ShouldDispatchNextOperation()
         {
-            if (this.maxLength.HasValue && this.state.OperationContext.StreamCopyState.Length > this.maxLength.Value)
+            if (this.maxLength.HasValue && this.streamCopyState != null && this.streamCopyState.Length > this.maxLength.Value)
             {
                 this.state.ExceptionRef = new ArgumentOutOfRangeException("stream");
             }
             else if (this.maxCopyTime.HasValue && DateTime.Now >= this.maxCopyTime.Value)
             {
-                this.state.ExceptionRef = Exceptions.GenerateTimeoutException(this.state.OperationContext.CurrentResult, null);
+                this.state.ExceptionRef = Exceptions.GenerateTimeoutException(this.state.Cmd != null ? this.state.Cmd.CurrentResult : null, null);
             }
             else if (this.state.CancelRequested)
             {
-                this.state.ExceptionRef = Exceptions.GenerateCancellationException(this.state.OperationContext.CurrentResult, null);
+                this.state.ExceptionRef = Exceptions.GenerateCancellationException(this.state.Cmd != null ? this.state.Cmd.CurrentResult : null, null);
             }
 
             // note cancellation will new up a exception and store it, so this will be not null;
@@ -363,36 +358,37 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         {
             this.readRes = null;
             this.lastReadCount = this.src.EndRead(res);
-
             this.state.CompletedSynchronously = this.state.CompletedSynchronously && res.CompletedSynchronously;
-
-            if (this.lastReadCount > 0)
-            {
-                this.readBufferFull = true;
-            }
         }
 
         private void ProcessEndWrite(IAsyncResult res, byte[] buffer, int offset, int count)
         {
             this.writeRes = null;
             this.dest.EndWrite(res);
-
+            
             this.state.CompletedSynchronously = this.state.CompletedSynchronously && res.CompletedSynchronously;
 
-            if (this.operationContext.StreamCopyState != null)
+            if (this.streamCopyState != null)
             {
-                this.operationContext.StreamCopyState.Length += count;
+                this.streamCopyState.Length += count;
 
-                if (this.operationContext.StreamCopyState.Md5HashRef != null)
+                if (this.streamCopyState.Md5HashRef != null)
                 {
-                    this.operationContext.StreamCopyState.Md5HashRef.UpdateHash(buffer, offset, count);
+                    this.streamCopyState.Md5HashRef.UpdateHash(buffer, offset, count);
                 }
             }
         }
 
-        private void ConsumeReadBuffer()
+        private int ConsumeReadBuffer()
         {
-            this.readBufferFull = false;
+            // Note this must be called inside a lock as it could lead to undefined behavior if multiple unsynchronized callers simultaneously called in.
+            if (this.lastReadCount < 0)
+            {
+                return this.lastReadCount;
+            }
+
+            this.currentWriteCount = this.lastReadCount;
+            this.lastReadCount = -1;
 
             // The buffer swap saves us a memcopy of the data in readBuff.
             byte[] tempBuff = null;
@@ -400,12 +396,20 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             this.currentReadBuff = this.currentWriteBuff;
             this.currentWriteBuff = tempBuff;
 
-            this.currentWriteCount = this.lastReadCount;
+            return this.currentWriteCount;
         }
 
         private bool IsCopyComplete()
         {
-            return this.lastReadCount == 0 && !this.readBufferFull;
+            return this.lastReadCount == 0;
+        }
+
+        private bool ReadBufferFull
+        {
+            get
+            {
+                return this.lastReadCount > 0;
+            }
         }
         #endregion
     }

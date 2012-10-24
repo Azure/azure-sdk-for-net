@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// <para><see cref="DynamicTableEntity"/> implements <see cref="ITableEntity"/> and provides a simple property dictionary to store and retrieve properties. Use a <see cref="DynamicTableEntity"/> for simple access 
     /// to entity properties when only a subset of properties are returned (for example, by a select clause in a query), or for when your query can return multiple entity types 
     /// with different properties. You can also use this type to perform bulk table updates of heterogeneous entities without losing property information.</para>
-    /// <para><see cref="TableEntity"/> is an implementation of <see cref="ITableEntity"/> that uses reflection-based serialization and de-serialization behavior in its <see cref="TableEntity.ReadEntity()"/>and <see cref="TableEntity.WriteEntity()"/> methods. 
+    /// <para><see cref="TableEntity"/> is an implementation of <see cref="ITableEntity"/> that uses reflection-based serialization and de-serialization behavior in its <see cref="TableEntity.ReadEntity(IDictionary{string, EntityProperty}, OperationContext)"/> and <see cref="TableEntity.WriteEntity(OperationContext)"/> methods. 
     /// <see cref="TableEntity"/>-derived classes with methods that follow a convention for types and naming are serialized and de-serialized automatically. <see cref="TableEntity"/>-derived classes must also provide a get-able and set-able public
     /// property of a type that is supported by the Windows Azure Table Service.</para></remarks>
     public interface ITableEntity

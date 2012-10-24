@@ -196,7 +196,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     catch (Exception)
                     {
                         StorageExtendedErrorInformation extendedInfo = operationContext.LastResult.ExtendedErrorInformation;
-                        if (extendedInfo != null && extendedInfo.ErrorCode == TableErrorCodeStrings.TableNotFound)
+                        if (extendedInfo != null && extendedInfo.ErrorCode == TableErrorCodeStrings.TableAlreadyExists)
                         {
                             return false;
                         }
@@ -278,8 +278,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     }
                     catch (Exception)
                     {
-                        if (operationContext.CurrentResult.ExtendedErrorInformation != null &&
-                            operationContext.CurrentResult.ExtendedErrorInformation.ErrorCode == TableErrorCodeStrings.TableNotFound)
+                        if (operationContext.LastResult.ExtendedErrorInformation != null &&
+                            operationContext.LastResult.ExtendedErrorInformation.ErrorCode == TableErrorCodeStrings.TableNotFound)
                         {
                             return false;
                         }

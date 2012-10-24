@@ -190,56 +190,55 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 try
                 {
                     exists = this.EndExists(asyncResult);
+
+                    if (exists)
+                    {
+                        chainedResult.Result = false;
+                        chainedResult.OnComplete();
+                    }
+                    else
+                    {
+                        ICancellableAsyncResult currentRes = this.BeginCreate(
+                             (QueueRequestOptions)chainedResult.RequestOptions,
+                             chainedResult.OperationContext,
+                             createRes =>
+                             {
+                                 chainedResult.CancelDelegate = null;
+                                 chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & createRes.CompletedSynchronously;
+
+                                 try
+                                 {
+                                     this.EndCreate(createRes);
+                                     chainedResult.Result = true;
+                                     chainedResult.OnComplete();
+                                 }
+                                 catch (StorageException storageEx)
+                                 {
+                                     if (storageEx.RequestInformation.ExtendedErrorInformation != null &&
+                                         storageEx.RequestInformation.ExtendedErrorInformation.ErrorCode ==
+                                         QueueErrorCodeStrings.QueueAlreadyExists)
+                                     {
+                                         chainedResult.Result = false;
+                                         chainedResult.OnComplete();
+                                     }
+                                     else
+                                     {
+                                         chainedResult.OnComplete(storageEx);
+                                     }
+                                 }
+                                 catch (Exception createEx)
+                                 {
+                                     chainedResult.OnComplete(createEx);
+                                 }
+                             },
+                             null);
+
+                        chainedResult.CancelDelegate = currentRes.Cancel;
+                    }
                 }
                 catch (Exception ex)
                 {
                     chainedResult.OnComplete(ex);
-                    return;
-                }
-
-                if (exists)
-                {
-                    chainedResult.Result = false;
-                    chainedResult.OnComplete();
-                }
-                else
-                {
-                    ICancellableAsyncResult currentRes = this.BeginCreate(
-                         (QueueRequestOptions)chainedResult.RequestOptions,
-                         chainedResult.OperationContext,
-                         createRes =>
-                         {
-                             chainedResult.CancelDelegate = null;
-                             chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & createRes.CompletedSynchronously;
-
-                             try
-                             {
-                                 this.EndCreate(createRes);
-                                 chainedResult.Result = true;
-                                 chainedResult.OnComplete();
-                             }
-                             catch (StorageException storageEx)
-                             {
-                                 if (storageEx.RequestInformation.ExtendedErrorInformation != null &&
-                                     storageEx.RequestInformation.ExtendedErrorInformation.ErrorCode ==
-                                     QueueErrorCodeStrings.QueueAlreadyExists)
-                                 {
-                                     chainedResult.Result = false;
-                                     chainedResult.OnComplete();
-                                 }
-                                 else
-                                 {
-                                     chainedResult.OnComplete(storageEx);
-                                 }
-                             }
-                             catch (Exception createEx)
-                             {
-                                 chainedResult.OnComplete(createEx);
-                             }
-                         },
-                         null);
-
-                    chainedResult.CancelDelegate = currentRes.Cancel;
                 }
             }
         }
@@ -350,56 +349,55 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 try
                 {
                     exists = this.EndExists(asyncResult);
+
+                    if (!exists)
+                    {
+                        chainedResult.Result = false;
+                        chainedResult.OnComplete();
+                    }
+                    else
+                    {
+                        ICancellableAsyncResult currentRes = this.BeginDelete(
+                            (QueueRequestOptions)chainedResult.RequestOptions,
+                            chainedResult.OperationContext,
+                            (deleteRes) =>
+                            {
+                                chainedResult.CancelDelegate = null;
+                                chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & deleteRes.CompletedSynchronously;
+
+                                try
+                                {
+                                    this.EndDelete(deleteRes);
+                                    chainedResult.Result = true;
+                                    chainedResult.OnComplete();
+                                }
+                                catch (StorageException storageEx)
+                                {
+                                    if (storageEx.RequestInformation.ExtendedErrorInformation != null &&
+                                        storageEx.RequestInformation.ExtendedErrorInformation.ErrorCode ==
+                                        QueueErrorCodeStrings.QueueAlreadyExists)
+                                    {
+                                        chainedResult.Result = false;
+                                        chainedResult.OnComplete();
+                                    }
+                                    else
+                                    {
+                                        chainedResult.OnComplete(storageEx);
+                                    }
+                                }
+                                catch (Exception createEx)
+                                {
+                                    chainedResult.OnComplete(createEx);
+                                }
+                            },
+                            null);
+
+                        chainedResult.CancelDelegate = currentRes.Cancel;
+                    }
                 }
                 catch (Exception ex)
                 {
                     chainedResult.OnComplete(ex);
-                    return;
-                }
-
-                if (!exists)
-                {
-                    chainedResult.Result = false;
-                    chainedResult.OnComplete();
-                }
-                else
-                {
-                    ICancellableAsyncResult currentRes = this.BeginDelete(
-                        (QueueRequestOptions)chainedResult.RequestOptions,
-                        chainedResult.OperationContext,
-                        (deleteRes) =>
-                        {
-                            chainedResult.CancelDelegate = null;
-                            chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & deleteRes.CompletedSynchronously;
-
-                            try
-                            {
-                                this.EndDelete(deleteRes);
-                                chainedResult.Result = true;
-                                chainedResult.OnComplete();
-                            }
-                            catch (StorageException storageEx)
-                            {
-                                if (storageEx.RequestInformation.ExtendedErrorInformation != null &&
-                                    storageEx.RequestInformation.ExtendedErrorInformation.ErrorCode ==
-                                    QueueErrorCodeStrings.QueueAlreadyExists)
-                                {
-                                    chainedResult.Result = false;
-                                    chainedResult.OnComplete();
-                                }
-                                else
-                                {
-                                    chainedResult.OnComplete(storageEx);
-                                }
-                            }
-                            catch (Exception createEx)
-                            {
-                                chainedResult.OnComplete(createEx);
-                            }
-                        },
-                        null);
-
-                    chainedResult.CancelDelegate = currentRes.Cancel;
                 }
             }
         }
@@ -772,7 +770,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">The message to add.</param>
         /// <param name="timeToLive">The maximum time to allow the message to be in the queue, or null.</param>
         /// <param name="initialVisibilityDelay">The length of time from now during which the message will be invisible.
-        /// If <code>null</code> then the message will be visible immediately.</param>
+        /// If <c>null</c> then the message will be visible immediately.</param>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         public void AddMessage(CloudQueueMessage message, TimeSpan? timeToLive = null, TimeSpan? initialVisibilityDelay = null, QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -806,7 +804,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">The message to add.</param>
         /// <param name="timeToLive">The maximum time to allow the message to be in the queue, or null.</param>
         /// <param name="initialVisibilityDelay">The length of time from now during which the message will be invisible.
-        /// If <code>null</code> then the message will be visible immediately.</param>        
+        /// If <c>null</c> then the message will be visible immediately.</param>        
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -1277,7 +1275,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Implementation for the ClearMessages method.
         /// </summary>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that gets the permissions.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that gets the permissions.</returns>
         private RESTCommand<NullType> ClearMessagesImpl(QueueRequestOptions options)
         {
             RESTCommand<NullType> putCmd = new RESTCommand<NullType>(this.ServiceClient.Credentials, this.GetMessageRequestAddress());
@@ -1294,7 +1292,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Implementation for the Create method.
         /// </summary>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that creates the queue.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that creates the queue.</returns>
         private RESTCommand<NullType> CreateQueueImpl(QueueRequestOptions options)
         {
             RESTCommand<NullType> putCmd = new RESTCommand<NullType>(this.ServiceClient.Credentials, this.Uri);
@@ -1319,7 +1317,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Implementation for the Delete method.
         /// </summary>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that deletes the queue.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that deletes the queue.</returns>
         private RESTCommand<NullType> DeleteQueueImpl(QueueRequestOptions options)
         {
             RESTCommand<NullType> putCmd = new RESTCommand<NullType>(this.ServiceClient.Credentials, this.Uri);
@@ -1336,7 +1334,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Implementation for the FetchAttributes method.
         /// </summary>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that fetches the attributes.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that fetches the attributes.</returns>
         private RESTCommand<NullType> FetchAttributesImpl(QueueRequestOptions options)
         {
             RESTCommand<NullType> getCmd = new RESTCommand<NullType>(this.ServiceClient.Credentials, this.Uri);
@@ -1358,7 +1356,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Implementation for the Exists method.
         /// </summary>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that checks existence.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that checks existence.</returns>
         private RESTCommand<bool> ExistsImpl(QueueRequestOptions options)
         {
             RESTCommand<bool> getCmd = new RESTCommand<bool>(this.ServiceClient.Credentials, this.Uri);
@@ -1388,7 +1386,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Implementation for the SetMetadata method.
         /// </summary>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that sets the metadata.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that sets the metadata.</returns>
         private RESTCommand<NullType> SetMetadataImpl(QueueRequestOptions options)
         {
             RESTCommand<NullType> putCmd = new RESTCommand<NullType>(this.ServiceClient.Credentials, this.Uri);
@@ -1411,7 +1409,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="acl">The permissions to set.</param>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that sets the permissions.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that sets the permissions.</returns>
         private RESTCommand<NullType> SetPermissionsImpl(QueuePermissions acl, QueueRequestOptions options)
         {
             MemoryStream memoryStream = new MemoryStream();
@@ -1438,7 +1436,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Implementation for the GetPermissions method.
         /// </summary>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that gets the permissions.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that gets the permissions.</returns>
         private RESTCommand<QueuePermissions> GetPermissionsImpl(QueueRequestOptions options)
         {
             RESTCommand<QueuePermissions> getCmd = new RESTCommand<QueuePermissions>(this.ServiceClient.Credentials, this.Uri);
@@ -1465,7 +1463,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="timeToLive">A value indicating the message time-to-live.</param>
         /// <param name="initialVisibilityDelay">The visibility delay for the message.</param>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that sets the permissions.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that sets the permissions.</returns>
         private RESTCommand<NullType> AddMessageImpl(CloudQueueMessage message, TimeSpan? timeToLive, TimeSpan? initialVisibilityDelay, QueueRequestOptions options)
         {
             int? timeToLiveInSeconds = null;
@@ -1526,7 +1524,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="visibilityTimeout">The visibility timeout for the message.</param>
         /// <param name="updateFlags">Indicates whether to update the visibility delay, message contents, or both.</param>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that sets the permissions.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that sets the permissions.</returns>
         private RESTCommand<NullType> UpdateMessageImpl(CloudQueueMessage message, TimeSpan visibilityTimeout, MessageUpdateFields updateFlags, QueueRequestOptions options)
         {
             CommonUtils.AssertNotNull("message", message);
@@ -1579,7 +1577,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="messageId">The message ID.</param>
         /// <param name="popReceipt">The pop receipt value.</param>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that deletes the queue.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that deletes the queue.</returns>
         private RESTCommand<NullType> DeleteMessageImpl(string messageId, string popReceipt, QueueRequestOptions options)
         {
             Uri messageUri = this.GetIndividualMessageAddress(messageId);
@@ -1599,7 +1597,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="messageCount">The number of messages to retrieve.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that gets the permissions.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that gets the permissions.</returns>
         private RESTCommand<IEnumerable<CloudQueueMessage>> GetMessagesImpl(int messageCount, TimeSpan? visibilityTimeout, QueueRequestOptions options)
         {
             RESTCommand<IEnumerable<CloudQueueMessage>> getCmd = new RESTCommand<IEnumerable<CloudQueueMessage>>(this.ServiceClient.Credentials, this.GetMessageRequestAddress());
@@ -1627,7 +1625,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageCount">The number of messages to retrieve.</param>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that gets the permissions.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that gets the permissions.</returns>
         private RESTCommand<IEnumerable<CloudQueueMessage>> PeekMessagesImpl(int messageCount, QueueRequestOptions options)
         {
             RESTCommand<IEnumerable<CloudQueueMessage>> getCmd = new RESTCommand<IEnumerable<CloudQueueMessage>>(this.ServiceClient.Credentials, this.GetMessageRequestAddress());

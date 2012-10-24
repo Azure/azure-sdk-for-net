@@ -11,7 +11,7 @@
 
     internal class TableOperationHttpResponseParsers
     {
-        internal static TableResult TableOperationPreProcess(TableResult result, TableOperation operation, HttpWebResponse resp, Exception ex, OperationContext ctx)
+        internal static TableResult TableOperationPreProcess<T>(TableResult result, TableOperation operation, HttpWebResponse resp, Exception ex, StorageCommandBase<T> cmd, OperationContext ctx)
         {
             result.HttpStatusCode = (int)resp.StatusCode;
 
@@ -19,27 +19,27 @@
             {
                 if (resp.StatusCode != HttpStatusCode.OK && resp.StatusCode != HttpStatusCode.NotFound)
                 {
-                    throw StorageException.TranslateException(ex, ctx.CurrentResult);
+                    throw StorageException.TranslateException(ex, cmd.CurrentResult);
                 }
             }
             else
             {
                 if (ex != null)
                 {
-                    throw StorageException.TranslateException(ex, ctx.CurrentResult);
+                    throw StorageException.TranslateException(ex, cmd.CurrentResult);
                 }
                 else if (operation.OperationType == TableOperationType.Insert)
                 {
                     if (resp.StatusCode != HttpStatusCode.Created)
                     {
-                        throw StorageException.TranslateException(ex, ctx.CurrentResult);
+                        throw StorageException.TranslateException(ex, cmd.CurrentResult);
                     }
                 }
                 else
                 {
                     if (resp.StatusCode != HttpStatusCode.NoContent)
                     {
-                        throw StorageException.TranslateException(ex, ctx.CurrentResult);
+                        throw StorageException.TranslateException(ex, cmd.CurrentResult);
                     }
                 }
             }
@@ -138,16 +138,24 @@
 
                     if (failError)
                     {
-                        ctx.CurrentResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(mimePartResponseMessage.GetStream());
-                        ctx.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
-                        throw new StorageException(ctx.CurrentResult, ctx.CurrentResult.ExtendedErrorInformation.ErrorMessage, null) { IsRetryable = false };
+                        cmd.CurrentResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(mimePartResponseMessage.GetStream());
+                        cmd.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
+
+                        throw new StorageException(
+                            cmd.CurrentResult,
+                            cmd.CurrentResult.ExtendedErrorInformation != null ? cmd.CurrentResult.ExtendedErrorInformation.ErrorMessage : SR.ExtendedErrorUnavailable,
+                            null)
+                            {
+                                IsRetryable = false
+                            };
                     }
 
                     if (failUnexpected)
                     {
-                        ctx.CurrentResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(mimePartResponseMessage.GetStream());
-                        ctx.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
-                        throw new StorageException(ctx.CurrentResult, SR.UnexpectedResponseCode + Convert.ToString(index), null) { IsRetryable = true };
+                        cmd.CurrentResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(mimePartResponseMessage.GetStream());
+                        cmd.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
+
+                        throw new StorageException(cmd.CurrentResult, SR.UnexpectedResponseCodeForOperation + Convert.ToString(index), null) { IsRetryable = true };
                     }
 
                     // Update etag

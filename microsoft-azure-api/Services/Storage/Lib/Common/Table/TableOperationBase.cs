@@ -29,7 +29,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// <summary>
     /// Represents a single table operation.
     /// </summary>
-    /// <remarks>
     public sealed partial class TableOperation
     {
         /// <summary>

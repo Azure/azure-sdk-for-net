@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <summary>
         /// Gets or sets an "etag" that must match the ETag of a resource.
         /// </summary>
-        /// <value>A quoted ETag string. If <code>null</code>, no condition exists.</value>
+        /// <value>A quoted ETag string. If <c>null</c>, no condition exists.</value>
         public string IfMatchETag
         {
             get;

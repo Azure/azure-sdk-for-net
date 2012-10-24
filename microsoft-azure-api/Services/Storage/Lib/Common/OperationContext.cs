@@ -19,8 +19,6 @@ namespace Microsoft.WindowsAzure.Storage
 {
     using System;
     using System.Collections.Generic;
-    using System.Net;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
 
     /// <summary>
     /// Represents the context for a request to the storage service and provides additional runtime information about its execution.
@@ -28,10 +26,9 @@ namespace Microsoft.WindowsAzure.Storage
     public sealed class OperationContext
     {
         #region State
+        
         internal object OperationState { get; set; }
-
-        // Used to keep track of Md5 / Length of a stream as it is being copied
-        internal StreamDescriptor StreamCopyState { get; set; }
+        
         #endregion
 
         #region Headers
@@ -39,7 +36,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <summary>
         /// Gets or sets additional headers, for example proxy or logging information.
         /// </summary>
-        /// <value>A <see cref="IDictionary{string, string}"/> object containing additional header information.</value>
+        /// <value>A <see cref="System.Collections.Generic.IDictionary{T, K}"/> object containing additional header information.</value>
         public IDictionary<string, string> UserHeaders { get; set; }
 
         /// <summary>
@@ -112,19 +109,11 @@ namespace Microsoft.WindowsAzure.Storage
         /// <summary>
         /// Gets or sets the set of request results that the current operation has created.
         /// </summary>
-        /// <value>An <see cref="IList"/> object that contains <see cref="RequestResult"/> objects that represent the request results created by the current operation.</value>
+        /// <value>An <see cref="System.Collections.IList"/> object that contains <see cref="RequestResult"/> objects that represent the request results created by the current operation.</value>
         public IList<RequestResult> RequestResults
         {
             get { return this.requestResults; }
             set { this.requestResults = value; }
-        }
-
-        private RequestResult currentResult = null;
-
-        internal RequestResult CurrentResult
-        {
-            get { return this.currentResult; }
-            set { this.currentResult = value; }
         }
 
         /// <summary>

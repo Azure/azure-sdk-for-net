@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public const string TooManyBlocksError = "The number of blocks is larger than the maximum of '{0}'";
         public const string TooManyPolicyIdentifiers = "Too many '{0}' shared access policy identifiers provided. Server does not support setting more than '{1}' on a single container, queue, or table.";
         public const string UndefinedBlobType = "The blob type cannot be undefined.";
-        public const string TimeoutExceptionMessage = "The operation timed out.";
+        public const string TimeoutExceptionMessage = "The client could not finish the operation within specified timeout.";
         public const string UnexpectedElement = "Unexpected Element '{0}'";
         public const string UnexpectedEmptyElement = "Unexpected Empty Element '{0}'";
         public const string UnexpectedContinuationType = "Unexpected Continuation Type";
@@ -104,7 +104,8 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public const string InternalStorageError = "Unexpected internal storage client error.";
         public const string BlobTypeMismatch = "BlobType of the blob reference doesn't match BlobType of the blob.";
         public const string UnexpectedResponseCode = "Unexpected response code, Expected:{0}, Received:{1}";
-        public const string ContentMD5NotCalculated = "ContentMd5 was not calculated prior to verification. Please ensure StorageCommand.CalculateMd5ForResponseStream is set to true.";
+        public const string UnexpectedResponseCodeForOperation = "Unexpected response code for operation : ";
+        public const string ContentMD5NotCalculated = "The operation requires a response body but no data was copied to the destination buffer.";
         public const string BlobDataCorruptedIncorrectNumberOfBytes = "Blob data corrupted. Incorrect number of bytes received '{0}' / '{1}'";
         public const string CryptoFunctionFailed = "Crypto function failed with error code '{0}'";
         public const string ResourceConsumed = "Resource consumed";
@@ -120,5 +121,6 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public const string PartitionKey = "All entities in a given batch must have the same partition key.";
         public const string ConcurrentOperationsNotSupported = "Could not acquire exclusive use of the TableServiceContext, Concurrent operations are not supported.";
         public const string TakeCountNotPositive = "Take count must be positive and greater than 0.";
+        public const string ExtendedErrorUnavailable = "An unknown error has occured, extended error information not available.";
     }
 }

@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// Parses the metadata.
         /// </summary>
         /// <param name="reader">The reader.</param>
-        /// <returns>A <see cref="IDictionary"/> of metadata.</returns>
+        /// <returns>A <see cref="System.Collections.IDictionary"/> of metadata.</returns>
         /// <remarks>
         /// Precondition: reader at &lt;Metadata&gt;
         /// Postcondition: reader after &lt;/Metadata&gt; (&lt;Metadata/&gt; consumed)

@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             catch (Exception ex)
             {
                 // Store exception and invoke callback here. All operations in this try would be non-retryable by default
-                StorageException storageEx = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                StorageException storageEx = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                 storageEx.IsRetryable = false;
                 executionState.ExceptionRef = storageEx;
                 executionState.OnComplete();
@@ -109,7 +109,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         {
             try
             {
-                executionState.Req.BeginGetRequestStream(
+                APMWithTimeout.RunWithTimeout(
+                    executionState.Req.BeginGetRequestStream,
                     (getRequestStreamResp) =>
                     {
                         executionState.CompletedSynchronously = executionState.CompletedSynchronously && getRequestStreamResp.CompletedSynchronously;
@@ -119,24 +120,49 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                             executionState.ReqStream = executionState.Req.EndGetRequestStream(getRequestStreamResp);
 
                             // don't calculate md5 here as we should have already set this for auth purposes
-                            executionState.RestCMD.SendStream.WriteToAsync(executionState.ReqStream, null /* maxLength */, executionState.OperationExpiryTime, false, executionState, executionState.OperationContext, EndSendStreamCopy);
+                            executionState.RestCMD.SendStream.WriteToAsync(executionState.ReqStream, null /* maxLength */, executionState.OperationExpiryTime, false, executionState, executionState.OperationContext, null /* streamCopyState */, EndSendStreamCopy);
                         }
                         catch (WebException ex)
                         {
-                            executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                            if (ex.Status == WebExceptionStatus.RequestCanceled)
+                            {
+                                // If the below condition is true, ExceptionRef is set anyway, so don't touch it
+                                if (!Executor.CheckCancellation(executionState))
+                                {
+                                    executionState.ExceptionRef = Exceptions.GenerateTimeoutException(executionState.Cmd.CurrentResult, null);
+                                }
+                            }
+                            else
+                            {
+                                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
+                            }
+
                             EndOperation(executionState);
                         }
                         catch (Exception ex)
                         {
-                            executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                            executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                             EndOperation(executionState);
                         }
                     },
-                    null);
+                    null,
+                    executionState.RemainingTimeout,
+                    (getRequestStreamResp) =>
+                    {
+                        try
+                        {
+                            executionState.ReqTimedOut = true;
+                            executionState.Req.Abort();
+                        }
+                        catch (Exception)
+                        {
+                            // no op
+                        }
+                    });
             }
             catch (Exception ex)
             {
-                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                 EndOperation(executionState);
             }
         }
@@ -184,13 +210,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     {
                         try
                         {
-                            // GetResponse Timed Out
-                            if (getRespRes == null)
-                            {
-                                executionState.Req.Abort();
-                                throw Exceptions.GenerateTimeoutException(executionState.OperationContext.CurrentResult, null);
-                            }
-
                             executionState.CompletedSynchronously = executionState.CompletedSynchronously && getRespRes.CompletedSynchronously;
 
                             try
@@ -200,13 +219,14 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                             catch (WebException ex)
                             {
                                 executionState.Resp = (HttpWebResponse)ex.Response;
+
                                 if (executionState.Resp == null)
                                 {
                                     throw;
                                 }
                                 else
                                 {
-                                    executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                                    executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                                 }
                             }
 
@@ -230,7 +250,12 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
                                 if (executionState.RestCMD.DestinationStream != null)
                                 {
-                                    executionState.RestCMD.ResponseStream.WriteToAsync(executionState.RestCMD.DestinationStream, null /* maxLength */, executionState.OperationExpiryTime, executionState.RestCMD.CalculateMd5ForResponseStream, executionState, executionState.OperationContext, EndResponseStreamCopy);
+                                    if (executionState.RestCMD.StreamCopyState == null)
+                                    {
+                                        executionState.RestCMD.StreamCopyState = new StreamDescriptor();
+                                    }
+
+                                    executionState.RestCMD.ResponseStream.WriteToAsync(executionState.RestCMD.DestinationStream, null /* maxLength */, executionState.OperationExpiryTime, executionState.RestCMD.CalculateMd5ForResponseStream, executionState, executionState.OperationContext, executionState.RestCMD.StreamCopyState, EndResponseStreamCopy);
                                 }
                                 else
                                 {
@@ -246,16 +271,28 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         }
                         catch (Exception ex)
                         {
-                            executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                            executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                             EndOperation(executionState);
                         }
                     },
                     null,
-                    executionState.RemainingTimeout);
+                    executionState.RemainingTimeout,
+                    (getRespRes) =>
+                    {
+                        try
+                        {
+                            executionState.ReqTimedOut = true;
+                            executionState.Req.Abort();
+                        }
+                        catch (Exception)
+                        {
+                            // no op
+                        }
+                    });
             }
             catch (Exception ex)
             {
-                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                 EndOperation(executionState);
             }
         }
@@ -273,22 +310,24 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
             lock (executionState.CancellationLockerObject)
             {
-                Executor.CheckCancellation(executionState);
-
                 try
                 {
+                    // If an operation has been canceled of timed out this should overwtie any exception
+                    Executor.CheckCancellation(executionState);
+                    Executor.CheckTimeout(executionState, true);
+
                     // Success
                     if (executionState.ExceptionRef == null)
                     {
                         // Step 9 - This will not be called if an exception is raised during stream copying
-                        ProcessEndOfRequest(executionState, executionState.ExceptionRef);
+                        Executor.ProcessEndOfRequest(executionState, executionState.ExceptionRef);
                         executionState.OnComplete();
                         return;
                     }
                 }
                 catch (Exception ex)
                 {
-                    executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                    executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                 }
                 finally
                 {
@@ -310,7 +349,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             // Handle Retry
             try
             {
-                StorageException translatedException = StorageException.TranslateException(executionState.ExceptionRef, executionState.OperationContext.CurrentResult);
+                StorageException translatedException = StorageException.TranslateException(executionState.ExceptionRef, executionState.Cmd.CurrentResult);
                 executionState.ExceptionRef = translatedException;
 
                 TimeSpan delay = TimeSpan.FromMilliseconds(0);
@@ -318,7 +357,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                         executionState.RetryPolicy != null ?
                                                 executionState.RetryPolicy.ShouldRetry(
                                                                                         executionState.RetryCount++,
-                                                                                        executionState.OperationContext.CurrentResult.HttpStatusCode,
+                                                                                        executionState.Cmd.CurrentResult.HttpStatusCode,
                                                                                         executionState.ExceptionRef,
                                                                                         out delay,
                                                                                         executionState.OperationContext)
@@ -365,7 +404,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             catch (Exception ex)
             {
                 // Catch all ( i.e. users retry policy throws etc.)
-                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                 executionState.OnComplete();
             }
         }
@@ -385,6 +424,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             {
                 try
                 {
+                    executionState.Init();
+
                     // 0. Begin Request 
                     Executor.StartRequestAttempt(executionState);
 
@@ -400,7 +441,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         // Reset timeout
                         executionState.Req.Timeout = executionState.RemainingTimeout;
                         executionState.ReqStream = executionState.Req.GetRequestStream();
-                        executionState.RestCMD.SendStream.WriteToSync(executionState.ReqStream, null /* maxLength */, executionState.OperationExpiryTime, false, true, executionState.OperationContext); // don't calculate md5 here as we should have already set this for auth purposes
+                        executionState.RestCMD.SendStream.WriteToSync(executionState.ReqStream, null /* maxLength */, executionState.OperationExpiryTime, false, true, executionState.OperationContext, null /* streamCopyState */); // don't calculate md5 here as we should have already set this for auth purposes
                     }
 
                     // 6. Get response 
@@ -419,7 +460,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         }
                         else
                         {
-                            executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                            executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                         }
                     }
 
@@ -445,7 +486,12 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     {
                         try
                         {
-                            executionState.RestCMD.ResponseStream.WriteToSync(executionState.RestCMD.DestinationStream, null /* maxLength */, executionState.OperationExpiryTime, executionState.RestCMD.CalculateMd5ForResponseStream, false, executionState.OperationContext);
+                            if (executionState.RestCMD.StreamCopyState == null)
+                            {
+                                executionState.RestCMD.StreamCopyState = new StreamDescriptor();
+                            }
+
+                            executionState.RestCMD.ResponseStream.WriteToSync(executionState.RestCMD.DestinationStream, null /* maxLength */, executionState.OperationExpiryTime, executionState.RestCMD.CalculateMd5ForResponseStream, false, executionState.OperationContext, executionState.RestCMD.StreamCopyState);
                         }
                         finally
                         {
@@ -464,7 +510,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 {
                     Executor.FinishRequestAttempt(executionState);
 
-                    StorageException translatedException = StorageException.TranslateException(e, executionState.OperationContext.CurrentResult);
+                    StorageException translatedException = StorageException.TranslateException(e, executionState.Cmd.CurrentResult);
                     executionState.ExceptionRef = translatedException;
 
                     TimeSpan delay = TimeSpan.FromMilliseconds(0);
@@ -472,7 +518,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                       executionState.RetryPolicy != null ?
                                               executionState.RetryPolicy.ShouldRetry(
                                                                                       executionState.RetryCount++,
-                                                                                      executionState.OperationContext.CurrentResult.HttpStatusCode,
+                                                                                      executionState.Cmd.CurrentResult.HttpStatusCode,
                                                                                       executionState.ExceptionRef,
                                                                                       out delay,
                                                                                       executionState.OperationContext)

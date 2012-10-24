@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Opens a stream for reading from the blob.
         /// </summary>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A stream to be used for reading from the blob.</returns>
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Opens a stream for writing to the blob.
         /// </summary>
         /// <param name="size">The size of the write operation, in bytes. The size must be a multiple of 512.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A stream to be used for writing to the blob.</returns>
@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Uploads a stream to a page blob. 
         /// </summary>
         /// <param name="source">The stream providing the blob content.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -158,7 +158,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 IOutputStream writeStream = await this.OpenWriteAsync(size, accessCondition, options, operationContext);
                 using (Stream blobStream = writeStream.AsStreamForWrite())
                 {
-                    await sourceAsStream.WriteToAsync(blobStream, null /* maxLength */, false, new OperationContext(), streamCopyToken);
+                    await sourceAsStream.WriteToAsync(blobStream, null /* maxLength */, false, new OperationContext(), null /* streamCopyState */, streamCopyToken);
                 }
             });
         }
@@ -178,7 +178,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Downloads the contents of a blob to a stream.
         /// </summary>
         /// <param name="target">The target stream.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -207,7 +207,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="target">The target stream.</param>
         /// <param name="offset">The starting offset of the data range, in bytes. Must be a multiple of 512.</param>
         /// <param name="length">The length of the data range, in bytes. Must be a multiple of 512.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -268,7 +268,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Creates a page blob.
         /// </summary>
         /// <param name="size">The maximum size of the page blob, in bytes.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -323,7 +323,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Populates a blob's properties and metadata.
         /// </summary>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -353,7 +353,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="offset">The starting offset of the data range, in bytes. Must be a multiple of 512.</param>
         /// <param name="length">The length of the data range, in bytes. Must be a multiple of 512.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An enumerable collection of page ranges.</returns>
@@ -381,7 +381,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Updates the blob's metadata.
         /// </summary>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -410,7 +410,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Updates the blob's properties.
         /// </summary>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -469,7 +469,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Deletes the blob if it already exists.
         /// </summary>
         /// <param name="deleteSnapshotsOption">Whether to only delete the blob, to delete the blob and all snapshots, or to only delete the snapshots.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns><c>true</c> if the blob already existed and was deleted; otherwise, <c>false</c>.</returns>
@@ -528,8 +528,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Creates a snapshot of the blob.
         /// </summary>
         /// <param name="metadata">A collection of name-value pairs defining the metadata of the snapshot.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request, or <code>null</code>.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request, or <c>null</c>.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <returns>A blob snapshot.</returns>
         [DoesServiceRequest]
@@ -548,9 +548,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Acquires a lease on this blob.
         /// </summary>
         /// <param name="leaseTime">A <see cref="TimeSpan"/> representing the span of time for which to acquire the lease,
-        /// which will be rounded down to seconds. If <code>null</code>, an infinite lease will be acquired. If not <code>null</code>, this must be
+        /// which will be rounded down to seconds. If <c>null</c>, an infinite lease will be acquired. If not <c>null</c>, this must be
         /// greater than zero.</param>
-        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or <code>null</code> if no lease ID is proposed.</param>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or <c>null</c> if no lease ID is proposed.</param>
         /// <returns>The ID of the acquired lease.</returns>
         [DoesServiceRequest]
         public IAsyncOperation<string> AcquireLeaseAsync(TimeSpan? leaseTime, string proposedLeaseId)
@@ -562,11 +562,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Acquires a lease on this blob.
         /// </summary>
         /// <param name="leaseTime">A <see cref="TimeSpan"/> representing the span of time for which to acquire the lease,
-        /// which will be rounded down to seconds. If <code>null</code>, an infinite lease will be acquired. If not <code>null</code>, this must be
+        /// which will be rounded down to seconds. If <c>null</c>, an infinite lease will be acquired. If not <c>null</c>, this must be
         /// greater than zero.</param>
-        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or <code>null</code> if no lease ID is proposed.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
-        /// <param name="options">The options for this operation. If <code>null</code>, default options will be used.</param>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or <c>null</c> if no lease ID is proposed.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">The options for this operation. If <c>null</c>, default options will be used.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>The ID of the acquired lease.</returns>
         [DoesServiceRequest]
@@ -595,7 +595,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Renews a lease on this blob.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob, including a required lease ID.</param>
-        /// <param name="options">The options for this operation. If <code>null</code>, default options will be used.</param>
+        /// <param name="options">The options for this operation. If <c>null</c>, default options will be used.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -612,7 +612,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Changes the lease ID on this blob.
         /// </summary>
-        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease. This cannot be <code>null</code>.</param>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease. This cannot be <c>null</c>.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob, including a required lease ID.</param>
         /// <returns>The new lease ID.</returns>
         [DoesServiceRequest]
@@ -624,9 +624,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Changes the lease ID on this blob.
         /// </summary>
-        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease. This cannot be <code>null</code>.</param>
+        /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease. This cannot be <c>null</c>.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob, including a required lease ID.</param>
-        /// <param name="options">The options for this operation. If <code>null</code>, default options will be used.</param>
+        /// <param name="options">The options for this operation. If <c>null</c>, default options will be used.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>The new lease ID.</returns>
         [DoesServiceRequest]
@@ -655,7 +655,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Releases the lease on this blob.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob, including a required lease ID.</param>
-        /// <param name="options">The options for this operation. If <code>null</code>, default options will be used.</param>
+        /// <param name="options">The options for this operation. If <c>null</c>, default options will be used.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -673,7 +673,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Breaks the current lease on this blob.
         /// </summary>
         /// <param name="breakPeriod">A <see cref="TimeSpan"/> representing the amount of time to allow the lease to remain,
-        /// which will be rounded down to seconds. If <code>null</code>, the break period is the remainder of the current lease,
+        /// which will be rounded down to seconds. If <c>null</c>, the break period is the remainder of the current lease,
         /// or zero for infinite leases.</param>
         /// <returns>A <see cref="TimeSpan"/> representing the amount of time before the lease ends, to the second.</returns>
         [DoesServiceRequest]
@@ -709,7 +709,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="pageData">A stream providing the page data.</param>
         /// <param name="startOffset">The offset at which to begin writing, in bytes. The offset must be a multiple of 512.</param>
         /// <param name="contentMD5">An optional hash value that will be used to set the <see cref="BlobProperties.ContentMD5"/> property
-        /// on the blob. May be <code>null</code> or an empty string.</param>
+        /// on the blob. May be <c>null</c> or an empty string.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
         public IAsyncAction WritePagesAsync(IInputStream pageData, long startOffset, string contentMD5)
@@ -723,7 +723,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="pageData">A stream providing the page data.</param>
         /// <param name="startOffset">The offset at which to begin writing, in bytes. The offset must be a multiple of 512.</param>
         /// <param name="contentMD5">An optional hash value that will be used to set the <see cref="BlobProperties.ContentMD5"/> property
-        /// on the blob. May be <code>null</code> or an empty string.</param>
+        /// on the blob. May be <c>null</c> or an empty string.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
@@ -767,13 +767,14 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     }
 
                     OperationContext tempOperationContext = new OperationContext();
+                    StreamDescriptor streamCopyState = new StreamDescriptor();
                     long startPosition = seekableStream.Position;
-                    await pageDataAsStream.WriteToAsync(writeToStream, Constants.MaxBlockSize, requiresContentMD5, tempOperationContext, streamCopyToken);
+                    await pageDataAsStream.WriteToAsync(writeToStream, Constants.MaxBlockSize, requiresContentMD5, tempOperationContext, streamCopyState, streamCopyToken);
                     seekableStream.Position = startPosition;
 
                     if (requiresContentMD5)
                     {
-                        contentMD5 = tempOperationContext.StreamCopyState.Md5;
+                        contentMD5 = streamCopyState.Md5;
                     }
 
                     if (modifiedOptions.MaximumExecutionTime.HasValue)
@@ -807,7 +808,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="startOffset">The offset at which to begin clearing pages, in bytes. The offset must be a multiple of 512.</param>
         /// <param name="length">The length of the data range to be cleared, in bytes. The length must be a multiple of 512.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -857,8 +858,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Requests that the service start to copy a blob's contents, properties, and metadata to a new blob.
         /// </summary>
         /// <param name="source">The URI of a source blob.</param>
-        /// <param name="sourceAccessCondition">An object that represents the access conditions for the source blob. If <code>null</code>, no condition is used.</param>
-        /// <param name="destAccessCondition">An object that represents the access conditions for the destination blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="sourceAccessCondition">An object that represents the access conditions for the source blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="destAccessCondition">An object that represents the access conditions for the destination blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>The copy ID associated with the copy operation.</returns>
@@ -882,8 +883,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Requests that the service start to copy a blob's contents, properties, and metadata to a new blob.
         /// </summary>
         /// <param name="source">The URI of a source blob.</param>
-        /// <param name="sourceAccessCondition">An object that represents the access conditions for the source blob. If <code>null</code>, no condition is used.</param>
-        /// <param name="destAccessCondition">An object that represents the access conditions for the destination blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="sourceAccessCondition">An object that represents the access conditions for the source blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="destAccessCondition">An object that represents the access conditions for the destination blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>The copy ID associated with the copy operation.</returns>
@@ -912,7 +913,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Aborts an ongoing blob copy operation.
         /// </summary>
         /// <param name="copyId">A string identifying the copy operation.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -961,7 +962,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Implementation for the Resize method.
         /// </summary>
         /// <param name="sizeInBytes">The size in bytes.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that sets the metadata.</returns>
         private RESTCommand<NullType> ResizeImpl(long sizeInBytes, AccessCondition accessCondition, BlobRequestOptions options)
@@ -986,11 +987,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Implementation for the CreateSnapshot method.
         /// </summary>
-        /// <param name="metadata">A collection of name-value pairs defining the metadata of the snapshot, or <code>null</code>.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="metadata">A collection of name-value pairs defining the metadata of the snapshot, or <c>null</c>.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that creates the snapshot.</returns>
-        /// <remarks>If the <c>metadata</c> parameter is <code>null</code> then no metadata is associated with the request.</remarks>
+        /// <remarks>If the <c>metadata</c> parameter is <c>null</c> then no metadata is associated with the request.</remarks>
         private RESTCommand<CloudPageBlob> CreateSnapshotImpl(IDictionary<string, string> metadata, AccessCondition accessCondition, BlobRequestOptions options)
         {
             RESTCommand<CloudPageBlob> putCmd = new RESTCommand<CloudPageBlob>(this.ServiceClient.Credentials, this.Uri);
@@ -1028,7 +1029,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="offset">The starting offset of the data range, in bytes. Must be a multiple of 512.</param>
         /// <param name="length">The length of the data range, in bytes. Must be a multiple of 512.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> for getting the page ranges.</returns>
         private RESTCommand<IEnumerable<PageRange>> GetPageRangesImpl(long? offset, long? length, AccessCondition accessCondition, BlobRequestOptions options)
@@ -1067,8 +1068,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="pageData">The page data.</param>
         /// <param name="startOffset">The start offset.</param> 
         /// <param name="contentMD5">An optional hash value that will be used to set the <see cref="BlobProperties.ContentMD5"/> property
-        /// on the blob. May be <code>null</code> or an empty string.</param>
-        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// on the blob. May be <c>null</c> or an empty string.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that writes the pages.</returns>
         private RESTCommand<NullType> PutPageImpl(Stream pageData, long startOffset, string contentMD5, AccessCondition accessCondition, BlobRequestOptions options)
@@ -1078,7 +1079,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 CommonUtils.ArgumentOutOfRange("startOffset", startOffset);
             }
 
-            PageRange pageRange = new PageRange(startOffset, startOffset + pageData.Length - 1);
+            long offset = pageData.Position;
+            long length = pageData.Length - offset;
+
+            PageRange pageRange = new PageRange(startOffset, startOffset + length - 1);
             PageWrite pageWrite = PageWrite.Update;
 
             if ((1 + pageRange.EndOffset - pageRange.StartOffset) % Constants.PageSize != 0 ||
@@ -1086,9 +1090,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 CommonUtils.ArgumentOutOfRange("pageData", pageData);
             }
-
-            long offset = pageData.Position;
-            long length = pageData.Length - offset;
 
             RESTCommand<NullType> putCmd = new RESTCommand<NullType>(this.ServiceClient.Credentials, this.Uri);
 
@@ -1112,7 +1113,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="startOffset">The start offset. Must be multiples of 512.</param>
         /// <param name="length">Length of the data range to be cleared. Must be multiples of 512.</param>
-        /// <param name="accessCondition">An object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that writes the pages.</returns>
         private RESTCommand<NullType> ClearPageImpl(long startOffset, long length, AccessCondition accessCondition, BlobRequestOptions options)

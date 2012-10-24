@@ -34,12 +34,6 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             return ProcessExpectedStatusCodeNoException(expectedStatusCodes, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex, operationContext);
         }
 
-        internal static T ValidateResponseStreamMd5AndLength<T>(RESTCommand<T> cmd, HttpWebResponse resp, long length, Exception ex, OperationContext ctx)
-        {
-            ValidateResponseStreamMd5AndLength(length, resp.Headers[HttpResponseHeader.ContentMd5], ctx);
-            return default(T);
-        }
-
         /// <summary>
         /// Gets an ETag from a response.
         /// </summary>
@@ -54,7 +48,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// Gets the user-defined metadata.
         /// </summary>
         /// <param name="response">The response from server.</param>
-        /// <returns>A <see cref="IDictionary"/> of the metadata.</returns>
+        /// <returns>A <see cref="System.Collections.IDictionary"/> of the metadata.</returns>
         internal static IDictionary<string, string> GetMetadata(HttpWebResponse response)
         {
             return GetMetadataOrProperties(response, Constants.HeaderConstants.PrefixForStorageMetadata);
@@ -65,7 +59,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// </summary>
         /// <param name="response">The response from server.</param>
         /// <param name="prefix">The prefix for all the headers.</param>
-        /// <returns>A <see cref="IDictionary"/> of the headers with the prefix.</returns>
+        /// <returns>A <see cref="System.Collections.IDictionary"/> of the headers with the prefix.</returns>
         private static IDictionary<string, string> GetMetadataOrProperties(HttpWebResponse response, string prefix)
         {
             IDictionary<string, string> nameValues = new Dictionary<string, string>();

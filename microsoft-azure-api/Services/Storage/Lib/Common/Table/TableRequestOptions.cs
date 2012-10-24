@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Gets or sets the maximum execution time for all potential retries.
         /// </summary>
-        /// <value>A <see cref="TimeSpan?"/> representing the maximum execution time for retries.</value>
+        /// <value>A <see cref="TimeSpan"/> representing the maximum execution time for retries.</value>
         public TimeSpan? MaximumExecutionTime { get; set; }
 
         internal static TableRequestOptions ApplyDefaults(TableRequestOptions requestOptions, CloudTableClient client)

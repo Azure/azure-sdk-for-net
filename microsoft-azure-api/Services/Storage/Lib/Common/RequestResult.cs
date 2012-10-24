@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Storage
     {
         private int httpStatusCode = -1;
 
-        private Exception exception = null;
+        private volatile Exception exception = null;
 
         /// <summary>
         /// Gets or sets the HTTP status code for the request.

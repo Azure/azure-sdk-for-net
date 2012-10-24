@@ -63,10 +63,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Creates a new <see cref="EntityProperty"/> object that represents the specified <see cref="Binary"/> value.
+        /// Creates a new <see cref="EntityProperty"/> object that represents the specified byte array.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
-        /// <returns>A new <see cref="EntityProperty"/> of the <see cref="Binary"/> type.</returns>
+        /// <returns>A new <see cref="EntityProperty"/> of the byte array.</returns>
         public static EntityProperty GeneratePropertyForByteArray(
 #if RT
             [ReadOnlyArray]
@@ -142,7 +142,7 @@ byte[] input)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EntityProperty"/> class by using the
-        /// <see cref="Binary"/> value of the property.
+        /// byte array value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
 #if RT
@@ -310,10 +310,10 @@ byte[] input)
         #region Properties
 
         /// <summary>
-        /// Gets or sets the <see cref="Binary"/> value of this <see cref="EntityProperty"/> object.
-        /// An exception will be thrown if you attempt to set this property to anything other than an <see cref="Binary"/> Object.
+        /// Gets or sets the byte array value of this <see cref="EntityProperty"/> object.
+        /// An exception will be thrown if you attempt to set this property to anything other than an byte array.
         /// </summary>
-        /// <value>The <see cref="Binary"/> value of this <see cref="EntityProperty"/> object.</value>
+        /// <value>The byte array value of this <see cref="EntityProperty"/> object.</value>
         public byte[] BinaryValue
         {
             get
@@ -501,7 +501,7 @@ byte[] input)
         /// for equality with this object.
         /// </summary>
         /// <param name="obj">The other object.</param>
-        /// <returns><code>true</code> if the objects are equivalent; <code>false</code> otherwise.</returns>
+        /// <returns><c>true</c> if the objects are equivalent; <c>false</c> otherwise.</returns>
         public override bool Equals(object obj)
         {
             EntityProperty other = obj as EntityProperty;

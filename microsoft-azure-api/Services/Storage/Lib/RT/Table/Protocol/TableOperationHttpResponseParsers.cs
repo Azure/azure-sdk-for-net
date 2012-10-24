@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 
     internal class TableOperationHttpResponseParsers
     {
-        internal static TableResult TableOperationPreProcess(TableResult result, TableOperation operation, HttpResponseMessage resp, Exception ex, OperationContext ctx)
+        internal static TableResult TableOperationPreProcess<T>(TableResult result, TableOperation operation, HttpResponseMessage resp, Exception ex, StorageCommandBase<T> cmd, OperationContext ctx)
         {
             result.HttpStatusCode = (int)resp.StatusCode;
 
@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
             {
                 if (resp.StatusCode != HttpStatusCode.OK && resp.StatusCode != HttpStatusCode.NotFound)
                 {
-                    throw new StorageException(ctx.LastResult, string.Format(SR.UnexpectedResponseCode, HttpStatusCode.OK.ToString() + " or " + HttpStatusCode.NotFound.ToString(), resp.StatusCode.ToString()), null);
+                    throw new StorageException(cmd.CurrentResult, string.Format(SR.UnexpectedResponseCode, HttpStatusCode.OK.ToString() + " or " + HttpStatusCode.NotFound.ToString(), resp.StatusCode.ToString()), null);
                 }
             }
             else
@@ -147,16 +147,22 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 
                             if (failError)
                             {
-                                ctx.CurrentResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(mimePartResponseMessage.GetStream());
-                                ctx.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
-                                throw new StorageException(ctx.CurrentResult, ctx.CurrentResult.ExtendedErrorInformation.ErrorMessage, null) { IsRetryable = false };
+                                cmd.CurrentResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(mimePartResponseMessage.GetStream());
+                                cmd.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
+                                throw new StorageException(
+                                       cmd.CurrentResult,
+                                       cmd.CurrentResult.ExtendedErrorInformation != null ? cmd.CurrentResult.ExtendedErrorInformation.ErrorMessage : SR.ExtendedErrorUnavailable,
+                                       null)
+                                {
+                                    IsRetryable = false
+                                };
                             }
 
                             if (failUnexpected)
                             {
-                                ctx.CurrentResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(mimePartResponseMessage.GetStream());
-                                ctx.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
-                                throw new StorageException(ctx.CurrentResult, "Unexpected response code for operation " + Convert.ToString(index), null) { IsRetryable = true };
+                                cmd.CurrentResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(mimePartResponseMessage.GetStream());
+                                cmd.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
+                                throw new StorageException(cmd.CurrentResult, SR.UnexpectedResponseCodeForOperation + Convert.ToString(index), null) { IsRetryable = true };
                             }
 
                             // Update etag

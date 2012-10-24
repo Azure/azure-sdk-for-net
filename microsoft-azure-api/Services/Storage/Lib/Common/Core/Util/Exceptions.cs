@@ -81,9 +81,12 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         internal static StorageException GenerateTimeoutException(RequestResult res, Exception inner)
         {
-            res.HttpStatusCode = 408; // RequestTimeout
-            Exception timeoutEx = new TimeoutException(SR.TimeoutExceptionMessage, inner);
+            if (res != null)
+            {
+                res.HttpStatusCode = 408; // RequestTimeout
+            }
 
+            TimeoutException timeoutEx = new TimeoutException(SR.TimeoutExceptionMessage, inner);
             return new StorageException(res, timeoutEx.Message, timeoutEx)
             {
                 IsRetryable = false
@@ -93,8 +96,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 #if DNCP
         internal static StorageException GenerateCancellationException(RequestResult res, Exception inner)
         {
-            res.HttpStatusCode = 306;
-            res.HttpStatusMessage = "Unused";
+            if (res != null)
+            {
+                res.HttpStatusCode = 306;
+                res.HttpStatusMessage = "Unused";
+            }
 
             OperationCanceledException cancelEx = new OperationCanceledException(SR.OperationCanceled, inner);
             return new StorageException(res, cancelEx.Message, inner) { IsRetryable = false };

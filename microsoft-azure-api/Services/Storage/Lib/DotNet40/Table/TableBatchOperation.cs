@@ -51,10 +51,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Adds a table operation to retrieve an entity of the specified class type with the specified partition key and row key to the batch operation.
         /// </summary>
-        /// <typeparam name="R">The return type which the specified <see cref="EntityResolver"/> will resolve the given entity to.</typeparam>
+        /// <typeparam name="R">The return type which the specified <see cref="EntityResolver{T}"/> will resolve the given entity to.</typeparam>
         /// <param name="partitionKey">A string containing the partition key of the entity to retrieve.</param>
         /// <param name="rowkey">A string containing the row key of the entity to retrieve.</param>
-        /// <param name="resolver">The <see cref="EntityResolver"/> implementation to project the entity to retrieve as a particular type in the result.</param>
+        /// <param name="resolver">The <see cref="EntityResolver{T}"/> implementation to project the entity to retrieve as a particular type in the result.</param>
         public void Retrieve<R>(string partitionKey, string rowkey, EntityResolver<R> resolver)
         {
             CommonUtils.AssertNotNull("partitionKey", partitionKey);

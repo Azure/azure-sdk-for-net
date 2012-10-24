@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.Storage.RetryPolicies
         /// <param name="lastException">An <see cref="Exception"/> object that represents the last exception encountered.</param>
         /// <param name="retryInterval">The interval to wait until the next retry.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns><code>true</code> if the operation should be retried; otherwise, <code>false</code>.</returns>
+        /// <returns><c>true</c> if the operation should be retried; otherwise, <c>false</c>.</returns>
         public bool ShouldRetry(int currentRetryCount, int statusCode, Exception lastException, out TimeSpan retryInterval, OperationContext operationContext)
         {
             retryInterval = TimeSpan.Zero;

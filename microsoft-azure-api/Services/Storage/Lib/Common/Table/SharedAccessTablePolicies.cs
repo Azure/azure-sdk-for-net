@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Determines whether the collection of shared access policies contains the specified key.
         /// </summary>
         /// <param name="key">The key to locate in the collection of shared access policies.</param>
-        /// <returns><code>true</code> if the collection of shared access policies contains an element with the specified key; otherwise, <code>false</code>.</returns>
+        /// <returns><c>true</c> if the collection of shared access policies contains an element with the specified key; otherwise, <c>false</c>.</returns>
         public bool ContainsKey(string key)
         {
             return this.policies.ContainsKey(key);
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Removes the value with the specified key from the shared access policies collection.
         /// </summary>
         /// <param name="key">The key of the <see cref="SharedAccessTablePolicy"/> item to remove.</param>
-        /// <returns><code>true</code> if the element is successfully found and removed; otherwise, <code>false</code>. This method returns <code>false</code> if the key is not found.</returns>
+        /// <returns><c>true</c> if the element is successfully found and removed; otherwise, <c>false</c>. This method returns <c>false</c> if the key is not found.</returns>
         public bool Remove(string key)
         {
             return this.policies.Remove(key);
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Gets or sets the <see cref="SharedAccessTablePolicy"/> item associated with the specified key.
         /// </summary>
         /// <param name="key">The key of the value to get or set.</param>
-        /// <returns>The <see cref="SharedAccessTablePolicy"/> item associated with the specified key, or <code>null</code> if key is not in the shared access policies collection.</returns>
+        /// <returns>The <see cref="SharedAccessTablePolicy"/> item associated with the specified key, or <c>null</c> if key is not in the shared access policies collection.</returns>
         public SharedAccessTablePolicy this[string key]
         {
             get { return this.policies[key]; }
@@ -124,7 +124,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Determines whether the collection of shared access policies contains the key and <see cref="SharedAccessTablePolicy"/> value in the specified <see cref="KeyValuePair{TKey,TValue}"/> object.
         /// </summary>
         /// <param name="item">A <see cref="KeyValuePair{TKey,TValue}"/> object containing the key and <see cref="SharedAccessTablePolicy"/> value to search for.</param>
-        /// <returns><code>true</code> if the shared access policies collection contains the specified key/value; otherwise, <code>false</code>.</returns>
+        /// <returns><c>true</c> if the shared access policies collection contains the specified key/value; otherwise, <c>false</c>.</returns>
         public bool Contains(KeyValuePair<string, SharedAccessTablePolicy> item)
         {
             SharedAccessTablePolicy storedItem;
@@ -167,7 +167,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Gets a value indicating whether the collection of shared access policies is read-only. 
         /// </summary>
-        /// <value><code>true</code> if the collection of shared access policies is read-only; otherwise, <code>false</code>.</value>
+        /// <value><c>true</c> if the collection of shared access policies is read-only; otherwise, <c>false</c>.</value>
         public bool IsReadOnly
         {
             get { return false; }
@@ -177,7 +177,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Removes the <see cref="SharedAccessTablePolicy"/> value, specified in the <see cref="KeyValuePair{TKey,TValue}"/> object, from the shared access policies collection.
         /// </summary>
         /// <param name="item">The <see cref="KeyValuePair{TKey,TValue}"/> object, containing a key and <see cref="SharedAccessTablePolicy"/> value, to remove from the shared access policies collection.</param>
-        /// <returns><code>true</code> if the item was successfully removed; otherwise, <code>false</code>.</returns>
+        /// <returns><c>true</c> if the item was successfully removed; otherwise, <c>false</c>.</returns>
         public bool Remove(KeyValuePair<string, SharedAccessTablePolicy> item)
         {
             if (this.Contains(item))
@@ -202,7 +202,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Returns an enumerator that iterates through the collection of shared access policies.
         /// </summary>
-        /// <returns>An <see cref="IEnumerator"/> object that can be used to iterate through the collection of shared access policies.</returns>
+        /// <returns>An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection of shared access policies.</returns>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             System.Collections.IEnumerable enumerable = this.policies;

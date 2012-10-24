@@ -69,7 +69,7 @@ using System.Net.Http;
             foreach (string vp in valuePairs)
             {
                 int equalDex = vp.IndexOf("=");
-                if (equalDex < 0 || equalDex == vp.Length - 1)
+                if (equalDex < 0)
                 {
                     retVal.Add(Uri.UnescapeDataString(vp), null);
                     continue;

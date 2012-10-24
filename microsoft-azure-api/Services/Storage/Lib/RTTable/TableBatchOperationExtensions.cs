@@ -19,13 +19,18 @@ namespace Microsoft.WindowsAzure.Storage.Table
 {
     using Microsoft.WindowsAzure.Storage.Core.Util;
 
+    /// <summary>
+    /// Defines the extension methods to the <see cref="TableBatchOperation"/> class. This is a static class.
+    /// </summary>
     public static class TableBatchOperationExtensions
     {
         /// <summary>
-        /// Creates a new table operation that replaces the contents of
-        /// the given entity in a table.
+        /// Adds a table operation that retrieves an entity with the specified partition key and row key to the batch operation.  The entity will be de-serialized into the specified class type which extends <see cref="ITableEntity"/>.
         /// </summary>
-        /// <param name="entity">The entity whose contents are being replaced.</param>
+        /// <typeparam name="TElement">The class of type for the entity to retrieve.</typeparam>
+        /// <param name="batch">The input <see cref="TableBatchOperation"/>, which acts as the <c>this</c> instance for the extension method.</param>
+        /// <param name="partitionKey">A string containing the partition key of the entity to be retrieved.</param>
+        /// <param name="rowkey">A string containing the row key of the entity to be retrieved.</param>
         public static void Retrieve<TElement>(this TableBatchOperation batch, string partitionKey, string rowkey) where TElement : ITableEntity
         {
             CommonUtils.AssertNotNull("partitionKey", partitionKey);
@@ -36,10 +41,13 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Creates a new table operation that replaces the contents of
-        /// the given entity in a table.
+        /// Adds a table operation that retrieves an entity with the specified partition key and row key to the batch operation.
         /// </summary>
-        /// <param name="entity">The entity whose contents are being replaced.</param>
+        /// <typeparam name="R">The return type which the specified <see cref="EntityResolver"/> will resolve the given entity to.</typeparam>
+        /// <param name="batch">The input <see cref="TableBatchOperation"/>, which acts as the <c>this</c> instance for the extension method.</param>
+        /// <param name="partitionKey">A string containing the partition key of the entity to be retrieved.</param>
+        /// <param name="rowkey">A string containing the row key of the entity to be retrieved.</param>
+        /// <param name="resolver">The <see cref="EntityResolver{R}"/> implementation to project the entity to retrieve as a particular type in the result.</param>
         public static void Retrieve<R>(this TableBatchOperation batch, string partitionKey, string rowkey, EntityResolver<R> resolver)
         {
             CommonUtils.AssertNotNull("partitionKey", partitionKey);

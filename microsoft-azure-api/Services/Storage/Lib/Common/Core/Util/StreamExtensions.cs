@@ -61,14 +61,13 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <param name="syncRead">A boolean indicating whether the write happens synchronously.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         [DebuggerNonUserCode]
-        internal static void WriteToSync(this Stream stream, Stream toStream, long? maxLength, DateTime? expiryTime, bool calculateMd5, bool syncRead, OperationContext operationContext)
+        internal static void WriteToSync(this Stream stream, Stream toStream, long? maxLength, DateTime? expiryTime, bool calculateMd5, bool syncRead, OperationContext operationContext, StreamDescriptor streamCopyState)
         {
             byte[] buffer = new byte[GetBufferSize(stream)];
 
-            if (operationContext.StreamCopyState == null)
+            if (streamCopyState != null && calculateMd5 && streamCopyState.Md5HashRef == null)
             {
-                operationContext.StreamCopyState = new StreamDescriptor();
-                operationContext.StreamCopyState.Md5HashRef = calculateMd5 ? new MD5Wrapper() : null;
+                streamCopyState.Md5HashRef = new MD5Wrapper();
             }
 
             int readCount;
@@ -76,7 +75,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             {
                 if (expiryTime.HasValue && DateTime.Now.CompareTo(expiryTime.Value) > 0)
                 {
-                    throw Exceptions.GenerateTimeoutException(operationContext.CurrentResult, null);
+                    throw Exceptions.GenerateTimeoutException(operationContext.LastResult, null);
                 }
 
                 if (syncRead)
@@ -92,37 +91,39 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 toStream.Write(buffer, 0, readCount);
 
                 // Update the StreamDescriptor after the bytes are successfully committed to the output stream
-                operationContext.StreamCopyState.Length += readCount;
-
-                if (maxLength.HasValue && operationContext.StreamCopyState.Length > maxLength.Value)
+                if (streamCopyState != null)
                 {
-                    throw new ArgumentOutOfRangeException("stream");
-                }
+                    streamCopyState.Length += readCount;
 
-                if (operationContext.StreamCopyState.Md5HashRef != null)
-                {
-                    operationContext.StreamCopyState.Md5HashRef.UpdateHash(buffer, 0, readCount);
+                    if (maxLength.HasValue && streamCopyState.Length > maxLength.Value)
+                    {
+                        throw new ArgumentOutOfRangeException("stream");
+                    }
+
+                    if (streamCopyState.Md5HashRef != null)
+                    {
+                        streamCopyState.Md5HashRef.UpdateHash(buffer, 0, readCount);
+                    }
                 }
             }
             while (readCount != 0);
 
-            if (operationContext.StreamCopyState.Md5HashRef != null)
+            if (streamCopyState != null && streamCopyState.Md5HashRef != null)
             {
-                operationContext.StreamCopyState.Md5 = operationContext.StreamCopyState.Md5HashRef.ComputeHash();
-                operationContext.StreamCopyState.Md5HashRef = null;
+                streamCopyState.Md5 = streamCopyState.Md5HashRef.ComputeHash();
+                streamCopyState.Md5HashRef = null;
             }
         }
 #endif
 
 #if RT
-        internal static async Task WriteToAsync(this Stream stream, Stream toStream, long? maxLength, bool calculateMd5, OperationContext operationContext, CancellationToken token)
+        internal static async Task WriteToAsync(this Stream stream, Stream toStream, long? maxLength, bool calculateMd5, OperationContext operationContext, StreamDescriptor streamCopyState, CancellationToken token)
         {
             byte[] buffer = new byte[GetBufferSize(stream)];
 
-            if (operationContext.StreamCopyState == null)
+            if (streamCopyState != null && calculateMd5 && streamCopyState.Md5HashRef == null)
             {
-                operationContext.StreamCopyState = new StreamDescriptor();
-                operationContext.StreamCopyState.Md5HashRef = calculateMd5 ? new MD5Wrapper() : null;
+                streamCopyState.Md5HashRef = new MD5Wrapper();
             }
 
             int readCount;
@@ -132,24 +133,27 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 await toStream.WriteAsync(buffer, 0, readCount, token);
 
                 // Update the StreamDescriptor after the bytes are successfully committed to the output stream
-                operationContext.StreamCopyState.Length += readCount;
-
-                if (maxLength.HasValue && operationContext.StreamCopyState.Length > maxLength.Value)
+                if (streamCopyState != null)
                 {
-                    throw new ArgumentOutOfRangeException("stream");
-                }
+                    streamCopyState.Length += readCount;
 
-                if (operationContext.StreamCopyState.Md5HashRef != null)
-                {
-                    operationContext.StreamCopyState.Md5HashRef.UpdateHash(buffer, 0, readCount);
+                    if (maxLength.HasValue && streamCopyState.Length > maxLength.Value)
+                    {
+                        throw new ArgumentOutOfRangeException("stream");
+                    }
+
+                    if (streamCopyState.Md5HashRef != null)
+                    {
+                        streamCopyState.Md5HashRef.UpdateHash(buffer, 0, readCount);
+                    }
                 }
             }
             while (readCount != 0);
 
-            if (operationContext.StreamCopyState.Md5HashRef != null)
+            if (streamCopyState != null && streamCopyState.Md5HashRef != null)
             {
-                operationContext.StreamCopyState.Md5 = operationContext.StreamCopyState.Md5HashRef.ComputeHash();
-                operationContext.StreamCopyState.Md5HashRef = null;
+                streamCopyState.Md5 = streamCopyState.Md5HashRef.ComputeHash();
+                streamCopyState.Md5HashRef = null;
             }
         }
 
@@ -166,9 +170,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <param name="completed">The action taken when the execution is completed.</param>
         [DebuggerNonUserCode]
-        internal static void WriteToAsync<T>(this Stream stream, Stream toStream, long? maxLength, DateTime? expiryTime, bool calculateMd5, ExecutionState<T> executionState, OperationContext operationContext, Action<ExecutionState<T>> completed)
+        internal static void WriteToAsync<T>(this Stream stream, Stream toStream, long? maxLength, DateTime? expiryTime, bool calculateMd5, ExecutionState<T> executionState, OperationContext operationContext, StreamDescriptor streamCopyState, Action<ExecutionState<T>> completed)
         {
-            AsyncStreamCopier<T> copier = new AsyncStreamCopier<T>(stream, toStream, executionState, GetBufferSize(stream), calculateMd5, operationContext);
+            AsyncStreamCopier<T> copier = new AsyncStreamCopier<T>(stream, toStream, executionState, GetBufferSize(stream), calculateMd5, operationContext, streamCopyState);
             copier.StartCopyStream(completed, maxLength, expiryTime);
         }
 #endif

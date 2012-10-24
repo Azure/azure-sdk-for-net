@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// <summary>
     /// Represents a query against a specified table.
     /// </summary>
-    /// <typeparam name="TElement">A class which implements <see cref="ITableEntity"/>.</typeparam>
+    /// <typeparam name="TElement">The entity type of the query.</typeparam>
     public partial class TableQuery<TElement> where TElement : ITableEntity, new()
     {
         /// <summary>

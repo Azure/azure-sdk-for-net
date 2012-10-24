@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                             {
                                 tResult = tableCommandRef.End(res);
 
-                                executionState.Result = tableCommandRef.ParseResponse(tResult, executionState.OperationContext.CurrentResult, tableCommandRef);
+                                executionState.Result = tableCommandRef.ParseResponse(tResult, executionState.Cmd.CurrentResult, tableCommandRef);
 
                                 // Attempt to populate response headers
                                 if (executionState.Req != null)
@@ -122,7 +122,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                 // Store exception and invoke callback here. All operations in this try would be non-retryable by default
                                 if (executionState.ExceptionRef == null || !(executionState.ExceptionRef is StorageException))
                                 {
-                                    executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                                    executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                                 }
 
                                 try
@@ -134,7 +134,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                         FireResponseReceived(executionState);
                                     }
 
-                                    executionState.Result = tableCommandRef.ParseResponse(tResult, executionState.OperationContext.CurrentResult, tableCommandRef);
+                                    executionState.Result = tableCommandRef.ParseResponse(tResult, executionState.Cmd.CurrentResult, tableCommandRef);
 
                                     // clear exception
                                     executionState.ExceptionRef = null;
@@ -162,7 +162,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 // Store exception and invoke callback here. All operations in this try would be non-retryable by default
                 if (executionState.ExceptionRef == null || !(executionState.ExceptionRef is StorageException))
                 {
-                    executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                    executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                 }
 
                 executionState.OnComplete();
@@ -195,7 +195,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             // Handle Retry
             try
             {
-                StorageException translatedException = StorageException.TranslateException(executionState.ExceptionRef, executionState.OperationContext.CurrentResult);
+                StorageException translatedException = StorageException.TranslateException(executionState.ExceptionRef, executionState.Cmd.CurrentResult);
                 executionState.ExceptionRef = translatedException;
 
                 TimeSpan delay = TimeSpan.FromMilliseconds(0);
@@ -203,7 +203,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                    executionState.RetryPolicy != null ?
                                         executionState.RetryPolicy.ShouldRetry(
                                                                         executionState.RetryCount++,
-                                                                        executionState.OperationContext.CurrentResult.HttpStatusCode,
+                                                                        executionState.Cmd.CurrentResult.HttpStatusCode,
                                                                         executionState.ExceptionRef,
                                                                         out delay,
                                                                         executionState.OperationContext)
@@ -249,7 +249,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             catch (Exception ex)
             {
                 // Catch all ( i.e. users retry policy throws etc.)
-                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                 executionState.OnComplete();
             }
         }
@@ -271,7 +271,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 // Enter Retryable Section of execution
                 do
                 {
-                    // 0. Begin Request 
+                    executionState.Init();
+
+                    // 0. Begin Request
                     TableExecutor.StartRequestAttempt(executionState);
 
                     TableExecutor.CheckTimeout<T>(executionState, true);
@@ -284,7 +286,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         {
                             tempResult = cmd.ExecuteFunc();
 
-                            executionState.Result = cmd.ParseResponse(tempResult, executionState.OperationContext.CurrentResult, cmd);
+                            executionState.Result = cmd.ParseResponse(tempResult, executionState.Cmd.CurrentResult, cmd);
 
                             // Attempt to populate response headers
                             if (executionState.Req != null)
@@ -298,7 +300,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                             // Store exception and invoke callback here. All operations in this try would be non-retryable by default
                             if (executionState.ExceptionRef == null || !(executionState.ExceptionRef is StorageException))
                             {
-                                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.OperationContext.CurrentResult);
+                                executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                             }
 
                             // Attempt to populate response headers
@@ -308,7 +310,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                 TableExecutor.FireResponseReceived(executionState);
                             }
 
-                            executionState.Result = cmd.ParseResponse(tempResult, executionState.OperationContext.CurrentResult, cmd);
+                            executionState.Result = cmd.ParseResponse(tempResult, executionState.Cmd.CurrentResult, cmd);
 
                             // clear exception
                             executionState.ExceptionRef = null;
@@ -320,7 +322,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     {
                         TableExecutor.FinishRequestAttempt(executionState);
 
-                        StorageException translatedException = StorageException.TranslateException(e, executionState.OperationContext.CurrentResult);
+                        StorageException translatedException = StorageException.TranslateException(e, executionState.Cmd.CurrentResult);
                         executionState.ExceptionRef = translatedException;
 
                         TimeSpan delay = TimeSpan.FromMilliseconds(0);
@@ -328,7 +330,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                             executionState.RetryPolicy != null ?
                                                     executionState.RetryPolicy.ShouldRetry(
                                                                                             executionState.RetryCount++,
-                                                                                            executionState.OperationContext.CurrentResult.HttpStatusCode,
+                                                                                            executionState.Cmd.CurrentResult.HttpStatusCode,
                                                                                             executionState.ExceptionRef,
                                                                                             out delay,
                                                                                             executionState.OperationContext)

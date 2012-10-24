@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// <summary>
     /// Represents a query against a specified table.
     /// </summary>
-    /// <remarks>A <see cref="TableQuery"/> instance aggregates the query parameters to use when the query is executed. One of the <code>executeQuery</code> or <code>executeQuerySegmented</code> methods 
+    /// <remarks>A <see cref="TableQuery"/> instance aggregates the query parameters to use when the query is executed. One of the <c>executeQuery</c> or <c>executeQuerySegmented</c> methods 
     /// of <see cref="CloudTableClient"/> must be called to execute the query. The parameters are encoded and passed to the server when the table query is executed.</remarks>
     public sealed partial class TableQuery
     {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="propertyName">A string containing the name of the property to compare.</param>
         /// <param name="operation">A string containing the comparison operator to use.</param>
-        /// <param name="givenValue">A <code>bool</code> containing the value to compare with the property.</param>
+        /// <param name="givenValue">A <c>bool</c> containing the value to compare with the property.</param>
         /// <returns>A string containing the formatted filter condition.</returns>
         public static string GenerateFilterConditionForBool(string propertyName, string operation, bool givenValue)
         {
@@ -193,7 +193,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Creates a filter condition using the specified logical operator on two filter conditions.
         /// </summary>
         /// <param name="filterA">A string containing the first formatted filter condition.</param>
-        /// <param name="operatorString">A string containing <code>Operators.AND</code> or <code>Operators.OR</code>.</param>
+        /// <param name="operatorString">A string containing <c>Operators.AND</c> or <c>Operators.OR</c>.</param>
         /// <param name="filterB">A string containing the second formatted filter condition.</param>
         /// <returns>A string containing the combined filter expression.</returns>
         public static string CombineFilters(string filterA, string operatorString, string filterB)

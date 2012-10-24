@@ -68,12 +68,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     }
                 }
 
-                if (ctx.StreamCopyState != null)
+                if (cmd.StreamCopyState != null)
                 {
-                    offset = startingOffset + ctx.StreamCopyState.Length;
+                    offset = startingOffset + cmd.StreamCopyState.Length;
                     if (startingLength.HasValue)
                     {
-                        length = startingLength.Value - ctx.StreamCopyState.Length;
+                        length = startingLength.Value - cmd.StreamCopyState.Length;
                     }
                 }
 
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         string.IsNullOrEmpty(storedMD5))
                     {
                         throw new StorageException(
-                            ctx.CurrentResult,
+                            cmd.CurrentResult,
                             SR.MD5NotPresentError,
                             null)
                         {
@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
             {
                 long validateLength = startingLength.HasValue ? startingLength.Value : (attributes.Properties.Length - startingOffset);
-                HttpResponseParsers.ValidateResponseStreamMd5AndLength(validateLength, storedMD5, ctx);
+                HttpResponseParsers.ValidateResponseStreamMd5AndLength(validateLength, storedMD5, cmd, cmd.StreamCopyState);
                 return Task.FromResult(NullType.Value);
             };
 
@@ -402,7 +402,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 if (!remainingLeaseTime.HasValue)
                 {
                     // Unexpected result from service.
-                    throw new StorageException(ctx.CurrentResult, SR.LeaseTimeNotReceived, null /* inner */);
+                    throw new StorageException(cmd.CurrentResult, SR.LeaseTimeNotReceived, null /* inner */);
                 }
 
                 return TimeSpan.FromSeconds(remainingLeaseTime.Value);

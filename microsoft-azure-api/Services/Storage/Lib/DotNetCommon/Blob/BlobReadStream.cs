@@ -34,6 +34,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">Blob reference to read from</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         internal BlobReadStream(ICloudBlob blob, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : base(blob, accessCondition, options, operationContext)
         {
@@ -110,6 +111,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 if (!this.isLengthAvailable)
                 {
                     this.blob.BeginFetchAttributes(
+                        this.accessCondition,
+                        this.options,
+                        this.operationContext,
                         ar =>
                         {
                             try
@@ -189,67 +193,78 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 this.parallelOperationSemaphore.WaitAsync(calledSynchronously =>
                     {
-                        // If the buffer is already consumed, dispatch another read.
-                        if (this.buffer.Position == this.buffer.Length)
+                        try
                         {
-                            int readSize = (int)Math.Min(this.blob.StreamMinimumReadSizeInBytes, this.Length - this.currentOffset);
-                            if (this.options.UseTransactionalMD5.Value)
+                            // If the buffer is already consumed, dispatch another read.
+                            if (this.buffer.Position == this.buffer.Length)
                             {
-                                readSize = Math.Min(readSize, Constants.MaxBlockSize);
-                            }
-
-                            this.buffer.SetLength(0);
-                            this.blob.BeginDownloadRangeToStream(
-                                this.buffer,
-                                this.currentOffset, 
-                                readSize, 
-                                this.accessCondition, 
-                                this.options, 
-                                this.operationContext, 
-                                ar =>
+                                int readSize = (int)Math.Min(this.blob.StreamMinimumReadSizeInBytes, this.Length - this.currentOffset);
+                                if (this.options.UseTransactionalMD5.Value)
                                 {
-                                    try
+                                    readSize = Math.Min(readSize, Constants.MaxBlockSize);
+                                }
+
+                                this.buffer.SetLength(0);
+                                this.blob.BeginDownloadRangeToStream(
+                                    this.buffer,
+                                    this.currentOffset,
+                                    readSize,
+                                    this.accessCondition,
+                                    this.options,
+                                    this.operationContext,
+                                    ar =>
                                     {
-                                        this.blob.EndDownloadRangeToStream(ar);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        this.lastException = e;
-                                    }
+                                        try
+                                        {
+                                            this.blob.EndDownloadRangeToStream(ar);
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            this.lastException = e;
+                                        }
 
-                                    if (this.lastException == null)
-                                    {
-                                        this.buffer.Seek(0, SeekOrigin.Begin);
-                                        this.LockToETag();
+                                        if (this.lastException == null)
+                                        {
+                                            this.buffer.Seek(0, SeekOrigin.Begin);
+                                            this.LockToETag();
 
-                                        // Read as much as we can from the buffer.
-                                        int result = this.buffer.Read(buffer, offset, count);
-                                        this.currentOffset += result;
-                                        chainedResult.Result = result;
-                                        this.VerifyBlobMD5(buffer, offset, result);
-                                    }
+                                            // Read as much as we can from the buffer.
+                                            int result = this.buffer.Read(buffer, offset, count);
+                                            this.currentOffset += result;
+                                            chainedResult.Result = result;
+                                            this.VerifyBlobMD5(buffer, offset, result);
+                                        }
 
-                                    // Calling this here will make reentrancy safer, as the user
-                                    // does not yet know the operation has completed.
-                                    this.parallelOperationSemaphore.Release();
+                                        // Calling this here will make reentrancy safer, as the user
+                                        // does not yet know the operation has completed.
+                                        this.parallelOperationSemaphore.Release();
 
-                                    // End the async result
-                                    chainedResult.CompletedSynchronously &= ar.CompletedSynchronously;
-                                    chainedResult.OnComplete(this.lastException);
-                                },
-                                null /* state */);
+                                        // End the async result
+                                        chainedResult.CompletedSynchronously &= ar.CompletedSynchronously;
+                                        chainedResult.OnComplete(this.lastException);
+                                    },
+                                    null /* state */);
+                            }
+                            else
+                            {
+                                // Read as much as we can from the buffer.
+                                int result = this.buffer.Read(buffer, offset, count);
+                                this.currentOffset += result;
+                                chainedResult.Result = result;
+                                this.VerifyBlobMD5(buffer, offset, result);
+
+                                // Calling this here will make reentrancy safer, as the user
+                                // does not yet know the operation has completed.
+                                this.parallelOperationSemaphore.Release();
+
+                                // End the async result
+                                chainedResult.CompletedSynchronously &= calledSynchronously;
+                                chainedResult.OnComplete(this.lastException);
+                            }
                         }
-                        else
+                        catch (Exception e)
                         {
-                            // Read as much as we can from the buffer.
-                            int result = this.buffer.Read(buffer, offset, count);
-                            this.currentOffset += result;
-                            chainedResult.Result = result;
-                            this.VerifyBlobMD5(buffer, offset, result);
-
-                            // Calling this here will make reentrancy safer, as the user
-                            // does not yet know the operation has completed.
-                            this.parallelOperationSemaphore.Release();
+                            this.lastException = e;
 
                             // End the async result
                             chainedResult.CompletedSynchronously &= calledSynchronously;

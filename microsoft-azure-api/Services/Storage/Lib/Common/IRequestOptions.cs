@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage
     /// <summary>
     /// An interface required for request option types.
     /// </summary>
-    /// <remarks>The <see cref="QueueRequestOptions"/>, <see cref="BlobRequestOptions"/>, and <see cref="TableRequestOptions"/> classes implement the <see cref="IRequestOptions"/> interface.</remarks>
+    /// <remarks>The <see cref="Microsoft.WindowsAzure.Storage.Queue.QueueRequestOptions"/>, <see cref="Microsoft.WindowsAzure.Storage.Blob.BlobRequestOptions"/>, and <see cref="Microsoft.WindowsAzure.Storage.Table.TableRequestOptions"/> classes implement the <see cref="IRequestOptions"/> interface.</remarks>
     public interface IRequestOptions
     {
         /// <summary>

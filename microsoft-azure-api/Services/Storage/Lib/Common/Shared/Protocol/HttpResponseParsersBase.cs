@@ -19,6 +19,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Executor;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -40,7 +41,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 
             if (actualStatusCode != expectedStatusCode)
             {
-                throw new StorageException(operationContext.CurrentResult, string.Format(SR.UnexpectedResponseCode, expectedStatusCode, actualStatusCode), null);
+                throw new StorageException(cmd.CurrentResult, string.Format(SR.UnexpectedResponseCode, expectedStatusCode, actualStatusCode), null);
             }
 
             return retVal;
@@ -65,39 +66,39 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 
             if (!foundExpectedStatusCode)
             {
-                throw new StorageException(operationContext.CurrentResult, SR.UnexpectedResponseCode, null);
+                throw new StorageException(cmd.CurrentResult, SR.UnexpectedResponseCode, null);
             }
 
             return retVal;
         }
 
-        internal static void ValidateResponseStreamMd5AndLength(long? length, string md5, OperationContext ctx)
+        internal static void ValidateResponseStreamMd5AndLength<T>(long? length, string md5, StorageCommandBase<T> cmd, StreamDescriptor streamCopyState)
         {
-            if (ctx.StreamCopyState == null)
+            if (streamCopyState == null)
             {
                 throw new StorageException(
-                    ctx.CurrentResult,
-                   SR.ContentMD5NotCalculated,
+                    cmd.CurrentResult,
+                    SR.ContentMD5NotCalculated,
+                    null)
+                {
+                    IsRetryable = false
+                };
+            }
+
+            if (streamCopyState.Length != length)
+            {
+                throw new StorageException(
+                    cmd.CurrentResult,
+                    string.Format(SR.BlobDataCorruptedIncorrectNumberOfBytes, streamCopyState.Length, length),
                     null)
                     {
                         IsRetryable = false
                     };
             }
 
-            if (ctx.StreamCopyState.Length != length)
+            if (md5 != null && streamCopyState.Md5 != null && streamCopyState.Md5 != md5)
             {
-                throw new StorageException(
-                    ctx.CurrentResult,
-                    string.Format(SR.BlobDataCorruptedIncorrectNumberOfBytes, ctx.StreamCopyState.Length, length),
-                    null)
-                    {
-                        IsRetryable = false
-                    };
-            }
-
-            if (md5 != null && ctx.StreamCopyState.Md5 != null && ctx.StreamCopyState.Md5 != md5)
-            {
-                throw new StorageException(ctx.CurrentResult, SR.MD5MismatchError, null) { IsRetryable = false };
+                throw new StorageException(cmd.CurrentResult, SR.MD5MismatchError, null) { IsRetryable = false };
             }
         }
 

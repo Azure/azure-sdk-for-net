@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="prefix">The queue name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return queue metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is <code>null</code>, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="QueueContinuationToken"/> token returned by a previous listing operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A result segment of queues.</returns>
@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="detailsIncluded">The details included.</param>
         /// <param name="currentToken">The continuation token.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is <code>null</code>, the maximum possible number of results will be returned, up to 5000.</param>
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <returns>A <see cref="TaskSequence"/> that lists the queues.</returns>
         private RESTCommand<ResultSegment<CloudQueue>> ListQueuesImpl(string prefix, QueueListingDetails detailsIncluded, QueueContinuationToken currentToken, int? maxResults)
         {

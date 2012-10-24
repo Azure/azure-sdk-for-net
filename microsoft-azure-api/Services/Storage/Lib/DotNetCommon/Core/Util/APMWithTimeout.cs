@@ -8,62 +8,38 @@
     /// </summary>
     internal class APMWithTimeout
     {
-        public static void RunWithTimeout(Func<AsyncCallback, object, IAsyncResult> beginMethod, AsyncCallback callback, object state, int? timeoutInMS)
+        public static void RunWithTimeout(Func<AsyncCallback, object, IAsyncResult> beginMethod, AsyncCallback callback, object state, int? timeoutInMS, AsyncCallback timeoutCallback)
         {
             CommonUtils.AssertNotNull("beginMethod", beginMethod);
             CommonUtils.AssertNotNull("callback", callback);
-            new APMWithTimeout(beginMethod, callback, state, timeoutInMS);
+            CommonUtils.AssertNotNull("timeoutCallback", timeoutCallback);
+            new APMWithTimeout(beginMethod, callback, state, timeoutInMS, timeoutCallback);
         }
 
         /// <summary>
-        /// Flag to store completion status, 0 = non complete, 1 = complete
+        /// User's timeout callback
         /// </summary>
-        private int completed = 0;
+        private AsyncCallback timeoutCallback;
 
-        /// <summary>
-        /// Users Callback
-        /// </summary>
-        private AsyncCallback callback;
-
-        /// <summary>
-        /// Stores the native timer used to trigger after the specified delay.
-        /// </summary>
-        private Timer timer;
-
-        private APMWithTimeout(Func<AsyncCallback, object, IAsyncResult> beginMethod, AsyncCallback callback, object state, int? timeoutInMS)
+        private APMWithTimeout(Func<AsyncCallback, object, IAsyncResult> beginMethod, AsyncCallback callback, object state, int? timeoutInMS, AsyncCallback timeoutCallback)
         {
-            this.callback = callback;
-            beginMethod(this.Complete, state);
+            this.timeoutCallback = timeoutCallback;
+            IAsyncResult result = beginMethod(callback, state);
 
             if (timeoutInMS.HasValue)
             {
-                this.timer = new Timer((t) => this.Complete(null));
-                this.timer.Change(TimeSpan.FromMilliseconds(timeoutInMS.Value), TimeSpan.FromMilliseconds(-1));
-            }
-        }
-
-        private void Complete(IAsyncResult res)
-        {
-            // Only one winner gets to dispose timer and callback user
-            if (Interlocked.CompareExchange(ref this.completed, 1, 0) == 0)
-            {
-                try
-                {
-                    if (this.timer != null)
+                ThreadPool.RegisterWaitForSingleObject(
+                    result.AsyncWaitHandle,
+                    (_, isTimedOut) =>
                     {
-                        this.timer.Dispose();
-                        this.timer = null;
-                    }
-                }
-                catch (Exception)
-                {
-                    // no op
-                }
-                finally
-                {
-                    // call users callback
-                    this.callback(res);
-                }
+                        if (isTimedOut)
+                        {
+                            this.timeoutCallback(result);
+                        }
+                    },
+                    null,
+                    timeoutInMS.Value,
+                    true);
             }
         }
     }

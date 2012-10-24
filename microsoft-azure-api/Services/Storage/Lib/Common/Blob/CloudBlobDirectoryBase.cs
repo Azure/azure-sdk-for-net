@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudBlobDirectory"/> class given an address and a client.
         /// </summary>
-        /// <param name="address">The blob directory's address.</param>
+        /// <param name="absolutePath">The blob directory's address.</param>
         /// <param name="service">The client to use.</param>
         internal CloudBlobDirectory(string absolutePath, CloudBlobClient service)
         {

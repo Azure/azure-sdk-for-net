@@ -333,7 +333,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Gets a reference to a blob in this container.
         /// </summary>
         /// <param name="blobUri">The URI of the blob.</param>
-        /// <param name="accessCondition">An object that represents the access conditions for the container. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A reference to the blob.</returns>
@@ -366,7 +366,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Begins an asynchronous operation to get a reference to a blob in this container.
         /// </summary>
         /// <param name="blobUri">The URI of the blob.</param>
-        /// <param name="accessCondition">An object that represents the access conditions for the container. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -405,7 +405,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
         /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="TaskSequence"/> that lists the containers.</returns>
+        /// <returns>A <see cref="ResultSegment{T}"/> that lists the containers.</returns>
         private RESTCommand<ResultSegment<CloudBlobContainer>> ListContainersImpl(string prefix, ContainerListingDetails detailsIncluded, BlobContinuationToken currentToken, int? maxResults, BlobRequestOptions options)
         {
             ListingContext listingContext = new ListingContext(prefix, maxResults)
@@ -447,9 +447,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Implements the FetchAttributes method. The attributes are updated immediately.
         /// </summary>
         /// <param name="blobUri">The URI of the blob.</param>
-        /// <param name="accessCondition">An object that represents the access conditions for the blob. If <code>null</code>, no condition is used.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
-        /// <returns>A <see cref="RESTCommand"/> that fetches the attributes.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that fetches the attributes.</returns>
         private RESTCommand<ICloudBlob> GetBlobReferenceImpl(Uri blobUri, AccessCondition accessCondition, BlobRequestOptions options)
         {
             RESTCommand<ICloudBlob> getCmd = new RESTCommand<ICloudBlob>(this.Credentials, blobUri);

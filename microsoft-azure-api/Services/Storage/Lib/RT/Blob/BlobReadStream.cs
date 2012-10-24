@@ -25,21 +25,25 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
+    /// <summary>
+    /// Provides an input stream to read a given blob resource.
+    /// </summary>
     internal sealed class BlobReadStream : BlobReadStreamBase, IContentTypeProvider
     {
         /// <summary>
-        /// Initializes a new instance of the BlobReadStrea class.
+        /// Initializes a new instance of the <see cref="BlobReadStream"/> class.
         /// </summary>
         /// <param name="blob">Blob reference to read from.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         internal BlobReadStream(ICloudBlob blob, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : base(blob, accessCondition, options, operationContext)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the BlobReadStrea class.
+        /// Initializes a new instance of the <see cref="BlobReadStream"/> class.
         /// </summary>
         /// <param name="otherStream">Another BlobReadStream instance to clone.</param>
         internal BlobReadStream(BlobReadStream otherStream)
@@ -50,6 +54,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Gets the length in bytes of the stream.
         /// </summary>
+        /// <value>The length in bytes of the stream.</value>
         public override long Length
         {
             get
@@ -74,15 +79,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Gets the format of the data.
         /// </summary>
+        /// <value>The format of the data.</value>
         public string ContentType
         {
             get
             {
-                if (!this.isLengthAvailable)
-                {
-                    this.blob.FetchAttributesAsync(this.accessCondition, this.options, this.operationContext).AsTask().Wait();
-                    this.isLengthAvailable = true;
-                }
+                // This will make sure the attributes are populated
+                long length = this.Length;
 
                 return this.blob.Properties.ContentType;
             }
@@ -108,15 +111,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Asynchronously reads a sequence of bytes from the current stream, advances the
         /// position within the stream by the number of bytes read, and monitors cancellation requests.
         /// </summary>
+        /// <remarks>In the returned <see cref="Task{TElement}"/> object, the value of the integer
+        /// parameter contains the total number of bytes read into the buffer. The result value can be
+        /// less than the number of bytes requested if the number of bytes currently available is less
+        /// than the requested number, or it can be 0 (zero) if the end of the stream has been reached.</remarks>
         /// <param name="buffer">The buffer to read the data into.</param>
         /// <param name="offset">The byte offset in buffer at which to begin writing
         /// data read from the stream.</param>
         /// <param name="count">The maximum number of bytes to read.</param>
         /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
-        /// <returns>A task that represents the asynchronous read operation. The value of the TResult
-        /// parameter contains the total number of bytes read into the buffer. The result value can be
-        /// less than the number of bytes requested if the number of bytes currently available is less
-        /// sthan the requested number, or it can be 0 (zero) if the end of the stream has been reached.</returns>
+        /// <returns>A task that represents the asynchronous read operation.</returns>
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             CommonUtils.AssertNotNull("buffer", buffer);
@@ -134,6 +138,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 this.LockToETag();
 
                 this.isLengthAvailable = true;
+
+                if (string.IsNullOrEmpty(this.blob.Properties.ContentMD5))
+                {
+                    this.blobMD5 = null;
+                }
             }
 
             if ((this.currentOffset == this.Length) || (count == 0))

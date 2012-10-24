@@ -43,22 +43,30 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
         protected static void StartRequestAttempt<T>(ExecutionState<T> executionState)
         {
-            executionState.OperationContext.CurrentResult = new RequestResult();
-            executionState.OperationContext.RequestResults.Add(executionState.OperationContext.CurrentResult);
-            executionState.OperationContext.CurrentResult.StartTime = DateTime.Now;
+            executionState.Cmd.CurrentResult = new RequestResult();
+
+            // Need to clear this explicitly for retries
+            executionState.ExceptionRef = null;
+
+            lock (executionState.OperationContext.RequestResults)
+            {
+                executionState.OperationContext.RequestResults.Add(executionState.Cmd.CurrentResult);
+            }
+
+            executionState.Cmd.CurrentResult.StartTime = DateTime.Now;
         }
 
         protected static void FinishRequestAttempt<T>(ExecutionState<T> executionState)
         {
-            executionState.OperationContext.CurrentResult.EndTime = DateTime.Now;
+            executionState.Cmd.CurrentResult.EndTime = DateTime.Now;
         }
 
         protected static void FireSendingRequest<T>(ExecutionState<T> executionState)
         {
-            RequestEventArgs args = new RequestEventArgs(executionState.OperationContext.CurrentResult);
+            RequestEventArgs args = new RequestEventArgs(executionState.Cmd.CurrentResult);
 #if RT
             args.RequestUri = executionState.Req.RequestUri;
-#else 
+#else
             args.Request = executionState.Req;
 #endif
             executionState.OperationContext.FireSendingRequest(args);
@@ -66,10 +74,10 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
         protected static void FireResponseReceived<T>(ExecutionState<T> executionState)
         {
-            RequestEventArgs args = new RequestEventArgs(executionState.OperationContext.CurrentResult);
+            RequestEventArgs args = new RequestEventArgs(executionState.Cmd.CurrentResult);
 #if RT
             args.RequestUri = executionState.Req.RequestUri;
-#else            
+#else
             args.Request = executionState.Req;
             args.Response = executionState.Resp;
 #endif
@@ -78,10 +86,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
         protected static bool CheckTimeout<T>(ExecutionState<T> executionState, bool throwOnTimeout)
         {
-            if (executionState.OperationExpiryTime.HasValue && executionState.OperationContext.CurrentResult.StartTime.CompareTo(executionState.OperationExpiryTime.Value) > 0)
+            if (executionState.ReqTimedOut || (executionState.OperationExpiryTime.HasValue && executionState.Cmd.CurrentResult.StartTime.CompareTo(executionState.OperationExpiryTime.Value) > 0))
             {
-                StorageException storageEx = Exceptions.GenerateTimeoutException(executionState.OperationContext.CurrentResult, null);
-                storageEx.IsRetryable = false;
+                executionState.ReqTimedOut = true;
+
+                StorageException storageEx = Exceptions.GenerateTimeoutException(executionState.Cmd.CurrentResult, null);
                 executionState.ExceptionRef = storageEx;
 
                 if (throwOnTimeout)
@@ -100,7 +109,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         {
             if (executionState.CancelRequested)
             {
-                executionState.ExceptionRef = Exceptions.GenerateCancellationException(executionState.OperationContext.CurrentResult, null);
+                executionState.ExceptionRef = Exceptions.GenerateCancellationException(executionState.Cmd.CurrentResult, null);
             }
 
             return executionState.CancelRequested;

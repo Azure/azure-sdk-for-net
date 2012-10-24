@@ -242,10 +242,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns <code>true</code> if this <see cref="TableBatchOperation"/> contains the specified element.
+        /// Returns <c>true</c> if this <see cref="TableBatchOperation"/> contains the specified element.
         /// </summary>
         /// <param name="item">The <see cref="TableOperation"/> item to search for.</param>
-        /// <returns><code>true</code> if the item is contained in the <see cref="TableBatchOperation"/>; <code>false</code>, otherwise.</returns>
+        /// <returns><c>true</c> if the item is contained in the <see cref="TableBatchOperation"/>; <c>false</c>, otherwise.</returns>
         public bool Contains(TableOperation item)
         {
             return this.operations.Contains(item);
@@ -273,7 +273,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Gets a value indicating whether the <see cref="TableBatchOperation"/> is read-only.
         /// </summary>
-        /// <value><code>true</code> if the <see cref="TableBatchOperation"/> is read-only; <code>false</code>, otherwise.</value>
+        /// <value><c>true</c> if the <see cref="TableBatchOperation"/> is read-only; <c>false</c>, otherwise.</value>
         public bool IsReadOnly
         {
             get { return false; }
@@ -283,7 +283,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Removes the specified <see cref="TableOperation"/> item from the <see cref="TableBatchOperation"/>.
         /// </summary>
         /// <param name="item">The <see cref="TableOperation"/> item to remove.</param>
-        /// <returns><code>true</code> if the item was successfully removed; <code>false</code>, otherwise.</returns>
+        /// <returns><c>true</c> if the item was successfully removed; <c>false</c>, otherwise.</returns>
         public bool Remove(TableOperation item)
         {
             CommonUtils.AssertNotNull("item", item);
@@ -300,7 +300,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns an <see cref="IEnumerator"/> for the <see cref="TableBatchOperation"/>.
+        /// Returns an <see cref="System.Collections.Generic.IEnumerator{T}"/> for the <see cref="TableBatchOperation"/>.
         /// </summary>
         /// <returns>An enumerable collection of <see cref="TableOperation"/> items.</returns>
         public IEnumerator<TableOperation> GetEnumerator()
@@ -309,9 +309,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns an <see cref="IEnumerator"/>.
+        /// Returns an <see cref="System.Collections.IEnumerator"/>.
         /// </summary>
-        /// <returns>An <see cref="IEnumerator"/> for the <see cref="TableBatchOperation"/>.</returns>
+        /// <returns>An <see cref="System.Collections.IEnumerator"/> for the <see cref="TableBatchOperation"/>.</returns>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.operations.GetEnumerator();

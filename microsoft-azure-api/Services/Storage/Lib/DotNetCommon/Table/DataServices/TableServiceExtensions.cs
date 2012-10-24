@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// </summary>
         /// <typeparam name="TElement">The type of the element.</typeparam>
         /// <param name="query">The query.</param>
-        /// <param name="client">The associated CloudTableClient </param>
+        /// <param name="context">A <see cref="TableServiceContext"/> object that represents the runtime context of the Table service.</param>
         /// <returns>The converted query.</returns>
         public static TableServiceQuery<TElement> AsTableServiceQuery<TElement>(this IQueryable<TElement> query, TableServiceContext context)
         {

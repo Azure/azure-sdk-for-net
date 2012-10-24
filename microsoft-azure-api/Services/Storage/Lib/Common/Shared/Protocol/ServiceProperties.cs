@@ -332,7 +332,6 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <summary>
         /// Writes service properties to a stream, formatted in XML.
         /// </summary>
-        /// <param name="properties">The service properties to format and write to the stream.</param>
         /// <param name="outputStream">The stream to which the formatted properties are to be written.</param>
         internal void WriteServiceProperties(Stream outputStream)
         {

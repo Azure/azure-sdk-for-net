@@ -19,6 +19,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
     using System;
     using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 #if RT
@@ -40,6 +41,23 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
         // State- different than async state, this is used for ops to communicate state between invocations, i.e. bytes downloaded etc
         internal object OperationState = null;
+
+        // Used to keep track of Md5 / Length of a stream as it is being copied
+        private volatile StreamDescriptor streamCopyState = null;
+
+        internal StreamDescriptor StreamCopyState
+        {
+            get { return this.streamCopyState; }
+            set { this.streamCopyState = value; }
+        }
+
+        private volatile RequestResult currentResult = null;
+
+        internal RequestResult CurrentResult
+        {
+            get { return this.currentResult; }
+            set { this.currentResult = value; }
+        }
 
 #if RT
         public HttpClientHandler Handler = null;

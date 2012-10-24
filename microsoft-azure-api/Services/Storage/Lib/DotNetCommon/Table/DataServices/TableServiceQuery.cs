@@ -119,10 +119,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// Begins an asynchronous operation to execute a query and return the results as a result segment.
         /// </summary>
         /// <param name="currentToken">A continuation token returned by a previous listing operation, can be null.</param>
-        /// <param name="operationContext"> </param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
-        /// <param name="requestOptions"> </param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         [DoesServiceRequest]
         public ICancellableAsyncResult BeginExecuteSegmented(TableContinuationToken currentToken, AsyncCallback callback, object state)

@@ -557,7 +557,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         /// <summary>
         /// Begins an asynchronous operation to request that the service start to copy another blob's contents, properties, and metadata
-        /// to the blob referenced by this <see cref="CloudBlob"/> object.
+        /// to the blob referenced by this <see cref="ICloudBlob"/> object.
         /// </summary>
         /// <param name="source">The URI of a source blob.</param>
         /// <param name="sourceAccessCondition">An object that represents the access conditions for the source blob.</param>

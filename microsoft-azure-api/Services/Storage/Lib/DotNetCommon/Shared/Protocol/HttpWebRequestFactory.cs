@@ -40,6 +40,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="uri">The request Uri.</param>
         /// <param name="timeout">The timeout.</param>
         /// <param name="builder">The builder.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request for performing the operation.</returns>
         internal static HttpWebRequest CreateWebRequest(string method, Uri uri, int? timeout, UriQueryBuilder builder, OperationContext operationContext)
         {
@@ -73,6 +74,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="uri">The Uri to create.</param>
         /// <param name="timeout">The timeout.</param>
         /// <param name="builder">The builder.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request for performing the operation.</returns>
         internal static HttpWebRequest Create(Uri uri, int? timeout, UriQueryBuilder builder, OperationContext operationContext)
         {
@@ -87,7 +89,8 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="uri">The absolute URI to the resource.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="builder">An optional query builder to use.</param>
-        /// <returns><returns>A web request to use to perform the operation.</returns></returns>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
+        /// <returns>A web request to use to perform the operation.</returns>
         internal static HttpWebRequest GetAcl(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
             if (builder == null)
@@ -107,7 +110,8 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="uri">The absolute URI to the resource.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="builder">An optional query builder to use.</param>
-        /// <returns><returns>A web request to use to perform the operation.</returns></returns>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
+        /// <returns>A web request to use to perform the operation.</returns>
         internal static HttpWebRequest SetAcl(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
             if (builder == null)
@@ -128,6 +132,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="uri">The Uri to query.</param>
         /// <param name="timeout">The timeout.</param>
         /// <param name="builder">The builder.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request for performing the operation.</returns>
         internal static HttpWebRequest GetProperties(Uri uri, int? timeout, UriQueryBuilder builder, OperationContext operationContext)
         {
@@ -141,6 +146,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="uri">The blob Uri.</param>
         /// <param name="timeout">The timeout.</param>
         /// <param name="builder">The builder.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request for performing the operation.</returns>
         internal static HttpWebRequest GetMetadata(Uri uri, int? timeout, UriQueryBuilder builder, OperationContext operationContext)
         {
@@ -161,6 +167,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="uri">The blob Uri.</param>
         /// <param name="timeout">The timeout.</param>
         /// <param name="builder">The builder.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request for performing the operation.</returns>
         internal static HttpWebRequest SetMetadata(Uri uri, int? timeout, UriQueryBuilder builder, OperationContext operationContext)
         {
@@ -210,6 +217,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="uri">The Uri to delete.</param>
         /// <param name="timeout">The timeout.</param>
         /// <param name="builder">The builder.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request for performing the operation.</returns>
         internal static HttpWebRequest Delete(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
@@ -222,6 +230,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the service.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to get the service properties.</returns>
         internal static HttpWebRequest GetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
@@ -241,6 +250,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the service.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to set the service properties.</returns>
         internal static HttpWebRequest SetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {

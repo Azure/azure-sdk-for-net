@@ -139,7 +139,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Serializes the <see cref="Dictionary{TKey,TValue}"/> of property names mapped to <see cref="EntityProperty"/> data values from this <see cref="DynamicTableEntity"/> instance.
         /// </summary>
         /// <param name="operationContext">An <see cref="OperationContext"/> object used to track the execution of the operation.</param>
-        /// <returns>A collection containing the map of <code>string</code> property names to <see cref="EntityProperty"/> data typed values stored in this <see cref="DynamicTableEntity"/> instance.</returns>
+        /// <returns>A collection containing the map of <c>string</c> property names to <see cref="EntityProperty"/> data typed values stored in this <see cref="DynamicTableEntity"/> instance.</returns>
         public IDictionary<string, EntityProperty> WriteEntity(OperationContext operationContext)
         {
             return this.Properties;

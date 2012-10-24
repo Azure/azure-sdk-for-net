@@ -34,6 +34,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the service.</param>
         /// <param name="timeout">The server timeout interval, in seconds.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to get the service properties.</returns>
         public static HttpWebRequest GetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
@@ -45,6 +46,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the service.</param>
         /// <param name="timeout">The server timeout interval, in seconds.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to set the service properties.</returns>
         public static HttpWebRequest SetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
@@ -66,7 +68,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the table.</param>
         /// <param name="timeout">The server timeout interval.</param>
-        /// <returns><returns>A web request to use to perform the operation.</returns></returns>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
+        /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest GetAcl(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
             return HttpWebRequestFactory.GetAcl(uri, builder, timeout, operationContext);
@@ -77,7 +80,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the table.</param>
         /// <param name="timeout">The server timeout interval.</param>
-        /// <returns><returns>A web request to use to perform the operation.</returns></returns>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
+        /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest SetAcl(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
             return HttpWebRequestFactory.SetAcl(uri, builder, timeout, operationContext);

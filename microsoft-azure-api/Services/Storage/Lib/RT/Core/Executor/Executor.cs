@@ -87,9 +87,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 try
                 {
                     // Typically this would be out of the try, but do to the unique need for RTMD to translate exception it is included.
-                    if (executionState.OperationExpiryTime.HasValue && executionState.OperationContext.CurrentResult.StartTime.CompareTo(executionState.OperationExpiryTime.Value) > 0)
+                    if (executionState.OperationExpiryTime.HasValue && executionState.Cmd.CurrentResult.StartTime.CompareTo(executionState.OperationExpiryTime.Value) > 0)
                     {
-                        throw Exceptions.GenerateTimeoutException(executionState.OperationContext.CurrentResult, null);
+                        throw Exceptions.GenerateTimeoutException(executionState.Cmd.CurrentResult, null);
                     }
 
                     // Content is re-created every retry, as HttpClient disposes it after a successful request
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     // Since HttpClient wont throw for non success, manually check and populate an exception
                     if (!executionState.Resp.IsSuccessStatusCode)
                     {
-                        executionState.ExceptionRef = await Exceptions.PopulateStorageExceptionFromHttpResponseMessage(executionState.Resp, executionState.OperationContext.CurrentResult);
+                        executionState.ExceptionRef = await Exceptions.PopulateStorageExceptionFromHttpResponseMessage(executionState.Resp, executionState.Cmd.CurrentResult);
                     }
 
                     Executor.FireResponseReceived(executionState);
@@ -131,7 +131,12 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
                     if (cmd.DestinationStream != null)
                     {
-                        await cmd.ResponseStream.WriteToAsync(cmd.DestinationStream, null /* MaxLength */, cmd.CalculateMd5ForResponseStream, executionState.OperationContext, tokenWithTimeout);
+                        if (cmd.StreamCopyState == null)
+                        {
+                            cmd.StreamCopyState = new StreamDescriptor();
+                        }
+
+                        await cmd.ResponseStream.WriteToAsync(cmd.DestinationStream, null /* MaxLength */, cmd.CalculateMd5ForResponseStream, executionState.OperationContext, cmd.StreamCopyState, tokenWithTimeout);
                         cmd.ResponseStream.Dispose();
                     }
 
@@ -154,7 +159,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         e = new TimeoutException(SR.TimeoutExceptionMessage, e);
                     }
 
-                    StorageException translatedException = StorageException.TranslateException(e, executionState.OperationContext.CurrentResult);
+                    StorageException translatedException = StorageException.TranslateException(e, executionState.Cmd.CurrentResult);
                     executionState.ExceptionRef = translatedException;
 
                     delay = TimeSpan.FromMilliseconds(0);
@@ -162,7 +167,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                       executionState.RetryPolicy != null ?
                                               executionState.RetryPolicy.ShouldRetry(
                                                                                       executionState.RetryCount++,
-                                                                                      executionState.OperationContext.CurrentResult.HttpStatusCode,
+                                                                                      executionState.Cmd.CurrentResult.HttpStatusCode,
                                                                                       executionState.ExceptionRef,
                                                                                       out delay,
                                                                                       executionState.OperationContext)
@@ -176,8 +181,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 {
 #if RTMD
                     // Need to throw wrapped Exception with message as serialized exception info stuff. 
-                    int hResult = WrappedStorageException.GenerateHResult(executionState.ExceptionRef, executionState.OperationContext.CurrentResult);
-                    throw new WrappedStorageException(executionState.OperationContext.CurrentResult.WriteAsXml(), executionState.ExceptionRef, hResult);
+                    int hResult = WrappedStorageException.GenerateHResult(executionState.ExceptionRef, executionState.Cmd.CurrentResult);
+                    throw new WrappedStorageException(executionState.Cmd.CurrentResult.WriteAsXml(), executionState.ExceptionRef, hResult);
 #else
                     throw executionState.ExceptionRef; // throw base exception for desktop
 #endif
@@ -187,7 +192,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     if (cmd.RecoveryAction != null)
                     {
                         // I.E. Rewind stream etc.
-                        cmd.RecoveryAction(cmd, executionState.OperationContext.CurrentResult.Exception, executionState.OperationContext);
+                        cmd.RecoveryAction(cmd, executionState.Cmd.CurrentResult.Exception, executionState.OperationContext);
                     }
 
                     if (delay > TimeSpan.Zero)

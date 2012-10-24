@@ -261,7 +261,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Ends an asynchronous operation to get the properties of the table service.
         /// </summary>
-        /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginGetServiceProperties"/>.</param>
+        /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginGetServiceProperties(AsyncCallback, object)"/>.</param>
         /// <returns>The table service properties.</returns>
         public ServiceProperties EndGetServiceProperties(IAsyncResult asyncResult)
         {
@@ -315,7 +315,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Ends an asynchronous operation to set the properties of the table service.
         /// </summary>
-        /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginSetServiceProperties"/></param>
+        /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginSetServiceProperties(ServiceProperties, AsyncCallback, object)"/></param>
         public void EndSetServiceProperties(IAsyncResult asyncResult)
         {
             Executor.EndExecuteAsync<NullType>(asyncResult);

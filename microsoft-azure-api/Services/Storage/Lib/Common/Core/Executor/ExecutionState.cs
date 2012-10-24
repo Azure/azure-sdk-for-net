@@ -48,7 +48,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             this.Cmd = cmd;
             this.RetryPolicy = policy.CreateInstance();
             this.OperationContext = operationContext ?? new OperationContext();
-            this.OperationContext.StreamCopyState = null;
 
             if (!this.OperationContext.OperationExpiryTime.HasValue && cmd != null && cmd.ClientMaxTimeout.HasValue)
             {
@@ -72,12 +71,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             this.Cmd = cmd;
             this.RetryPolicy = policy.CreateInstance();
             this.OperationContext = operationContext ?? new OperationContext();
-            this.OperationContext.StreamCopyState = null;
 
             if (!this.OperationContext.OperationExpiryTime.HasValue && cmd != null && cmd.ClientMaxTimeout.HasValue)
             {
                 this.OperationExpiryTime = DateTime.Now + cmd.ClientMaxTimeout.Value;
-            }            
+            }
             else if (this.OperationContext.OperationExpiryTime.HasValue)
             {
                 // Override timeout for complex actions
@@ -92,6 +90,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             this.resp = null;
 
 #if !RT
+            this.ReqTimedOut = false;
             this.CancelDelegate = null;
 #endif
         }
@@ -106,7 +105,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             set { this.cancellationLockerObject = value; }
         }
 
-        private bool cancelRequested = false;
+        private volatile bool cancelRequested = false;
 
         internal bool CancelRequested
         {
@@ -193,7 +192,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         {
             get
             {
-                if (!this.OperationExpiryTime.HasValue  || this.OperationExpiryTime.Value.Equals(DateTime.MaxValue))
+                if (!this.OperationExpiryTime.HasValue || this.OperationExpiryTime.Value.Equals(DateTime.MaxValue))
                 {
                     // User did not specify a timeout, so we will set the request timeout to avoid
                     // waiting for the response infinitely
@@ -225,9 +224,22 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
         internal Exception ExceptionRef
         {
-            get { return this.OperationContext.CurrentResult.Exception; }
-            set { this.OperationContext.CurrentResult.Exception = value; }
+            get
+            {
+                return this.exceptionRef;
+            }
+
+            set
+            {
+                this.exceptionRef = value;
+                if (this.Cmd != null && this.Cmd.CurrentResult != null)
+                {
+                    this.Cmd.CurrentResult.Exception = value;
+                }
+            }
         }
+
+        private volatile Exception exceptionRef = null;
 
         private T result = default(T);
 
@@ -235,6 +247,28 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         {
             get { return this.result; }
             set { this.result = value; }
+        }
+
+        private object timeoutLockerObj = new object();
+        private bool reqTimedOut = false;
+
+        internal bool ReqTimedOut
+        {
+            get
+            {
+                lock (this.timeoutLockerObj)
+                {
+                    return this.reqTimedOut;
+                }
+            }
+
+            set
+            {
+                lock (this.timeoutLockerObj)
+                {
+                    this.reqTimedOut = value;
+                }
+            }
         }
 
 #if RT
@@ -269,12 +303,12 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
                 if (value != null)
                 {
-                    this.OperationContext.CurrentResult.ServiceRequestID = HttpResponseMessageUtils.GetHeaderSingleValueOrDefault(this.resp.Headers, Constants.HeaderConstants.RequestIdHeader);
-                    this.OperationContext.CurrentResult.ContentMd5 = this.resp.Content.Headers.ContentMD5 != null ? Convert.ToBase64String(this.resp.Content.Headers.ContentMD5) : null;
-                    this.OperationContext.CurrentResult.Etag = this.resp.Headers.ETag != null ? this.resp.Headers.ETag.ToString() : null;
-                    this.OperationContext.CurrentResult.RequestDate = this.resp.Headers.Date.HasValue ? this.resp.Headers.Date.Value.UtcDateTime.ToString("R", CultureInfo.InvariantCulture) : null;
-                    this.OperationContext.CurrentResult.HttpStatusMessage = this.resp.ReasonPhrase;
-                    this.OperationContext.CurrentResult.HttpStatusCode = (int)this.resp.StatusCode;
+                    this.Cmd.CurrentResult.ServiceRequestID = HttpResponseMessageUtils.GetHeaderSingleValueOrDefault(this.resp.Headers, Constants.HeaderConstants.RequestIdHeader);
+                    this.Cmd.CurrentResult.ContentMd5 = this.resp.Content.Headers.ContentMD5 != null ? Convert.ToBase64String(this.resp.Content.Headers.ContentMD5) : null;
+                    this.Cmd.CurrentResult.Etag = this.resp.Headers.ETag != null ? this.resp.Headers.ETag.ToString() : null;
+                    this.Cmd.CurrentResult.RequestDate = this.resp.Headers.Date.HasValue ? this.resp.Headers.Date.Value.UtcDateTime.ToString("R", CultureInfo.InvariantCulture) : null;
+                    this.Cmd.CurrentResult.HttpStatusMessage = this.resp.ReasonPhrase;
+                    this.Cmd.CurrentResult.HttpStatusCode = (int)this.resp.StatusCode;
                 }
             }
         }
@@ -305,19 +339,19 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     if (value.Headers != null)
                     {
 #if DNCP
-                        this.OperationContext.CurrentResult.ServiceRequestID = HttpUtility.TryGetHeader(this.resp, Constants.HeaderConstants.RequestIdHeader, null);
-                        this.OperationContext.CurrentResult.ContentMd5 = HttpUtility.TryGetHeader(this.resp, "Content-MD5", null);
+                        this.Cmd.CurrentResult.ServiceRequestID = HttpUtility.TryGetHeader(this.resp, Constants.HeaderConstants.RequestIdHeader, null);
+                        this.Cmd.CurrentResult.ContentMd5 = HttpUtility.TryGetHeader(this.resp, "Content-MD5", null);
                         string tempDate = HttpUtility.TryGetHeader(this.resp, "Date", null);
-                        this.OperationContext.CurrentResult.RequestDate = string.IsNullOrEmpty(tempDate) ? DateTime.Now.ToString("R", CultureInfo.InvariantCulture) : tempDate;
-                        this.OperationContext.CurrentResult.Etag = this.resp.Headers[HttpResponseHeader.ETag];
+                        this.Cmd.CurrentResult.RequestDate = string.IsNullOrEmpty(tempDate) ? DateTime.Now.ToString("R", CultureInfo.InvariantCulture) : tempDate;
+                        this.Cmd.CurrentResult.Etag = this.resp.Headers[HttpResponseHeader.ETag];
 #endif
                     }
 
-                    this.OperationContext.CurrentResult.HttpStatusMessage = this.OperationContext.CurrentResult.HttpStatusMessage ?? this.resp.StatusDescription;
+                    this.Cmd.CurrentResult.HttpStatusMessage = this.Cmd.CurrentResult.HttpStatusMessage ?? this.resp.StatusDescription;
 
-                    if (this.OperationContext.CurrentResult.HttpStatusCode == -1)
+                    if (this.Cmd.CurrentResult.HttpStatusCode == -1)
                     {
-                        this.OperationContext.CurrentResult.HttpStatusCode = (int)this.resp.StatusCode;
+                        this.Cmd.CurrentResult.HttpStatusCode = (int)this.resp.StatusCode;
                     }
                 }
             }

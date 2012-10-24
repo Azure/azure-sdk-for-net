@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Initializes a new instance of the <see cref="CloudBlobContainer"/> class.
         /// </summary>
         /// <param name="containerName">The container name.</param>
-        /// <param name="client">The client to be used.</param>
+        /// <param name="serviceClient">The client to be used.</param>
         internal CloudBlobContainer(BlobContainerProperties properties, IDictionary<string, string> metadata, string containerName, CloudBlobClient serviceClient)
         {
             this.Uri = NavigationHelper.AppendPathToUri(serviceClient.BaseUri, containerName);

@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     /// <summary>
     /// Represents a continuation token for listing operations. 
     /// </summary>
-    /// <remarks> <see cref="BlobContinuationToken"/> continuation tokens are used in methods that return a <see cref="BlobResultSegment"/> object, such as <see cref="CloudBlobDirectory.listBlobsSegmented()"/>.</remarks>
+    /// <remarks> <see cref="BlobContinuationToken"/> continuation tokens are used in methods that return a <see cref="BlobResultSegment"/> object, such as <see cref="CloudBlobDirectory.ListBlobsSegmented(BlobContinuationToken)"/>.</remarks>
     [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1001:CommasMustBeSpacedCorrectly", Justification = "Reviewed.")]
     public sealed class BlobContinuationToken : IContinuationToken
 #if DNCP

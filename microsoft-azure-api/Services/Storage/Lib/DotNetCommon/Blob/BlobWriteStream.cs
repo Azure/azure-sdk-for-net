@@ -32,6 +32,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blockBlob">Blob reference to write to.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         internal BlobWriteStream(CloudBlockBlob blockBlob, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : base(blockBlob, accessCondition, options, operationContext)
         {
@@ -44,6 +45,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="pageBlobSize">Size of the page blob.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         internal BlobWriteStream(CloudPageBlob pageBlob, long pageBlobSize, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : base(pageBlob, pageBlobSize, accessCondition, options, operationContext)
         {
@@ -283,48 +285,60 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
             bool completedSynchronously = this.parallelOperationSemaphore.WaitAsync(calledSynchronously =>
                 {
-                    this.blockBlob.BeginPutBlock(
-                        blockId, 
-                        blockData, 
-                        blockMD5, 
-                        this.accessCondition, 
-                        this.options, 
-                        this.operationContext, 
-                        ar =>
-                        {
-                            try
+                    try
+                    {
+                        this.blockBlob.BeginPutBlock(
+                            blockId,
+                            blockData,
+                            blockMD5,
+                            this.accessCondition,
+                            this.options,
+                            this.operationContext,
+                            ar =>
                             {
-                                this.blockBlob.EndPutBlock(ar);
-                            }
-                            catch (Exception e)
-                            {
-                                this.lastException = e;
-                            }
-
-                            try
-                            {
-                                if (!calledSynchronously && (asyncResult != null))
+                                try
                                 {
-                                    asyncResult.CompletedSynchronously = ar.CompletedSynchronously;
-                                    asyncResult.OnComplete(this.lastException);
+                                    this.blockBlob.EndPutBlock(ar);
                                 }
-                            }
-                            catch (Exception)
-                            {
-                                // If user's callback throws an exception, we want to
-                                // ignore and continue.
-                            }
-                            finally
-                            {
-                                if (Interlocked.Decrement(ref this.pendingWrites) == 0)
+                                catch (Exception e)
                                 {
-                                    this.noPendingWritesEvent.Set();
+                                    this.lastException = e;
                                 }
 
-                                this.parallelOperationSemaphore.Release();
-                            }
-                        },
-                        null /* state */);
+                                try
+                                {
+                                    if (!calledSynchronously && (asyncResult != null))
+                                    {
+                                        // End the async result
+                                        asyncResult.CompletedSynchronously = ar.CompletedSynchronously;
+                                        asyncResult.OnComplete(this.lastException);
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    // If user's callback throws an exception, we want to
+                                    // ignore and continue.
+                                }
+                                finally
+                                {
+                                    if (Interlocked.Decrement(ref this.pendingWrites) == 0)
+                                    {
+                                        this.noPendingWritesEvent.Set();
+                                    }
+
+                                    this.parallelOperationSemaphore.Release();
+                                }
+                            },
+                            null /* state */);
+                    }
+                    catch (Exception e)
+                    {
+                        this.lastException = e;
+
+                        // End the async result
+                        asyncResult.CompletedSynchronously = calledSynchronously;
+                        asyncResult.OnComplete(e);
+                    }
                 });
 
             if (completedSynchronously && asyncResult != null)
@@ -348,48 +362,60 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
             bool completedSynchronously = this.parallelOperationSemaphore.WaitAsync(calledSynchronously =>
                 {
-                    this.pageBlob.BeginWritePages(
-                        pageData, 
-                        offset, 
-                        contentMD5, 
-                        this.accessCondition, 
-                        this.options, 
-                        this.operationContext, 
-                        ar =>
-                        {
-                            try
+                    try
+                    {
+                        this.pageBlob.BeginWritePages(
+                            pageData,
+                            offset,
+                            contentMD5,
+                            this.accessCondition,
+                            this.options,
+                            this.operationContext,
+                            ar =>
                             {
-                                this.pageBlob.EndWritePages(ar);
-                            }
-                            catch (Exception e)
-                            {
-                                this.lastException = e;
-                            }
-
-                            try
-                            {
-                                if (!calledSynchronously && (asyncResult != null))
+                                try
                                 {
-                                    asyncResult.CompletedSynchronously = ar.CompletedSynchronously;
-                                    asyncResult.OnComplete(this.lastException);
+                                    this.pageBlob.EndWritePages(ar);
                                 }
-                            }
-                            catch (Exception)
-                            {
-                                // If user's callback throws an exception, we want to
-                                // ignore and continue.
-                            }
-                            finally
-                            {
-                                if (Interlocked.Decrement(ref this.pendingWrites) == 0)
+                                catch (Exception e)
                                 {
-                                    this.noPendingWritesEvent.Set();
+                                    this.lastException = e;
                                 }
 
-                                this.parallelOperationSemaphore.Release();
-                            }
-                        },
-                        null /* state */);
+                                try
+                                {
+                                    if (!calledSynchronously && (asyncResult != null))
+                                    {
+                                        // End the async result
+                                        asyncResult.CompletedSynchronously = ar.CompletedSynchronously;
+                                        asyncResult.OnComplete(this.lastException);
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    // If user's callback throws an exception, we want to
+                                    // ignore and continue.
+                                }
+                                finally
+                                {
+                                    if (Interlocked.Decrement(ref this.pendingWrites) == 0)
+                                    {
+                                        this.noPendingWritesEvent.Set();
+                                    }
+
+                                    this.parallelOperationSemaphore.Release();
+                                }
+                            },
+                            null /* state */);
+                    }
+                    catch (Exception e)
+                    {
+                        this.lastException = e;
+
+                        // End the async result
+                        asyncResult.CompletedSynchronously = calledSynchronously;
+                        asyncResult.OnComplete(e);
+                    }
                 });
 
             if (completedSynchronously && asyncResult != null)

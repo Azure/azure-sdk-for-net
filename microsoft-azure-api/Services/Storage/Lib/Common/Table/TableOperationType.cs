@@ -19,9 +19,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
 {
     /// <summary>
     /// Enumeration containing the types of operations that can be
-    /// performed by a TableOperation.
+    /// performed by a <see cref="TableOperation"/>.
     /// </summary>
-    /// <remarks>
     public enum TableOperationType
     {
         Insert,

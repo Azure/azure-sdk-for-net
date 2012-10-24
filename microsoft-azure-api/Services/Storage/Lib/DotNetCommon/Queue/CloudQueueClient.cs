@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="prefix">The queue name prefix.</param>
         /// <param name="queueListingDetails">A <see cref="QueueListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is <code>null</code>, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
@@ -126,7 +126,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="prefix">The queue name prefix.</param>
         /// <param name="queueListingDetails">A <see cref="QueueListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is <code>null</code>, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
@@ -194,11 +194,11 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="prefix">The queue name prefix.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is <code>null</code>, the maximum possible number of results will be returned, up to 5000.</param>
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="queueListingDetails">A <see cref="QueueListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="currentToken">The continuation token.</param>
-        /// <returns>A <see cref="RESTCommand"/> that lists the queues.</returns>
+        /// <returns>A <see cref="RESTCommand{T}"/> that lists the queues.</returns>
         private RESTCommand<ResultSegment<CloudQueue>> ListQueuesImpl(string prefix, int? maxResults, QueueListingDetails queueListingDetails, QueueRequestOptions options, QueueContinuationToken currentToken)
         {
             int? nullableMaxResults = (maxResults > 0) ? maxResults : null;
@@ -277,7 +277,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Ends an asynchronous operation to get the properties of the queue service.
         /// </summary>
-        /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginGetServiceProperties"/>.</param>
+        /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginGetServiceProperties(AsyncCallback, object)"/>.</param>
         /// <returns>A <see cref="ServiceProperties"/> object containing the queue service properties.</returns>
         public ServiceProperties EndGetServiceProperties(IAsyncResult asyncResult)
         {
@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Ends an asynchronous operation to set the properties of the queue service.
         /// </summary>
-        /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginSetServiceProperties"/>.</param>
+        /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginSetServiceProperties(ServiceProperties, AsyncCallback, object)"/>.</param>
         public void EndSetServiceProperties(IAsyncResult asyncResult)
         {
             Executor.EndExecuteAsync<NullType>(asyncResult);

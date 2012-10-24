@@ -37,13 +37,6 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             return ProcessExpectedStatusCodeNoException(expectedStatusCodes, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex, operationContext);
         }
 
-        internal static Task<T> ValidateResponseStreamMd5AndLength<T>(RESTCommand<T> cmd, HttpResponseMessage msg, long length, Exception ex, OperationContext ctx)
-        {
-            string md5 = msg.Content.Headers.ContentMD5 != null ? Convert.ToBase64String(msg.Content.Headers.ContentMD5) : null;
-            ValidateResponseStreamMd5AndLength(length, md5, ctx);
-            return Task.FromResult(default(T));
-        }
-
         /// <summary>
         /// Gets the user-defined metadata.
         /// </summary>

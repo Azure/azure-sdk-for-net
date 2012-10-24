@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Gets or sets a value to calculate and send/validate content MD5 for transactions.
         /// </summary>
-        /// <value>Use <code>true</code> to calculate and send/validate content MD5 for transactions; otherwise, <code>false</code>.</value>
+        /// <value>Use <c>true</c> to calculate and send/validate content MD5 for transactions; otherwise, <c>false</c>.</value>
         public bool? UseTransactionalMD5 { get; set; }
 
         /// <summary>

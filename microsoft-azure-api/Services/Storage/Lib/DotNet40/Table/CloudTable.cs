@@ -165,10 +165,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Executes a query in segmented mode with the specified <see cref="TableContinuationToken"/> continuation token, <see cref="TableRequestOptions"/>, and <see cref="OperationContext"/>.
         /// </summary>
         /// <param name="query">A <see cref="TableQuery"/> representing the query to execute.</param>
-        /// <param name="token">A <see cref="ResultContinuation"/> object representing a continuation token from the server when the operation returns a partial result.</param>
+        /// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A <see cref="TableQuerySegment"/> object containing the results of executing the query.</returns>
+        /// <returns>A <see cref="TableQuerySegment{T}"/> object containing the results of executing the query.</returns>
         [DoesServiceRequest]
         public TableQuerySegment<DynamicTableEntity> ExecuteQuerySegmented(TableQuery query, TableContinuationToken token, TableRequestOptions requestOptions = null, OperationContext operationContext = null)
         {
@@ -180,7 +180,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Begins an asynchronous segmented query operation using the specified <see cref="TableContinuationToken"/> continuation token.
         /// </summary>
         /// <param name="query">A <see cref="TableQuery"/> representing the query to execute.</param>
-        /// <param name="token">A <see cref="ResultContinuation"/> object representing a continuation token from the server when the operation returns a partial result.</param>
+        /// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
@@ -195,7 +195,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Begins an asynchronous operation to query a table in segmented mode using the specified <see cref="TableContinuationToken"/> continuation token, <see cref="TableRequestOptions"/>, and <see cref="OperationContext"/>.
         /// </summary>
         /// <param name="query">A <see cref="TableQuery"/> representing the query to execute.</param>
-        /// <param name="token">A <see cref="ResultContinuation"/> object representing a continuation token from the server when the operation returns a partial result.</param>
+        /// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -212,7 +212,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Ends an asynchronous segmented query operation. 
         /// </summary>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
-        /// <returns>A <see cref="TableQuerySegment"/> object containing the results of executing the query.</returns>
+        /// <returns>A <see cref="TableQuerySegment{T}"/> object containing the results of executing the query.</returns>
         public TableQuerySegment<DynamicTableEntity> EndExecuteQuerySegmented(IAsyncResult asyncResult)
         {
             return Executor.EndExecuteAsync<TableQuerySegment<DynamicTableEntity>>(asyncResult);
@@ -228,7 +228,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="query">A TableQuery instance specifying the table to query and the query parameters to use, specialized for a type T implementing TableEntity.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>An enumerable collection, specialized for type <code>TElement</code>, of the results of executing the query.</returns>
+        /// <returns>An enumerable collection, specialized for type <c>TElement</c>, of the results of executing the query.</returns>
         [DoesServiceRequest]
         public IEnumerable<TElement> ExecuteQuery<TElement>(TableQuery<TElement> query, TableRequestOptions requestOptions = null, OperationContext operationContext = null) where TElement : ITableEntity, new()
         {
@@ -240,11 +240,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Queries a table in segmented mode using the specified <see cref="TableContinuationToken"/> continuation token, <see cref="TableRequestOptions"/>, and <see cref="OperationContext"/>.
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
-        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <code>TElement</code>.</param>
-        /// <param name="token">A <see cref="ResultContinuation"/> object representing a continuation token from the server when the operation returns a partial result.</param>
+        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
+        /// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A <see cref="TableQuerySegment"/>, specialized for type <code>TElement</code>, containing the results of executing the query.</returns>
+        /// <returns>A <see cref="TableQuerySegment{T}"/>, specialized for type <c>TElement</c>, containing the results of executing the query.</returns>
         [DoesServiceRequest]
         public TableQuerySegment<TElement> ExecuteQuerySegmented<TElement>(TableQuery<TElement> query, TableContinuationToken token, TableRequestOptions requestOptions = null, OperationContext operationContext = null) where TElement : ITableEntity, new()
         {
@@ -253,11 +253,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Begins an asynchronous operation to query a table in segmented mode, using the specified <see cref="ResultContinuation"/> continuation token.
+        /// Begins an asynchronous operation to query a table in segmented mode, using the specified <see cref="TableContinuationToken"/> continuation token.
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
-        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <code>TElement</code>.</param>
-        /// <param name="token">A <see cref="ResultContinuation"/> object representing a continuation token from the server when the operation returns a partial result.</param>
+        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
+        /// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
@@ -272,8 +272,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Begins an asynchronous operation to query a table in segmented mode using the specified <see cref="TableContinuationToken"/> continuation token and <see cref="OperationContext"/>.
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
-        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <code>TElement</code>.</param>
-        /// <param name="token">A <see cref="ResultContinuation"/> object representing a continuation token from the server when the operation returns a partial result.</param>
+        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
+        /// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -291,7 +291,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
-        /// <returns>A <see cref="TableQuerySegment"/>, specialized for type <code>TElement</code>, containing the results of executing the query.</returns>
+        /// <returns>A <see cref="TableQuerySegment{T}"/>, specialized for type <c>TElement</c>, containing the results of executing the query.</returns>
         public TableQuerySegment<TElement> EndExecuteQuerySegmented<TElement>(IAsyncResult asyncResult)
         {
             return Executor.EndExecuteAsync<TableQuerySegment<TElement>>(asyncResult);
@@ -304,11 +304,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
         /// <typeparam name="R">The type into which the <see cref="EntityResolver"/> will project the query results.</typeparam>
-        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <code>TElement</code>.</param>
-        /// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <code>R</code>.</param>
+        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
+        /// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <c>R</c>.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>An enumerable collection, containing the projection into type <code>R</code>, of the results of executing the query.</returns>
+        /// <returns>An enumerable collection, containing the projection into type <c>R</c>, of the results of executing the query.</returns>
         [DoesServiceRequest]
         public IEnumerable<R> ExecuteQuery<TElement, R>(TableQuery<TElement> query, EntityResolver<R> resolver, TableRequestOptions requestOptions = null, OperationContext operationContext = null) where TElement : ITableEntity, new()
         {
@@ -322,12 +322,12 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
         /// <typeparam name="R">The type into which the <see cref="EntityResolver"/> will project the query results.</typeparam>
-        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <code>TElement</code>.</param>
-        /// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <code>R</code>.</param>
-        /// <param name="token">A <see cref="ResultContinuation"/> object representing a continuation token from the server when the operation returns a partial result.</param>
+        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
+        /// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <c>R</c>.</param>
+        /// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A <see cref="TableQuerySegment"/> containing the projection into type <code>R</code> of the results of executing the query. </returns>
+        /// <returns>A <see cref="TableQuerySegment{T}"/> containing the projection into type <c>R</c> of the results of executing the query. </returns>
         [DoesServiceRequest]
         public TableQuerySegment<R> ExecuteQuerySegmented<TElement, R>(TableQuery<TElement> query, EntityResolver<R> resolver, TableContinuationToken token, TableRequestOptions requestOptions = null, OperationContext operationContext = null) where TElement : ITableEntity, new()
         {
@@ -341,16 +341,16 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
         /// <typeparam name="R">The type into which the <see cref="EntityResolver"/> will project the query results.</typeparam>
-        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <code>TElement</code>.</param>
-        /// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <code>R</code>.</param>
-        /// <param name="token">A <see cref="ResultContinuation"/> object representing a continuation token from the server when the operation returns a partial result.</param>
+        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
+        /// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <c>R</c>.</param>
+        /// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
         [DoesServiceRequest]
         public ICancellableAsyncResult BeginExecuteQuerySegmented<TElement, R>(TableQuery<TElement> query, EntityResolver<R> resolver, TableContinuationToken token, AsyncCallback callback, object state) where TElement : ITableEntity, new()
         {
-            return this.BeginExecuteQuerySegmented(query, token, null /* RequestOptions */, null /* OperationContext */, callback, state);
+            return this.BeginExecuteQuerySegmented(query, resolver, token, null /* RequestOptions */, null /* OperationContext */, callback, state);
         }
 
         /// <summary>
@@ -358,9 +358,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
         /// <typeparam name="R">The type into which the <see cref="EntityResolver"/> will project the query results.</typeparam>
-        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <code>TElement</code>.</param>
-        /// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <code>R</code>.</param>
-        /// <param name="token">A <see cref="ResultContinuation"/> object representing a continuation token from the server when the operation returns a partial result.</param>
+        /// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
+        /// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <c>R</c>.</param>
+        /// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -372,6 +372,18 @@ namespace Microsoft.WindowsAzure.Storage.Table
             CommonUtils.AssertNotNull("query", query);
             CommonUtils.AssertNotNull("resolver", resolver);
             return query.BeginExecuteQuerySegmented(token, this.ServiceClient, this.Name, resolver, requestOptions, operationContext, callback, state);
+        }
+
+        /// <summary>
+        /// Ends an asynchronous segmented table query operation.
+        /// </summary>
+        /// <typeparam name="TElement">The entity type of the query.</typeparam>
+        /// <typeparam name="R">The type into which the <see cref="EntityResolver"/> will project the query results.</typeparam>
+        /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
+        /// <returns>A <see cref="TableQuerySegment{T}"/> containing the projection into type <c>R</c> of the results of executing the query. </returns>
+        public TableQuerySegment<R> EndExecuteQuerySegmented<TElement, R>(IAsyncResult asyncResult)
+        {
+            return Executor.EndExecuteAsync<TableQuerySegment<R>>(asyncResult);
         }
         #endregion
 
@@ -512,56 +524,55 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 try
                 {
                     exists = this.EndExists(asyncResult);
+
+                    if (exists)
+                    {
+                        chainedResult.Result = false;
+                        chainedResult.OnComplete();
+                    }
+                    else
+                    {
+                        ICancellableAsyncResult currentRes = this.BeginCreate(
+                             (TableRequestOptions)chainedResult.RequestOptions,
+                             chainedResult.OperationContext,
+                             createRes =>
+                             {
+                                 chainedResult.CancelDelegate = null;
+                                 chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & createRes.CompletedSynchronously;
+
+                                 try
+                                 {
+                                     this.EndCreate(createRes);
+                                     chainedResult.Result = true;
+                                     chainedResult.OnComplete();
+                                 }
+                                 catch (StorageException storageEx)
+                                 {
+                                     if (storageEx.RequestInformation.ExtendedErrorInformation != null &&
+                                         storageEx.RequestInformation.ExtendedErrorInformation.ErrorCode ==
+                                         TableErrorCodeStrings.TableAlreadyExists)
+                                     {
+                                         chainedResult.Result = false;
+                                         chainedResult.OnComplete();
+                                     }
+                                     else
+                                     {
+                                         chainedResult.OnComplete(storageEx);
+                                     }
+                                 }
+                                 catch (Exception createEx)
+                                 {
+                                     chainedResult.OnComplete(createEx);
+                                 }
+                             },
+                             null);
+
+                        chainedResult.CancelDelegate = currentRes.Cancel;
+                    }
                 }
                 catch (Exception ex)
                 {
                     chainedResult.OnComplete(ex);
-                    return;
-                }
-
-                if (exists)
-                {
-                    chainedResult.Result = false;
-                    chainedResult.OnComplete();
-                }
-                else
-                {
-                    ICancellableAsyncResult currentRes = this.BeginCreate(
-                         (TableRequestOptions)chainedResult.RequestOptions,
-                         chainedResult.OperationContext,
-                         createRes =>
-                         {
-                             chainedResult.CancelDelegate = null;
-                             chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & createRes.CompletedSynchronously;
-
-                             try
-                             {
-                                 this.EndCreate(createRes);
-                                 chainedResult.Result = true;
-                                 chainedResult.OnComplete();
-                             }
-                             catch (StorageException storageEx)
-                             {
-                                 if (storageEx.RequestInformation.ExtendedErrorInformation != null &&
-                                     storageEx.RequestInformation.ExtendedErrorInformation.ErrorCode ==
-                                     TableErrorCodeStrings.TableAlreadyExists)
-                                 {
-                                     chainedResult.Result = false;
-                                     chainedResult.OnComplete();
-                                 }
-                                 else
-                                 {
-                                     chainedResult.OnComplete(storageEx);
-                                 }
-                             }
-                             catch (Exception createEx)
-                             {
-                                 chainedResult.OnComplete(createEx);
-                             }
-                         },
-                         null);
-
-                    chainedResult.CancelDelegate = currentRes.Cancel;
                 }
             }
         }
@@ -757,55 +768,54 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 try
                 {
                     exists = this.EndExists(asyncResult);
+
+                    if (!exists)
+                    {
+                        chainedResult.Result = false;
+                        chainedResult.OnComplete();
+                    }
+                    else
+                    {
+                        ICancellableAsyncResult currentRes = this.BeginDelete(
+                            (TableRequestOptions)chainedResult.RequestOptions,
+                            chainedResult.OperationContext,
+                            (deleteRes) =>
+                            {
+                                chainedResult.CancelDelegate = null;
+                                chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & deleteRes.CompletedSynchronously;
+
+                                try
+                                {
+                                    this.EndDelete(deleteRes);
+                                    chainedResult.Result = true;
+                                    chainedResult.OnComplete();
+                                }
+                                catch (StorageException storageEx)
+                                {
+                                    if (storageEx.RequestInformation.ExtendedErrorInformation != null &&
+                                        storageEx.RequestInformation.ExtendedErrorInformation.ErrorCode == TableErrorCodeStrings.TableNotFound)
+                                    {
+                                        chainedResult.Result = false;
+                                        chainedResult.OnComplete();
+                                    }
+                                    else
+                                    {
+                                        chainedResult.OnComplete(storageEx);
+                                    }
+                                }
+                                catch (Exception createEx)
+                                {
+                                    chainedResult.OnComplete(createEx);
+                                }
+                            },
+                            null);
+
+                        chainedResult.CancelDelegate = currentRes.Cancel;
+                    }
                 }
                 catch (Exception ex)
                 {
                     chainedResult.OnComplete(ex);
-                    return;
-                }
-
-                if (!exists)
-                {
-                    chainedResult.Result = false;
-                    chainedResult.OnComplete();
-                }
-                else
-                {
-                    ICancellableAsyncResult currentRes = this.BeginDelete(
-                        (TableRequestOptions)chainedResult.RequestOptions,
-                        chainedResult.OperationContext,
-                        (deleteRes) =>
-                        {
-                            chainedResult.CancelDelegate = null;
-                            chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & deleteRes.CompletedSynchronously;
-
-                            try
-                            {
-                                this.EndDelete(deleteRes);
-                                chainedResult.Result = true;
-                                chainedResult.OnComplete();
-                            }
-                            catch (StorageException storageEx)
-                            {
-                                if (storageEx.RequestInformation.ExtendedErrorInformation != null &&
-                                    storageEx.RequestInformation.ExtendedErrorInformation.ErrorCode == TableErrorCodeStrings.TableNotFound)
-                                {
-                                    chainedResult.Result = false;
-                                    chainedResult.OnComplete();
-                                }
-                                else
-                                {
-                                    chainedResult.OnComplete(storageEx);
-                                }
-                            }
-                            catch (Exception createEx)
-                            {
-                                chainedResult.OnComplete(createEx);
-                            }
-                        },
-                        null);
-
-                    chainedResult.CancelDelegate = currentRes.Cancel;
                 }
             }
         }

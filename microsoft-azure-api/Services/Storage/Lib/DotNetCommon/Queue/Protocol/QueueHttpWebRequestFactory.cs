@@ -32,6 +32,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the service.</param>
         /// <param name="timeout">The server timeout interval, in seconds.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to get the service properties.</returns>
         public static HttpWebRequest GetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
@@ -43,6 +44,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the service.</param>
         /// <param name="timeout">The server timeout interval, in seconds.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to set the service properties.</returns>
         public static HttpWebRequest SetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
@@ -64,6 +66,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest Create(Uri uri, int? timeout, OperationContext operationContext)
         {
@@ -75,6 +78,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest Delete(Uri uri, int? timeout, OperationContext operationContext)
         {
@@ -87,6 +91,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest ClearMessages(Uri uri, int? timeout, OperationContext operationContext)
         {
@@ -99,6 +104,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest GetMetadata(Uri uri, int? timeout, OperationContext operationContext)
         {
@@ -111,6 +117,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest SetMetadata(Uri uri, int? timeout, OperationContext operationContext)
         {
@@ -146,6 +153,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="listingContext">A set of parameters for the listing operation.</param>
         /// <param name="detailsIncluded">Additional details to return with the listing.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request for the specified operation.</returns>
         public static HttpWebRequest List(Uri uri, int? timeout, ListingContext listingContext, QueueListingDetails detailsIncluded, OperationContext operationContext)
         {
@@ -184,6 +192,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest GetAcl(Uri uri, int? timeout, OperationContext operationContext)
         {
@@ -196,6 +205,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest SetAcl(Uri uri, int? timeout, OperationContext operationContext)
         {
@@ -208,6 +218,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest AddMessage(Uri uri, int? timeout, int? timeToLiveInSeconds, int? visibilityTimeoutInSeconds, OperationContext operationContext)
         {
@@ -234,6 +245,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <param name="timeout">The server timeout interval, in seconds.</param>
         /// <param name="popReceipt">The pop receipt of the message.</param>
         /// <param name="visibilityTimeoutInSeconds">The length of time from now during which the message will be invisible, in seconds.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request for the update operation.</returns>
         public static HttpWebRequest UpdateMessage(Uri uri, int? timeout, string popReceipt, int visibilityTimeoutInSeconds, OperationContext operationContext)
         {
@@ -252,6 +264,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <param name="uri">The absolute URI to the message to update.</param>
         /// <param name="timeout">The server timeout interval, in seconds.</param>
         /// <param name="popReceipt">The pop receipt of the message.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request for the update operation.</returns>
         public static HttpWebRequest DeleteMessage(Uri uri, int? timeout, string popReceipt, OperationContext operationContext)
         {
@@ -267,6 +280,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest GetMessages(Uri uri, int? timeout, int numberOfMessages, TimeSpan? visibilityTimeout, OperationContext operationContext)
         {
@@ -288,6 +302,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest PeekMessages(Uri uri, int? timeout, int numberOfMessages, OperationContext operationContext)
         {

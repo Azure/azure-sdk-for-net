@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// <summary>
         /// Gets a value indicating whether the credentials are for anonymous access.
         /// </summary>
-        /// <value><code>true</code> if the credentials are for anonymous access; otherwise, <code>false</code>.</value>
+        /// <value><c>true</c> if the credentials are for anonymous access; otherwise, <c>false</c>.</value>
         public bool IsAnonymous
         {
             get
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// <summary>
         /// Gets a value indicating whether the credentials are a shared access signature token.
         /// </summary>
-        /// <value><code>true</code> if the credentials are a shared access signature token; otherwise, <code>false</code>.</value>
+        /// <value><c>true</c> if the credentials are a shared access signature token; otherwise, <c>false</c>.</value>
         public bool IsSAS
         {
             get
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// <summary>
         /// Gets a value indicating whether the credentials are a shared key.
         /// </summary>
-        /// <value><code>true</code> if the credentials are a shared key; otherwise, <code>false</code>.</value>
+        /// <value><c>true</c> if the credentials are a shared key; otherwise, <c>false</c>.</value>
         public bool IsSharedKey
         {
             get
@@ -262,7 +262,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// Determines whether an other <see cref="StorageCredentials"/> object is equal to this one by comparing their SAS tokens, account names, key names, and key values.
         /// </summary>
         /// <param name="other">The <see cref="StorageCredentials"/> object to compare to this one.</param>
-        /// <returns><code>true</code> if the two <see cref="StorageCredentials"/> objects are equal; otherwise, <code>false</code>.</returns>
+        /// <returns><c>true</c> if the two <see cref="StorageCredentials"/> objects are equal; otherwise, <c>false</c>.</returns>
         public bool Equals(StorageCredentials other)
         {
             if (other == null)

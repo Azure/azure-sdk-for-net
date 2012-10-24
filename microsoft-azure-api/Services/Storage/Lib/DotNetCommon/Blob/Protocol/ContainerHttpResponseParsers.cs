@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// Gets the user-defined metadata.
         /// </summary>
         /// <param name="response">The response from server.</param>
-        /// <returns>A <see cref="IDictionary"/> of the metadata.</returns>
+        /// <returns>A <see cref="System.Collections.Generic.IDictionary{T,K}"/> of the metadata.</returns>
         public static IDictionary<string, string> GetMetadata(HttpWebResponse response)
         {
             return HttpResponseParsers.GetMetadata(response);

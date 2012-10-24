@@ -28,14 +28,15 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// <summary>
     /// Represents a single table operation.
     /// </summary>
-    /// <remarks>
     public sealed partial class TableOperation
     {
         /// <summary>
         /// Creates a new table operation that replaces the contents of
         /// the given entity in a table.
         /// </summary>
-        /// <param name="entity">The entity whose contents are being replaced.</param>
+        /// <typeparam name="TElement">The class of type for the entity to retrieve.</typeparam>
+        /// <param name="partitionKey">A string containing the partition key of the entity to retrieve.</param>
+        /// <param name="rowkey">A string containing the row key of the entity to retrieve.</param>        
         /// <returns>The table operation.</returns>
         public static TableOperation Retrieve<TElement>(string partitionKey, string rowkey) where TElement : ITableEntity
         {
@@ -50,7 +51,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Creates a new table operation that replaces the contents of
         /// the given entity in a table.
         /// </summary>
-        /// <param name="entity">The entity whose contents are being replaced.</param>
+        /// <typeparam name="R">The return type which the specified <see cref="EntityResolver"/> will resolve the given entity to.</typeparam>
+        /// <param name="partitionKey">A string containing the partition key of the entity to retrieve.</param>
+        /// <param name="rowkey">A string containing the row key of the entity to retrieve.</param>
+        /// <param name="resolver">The <see cref="EntityResolver{T}"/> implementation to project the entity to retrieve as a particular type in the result.</param>
         /// <returns>The table operation.</returns>
         public static TableOperation Retrieve<R>(string partitionKey, string rowkey, EntityResolver<R> resolver)
         {
@@ -157,7 +161,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     return res.Item1;
                 };
 
-            insertCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, ctx);
+            insertCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
 
             insertCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
                     {
@@ -185,7 +189,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             deleteCmd.RetrieveResponseStream = false;
             deleteCmd.SignRequest = client.AuthenticationHandler.SignRequest;
             deleteCmd.BuildRequestDelegate = (uri, builder, timeout, ctx) => TableOperationHttpWebRequestFactory.BuildRequestForTableOperation(uri, builder, timeout, operation, ctx).Item1;
-            deleteCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, ctx);
+            deleteCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
             deleteCmd.PostProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.NoContent, resp, result, cmd, ex, ctx);
 
             return deleteCmd;
@@ -206,7 +210,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 return res.Item1;
             };
 
-            mergeCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, ctx);
+            mergeCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
             mergeCmd.PostProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.NoContent, resp, result, cmd, ex, ctx);
 
             return mergeCmd;
@@ -227,7 +231,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 return res.Item1;
             };
 
-            replaceCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, ctx);
+            replaceCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
             replaceCmd.PostProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.NoContent, resp, result, cmd, ex, ctx);
 
             return replaceCmd;
@@ -242,7 +246,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             retrieveCmd.RetrieveResponseStream = true;
             retrieveCmd.SignRequest = client.AuthenticationHandler.SignRequest;
             retrieveCmd.BuildRequestDelegate = (uri, builder, timeout, ctx) => TableOperationHttpWebRequestFactory.BuildRequestForTableOperation(uri, builder, timeout, operation, ctx).Item1;
-            retrieveCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, ctx);
+            retrieveCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
             retrieveCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
                     {
                         if (resp.StatusCode == HttpStatusCode.NotFound)

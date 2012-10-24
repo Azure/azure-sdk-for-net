@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Creates the queue if it does not already exist.
         /// </summary>
-        /// <returns><code>true</code> if the queue did not already exist and was created; otherwise, <code>false</code>.</returns>
+        /// <returns><c>true</c> if the queue did not already exist and was created; otherwise, <c>false</c>.</returns>
         public IAsyncOperation<bool> CreateIfNotExistsAsync()
         {
             return this.CreateIfNotExistsAsync(null, null);
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
-        /// <returns><code>true</code> if the queue did not already exist and was created; otherwise <code>false</code>.</returns>
+        /// <returns><c>true</c> if the queue did not already exist and was created; otherwise <c>false</c>.</returns>
         public IAsyncOperation<bool> CreateIfNotExistsAsync(QueueRequestOptions options, OperationContext operationContext)
         {
             QueueRequestOptions modifiedOptions = QueueRequestOptions.ApplyDefaults(options, this.ServiceClient);
@@ -157,7 +157,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Deletes the queue if it already exists.
         /// </summary>
-        /// <returns><code>true</code> if the queue already existed and was deleted; otherwise, <code>false</code>.</returns>
+        /// <returns><c>true</c> if the queue already existed and was deleted; otherwise, <c>false</c>.</returns>
         public IAsyncOperation<bool> DeleteIfExistsAsync()
         {
             return this.DeleteIfExistsAsync(null, null);
@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
-        /// <returns><code>true</code> if the queue already existed and was deleted; otherwise, <code>false</code>.</returns>
+        /// <returns><c>true</c> if the queue already existed and was deleted; otherwise, <c>false</c>.</returns>
         public IAsyncOperation<bool> DeleteIfExistsAsync(QueueRequestOptions options, OperationContext operationContext)
         {
             QueueRequestOptions modifiedOptions = QueueRequestOptions.ApplyDefaults(options, this.ServiceClient);
@@ -268,7 +268,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Checks existence of the queue.
         /// </summary>
-        /// <returns><code>true</code> if the queue exists.</returns>
+        /// <returns><c>true</c> if the queue exists.</returns>
         public IAsyncOperation<bool> ExistsAsync()
         {
             return this.ExistsAsync(null, null);
@@ -279,7 +279,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
-        /// <returns><code>true</code> if the queue exists.</returns>
+        /// <returns><c>true</c> if the queue exists.</returns>
         public IAsyncOperation<bool> ExistsAsync(QueueRequestOptions options, OperationContext operationContext)
         {
             QueueRequestOptions modifiedOptions = QueueRequestOptions.ApplyDefaults(options, this.ServiceClient);
@@ -362,7 +362,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">The message to add.</param>
         /// <param name="timeToLive">The maximum time to allow the message to be in the queue, or null.</param>
         /// <param name="initialVisibilityDelay">The length of time from now during which the message will be invisible.
-        /// If <code>null</code> then the message will be visible immediately.</param>
+        /// If <c>null</c> then the message will be visible immediately.</param>
         /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -817,7 +817,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">The message.</param>
         /// <param name="timeToLive">The maximum time to allow the message to be in the queue, or null.</param>
         /// <param name="initialVisibilityDelay">The length of time from now during which the message will be invisible.
-        /// If <code>null</code> then the message will be visible immediately.</param>
+        /// If <c>null</c> then the message will be visible immediately.</param>
         /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that sets the permissions.</returns>
         private RESTCommand<NullType> AddMessageImpl(CloudQueueMessage message, TimeSpan? timeToLive, TimeSpan? initialVisibilityDelay, QueueRequestOptions options)

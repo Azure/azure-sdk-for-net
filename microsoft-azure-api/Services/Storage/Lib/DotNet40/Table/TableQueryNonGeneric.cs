@@ -28,6 +28,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
     public partial class TableQuery
     {
+        /// <summary>
+        /// Represents a query against a specified table.
+        /// </summary>
+        /// <remarks>A <see cref="TableQuery"/> instance aggregates the query parameters to use when the query is executed. One of the <c>executeQuery</c> or <c>executeQuerySegmented</c> methods 
+        /// of <see cref="CloudTableClient"/> must be called to execute the query. The parameters are encoded and passed to the server when the table query is executed.</remarks>
         public TableQuery()
         {
         }
