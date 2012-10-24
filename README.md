@@ -1,4 +1,4 @@
-<h1>Windows Azure SDK for .NET (1.7.0.0)</h1>
+<h1>Windows Azure SDK for Windows 8 and .NET 4(2.0.0.0)</h1>
 <p>This SDK allows you to build Windows Azure applications that take advantage of
 Azure scalable cloud computing resources: table and blob storage, messaging through
 Service Bus, distributed caching through cache.</p>
@@ -41,11 +41,21 @@ within your project you can also have them installed by the .NET package manager
 <ul>
     <li>Account: To use this SDK to call Windows Azure services, you need to first
     create an account.</li>
-    <li>Hosting: To host your Java code in Windows Azure, you additionally need
+    <li>Hosting: To host your .Net code in Windows Azure, you additionally need
     to download the full Windows Azure SDK for .NET - which includes packaging,
     emulation, and deployment tools.</li>
-    <li>.NET Framework 3.5 or higher</li>
+    <li>Windows 8 or .NET Framework 4.0</li>
 </ul>
+
+<h2>Dependencies</h2>
+<p>
+The 2.0.0.0 version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.0.2) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.  
+The ODataLib libraries can be downloaded directly or referenced by your code project through NuGet.  
+The specific ODataLib packages are:<br/>
+http://nuget.org/packages/Microsoft.Data.OData/5.0.2
+http://nuget.org/packages/Microsoft.Data.Edm/5.0.2
+http://nuget.org/packages/System.Spatial/5.0.2
+</p>
 
 <h2>Code Samples</h2>
 <p>Note:</p>
@@ -69,7 +79,9 @@ a <strong>client</strong> which allows performing actions on it. The resource is
 var tableClient = storageAccount.CreateCloudTableClient();</pre></p>
 
 <p>Now, to create a table entity using the client:<br/>
-<pre>tableClient.CreateTable("People");</pre></p>
+<pre>CloudTable peopleTable = tableClient.GetTableReference("people");
+peopleTable.Create();
+</pre></p>
 
 <h1>Need Help?</h1>
 <p>Be sure to check out the Windows Azure <a href="http://go.microsoft.com/fwlink/?LinkId=234489">
