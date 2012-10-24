@@ -52,9 +52,9 @@ within your project you can also have them installed by the .NET package manager
 The 2.0.0.0 version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.0.2) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.  
 The ODataLib libraries can be downloaded directly or referenced by your code project through NuGet.  
 The specific ODataLib packages are:<br/>
-http://nuget.org/packages/Microsoft.Data.OData/5.0.2
-http://nuget.org/packages/Microsoft.Data.Edm/5.0.2
-http://nuget.org/packages/System.Spatial/5.0.2
+http://nuget.org/packages/Microsoft.Data.OData/5.0.2<br/>
+http://nuget.org/packages/Microsoft.Data.Edm/5.0.2<br/>
+http://nuget.org/packages/System.Spatial/5.0.2<br/>
 </p>
 
 <h2>Code Samples</h2>
