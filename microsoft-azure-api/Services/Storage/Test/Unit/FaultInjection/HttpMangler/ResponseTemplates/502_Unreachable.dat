@@ -1,0 +1,6 @@
+HTTP/1.1 502 Unreachable Server
+FiddlerTemplate: True
+Content-Type: text/html
+Content-Length: 520
+
+Fiddler: HTTP/502 unreachable server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   

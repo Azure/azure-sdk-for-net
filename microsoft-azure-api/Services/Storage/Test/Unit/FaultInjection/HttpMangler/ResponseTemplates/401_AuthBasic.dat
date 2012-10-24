@@ -1,0 +1,7 @@
+HTTP/1.1 401 Authentication Required
+FiddlerTemplate: True
+WWW-Authenticate: Basic realm="Fiddler"
+Content-Type: text/html
+Content-Length: 520
+
+Fiddler: HTTP/401 Basic Server Auth Required.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

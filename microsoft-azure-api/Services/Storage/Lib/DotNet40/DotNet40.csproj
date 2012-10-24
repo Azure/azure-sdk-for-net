@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C6787633-B26A-4913-A762-4C0FFCEB6FE3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.WindowsAzure.Storage</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Storage</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DN40CP;DNCP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;DN40CP;DNCP;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Microsoft.WindowsAzure.Storage.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Data.Edm, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Spatial, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\DotNetCommon\*.cs" />
+    <Compile Include="..\DotNetCommon\Auth\*.cs">
+      <Link>Auth\Auth</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Auth\Protocol\*.cs">
+      <Link>Auth\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Blob\*.cs">
+      <Link>Blob\Blob</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Blob\Protocol\*.cs">
+      <Link>Blob\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Queue\*.cs">
+      <Link>Queue\Queue</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Queue\Protocol\*.cs">
+      <Link>Queue\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Table\DataServices\*.cs">
+      <Link>Table\DataServices\DataServices</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Table\Protocol\*.cs">
+      <Link>Table\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Shared\Protocol\*.cs">
+      <Link>Shared\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Core\*.cs">
+      <Link>Core\Core</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Core\Auth\*.cs">
+      <Link>Core\Auth\Auth</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Core\Util\*.cs">
+      <Link>Core\Util\Util</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Core\Executor\*.cs">
+      <Link>Core\Executor\Executor</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Table\CloudTable.cs" />
+    <Compile Include="Table\CloudTableClient.cs" />
+    <Compile Include="Table\TableQueryNonGeneric.cs" />
+    <Compile Include="Table\Protocol\HttpWebRequestAdapterMessage.cs" />
+    <Compile Include="Table\Protocol\HttpResponseAdapterMessage.cs" />
+    <Compile Include="Table\Protocol\TableOperationHttpRequestFactory.cs" />
+    <Compile Include="Table\Protocol\TableOperationHttpResponseParsers.cs" />
+    <Compile Include="Table\TableBatchOperation.cs" />
+    <Compile Include="Table\TableOperation.cs" />
+    <Compile Include="Table\TableQuery.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Root -->
+    <Compile Include="..\Common\*.cs" />
+    <!-- Auth -->
+    <Compile Include="..\Common\Auth\*.cs">
+      <Link>Auth\Auth</Link>
+    </Compile>
+    <!-- Core -->
+    <Compile Include="..\Common\Core\*.cs">
+      <Link>Core\Core</Link>
+    </Compile>
+    <Compile Include="..\Common\Core\Auth\*.cs">
+      <Link>Core\Auth\Auth</Link>
+    </Compile>
+    <Compile Include="..\Common\Core\Executor\*.cs">
+      <Link>Core\Executor\Executor</Link>
+    </Compile>
+    <Compile Include="..\Common\Core\Util\*.cs">
+      <Link>Core\Util\Util</Link>
+    </Compile>
+    <!-- Services-->
+    <Compile Include="..\Common\RetryPolicies\*.cs">
+      <Link>RetryPolicies\RetryPolicies</Link>
+    </Compile>
+    <Compile Include="..\Common\Blob\*.cs">
+      <Link>Blob\Blob</Link>
+    </Compile>
+    <Compile Include="..\Common\Blob\Protocol\*.cs">
+      <Link>Blob\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\Common\Queue\*.cs">
+      <Link>Queue\Queue</Link>
+    </Compile>
+    <Compile Include="..\Common\Queue\Protocol\*.cs">
+      <Link>Queue\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\CloudTableBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\CloudTableClientBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\DynamicTableEntity.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EdmType.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EntityProperty.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EntityReadFlags.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EntityResolver.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EntityUtilities.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\ITableEntity.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableResultSegment.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\QueryComparisons.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\SharedAccessTablePermissions.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\SharedAccessTablePolicies.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\SharedAccessTablePolicy.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableBatchOperationBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableContinuationToken.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableEntity.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableQueryBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableQueryGenericBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableOperationBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableOperationType.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableOperators.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TablePermissions.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableQuerySegment.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableRequestOptions.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableResult.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\Protocol\*.cs">
+      <Link>Table\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\Common\Shared\*.cs">
+      <Link>Shared\Shared</Link>
+    </Compile>
+    <Compile Include="..\Common\Shared\Protocol\*.cs">
+      <Link>Shared\Protocol\Protocol</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MSSharedLibKey.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

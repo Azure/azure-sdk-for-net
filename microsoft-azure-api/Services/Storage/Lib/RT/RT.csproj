@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{42CB7861-70BB-4F34-A815-4355E6EA2589}</ProjectGuid>
+    <OutputType>winmdobj</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.WindowsAzure.Storage</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.StorageClient</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;RTMD;RT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;RTMD;RT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Auth\Protocol\NoOpAuthenticationHttpHandler.cs" />
+    <Compile Include="Auth\Protocol\SharedKeyAuthenticationHttpHandler.cs" />
+    <Compile Include="Blob\BlobReadStream.cs" />
+    <Compile Include="Blob\BlobReadStreamHelper.cs" />
+    <Compile Include="Blob\BlobWriteStream.cs" />
+    <Compile Include="Blob\CloudBlobClient.cs" />
+    <Compile Include="Blob\CloudBlobContainer.cs" />
+    <Compile Include="Blob\CloudBlobSharedImpl.cs" />
+    <Compile Include="Blob\CloudBlockBlob.cs" />
+    <Compile Include="Blob\CloudPageBlob.cs" />
+    <Compile Include="Blob\CloudBlobDirectory.cs" />
+    <Compile Include="Blob\ICloudBlob.cs" />
+    <Compile Include="Blob\Protocol\BlobHttpResponseParsers.cs" />
+    <Compile Include="Blob\Protocol\ContainerHttpRequestMessageFactory.cs" />
+    <Compile Include="Blob\Protocol\ContainerHttpResponseParsers.cs" />
+    <Compile Include="Core\Auth\CanonicalizationHelper.cs" />
+    <Compile Include="Core\Auth\ICanonicalizer.cs" />
+    <Compile Include="Core\Auth\SharedKeyCanonicalizer.cs" />
+    <Compile Include="Core\Auth\SharedKeyLiteTableCanonicalizer.cs" />
+    <Compile Include="Core\Executor\Executor.cs" />
+    <Compile Include="Core\Util\AsyncSemaphore.cs" />
+    <Compile Include="Core\Util\HttpResponseMessageUtils.cs" />
+    <Compile Include="Core\Util\WindowsAzureErrorCode.cs" />
+    <Compile Include="ExceptionInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Blob\Protocol\BlobHttpRequestMessageFactory.cs" />
+    <Compile Include="Queue\CloudQueue.cs" />
+    <Compile Include="Queue\CloudQueueClient.cs" />
+    <Compile Include="Queue\CloudQueueMessage.cs" />
+    <Compile Include="Queue\Protocol\QueueHttpRequestMessageFactory.cs" />
+    <Compile Include="Queue\Protocol\QueueHttpResponseParsers.cs" />
+    <Compile Include="Shared\Protocol\HttpContentFactory.cs" />
+    <Compile Include="Shared\Protocol\HttpRequestMessageFactory.cs" />
+    <Compile Include="Shared\Protocol\HttpClientFactory.cs" />
+    <Compile Include="Shared\Protocol\HttpResponseParsers.cs" />
+    <Compile Include="Shared\Protocol\RequestMessageExtensions.cs" />
+    <Compile Include="Shared\Protocol\RetryableStreamContent.cs" />
+    <Compile Include="Table\CloudTable.cs" />
+    <Compile Include="Table\CloudTableClient.cs" />
+    <Compile Include="Table\Protocol\TableHttpRequestMessageFactory.cs" />
+    <Compile Include="Table\Protocol\HttpRequestAdapterMessage.cs" />
+    <Compile Include="Table\Protocol\HttpResponseAdapterMessage.cs" />
+    <Compile Include="Table\TableOperation.cs" />
+    <Compile Include="Table\Protocol\TableOperationHttpRequestFactory.cs" />
+    <Compile Include="Table\Protocol\TableOperationHttpResponseParsers.cs" />
+    <Compile Include="Table\TableQuery.cs" />
+    <Compile Include="Table\TableBatchOperation.cs" />
+    <Compile Include="Table\TableQuerySegmentNonGeneric.cs" />
+    <Compile Include="WrappedStorageException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Root -->
+    <Compile Include="..\Common\*.cs" />
+    <!-- Auth -->
+    <Compile Include="..\Common\Auth\*.cs">
+      <Link>Auth\Auth</Link>
+    </Compile>
+    <!-- Core -->
+    <Compile Include="..\Common\Core\*.cs">
+      <Link>Core\Core</Link>
+    </Compile>
+    <Compile Include="..\Common\Core\Auth\*.cs">
+      <Link>Core\Auth\Auth</Link>
+    </Compile>
+    <Compile Include="..\Common\Core\Executor\*.cs">
+      <Link>Core\Executor\Executor</Link>
+    </Compile>
+    <Compile Include="..\Common\Core\Util\*.cs">
+      <Link>Core\Util\Util</Link>
+    </Compile>
+    <!-- Services-->
+    <Compile Include="..\Common\RetryPolicies\*.cs">
+      <Link>RetryPolicies\RetryPolicies</Link>
+    </Compile>
+    <Compile Include="..\Common\Blob\*.cs">
+      <Link>Blob\Blob</Link>
+    </Compile>
+    <Compile Include="..\Common\Blob\Protocol\*.cs">
+      <Link>Blob\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\Common\Queue\*.cs">
+      <Link>Queue\Queue</Link>
+    </Compile>
+    <Compile Include="..\Common\Queue\Protocol\*.cs">
+      <Link>Queue\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\CloudTableBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\CloudTableClientBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\DynamicTableEntity.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EdmType.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EntityProperty.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EntityReadFlags.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EntityResolver.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\EntityUtilities.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\ITableEntity.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableResultSegment.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\QueryComparisons.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\SharedAccessTablePermissions.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\SharedAccessTablePolicies.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\SharedAccessTablePolicy.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableBatchOperationBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableContinuationToken.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableOperationBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableOperationType.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableOperators.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TablePermissions.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableQueryBase.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableRequestOptions.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableResult.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\TableServiceTable.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\Protocol\*.cs">
+      <Link>Table\Protocol\Protocol</Link>
+    </Compile>
+    <Compile Include="..\Common\Shared\*.cs">
+      <Link>Shared\Shared</Link>
+    </Compile>
+    <Compile Include="..\Common\Shared\Protocol\*.cs">
+      <Link>Shared\Protocol\Protocol</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Data.Edm.Metro, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Microsoft.Data.Edm.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData.Metro, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Microsoft.Data.OData.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Spatial.Metro, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\System.Spatial.Metro.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' ">
+    <VisualStudioVersion>11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
