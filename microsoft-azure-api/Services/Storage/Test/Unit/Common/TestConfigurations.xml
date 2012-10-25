@@ -1,0 +1,23 @@
+﻿<TestConfigurations>
+<TargetTestTenant>ProductionTenant</TargetTestTenant>
+<TenantConfigurations>
+  <TenantConfiguration>
+    <TenantName>DevStore</TenantName>
+    <TenantType>DevStore</TenantType>
+    <AccountName>devstoreaccount1</AccountName>
+    <AccountKey>Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==</AccountKey>
+    <BlobServiceEndpoint>http://127.0.0.1:10000/devstoreaccount1</BlobServiceEndpoint>
+    <QueueServiceEndpoint>http://127.0.0.1:10001/devstoreaccount1</QueueServiceEndpoint>
+    <TableServiceEndpoint>http://127.0.0.1:10002/devstoreaccount1</TableServiceEndpoint>
+  </TenantConfiguration>
+  <TenantConfiguration>
+    <TenantName>ProductionTenant</TenantName>
+    <TenantType>Cloud</TenantType>
+    <AccountName>[ACCOUNT NAME HERE]</AccountName>
+    <AccountKey>[ACCOUNT KEY HERE]</AccountKey>
+    <BlobServiceEndpoint>http://[ACCOUNT].blob.core.windows.net</BlobServiceEndpoint>
+    <QueueServiceEndpoint>http://[ACCOUNT].queue.core.windows.net</QueueServiceEndpoint>
+    <TableServiceEndpoint>http://[ACCOUNT].table.core.windows.net</TableServiceEndpoint>
+  </TenantConfiguration>
+</TenantConfigurations>
+</TestConfigurations>
