@@ -1,0 +1,7 @@
+HTTP/1.1 407 Proxy Auth Required
+FiddlerTemplate: True
+Proxy-Authenticate: Basic realm="Fiddler (just hit Ok)"
+Content-Type: text/html
+Content-Length: 520
+
+Fiddler: HTTP/407 Proxy Auth Required.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
