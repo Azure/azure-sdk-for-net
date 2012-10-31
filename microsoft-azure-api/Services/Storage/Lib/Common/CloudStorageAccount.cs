@@ -483,7 +483,8 @@ namespace Microsoft.WindowsAzure.Storage
                 AllRequired(UseDevelopmentStorageSetting),
                 Optional(DevelopmentStorageProxyUriSetting)))
             {
-                var proxyUri = settings[DevelopmentStorageProxyUriSettingString];
+                string proxyUri = null;
+                settings.TryGetValue(DevelopmentStorageProxyUriSettingString, out proxyUri);
 
                 accountInformation = GetDevelopmentStorageAccount(proxyUri == null ? null : new Uri(proxyUri));
 
