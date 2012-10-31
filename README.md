@@ -66,10 +66,11 @@ http://nuget.org/packages/System.Spatial/5.0.2<br/>
     Developer Center</a>.</li>
 </ul>
 
-<p>First, include the classes you need (in this case we'll include the StorageClient
+<p>First, include the classes you need (in this case we'll include the lightweight TableClient
 and further demonstrate creating a table):<br/>
 <pre>using System.Configuration;
-using Microsoft.WindowsAzure.Storage;</pre></p>
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table</pre></p>
 
 <p>To perform an operation on any Windows Azure resource you will first instantiate
 a <strong>client</strong> which allows performing actions on it. The resource is known as an
