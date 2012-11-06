@@ -467,7 +467,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <returns>If true, the parse was successful. Otherwise, false.</returns>
         internal static bool TryParse(string s, out CloudStorageAccount accountInformation, Action<string> error)
         {
-            var settings = ParseStringIntoSettings(s, error);
+            IDictionary<string, string> settings = ParseStringIntoSettings(s, error);
 
             // malformed settings string
             if (settings == null)
@@ -477,15 +477,22 @@ namespace Microsoft.WindowsAzure.Storage
                 return false;
             }
 
+            string proxyUri = null;
+
             // devstore case
             if (MatchesSpecification(
                 settings,
                 AllRequired(UseDevelopmentStorageSetting),
                 Optional(DevelopmentStorageProxyUriSetting)))
             {
-                var proxyUri = settings[DevelopmentStorageProxyUriSettingString];
-
-                accountInformation = GetDevelopmentStorageAccount(proxyUri == null ? null : new Uri(proxyUri));
+                if (settings.TryGetValue(DevelopmentStorageProxyUriSettingString, out proxyUri))
+                {
+                    accountInformation = GetDevelopmentStorageAccount(new Uri(proxyUri));
+                }
+                else
+                {
+                    accountInformation = GetDevelopmentStorageAccount(null);
+                }
 
                 return true;
             }
