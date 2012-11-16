@@ -142,7 +142,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Entities
             set { int64 = value; }
         }
 
-        private string stringObj = "foobar";
+        private string stringObj = "test";
         public string String
         {
             get { return stringObj; }
