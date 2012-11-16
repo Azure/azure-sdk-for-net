@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices.Entities
             set { int64 = value; }
         }
 
-        private string stringObj = "foobar";
+        private string stringObj = "test";
         public string String
         {
             get { return stringObj; }
