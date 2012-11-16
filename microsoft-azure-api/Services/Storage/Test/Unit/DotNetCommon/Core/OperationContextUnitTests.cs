@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public void OpContextTestClientRequestIDOnBlob()
         {
             CloudBlobClient blobClient = GenerateCloudBlobClient();
-            CloudBlobContainer container = blobClient.GetContainerReference("foobar");
+            CloudBlobContainer container = blobClient.GetContainerReference("test");
 
             string uniqueID = Guid.NewGuid().ToString();
 
@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public void OpContextTestUserHeadersOnBlob()
         {
             CloudBlobClient blobClient = GenerateCloudBlobClient();
-            CloudBlobContainer container = blobClient.GetContainerReference("foobar");
+            CloudBlobContainer container = blobClient.GetContainerReference("test");
 
             string uniqueID = Guid.NewGuid().ToString();
 
@@ -135,7 +135,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public void OpContextTestClientRequestIDOnQueue()
         {
             CloudQueueClient qClient = GenerateCloudQueueClient();
-            CloudQueue queue = qClient.GetQueueReference("foobar");
+            CloudQueue queue = qClient.GetQueueReference("test");
 
             string uniqueID = Guid.NewGuid().ToString();
 
@@ -157,7 +157,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public void OpContextTestUserHeadersOnQueue()
         {
             CloudQueueClient qClient = GenerateCloudQueueClient();
-            CloudQueue queue = qClient.GetQueueReference("foobar");
+            CloudQueue queue = qClient.GetQueueReference("test");
 
             string uniqueID = Guid.NewGuid().ToString();
 
@@ -184,7 +184,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public void OpContextTestClientRequestIDOnTable()
         {
             CloudTableClient tClient = GenerateCloudTableClient();
-            CloudTable table = tClient.GetTableReference("foobar");
+            CloudTable table = tClient.GetTableReference("test");
 
             string uniqueID = Guid.NewGuid().ToString();
 
@@ -206,7 +206,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public void OpContextTestUserHeadersOnTable()
         {
             CloudTableClient tClient = GenerateCloudTableClient();
-            CloudTable table = tClient.GetTableReference("foobar");
+            CloudTable table = tClient.GetTableReference("test");
 
             string uniqueID = Guid.NewGuid().ToString();
 
