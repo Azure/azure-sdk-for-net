@@ -60,22 +60,21 @@ http://nuget.org/packages/System.Spatial/5.0.2<br/>
 <h2>Code Samples</h2>
 <p>Note:</p>
 <ul>
-    <li>All code samples are available under the <code>/samples</code> folder.</li>
     <li>How-Tos focused around accomplishing specific tasks are available on the
     <a href="http://www.windowsazure.com/en-us/develop/net/">Windows Azure .NET
     Developer Center</a>.</li>
 </ul>
 
-<p>First, include the classes you need (in this case we'll include the StorageClient
+<p>First, include the classes you need (in this case we'll include the Storage and Table
 and further demonstrate creating a table):<br/>
-<pre>using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;</pre></p>
+<pre>using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table;</pre></p>
 
 <p>To perform an operation on any Windows Azure resource you will first instantiate
 a <strong>client</strong> which allows performing actions on it. The resource is known as an
 <strong>entity</strong>. To do so for Table you also have to authenticate your request:<br/>
 <pre>var storageAccount = 
-    CloudStorageAccount.FromConfigurationSetting("StorageConnectionString");
+    CloudStorageAccount.DevelopmentStorageAccount;
 var tableClient = storageAccount.CreateCloudTableClient();</pre></p>
 
 <p>Now, to create a table entity using the client:<br/>
