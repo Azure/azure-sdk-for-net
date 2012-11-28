@@ -1,4 +1,4 @@
-<h1>Windows Azure SDK for Windows 8 and .NET 4(2.0.0.0)</h1>
+<h1>Windows Azure SDK for Windows 8 and .NET 4 (2.0.2)</h1>
 <p>This SDK allows you to build Windows Azure applications that take advantage of
 Azure scalable cloud computing resources: table and blob storage, messaging through
 Service Bus, distributed caching through cache.</p>
@@ -49,7 +49,7 @@ within your project you can also have them installed by the .NET package manager
 
 <h2>Dependencies</h2>
 <p>
-The 2.0.0.0 version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.0.2) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.  
+The 2.0.2 version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.0.2) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.  
 The ODataLib libraries can be downloaded directly or referenced by your code project through NuGet.  
 The specific ODataLib packages are:<br/>
 http://nuget.org/packages/Microsoft.Data.OData/5.0.2<br/>
