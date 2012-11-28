@@ -113,7 +113,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     executionState.Req.BeginGetRequestStream,
                     (getRequestStreamResp) =>
                     {
-                        executionState.CompletedSynchronously = executionState.CompletedSynchronously && getRequestStreamResp.CompletedSynchronously;
+                        executionState.UpdateCompletedSynchronously(getRequestStreamResp.CompletedSynchronously);
 
                         try
                         {
@@ -210,7 +210,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     {
                         try
                         {
-                            executionState.CompletedSynchronously = executionState.CompletedSynchronously && getRespRes.CompletedSynchronously;
+                            executionState.UpdateCompletedSynchronously(getRespRes.CompletedSynchronously);
 
                             try
                             {
@@ -385,7 +385,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         backoffTimer = new Timer(
                             (obj) =>
                             {
-                                executionState.CompletedSynchronously = false;
+                                executionState.UpdateCompletedSynchronously(false);
                                 backoffTimer.Change(Timeout.Infinite, Timeout.Infinite);
                                 backoffTimer.Dispose();
                                 InitRequest(executionState);

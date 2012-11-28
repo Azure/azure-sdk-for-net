@@ -119,84 +119,86 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 {
                     property.SetValue(this, null, null);
                 }
-
-                switch (entityProperty.PropertyType)
+                else
                 {
-                    case EdmType.String:
-                        if (property.PropertyType != typeof(string) && property.PropertyType != typeof(String))
-                        {
-                            continue;
-                        }
+                    switch (entityProperty.PropertyType)
+                    {
+                        case EdmType.String:
+                            if (property.PropertyType != typeof(string) && property.PropertyType != typeof(String))
+                            {
+                                continue;
+                            }
 
-                        property.SetValue(this, entityProperty.StringValue, null);
-                        break;
-                    case EdmType.Binary:
-                        if (property.PropertyType != typeof(byte[]))
-                        {
-                            continue;
-                        }
+                            property.SetValue(this, entityProperty.StringValue, null);
+                            break;
+                        case EdmType.Binary:
+                            if (property.PropertyType != typeof(byte[]))
+                            {
+                                continue;
+                            }
 
-                        property.SetValue(this, entityProperty.BinaryValue, null);
-                        break;
-                    case EdmType.Boolean:
-                        if (property.PropertyType != typeof(bool) && property.PropertyType != typeof(Boolean))
-                        {
-                            continue;
-                        }
+                            property.SetValue(this, entityProperty.BinaryValue, null);
+                            break;
+                        case EdmType.Boolean:
+                            if (property.PropertyType != typeof(bool) && property.PropertyType != typeof(Boolean))
+                            {
+                                continue;
+                            }
 
-                        property.SetValue(this, entityProperty.BooleanValue, null);
-                        break;
-                    case EdmType.DateTime:
-                        if (property.PropertyType == typeof(DateTime))
-                        {
-                            property.SetValue(this, entityProperty.DateTimeOffsetValue.Value.UtcDateTime, null);
-                        }
-                        else if (property.PropertyType == typeof(DateTime?))
-                        {
-                            property.SetValue(this, entityProperty.DateTimeOffsetValue.HasValue ? entityProperty.DateTimeOffsetValue.Value.UtcDateTime : (DateTime?)null, null);
-                        }
-                        else if (property.PropertyType == typeof(DateTimeOffset))
-                        {
-                            property.SetValue(this, entityProperty.DateTimeOffsetValue.Value, null);
-                        }
-                        else if (property.PropertyType == typeof(DateTimeOffset?))
-                        {
-                            property.SetValue(this, entityProperty.DateTimeOffsetValue, null);
-                        }
+                            property.SetValue(this, entityProperty.BooleanValue, null);
+                            break;
+                        case EdmType.DateTime:
+                            if (property.PropertyType == typeof(DateTime))
+                            {
+                                property.SetValue(this, entityProperty.DateTimeOffsetValue.Value.UtcDateTime, null);
+                            }
+                            else if (property.PropertyType == typeof(DateTime?))
+                            {
+                                property.SetValue(this, entityProperty.DateTimeOffsetValue.HasValue ? entityProperty.DateTimeOffsetValue.Value.UtcDateTime : (DateTime?)null, null);
+                            }
+                            else if (property.PropertyType == typeof(DateTimeOffset))
+                            {
+                                property.SetValue(this, entityProperty.DateTimeOffsetValue.Value, null);
+                            }
+                            else if (property.PropertyType == typeof(DateTimeOffset?))
+                            {
+                                property.SetValue(this, entityProperty.DateTimeOffsetValue, null);
+                            }
 
-                        break;
-                    case EdmType.Double:
-                        if (property.PropertyType != typeof(double) && property.PropertyType != typeof(Double))
-                        {
-                            continue;
-                        }
+                            break;
+                        case EdmType.Double:
+                            if (property.PropertyType != typeof(double) && property.PropertyType != typeof(Double))
+                            {
+                                continue;
+                            }
 
-                        property.SetValue(this, entityProperty.DoubleValue, null);
-                        break;
-                    case EdmType.Guid:
-                        if (property.PropertyType != typeof(Guid))
-                        {
-                            continue;
-                        }
+                            property.SetValue(this, entityProperty.DoubleValue, null);
+                            break;
+                        case EdmType.Guid:
+                            if (property.PropertyType != typeof(Guid) && property.PropertyType != typeof(Guid?))
+                            {
+                                continue;
+                            }
 
-                        property.SetValue(this, entityProperty.GuidValue, null);
-                        break;
-                    case EdmType.Int32:
-                        if (property.PropertyType != typeof(int) && property.PropertyType != typeof(Int32))
-                        {
-                            continue;
-                        }
+                            property.SetValue(this, entityProperty.GuidValue, null);
+                            break;
+                        case EdmType.Int32:
+                            if (property.PropertyType != typeof(int) && property.PropertyType != typeof(Int32))
+                            {
+                                continue;
+                            }
 
-                        property.SetValue(this, entityProperty.Int32Value, null);
-                        break;
-                    case EdmType.Int64:
-                        if (property.PropertyType != typeof(long) && property.PropertyType != typeof(Int64))
-                        {
-                            continue;
-                        }
+                            property.SetValue(this, entityProperty.Int32Value, null);
+                            break;
+                        case EdmType.Int64:
+                            if (property.PropertyType != typeof(long) && property.PropertyType != typeof(Int64))
+                            {
+                                continue;
+                            }
 
-                        property.SetValue(this, entityProperty.Int64Value, null);
-                        break;
+                            property.SetValue(this, entityProperty.Int64Value, null);
+                            break;
+                    }
                 }
             }
         }

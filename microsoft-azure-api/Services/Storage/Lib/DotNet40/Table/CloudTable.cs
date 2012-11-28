@@ -519,7 +519,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             lock (chainedResult.CancellationLockerObject)
             {
                 chainedResult.CancelDelegate = null;
-                chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & asyncResult.CompletedSynchronously;
+                chainedResult.UpdateCompletedSynchronously(asyncResult.CompletedSynchronously);
 
                 try
                 {
@@ -538,7 +538,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                              createRes =>
                              {
                                  chainedResult.CancelDelegate = null;
-                                 chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & createRes.CompletedSynchronously;
+                                 chainedResult.UpdateCompletedSynchronously(chainedResult.CompletedSynchronously);
 
                                  try
                                  {
@@ -763,7 +763,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             lock (chainedResult.CancellationLockerObject)
             {
                 chainedResult.CancelDelegate = null;
-                chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & asyncResult.CompletedSynchronously;
+                chainedResult.UpdateCompletedSynchronously(asyncResult.CompletedSynchronously);
 
                 try
                 {
@@ -782,7 +782,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                             (deleteRes) =>
                             {
                                 chainedResult.CancelDelegate = null;
-                                chainedResult.CompletedSynchronously = chainedResult.CompletedSynchronously & deleteRes.CompletedSynchronously;
+                                chainedResult.UpdateCompletedSynchronously(deleteRes.CompletedSynchronously);
 
                                 try
                                 {

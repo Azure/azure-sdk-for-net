@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Table.Entities;
@@ -235,6 +236,38 @@ namespace Microsoft.WindowsAzure.Storage.Table
             {
                 TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.Conflict, new string[] { "EntityAlreadyExists" }, "The specified entity already exists");
             }
+        }
+        #endregion
+
+        #region Task
+        [TestMethod]
+        [Description("TableOperation Insert")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableOperationInsertTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            // Insert Entity
+            DynamicTableEntity ent = new DynamicTableEntity() { PartitionKey = Guid.NewGuid().ToString(), RowKey = DateTime.Now.Ticks.ToString() };
+            ent.Properties.Add("foo2", new EntityProperty("bar2"));
+            ent.Properties.Add("foo", new EntityProperty("bar"));
+            Task.Factory.FromAsync<TableOperation, TableResult>(currentTable.BeginExecute, currentTable.EndExecute, TableOperation.Insert(ent), null).Wait();
+
+            // Retrieve Entity
+            TableResult result = Task.Factory.FromAsync<TableOperation, TableResult>(currentTable.BeginExecute, currentTable.EndExecute, TableOperation.Retrieve(ent.PartitionKey, ent.RowKey), null).Result;
+
+            DynamicTableEntity retrievedEntity = result.Result as DynamicTableEntity;
+            Assert.IsNotNull(retrievedEntity);
+            Assert.AreEqual(ent.PartitionKey, retrievedEntity.PartitionKey);
+            Assert.AreEqual(ent.RowKey, retrievedEntity.RowKey);
+            Assert.AreEqual(ent.Properties.Count, retrievedEntity.Properties.Count);
+            Assert.AreEqual(ent.Properties["foo"].StringValue, retrievedEntity.Properties["foo"].StringValue);
+            Assert.AreEqual(ent.Properties["foo"], retrievedEntity.Properties["foo"]);
+            Assert.AreEqual(ent.Properties["foo2"].StringValue, retrievedEntity.Properties["foo2"].StringValue);
+            Assert.AreEqual(ent.Properties["foo2"], retrievedEntity.Properties["foo2"]);
         }
         #endregion
         #endregion
@@ -1122,23 +1155,114 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             // Validate entity
             Assert.AreEqual(sendEnt["String"], retrievedEntity["String"]);
+
             Assert.AreEqual(sendEnt["Int64"], retrievedEntity["Int64"]);
+            Assert.AreEqual(sendEnt["Int64N"], retrievedEntity["Int64N"]);
+
             Assert.AreEqual(sendEnt["LongPrimitive"], retrievedEntity["LongPrimitive"]);
+            Assert.AreEqual(sendEnt["LongPrimitiveN"], retrievedEntity["LongPrimitiveN"]);
+
             Assert.AreEqual(sendEnt["Int32"], retrievedEntity["Int32"]);
+            Assert.AreEqual(sendEnt["Int32N"], retrievedEntity["Int32N"]);
             Assert.AreEqual(sendEnt["IntegerPrimitive"], retrievedEntity["IntegerPrimitive"]);
+            Assert.AreEqual(sendEnt["IntegerPrimitiveN"], retrievedEntity["IntegerPrimitiveN"]);
+
             Assert.AreEqual(sendEnt["Guid"], retrievedEntity["Guid"]);
+            Assert.AreEqual(sendEnt["GuidN"], retrievedEntity["GuidN"]);
+
             Assert.AreEqual(sendEnt["Double"], retrievedEntity["Double"]);
+            Assert.AreEqual(sendEnt["DoubleN"], retrievedEntity["DoubleN"]);
             Assert.AreEqual(sendEnt["DoublePrimitive"], retrievedEntity["DoublePrimitive"]);
+            Assert.AreEqual(sendEnt["DoublePrimitiveN"], retrievedEntity["DoublePrimitiveN"]);
+
             Assert.AreEqual(sendEnt["BinaryPrimitive"], retrievedEntity["BinaryPrimitive"]);
             Assert.AreEqual(sendEnt["Binary"], retrievedEntity["Binary"]);
+
             Assert.AreEqual(sendEnt["BoolPrimitive"], retrievedEntity["BoolPrimitive"]);
+            Assert.AreEqual(sendEnt["BoolPrimitiveN"], retrievedEntity["BoolPrimitiveN"]);
             Assert.AreEqual(sendEnt["Bool"], retrievedEntity["Bool"]);
-            Assert.AreEqual(sendEnt["DateTimeOffsetN"], retrievedEntity["DateTimeOffsetN"]);
+            Assert.AreEqual(sendEnt["BoolN"], retrievedEntity["BoolN"]);
+
             Assert.AreEqual(sendEnt["DateTimeOffset"], retrievedEntity["DateTimeOffset"]);
+            Assert.AreEqual(sendEnt["DateTimeOffsetN"], retrievedEntity["DateTimeOffsetN"]);
             Assert.AreEqual(sendEnt["DateTime"], retrievedEntity["DateTime"]);
             Assert.AreEqual(sendEnt["DateTimeN"], retrievedEntity["DateTimeN"]);
         }
 
+        [TestMethod]
+        [Description("A test to check retrieve functionality Sync")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableRetrieveSyncWithReflection()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string pk = Guid.NewGuid().ToString();
+            string rk = Guid.NewGuid().ToString();
+
+            ComplexEntity sendEnt = new ComplexEntity(pk, rk);
+            currentTable.Execute(TableOperation.Insert(sendEnt));
+
+
+            TableQuery<ComplexEntity> query = new TableQuery<ComplexEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, pk));
+            IEnumerable<ComplexEntity> result = currentTable.ExecuteQuery(query);
+            ComplexEntity retrievedEntity = result.ToList().First() as ComplexEntity;
+
+            Assert.AreEqual(sendEnt.String, retrievedEntity.String);
+
+            Assert.AreEqual(sendEnt.Int64, retrievedEntity.Int64);
+            Assert.AreEqual(sendEnt.Int64N, retrievedEntity.Int64N);
+            Assert.AreEqual(sendEnt.Int64Null, retrievedEntity.Int64Null);
+
+            Assert.AreEqual(sendEnt.LongPrimitive, retrievedEntity.LongPrimitive);
+            Assert.AreEqual(sendEnt.LongPrimitiveN, retrievedEntity.LongPrimitiveN);
+            Assert.AreEqual(sendEnt.LongPrimitiveNull, retrievedEntity.LongPrimitiveNull);
+
+            Assert.AreEqual(sendEnt.Int32, retrievedEntity.Int32);
+            Assert.AreEqual(sendEnt.Int32N, retrievedEntity.Int32N);
+            Assert.AreEqual(sendEnt.Int32Null, retrievedEntity.Int32Null);
+            Assert.AreEqual(sendEnt.IntegerPrimitive, retrievedEntity.IntegerPrimitive);
+            Assert.AreEqual(sendEnt.IntegerPrimitiveN, retrievedEntity.IntegerPrimitiveN);
+            Assert.AreEqual(sendEnt.IntegerPrimitiveNull, retrievedEntity.IntegerPrimitiveNull);
+
+            Assert.AreEqual(sendEnt.Guid, retrievedEntity.Guid);
+            Assert.AreEqual(sendEnt.GuidN, retrievedEntity.GuidN);
+            Assert.AreEqual(sendEnt.GuidNull, retrievedEntity.GuidNull);
+
+            Assert.AreEqual(sendEnt.Double, retrievedEntity.Double);
+            Assert.AreEqual(sendEnt.DoubleN, retrievedEntity.DoubleN);
+            Assert.AreEqual(sendEnt.DoubleNull, retrievedEntity.DoubleNull);
+            Assert.AreEqual(sendEnt.DoublePrimitive, retrievedEntity.DoublePrimitive);
+            Assert.AreEqual(sendEnt.DoublePrimitiveN, retrievedEntity.DoublePrimitiveN);
+            Assert.AreEqual(sendEnt.DoublePrimitiveNull, retrievedEntity.DoublePrimitiveNull);
+
+            Assert.AreEqual(sendEnt.BinaryPrimitive.GetValue(0), retrievedEntity.BinaryPrimitive.GetValue(0));
+            Assert.AreEqual(sendEnt.BinaryPrimitive.GetValue(1), retrievedEntity.BinaryPrimitive.GetValue(1));
+            Assert.AreEqual(sendEnt.BinaryPrimitive.GetValue(2), retrievedEntity.BinaryPrimitive.GetValue(2));
+            Assert.AreEqual(sendEnt.BinaryPrimitive.GetValue(3), retrievedEntity.BinaryPrimitive.GetValue(3));
+
+            Assert.AreEqual(sendEnt.BinaryNull, retrievedEntity.BinaryNull);
+            Assert.AreEqual(sendEnt.Binary.GetValue(0), retrievedEntity.Binary.GetValue(0));
+            Assert.AreEqual(sendEnt.Binary.GetValue(1), retrievedEntity.Binary.GetValue(1));
+            Assert.AreEqual(sendEnt.Binary.GetValue(2), retrievedEntity.Binary.GetValue(2));
+            Assert.AreEqual(sendEnt.Binary.GetValue(3), retrievedEntity.Binary.GetValue(3));
+
+
+            Assert.AreEqual(sendEnt.BoolPrimitive, retrievedEntity.BoolPrimitive);
+            Assert.AreEqual(sendEnt.BoolPrimitiveN, retrievedEntity.BoolPrimitiveN);
+            Assert.AreEqual(sendEnt.BoolPrimitiveNull, retrievedEntity.BoolPrimitiveNull);
+            Assert.AreEqual(sendEnt.Bool, retrievedEntity.Bool);
+            Assert.AreEqual(sendEnt.BoolN, retrievedEntity.BoolN);
+            Assert.AreEqual(sendEnt.BoolNull, retrievedEntity.BoolNull);
+
+            Assert.AreEqual(sendEnt.DateTimeOffset, retrievedEntity.DateTimeOffset);
+            Assert.AreEqual(sendEnt.DateTimeOffsetN, retrievedEntity.DateTimeOffsetN);
+            Assert.AreEqual(sendEnt.DateTimeOffsetNull, retrievedEntity.DateTimeOffsetNull);
+            Assert.AreEqual(sendEnt.DateTime, retrievedEntity.DateTime);
+            Assert.AreEqual(sendEnt.DateTimeN, retrievedEntity.DateTimeN);
+            Assert.AreEqual(sendEnt.DateTimeNull, retrievedEntity.DateTimeNull);
+        }
 
         [TestMethod]
         [Description("A test to check retrieve functionality Sync")]
@@ -1174,7 +1298,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
             result = currentTable.Execute(TableOperation.Retrieve(sendEnt.PartitionKey, sendEnt.RowKey, resolver));
 
             Assert.AreEqual(result.HttpStatusCode, (int)HttpStatusCode.OK);
-            Assert.AreEqual((string)result.Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt["foo"].StringValue + sendEnt.Properties.Count);
+            // Since there are properties in ComplexEntity set to null, we do not receive those from the server. Hence we need to check for non null values.
+            Assert.AreEqual((string)result.Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt["foo"].StringValue + ComplexEntity.NumberOfNonNullProperties);
         }
         #endregion
 
@@ -1315,7 +1440,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
             }
 
             Assert.AreEqual(result.HttpStatusCode, (int)HttpStatusCode.OK);
-            Assert.AreEqual((string)result.Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt["foo"].StringValue + sendEnt.Properties.Count);
+            // Since there are properties in ComplexEntity set to null, we do not receive those from the server. Hence we need to check for non null values.
+            Assert.AreEqual((string)result.Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt["foo"].StringValue + ComplexEntity.NumberOfNonNullProperties);
         }
         #endregion
         #endregion

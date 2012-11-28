@@ -130,6 +130,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
                         IListBlobItem item13 = simpleList1.ElementAt(2);
                         Assert.IsTrue(item13.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter));
+                        CloudBlobDirectory midDir2 = (CloudBlobDirectory)item13;
 
                         BlobResultSegment segment2 = await container.ListBlobsSegmentedAsync("TopDir1" + delimiter + "MidDir1", true, BlobListingDetails.None, null, null, null, null);
                         List<IListBlobItem> simpleList2 = new List<IListBlobItem>();
@@ -148,8 +149,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         IListBlobItem item22 = simpleList2.ElementAt(1);
                         Assert.IsTrue(item22.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir1" + delimiter + "EndDir2" + delimiter + "EndBlob2"));
 
-
-
                         BlobResultSegment segment3 = await container.ListBlobsSegmentedAsync("TopDir1" + delimiter + "MidDir1"+delimiter, false, BlobListingDetails.None, null, null, null, null);
                         List<IListBlobItem> simpleList3 = new List<IListBlobItem>();
                         simpleList3.AddRange(segment3.Results);
@@ -165,8 +164,24 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
                         IListBlobItem item32 = simpleList3.ElementAt(1);
                         Assert.IsTrue(item32.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir1" + delimiter + "EndDir2" + delimiter));
-                    }
 
+                        BlobResultSegment segment4 = await midDir2.ListBlobsSegmentedAsync(true, BlobListingDetails.None, null, null, null, null);
+                        List<IListBlobItem> simpleList4 = new List<IListBlobItem>();
+                        simpleList4.AddRange(segment4.Results);
+                        while (segment4.ContinuationToken != null)
+                        {
+                            segment4 = await midDir2.ListBlobsSegmentedAsync(true, BlobListingDetails.None, null, segment4.ContinuationToken, null, null);
+                            simpleList4.AddRange(segment4.Results);
+                        }
+
+                        Assert.IsTrue(simpleList4.Count == 2);
+
+                        IListBlobItem item41 = simpleList4.ElementAt(0);
+                        Assert.IsTrue(item41.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir1" + delimiter + "EndBlob1"));
+
+                        IListBlobItem item42 = simpleList4.ElementAt(1);
+                        Assert.IsTrue(item42.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir2" + delimiter + "EndBlob2"));
+                    }
                 }
                 finally
                 {

@@ -301,6 +301,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 operationContext,
                 ar =>
                 {
+                    result.UpdateCompletedSynchronously(ar.CompletedSynchronously);
+
                     try
                     {
                         result.Result = container.EndListBlobsSegmented(ar);
@@ -312,6 +314,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     }
                 },
                 null /* state */);
+
             result.CancelDelegate = asyncResult.Cancel;
             return result;
         }
