@@ -263,31 +263,31 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                 // 2. Filter on Guid
                 ExecuteQueryAndAssertResults(table,
-                        TableQuery.GenerateFilterConditionForGuid("Guid", QueryComparisons.Equal, middleRef.Properties["Guid"].GuidValue), 1);
+                        TableQuery.GenerateFilterConditionForGuid("Guid", QueryComparisons.Equal, middleRef.Properties["Guid"].GuidValue.Value), 1);
 
                 // 3. Filter on Long
                 ExecuteQueryAndAssertResults(table,
                         TableQuery.GenerateFilterConditionForLong("Int64", QueryComparisons.GreaterThanOrEqual,
-                                middleRef.Properties["LongPrimitive"].Int64Value), 50);
+                                middleRef.Properties["LongPrimitive"].Int64Value.Value), 50);
 
                 ExecuteQueryAndAssertResults(table, TableQuery.GenerateFilterConditionForLong("LongPrimitive",
-                        QueryComparisons.GreaterThanOrEqual, middleRef.Properties["LongPrimitive"].Int64Value), 50);
+                        QueryComparisons.GreaterThanOrEqual, middleRef.Properties["LongPrimitive"].Int64Value.Value), 50);
 
                 // 4. Filter on Double
                 ExecuteQueryAndAssertResults(table,
                         TableQuery.GenerateFilterConditionForDouble("Double", QueryComparisons.GreaterThanOrEqual,
-                                middleRef.Properties["Double"].DoubleValue), 50);
+                                middleRef.Properties["Double"].DoubleValue.Value), 50);
 
                 ExecuteQueryAndAssertResults(table, TableQuery.GenerateFilterConditionForDouble("DoublePrimitive",
-                        QueryComparisons.GreaterThanOrEqual, middleRef.Properties["DoublePrimitive"].DoubleValue), 50);
+                        QueryComparisons.GreaterThanOrEqual, middleRef.Properties["DoublePrimitive"].DoubleValue.Value), 50);
 
                 // 5. Filter on Integer
                 ExecuteQueryAndAssertResults(table,
                         TableQuery.GenerateFilterConditionForInt("Int32", QueryComparisons.GreaterThanOrEqual,
-                                middleRef.Properties["Int32"].Int32Value), 50);
+                                middleRef.Properties["Int32"].Int32Value.Value), 50);
 
                 ExecuteQueryAndAssertResults(table, TableQuery.GenerateFilterConditionForInt("IntegerPrimitive",
-                        QueryComparisons.GreaterThanOrEqual, middleRef.Properties["IntegerPrimitive"].Int32Value), 50);
+                        QueryComparisons.GreaterThanOrEqual, middleRef.Properties["IntegerPrimitive"].Int32Value.Value), 50);
 
                 // 6. Filter on Date
                 ExecuteQueryAndAssertResults(table,
@@ -296,10 +296,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                 // 7. Filter on Boolean
                 ExecuteQueryAndAssertResults(table,
-                        TableQuery.GenerateFilterConditionForBool("Bool", QueryComparisons.Equal, middleRef.Properties["Bool"].BooleanValue), 50);
+                        TableQuery.GenerateFilterConditionForBool("Bool", QueryComparisons.Equal, middleRef.Properties["Bool"].BooleanValue.Value), 50);
 
                 ExecuteQueryAndAssertResults(table,
-                        TableQuery.GenerateFilterConditionForBool("BoolPrimitive", QueryComparisons.Equal, middleRef.Properties["BoolPrimitive"].BooleanValue),
+                        TableQuery.GenerateFilterConditionForBool("BoolPrimitive", QueryComparisons.Equal, middleRef.Properties["BoolPrimitive"].BooleanValue.Value),
                         50);
 
                 // 8. Filter on Binary 

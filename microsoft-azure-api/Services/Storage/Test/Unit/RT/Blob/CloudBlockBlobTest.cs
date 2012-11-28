@@ -433,6 +433,40 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
+        /// [Description("Put blob in blocks and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlockBlobUploadFromStreamInBlocksAsync()
+        {
+            byte[] buffer = GetRandomBuffer(2 * 1024 * 1024);
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                await container.CreateAsync();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                blob.ServiceClient.SingleBlobUploadThresholdInBytes = 1 * 1024 * 1024;
+                blob.StreamWriteSizeInBytes = 512 * 1024;
+                using (MemoryStream originalBlob = new MemoryStream(buffer))
+                {
+                    await blob.UploadFromStreamAsync(originalBlob.AsInputStream());
+
+                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    {
+                        await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
+                        TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
         /// [Description("Single put blob and get blob")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -772,6 +806,67 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         operationContext,
                         "Trying to upload a block with more than 4MB should fail",
                         HttpStatusCode.RequestEntityTooLarge);
+                }
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        /// [Description("Upload blocks and then verify the contents")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlockBlobPutBlockAsync()
+        {
+            byte[] buffer = GetRandomBuffer(4 * 1024 * 1024);
+            CryptographicHash hasher = HashAlgorithmProvider.OpenAlgorithm("MD5").CreateHash();
+            hasher.Append(buffer.AsBuffer());
+            string contentMD5 = CryptographicBuffer.EncodeToBase64String(hasher.GetValueAndReset());
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                await container.CreateAsync();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                List<string> blockList = GetBlockIdList(2);
+
+                using (MemoryStream resultingData = new MemoryStream())
+                {
+                    using (MemoryStream memoryStream = new MemoryStream(buffer))
+                    {
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        await blob.PutBlockAsync(blockList[0], memoryStream.AsInputStream(), contentMD5);
+                        resultingData.Write(buffer, 0, buffer.Length);
+
+                        int offset = buffer.Length - 1024;
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        OperationContext opContext = new OperationContext();
+                        await TestHelper.ExpectedExceptionAsync(
+                            async () => await blob.PutBlockAsync(blockList[1], memoryStream.AsInputStream(), contentMD5, null, null, opContext),
+                            opContext,
+                            "Invalid MD5 should fail with mismatch",
+                            HttpStatusCode.BadRequest,
+                            "Md5Mismatch");
+
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        await blob.PutBlockAsync(blockList[1], memoryStream.AsInputStream(), null);
+                        resultingData.Write(buffer, offset, buffer.Length - offset);
+                    }
+
+                    await blob.PutBlockListAsync(blockList);
+
+                    using (MemoryStream blobData = new MemoryStream())
+                    {
+                        await blob.DownloadToStreamAsync(blobData.AsOutputStream());
+                        Assert.AreEqual(resultingData.Length, blobData.Length);
+
+                        Assert.IsTrue(blobData.ToArray().SequenceEqual(resultingData.ToArray()));
+                    }
                 }
             }
             finally

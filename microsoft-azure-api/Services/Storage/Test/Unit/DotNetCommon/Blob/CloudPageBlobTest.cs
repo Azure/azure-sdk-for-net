@@ -846,6 +846,193 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
+        [Description("Upload pages to a page blob and then verify the contents")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudPageBlobWritePages()
+        {
+            byte[] buffer = GetRandomBuffer(4 * 1024 * 1024);
+            MD5 md5 = MD5.Create();
+            string contentMD5 = Convert.ToBase64String(md5.ComputeHash(buffer));
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                blob.Create(4 * 1024 * 1024);
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    TestHelper.ExpectedException<ArgumentOutOfRangeException>(
+                        () => blob.WritePages(memoryStream, 0),
+                        "Zero-length WritePages should fail");
+
+                    memoryStream.SetLength(4 * 1024 * 1024 + 1);
+                    TestHelper.ExpectedException<ArgumentOutOfRangeException>(
+                        () => blob.WritePages(memoryStream, 0),
+                        ">4MB WritePages should fail");
+                }
+
+                using (MemoryStream resultingData = new MemoryStream())
+                {
+                    using (MemoryStream memoryStream = new MemoryStream(buffer))
+                    {
+                        TestHelper.ExpectedException(
+                            () => blob.WritePages(memoryStream, 512),
+                            "Writing out-of-range pages should fail",
+                            HttpStatusCode.RequestedRangeNotSatisfiable,
+                            "InvalidPageRange");
+
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        blob.WritePages(memoryStream, 0, contentMD5);
+                        resultingData.Write(buffer, 0, buffer.Length);
+
+                        int offset = buffer.Length - 1024;
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        TestHelper.ExpectedException(
+                            () => blob.WritePages(memoryStream, 0, contentMD5),
+                            "Invalid MD5 should fail with mismatch",
+                            HttpStatusCode.BadRequest,
+                            "Md5Mismatch");
+
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        blob.WritePages(memoryStream, 0);
+                        resultingData.Seek(0, SeekOrigin.Begin);
+                        resultingData.Write(buffer, offset, buffer.Length - offset);
+
+                        offset = buffer.Length - 2048;
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        blob.WritePages(memoryStream, 1024);
+                        resultingData.Seek(1024, SeekOrigin.Begin);
+                        resultingData.Write(buffer, offset, buffer.Length - offset);
+                    }
+
+                    using (MemoryStream blobData = new MemoryStream())
+                    {
+                        blob.DownloadToStream(blobData);
+                        Assert.AreEqual(resultingData.Length, blobData.Length);
+
+                        Assert.IsTrue(blobData.ToArray().SequenceEqual(resultingData.ToArray()));
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Upload pages to a page blob and then verify the contents")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudPageBlobWritePagesAPM()
+        {
+            byte[] buffer = GetRandomBuffer(4 * 1024 * 1024);
+            MD5 md5 = MD5.Create();
+            string contentMD5 = Convert.ToBase64String(md5.ComputeHash(buffer));
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                blob.Create(4 * 1024 * 1024);
+
+                using (AutoResetEvent waitHandle = new AutoResetEvent(false))
+                {
+                    IAsyncResult result;
+
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        TestHelper.ExpectedException<ArgumentOutOfRangeException>(
+                            () => blob.BeginWritePages(memoryStream, 0, null, null, null),
+                            "Zero-length WritePages should fail");
+
+                        memoryStream.SetLength(4 * 1024 * 1024 + 1);
+                        TestHelper.ExpectedException<ArgumentOutOfRangeException>(
+                            () => blob.BeginWritePages(memoryStream, 0, null, null, null),
+                            ">4MB WritePages should fail");
+                    }
+
+                    using (MemoryStream resultingData = new MemoryStream())
+                    {
+                        using (MemoryStream memoryStream = new MemoryStream(buffer))
+                        {
+                            result = blob.BeginWritePages(memoryStream, 512, null,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            TestHelper.ExpectedException(
+                                () => blob.EndWritePages(result),
+                                "Writing out-of-range pages should fail",
+                                HttpStatusCode.RequestedRangeNotSatisfiable,
+                                "InvalidPageRange");
+
+                            memoryStream.Seek(0, SeekOrigin.Begin);
+                            result = blob.BeginWritePages(memoryStream, 0, contentMD5,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndWritePages(result);
+                            resultingData.Write(buffer, 0, buffer.Length);
+
+                            int offset = buffer.Length - 1024;
+                            memoryStream.Seek(offset, SeekOrigin.Begin);
+                            result = blob.BeginWritePages(memoryStream, 0, contentMD5,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            TestHelper.ExpectedException(
+                                () => blob.EndWritePages(result),
+                            "Invalid MD5 should fail with mismatch",
+                            HttpStatusCode.BadRequest,
+                            "Md5Mismatch");
+
+                            memoryStream.Seek(offset, SeekOrigin.Begin);
+                            result = blob.BeginWritePages(memoryStream, 0, null,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndWritePages(result);
+                            resultingData.Seek(0, SeekOrigin.Begin);
+                            resultingData.Write(buffer, offset, buffer.Length - offset);
+
+                            offset = buffer.Length - 2048;
+                            memoryStream.Seek(offset, SeekOrigin.Begin);
+                            result = blob.BeginWritePages(memoryStream, 1024, null,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndWritePages(result);
+                            resultingData.Seek(1024, SeekOrigin.Begin);
+                            resultingData.Write(buffer, offset, buffer.Length - offset);
+                        }
+
+                        using (MemoryStream blobData = new MemoryStream())
+                        {
+                            blob.DownloadToStream(blobData);
+                            Assert.AreEqual(resultingData.Length, blobData.Length);
+
+                            Assert.IsTrue(blobData.ToArray().SequenceEqual(resultingData.ToArray()));
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
         [Description("Single put blob and get blob")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]

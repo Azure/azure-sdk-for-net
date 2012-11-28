@@ -142,11 +142,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         HttpStatusCode.PreconditionFailed);
                 }
 
-                AccessCondition accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(DateTimeOffset.Now);
+                AccessCondition accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(DateTimeOffset.Now.Subtract(TimeSpan.FromHours(1)));
                 using (Stream blobStream = blob.OpenRead(accessCondition))
                 {
-                    blob.SetMetadata();
-                    blobStream.Read(outBuffer, 0, outBuffer.Length);
                     blob.SetMetadata();
                     TestHelper.ExpectedException(
                         () => blobStream.Read(outBuffer, 0, outBuffer.Length),
@@ -204,11 +202,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         HttpStatusCode.PreconditionFailed);
                 }
 
-                AccessCondition accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(DateTimeOffset.Now);
+                AccessCondition accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(DateTimeOffset.Now.Subtract(TimeSpan.FromHours(1)));
                 using (Stream blobStream = blob.OpenRead(accessCondition))
                 {
-                    blob.SetMetadata();
-                    blobStream.Read(outBuffer, 0, outBuffer.Length);
                     blob.SetMetadata();
                     TestHelper.ExpectedException(
                         () => blobStream.Read(outBuffer, 0, outBuffer.Length),

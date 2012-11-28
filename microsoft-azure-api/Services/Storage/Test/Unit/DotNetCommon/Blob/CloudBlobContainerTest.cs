@@ -22,6 +22,10 @@ using System.Net;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+#if DN40CP
+using System.Threading.Tasks;
+#endif
+
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
@@ -71,6 +75,27 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             }
             container.Delete();
         }
+
+#if DN40CP
+        [TestMethod]
+        [Description("Create and delete a container")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlobContainerCreateTask()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+
+            Task.Factory.FromAsync(container.BeginCreate, container.EndCreate, null).Wait();
+            AggregateException e = TestHelper.ExpectedException<AggregateException>(
+                () => Task.Factory.FromAsync(container.BeginCreate, container.EndCreate, null).Wait(),
+                "Creating already exists container should fail");
+            Assert.IsInstanceOfType(e.InnerException, typeof(StorageException));
+            Assert.AreEqual((int)HttpStatusCode.Conflict, ((StorageException)e.InnerException).RequestInformation.HttpStatusCode);
+            Task.Factory.FromAsync(container.BeginDelete, container.EndDelete, null).Wait();
+        }
+#endif
 
         [TestMethod]
         [Description("Try to create a container after it is created")]
@@ -432,6 +457,50 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     Assert.IsInstanceOfType(blobItem, typeof(CloudPageBlob));
                     Assert.IsTrue(blobNames.Remove(((CloudPageBlob)blobItem).Name));
                 }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("List many blobs")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric)]
+        public void CloudBlobContainerListManyBlobs()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+                List<string> pageBlobNames = CreateBlobs(container, 3000, BlobType.PageBlob);
+                List<string> blockBlobNames = CreateBlobs(container, 3000, BlobType.BlockBlob);
+
+                int count = 0;
+                IEnumerable<IListBlobItem> results = container.ListBlobs();
+                foreach (IListBlobItem blobItem in results)
+                {
+                    count++;
+                    Assert.IsInstanceOfType(blobItem, typeof(ICloudBlob));
+                    ICloudBlob blob = (ICloudBlob)blobItem;
+                    if (pageBlobNames.Remove(blob.Name))
+                    {
+                        Assert.IsInstanceOfType(blob, typeof(CloudPageBlob));
+                    }
+                    else if (blockBlobNames.Remove(blob.Name))
+                    {
+                        Assert.IsInstanceOfType(blob, typeof(CloudBlockBlob));
+                    }
+                    else
+                    {
+                        Assert.Fail("Unexpected blob: " + blob.Uri.AbsoluteUri);
+                    }
+                }
+
+                Assert.AreEqual(6000, count);
             }
             finally
             {

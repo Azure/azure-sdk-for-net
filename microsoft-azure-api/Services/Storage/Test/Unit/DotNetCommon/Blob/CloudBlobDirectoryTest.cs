@@ -124,6 +124,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
                         IListBlobItem item13 = simpleList1.ElementAt(2);
                         Assert.IsTrue(item13.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter));
+                        CloudBlobDirectory midDir2 = (CloudBlobDirectory)item13;
 
                         IEnumerable<IListBlobItem> list2 = container.ListBlobs("TopDir1" + delimiter + "MidDir1", true, BlobListingDetails.None, null, null);
 
@@ -147,6 +148,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         IListBlobItem item32 = simpleList3.ElementAt(1);
                         Assert.IsTrue(item32.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir1" + delimiter + "EndDir2" + delimiter));
 
+                        IEnumerable<IListBlobItem> list4 = midDir2.ListBlobs(true);
+
+                        List<IListBlobItem> simpleList4 = list4.ToList();
+                        Assert.IsTrue(simpleList4.Count == 2);
+
+                        IListBlobItem item41 = simpleList4.ElementAt(0);
+                        Assert.IsTrue(item41.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir1" + delimiter + "EndBlob1"));
+
+                        IListBlobItem item42 = simpleList4.ElementAt(1);
+                        Assert.IsTrue(item42.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir2" + delimiter + "EndBlob2"));
                     }
                 }
                 finally

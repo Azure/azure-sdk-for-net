@@ -189,6 +189,96 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
+        [Description("List blobs with empty prefix")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlobClientListBlobsSegmentedWithEmptyPrefix()
+        {
+            string name = "bb" + GetRandomContainerName();
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            CloudBlobContainer rootContainer = blobClient.GetRootContainerReference();
+            CloudBlobContainer container = blobClient.GetContainerReference(name);
+           
+            try
+            {
+                rootContainer.CreateIfNotExists();
+                container.Create();
+                List<Uri> preExistingBlobs = rootContainer.ListBlobs().Select(b => b.Uri).ToList();
+
+                List<string> blobNames = CreateBlobs(container, 3, BlobType.BlockBlob);
+                List<string> rootBlobNames = CreateBlobs(rootContainer, 2, BlobType.BlockBlob);
+
+                BlobResultSegment results;
+                BlobContinuationToken token = null;
+                List<Uri> listedBlobs = new List<Uri>();
+                do
+                {
+                    results = blobClient.ListBlobsSegmented("", token);
+                    token = results.ContinuationToken;
+
+                    foreach (IListBlobItem blob in results.Results)
+                    {
+                        if (preExistingBlobs.Contains(blob.Uri))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            if (blob is CloudPageBlob)
+                            {
+                                ((CloudPageBlob)blob).Delete();
+                            }
+                            else
+                            {
+                                ((CloudBlockBlob)blob).Delete();
+                            }
+
+                            listedBlobs.Add(blob.Uri);
+                        }
+                    }
+                }
+                while (token != null);
+
+                Assert.AreEqual(2, listedBlobs.Count);
+                do
+                {
+                    results = container.ListBlobsSegmented("", false, BlobListingDetails.None, null, token, null, null);
+                    token = results.ContinuationToken;
+
+                    foreach (IListBlobItem blob in results.Results)
+                    {
+                        if (preExistingBlobs.Contains(blob.Uri))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            if (blob is CloudPageBlob)
+                            {
+                                ((CloudPageBlob)blob).Delete();
+                            }
+                            else
+                            {
+                                ((CloudBlockBlob)blob).Delete();
+                            }
+
+                            listedBlobs.Add(blob.Uri);
+                        }
+                    }
+                }
+                while (token != null);
+
+                Assert.AreEqual(5, listedBlobs.Count);
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
         [Description("List blobs with prefix")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -359,7 +449,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 ContainerResultSegment resultSegment = blobClient.ListContainersSegmented(name, ContainerListingDetails.None, 1, token);
                 token = resultSegment.ContinuationToken;
-                
+
                 int count = 0;
                 foreach (CloudBlobContainer container in resultSegment.Results)
                 {

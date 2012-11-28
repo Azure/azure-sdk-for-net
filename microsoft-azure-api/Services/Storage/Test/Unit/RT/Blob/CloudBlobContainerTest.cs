@@ -234,11 +234,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 await container.CreateAsync();
                 List<string> blobNames = await CreateBlobsAsync(container, 3, BlobType.PageBlob);
 
-                foreach (string blobName in blobNames)
-                {
-                    await container.GetPageBlobReference(blobName).CreateAsync(0);
-                }
-
                 BlobResultSegment results = await container.ListBlobsSegmentedAsync(null);
                 Assert.AreEqual(blobNames.Count, results.Results.Count());
                 foreach (IListBlobItem blobItem in results.Results)

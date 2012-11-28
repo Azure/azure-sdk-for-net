@@ -92,6 +92,24 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
         #region Sync
         [TestMethod]
+        [Description("A test to check the DynamicTableEntity constructor")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableDynamicTableEntityConstructor()
+        {
+            string pk = Guid.NewGuid().ToString();
+            string rk = Guid.NewGuid().ToString();
+            Dictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>();
+            properties.Add("foo", new EntityProperty("bar"));
+            properties.Add("foo1", new EntityProperty("bar1"));
+
+            DynamicTableEntity ent = new DynamicTableEntity(pk, rk, "*", properties);
+            currentTable.Execute(TableOperation.Insert(ent));
+        }
+        
+        [TestMethod]
         [Description("A test to check batch insert functionality")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -1360,16 +1378,25 @@ namespace Microsoft.WindowsAzure.Storage.Table
             // Validate entity
             Assert.AreEqual(sendEnt["String"], retrievedEntity["String"]);
             Assert.AreEqual(sendEnt["Int64"], retrievedEntity["Int64"]);
+            Assert.AreEqual(sendEnt["Int64N"], retrievedEntity["Int64N"]);
             Assert.AreEqual(sendEnt["LongPrimitive"], retrievedEntity["LongPrimitive"]);
+            Assert.AreEqual(sendEnt["LongPrimitiveN"], retrievedEntity["LongPrimitiveN"]);
             Assert.AreEqual(sendEnt["Int32"], retrievedEntity["Int32"]);
+            Assert.AreEqual(sendEnt["Int32N"], retrievedEntity["Int32N"]);
             Assert.AreEqual(sendEnt["IntegerPrimitive"], retrievedEntity["IntegerPrimitive"]);
+            Assert.AreEqual(sendEnt["IntegerPrimitiveN"], retrievedEntity["IntegerPrimitiveN"]);
             Assert.AreEqual(sendEnt["Guid"], retrievedEntity["Guid"]);
+            Assert.AreEqual(sendEnt["GuidN"], retrievedEntity["GuidN"]);
             Assert.AreEqual(sendEnt["Double"], retrievedEntity["Double"]);
+            Assert.AreEqual(sendEnt["DoubleN"], retrievedEntity["DoubleN"]);
             Assert.AreEqual(sendEnt["DoublePrimitive"], retrievedEntity["DoublePrimitive"]);
+            Assert.AreEqual(sendEnt["DoublePrimitiveN"], retrievedEntity["DoublePrimitiveN"]);
             Assert.AreEqual(sendEnt["BinaryPrimitive"], retrievedEntity["BinaryPrimitive"]);
             Assert.AreEqual(sendEnt["Binary"], retrievedEntity["Binary"]);
             Assert.AreEqual(sendEnt["BoolPrimitive"], retrievedEntity["BoolPrimitive"]);
+            Assert.AreEqual(sendEnt["BoolPrimitiveN"], retrievedEntity["BoolPrimitiveN"]);
             Assert.AreEqual(sendEnt["Bool"], retrievedEntity["Bool"]);
+            Assert.AreEqual(sendEnt["BoolN"], retrievedEntity["BoolN"]);
             Assert.AreEqual(sendEnt["DateTimeOffsetN"], retrievedEntity["DateTimeOffsetN"]);
             Assert.AreEqual(sendEnt["DateTimeOffset"], retrievedEntity["DateTimeOffset"]);
             Assert.AreEqual(sendEnt["DateTime"], retrievedEntity["DateTime"]);
@@ -1412,7 +1439,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
             results = currentTable.ExecuteBatch(batch);
             Assert.AreEqual(results.Count, 1);
             Assert.AreEqual(results.First().HttpStatusCode, (int)HttpStatusCode.OK);
-            Assert.AreEqual((string)results.First().Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt["foo"].StringValue + sendEnt.Properties.Count);
+
+            // Since there are properties in ComplexEntity set to null, we do not receive those from the server. Hence we need to check for non null values.
+            Assert.AreEqual((string)results.First().Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt["foo"].StringValue + ComplexEntity.NumberOfNonNullProperties);
         }
         #endregion
 
@@ -1557,7 +1586,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
             }
             Assert.AreEqual(results.Count, 1);
             Assert.AreEqual(results.First().HttpStatusCode, (int)HttpStatusCode.OK);
-            Assert.AreEqual((string)results.First().Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt["foo"].StringValue + sendEnt.Properties.Count);
+            // Since there are properties in ComplexEntity set to null, we do not receive those from the server. Hence we need to check for non null values.
+            Assert.AreEqual((string)results.First().Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt["foo"].StringValue + ComplexEntity.NumberOfNonNullProperties);
         }
         #endregion
         #endregion

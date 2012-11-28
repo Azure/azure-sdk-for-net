@@ -81,7 +81,7 @@ byte[] input)
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
         /// <returns>A new <see cref="EntityProperty"/> of the <see cref="Boolean"/> type.</returns>
-        public static EntityProperty GeneratePropertyForBool(bool input)
+        public static EntityProperty GeneratePropertyForBool(bool? input)
         {
             return new EntityProperty(input);
         }
@@ -91,7 +91,7 @@ byte[] input)
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
         /// <returns>A new <see cref="EntityProperty"/> of the <see cref="Double"/> type.</returns>
-        public static EntityProperty GeneratePropertyForDouble(double input)
+        public static EntityProperty GeneratePropertyForDouble(double? input)
         {
             return new EntityProperty(input);
         }
@@ -101,7 +101,7 @@ byte[] input)
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
         /// <returns>A new <see cref="EntityProperty"/> of the <see cref="Guid"/> type.</returns>
-        public static EntityProperty GeneratePropertyForGuid(Guid input)
+        public static EntityProperty GeneratePropertyForGuid(Guid? input)
         {
             return new EntityProperty(input);
         }
@@ -111,7 +111,7 @@ byte[] input)
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
         /// <returns>A new <see cref="EntityProperty"/> of the <see cref="Int32"/> type.</returns>
-        public static EntityProperty GeneratePropertyForInt(int input)
+        public static EntityProperty GeneratePropertyForInt(int? input)
         {
             return new EntityProperty(input);
         }
@@ -121,7 +121,7 @@ byte[] input)
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
         /// <returns>A new <see cref="EntityProperty"/> of the <see cref="Int64"/> type.</returns>
-        public static EntityProperty GeneratePropertyForLong(long input)
+        public static EntityProperty GeneratePropertyForLong(long? input)
         {
             return new EntityProperty(input);
         }
@@ -166,9 +166,10 @@ byte[] input)
 #else
         public
 #endif
- EntityProperty(bool input)
+ EntityProperty(bool? input)
             : this(EdmType.Boolean)
         {
+            this.IsNull = !input.HasValue;
             this.PropertyAsObject = input;
         }
 
@@ -224,9 +225,10 @@ byte[] input)
 #else
         public
 #endif
- EntityProperty(double input)
+ EntityProperty(double? input)
             : this(EdmType.Double)
         {
+            this.IsNull = !input.HasValue;
             this.PropertyAsObject = input;
         }
 
@@ -240,9 +242,10 @@ byte[] input)
 #else
         public
 #endif
- EntityProperty(Guid input)
+ EntityProperty(Guid? input)
             : this(EdmType.Guid)
         {
+            this.IsNull = !input.HasValue;
             this.PropertyAsObject = input;
         }
 
@@ -256,9 +259,10 @@ byte[] input)
 #else
         public
 #endif
- EntityProperty(int input)
+ EntityProperty(int? input)
             : this(EdmType.Int32)
         {
+            this.IsNull = !input.HasValue;
             this.PropertyAsObject = input;
         }
 
@@ -272,9 +276,10 @@ byte[] input)
 #else
         public
 #endif
- EntityProperty(long input)
+ EntityProperty(long? input)
             : this(EdmType.Int64)
         {
+            this.IsNull = !input.HasValue;
             this.PropertyAsObject = input;
         }
 
@@ -334,18 +339,19 @@ byte[] input)
         /// An exception will be thrown if you attempt to set this property to anything other than an <see cref="Boolean"/> Object.
         /// </summary>
         /// <value>The <see cref="Boolean"/> value of this <see cref="EntityProperty"/> object.</value>
-        public bool BooleanValue
+        public bool? BooleanValue
         {
             get
             {
                 this.EnforceType(EdmType.Boolean);
-                return (bool)this.PropertyAsObject;
+                return (bool?)this.PropertyAsObject;
             }
 
             set
             {
                 this.EnforceType(EdmType.Boolean);
                 this.PropertyAsObject = value;
+                this.IsNull = value.HasValue;
             }
         }
 
@@ -399,18 +405,19 @@ byte[] input)
         /// An exception will be thrown if you attempt to set this property to anything other than a <see cref="Double"/> object.
         /// </summary>
         /// <value>The <see cref="Double"/> value of this <see cref="EntityProperty"/> object.</value>
-        public double DoubleValue
+        public double? DoubleValue
         {
             get
             {
                 this.EnforceType(EdmType.Double);
-                return (double)this.PropertyAsObject;
+                return (double?)this.PropertyAsObject;
             }
 
             set
             {
                 this.EnforceType(EdmType.Double);
                 this.PropertyAsObject = value;
+                this.IsNull = value.HasValue;
             }
         }
 
@@ -419,18 +426,19 @@ byte[] input)
         /// An exception will be thrown if you attempt to set this property to anything other than a <see cref="Guid"/> object.
         /// </summary>
         /// <value>The <see cref="Guid"/> value of this <see cref="EntityProperty"/> object.</value>
-        public Guid GuidValue
+        public Guid? GuidValue
         {
             get
             {
                 this.EnforceType(EdmType.Guid);
-                return (Guid)this.PropertyAsObject;
+                return (Guid?)this.PropertyAsObject;
             }
 
             set
             {
                 this.EnforceType(EdmType.Guid);
                 this.PropertyAsObject = value;
+                this.IsNull = value.HasValue;
             }
         }
 
@@ -439,18 +447,19 @@ byte[] input)
         /// An exception will be thrown if you attempt to set this property to anything other than an <see cref="Int32"/> Object.
         /// </summary>
         /// <value>The <see cref="Int32"/> value of this <see cref="EntityProperty"/> object.</value>
-        public int Int32Value
+        public int? Int32Value
         {
             get
             {
                 this.EnforceType(EdmType.Int32);
-                return (int)this.PropertyAsObject;
+                return (int?)this.PropertyAsObject;
             }
 
             set
             {
                 this.EnforceType(EdmType.Int32);
                 this.PropertyAsObject = value;
+                this.IsNull = value.HasValue;
             }
         }
 
@@ -459,18 +468,19 @@ byte[] input)
         /// An exception will be thrown if you attempt to set this property to anything other than an <see cref="Int64"/> Object.
         /// </summary>
         /// <value>The <see cref="Int64"/> value of this <see cref="EntityProperty"/> object.</value>
-        public long Int64Value
+        public long? Int64Value
         {
             get
             {
                 this.EnforceType(EdmType.Int64);
-                return (long)this.PropertyAsObject;
+                return (long?)this.PropertyAsObject;
             }
 
             set
             {
                 this.EnforceType(EdmType.Int64);
                 this.PropertyAsObject = value;
+                this.IsNull = value.HasValue;
             }
         }
 
@@ -564,6 +574,10 @@ byte[] input)
             {
                 return new EntityProperty((bool)value);
             }
+            else if (value is bool?)
+            {
+                return new EntityProperty((bool?)value);
+            }
             else if (value is DateTime)
             {
                 return new EntityProperty((DateTime)value);
@@ -584,6 +598,14 @@ byte[] input)
             {
                 return new EntityProperty((double)value);
             }
+            else if (value is double?)
+            {
+                return new EntityProperty((double?)value);
+            }
+            else if (value is Guid?)
+            {
+                return new EntityProperty((Guid?)value);
+            }
             else if (value is Guid)
             {
                 return new EntityProperty((Guid)value);
@@ -592,9 +614,17 @@ byte[] input)
             {
                 return new EntityProperty((int)value);
             }
+            else if (value is int?)
+            {
+                return new EntityProperty((int?)value);
+            }
             else if (value is long)
             {
                 return new EntityProperty((long)value);
+            }
+            else if (value is long?)
+            {
+                return new EntityProperty((long?)value);
             }
             else if (value == null)
             {
