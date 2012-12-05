@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             this.testContainer = null;
         }
 
-        private async Task TestAccessAsync(string sasToken, SharedAccessBlobPermissions permissions, CloudBlobContainer container, ICloudBlob blob)
+        private static async Task TestAccessAsync(string sasToken, SharedAccessBlobPermissions permissions, CloudBlobContainer container, ICloudBlob blob)
         {
             OperationContext operationContext = new OperationContext();
             StorageCredentials credentials = string.IsNullOrEmpty(sasToken) ?
@@ -132,6 +132,21 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             }
         }
 
+        private static async Task TestBlobSASAsync(ICloudBlob testBlob, SharedAccessBlobPermissions permissions)
+        {
+            await UploadTextAsync(testBlob, "blob", Encoding.UTF8);
+
+            SharedAccessBlobPolicy policy = new SharedAccessBlobPolicy()
+            {
+                SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                Permissions = permissions,
+            };
+
+            string sasToken = testBlob.GetSharedAccessSignature(policy);
+            await SASTests.TestAccessAsync(sasToken, permissions, null, testBlob);
+        }
+
         [TestMethod]
         /// [Description("Test all combinations of blob permissions against a container")]
         [TestCategory(ComponentCategory.Blob)]
@@ -153,11 +168,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
                 CloudBlockBlob testBlockBlob = this.testContainer.GetBlockBlobReference("blockblob" + i);
                 await UploadTextAsync(testBlockBlob, "blob", Encoding.UTF8);
-                await TestAccessAsync(sasToken, permissions, this.testContainer, testBlockBlob);
+                await SASTests.TestAccessAsync(sasToken, permissions, this.testContainer, testBlockBlob);
 
                 CloudPageBlob testPageBlob = this.testContainer.GetPageBlobReference("pageblob" + i);
                 await UploadTextAsync(testPageBlob, "blob", Encoding.UTF8);
-                await TestAccessAsync(sasToken, permissions, this.testContainer, testPageBlob);
+                await SASTests.TestAccessAsync(sasToken, permissions, this.testContainer, testPageBlob);
             }
         }
 
@@ -180,14 +195,14 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             permissions.PublicAccess = BlobContainerPublicAccessType.Container;
             await this.testContainer.SetPermissionsAsync(permissions);
             await Task.Delay(30 * 1000);
-            await TestAccessAsync(null, SharedAccessBlobPermissions.List | SharedAccessBlobPermissions.Read, this.testContainer, testBlockBlob);
-            await TestAccessAsync(null, SharedAccessBlobPermissions.List | SharedAccessBlobPermissions.Read, this.testContainer, testPageBlob);
+            await SASTests.TestAccessAsync(null, SharedAccessBlobPermissions.List | SharedAccessBlobPermissions.Read, this.testContainer, testBlockBlob);
+            await SASTests.TestAccessAsync(null, SharedAccessBlobPermissions.List | SharedAccessBlobPermissions.Read, this.testContainer, testPageBlob);
 
             permissions.PublicAccess = BlobContainerPublicAccessType.Blob;
             await this.testContainer.SetPermissionsAsync(permissions);
             await Task.Delay(30 * 1000);
-            await TestAccessAsync(null, SharedAccessBlobPermissions.Read, this.testContainer, testBlockBlob);
-            await TestAccessAsync(null, SharedAccessBlobPermissions.Read, this.testContainer, testPageBlob);
+            await SASTests.TestAccessAsync(null, SharedAccessBlobPermissions.Read, this.testContainer, testBlockBlob);
+            await SASTests.TestAccessAsync(null, SharedAccessBlobPermissions.Read, this.testContainer, testPageBlob);
         }
 
         [TestMethod]
@@ -201,18 +216,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             for (int i = 1; i < 8; i++)
             {
                 CloudBlockBlob testBlob = this.testContainer.GetBlockBlobReference("blob" + i);
-                await UploadTextAsync(testBlob, "blob", Encoding.UTF8);
-
                 SharedAccessBlobPermissions permissions = (SharedAccessBlobPermissions)i;
-                SharedAccessBlobPolicy policy = new SharedAccessBlobPolicy()
-                {
-                    SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
-                    SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
-                    Permissions = permissions,
-                };
-                string sasToken = testBlob.GetSharedAccessSignature(policy);
-
-                await TestAccessAsync(sasToken, permissions, null, testBlob);
+                await SASTests.TestBlobSASAsync(testBlob, permissions);
             }
         }
 
@@ -227,18 +232,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             for (int i = 1; i < 8; i++)
             {
                 CloudPageBlob testBlob = this.testContainer.GetPageBlobReference("blob" + i);
-                await UploadTextAsync(testBlob, "blob", Encoding.UTF8);
-
                 SharedAccessBlobPermissions permissions = (SharedAccessBlobPermissions)i;
-                SharedAccessBlobPolicy policy = new SharedAccessBlobPolicy()
-                {
-                    SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
-                    SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
-                    Permissions = permissions,
-                };
-                string sasToken = testBlob.GetSharedAccessSignature(policy);
-
-                await TestAccessAsync(sasToken, permissions, null, testBlob);
+                await SASTests.TestBlobSASAsync(testBlob, permissions);
             }
         }
     }

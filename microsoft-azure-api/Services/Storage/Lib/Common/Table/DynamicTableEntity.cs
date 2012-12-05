@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="partitionKey">The partition key value for the entity.</param>
         /// <param name="rowKey">The row key value for the entity.</param>
         public DynamicTableEntity(string partitionKey, string rowKey)
-            : this(partitionKey, rowKey, DateTime.MinValue, null /* timestamp */, new Dictionary<string, EntityProperty>())
+            : this(partitionKey, rowKey, DateTimeOffset.MinValue, null /* timestamp */, new Dictionary<string, EntityProperty>())
         {
         }
 
@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="properties">The entity's properties, indexed by property name.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is consistent with IDictionary<> itself.")]
         public DynamicTableEntity(string partitionKey, string rowKey, string etag, IDictionary<string, EntityProperty> properties)
-            : this(partitionKey, rowKey, DateTime.MinValue, etag, properties)
+            : this(partitionKey, rowKey, DateTimeOffset.MinValue, etag, properties)
         {
         }
 
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="timestamp">The timestamp for this entity as returned by Windows Azure.</param>
         /// <param name="etag">The entity's current ETag; set to null to ignore the ETag during subsequent update operations.</param>
         /// <param name="properties">An <see cref="IDictionary{TKey,TElement}"/> containg a map of <see cref="string"/> property names to <see cref="EntityProperty"/> data typed values to store in the new <see cref="DynamicTableEntity"/>.</param>
-        internal DynamicTableEntity(string partitionKey, string rowKey, DateTime timestamp, string etag, IDictionary<string, EntityProperty> properties)
+        internal DynamicTableEntity(string partitionKey, string rowKey, DateTimeOffset timestamp, string etag, IDictionary<string, EntityProperty> properties)
         {
             CommonUtils.AssertNotNull("partitionKey", partitionKey);
             CommonUtils.AssertNotNull("rowKey", rowKey);

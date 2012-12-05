@@ -929,6 +929,85 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
+        [Description("Put blob in blocks and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlockBlobUploadFromStreamInBlocks()
+        {
+            byte[] buffer = GetRandomBuffer(2 * 1024 * 1024);
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                blob.ServiceClient.SingleBlobUploadThresholdInBytes = 1 * 1024 * 1024;
+                blob.StreamWriteSizeInBytes = 512 * 1024;
+                using (MemoryStream originalBlob = new MemoryStream(buffer))
+                {
+                    blob.UploadFromStream(originalBlob);
+
+                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    {
+                        blob.DownloadToStream(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Put blob in blocks and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlockBlobUploadFromStreamInBlocksAPM()
+        {
+            byte[] buffer = GetRandomBuffer(2 * 1024 * 1024);
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                blob.ServiceClient.SingleBlobUploadThresholdInBytes = 1 * 1024 * 1024;
+                blob.StreamWriteSizeInBytes = 512 * 1024;
+                using (MemoryStream originalBlob = new MemoryStream(buffer))
+                {
+                    using (AutoResetEvent waitHandle = new AutoResetEvent(false))
+                    {
+                        ICancellableAsyncResult result = blob.BeginUploadFromStream(originalBlob,
+                            ar => waitHandle.Set(),
+                            null);
+                        waitHandle.WaitOne();
+                        blob.EndUploadFromStream(result);
+
+                        using (MemoryStream downloadedBlob = new MemoryStream())
+                        {
+                            result = blob.BeginDownloadToStream(downloadedBlob,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndDownloadToStream(result);
+                            TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
         [Description("Single put blob and get blob")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -1379,6 +1458,139 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             () => blob.EndPutBlock(result),
                             "Trying to upload a block with more than 4MB should fail",
                             HttpStatusCode.RequestEntityTooLarge);
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Upload blocks and then verify the contents")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlockBlobPutBlock()
+        {
+            byte[] buffer = GetRandomBuffer(4 * 1024 * 1024);
+            MD5 md5 = MD5.Create();
+            string contentMD5 = Convert.ToBase64String(md5.ComputeHash(buffer));
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                List<string> blockList = GetBlockIdList(2);
+
+                using (MemoryStream resultingData = new MemoryStream())
+                {
+                    using (MemoryStream memoryStream = new MemoryStream(buffer))
+                    {
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        blob.PutBlock(blockList[0], memoryStream, contentMD5);
+                        resultingData.Write(buffer, 0, buffer.Length);
+
+                        int offset = buffer.Length - 1024;
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        TestHelper.ExpectedException(
+                            () => blob.PutBlock(blockList[1], memoryStream, contentMD5),
+                            "Invalid MD5 should fail with mismatch",
+                            HttpStatusCode.BadRequest,
+                            "Md5Mismatch");
+
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        blob.PutBlock(blockList[1], memoryStream, null);
+                        resultingData.Write(buffer, offset, buffer.Length - offset);
+                    }
+
+                    blob.PutBlockList(blockList);
+
+                    using (MemoryStream blobData = new MemoryStream())
+                    {
+                        blob.DownloadToStream(blobData);
+                        Assert.AreEqual(resultingData.Length, blobData.Length);
+
+                        Assert.IsTrue(blobData.ToArray().SequenceEqual(resultingData.ToArray()));
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Upload blocks and then verify the contents")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlockBlobPutBlockAPM()
+        {
+            byte[] buffer = GetRandomBuffer(4 * 1024 * 1024);
+            MD5 md5 = MD5.Create();
+            string contentMD5 = Convert.ToBase64String(md5.ComputeHash(buffer));
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                List<string> blockList = GetBlockIdList(2);
+
+                using (AutoResetEvent waitHandle = new AutoResetEvent(false))
+                {
+                    IAsyncResult result;
+
+                    using (MemoryStream resultingData = new MemoryStream())
+                    {
+                        using (MemoryStream memoryStream = new MemoryStream(buffer))
+                        {
+                            memoryStream.Seek(0, SeekOrigin.Begin);
+                            result = blob.BeginPutBlock(blockList[0], memoryStream, contentMD5,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndPutBlock(result);
+                            resultingData.Write(buffer, 0, buffer.Length);
+
+                            int offset = buffer.Length - 1024;
+                            memoryStream.Seek(offset, SeekOrigin.Begin);
+                            result = blob.BeginPutBlock(blockList[1], memoryStream, contentMD5,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            TestHelper.ExpectedException(
+                                () => blob.EndPutBlock(result),
+                                "Invalid MD5 should fail with mismatch",
+                                HttpStatusCode.BadRequest,
+                                "Md5Mismatch");
+
+                            memoryStream.Seek(offset, SeekOrigin.Begin);
+                            result = blob.BeginPutBlock(blockList[1], memoryStream, null,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndPutBlock(result);
+                            resultingData.Write(buffer, offset, buffer.Length - offset);
+                        }
+
+                        blob.PutBlockList(blockList);
+
+                        using (MemoryStream blobData = new MemoryStream())
+                        {
+                            blob.DownloadToStream(blobData);
+                            Assert.AreEqual(resultingData.Length, blobData.Length);
+
+                            Assert.IsTrue(blobData.ToArray().SequenceEqual(resultingData.ToArray()));
+                        }
                     }
                 }
             }

@@ -149,12 +149,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 }
 
                 opContext = new OperationContext();
-                AccessCondition accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(DateTimeOffset.Now);
+                AccessCondition accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(DateTimeOffset.Now.Subtract(TimeSpan.FromHours(1)));
                 using (IRandomAccessStreamWithContentType blobStream = await blob.OpenReadAsync(accessCondition, null, opContext))
                 {
                     Stream blobStreamForRead = blobStream.AsStreamForRead();
-                    await blob.SetMetadataAsync();
-                    await blobStreamForRead.ReadAsync(outBuffer, 0, outBuffer.Length);
                     await blob.SetMetadataAsync();
                     await TestHelper.ExpectedExceptionAsync(
                         async () => await blobStreamForRead.ReadAsync(outBuffer, 0, outBuffer.Length),
@@ -220,12 +218,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 }
 
                 opContext = new OperationContext();
-                AccessCondition accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(DateTimeOffset.Now);
+                AccessCondition accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(DateTimeOffset.Now.Subtract(TimeSpan.FromHours(1)));
                 using (IRandomAccessStreamWithContentType blobStream = await blob.OpenReadAsync(accessCondition, null, opContext))
                 {
                     Stream blobStreamForRead = blobStream.AsStreamForRead();
-                    await blob.SetMetadataAsync();
-                    await blobStreamForRead.ReadAsync(outBuffer, 0, outBuffer.Length);
                     await blob.SetMetadataAsync();
                     await TestHelper.ExpectedExceptionAsync(
                         async () => await blobStreamForRead.ReadAsync(outBuffer, 0, outBuffer.Length),

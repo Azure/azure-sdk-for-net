@@ -86,7 +86,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             ChainedAsyncResult<Stream> chainedResult = new ChainedAsyncResult<Stream>(callback, state)
             {
-                CompletedSynchronously = true,
                 Result = this.OpenWrite(accessCondition, options, operationContext),
             };
             chainedResult.OnComplete();
@@ -212,6 +211,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         streamCopyState,
                         completedState =>
                         {
+                            chainedResult.UpdateCompletedSynchronously(executionState.CompletedSynchronously);
+
                             try
                             {
                                 lock (chainedResult.CancellationLockerObject)
@@ -253,6 +254,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     null /* streamCopyState */,
                     completedState =>
                     {
+                        chainedResult.UpdateCompletedSynchronously(executionState.CompletedSynchronously);
+
                         try
                         {
                             blobStream.Close();
@@ -276,6 +279,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 operationContext,
                 ar =>
                 {
+                    chainedResult.UpdateCompletedSynchronously(ar.CompletedSynchronously);
+
                     try
                     {
                         Executor.EndExecuteAsync<NullType>(ar);
@@ -786,7 +791,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 RequestOptions = modifiedOptions,
                 OperationContext = operationContext,
-                CompletedSynchronously = true,
             };
             this.DeleteIfExistsHandler(deleteSnapshotsOption, accessCondition, options, operationContext, chainedResult);
             return chainedResult;
@@ -801,7 +805,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     operationContext,
                     existsResult =>
                     {
-                        chainedResult.CompletedSynchronously &= existsResult.CompletedSynchronously;
+                        chainedResult.UpdateCompletedSynchronously(existsResult.CompletedSynchronously);
                         lock (chainedResult.CancellationLockerObject)
                         {
                             chainedResult.CancelDelegate = null;
@@ -822,7 +826,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                                     operationContext,
                                     deleteResult =>
                                     {
-                                        chainedResult.CompletedSynchronously &= deleteResult.CompletedSynchronously;
+                                        chainedResult.UpdateCompletedSynchronously(deleteResult.CompletedSynchronously);
                                         chainedResult.CancelDelegate = null;
                                         try
                                         {
@@ -1399,6 +1403,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     streamCopyState,
                     _ =>
                     {
+                        chainedResult.UpdateCompletedSynchronously(executionState.CompletedSynchronously);
+
                         if (executionState.ExceptionRef != null)
                         {
                             chainedResult.OnComplete(executionState.ExceptionRef);
@@ -1436,6 +1442,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     operationContext,
                     ar =>
                     {
+                        chainedResult.UpdateCompletedSynchronously(ar.CompletedSynchronously);
+
                         try
                         {
                             Executor.EndExecuteAsync<NullType>(ar);

@@ -366,7 +366,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void TableServiceContextTimeoutDuringSaveChangesNonBatchSync()
         {
             CloudTableClient tableClient = GenerateCloudTableClient();
@@ -393,7 +393,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
                 catch (StorageException ex)
                 {
                     Assert.AreEqual(ex.RequestInformation.HttpStatusCode, (int)HttpStatusCode.RequestTimeout);
-                    Assert.AreEqual(ex.Message, "The operation timed out.");
+                    Assert.AreEqual("The client could not finish the operation within specified timeout.", ex.Message);
                     Assert.IsTrue(ex.InnerException is TimeoutException);
                 }
             }
@@ -404,7 +404,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void TableServiceContextTimeoutDuringSaveChangesNonBatchAPM()
         {
             CloudTableClient tableClient = GenerateCloudTableClient();
@@ -445,7 +445,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
                 catch (StorageException ex)
                 {
                     Assert.AreEqual(ex.RequestInformation.HttpStatusCode, (int)HttpStatusCode.RequestTimeout);
-                    Assert.AreEqual(ex.Message, "The operation timed out.");
+                    Assert.AreEqual("The client could not finish the operation within specified timeout.", ex.Message);
                     Assert.IsTrue(ex.InnerException is TimeoutException);
                 }
             }
