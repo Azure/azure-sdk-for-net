@@ -15,12 +15,19 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAzure.Storage.Table.DataServices;
 using Microsoft.WindowsAzure.Storage.Table.DataServices.Entities;
+
+#if DN40CP
+using System.Threading.Tasks;
+#endif
 
 namespace Microsoft.WindowsAzure.Storage.Table.DataServices
 {
@@ -111,6 +118,34 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             Assert.IsNotNull(retrievedEntity);
             ComplexEntity.AssertEquality(insertEntity, retrievedEntity);
         }
+
+#if DN40CP
+        [TestMethod]
+        [Description("Single Entity Insert")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void SingleEntityInsertTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableServiceContext ctx = tableClient.GetTableServiceContext();
+
+            // Insert Entity
+            ComplexEntity insertEntity = new ComplexEntity("insert test", "foo");
+            ctx.AddObject(currentTable.Name, insertEntity);
+            Task.Factory.FromAsync<DataServiceResponse>(ctx.BeginSaveChangesWithRetries, ctx.EndSaveChangesWithRetries, null).Wait();
+
+            // Retrieve Entity
+            ComplexEntity retrievedEntity = (from ent in ctx.CreateQuery<ComplexEntity>(currentTable.Name)
+                                             where ent.PartitionKey == insertEntity.PartitionKey
+                                             && ent.RowKey == insertEntity.RowKey
+                                             select ent).AsTableServiceQuery(ctx).Execute().FirstOrDefault();
+
+            Assert.IsNotNull(retrievedEntity);
+            ComplexEntity.AssertEquality(insertEntity, retrievedEntity);
+        }
+#endif
 
         [TestMethod]
         [Description("Single Entity Insert Conflict")]
@@ -257,6 +292,91 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             ctx.AttachTo(currentTable.Name, replacedEntity, null);
             ctx.UpdateObject(replacedEntity);
             ctx.SaveChangesWithRetries(SaveChangesOptions.ReplaceOnUpdate);
+
+            // Retrieve Entity & Verify
+            retrievedEntity = (from ent in queryContext.CreateQuery<UnionEnitity>(currentTable.Name)
+                               where ent.PartitionKey == baseEntity.PartitionKey
+                               && ent.RowKey == baseEntity.RowKey
+                               select ent).AsTableServiceQuery(queryContext).Execute().FirstOrDefault();
+
+            Assert.IsNotNull(retrievedEntity);
+            Assert.AreEqual(replacedEntity.A, retrievedEntity.A);
+            Assert.AreEqual(replacedEntity.B, retrievedEntity.B);
+            Assert.AreEqual(replacedEntity.C, retrievedEntity.C);
+            Assert.AreEqual(null, retrievedEntity.D);
+            Assert.AreEqual(null, retrievedEntity.E);
+            Assert.AreEqual(null, retrievedEntity.F);
+        }
+
+        [TestMethod]
+        [Description("Single Entity Insert Or Replace")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void SingleEntityInsertOrReplaceAPM()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableServiceContext ctx = tableClient.GetTableServiceContext();
+            TableServiceContext queryContext = tableClient.GetTableServiceContext();
+            queryContext.MergeOption = MergeOption.NoTracking;
+
+            // Insert Entity
+            BaseEntity baseEntity = new BaseEntity("insert test", "foo");
+
+            // Insert Or Merge with no pre-existing entity
+            MergeEntity insertOrReplaceEntity = new MergeEntity(baseEntity.PartitionKey, baseEntity.RowKey);
+            insertOrReplaceEntity.Randomize();
+            ctx.AttachTo(currentTable.Name, insertOrReplaceEntity, null);
+            ctx.UpdateObject(insertOrReplaceEntity);
+
+            using (ManualResetEvent evt = new ManualResetEvent(false))
+            {
+                IAsyncResult asyncRes = null;
+                ctx.BeginSaveChangesWithRetries(SaveChangesOptions.ReplaceOnUpdate, (res) =>
+                {
+                    asyncRes = res;
+                    evt.Set();
+                }, null);
+                evt.WaitOne();
+                
+                ctx.EndSaveChangesWithRetries(asyncRes);
+            }
+
+            ctx.Detach(insertOrReplaceEntity);
+
+            // Retrieve Entity & Verify Contents
+            UnionEnitity retrievedEntity = (from ent in queryContext.CreateQuery<UnionEnitity>(currentTable.Name)
+                                            where ent.PartitionKey == baseEntity.PartitionKey
+                                            && ent.RowKey == baseEntity.RowKey
+                                            select ent).AsTableServiceQuery(queryContext).Execute().FirstOrDefault();
+
+            Assert.IsNotNull(retrievedEntity);
+            Assert.AreEqual(null, retrievedEntity.A);
+            Assert.AreEqual(null, retrievedEntity.B);
+            Assert.AreEqual(null, retrievedEntity.C);
+            Assert.AreEqual(insertOrReplaceEntity.D, retrievedEntity.D);
+            Assert.AreEqual(insertOrReplaceEntity.E, retrievedEntity.E);
+            Assert.AreEqual(insertOrReplaceEntity.F, retrievedEntity.F);
+
+            BaseEntity replacedEntity = new BaseEntity("insert test", "foo");
+            replacedEntity.Randomize();
+
+            ctx.AttachTo(currentTable.Name, replacedEntity, null);
+            ctx.UpdateObject(replacedEntity);
+
+            using (ManualResetEvent evt = new ManualResetEvent(false))
+            {
+                IAsyncResult asyncRes = null;
+                ctx.BeginSaveChangesWithRetries(SaveChangesOptions.ReplaceOnUpdate, (res) =>
+                {
+                    asyncRes = res;
+                    evt.Set();
+                }, null);
+                evt.WaitOne();
+                
+                ctx.EndSaveChangesWithRetries(asyncRes);
+            }
 
             // Retrieve Entity & Verify
             retrievedEntity = (from ent in queryContext.CreateQuery<UnionEnitity>(currentTable.Name)
@@ -589,6 +709,101 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             {
                 TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.NotFound, new string[] { "ResourceNotFound" }, "The specified resource does not exist.");
             }
+        }
+
+        #endregion
+
+        #region Batch
+
+        [TestMethod]
+        [Description("Batch Insert")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void BatchInsert()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableServiceContext ctx = tableClient.GetTableServiceContext();
+
+            // Insert Entities
+            SortedDictionary<string, ComplexEntity> entities = new SortedDictionary<string, ComplexEntity>();
+            for (int i = 0; i < 100; i++)
+            {
+                ComplexEntity insertEntity = new ComplexEntity("insert test", "foo" + i);
+                entities.Add(insertEntity.RowKey, insertEntity);
+                ctx.AddObject(currentTable.Name, insertEntity);
+            }
+
+            DataServiceResponse response = ctx.SaveChangesWithRetries(SaveChangesOptions.Batch);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.BatchStatusCode);
+
+            // Retrieve Entities
+            List<ComplexEntity> retrievedEntities = (from ent in ctx.CreateQuery<ComplexEntity>(currentTable.Name)
+                                                     where ent.PartitionKey == entities.First().Value.PartitionKey
+                                                     select ent).AsTableServiceQuery(ctx).Execute().ToList();
+
+            Assert.AreEqual(entities.Count, retrievedEntities.Count);
+
+            foreach (ComplexEntity retrievedEntity in retrievedEntities)
+            {
+                ComplexEntity.AssertEquality(entities[retrievedEntity.RowKey], retrievedEntity);
+                entities.Remove(retrievedEntity.RowKey);
+            }
+
+            Assert.AreEqual(0, entities.Count);
+        }
+
+        [TestMethod]
+        [Description("Batch Insert")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void BatchInsertAPM()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableServiceContext ctx = tableClient.GetTableServiceContext();
+
+            // Insert Entities
+            SortedDictionary<string, ComplexEntity> entities = new SortedDictionary<string, ComplexEntity>();
+            for (int i = 0; i < 100; i++)
+            {
+                ComplexEntity insertEntity = new ComplexEntity("insert test", "foo" + i);
+                entities.Add(insertEntity.RowKey, insertEntity);
+                ctx.AddObject(currentTable.Name, insertEntity);
+            }
+
+            DataServiceResponse response;
+            using (ManualResetEvent evt = new ManualResetEvent(false))
+            {
+                IAsyncResult asyncRes = null;
+                ctx.BeginSaveChangesWithRetries(SaveChangesOptions.Batch, (res) =>
+                {
+                    asyncRes = res;
+                    evt.Set();
+                }, null);
+                evt.WaitOne();
+
+                response = ctx.EndSaveChangesWithRetries(asyncRes);
+            }
+
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.BatchStatusCode);
+
+            // Retrieve Entities
+            List<ComplexEntity> retrievedEntities = (from ent in ctx.CreateQuery<ComplexEntity>(currentTable.Name)
+                                                     where ent.PartitionKey == entities.First().Value.PartitionKey
+                                                     select ent).AsTableServiceQuery(ctx).Execute().ToList();
+
+            Assert.AreEqual(entities.Count, retrievedEntities.Count);
+
+            foreach (ComplexEntity retrievedEntity in retrievedEntities)
+            {
+                ComplexEntity.AssertEquality(entities[retrievedEntity.RowKey], retrievedEntity);
+                entities.Remove(retrievedEntity.RowKey);
+            }
+
+            Assert.AreEqual(0, entities.Count);
         }
 
         #endregion

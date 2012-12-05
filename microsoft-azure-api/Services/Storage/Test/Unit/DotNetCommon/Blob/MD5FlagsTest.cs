@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     pageBlob.SetProperties();
 
                     TestHelper.ExpectedException(
-                        () => blockBlob.DownloadToStream(stream, null, optionsWithMD5),
+                        () => pageBlob.DownloadToStream(stream, null, optionsWithMD5),
                         "Downloading a blob with invalid MD5 should fail",
                         HttpStatusCode.OK);
                     pageBlob.DownloadToStream(stream, null, optionsWithNoMD5);
@@ -932,7 +932,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             ar => waitHandle.Set(),
                             null);
                         waitHandle.WaitOne();
-                        blockBlob.EndDownloadRangeToStream(result);
+                        pageBlob.EndDownloadRangeToStream(result);
                         Assert.IsNull(lastCheckMD5);
 
                         result = pageBlob.BeginDownloadToStream(stream, null, optionsWithMD5, opContextWithMD5Check,
@@ -940,7 +940,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             null);
                         waitHandle.WaitOne();
                         StorageException storageEx = TestHelper.ExpectedException<StorageException>(
-                            () => blockBlob.EndDownloadRangeToStream(result),
+                            () => pageBlob.EndDownloadRangeToStream(result),
                             "Page blob will not have MD5 set by default; with UseTransactional, download should fail");
 
                         result = pageBlob.BeginDownloadRangeToStream(stream, buffer.Length, buffer.Length, null, optionsWithNoMD5, opContextWithMD5Check,

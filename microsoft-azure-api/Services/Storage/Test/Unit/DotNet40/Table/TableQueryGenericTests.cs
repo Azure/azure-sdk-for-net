@@ -402,6 +402,65 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         [TestMethod]
+        [Description("Basic with resolver")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableGenericWithResolverAPM()
+        {
+            TableQuery<TableEntity> query = new TableQuery<TableEntity>().Select(new List<string>() { "A", "C" });
+
+            using (AutoResetEvent waitHandle = new AutoResetEvent(false))
+            {
+                TableContinuationToken token = null;
+                List<string> list = new List<string>();
+                do
+                {
+                    IAsyncResult result = currentTable.BeginExecuteQuerySegmented(query, (pk, rk, ts, prop, etag) => prop["A"].StringValue + prop["C"].StringValue, token, ar => waitHandle.Set(), null);
+                    waitHandle.WaitOne();
+                    TableQuerySegment<string> segment = currentTable.EndExecuteQuerySegmented<TableEntity, string>(result);
+                    list.AddRange(segment.Results);
+                    token = segment.ContinuationToken;
+                } while (token != null);
+
+                foreach (string ent in list)
+                {
+                    Assert.AreEqual(ent, "ac");
+                }
+
+                List<BaseEntity> list1 = new List<BaseEntity>();
+                do
+                {
+                    IAsyncResult result = currentTable.BeginExecuteQuerySegmented(query, (pk, rk, ts, prop, etag) => new BaseEntity() {
+                        PartitionKey = pk,
+                        RowKey = rk,
+                        Timestamp = ts,
+                        A = prop["A"].StringValue,
+                        C = prop["C"].StringValue,
+                        ETag = etag
+                    }, token, ar => waitHandle.Set(), null);
+                    waitHandle.WaitOne();
+                    TableQuerySegment<BaseEntity> segment = currentTable.EndExecuteQuerySegmented<TableEntity, BaseEntity>(result);
+                    list1.AddRange(segment.Results);
+                    token = segment.ContinuationToken;
+                } while (token != null);
+
+                foreach (BaseEntity ent in list1)
+                {
+                    Assert.IsNotNull(ent.PartitionKey);
+                    Assert.IsNotNull(ent.RowKey);
+                    Assert.IsNotNull(ent.Timestamp);
+                    Assert.IsNotNull(ent.ETag);
+
+                    Assert.AreEqual(ent.A, "a");
+                    Assert.IsNull(ent.B);
+                    Assert.AreEqual(ent.C, "c");
+                    Assert.IsNull(ent.D);
+                }
+            }
+        }
+        [TestMethod]
         [Description("A test validate all supported query types")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]

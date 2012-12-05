@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     tableCommandRef.Begin(
                         (res) =>
                         {
-                            executionState.CompletedSynchronously = executionState.CompletedSynchronously && res.CompletedSynchronously;
+                            executionState.UpdateCompletedSynchronously(res.CompletedSynchronously);
                             INTERMEDIATE_TYPE tResult = default(INTERMEDIATE_TYPE);
 
                             try

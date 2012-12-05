@@ -358,15 +358,15 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         {
             this.readRes = null;
             this.lastReadCount = this.src.EndRead(res);
-            this.state.CompletedSynchronously = this.state.CompletedSynchronously && res.CompletedSynchronously;
+            this.state.UpdateCompletedSynchronously(res.CompletedSynchronously);
         }
 
         private void ProcessEndWrite(IAsyncResult res, byte[] buffer, int offset, int count)
         {
             this.writeRes = null;
             this.dest.EndWrite(res);
-            
-            this.state.CompletedSynchronously = this.state.CompletedSynchronously && res.CompletedSynchronously;
+
+            this.state.UpdateCompletedSynchronously(res.CompletedSynchronously);
 
             if (this.streamCopyState != null)
             {

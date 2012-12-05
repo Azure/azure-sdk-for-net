@@ -97,15 +97,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         [DebuggerNonUserCode]
         public bool CompletedSynchronously
         {
-            get
-            {
-                return this.completedSynchronously;
-            }
-
-            internal set
-            {
-                this.completedSynchronously = value;
-            }
+            get { return this.completedSynchronously && this.isCompleted; }
         }
 
         /// <summary>
@@ -217,6 +209,16 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             {
                 this.AsyncWaitHandle.WaitOne();
             }
+        }
+
+        /// <summary>
+        /// Updates the CompletedSynchronously flag with another asynchronous operation result.
+        /// </summary>
+        /// <param name="lastOperationCompletedSynchronously">Set to <c>true</c> if the last operation was completed synchronously; <c>false</c> if it was completed asynchronously.</param>
+        [DebuggerNonUserCode]
+        internal void UpdateCompletedSynchronously(bool lastOperationCompletedSynchronously)
+        {
+            this.completedSynchronously = this.completedSynchronously && lastOperationCompletedSynchronously;
         }
     }
 }

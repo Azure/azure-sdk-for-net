@@ -203,7 +203,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         [DoesServiceRequest]
         public ICancellableAsyncResult BeginSaveChangesWithRetries(SaveChangesOptions options, AsyncCallback callback, object state)
         {
-            return this.BeginSaveChangesWithRetries(this.SaveChangesDefaultOptions, null /* RequestOptions */, null /* OperationContext */, callback, state);
+            return this.BeginSaveChangesWithRetries(options, null /* RequestOptions */, null /* OperationContext */, callback, state);
         }
 
         /// <summary>
