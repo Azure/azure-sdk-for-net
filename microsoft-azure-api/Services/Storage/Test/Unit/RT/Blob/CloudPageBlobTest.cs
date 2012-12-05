@@ -403,6 +403,91 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
+        /// [Description("Upload pages to a page blob and then verify the contents")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudPageBlobWritePagesAsync()
+        {
+            byte[] buffer = GetRandomBuffer(4 * 1024 * 1024);
+            CryptographicHash hasher = HashAlgorithmProvider.OpenAlgorithm("MD5").CreateHash();
+            hasher.Append(buffer.AsBuffer());
+            string contentMD5 = CryptographicBuffer.EncodeToBase64String(hasher.GetValueAndReset());
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                await container.CreateAsync();
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                await blob.CreateAsync(4 * 1024 * 1024);
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    await TestHelper.ExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                        async () => await blob.WritePagesAsync(memoryStream.AsInputStream(), 0, null),
+                        "Zero-length WritePages should fail");
+
+                    memoryStream.SetLength(4 * 1024 * 1024 + 1);
+                    await TestHelper.ExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                        async () => await blob.WritePagesAsync(memoryStream.AsInputStream(), 0, null),
+                        ">4MB WritePages should fail");
+                }
+
+                using (MemoryStream resultingData = new MemoryStream())
+                {
+                    using (MemoryStream memoryStream = new MemoryStream(buffer))
+                    {
+                        OperationContext opContext = new OperationContext();
+                        await TestHelper.ExpectedExceptionAsync(
+                            async () => await blob.WritePagesAsync(memoryStream.AsInputStream(), 512, null, null, null, opContext),
+                            opContext,
+                            "Writing out-of-range pages should fail",
+                            HttpStatusCode.RequestedRangeNotSatisfiable,
+                            "InvalidPageRange");
+
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        await blob.WritePagesAsync(memoryStream.AsInputStream(), 0, contentMD5);
+                        resultingData.Write(buffer, 0, buffer.Length);
+
+                        int offset = buffer.Length - 1024;
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        await TestHelper.ExpectedExceptionAsync(
+                            async () => await blob.WritePagesAsync(memoryStream.AsInputStream(), 0, contentMD5, null, null, opContext),
+                            opContext,
+                            "Invalid MD5 should fail with mismatch",
+                            HttpStatusCode.BadRequest,
+                            "Md5Mismatch");
+
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        await blob.WritePagesAsync(memoryStream.AsInputStream(), 0, null);
+                        resultingData.Seek(0, SeekOrigin.Begin);
+                        resultingData.Write(buffer, offset, buffer.Length - offset);
+
+                        offset = buffer.Length - 2048;
+                        memoryStream.Seek(offset, SeekOrigin.Begin);
+                        await blob.WritePagesAsync(memoryStream.AsInputStream(), 1024, null);
+                        resultingData.Seek(1024, SeekOrigin.Begin);
+                        resultingData.Write(buffer, offset, buffer.Length - offset);
+                    }
+
+                    using (MemoryStream blobData = new MemoryStream())
+                    {
+                        await blob.DownloadToStreamAsync(blobData.AsOutputStream());
+                        Assert.AreEqual(resultingData.Length, blobData.Length);
+
+                        Assert.IsTrue(blobData.ToArray().SequenceEqual(resultingData.ToArray()));
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
         /// [Description("Single put blob and get blob")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]

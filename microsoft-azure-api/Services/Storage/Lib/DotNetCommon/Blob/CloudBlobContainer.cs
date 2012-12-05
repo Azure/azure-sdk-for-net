@@ -153,7 +153,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 RequestOptions = modifiedOptions,
                 OperationContext = operationContext,
-                CompletedSynchronously = true,
             };
             this.CreateIfNotExistsHandler(options, operationContext, chainedResult);
             return chainedResult;
@@ -168,7 +167,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     operationContext,
                     existsResult =>
                     {
-                        chainedResult.CompletedSynchronously &= existsResult.CompletedSynchronously;
+                        chainedResult.UpdateCompletedSynchronously(existsResult.CompletedSynchronously);
                         lock (chainedResult.CancellationLockerObject)
                         {
                             chainedResult.CancelDelegate = null;
@@ -187,7 +186,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                                     operationContext,
                                     createResult =>
                                     {
-                                        chainedResult.CompletedSynchronously &= createResult.CompletedSynchronously;
+                                        chainedResult.UpdateCompletedSynchronously(createResult.CompletedSynchronously);
                                         chainedResult.CancelDelegate = null;
                                         try
                                         {
@@ -371,7 +370,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 RequestOptions = modifiedOptions,
                 OperationContext = operationContext,
-                CompletedSynchronously = true,
             };
             this.DeleteIfExistsHandler(accessCondition, options, operationContext, chainedResult);
             return chainedResult;
@@ -386,7 +384,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     operationContext,
                     existsResult =>
                     {
-                        chainedResult.CompletedSynchronously &= existsResult.CompletedSynchronously;
+                        chainedResult.UpdateCompletedSynchronously(existsResult.CompletedSynchronously);
                         lock (chainedResult.CancellationLockerObject)
                         {
                             chainedResult.CancelDelegate = null;
@@ -406,7 +404,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                                     operationContext,
                                     deleteResult =>
                                     {
-                                        chainedResult.CompletedSynchronously &= deleteResult.CompletedSynchronously;
+                                        chainedResult.UpdateCompletedSynchronously(deleteResult.CompletedSynchronously);
                                         chainedResult.CancelDelegate = null;
                                         try
                                         {

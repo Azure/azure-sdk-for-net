@@ -97,10 +97,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             CommonUtils.AssertInBounds("offset", offset, 0, buffer.Length);
             CommonUtils.AssertInBounds("count", count, 0, buffer.Length - offset);
 
-            ChainedAsyncResult<int> chainedResult = new ChainedAsyncResult<int>(callback, state)
-            {
-                CompletedSynchronously = true,
-            };
+            ChainedAsyncResult<int> chainedResult = new ChainedAsyncResult<int>(callback, state);
 
             if (this.lastException != null)
             {
@@ -116,6 +113,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         this.operationContext,
                         ar =>
                         {
+                            chainedResult.UpdateCompletedSynchronously(ar.CompletedSynchronously);
+
                             try
                             {
                                 this.blob.EndFetchAttributes(ar);
@@ -123,14 +122,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             catch (Exception e)
                             {
                                 this.lastException = e;
-                                chainedResult.CompletedSynchronously &= ar.CompletedSynchronously;
                                 chainedResult.OnComplete(this.lastException);
                                 return;
                             }
 
                             this.LockToETag();
-
-                            chainedResult.CompletedSynchronously &= ar.CompletedSynchronously;
                             this.isLengthAvailable = true;
 
                             if (string.IsNullOrEmpty(this.blob.Properties.ContentMD5))
@@ -240,7 +236,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                                         this.parallelOperationSemaphore.Release();
 
                                         // End the async result
-                                        chainedResult.CompletedSynchronously &= ar.CompletedSynchronously;
+                                        chainedResult.UpdateCompletedSynchronously(ar.CompletedSynchronously);
                                         chainedResult.OnComplete(this.lastException);
                                     },
                                     null /* state */);
@@ -258,7 +254,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                                 this.parallelOperationSemaphore.Release();
 
                                 // End the async result
-                                chainedResult.CompletedSynchronously &= calledSynchronously;
+                                chainedResult.UpdateCompletedSynchronously(calledSynchronously);
                                 chainedResult.OnComplete(this.lastException);
                             }
                         }
@@ -267,7 +263,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             this.lastException = e;
 
                             // End the async result
-                            chainedResult.CompletedSynchronously &= calledSynchronously;
+                            chainedResult.UpdateCompletedSynchronously(calledSynchronously);
                             chainedResult.OnComplete(this.lastException);
                         }
                     });

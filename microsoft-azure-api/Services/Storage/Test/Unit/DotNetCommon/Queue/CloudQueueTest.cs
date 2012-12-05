@@ -25,6 +25,10 @@ using Microsoft.WindowsAzure.Storage.Queue.Protocol;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
+#if DN40CP
+using System.Threading.Tasks;
+#endif
+
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
     [TestClass]
@@ -43,6 +47,22 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             queue.Create();
             queue.Delete();
         }
+
+#if DN40CP
+        [TestMethod]
+        [Description("Create and delete a queue")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudQueueCreateAndDeleteTask()
+        {
+            string name = GenerateNewQueueName();
+            CloudQueue queue = DefaultQueueClient.GetQueueReference(name);
+            Task.Factory.FromAsync(queue.BeginCreate, queue.EndCreate, null).Wait();
+            Task.Factory.FromAsync(queue.BeginDelete, queue.EndDelete, null).Wait();
+        }
+#endif
 
         [TestMethod]
         [Description("Create a queue")]

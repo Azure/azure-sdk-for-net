@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void CloudBlockBlobDownloadToStreamAPMRetry()
         {
             byte[] buffer = GetRandomBuffer(1 * 1024 * 1024);
@@ -104,7 +104,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void CloudBlockBlobDownloadRangeToStreamAPMRetry()
         {
             byte[] buffer = GetRandomBuffer(1 * 1024 * 1024);
