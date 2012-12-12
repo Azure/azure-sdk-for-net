@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             Justification = "This is a member-operation.")]
         public TableResultSegment EndListTablesSegmented(IAsyncResult asyncResult)
         {
-            ResultSegment<DynamicTableEntity> res = Executor.EndExecuteAsync<ResultSegment<DynamicTableEntity>>(asyncResult);
+            TableQuerySegment<DynamicTableEntity> res = Executor.EndExecuteAsync<TableQuerySegment<DynamicTableEntity>>(asyncResult);
 
             List<CloudTable> tables = res.Results.Select(tbl => new CloudTable(
                                                                          NavigationHelper.AppendPathToUri(this.BaseUri, tbl.Properties[TableConstants.TableName].StringValue),

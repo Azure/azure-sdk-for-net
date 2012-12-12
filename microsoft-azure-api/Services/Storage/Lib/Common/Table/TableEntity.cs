@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                             property.SetValue(this, entityProperty.BinaryValue, null);
                             break;
                         case EdmType.Boolean:
-                            if (property.PropertyType != typeof(bool) && property.PropertyType != typeof(Boolean))
+                            if (property.PropertyType != typeof(bool) && property.PropertyType != typeof(Boolean) && property.PropertyType != typeof(Boolean?) && property.PropertyType != typeof(bool?))
                             {
                                 continue;
                             }
@@ -167,7 +167,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                             break;
                         case EdmType.Double:
-                            if (property.PropertyType != typeof(double) && property.PropertyType != typeof(Double))
+                            if (property.PropertyType != typeof(double) && property.PropertyType != typeof(Double) && property.PropertyType != typeof(Double?) && property.PropertyType != typeof(double?))
                             {
                                 continue;
                             }
@@ -183,7 +183,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                             property.SetValue(this, entityProperty.GuidValue, null);
                             break;
                         case EdmType.Int32:
-                            if (property.PropertyType != typeof(int) && property.PropertyType != typeof(Int32))
+                            if (property.PropertyType != typeof(int) && property.PropertyType != typeof(Int32) && property.PropertyType != typeof(Int32?) && property.PropertyType != typeof(int?))
                             {
                                 continue;
                             }
@@ -191,7 +191,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                             property.SetValue(this, entityProperty.Int32Value, null);
                             break;
                         case EdmType.Int64:
-                            if (property.PropertyType != typeof(long) && property.PropertyType != typeof(Int64))
+                            if (property.PropertyType != typeof(long) && property.PropertyType != typeof(Int64) && property.PropertyType != typeof(long?) && property.PropertyType != typeof(Int64?))
                             {
                                 continue;
                             }

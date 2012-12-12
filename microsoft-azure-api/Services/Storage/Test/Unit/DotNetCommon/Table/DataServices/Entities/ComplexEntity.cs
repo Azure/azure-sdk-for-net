@@ -22,7 +22,6 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAzure.Storage.Table.DataServices;
 
-
 namespace Microsoft.WindowsAzure.Storage.Table.DataServices.Entities
 {
     public class ComplexEntity : TableServiceEntity
@@ -107,14 +106,14 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices.Entities
             set { int32 = value; }
         }
 
-        private long longPrimitive = 1234;
+        private long longPrimitive = 123456789012;
         public long LongPrimitive
         {
             get { return longPrimitive; }
             set { longPrimitive = value; }
         }
 
-        private Int64 int64 = (long)1234;
+        private Int64 int64 = 123456789012;
         public Int64 Int64
         {
             get { return int64; }
