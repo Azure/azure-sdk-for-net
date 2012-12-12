@@ -22,7 +22,11 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
     /// <summary>
     /// Represents a message retrieved from a queue.
     /// </summary>
+#if !RTMD
     public class QueueMessage
+#else
+    internal class QueueMessage
+#endif
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueMessage"/> class.

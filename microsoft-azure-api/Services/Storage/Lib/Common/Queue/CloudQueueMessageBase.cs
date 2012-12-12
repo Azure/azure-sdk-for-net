@@ -31,17 +31,53 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// The maximum message size in bytes.
         /// </summary>
-        internal static readonly long MaxMessageSize = 64 * Constants.KB;
+        private const long MaximumMessageSize = 64 * Constants.KB;
+
+        /// <summary>
+        /// Gets the maximum message size in bytes.
+        /// </summary>
+        /// <value>The maximum message size in bytes.</value>
+        public static long MaxMessageSize 
+        { 
+            get
+            {
+                return MaximumMessageSize;
+            } 
+        }
 
         /// <summary>
         /// The maximum amount of time a message is kept in the queue.
         /// </summary>
-        internal static readonly TimeSpan MaxTimeToLive = TimeSpan.FromDays(7);
+        private static readonly TimeSpan MaximumTimeToLive = TimeSpan.FromDays(7);
+
+        /// <summary>
+        /// Gets the maximum amount of time a message is kept in the queue.
+        /// </summary>
+        /// <value>The maximum amount of time a message is kept in the queue.</value>
+        public static TimeSpan MaxTimeToLive
+        {
+            get
+            {
+                return MaximumTimeToLive;
+            }
+        }
 
         /// <summary>
         /// The maximum number of messages that can be peeked at a time.
         /// </summary>
-        internal static readonly int MaxNumberOfMessagesToPeek = 32;
+        private const int MaximumNumberOfMessagesToPeek = 32;
+
+        /// <summary>
+        /// Gets the maximum number of messages that can be peeked at a time.
+        /// </summary>
+        /// <value>The maximum number of messages that can be peeked at a time.</value>
+        public static int MaxNumberOfMessagesToPeek
+        {
+            get
+            {
+                return MaximumNumberOfMessagesToPeek;
+            }
+        }
 
         /// <summary>
         /// Custom UTF8Encoder to throw exception in case of invalid bytes.
