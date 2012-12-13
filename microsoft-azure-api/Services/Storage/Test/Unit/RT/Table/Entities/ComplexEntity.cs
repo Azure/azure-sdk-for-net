@@ -256,14 +256,14 @@ namespace Microsoft.WindowsAzure.Storage.Table.Entities
             set { longPrimitiveNull = value; }
         }
 
-        private long? longPrimitiveN = 1234;
+        private long? longPrimitiveN = 123456789012;
         public long? LongPrimitiveN
         {
             get { return longPrimitiveN; }
             set { longPrimitiveN = value; }
         }
 
-        private long longPrimitive = 1234;
+        private long longPrimitive = 123456789012;
         public long LongPrimitive
         {
             get { return longPrimitive; }
@@ -277,14 +277,14 @@ namespace Microsoft.WindowsAzure.Storage.Table.Entities
             set { int64Null = value; }
         }
 
-        private Int64? int64N = (long)1234;
+        private Int64? int64N = 123456789012;
         public Int64? Int64N
         {
             get { return int64N; }
             set { int64N = value; }
         }
 
-        private Int64 int64 = (long)1234;
+        private Int64 int64 = 123456789012;
         public Int64 Int64
         {
             get { return int64; }

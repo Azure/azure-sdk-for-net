@@ -193,17 +193,16 @@ namespace Microsoft.WindowsAzure.Storage.Table
             Assert.AreEqual(intProp.Int32Value, intVal2);
 
             // long
-            long longVal = 1234;
+            long longVal = 123456789012;
 
             // Ctor
             EntityProperty longProp = EntityProperty.GeneratePropertyForLong(longVal);
             Assert.AreEqual(longProp.Int64Value, longVal);
 
             // Setter
-            long longVal2 = 8979654;
+            long longVal2 = 56789012345;
             longProp.Int64Value = longVal2;
             Assert.AreEqual(longProp.Int64Value, longVal2);
-
 
             // string
             string string1 = "abcdefghijklmnop";
