@@ -66,6 +66,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             batchCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableBatchOperation(cmd.Uri, cmd.ServerTimeoutInSeconds, client.BaseUri, tableName, batch, ctx);
             batchCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Accepted, resp.StatusCode, results, cmd, ex, ctx);
             batchCmd.PostProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableBatchOperationPostProcess(results, batch, cmd, resp, ctx);
+            batchCmd.RecoveryAction = (cmd, ex, ctx) => results.Clear();
 
             return batchCmd;
         }

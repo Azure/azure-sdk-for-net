@@ -34,17 +34,19 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         [TestMethod()]
         public void MD5ComparisonTest()
         {
-            MD5Wrapper nativeHash = new MD5Wrapper();
-            nativeHash.UpdateHash(data, 0, data.Length);
-            string nativeResult = nativeHash.ComputeHash();
+            using (MD5Wrapper nativeHash = new MD5Wrapper())
+            {
+                nativeHash.UpdateHash(data, 0, data.Length);
+                string nativeResult = nativeHash.ComputeHash();
 
-            MD5 hash = MD5.Create();
-            hash.TransformBlock(data, 0, data.Length, null, 0);
-            hash.TransformFinalBlock(new byte[0], 0, 0);
-            var bytes = hash.Hash;
-            string result = Convert.ToBase64String(bytes);
+                MD5 hash = MD5.Create();
+                hash.TransformBlock(data, 0, data.Length, null, 0);
+                hash.TransformFinalBlock(new byte[0], 0, 0);
+                var bytes = hash.Hash;
+                string result = Convert.ToBase64String(bytes);
 
-            Assert.AreEqual(nativeResult, result);
+                Assert.AreEqual(nativeResult, result);
+            }
 
         }
 
@@ -54,34 +56,38 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         [TestMethod()]
         public void MD5SingleByteTest()
         {
-            MD5Wrapper nativeHash = new MD5Wrapper();
-            nativeHash.UpdateHash(data, 3, 2);
-            string nativeResult = nativeHash.ComputeHash();
+            using (MD5Wrapper nativeHash = new MD5Wrapper())
+            {
+                nativeHash.UpdateHash(data, 3, 2);
+                string nativeResult = nativeHash.ComputeHash();
 
-            MD5 hash = MD5.Create();
-            hash.TransformBlock(data, 3, 2, null, 0);
-            hash.TransformFinalBlock(new byte[0], 0, 0);
-            var bytes = hash.Hash;
-            string result = Convert.ToBase64String(bytes);
+                MD5 hash = MD5.Create();
+                hash.TransformBlock(data, 3, 2, null, 0);
+                hash.TransformFinalBlock(new byte[0], 0, 0);
+                var bytes = hash.Hash;
+                string result = Convert.ToBase64String(bytes);
 
-            Assert.AreEqual(nativeResult, result);
+                Assert.AreEqual(nativeResult, result);
+            }
         }
 
         [TestMethod]
         public void MD5EmptyArrayTest()
         {
             byte[] data = new byte[] { };
-            MD5Wrapper nativeHash = new MD5Wrapper();
-            nativeHash.UpdateHash(data, 0, data.Length);
-            string nativeResult = nativeHash.ComputeHash();
+            using (MD5Wrapper nativeHash = new MD5Wrapper())
+            {
+                nativeHash.UpdateHash(data, 0, data.Length);
+                string nativeResult = nativeHash.ComputeHash();
 
 
-            MD5 hash = MD5.Create();
-            hash.ComputeHash(data, 0, data.Length);
-            var varResult = hash.Hash;
-            string result = Convert.ToBase64String(varResult);
+                MD5 hash = MD5.Create();
+                hash.ComputeHash(data, 0, data.Length);
+                var varResult = hash.Hash;
+                string result = Convert.ToBase64String(varResult);
 
-            Assert.AreEqual(nativeResult, result);
+                Assert.AreEqual(nativeResult, result);
+            }
 
         }
 
@@ -94,37 +100,41 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 data[i] = 1;
             }
 
-            MD5Wrapper nativeHash = new MD5Wrapper();
-            MD5 hash = MD5.Create();
-            for (int i = 0; i < 999; i++)
+            using (MD5Wrapper nativeHash = new MD5Wrapper())
             {
-                int index = 10 * i;
-                nativeHash.UpdateHash(data, 0, 10);
-                hash.TransformBlock(data, 0, 10, null, 0);
+                MD5 hash = MD5.Create();
+                for (int i = 0; i < 999; i++)
+                {
+                    int index = 10 * i;
+                    nativeHash.UpdateHash(data, 0, 10);
+                    hash.TransformBlock(data, 0, 10, null, 0);
+                }
+                string nativeResult = nativeHash.ComputeHash();
+
+                hash.TransformFinalBlock(new byte[0], 0, 0);
+                var varResult = hash.Hash;
+                String result = Convert.ToBase64String(varResult);
+
+                Assert.AreEqual(nativeResult, result);
             }
-            string nativeResult = nativeHash.ComputeHash();
-
-            hash.TransformFinalBlock(new byte[0], 0, 0);
-            var varResult = hash.Hash;
-            String result = Convert.ToBase64String(varResult);
-
-            Assert.AreEqual(nativeResult, result);
         }
 
         [TestMethod]
         public void MD5LastByteTest()
         {
-            MD5Wrapper nativeHash = new MD5Wrapper();
-            nativeHash.UpdateHash(data, 8, 1);
-            string nativeResult = nativeHash.ComputeHash();
+            using (MD5Wrapper nativeHash = new MD5Wrapper())
+            {
+                nativeHash.UpdateHash(data, 8, 1);
+                string nativeResult = nativeHash.ComputeHash();
 
 
-            MD5 hash = MD5.Create();
-            hash.ComputeHash(data, 8, 1);
-            var varResult = hash.Hash;
-            string result = Convert.ToBase64String(varResult);
+                MD5 hash = MD5.Create();
+                hash.ComputeHash(data, 8, 1);
+                var varResult = hash.Hash;
+                string result = Convert.ToBase64String(varResult);
 
-            Assert.AreEqual(nativeResult, result);
+                Assert.AreEqual(nativeResult, result);
+            }
         }
     }
 }
