@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
 
             TestHelper.ExecuteAPMMethodWithRetry(3,
                  new[] {
-                    //Insert upstream netrowk delay to prevent upload to server @ 1000ms / kb
+                    //Insert upstream network delay to prevent upload to server @ 1000ms / kb
                     PerformanceBehaviors.InsertUpstreamNetworkDelay(10000,
                                                                     XStoreSelectors.TableTraffic().IfHostNameContains(tableClient.Credentials.AccountName),
                                                                     new BehaviorOptions(2)),
@@ -146,7 +146,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             TestHelper.ExecuteMethodWithRetry(
                 3,
                 new[] {
-                    //Insert upstream netrowk delay to prevent upload to server @ 1000ms / kb
+                    //Insert upstream network delay to prevent upload to server @ 1000ms / kb
                     PerformanceBehaviors.InsertUpstreamNetworkDelay(10000,
                                                                     XStoreSelectors.TableTraffic().IfHostNameContains(tableClient.Credentials.AccountName),
                                                                     new BehaviorOptions(2)),
@@ -192,7 +192,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             TestHelper.ExecuteMethodWithRetry(
                4, // 2 segments, 2 failures
                new[] {
-                    //Insert upstream netrowk delay to prevent upload to server @ 1000ms / kb
+                    //Insert upstream network delay to prevent upload to server @ 1000ms / kb
                     PerformanceBehaviors.InsertDownstreamNetworkDelay(10000,
                                                                     XStoreSelectors.TableTraffic().IfHostNameContains(tableClient.Credentials.AccountName).Alternating(true),
                                                                     new BehaviorOptions(4)),
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             TestHelper.ExecuteAPMMethodWithRetry(
                2, // 1 failure, one success
                 new[] {
-                    //Insert upstream netrowk delay to prevent upload to server @ 1000ms / kb
+                    //Insert upstream network delay to prevent upload to server @ 1000ms / kb
                     PerformanceBehaviors.InsertDownstreamNetworkDelay(10000,
                                                                     XStoreSelectors.TableTraffic().IfHostNameContains(tableClient.Credentials.AccountName).Alternating(true)),
                     // After 100 ms return throttle message

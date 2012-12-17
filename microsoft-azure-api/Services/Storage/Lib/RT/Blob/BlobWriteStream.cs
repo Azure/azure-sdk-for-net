@@ -171,8 +171,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
+            if (disposing)
+            {
+                this.CommitAsync().Wait();
+            }
+
             base.Dispose(disposing);
-            this.CommitAsync().Wait();
         }
 
         /// <summary>
