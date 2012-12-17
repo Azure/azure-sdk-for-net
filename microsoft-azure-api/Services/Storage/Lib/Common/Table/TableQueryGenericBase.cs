@@ -162,10 +162,13 @@ namespace Microsoft.WindowsAzure.Storage.Table
         {
             string valueOperand = null;
 
-            if (edmType == EdmType.Boolean || edmType == EdmType.Double || edmType == EdmType.Int32
-                    || edmType == EdmType.Int64)
+            if (edmType == EdmType.Boolean || edmType == EdmType.Double || edmType == EdmType.Int32)
             {
                 valueOperand = value;
+            }
+            else if (edmType == EdmType.Int64)
+            {
+                valueOperand = string.Format("{0}L", value);
             }
             else if (edmType == EdmType.DateTime)
             {

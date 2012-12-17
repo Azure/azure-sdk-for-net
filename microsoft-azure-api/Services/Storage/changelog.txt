@@ -1,0 +1,22 @@
+Issues fixed in 2.0.1 : 
+	
+	1. All: CloudStorageAccount.*Parse methods throw an exception for “UseDevelopmentStorage=true” string
+	2. All: StorageErrorCodeStrings class is missing
+	3. Blobs: ICloudBlob interface does not have GetSharedAccessSignature method
+
+Issues fixed in 2.0.2 :
+
+	1. All: CompletedSynchronously property returns inconsistent values on IAsyncResult objects returned by asynchronous methods and thus TaskFactory.FromAsync does not work properly
+	2. Tables: Public DynamicTableEntity constructors use DateTime even though the Timestamp property is of type DateTimeOffset
+	3. Tables: BeginSaveChangesWithRetries overload ignores the options argument
+
+Issues fixed in 2.0.3 :
+
+	1. All: General metadata correctness test fails when using the RT library to develop windows store apps
+	2. Queues: CloudQueueMessage.MaxNumberOfMessagesToPeek, CloudQueueMessage.MaxMessageSize and CloudQueueMessage.MaximumTimeToLive have disappeared from CloudQueueMessage
+	3. Queues: CloudQueue.BeginCreateIfNotExists and CloudQueue.BeginDeleteIfExists methods expect valid options argument
+	4. Tables: When one or more of the batches fails, but then succeeds on a retry, the "extra" TableResults of the failed transactions are also returned
+	5. Tables: TableQuery.GenerateFilterConditionForLong does not append 'L' at the end of the value and thus values larger than Int32.MaxValue cannot be used when filtering
+	6. Tables: TableEntity does not support serializing nullable values
+	7. Tables: CloudTable.EndListTablesSegmented method does not work correctly
+	 

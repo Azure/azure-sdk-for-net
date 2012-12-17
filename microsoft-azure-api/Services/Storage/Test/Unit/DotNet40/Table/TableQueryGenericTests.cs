@@ -491,8 +491,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     complexEntity.DoublePrimitive = m + ((double)m / 100);
                     complexEntity.Int32 = m;
                     complexEntity.IntegerPrimitive = m;
-                    complexEntity.Int64 = m;
-                    complexEntity.LongPrimitive = m;
+                    complexEntity.Int64 = (long)int.MaxValue + m;
+                    complexEntity.LongPrimitive = (long)int.MaxValue + m;
                     complexEntity.Guid = Guid.NewGuid();
 
                     batch.Insert(complexEntity);

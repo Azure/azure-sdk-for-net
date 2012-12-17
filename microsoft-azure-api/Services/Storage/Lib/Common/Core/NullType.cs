@@ -20,7 +20,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
     /// <summary>
     /// A NullTaskReturn type.
     /// </summary>
-    public class NullType
+    public sealed class NullType
     {
         /// <summary>
         /// Represents a no-return from a task.

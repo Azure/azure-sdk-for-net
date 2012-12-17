@@ -24,6 +24,8 @@ using Microsoft.WindowsAzure.Storage.Table.Entities;
 using Microsoft.WindowsAzure.Storage.Table;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
+using Microsoft.WindowsAzure.Test.Network.Behaviors;
+using Microsoft.WindowsAzure.Test.Network;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -108,7 +110,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             DynamicTableEntity ent = new DynamicTableEntity(pk, rk, "*", properties);
             currentTable.Execute(TableOperation.Insert(ent));
         }
-        
+
         [TestMethod]
         [Description("A test to check batch insert functionality")]
         [TestCategory(ComponentCategory.Table)]
@@ -2186,6 +2188,43 @@ namespace Microsoft.WindowsAzure.Storage.Table
             {
                 TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "PropertyNameTooLong" }, "The property name exceeds the maximum allowed length.");
             }
+        }
+
+        [TestMethod]
+        [Description("Test a Table batch operation that retried has the correct number of results returned to the user")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableBatchOperationWithRetryHasCorrectNumberOfResults()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            TableBatchOperation batch = new TableBatchOperation();
+            for (int i = 0; i < 100; i++)
+            {
+                DynamicTableEntity insertEntity = new DynamicTableEntity("retry test", i.ToString());
+                insertEntity.Properties.Add("prop", new EntityProperty(new byte[20 * 1024]));
+                batch.Insert(insertEntity);
+            }
+
+            IList<TableResult> results = null;
+            TestHelper.ExecuteMethodWithRetry(
+                3,
+                new[] {
+                    // Insert upstream network delay to prevent upload to server @ 1000ms / kb
+                    PerformanceBehaviors.InsertUpstreamNetworkDelay(10000,
+                                                                    XStoreSelectors.TableTraffic().IfHostNameContains(tableClient.Credentials.AccountName),
+                                                                    new BehaviorOptions(2)),
+                    // After 500 ms return throttle message
+                    DelayedActionBehaviors.ExecuteAfter(Actions.ThrottleTableRequest,
+                                                            100,
+                                                            XStoreSelectors.TableTraffic().IfHostNameContains(tableClient.Credentials.AccountName),
+                                                            new BehaviorOptions(2))                    
+               },
+               (options, opContext) => results = currentTable.ExecuteBatch(batch, (TableRequestOptions)options, opContext));
+
+            Assert.AreEqual(batch.Count, results.Count);
         }
 
         #endregion

@@ -158,13 +158,13 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 OperationContext = operationContext,
             };
 
-            operationContext.OperationExpiryTime = options.MaximumExecutionTime.HasValue
-                                                       ? DateTime.Now + options.MaximumExecutionTime.Value
+            operationContext.OperationExpiryTime = modifiedOptions.MaximumExecutionTime.HasValue
+                                                       ? DateTime.Now + modifiedOptions.MaximumExecutionTime.Value
                                                        : (DateTime?)null;
 
             lock (chainedResult.CancellationLockerObject)
             {
-                ICancellableAsyncResult currentRes = this.BeginExists(options, operationContext, this.CreateIfNotExistsHandler, chainedResult);
+                ICancellableAsyncResult currentRes = this.BeginExists(modifiedOptions, operationContext, this.CreateIfNotExistsHandler, chainedResult);
                 chainedResult.CancelDelegate = currentRes.Cancel;
 
                 // Check if cancellation was requested prior to begin
@@ -318,13 +318,13 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 OperationContext = operationContext,
             };
 
-            operationContext.OperationExpiryTime = options.MaximumExecutionTime.HasValue
-                                                       ? DateTime.Now + options.MaximumExecutionTime.Value
+            operationContext.OperationExpiryTime = modifiedOptions.MaximumExecutionTime.HasValue
+                                                       ? DateTime.Now + modifiedOptions.MaximumExecutionTime.Value
                                                        : (DateTime?)null;
 
             lock (chainedResult.CancellationLockerObject)
             {
-                ICancellableAsyncResult currentRes = this.BeginExists(options, operationContext, this.DeleteIfExistsHandler, chainedResult);
+                ICancellableAsyncResult currentRes = this.BeginExists(modifiedOptions, operationContext, this.DeleteIfExistsHandler, chainedResult);
                 chainedResult.CancelDelegate = currentRes.Cancel;
 
                 // Check if cancellation was requested prior to begin

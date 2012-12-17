@@ -1202,8 +1202,44 @@ namespace Microsoft.WindowsAzure.Storage.Table
             string rk = Guid.NewGuid().ToString();
 
             ComplexEntity sendEnt = new ComplexEntity(pk, rk);
+            sendEnt.Binary = new Byte[] { 5, 6, 7, 8 };
+            sendEnt.BinaryNull = null;
+            sendEnt.BinaryPrimitive = new byte[] { 5, 6, 7, 8 };
+            sendEnt.Bool = true;
+            sendEnt.BoolN = true;
+            sendEnt.BoolNull = null;
+            sendEnt.BoolPrimitive = true;
+            sendEnt.BoolPrimitiveN = true;
+            sendEnt.BoolPrimitiveNull = null;
+            sendEnt.DateTime = DateTime.UtcNow.AddMinutes(1);
+            sendEnt.DateTimeN = DateTime.UtcNow.AddMinutes(1);
+            sendEnt.DateTimeNull = null;
+            sendEnt.DateTimeOffset = DateTimeOffset.Now.AddMinutes(1);
+            sendEnt.DateTimeOffsetN = DateTimeOffset.Now.AddMinutes(1);
+            sendEnt.DateTimeOffsetNull = null;
+            sendEnt.Double = (Double)5678.5678;
+            sendEnt.DoubleN = (Double)5678.5678;
+            sendEnt.DoubleNull = null;
+            sendEnt.DoublePrimitive = (double)5678.5678;
+            sendEnt.DoublePrimitiveN = (double)5678.5678;
+            sendEnt.DoublePrimitiveNull = null;
+            sendEnt.Guid = Guid.NewGuid();
+            sendEnt.GuidN = Guid.NewGuid();
+            sendEnt.GuidNull = null;
+            sendEnt.Int32 = 5678;
+            sendEnt.Int32N = 5678;
+            sendEnt.Int32Null = null;
+            sendEnt.Int64 = (long)5678;
+            sendEnt.Int64N = (long)5678;
+            sendEnt.Int64Null = null;
+            sendEnt.IntegerPrimitive = 5678;
+            sendEnt.IntegerPrimitiveN = 5678;
+            sendEnt.IntegerPrimitiveNull = null;
+            sendEnt.LongPrimitive = 5678;
+            sendEnt.LongPrimitiveN = 5678;
+            sendEnt.LongPrimitiveNull = null;
+            sendEnt.String = "ResetTestTotested";
             currentTable.Execute(TableOperation.Insert(sendEnt));
-
 
             TableQuery<ComplexEntity> query = new TableQuery<ComplexEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, pk));
             IEnumerable<ComplexEntity> result = currentTable.ExecuteQuery(query);

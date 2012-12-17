@@ -61,14 +61,24 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// </summary>
         private IntPtr hashProv;
 
+        /// <summary>
+        /// Whether this object has been torn down or not.
+        /// </summary>
+        private bool disposed = false;
+
         private NativeMD5()
         {
-            if (this.hashProv == IntPtr.Zero)
-            {
-                this.ValidateReturnCode(CryptAcquireContext(out this.hashProv, null, null, ProvRsaFull, CryptVerifyContext));
-            }
 
+            this.ValidateReturnCode(CryptAcquireContext(out this.hashProv, null, null, ProvRsaFull, CryptVerifyContext));
             this.ValidateReturnCode(CryptCreateHash(this.hashProv, CalgMD5, IntPtr.Zero, 0, out this.hashHandle));
+        }
+
+        /// <summary>
+        /// Finalizes an instance of the NativeMD5 class, unhooking it from all events.
+        /// </summary>
+        ~NativeMD5()
+        {
+            this.DisposeUnmanagedResources();
         }
 
         /// <summary>
@@ -143,7 +153,30 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// </summary>
         public void Dispose()
         {
-            this.ValidateReturnCode(CryptDestroyHash(this.hashHandle));
+            if (!this.disposed)
+            {
+                this.DisposeUnmanagedResources();
+                this.disposed = true;
+                GC.SuppressFinalize(this);
+            }
+        }
+
+        /// <summary>
+        /// Releases the unmanaged resources.
+        /// </summary>
+        public void DisposeUnmanagedResources()
+        {
+            if (this.hashHandle != IntPtr.Zero)
+            {
+                CryptDestroyHash(this.hashHandle);
+                this.hashHandle = IntPtr.Zero;
+            }
+
+            if (this.hashProv != IntPtr.Zero)
+            {
+                CryptReleaseContext(this.hashProv, 0);
+                this.hashProv = IntPtr.Zero;
+            }
         }
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -159,6 +192,12 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool CryptDestroyHash(
             IntPtr hashHandle);
+
+        [DllImport("advapi32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CryptReleaseContext(
+            IntPtr hashProv,
+            Int32 dwFlags);  // Reserved. Must be 0.
 
         [DllImport("advapi32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

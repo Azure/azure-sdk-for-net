@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -399,6 +400,135 @@ namespace Microsoft.WindowsAzure.Storage.Table
             do
             {
                 segment = tableClient.ListTablesSegmented(prefixTablesPrefix, null, segment != null ? segment.ContinuationToken : null, null, null);
+                totalResults.AddRange(segment);
+                segCount++;
+            }
+            while (segment.ContinuationToken != null);
+
+            Assert.AreEqual(totalResults.Count, 20);
+            foreach (CloudTable tbl in totalResults)
+            {
+                Assert.IsTrue(tbl.Name.StartsWith(prefixTablesPrefix));
+            }
+        }
+
+        #endregion
+
+        #region APM
+
+        [TestMethod]
+        [Description("Test List Tables Segmented Basic APM")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ListTablesSegmentedBasicAPM()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            TableResultSegment segment = null;
+            List<CloudTable> totalResults = new List<CloudTable>();
+
+            do
+            {
+                using (ManualResetEvent evt = new ManualResetEvent(false))
+                {
+                    IAsyncResult asyncRes = tableClient.BeginListTablesSegmented(segment != null ? segment.ContinuationToken : null,
+                        (res) =>
+                        {
+                            evt.Set();
+                        },
+                        null);
+
+                    evt.WaitOne();
+
+                    segment = tableClient.EndListTablesSegmented(asyncRes);
+                }
+
+                totalResults.AddRange(segment);
+            }
+            while (segment.ContinuationToken != null);
+
+            Assert.AreEqual(totalResults.Count, tableClient.ListTables().Count());
+        }
+
+        [TestMethod]
+        [Description("Test List Tables Segmented MaxResults APM")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ListTablesSegmentedMaxResultsAPM()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            TableResultSegment segment = null;
+            List<CloudTable> totalResults = new List<CloudTable>();
+
+            int segCount = 0;
+            do
+            {
+                using (ManualResetEvent evt = new ManualResetEvent(false))
+                {
+                    IAsyncResult asyncRes = tableClient.BeginListTablesSegmented(string.Empty,
+                        10,
+                        segment != null ? segment.ContinuationToken : null,
+                        null,
+                        null,
+                        (res) =>
+                        {
+                            evt.Set();
+                        },
+                        null);
+
+                    evt.WaitOne();
+
+                    segment = tableClient.EndListTablesSegmented(asyncRes);
+                }
+
+                totalResults.AddRange(segment);
+                segCount++;
+            }
+            while (segment.ContinuationToken != null);
+
+            Assert.AreEqual(totalResults.Count, tableClient.ListTables().Count());
+            Assert.IsTrue(segCount >= totalResults.Count / 10);
+        }
+
+        [TestMethod]
+        [Description("Test List Tables Segmented With Prefix APM")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ListTablesSegmentedWithPrefixAPM()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            TableResultSegment segment = null;
+            List<CloudTable> totalResults = new List<CloudTable>();
+
+            int segCount = 0;
+            do
+            {
+                using (ManualResetEvent evt = new ManualResetEvent(false))
+                {
+                    IAsyncResult asyncRes = tableClient.BeginListTablesSegmented(prefixTablesPrefix,
+                        null,
+                        segment != null ? segment.ContinuationToken : null,
+                        null,
+                        null,
+                        (res) =>
+                        {
+                            evt.Set();
+                        },
+                        null);
+
+                    evt.WaitOne();
+
+                    segment = tableClient.EndListTablesSegmented(asyncRes);
+                }
+
                 totalResults.AddRange(segment);
                 segCount++;
             }
