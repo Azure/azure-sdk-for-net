@@ -158,7 +158,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="operation">A <see cref="TableOperation"/> object that represents the operation to perform.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableResult> ExecuteAsync(this CloudTable cloudTable, TableOperation operation)
 		{
@@ -172,7 +172,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="operation">A <see cref="TableOperation" /> object that represents the operation to perform.</param>
 		/// <param name="token">The cancellation token.</param>
 		/// <returns>
-		/// An <see cref="ICancellableAsyncResult" /> that references the asynchronous operation.
+		/// A <see cref="Task{T}"/> that references the asynchronous operation.
 		/// </returns>
 		[DoesServiceRequest]
 		public static Task<TableResult> ExecuteAsync(this CloudTable cloudTable, TableOperation operation, CancellationToken token)
@@ -187,7 +187,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="operation">A <see cref="TableOperation"/> object that represents the operation to perform.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableResult> ExecuteAsync(this CloudTable cloudTable, TableOperation operation, TableRequestOptions requestOptions, OperationContext operationContext)
 		{
@@ -203,7 +203,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableResult> ExecuteAsync(this CloudTable cloudTable, TableOperation operation, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken token)
 		{
@@ -293,7 +293,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="query">A <see cref="TableQuery"/> representing the query to execute.</param>
 		/// <param name="continuationToken">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<DynamicTableEntity>> ExecuteQuerySegmentedAsync(this CloudTable cloudTable, TableQuery query,
 			TableContinuationToken continuationToken)
@@ -308,7 +308,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="query">A <see cref="TableQuery"/> representing the query to execute.</param>
 		/// <param name="continuationToken">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<DynamicTableEntity>> ExecuteQuerySegmentedAsync(this CloudTable cloudTable, TableQuery query,
 			TableContinuationToken continuationToken, CancellationToken cancellationToken)
@@ -325,7 +325,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="token">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<DynamicTableEntity>> ExecuteQuerySegmentedAsync(this CloudTable cloudTable, TableQuery query,
 			TableContinuationToken token, TableRequestOptions requestOptions, OperationContext operationContext)
@@ -344,7 +344,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<DynamicTableEntity>> ExecuteQuerySegmentedAsync(this CloudTable cloudTable, TableQuery query,
 			TableContinuationToken token, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken cancellationToken)
@@ -364,7 +364,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
 		/// <param name="continuationToken">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<TElement>> ExecuteQuerySegmentedAsync<TElement>(this CloudTable cloudTable, TableQuery<TElement> query, TableContinuationToken continuationToken) where TElement : ITableEntity, new()
 		{
@@ -379,7 +379,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
 		/// <param name="continuationToken">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<TElement>> ExecuteQuerySegmentedAsync<TElement>(this CloudTable cloudTable, TableQuery<TElement> query,
 			TableContinuationToken continuationToken, CancellationToken cancellationToken) where TElement : ITableEntity, new()
@@ -396,7 +396,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="continuationToken">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<TElement>> ExecuteQuerySegmentedAsync<TElement>(this CloudTable cloudTable, TableQuery<TElement> query,
 			TableContinuationToken continuationToken, TableRequestOptions requestOptions, OperationContext operationContext) where TElement : ITableEntity, new()
@@ -416,7 +416,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<TElement>> ExecuteQuerySegmentedAsync<TElement>(this CloudTable cloudTable, TableQuery<TElement> query,
 			TableContinuationToken continuationToken, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken cancellationToken) where TElement : ITableEntity, new()
@@ -438,7 +438,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="query">A <see cref="TableQuery"/> instance specifying the table to query and the query parameters to use, specialized for a type <c>TElement</c>.</param>
 		/// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <c>R</c>.</param>
 		/// <param name="continuationToken">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<TResult>> ExecuteQuerySegmentedAsync<TElement, TResult>(this CloudTable cloudTable, TableQuery<TElement> query, EntityResolver<TResult> resolver, TableContinuationToken continuationToken) where TElement : ITableEntity, new()
 		{
@@ -455,7 +455,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="resolver">An <see cref="EntityResolver"/> instance which creates a projection of the table query result entities into the specified type <c>R</c>.</param>
 		/// <param name="continuationToken">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<TResult>> ExecuteQuerySegmentedAsync<TElement, TResult>(this CloudTable cloudTable, TableQuery<TElement> query, EntityResolver<TResult> resolver,
 			TableContinuationToken continuationToken, CancellationToken cancellationToken) where TElement : ITableEntity, new()
@@ -476,7 +476,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="continuationToken">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<TResult>> ExecuteQuerySegmentedAsync<TElement, TResult>(this CloudTable cloudTable, TableQuery<TElement> query, EntityResolver<TResult> resolver,
 			TableContinuationToken continuationToken, TableRequestOptions requestOptions, OperationContext operationContext) where TElement : ITableEntity, new()
@@ -498,7 +498,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
-		/// <returns>An <see cref="Task{T}"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TableQuerySegment<TResult>> ExecuteQuerySegmentedAsync<TElement, TResult>(this CloudTable cloudTable, TableQuery<TElement> query, EntityResolver<TResult> resolver,
 			TableContinuationToken continuationToken, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken cancellationToken) where TElement : ITableEntity, new()
@@ -517,7 +517,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// Executes an asynchronous operation to create a table.
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task CreateAsync(this CloudTable cloudTable)
 		{
@@ -529,7 +529,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task CreateAsync(this CloudTable cloudTable, CancellationToken token)
 		{
@@ -542,7 +542,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task CreateAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext)
 		{
@@ -556,7 +556,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task CreateAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken token)
 		{
@@ -571,7 +571,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// Executes an asynchronous operation to create a table if it does not already exist.
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> CreateIfNotExistsAsync(this CloudTable cloudTable)
 		{
@@ -583,7 +583,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> CreateIfNotExistsAsync(this CloudTable cloudTable, CancellationToken token)
 		{
@@ -596,7 +596,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> CreateIfNotExistsAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext)
 		{
@@ -610,7 +610,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> CreateIfNotExistsAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken token)
 		{
@@ -625,7 +625,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// Executes an asynchronous operation to delete a table.
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task DeleteAsync(this CloudTable cloudTable)
 		{
@@ -637,7 +637,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task DeleteAsync(this CloudTable cloudTable, CancellationToken token)
 		{
@@ -650,7 +650,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task DeleteAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext)
 		{
@@ -664,7 +664,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task DeleteAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken token)
 		{
@@ -679,7 +679,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// Executes an asynchronous operation to delete the tables if it exists.
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> DeleteIfNotExistsAsync(this CloudTable cloudTable)
 		{
@@ -691,7 +691,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> DeleteIfNotExistsAsync(this CloudTable cloudTable, CancellationToken token)
 		{
@@ -704,7 +704,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> DeleteIfNotExistsAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext)
 		{
@@ -718,7 +718,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> DeleteIfNotExistsAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken token)
 		{
@@ -733,7 +733,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// Executes an asynchronous operation to determine whether a table exists.
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> ExistsAsync(this CloudTable cloudTable)
 		{
@@ -745,7 +745,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> ExistsAsync(this CloudTable cloudTable, CancellationToken token)
 		{
@@ -758,7 +758,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> ExistsAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext)
 		{
@@ -772,7 +772,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<bool> ExistsAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken token)
 		{
@@ -787,7 +787,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// Executes an asynchronous request to get the permissions settings for the table.
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TablePermissions> GetPermissionsAsync(this CloudTable cloudTable)
 		{
@@ -799,7 +799,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TablePermissions> GetPermissionsAsync(this CloudTable cloudTable, CancellationToken token)
 		{
@@ -812,7 +812,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TablePermissions> GetPermissionsAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext)
 		{
@@ -826,7 +826,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task{T}"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task<TablePermissions> GetPermissionsAsync(this CloudTable cloudTable, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken token)
 		{
@@ -838,7 +838,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// </summary>
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="permissions">The permissions to apply to the table.</param>
-		/// <returns>An <see cref="Task"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task SetPermissionsAsync(this CloudTable cloudTable, TablePermissions permissions)
 		{
@@ -851,9 +851,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="cloudTable">The cloud table to run on.</param>
 		/// <param name="permissions">The permissions to apply to the table.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>
-		/// An <see cref="ICancellableAsyncResult" /> that references the asynchronous operation.
-		/// </returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task SetPermissionsAsync(this CloudTable cloudTable, TablePermissions permissions, CancellationToken token)
 		{
@@ -867,7 +865,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="permissions">The permissions to apply to the table.</param>
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-		/// <returns>An <see cref="Task"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task SetPermissionsAsync(this CloudTable cloudTable, TablePermissions permissions, TableRequestOptions requestOptions, OperationContext operationContext)
 		{
@@ -883,7 +881,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 		/// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
 		/// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
 		/// <param name="token">The cancellation token.</param>
-		/// <returns>An <see cref="Task"/> that references the asynchronous operation.</returns>
+		/// <returns>A <see cref="Task"/> that references the asynchronous operation.</returns>
 		[DoesServiceRequest]
 		public static Task SetPermissionsAsync(this CloudTable cloudTable, TablePermissions permissions, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken token)
 		{
