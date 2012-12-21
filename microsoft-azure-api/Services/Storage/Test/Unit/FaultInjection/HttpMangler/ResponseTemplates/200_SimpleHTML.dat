@@ -1,0 +1,5 @@
+HTTP/1.1 200 OK
+FiddlerTemplate: True
+Content-Length: 51
+
+This is a simple Fiddler-returned <B>HTML</B> page.

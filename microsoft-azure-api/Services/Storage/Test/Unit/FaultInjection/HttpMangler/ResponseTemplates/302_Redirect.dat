@@ -1,0 +1,5 @@
+HTTP/1.1 302 Redirect
+FiddlerTemplate: True
+Location: http://www.fiddler2.com/sandbox/FormAndCookie.asp
+Content-Length: 0
+
