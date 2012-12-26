@@ -106,5 +106,4 @@ UpgradeLog*.XML
 
 # NuGet
 packages/
-/microsoft-azure-api/Services/Storage/Test/Unit/RT/AppPackages/RT_1.0.0.0_AnyCPU_Debug_Test/RT_1.0.0.0_AnyCPU_Debug.appx
-/microsoft-azure-api/Services/Storage/Test/Unit/RT/AppPackages/RT_1.0.0.0_AnyCPU_Debug_Test/RT_1.0.0.0_AnyCPU_Debug.appxsym
+/microsoft-azure-api/Services/Storage/Test/Unit/RT/AppPackages/
