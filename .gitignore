@@ -106,3 +106,4 @@ UpgradeLog*.XML
 
 # NuGet
 packages/
+/microsoft-azure-api/Services/Storage/Test/Unit/RT/AppPackages/
