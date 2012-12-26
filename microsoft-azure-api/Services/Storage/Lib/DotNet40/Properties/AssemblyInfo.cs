@@ -38,7 +38,7 @@ using System.Security;
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.3.0")]
 
-#if SIGNED
+#if SIGN
 [assembly: InternalsVisibleTo(
     "Microsoft.WindowsAzure.Storage.Test, PublicKey=" +
     "0024000004800000940000000602000000240000525341310004000001000100b5fc90e7027f67" +
