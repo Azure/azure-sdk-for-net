@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>A string containing the formatted filter condition.</returns>
         public static string GenerateFilterCondition(string propertyName, string operation, string givenValue)
         {
-            CommonUtils.AssertNotNullOrEmpty("givenValue", givenValue);
+            CommonUtils.AssertNotNull("givenValue", givenValue);
             return GenerateFilterCondition(propertyName, operation, givenValue, EdmType.String);
         }
 
