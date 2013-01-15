@@ -15,6 +15,8 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using System.Runtime.Serialization;
+
 namespace Microsoft.WindowsAzure.Storage
 {
     using System;
@@ -31,11 +33,13 @@ namespace Microsoft.WindowsAzure.Storage
     using System.Text;
 
 #if RTMD
+    [Serializable]
     internal class StorageException : COMException
 #else
-    /// <summary>
+	/// <summary>
     /// Represents an exception for the Windows Azure storage service.
     /// </summary>
+    [Serializable]
     public class StorageException : Exception
 #endif
     {
@@ -46,6 +50,17 @@ namespace Microsoft.WindowsAzure.Storage
         public RequestResult RequestInformation { get; private set; }
 
         internal bool IsRetryable { get; set; }
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StorageException"/> class by using the specified parameters.
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="context"></param>
+		public StorageException(SerializationInfo info, StreamingContext context) : base(info, context)
+		{
+			this.RequestInformation = (RequestResult) info.GetValue("RequestInformation", typeof(RequestResult));
+			this.IsRetryable = info.GetBoolean("IsRetryable");
+		}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageException"/> class by using the specified parameters.
@@ -59,6 +74,16 @@ namespace Microsoft.WindowsAzure.Storage
             this.RequestInformation = res;
             this.IsRetryable = true;
         }
+
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			if (info == null) { throw new ArgumentNullException("info"); }
+
+			info.AddValue("RequestInformation", this.RequestInformation);
+			info.AddValue("IsRetryable", this.IsRetryable);
+
+			base.GetObjectData(info, context);
+		}
 
         /// <summary>
         /// Translates the specified exception into a storage exception.
