@@ -56,6 +56,20 @@ http://nuget.org/packages/Microsoft.Data.OData/5.0.2<br/>
 http://nuget.org/packages/Microsoft.Data.Edm/5.0.2<br/>
 http://nuget.org/packages/System.Spatial/5.0.2<br/>
 </p>
+<p>
+FiddlerCore - is required by:
+<ul>
+  <li>Test\Unit\FaultInjection\HttpMangler</li>
+  <li>Test\Unit\FaultInjection\XStore</li>
+  <li>Test\Unit\DotNet4\XStore</li>
+</ul>
+<br/>
+This dependency is not included and must be downloaded from <a target="blank" href="http://www.fiddler2.com/Fiddler/Core/">http://www.fiddler2.com/Fiddler/Core/</a>.
+</p>
+<p> 
+Once installed, copy: <br/> FiddlerCore.dll to azure-sdk-for-net\microsoft-azure-api\Services\Storage\Test\Unit\FaultInjection\Dependencies\DotNet2<br/>
+and then copy: <br/>FiddlerCore4.dll to azure-sdk-for-net\microsoft-azure-api\Services\Storage\Test\Unit\FaultInjection\Dependencies\DotNet4
+<p>
 
 <h2>Code Samples</h2>
 <p>Note:</p>
