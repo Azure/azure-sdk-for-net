@@ -441,7 +441,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         public IAsyncAction DeleteMessageAsync(string messageId, string popReceipt)
         {
-            return this.DeleteMessageAsync(null, null, null, null);
+            return this.DeleteMessageAsync(messageId, popReceipt, null, null);
         }
 
         /// <summary>

@@ -337,6 +337,34 @@ namespace Microsoft.WindowsAzure.Storage.Table
             }
         }
 
+
+        [TestMethod]
+        // [Description("A test to validate querying with an empty value")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task TableQueryEmptyValueAsync()
+        {
+            CloudTableClient client = GenerateCloudTableClient();
+
+            CloudTable table = client.GetTableReference(GenerateRandomTableName());
+            await table.CreateAsync();
+
+            // Setup
+            string pk = Guid.NewGuid().ToString();
+
+            DynamicTableEntity dynEnt = new DynamicTableEntity(pk, string.Format("{0:0000}", "rowkey"));
+            dynEnt.Properties.Add("A", new EntityProperty(string.Empty));
+            await table.ExecuteAsync(TableOperation.Insert(dynEnt));
+
+            // 1. Filter on String
+            List<DynamicTableEntity> results = (await table.ExecuteQuerySegmentedAsync(new TableQuery().Where(TableQuery.GenerateFilterCondition("A", QueryComparisons.Equal, string.Empty)), null)).ToList();
+            Assert.AreEqual(1, results.Count);
+
+            List<BaseEntity> pocoresults = (await table.ExecuteQuerySegmentedAsync(new TableQuery<BaseEntity>().Where(TableQuery.GenerateFilterCondition("A", QueryComparisons.Equal, string.Empty)), null)).ToList();
+            Assert.AreEqual(1, pocoresults.Count);
+        }
         #endregion
 
         #region Negative Tests

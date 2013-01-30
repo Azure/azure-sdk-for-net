@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                     return new ResultSegment<TElement>(seg.Results) { ContinuationToken = seg.ContinuationToken };
                 },
-                long.MaxValue,
+                this.takeCount.HasValue ? this.takeCount.Value : long.MaxValue,
                 operationContext);
 
             return enumerable;

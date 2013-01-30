@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         public ExecutionState(StorageCommandBase<T> cmd, IRetryPolicy policy, OperationContext operationContext)
         {
             this.Cmd = cmd;
-            this.RetryPolicy = policy.CreateInstance();
+            this.RetryPolicy = policy != null ? policy.CreateInstance() : new NoRetry();
             this.OperationContext = operationContext ?? new OperationContext();
 
             if (!this.OperationContext.OperationExpiryTime.HasValue && cmd != null && cmd.ClientMaxTimeout.HasValue)
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             : base(callback, asyncState)
         {
             this.Cmd = cmd;
-            this.RetryPolicy = policy.CreateInstance();
+            this.RetryPolicy = policy != null ? policy.CreateInstance() : new NoRetry();
             this.OperationContext = operationContext ?? new OperationContext();
 
             if (!this.OperationContext.OperationExpiryTime.HasValue && cmd != null && cmd.ClientMaxTimeout.HasValue)
