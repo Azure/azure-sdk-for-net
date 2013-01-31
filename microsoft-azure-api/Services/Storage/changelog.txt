@@ -20,3 +20,11 @@ Issues fixed in 2.0.3 :
 	6. Tables: TableEntity does not support serializing nullable values
 	7. Tables: CloudTable.EndListTablesSegmented method does not work correctly
 	 
+Issues fixed in 2.0.4 :
+	1. ALL: Flush HttpWebRequest's request stream before calling BeginGetResponse
+	2. ALL: Support Null Retry Policies
+	3. Blob: Continue ListContainers parsing if a container property is unknown 
+	4. Queue (RT): DeleteMessageAsync(string messageId, string popReceipt) ignores the messageId and popReceipt
+	5. Tables: Add a TableConstant to define minimum DateTime supported
+	6. Tables: Correct count behavior with synchronous non segmented execution
+	7. Tables: Allow String.Empty in TableQuery Filters

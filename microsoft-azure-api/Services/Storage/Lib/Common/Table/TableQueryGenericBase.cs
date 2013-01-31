@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>A string containing the formatted filter condition.</returns>
         public static string GenerateFilterCondition(string propertyName, string operation, string value)
         {
-            CommonUtils.AssertNotNullOrEmpty("value", value);
+            value = value ?? string.Empty;
             return GenerateFilterCondition(propertyName, operation, value, EdmType.String);
         }
 
@@ -293,7 +293,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             // take
             if (this.takeCount.HasValue)
             {
-                builder.Add(TableConstants.Top, Convert.ToString(this.takeCount.Value));
+                builder.Add(TableConstants.Top, Convert.ToString(Math.Min(this.takeCount.Value, TableConstants.TableServiceMaxResults)));
             }
 
             // select
