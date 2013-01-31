@@ -102,7 +102,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region Unit Tests
 
         #region Query Segmented
-        
+
         #region Sync
 
         [TestMethod]
@@ -186,7 +186,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         #endregion
-        
+
         #region APM
 
         [TestMethod]
@@ -277,9 +277,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             Assert.AreEqual(1500, count);
             TestHelper.AssertNAttempts(opContext, 2);
-        } 
+        }
         #endregion
-        
+
         #endregion
 
         [TestMethod]
@@ -432,7 +432,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 List<BaseEntity> list1 = new List<BaseEntity>();
                 do
                 {
-                    IAsyncResult result = currentTable.BeginExecuteQuerySegmented(query, (pk, rk, ts, prop, etag) => new BaseEntity() {
+                    IAsyncResult result = currentTable.BeginExecuteQuerySegmented(query, (pk, rk, ts, prop, etag) => new BaseEntity()
+                    {
                         PartitionKey = pk,
                         RowKey = rk,
                         Timestamp = ts,
@@ -588,6 +589,58 @@ namespace Microsoft.WindowsAzure.Storage.Table
             }
         }
 
+        [TestMethod]
+        [Description("A test to validate basic take Count with and without continuations")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryGenericWithTakeCount()
+        {
+            // No continuation
+            TableQuery<BaseEntity> query = new TableQuery<BaseEntity>().Take(100);
+
+            OperationContext opContext = new OperationContext();
+            IEnumerable<BaseEntity> enumerable = currentTable.ExecuteQuery(query, null, opContext);
+
+            Assert.AreEqual(query.TakeCount, enumerable.Count());
+            TestHelper.AssertNAttempts(opContext, 1);
+
+
+            // With continuations
+            query.TakeCount = 1200;
+            opContext = new OperationContext();
+            enumerable = currentTable.ExecuteQuery(query, null, opContext);
+
+            Assert.AreEqual(query.TakeCount, enumerable.Count());
+            TestHelper.AssertNAttempts(opContext, 2);
+        }
+
+        [TestMethod]
+        [Description("A test to validate basic take Count with a resolver, with and without continuations")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryGenericWithTakeCountAndResolver()
+        {
+            // No continuation
+            TableQuery<BaseEntity> query = new TableQuery<BaseEntity>().Take(100);
+
+            OperationContext opContext = new OperationContext();
+            IEnumerable<string> enumerable = currentTable.ExecuteQuery(query, (pk, rk, ts, prop, etag) => pk + rk, null, opContext);
+
+            Assert.AreEqual(query.TakeCount, enumerable.Count());
+            TestHelper.AssertNAttempts(opContext, 1);
+
+            // With continuations
+            query.TakeCount = 1200;
+            opContext = new OperationContext();
+            enumerable = currentTable.ExecuteQuery(query, (pk, rk, ts, prop, etag) => pk + rk, null, opContext);
+
+            Assert.AreEqual(query.TakeCount, enumerable.Count());
+            TestHelper.AssertNAttempts(opContext, 2);
+        }
         #endregion
 
         #region Negative Tests
