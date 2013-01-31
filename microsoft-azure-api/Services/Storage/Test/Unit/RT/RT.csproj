@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;RTMD</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;RT;RTMD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -109,7 +109,7 @@
     <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;RT;RTMD</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -158,6 +158,7 @@
     <Compile Include="Blob\MD5FlagsTest.cs" />
     <Compile Include="Blob\SASTests.cs" />
     <Compile Include="Blob\ExceptionHResultTest.cs" />
+    <Compile Include="Core\RetryPoliciesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\CloudQueueClientTest.cs" />
     <Compile Include="Queue\ExceptionHResultTest.cs" />

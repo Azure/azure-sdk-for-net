@@ -257,7 +257,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #endregion
 
         #endregion
-        
+
         [TestMethod]
         [Description("A test to validate basic table filtering")]
         [TestCategory(ComponentCategory.Table)]
@@ -476,6 +476,60 @@ namespace Microsoft.WindowsAzure.Storage.Table
             {
                 table.DeleteIfExists();
             }
+        }
+
+        [TestMethod]
+        [Description("A test to validate querying with an empty value")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryEmptyValue()
+        {
+            CloudTableClient client = GenerateCloudTableClient();
+
+            CloudTable table = client.GetTableReference(GenerateRandomTableName());
+            table.Create();
+
+            // Setup
+            string pk = Guid.NewGuid().ToString();
+
+            DynamicTableEntity dynEnt = new DynamicTableEntity(pk, string.Format("{0:0000}", "rowkey"));
+            dynEnt.Properties.Add("A", new EntityProperty(string.Empty));
+            table.Execute(TableOperation.Insert(dynEnt));
+
+            // 1. Filter on String
+            List<DynamicTableEntity> results = table.ExecuteQuery(new TableQuery().Where(TableQuery.GenerateFilterCondition("A", QueryComparisons.Equal, string.Empty))).ToList();
+            Assert.AreEqual(1, results.Count);
+
+            List<BaseEntity> pocoresults = table.ExecuteQuery(new TableQuery<BaseEntity>().Where(TableQuery.GenerateFilterCondition("A", QueryComparisons.Equal, string.Empty))).ToList();
+            Assert.AreEqual(1, pocoresults.Count);
+        }
+
+        [TestMethod]
+        [Description("A test to validate basic take Count with and without continuations")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryWithTakeCount()
+        {
+            // No continuation
+            TableQuery query = new TableQuery().Take(100);
+
+            OperationContext opContext = new OperationContext();
+            IEnumerable<DynamicTableEntity> enumerable = currentTable.ExecuteQuery(query, null, opContext);
+
+            Assert.AreEqual(query.TakeCount, enumerable.Count());
+            TestHelper.AssertNAttempts(opContext, 1);
+
+            // With continuations
+            query.TakeCount = 1200;
+            opContext = new OperationContext();
+            enumerable = currentTable.ExecuteQuery(query, null, opContext);
+
+            Assert.AreEqual(query.TakeCount, enumerable.Count());
+            TestHelper.AssertNAttempts(opContext, 2);
         }
 
         #endregion

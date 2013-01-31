@@ -192,6 +192,18 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 }
                 else
                 {
+                    try
+                    {
+                        executionState.ReqStream.Flush();
+                        executionState.ReqStream.Dispose();
+                        executionState.ReqStream = null;
+                    }
+                    catch (Exception)
+                    {
+                        // If we could not flush/dispose the request stream properly,
+                        // BeginGetResponse will fail with a more meaningful error anyway.
+                    }
+
                     BeginGetResponse(executionState);
                 }
             }
@@ -442,6 +454,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         executionState.Req.Timeout = executionState.RemainingTimeout;
                         executionState.ReqStream = executionState.Req.GetRequestStream();
                         executionState.RestCMD.SendStream.WriteToSync(executionState.ReqStream, null /* maxLength */, executionState.OperationExpiryTime, false, true, executionState.OperationContext, null /* streamCopyState */); // don't calculate md5 here as we should have already set this for auth purposes
+                        executionState.ReqStream.Flush();
+                        executionState.ReqStream.Dispose();
+                        executionState.ReqStream = null;
                     }
 
                     // 6. Get response 

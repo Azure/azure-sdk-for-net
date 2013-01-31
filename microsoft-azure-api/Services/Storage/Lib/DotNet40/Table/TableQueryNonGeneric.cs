@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                     return new ResultSegment<DynamicTableEntity>(seg.Results) { ContinuationToken = seg.ContinuationToken };
                 },
-                long.MaxValue,
+                this.takeCount.HasValue ? this.takeCount.Value : long.MaxValue,
                 operationContext);
 
             return enumerable;
