@@ -226,6 +226,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
                                         case Constants.LeaseDurationElement:
                                             containerProperties.LeaseDuration = BlobHttpResponseParsers.GetLeaseDuration(reader.ReadElementContentAsString());
                                             break;
+
+                                        default:
+                                            reader.Skip();
+                                            break;
                                     }
                                 }
                             }

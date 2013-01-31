@@ -17,6 +17,7 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
+    using System;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 #if DNCP
@@ -120,5 +121,10 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// The query select clause name.
         /// </summary>
         internal const string Select = "$select";
+
+        /// <summary>
+        /// The minimum DateTime supported.
+        /// </summary> 
+        public static readonly DateTimeOffset MinDateTime = new DateTimeOffset(1601, 1, 1, 0, 0, 0, TimeSpan.Zero);
     }
 }
