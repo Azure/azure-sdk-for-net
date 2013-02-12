@@ -31,6 +31,7 @@ namespace Microsoft.WindowsAzure.Storage
     /// <summary>
     /// Represents extended error information returned by the Windows Azure storage services.
     /// </summary>
+    [Serializable]
     public sealed class StorageExtendedErrorInformation
     {
         /// <summary>

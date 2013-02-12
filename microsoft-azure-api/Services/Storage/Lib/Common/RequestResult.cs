@@ -34,6 +34,7 @@ namespace Microsoft.WindowsAzure.Storage
     /// <summary>
     /// Represents the result of a physical request.
     /// </summary>
+    [Serializable]
     public sealed class RequestResult
     {
         private int httpStatusCode = -1;
