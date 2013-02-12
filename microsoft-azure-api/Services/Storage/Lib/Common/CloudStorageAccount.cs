@@ -473,7 +473,6 @@ namespace Microsoft.WindowsAzure.Storage
             if (settings == null)
             {
                 accountInformation = null;
-
                 return false;
             }
 
@@ -553,47 +552,28 @@ namespace Microsoft.WindowsAzure.Storage
         private static IDictionary<string, string> ParseStringIntoSettings(string s, Action<string> error)
         {
             IDictionary<string, string> settings = new Dictionary<string, string>();
-            int pos = 0;
-
-            while (pos < s.Length)
+            
+            //Linq could make this even prettier
+            var keyvalues = s.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string entry in keyvalues)
             {
-                var equalsPos = s.IndexOf('=', pos);
-
-                if (equalsPos == -1)
-                {
+               var keyvalue = entry.Split(new[] { '=' });
+               if  (keyvalue.Length != 2)
+               {
                     error("Settings must be of the form \"name=value\".");
                     return null;
-                }
+               }
+               string key = keyvalue[0];
+               string value = keyvalue[1];
 
-                var name = s.Substring(pos, equalsPos - pos).Trim();
-
-                if (settings.ContainsKey(name))
-                {
-                    error(string.Format("Duplicate setting '{0}' found.", name));
-                    return null;
-                }
-
-                var semiPos = s.IndexOf(';', equalsPos);
-
-                if (semiPos == -1)
-                {
-                    // add 1 to move past the '='
-                    settings.Add(name, s.Substring(equalsPos + 1).Trim());
-
-                    return settings;
-                }
-                else
-                {
-                    // add 1 to move past the '=', subtract one to miss the ';'
-                    settings.Add(name, s.Substring(equalsPos + 1, semiPos - equalsPos - 1));
-                }
-
-                // add 1 to move past the ';'
-                pos = semiPos + 1;
+               if (settings.ContainsKey(key))
+               {
+                   error(string.Format("Duplicate setting '{0}' found.", key));
+                   return null;
+               }
+               settings.Add(key, value);
             }
-
-            error("Invalid account string.");
-            return null;
+            return settings;
         }
 
         /// <summary>
