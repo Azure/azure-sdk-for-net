@@ -69,6 +69,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 #else
             args.Request = executionState.Req;
 #endif
+            RequestInterceptor.FireSendingRequest(executionState.OperationContext, args);
             executionState.OperationContext.FireSendingRequest(args);
         }
 
@@ -82,6 +83,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             args.Response = executionState.Resp;
 #endif
             executionState.OperationContext.FireResponseReceived(args);
+            RequestInterceptor.FireResponseReceived(executionState.OperationContext, args);
         }
 
         protected static bool CheckTimeout<T>(ExecutionState<T> executionState, bool throwOnTimeout)
