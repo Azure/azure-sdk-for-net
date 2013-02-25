@@ -28,4 +28,3 @@ Issues fixed in 2.0.4 :
 	5. Tables: Add a TableConstant to define minimum DateTime supported
 	6. Tables: Correct count behavior with synchronous non segmented execution
 	7. Tables: Allow String.Empty in TableQuery Filters
-	8. Tables: Fix to honor TakeCount correctly in TableQueries
