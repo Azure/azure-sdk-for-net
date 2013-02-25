@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>WindowsAzure.Storage</id>
-    <version>2.0.4.0</version>
+    <version>2.0.4.1</version>
     <title>Windows Azure Storage</title>
     <authors>Microsoft</authors>
     <owners>Microsoft</owners>
@@ -16,7 +16,7 @@ Windows Azure Storage team's blog - http://blogs.msdn.com/b/windowsazurestorage/
     <summary>A client library for working with Windows Azure storage services including blobs, tables, and queues.</summary>
     <tags>Microsoft, Azure, Storage, Table, Blob, Queue, Scalable, windowsazureofficial</tags>
     <dependencies>
-      <dependency id="Microsoft.Data.OData" version="[5.0.2]" />
+      <dependency id="Microsoft.Data.OData" version="5.2.0" />
       <dependency id="Microsoft.WindowsAzure.ConfigurationManager" version="1.8.0.0" />
     </dependencies>
     <frameworkAssemblies>
