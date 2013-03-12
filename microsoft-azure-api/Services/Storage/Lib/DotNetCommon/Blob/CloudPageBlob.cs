@@ -42,7 +42,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <remarks>On the <see cref="System.IO.Stream"/> object returned by this method, the <see cref="System.IO.Stream.EndRead(IAsyncResult)"/> method must be called exactly once for every <see cref="System.IO.Stream.BeginRead(byte[], int, int, AsyncCallback, Object)"/> call. Failing to end a read process before beginning another read can cause unknown behavior.</remarks>
         public Stream OpenRead(AccessCondition accessCondition = null, BlobRequestOptions options = null, OperationContext operationContext = null)
         {
-            this.attributes.AssertNoSnapshot();
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
             return new BlobReadStream(this, accessCondition, modifiedOptions, operationContext);
         }
@@ -60,18 +59,29 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.attributes.AssertNoSnapshot();
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
+            bool createNew = size.HasValue;
 
-            if (size.HasValue)
+            if (createNew)
             {
                 this.Create(size.Value, accessCondition, modifiedOptions, operationContext);
             }
             else
             {
+                if (modifiedOptions.StoreBlobContentMD5.Value)
+                {
+                    throw new ArgumentException(SR.MD5NotPossible);
+                }
+
                 this.FetchAttributes(accessCondition, modifiedOptions, operationContext);
                 size = this.Properties.Length;
             }
 
-            return new BlobWriteStream(this, size.Value, accessCondition, modifiedOptions, operationContext);
+            if (accessCondition != null)
+            {
+                accessCondition = AccessCondition.GenerateLeaseCondition(accessCondition.LeaseId);
+            }
+
+            return new BlobWriteStream(this, size.Value, createNew, accessCondition, modifiedOptions, operationContext);
         }
 
         /// <summary>
@@ -102,10 +112,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.attributes.AssertNoSnapshot();
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
+            bool createNew = size.HasValue;
 
             ChainedAsyncResult<Stream> chainedResult = new ChainedAsyncResult<Stream>(callback, state);
             ICancellableAsyncResult result;
-            if (size.HasValue)
+            if (createNew)
             {
                 result = this.BeginCreate(
                     size.Value,
@@ -119,7 +130,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         try
                         {
                             this.EndCreate(ar);
-                            chainedResult.Result = new BlobWriteStream(this, size.Value, accessCondition, modifiedOptions, operationContext);
+
+                            if (accessCondition != null)
+                            {
+                                accessCondition = AccessCondition.GenerateLeaseCondition(accessCondition.LeaseId);
+                            }
+
+                            chainedResult.Result = new BlobWriteStream(this, size.Value, createNew, accessCondition, modifiedOptions, operationContext);
                             chainedResult.OnComplete();
                         }
                         catch (Exception e)
@@ -131,6 +148,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             }
             else
             {
+                if (modifiedOptions.StoreBlobContentMD5.Value)
+                {
+                    throw new ArgumentException(SR.MD5NotPossible);
+                }
+
                 result = this.BeginFetchAttributes(
                     accessCondition,
                     modifiedOptions,
@@ -142,7 +164,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         try
                         {
                             this.EndFetchAttributes(ar);
-                            chainedResult.Result = new BlobWriteStream(this, this.Properties.Length, accessCondition, modifiedOptions, operationContext);
+
+                            if (accessCondition != null)
+                            {
+                                accessCondition = AccessCondition.GenerateLeaseCondition(accessCondition.LeaseId);
+                            }
+
+                            chainedResult.Result = new BlobWriteStream(this, this.Properties.Length, createNew, accessCondition, modifiedOptions, operationContext);
                             chainedResult.OnComplete();
                         }
                         catch (Exception e)

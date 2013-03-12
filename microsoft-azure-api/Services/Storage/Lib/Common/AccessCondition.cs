@@ -99,6 +99,21 @@ namespace Microsoft.WindowsAzure.Storage
         }
 
         /// <summary>
+        /// Determines whether the access condition is one of the four conditional headers.
+        /// </summary>
+        /// <value><c>true</c> if the access condition is a conditional header; otherwise, <c>false</c>.</value>
+        internal bool IsConditional
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(this.IfMatchETag) ||
+                    !string.IsNullOrEmpty(this.IfNoneMatchETag) ||
+                    this.IfModifiedSinceTime.HasValue ||
+                    this.IfNotModifiedSinceTime.HasValue;
+            }
+        }
+
+        /// <summary>
         /// Constructs an empty access condition.
         /// </summary>
         /// <returns>An empty access condition.</returns>

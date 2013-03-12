@@ -166,7 +166,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
             ctx.UserHeaders.Add("foo", "bar");
 
             Action act = () => queue.Exists(null, ctx);
-            
+
             TestHelper.VerifyHeaderWasSent(ctx.UserHeaders.Keys.First(), ctx.UserHeaders[ctx.UserHeaders.Keys.First()], XStoreSelectors.QueueTraffic().IfHostNameContains(qClient.Credentials.AccountName), act);
 
             act = () => queue.EndExists(queue.BeginExists(null, ctx, null, null));
@@ -221,6 +221,48 @@ namespace Microsoft.WindowsAzure.Storage.Core
             act = () => table.EndExists(table.BeginExists(null, ctx, null, null));
 
             TestHelper.VerifyHeaderWasSent(ctx.UserHeaders.Keys.First(), ctx.UserHeaders[ctx.UserHeaders.Keys.First()], XStoreSelectors.TableTraffic().IfHostNameContains(tClient.Credentials.AccountName), act);
+        }
+
+        [TestMethod]
+        [Description("Test start / end time on OperationContext")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.Cloud)]
+        public void OpContextTestStartEndTime()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("test");
+
+            DateTime start = DateTime.Now;
+            OperationContext ctx = new OperationContext();
+            container.Exists(null, ctx);
+
+            Assert.IsNotNull(ctx.StartTime, "StartTime not set");
+            Assert.IsTrue(ctx.StartTime >= start, "StartTime not set correctly");
+            Assert.IsNotNull(ctx.EndTime, "EndTime not set");
+            Assert.IsTrue(ctx.EndTime <= DateTime.Now, "EndTime not set correctly");
+        }
+
+        [TestMethod]
+        [Description("Test start / end time on OperationContext")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.Cloud)]
+        public void OpContextTestStartEndTimeAPM()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("test");
+
+            DateTime start = DateTime.Now;
+            OperationContext ctx = new OperationContext();
+            container.EndCreateIfNotExists(container.BeginCreateIfNotExists(null, ctx, null, null));
+
+            Assert.IsNotNull(ctx.StartTime, "StartTime not set");
+            Assert.IsTrue(ctx.StartTime >= start, "StartTime not set correctly");
+            Assert.IsNotNull(ctx.EndTime, "EndTime not set");
+            Assert.IsTrue(ctx.EndTime <= DateTime.Now, "EndTime not set correctly");
         }
     }
 }

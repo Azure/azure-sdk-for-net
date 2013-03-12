@@ -225,7 +225,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         /// <returns>A string representing the specified value.</returns>
         internal static string GetDateTimeOrNull(DateTimeOffset? value)
         {
-            string result = value != null ? value.Value.UtcDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ") : null;
+            string result = value != null ? value.Value.UtcDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture) : null;
             return result;
         }
 

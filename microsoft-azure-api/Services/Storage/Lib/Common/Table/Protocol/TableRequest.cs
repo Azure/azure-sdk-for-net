@@ -34,5 +34,20 @@
                         SharedAccessTablePolicy.PermissionsToString(policy.Permissions));
                 });
         }
+
+        internal static string ExtractEntityIndexFromExtendedErrorInformation(RequestResult result)
+        {
+            if (result != null && result.ExtendedErrorInformation != null && !string.IsNullOrEmpty(result.ExtendedErrorInformation.ErrorMessage))
+            {
+                int semiDex = result.ExtendedErrorInformation.ErrorMessage.IndexOf(":");
+
+                if (semiDex > 0 && semiDex < 3)
+                {
+                    return result.ExtendedErrorInformation.ErrorMessage.Substring(0, semiDex);
+                }
+            }
+
+            return null;
+        }
     }
 }

@@ -26,6 +26,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     public partial interface ICloudBlob : IListBlobItem
     {
         /// <summary>
+        /// Opens a stream for reading from the blob.
+        /// </summary>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A stream to be used for reading from the blob.</returns>
+        /// <remarks>On the <see cref="System.IO.Stream"/> object returned by this method, the <see cref="System.IO.Stream.EndRead(IAsyncResult)"/> method must be called exactly once for every <see cref="System.IO.Stream.BeginRead(byte[], int, int, AsyncCallback, Object)"/> call. Failing to end a read process before beginning another read can cause unknown behavior.</remarks>
+        Stream OpenRead(AccessCondition accessCondition = null, BlobRequestOptions options = null, OperationContext operationContext = null);
+
+        /// <summary>
         /// Uploads a stream to the Windows Azure Blob Service. 
         /// </summary>
         /// <param name="source">The stream providing the blob content. Use a seek-able stream for optimal performance.</param>

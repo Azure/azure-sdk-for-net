@@ -98,15 +98,18 @@ namespace Microsoft.WindowsAzure.Storage
         internal static void AssertStreamsAreEqual(Stream src, Stream dst)
         {
             Assert.AreEqual(src.Length, dst.Length);
-            var origDstPosition = dst.Position;
-            var origSrcPosition = src.Position;
-            var originPosition = Math.Min(dst.Position, src.Position);
-            dst.Position = src.Position = 0;
+
+            long origDstPosition = dst.Position;
+            long origSrcPosition = src.Position;
+            long originPosition = Math.Min(dst.Position, src.Position);
+            dst.Position = 0;
+            src.Position = 0;
 
             for (int i = 0; i < originPosition; i++)
             {
                 Assert.AreEqual(src.ReadByte(), dst.ReadByte());
             }
+
             dst.Position = origDstPosition;
             src.Position = origSrcPosition;
         }
@@ -207,6 +210,11 @@ namespace Microsoft.WindowsAzure.Storage
 
         internal static void ValidateResponse(OperationContext opContext, int expectedAttempts, int expectedStatusCode, string[] allowedErrorCodes, string[] errorMessageBeginsWith)
         {
+            ValidateResponse(opContext, expectedAttempts, expectedStatusCode, allowedErrorCodes, errorMessageBeginsWith, true);
+        }
+
+        internal static void ValidateResponse(OperationContext opContext, int expectedAttempts, int expectedStatusCode, string[] allowedErrorCodes, string[] errorMessageBeginsWith, bool stripIndex)
+        {
             TestHelper.AssertNAttempts(opContext, 1);
             Assert.AreEqual(opContext.LastResult.HttpStatusCode, expectedStatusCode);
             Assert.IsTrue(allowedErrorCodes.Contains(opContext.LastResult.ExtendedErrorInformation.ErrorCode), "Unexpected Error Code, recieved" + opContext.LastResult.ExtendedErrorInformation.ErrorCode);
@@ -214,10 +222,15 @@ namespace Microsoft.WindowsAzure.Storage
             if (errorMessageBeginsWith != null)
             {
                 Assert.IsNotNull(opContext.LastResult.ExtendedErrorInformation.ErrorMessage);
-                int semDex = opContext.LastResult.ExtendedErrorInformation.ErrorMessage.IndexOf(":");
-                semDex = semDex > 2 ? -1 : semDex;
+                string message = opContext.LastResult.ExtendedErrorInformation.ErrorMessage;
+                if (stripIndex)
+                {
+                    int semDex = opContext.LastResult.ExtendedErrorInformation.ErrorMessage.IndexOf(":");
+                    semDex = semDex > 2 ? -1 : semDex;
+                    message = message.Substring(semDex + 1);
+                }
 
-                Assert.IsTrue(errorMessageBeginsWith.Where((s) => opContext.LastResult.ExtendedErrorInformation.ErrorMessage.Substring(semDex + 1).StartsWith(s)).Count() > 0, opContext.LastResult.ExtendedErrorInformation.ErrorMessage);
+                Assert.IsTrue(errorMessageBeginsWith.Where((s) => message.StartsWith(s)).Count() > 0, opContext.LastResult.ExtendedErrorInformation.ErrorMessage);
             }
         }
     }
