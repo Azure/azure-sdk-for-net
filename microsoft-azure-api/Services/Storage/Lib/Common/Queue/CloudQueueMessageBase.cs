@@ -104,6 +104,17 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CloudQueueMessage"/> class with the given message ID and pop receipt.
+        /// </summary>
+        /// <param name="messageId">The message ID.</param>
+        /// <param name="popReceipt">The pop receipt token.</param>
+        public CloudQueueMessage(string messageId, string popReceipt)
+        {
+            this.Id = messageId;
+            this.PopReceipt = popReceipt;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CloudQueueMessage"/> class with the given Base64 encoded string.
         /// This method is only used internally.
         /// </summary>

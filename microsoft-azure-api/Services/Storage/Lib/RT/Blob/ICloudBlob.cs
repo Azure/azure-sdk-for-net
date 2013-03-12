@@ -27,6 +27,15 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     public partial interface ICloudBlob : IListBlobItem, IRandomAccessStreamReference
     {
         /// <summary>
+        /// Opens a stream for reading from the blob.
+        /// </summary>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A stream to be used for reading from the blob.</returns>
+        IAsyncOperation<IRandomAccessStreamWithContentType> OpenReadAsync(AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
+
+        /// <summary>
         /// Uploads a stream to the Windows Azure Blob Service. 
         /// </summary>
         /// <param name="source">The stream providing the blob content.</param>

@@ -138,6 +138,7 @@
     <Compile Include="Core\Auth\SharedKeyLiteTableCanonicalizer.cs" />
     <Compile Include="Core\Executor\Executor.cs" />
     <Compile Include="Core\Util\AsyncSemaphore.cs" />
+    <Compile Include="Core\Util\CultureStringComparer.cs" />
     <Compile Include="Core\Util\HttpResponseMessageUtils.cs" />
     <Compile Include="Core\Util\WindowsAzureErrorCode.cs" />
     <Compile Include="ExceptionInfo.cs" />

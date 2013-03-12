@@ -58,7 +58,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A stream to be used for reading from the blob.</returns>
         public IAsyncOperation<IRandomAccessStreamWithContentType> OpenReadAsync(AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
-            this.attributes.AssertNoSnapshot();
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.BlockBlob, this.ServiceClient);
             IRandomAccessStreamWithContentType stream = new BlobReadStreamHelper(this, accessCondition, modifiedOptions, operationContext);
             return Task.FromResult(stream).AsAsyncOperation();
@@ -84,8 +83,39 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.attributes.AssertNoSnapshot();
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.BlockBlob, this.ServiceClient);
-            IOutputStream stream = new BlobWriteStream(this, accessCondition, modifiedOptions, operationContext).AsOutputStream();
-            return Task.FromResult(stream).AsAsyncOperation();
+            operationContext = operationContext ?? new OperationContext();
+
+            if ((accessCondition != null) && accessCondition.IsConditional)
+            {
+                return AsyncInfo.Run(async (token) =>
+                {
+                    try
+                    {
+                        await this.FetchAttributesAsync(accessCondition, modifiedOptions, operationContext);
+                    }
+                    catch (Exception)
+                    {
+                        if ((operationContext.LastResult != null) &&
+                            (operationContext.LastResult.HttpStatusCode == (int)HttpStatusCode.NotFound) &&
+                            string.IsNullOrEmpty(accessCondition.IfMatchETag))
+                        {
+                            // If we got a 404 and the condition was not an If-Match,
+                            // we should continue with the operation.
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+
+                    return new BlobWriteStream(this, accessCondition, modifiedOptions, operationContext).AsOutputStream();
+                });
+            }
+            else
+            {
+                IOutputStream stream = new BlobWriteStream(this, accessCondition, modifiedOptions, operationContext).AsOutputStream();
+                return Task.FromResult(stream).AsAsyncOperation();
+            }
         }
 
         /// <summary>

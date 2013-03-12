@@ -77,12 +77,19 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             {
                 if (!string.IsNullOrEmpty(accessCondition.IfMatchETag))
                 {
-                    request.Headers.IfMatch.Add(new EntityTagHeaderValue(accessCondition.IfMatchETag));
+                    request.Headers.IfMatch.Add(EntityTagHeaderValue.Parse(accessCondition.IfMatchETag));
                 }
 
                 if (!string.IsNullOrEmpty(accessCondition.IfNoneMatchETag))
                 {
-                    request.Headers.IfNoneMatch.Add(new EntityTagHeaderValue(accessCondition.IfNoneMatchETag));
+                    if (accessCondition.IfNoneMatchETag.Equals(EntityTagHeaderValue.Any.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        request.Headers.IfNoneMatch.Add(EntityTagHeaderValue.Any);
+                    }
+                    else
+                    {
+                        request.Headers.IfNoneMatch.Add(EntityTagHeaderValue.Parse(accessCondition.IfNoneMatchETag));
+                    }
                 }
 
                 request.Headers.IfModifiedSince = accessCondition.IfModifiedSinceTime;

@@ -20,6 +20,7 @@ namespace Microsoft.WindowsAzure.Storage
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
     using Microsoft.WindowsAzure.Storage.Auth;
     using Microsoft.WindowsAzure.Storage.Blob;
     using Microsoft.WindowsAzure.Storage.Core;
@@ -276,7 +277,7 @@ namespace Microsoft.WindowsAzure.Storage
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException("connectionString");
             }
 
             if (TryParse(connectionString, out ret, err => { throw new FormatException(err); }))
@@ -383,7 +384,7 @@ namespace Microsoft.WindowsAzure.Storage
 
             if (this == DevelopmentStorageAccount)
             {
-                settings.Add(string.Format("{0}=true", UseDevelopmentStorageSettingString));
+                settings.Add(string.Format(CultureInfo.InvariantCulture, "{0}=true", UseDevelopmentStorageSettingString));
             }
             else if (this.Credentials != null &&
                      this.Credentials.AccountName == DevstoreAccountSettingString &&
@@ -394,17 +395,17 @@ namespace Microsoft.WindowsAzure.Storage
                      this.BlobEndpoint.Scheme == this.QueueEndpoint.Scheme &&
                      this.QueueEndpoint.Scheme == this.TableEndpoint.Scheme)
             {
-                settings.Add(string.Format("{0}=true", UseDevelopmentStorageSettingString));
-                settings.Add(string.Format("{0}={1}://{2}", DevelopmentStorageProxyUriSettingString, this.BlobEndpoint.Scheme, this.BlobEndpoint.Host));
+                settings.Add(string.Format(CultureInfo.InvariantCulture, "{0}=true", UseDevelopmentStorageSettingString));
+                settings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}://{2}", DevelopmentStorageProxyUriSettingString, this.BlobEndpoint.Scheme, this.BlobEndpoint.Host));
             }
             else if (this.BlobEndpoint != null && this.QueueEndpoint != null && this.TableEndpoint != null &&
-                     this.BlobEndpoint.Host.EndsWith(BlobBaseDnsName) &&
-                     this.QueueEndpoint.Host.EndsWith(QueueBaseDnsName) &&
-                     this.TableEndpoint.Host.EndsWith(TableBaseDnsName) &&
+                     this.BlobEndpoint.Host.EndsWith(BlobBaseDnsName, StringComparison.Ordinal) &&
+                     this.QueueEndpoint.Host.EndsWith(QueueBaseDnsName, StringComparison.Ordinal) &&
+                     this.TableEndpoint.Host.EndsWith(TableBaseDnsName, StringComparison.Ordinal) &&
                      this.BlobEndpoint.Scheme == this.QueueEndpoint.Scheme &&
                      this.QueueEndpoint.Scheme == this.TableEndpoint.Scheme)
             {
-                settings.Add(string.Format("{0}={1}", DefaultEndpointsProtocolSettingString, this.BlobEndpoint.Scheme));
+                settings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", DefaultEndpointsProtocolSettingString, this.BlobEndpoint.Scheme));
 
                 if (this.Credentials != null)
                 {
@@ -415,17 +416,17 @@ namespace Microsoft.WindowsAzure.Storage
             {
                 if (this.BlobEndpoint != null)
                 {
-                    settings.Add(string.Format("{0}={1}", BlobEndpointSettingString, this.BlobEndpoint));
+                    settings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", BlobEndpointSettingString, this.BlobEndpoint));
                 }
 
                 if (this.QueueEndpoint != null)
                 {
-                    settings.Add(string.Format("{0}={1}", QueueEndpointSettingString, this.QueueEndpoint));
+                    settings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", QueueEndpointSettingString, this.QueueEndpoint));
                 }
 
                 if (this.TableEndpoint != null)
                 {
-                    settings.Add(string.Format("{0}={1}", TableEndpointSettingString, this.TableEndpoint));
+                    settings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", TableEndpointSettingString, this.TableEndpoint));
                 }
 
                 if (this.Credentials != null)
@@ -553,47 +554,28 @@ namespace Microsoft.WindowsAzure.Storage
         private static IDictionary<string, string> ParseStringIntoSettings(string s, Action<string> error)
         {
             IDictionary<string, string> settings = new Dictionary<string, string>();
-            int pos = 0;
+            string[] splitted = s.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-            while (pos < s.Length)
+            foreach (string nameValue in splitted)
             {
-                var equalsPos = s.IndexOf('=', pos);
+                string[] splittedNameValue = nameValue.Split(new char[] { '=' }, 2);
 
-                if (equalsPos == -1)
+                if (splittedNameValue.Length != 2)
                 {
                     error("Settings must be of the form \"name=value\".");
                     return null;
                 }
 
-                var name = s.Substring(pos, equalsPos - pos).Trim();
-
-                if (settings.ContainsKey(name))
+                if (settings.ContainsKey(splittedNameValue[0]))
                 {
-                    error(string.Format("Duplicate setting '{0}' found.", name));
+                    error(string.Format(CultureInfo.InvariantCulture, "Duplicate setting '{0}' found.", splittedNameValue[0]));
                     return null;
                 }
 
-                var semiPos = s.IndexOf(';', equalsPos);
-
-                if (semiPos == -1)
-                {
-                    // add 1 to move past the '='
-                    settings.Add(name, s.Substring(equalsPos + 1).Trim());
-
-                    return settings;
-                }
-                else
-                {
-                    // add 1 to move past the '=', subtract one to miss the ';'
-                    settings.Add(name, s.Substring(equalsPos + 1, semiPos - equalsPos - 1));
-                }
-
-                // add 1 to move past the ';'
-                pos = semiPos + 1;
+                settings.Add(splittedNameValue[0], splittedNameValue[1]);
             }
 
-            error("Invalid account string.");
-            return null;
+            return settings;
         }
 
         /// <summary>
@@ -901,7 +883,7 @@ namespace Microsoft.WindowsAzure.Storage
                 throw new ArgumentNullException("accountName");
             }
 
-            return string.Format("{0}://{1}.{2}", scheme, accountName, BlobBaseDnsName);
+            return string.Format(CultureInfo.InvariantCulture, "{0}://{1}.{2}", scheme, accountName, BlobBaseDnsName);
         }
 
         /// <summary>
@@ -930,7 +912,7 @@ namespace Microsoft.WindowsAzure.Storage
                 throw new ArgumentNullException("accountName");
             }
 
-            return string.Format("{0}://{1}.{2}", scheme, accountName, QueueBaseDnsName);
+            return string.Format(CultureInfo.InvariantCulture, "{0}://{1}.{2}", scheme, accountName, QueueBaseDnsName);
         }
 
         /// <summary>
@@ -959,7 +941,7 @@ namespace Microsoft.WindowsAzure.Storage
                 throw new ArgumentNullException("accountName");
             }
 
-            return string.Format("{0}://{1}.{2}", scheme, accountName, TableBaseDnsName);
+            return string.Format(CultureInfo.InvariantCulture, "{0}://{1}.{2}", scheme, accountName, TableBaseDnsName);
         }
     }
 }

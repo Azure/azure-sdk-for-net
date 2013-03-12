@@ -28,7 +28,42 @@ namespace Microsoft.WindowsAzure.Storage.Queue
     [TestClass]
     public class CloudQueueMessageTest : QueueTestBase
     {
-        
+        [TestMethod]
+        [Description("Test CloudQueueMessage constructor.")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudQueueCreateMessage()
+        {
+            CloudQueue queue = DefaultQueueClient.GetQueueReference(GenerateNewQueueName());
+
+            try
+            {
+                queue.CreateIfNotExists();
+
+                CloudQueueMessage message = new CloudQueueMessage(Guid.NewGuid().ToString());
+                queue.AddMessage(message);
+
+                CloudQueueMessage retrMessage = queue.GetMessage();
+                string messageId = retrMessage.Id;
+                string popReceipt = retrMessage.PopReceipt;
+
+                // Recreate the message using the messageId and popReceipt.
+                CloudQueueMessage newMessage = new CloudQueueMessage(messageId, popReceipt);
+                Assert.AreEqual(messageId, newMessage.Id);
+                Assert.AreEqual(popReceipt, newMessage.PopReceipt);
+
+                queue.UpdateMessage(newMessage, TimeSpan.FromSeconds(30), MessageUpdateFields.Visibility);
+                CloudQueueMessage retrMessage2 = queue.GetMessage();
+                Assert.AreEqual(null, retrMessage2);
+            }
+            finally
+            {
+                queue.DeleteIfExists();
+            }
+        }
+
         [TestMethod]
         [Description("Test whether we can add message.")]
         [TestCategory(ComponentCategory.Queue)]
