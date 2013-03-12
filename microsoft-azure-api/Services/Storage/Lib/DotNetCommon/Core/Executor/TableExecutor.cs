@@ -316,6 +316,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                             executionState.ExceptionRef = null;
                         }
 
+                        TableExecutor.FinishRequestAttempt(executionState);
+
                         return executionState.Result;
                     }
                     catch (Exception e)

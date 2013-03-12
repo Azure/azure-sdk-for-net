@@ -16,6 +16,7 @@
 // -----------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -71,6 +72,258 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 await pageBlob2.FetchAttributesAsync();
                 Assert.AreEqual(1024, pageBlob2.Properties.Length);
                 Assert.AreEqual(BlobType.PageBlob, pageBlob2.Properties.BlobType);
+            }
+            finally
+            {
+                container.DeleteAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        /// [Description("Create a blob using blob stream by specifying an access condition")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task BlockBlobWriteStreamOpenWithAccessConditionAsync()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            await container.CreateAsync();
+
+            try
+            {
+                OperationContext context = new OperationContext();
+
+                CloudBlockBlob existingBlob = container.GetBlockBlobReference("blob");
+                await existingBlob.PutBlockListAsync(new List<string>());
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob2");
+                AccessCondition accessCondition = AccessCondition.GenerateIfMatchCondition(existingBlob.Properties.ETag);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await blob.OpenWriteAsync(accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.NotFound);
+
+                blob = container.GetBlockBlobReference("blob3");
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(existingBlob.Properties.ETag);
+                IOutputStream blobStream = await blob.OpenWriteAsync(accessCondition, null, context);
+                blobStream.Dispose();
+
+                blob = container.GetBlockBlobReference("blob4");
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition("*");
+                blobStream = await blob.OpenWriteAsync(accessCondition, null, context);
+                blobStream.Dispose();
+
+                blob = container.GetBlockBlobReference("blob5");
+                accessCondition = AccessCondition.GenerateIfModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(1));
+                blobStream = await blob.OpenWriteAsync(accessCondition, null, context);
+                blobStream.Dispose();
+
+                blob = container.GetBlockBlobReference("blob6");
+                accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(-1));
+                blobStream = await blob.OpenWriteAsync(accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfMatchCondition(existingBlob.Properties.ETag);
+                blobStream = await existingBlob.OpenWriteAsync(accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await existingBlob.OpenWriteAsync(accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
+
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                blobStream = await existingBlob.OpenWriteAsync(accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(existingBlob.Properties.ETag);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await existingBlob.OpenWriteAsync(accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.NotModified);
+
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition("*");
+                blobStream = await existingBlob.OpenWriteAsync(accessCondition, null, context);
+                await TestHelper.ExpectedExceptionAsync(
+                    () =>
+                    {
+                        blobStream.Dispose();
+                        return Task.FromResult(true);
+                    },
+                    context,
+                    "BlobWriteStream.Dispose with a non-met condition should fail",
+                    HttpStatusCode.Conflict);
+
+                accessCondition = AccessCondition.GenerateIfModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(-1));
+                blobStream = await existingBlob.OpenWriteAsync(accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(1));
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await existingBlob.OpenWriteAsync(accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.NotModified);
+
+                accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(1));
+                blobStream = await existingBlob.OpenWriteAsync(accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(-1));
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await existingBlob.OpenWriteAsync(accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
+
+                accessCondition = AccessCondition.GenerateIfMatchCondition(existingBlob.Properties.ETag);
+                blobStream = await existingBlob.OpenWriteAsync(accessCondition, null, context);
+                await existingBlob.SetPropertiesAsync();
+                await TestHelper.ExpectedExceptionAsync(
+                    () =>
+                    {
+                        blobStream.Dispose();
+                        return Task.FromResult(true);
+                    },
+                    context,
+                    "BlobWriteStream.Dispose with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
+
+                blob = container.GetBlockBlobReference("blob7");
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition("*");
+                blobStream = await blob.OpenWriteAsync(accessCondition, null, context);
+                await blob.PutBlockListAsync(new List<string>());
+                await TestHelper.ExpectedExceptionAsync(
+                    () =>
+                    {
+                        blobStream.Dispose();
+                        return Task.FromResult(true);
+                    },
+                    context,
+                    "BlobWriteStream.Dispose with a non-met condition should fail",
+                    HttpStatusCode.Conflict);
+
+                blob = container.GetBlockBlobReference("blob8");
+                accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(existingBlob.Properties.LastModified.Value);
+                blobStream = await existingBlob.OpenWriteAsync(accessCondition, null, context);
+                await existingBlob.SetPropertiesAsync();
+                await TestHelper.ExpectedExceptionAsync(
+                    () =>
+                    {
+                        blobStream.Dispose();
+                        return Task.FromResult(true);
+                    },
+                    context,
+                    "BlobWriteStream.Dispose with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
+            }
+            finally
+            {
+                container.DeleteAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        /// [Description("Create a blob using blob stream by specifying an access condition")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task PageBlobWriteStreamOpenWithAccessConditionAsync()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            await container.CreateAsync();
+
+            try
+            {
+                OperationContext context = new OperationContext();
+
+                CloudPageBlob existingBlob = container.GetPageBlobReference("blob");
+                await existingBlob.CreateAsync(1024);
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob2");
+                AccessCondition accessCondition = AccessCondition.GenerateIfMatchCondition(existingBlob.Properties.ETag);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await blob.OpenWriteAsync(1024, accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
+
+                blob = container.GetPageBlobReference("blob3");
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(existingBlob.Properties.ETag);
+                IOutputStream blobStream = await blob.OpenWriteAsync(1024, accessCondition, null, context);
+                blobStream.Dispose();
+
+                blob = container.GetPageBlobReference("blob4");
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition("*");
+                blobStream = await blob.OpenWriteAsync(1024, accessCondition, null, context);
+                blobStream.Dispose();
+
+                blob = container.GetPageBlobReference("blob5");
+                accessCondition = AccessCondition.GenerateIfModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(1));
+                blobStream = await blob.OpenWriteAsync(1024, accessCondition, null, context);
+                blobStream.Dispose();
+
+                blob = container.GetPageBlobReference("blob6");
+                accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(-1));
+                blobStream = await blob.OpenWriteAsync(1024, accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfMatchCondition(existingBlob.Properties.ETag);
+                blobStream = await existingBlob.OpenWriteAsync(1024, accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await existingBlob.OpenWriteAsync(1024, accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
+
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                blobStream = await existingBlob.OpenWriteAsync(1024, accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(existingBlob.Properties.ETag);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await existingBlob.OpenWriteAsync(1024, accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
+
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition("*");
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await existingBlob.OpenWriteAsync(1024, accessCondition, null, context),
+                    context,
+                    "BlobWriteStream.Dispose with a non-met condition should fail",
+                    HttpStatusCode.Conflict);
+
+                accessCondition = AccessCondition.GenerateIfModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(-1));
+                blobStream = await existingBlob.OpenWriteAsync(1024, accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(1));
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await existingBlob.OpenWriteAsync(1024, accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
+
+                accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(1));
+                blobStream = await existingBlob.OpenWriteAsync(1024, accessCondition, null, context);
+                blobStream.Dispose();
+
+                accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(existingBlob.Properties.LastModified.Value.AddMinutes(-1));
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await existingBlob.OpenWriteAsync(1024, accessCondition, null, context),
+                    context,
+                    "OpenWriteAsync with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
             }
             finally
             {
@@ -169,27 +422,30 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task PageBlobWriteStreamBasicTestAsync()
         {
-            byte[] buffer = GetRandomBuffer(3 * 1024 * 1024);
+            byte[] buffer = GetRandomBuffer(6 * 512);
 
             CryptographicHash hasher = HashAlgorithmProvider.OpenAlgorithm("MD5").CreateHash();
-            CloudBlobClient blobClient = GenerateCloudBlobClient();
-            blobClient.ParallelOperationThreadCount = 2;
-            string name = GetRandomContainerName();
-            CloudBlobContainer container = blobClient.GetContainerReference(name);
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.ServiceClient.ParallelOperationThreadCount = 2;
+
             try
             {
                 await container.CreateAsync();
 
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                blob.StreamWriteSizeInBytes = 8 * 512;
+
                 using (MemoryStream wholeBlob = new MemoryStream())
                 {
                     BlobRequestOptions options = new BlobRequestOptions()
                     {
                         StoreBlobContentMD5 = true,
                     };
+
                     using (IOutputStream writeStream = await blob.OpenWriteAsync(buffer.Length * 3, null, options, null))
                     {
                         Stream blobStream = writeStream.AsStreamForWrite();
+
                         for (int i = 0; i < 3; i++)
                         {
                             await blobStream.WriteAsync(buffer, 0, buffer.Length);
@@ -206,6 +462,36 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     using (MemoryStream downloadedBlob = new MemoryStream())
                     {
                         await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                    }
+
+                    await TestHelper.ExpectedExceptionAsync<ArgumentException>(
+                        async () => await blob.OpenWriteAsync(null, null, options, null),
+                        "OpenWrite with StoreBlobContentMD5 on an existing page blob should fail");
+
+                    using (IOutputStream writeStream = await blob.OpenWriteAsync(null))
+                    {
+                        Stream blobStream = writeStream.AsStreamForWrite();
+                        blobStream.Seek(buffer.Length / 2, SeekOrigin.Begin);
+                        wholeBlob.Seek(buffer.Length / 2, SeekOrigin.Begin);
+
+                        for (int i = 0; i < 2; i++)
+                        {
+                            blobStream.Write(buffer, 0, buffer.Length);
+                            wholeBlob.Write(buffer, 0, buffer.Length);
+                            Assert.AreEqual(wholeBlob.Position, blobStream.Position);
+                        }
+
+                        wholeBlob.Seek(0, SeekOrigin.End);
+                    }
+
+                    await blob.FetchAttributesAsync();
+                    Assert.AreEqual(md5, blob.Properties.ContentMD5);
+
+                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    {
+                        options.DisableContentMD5Validation = true;
+                        await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream(), null, options, null);
                         TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
                     }
                 }

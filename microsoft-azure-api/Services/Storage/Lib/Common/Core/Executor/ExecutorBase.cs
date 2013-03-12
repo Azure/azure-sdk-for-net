@@ -59,6 +59,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         protected static void FinishRequestAttempt<T>(ExecutionState<T> executionState)
         {
             executionState.Cmd.CurrentResult.EndTime = DateTime.Now;
+            executionState.OperationContext.EndTime = DateTime.Now;
         }
 
         protected static void FireSendingRequest<T>(ExecutionState<T> executionState)

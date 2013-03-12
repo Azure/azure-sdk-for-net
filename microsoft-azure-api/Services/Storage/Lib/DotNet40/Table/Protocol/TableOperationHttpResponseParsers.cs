@@ -155,7 +155,20 @@
                         cmd.CurrentResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(mimePartResponseMessage.GetStream());
                         cmd.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
 
-                        throw new StorageException(cmd.CurrentResult, SR.UnexpectedResponseCodeForOperation + Convert.ToString(index), null) { IsRetryable = true };
+                        string indexString = Convert.ToString(index);
+                        
+                        // Attempt to extract index of failing entity from extended error info
+                        if (cmd.CurrentResult.ExtendedErrorInformation != null &&
+                            !string.IsNullOrEmpty(cmd.CurrentResult.ExtendedErrorInformation.ErrorMessage))
+                        {
+                            string tempIndex = TableRequest.ExtractEntityIndexFromExtendedErrorInformation(cmd.CurrentResult);
+                            if (!string.IsNullOrEmpty(tempIndex))
+                            {
+                                indexString = tempIndex;
+                            }
+                        }
+
+                        throw new StorageException(cmd.CurrentResult, SR.UnexpectedResponseCodeForOperation + indexString, null) { IsRetryable = true };
                     }
 
                     // Update etag

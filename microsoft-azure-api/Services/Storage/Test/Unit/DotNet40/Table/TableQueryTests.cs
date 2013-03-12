@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -479,6 +480,140 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         [TestMethod]
+        [Description("A test validate all supported query types")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableRegionalQueryOnSupportedTypes()
+        {
+            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR");
+
+            CloudTableClient client = GenerateCloudTableClient();
+            CloudTable table = client.GetTableReference(GenerateRandomTableName());
+
+            try
+            {
+                table.Create();
+
+                // Setup
+                TableBatchOperation batch = new TableBatchOperation();
+                string pk = Guid.NewGuid().ToString();
+                DynamicTableEntity middleRef = null;
+                for (int m = 0; m < 100; m++)
+                {
+                    ComplexEntity complexEntity = new ComplexEntity();
+                    complexEntity.String = string.Format("{0:0000}", m);
+                    complexEntity.Binary = new byte[] { 0x01, 0x02, (byte)m };
+                    complexEntity.BinaryPrimitive = new byte[] { 0x01, 0x02, (byte)m };
+                    complexEntity.Bool = m % 2 == 0 ? true : false;
+                    complexEntity.BoolPrimitive = m % 2 == 0 ? true : false;
+                    complexEntity.Double = m + ((double)m / 100);
+                    complexEntity.DoublePrimitive = m + ((double)m / 100);
+                    complexEntity.Int32 = m;
+                    complexEntity.IntegerPrimitive = m;
+                    complexEntity.Int64 = (long)int.MaxValue + m;
+                    complexEntity.LongPrimitive = (long)int.MaxValue + m;
+                    complexEntity.Guid = Guid.NewGuid();
+
+                    DynamicTableEntity dynEnt = new DynamicTableEntity(pk, string.Format("{0:0000}", m));
+                    dynEnt.Properties = complexEntity.WriteEntity(null);
+                    batch.Insert(dynEnt);
+
+                    if (m == 50)
+                    {
+                        middleRef = dynEnt;
+                    }
+
+                    // Add delay to make times unique
+                    Thread.Sleep(100);
+                }
+
+                table.ExecuteBatch(batch);
+
+                // 1. Filter on String
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterCondition("String", QueryComparisons.GreaterThanOrEqual, "0050"), 50);
+
+                // 2. Filter on Guid
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForGuid("Guid", QueryComparisons.Equal, middleRef["Guid"].GuidValue.Value), 1);
+
+                // 3. Filter on Long
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForLong("Int64", QueryComparisons.GreaterThanOrEqual,
+                                middleRef["LongPrimitive"].Int64Value.Value), 50);
+
+                ExecuteQueryAndAssertResults(table, TableQuery.GenerateFilterConditionForLong("LongPrimitive",
+                        QueryComparisons.GreaterThanOrEqual, middleRef["LongPrimitive"].Int64Value.Value), 50);
+
+                // 4. Filter on Double
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForDouble("Double", QueryComparisons.GreaterThanOrEqual,
+                                middleRef["Double"].DoubleValue.Value), 50);
+
+                ExecuteQueryAndAssertResults(table, TableQuery.GenerateFilterConditionForDouble("DoublePrimitive",
+                        QueryComparisons.GreaterThanOrEqual, middleRef["DoublePrimitive"].DoubleValue.Value), 50);
+
+                // 5. Filter on Integer
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForInt("Int32", QueryComparisons.GreaterThanOrEqual,
+                                middleRef["Int32"].Int32Value.Value), 50);
+
+                ExecuteQueryAndAssertResults(table, TableQuery.GenerateFilterConditionForInt("IntegerPrimitive",
+                        QueryComparisons.GreaterThanOrEqual, middleRef["IntegerPrimitive"].Int32Value.Value), 50);
+
+                // 6. Filter on Date
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForDate("DateTimeOffset", QueryComparisons.GreaterThanOrEqual,
+                                middleRef["DateTimeOffset"].DateTimeOffsetValue.Value), 50);
+
+                // 7. Filter on Boolean
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForBool("Bool", QueryComparisons.Equal, middleRef["Bool"].BooleanValue.Value), 50);
+
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForBool("BoolPrimitive", QueryComparisons.Equal, middleRef["BoolPrimitive"].BooleanValue.Value),
+                        50);
+
+                // 8. Filter on Binary 
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForBinary("Binary", QueryComparisons.Equal, middleRef["Binary"].BinaryValue), 1);
+
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForBinary("BinaryPrimitive", QueryComparisons.Equal,
+                                middleRef["BinaryPrimitive"].BinaryValue), 1);
+
+                // 9. Filter on Binary GTE
+                ExecuteQueryAndAssertResults(table,
+                        TableQuery.GenerateFilterConditionForBinary("Binary", QueryComparisons.GreaterThanOrEqual,
+                                middleRef["Binary"].BinaryValue), 50);
+
+                ExecuteQueryAndAssertResults(table, TableQuery.GenerateFilterConditionForBinary("BinaryPrimitive",
+                        QueryComparisons.GreaterThanOrEqual, middleRef["BinaryPrimitive"].BinaryValue), 50);
+
+                // 10. Complex Filter on Binary GTE
+                ExecuteQueryAndAssertResults(table, TableQuery.CombineFilters(
+                        TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,
+                                middleRef.PartitionKey),
+                        TableOperators.And,
+                        TableQuery.GenerateFilterConditionForBinary("Binary", QueryComparisons.GreaterThanOrEqual,
+                                middleRef["Binary"].BinaryValue)), 50);
+
+                ExecuteQueryAndAssertResults(table, TableQuery.GenerateFilterConditionForBinary("BinaryPrimitive",
+                        QueryComparisons.GreaterThanOrEqual, middleRef["BinaryPrimitive"].BinaryValue), 50);
+
+
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = currentCulture;
+                table.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
         [Description("A test to validate querying with an empty value")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -494,7 +629,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             // Setup
             string pk = Guid.NewGuid().ToString();
 
-            DynamicTableEntity dynEnt = new DynamicTableEntity(pk, string.Format("{0:0000}", "rowkey"));
+            DynamicTableEntity dynEnt = new DynamicTableEntity(pk, "rowkey");
             dynEnt.Properties.Add("A", new EntityProperty(string.Empty));
             table.Execute(TableOperation.Insert(dynEnt));
 

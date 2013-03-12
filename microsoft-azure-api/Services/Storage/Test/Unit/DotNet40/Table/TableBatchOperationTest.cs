@@ -165,7 +165,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
             // add entity
             currentTable.Execute(TableOperation.Insert(ent));
 
-            TableBatchOperation batch = new TableBatchOperation();
+            TableBatchOperation batch = new TableBatchOperation();           
+            batch.Insert(GenerateRandomEnitity("foo"));
             batch.Insert(ent);
 
             OperationContext opContext = new OperationContext();
@@ -1921,6 +1922,41 @@ namespace Microsoft.WindowsAzure.Storage.Table
             catch (Exception)
             {
                 Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        [Description("Ensure that a batch that contains multiple operations on the same entity fails")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableBatchWithMultipleOperationsOnSameEntityShouldFail()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableBatchOperation batch = new TableBatchOperation();
+            string pk = Guid.NewGuid().ToString();
+
+            ITableEntity first = GenerateRandomEnitity(pk);
+            batch.Insert(first);
+
+            for (int m = 0; m < 99; m++)
+            {
+                batch.Insert(GenerateRandomEnitity(pk));
+            }
+
+            // Insert Duplicate entity
+            batch.Insert(first);
+
+            OperationContext opContext = new OperationContext();
+            try
+            {
+                currentTable.ExecuteBatch(batch, null, opContext);
+                Assert.Fail();
+            }
+            catch (StorageException)
+            {
+                TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "InvalidInput" }, new string[] { "99:One of the request inputs is not valid." }, false);
             }
         }
 

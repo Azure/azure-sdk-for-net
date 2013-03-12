@@ -49,6 +49,17 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             this.RetryPolicy = policy != null ? policy.CreateInstance() : new NoRetry();
             this.OperationContext = operationContext ?? new OperationContext();
 
+#if RT
+            if (this.OperationContext.StartTime == DateTimeOffset.MinValue)
+            {
+                this.OperationContext.StartTime = DateTimeOffset.Now;
+            }
+#else
+            if (this.OperationContext.StartTime == DateTime.MinValue)
+            {
+                this.OperationContext.StartTime = DateTime.Now;
+            }
+#endif
             if (!this.OperationContext.OperationExpiryTime.HasValue && cmd != null && cmd.ClientMaxTimeout.HasValue)
             {
                 this.OperationExpiryTime = DateTime.Now + cmd.ClientMaxTimeout.Value;
@@ -71,6 +82,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             this.Cmd = cmd;
             this.RetryPolicy = policy != null ? policy.CreateInstance() : new NoRetry();
             this.OperationContext = operationContext ?? new OperationContext();
+
+            if (this.OperationContext.StartTime == DateTime.MinValue)
+            {
+                this.OperationContext.StartTime = DateTime.Now;
+            }
 
             if (!this.OperationContext.OperationExpiryTime.HasValue && cmd != null && cmd.ClientMaxTimeout.HasValue)
             {
@@ -200,7 +216,14 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 }
                 else
                 {
-                    return (int)(this.OperationExpiryTime.Value - DateTime.Now).TotalMilliseconds;
+                    int potentialTimeout = (int)(this.OperationExpiryTime.Value - DateTime.Now).TotalMilliseconds;
+
+                    if (potentialTimeout <= 0)
+                    {
+                        throw Exceptions.GenerateTimeoutException(this.Cmd.CurrentResult, null);
+                    }
+
+                    return potentialTimeout;
                 }
             }
         }

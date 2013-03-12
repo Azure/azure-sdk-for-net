@@ -493,54 +493,98 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public async Task CloudPageBlobUploadFromStreamAsync()
+        public async Task CloudPageBlobUploadFromStreamWithAccessConditionAsync()
         {
-            await CloudPageBlobUploadFromStreamAsync(0);
-            await CloudPageBlobUploadFromStreamAsync(1024);
+            OperationContext operationContext = new OperationContext();
+            CloudBlobContainer container = GetRandomContainerReference();
+            await container.CreateAsync();
+            try
+            {
+                AccessCondition accessCondition = AccessCondition.GenerateIfNoneMatchCondition("\"*\"");
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0);
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                await blob.CreateAsync(1024);
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0),
+                    operationContext,
+                    "Uploading a blob on top of an existing blob should fail if the ETag matches",
+                    HttpStatusCode.PreconditionFailed);
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0);
+
+                blob = container.GetPageBlobReference("blob3");
+                await blob.CreateAsync(1024);
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0),
+                    operationContext,
+                    "Uploading a blob on top of an non-existing blob should fail when the ETag doesn't match",
+                    HttpStatusCode.PreconditionFailed);
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0);
+            }
+            finally
+            {
+                container.DeleteAsync().AsTask().Wait();
+            }
         }
 
-        private async Task CloudPageBlobUploadFromStreamAsync(int startOffset)
+        [TestMethod]
+        /// [Description("Single put blob and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudPageBlobUploadFromStreamAsync()
         {
-            byte[] buffer = GetRandomBuffer(1 * 1024 * 1024);
+            CloudBlobContainer container = GetRandomContainerReference();
+            await container.CreateAsync();
+            try
+            {
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, null, 0);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, null, 1024);
+            }
+            finally
+            {
+                container.DeleteAsync().AsTask().Wait();
+            }
+        }
+
+        private async Task CloudPageBlobUploadFromStreamAsync(CloudBlobContainer container, int size, AccessCondition accessCondition, OperationContext operationContext, int startOffset)
+        {
+            byte[] buffer = GetRandomBuffer(size);
 
             CryptographicHash hasher = HashAlgorithmProvider.OpenAlgorithm("MD5").CreateHash();
             hasher.Append(buffer.AsBuffer(startOffset, buffer.Length - startOffset));
             string md5 = CryptographicBuffer.EncodeToBase64String(hasher.GetValueAndReset());
 
-            CloudBlobContainer container = GetRandomContainerReference();
-            try
+            CloudPageBlob blob = container.GetPageBlobReference("blob1");
+            blob.StreamWriteSizeInBytes = 512;
+
+            using (MemoryStream originalBlob = new MemoryStream())
             {
-                await container.CreateAsync();
+                originalBlob.Write(buffer, startOffset, buffer.Length - startOffset);
 
-                CloudPageBlob blob = container.GetPageBlobReference("blob1");
-
-                using (MemoryStream originalBlob = new MemoryStream())
+                using (MemoryStream sourceStream = new MemoryStream(buffer))
                 {
-                    originalBlob.Write(buffer, startOffset, buffer.Length - startOffset);
-
-                    using (MemoryStream sourceStream = new MemoryStream(buffer))
+                    sourceStream.Seek(startOffset, SeekOrigin.Begin);
+                    BlobRequestOptions options = new BlobRequestOptions()
                     {
-                        sourceStream.Seek(startOffset, SeekOrigin.Begin);
-                        BlobRequestOptions options = new BlobRequestOptions()
-                        {
-                            StoreBlobContentMD5 = true,
-                        };
-                        await blob.UploadFromStreamAsync(sourceStream.AsInputStream(), null, options, null);
-                    }
-
-                    await blob.FetchAttributesAsync();
-                    Assert.AreEqual(md5, blob.Properties.ContentMD5);
-
-                    using (MemoryStream downloadedBlob = new MemoryStream())
-                    {
-                        await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
-                        TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
-                    }
+                        StoreBlobContentMD5 = true,
+                    };
+                    await blob.UploadFromStreamAsync(sourceStream.AsInputStream(), accessCondition, options, operationContext);
                 }
-            }
-            finally
-            {
-                container.DeleteIfExistsAsync().AsTask().Wait();
+
+                await blob.FetchAttributesAsync();
+                Assert.AreEqual(md5, blob.Properties.ContentMD5);
+
+                using (MemoryStream downloadedBlob = new MemoryStream())
+                {
+                    await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
+                    TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
+                }
             }
         }
 
@@ -557,8 +601,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 await container.CreateAsync();
 
+                MemoryStream originalData = new MemoryStream(GetRandomBuffer(1024));
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
-                await blob.CreateAsync(1024);
+                await blob.UploadFromStreamAsync(originalData.AsInputStream());
 
                 CloudPageBlob snapshot1 = await blob.CreateSnapshotAsync();
                 Assert.AreEqual(blob.Properties.ETag, snapshot1.Properties.ETag);
@@ -574,6 +619,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 await blob.FetchAttributesAsync();
                 AssertAreEqual(snapshot1.Properties, blob.Properties);
 
+                CloudPageBlob snapshot1Clone = new CloudPageBlob(new Uri(blob.Uri + "?snapshot=" + snapshot1.SnapshotTime.Value.ToString("O")), blob.ServiceClient.Credentials);
+                Assert.IsNotNull(snapshot1Clone.SnapshotTime, "Snapshot clone does not have SnapshotTime set");
+                Assert.AreEqual(snapshot1.SnapshotTime.Value, snapshot1Clone.SnapshotTime.Value);
+                await snapshot1Clone.FetchAttributesAsync();
+                AssertAreEqual(snapshot1.Properties, snapshot1Clone.Properties);
+
                 CloudPageBlob snapshotCopy = container.GetPageBlobReference("blob2");
                 await snapshotCopy.StartCopyFromBlobAsync(TestHelper.Defiddler(snapshot1.Uri));
                 await WaitForCopyAsync(snapshotCopy);
@@ -582,6 +633,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 await TestHelper.ExpectedExceptionAsync<InvalidOperationException>(
                     async () => await snapshot1.OpenWriteAsync(1024),
                     "Trying to write to a blob snapshot should fail");
+
+                using (Stream snapshotStream = (await snapshot1.OpenReadAsync()).AsStreamForRead())
+                {
+                    snapshotStream.Seek(0, SeekOrigin.End);
+                    TestHelper.AssertStreamsAreEqual(originalData, snapshotStream);
+                }
+
+                await blob.CreateAsync(1024);
+
+                using (Stream snapshotStream = (await snapshot1.OpenReadAsync()).AsStreamForRead())
+                {
+                    snapshotStream.Seek(0, SeekOrigin.End);
+                    TestHelper.AssertStreamsAreEqual(originalData, snapshotStream);
+                }
 
                 BlobResultSegment resultSegment = await container.ListBlobsSegmentedAsync(null, true, BlobListingDetails.All, null, null, null, null);
                 List<IListBlobItem> blobs = resultSegment.Results.ToList();

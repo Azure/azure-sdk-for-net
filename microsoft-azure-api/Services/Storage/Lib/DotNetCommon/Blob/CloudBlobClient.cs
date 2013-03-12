@@ -22,6 +22,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using System.IO;
     using System.Linq;
     using System.Net;
+    using Microsoft.WindowsAzure.Storage.Auth;
     using Microsoft.WindowsAzure.Storage.Auth.Protocol;
     using Microsoft.WindowsAzure.Storage.Blob.Protocol;
     using Microsoft.WindowsAzure.Storage.Core;
@@ -455,24 +456,37 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A <see cref="RESTCommand{T}"/> that fetches the attributes.</returns>
         private RESTCommand<ICloudBlob> GetBlobReferenceImpl(Uri blobUri, AccessCondition accessCondition, BlobRequestOptions options)
         {
-            RESTCommand<ICloudBlob> getCmd = new RESTCommand<ICloudBlob>(this.Credentials, blobUri);
+            // If the blob Uri contains SAS credentials, we need to use those
+            // credentials instead of this service client's stored credentials.
+            StorageCredentials parsedCredentials;
+            DateTimeOffset? parsedSnapshot;
+            blobUri = NavigationHelper.ParseBlobQueryAndVerify(blobUri, out parsedCredentials, out parsedSnapshot);
+            CloudBlobClient client = parsedCredentials != null ? new CloudBlobClient(this.BaseUri, parsedCredentials) : this;
+
+            RESTCommand<ICloudBlob> getCmd = new RESTCommand<ICloudBlob>(client.Credentials, blobUri);
 
             getCmd.ApplyRequestOptions(options);
             getCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => BlobHttpWebRequestFactory.GetProperties(uri, serverTimeout, null /* snapshot */, accessCondition, ctx);
-            getCmd.SignRequest = this.AuthenticationHandler.SignRequest;
+            getCmd.SignRequest = client.AuthenticationHandler.SignRequest;
             getCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
                 HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-                BlobAttributes attributes = new BlobAttributes();
-                attributes.Uri = blobUri;
+                
+                BlobAttributes attributes = new BlobAttributes()
+                {
+                    Uri = blobUri,
+                    SnapshotTime = parsedSnapshot,
+                };
+
                 CloudBlobSharedImpl.UpdateAfterFetchAttributes(attributes, resp, false);
+
                 switch (attributes.Properties.BlobType)
                 {
                     case BlobType.BlockBlob:
-                        return new CloudBlockBlob(attributes, this);
+                        return new CloudBlockBlob(attributes, client);
 
                     case BlobType.PageBlob:
-                        return new CloudPageBlob(attributes, this);
+                        return new CloudPageBlob(attributes, client);
 
                     default:
                         throw new InvalidOperationException();

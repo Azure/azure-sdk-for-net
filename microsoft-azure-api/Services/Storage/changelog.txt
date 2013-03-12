@@ -19,12 +19,35 @@ Issues fixed in 2.0.3 :
 	5. Tables: TableQuery.GenerateFilterConditionForLong does not append 'L' at the end of the value and thus values larger than Int32.MaxValue cannot be used when filtering
 	6. Tables: TableEntity does not support serializing nullable values
 	7. Tables: CloudTable.EndListTablesSegmented method does not work correctly
-	 
+
 Issues fixed in 2.0.4 :
-	1. ALL: Flush HttpWebRequest's request stream before calling BeginGetResponse
-	2. ALL: Support Null Retry Policies
+	1. All: Flush HttpWebRequest's request stream before calling BeginGetResponse
+	2. All: Support Null Retry Policies
 	3. Blob: Continue ListContainers parsing if a container property is unknown 
 	4. Queue (RT): DeleteMessageAsync(string messageId, string popReceipt) ignores the messageId and popReceipt
 	5. Tables: Add a TableConstant to define minimum DateTime supported
 	6. Tables: Correct count behavior with synchronous non segmented execution
 	7. Tables: Allow String.Empty in TableQuery Filters
+
+Issues fixed in 2.0.4.1 :
+	1. All: Updated Odata dependency to latest and also changed nuspec to allow any version >= 5.2.0
+
+Issues fixed in 2.0.5 :
+	1. All: StorageException is now serializable. Also, other useful objects for debugging(StorageExtendedErrorInformation and RequestResult) are also serializable
+	2. All: SharedAccessSignature helper now uses culture invariant characteristics to calculate SAS
+	3. All: CloudStorageAccount can now parse connection strings with extra blank values
+	4. All: OperationContext StartTime and EndTime are now populated during execution
+	5. All: StorageCredentials.UpdateKey does not work on SAS/Anonymous credentials anymore
+	6. All: Metadata headers are now sorted using en-US culture to prevent 403 errors in some cultures
+	7. All: Fixed issue where in some cases a sync method call could result in a 0 ms timeout being set on HttpWebRequest.
+	8. Blob: Snapshot time embedded in blob Uri is parsed in the constructor
+	9. Blob: GetBlobReferenceFromServer works with blob Uri that contain a SAS token
+	10. Blob: BlobWriteStream now honors AccessCondition
+	11. Blob: BlobWriteStream prevents using StoreBlobContentMD5 on existing page blobs
+	12. Blob: ICloudBlob now has OpenRead method
+	13. Blob: Cloud*Blob.OpenRead now can be used with snapshots
+	14. Blob: AbortCopy does not throw an exception anymore when a copy is successfully aborted
+	15. Queue: Ability to recreate CloudQueueMessage with Message Id and Pop Receipt
+	16. Table: Exceptions during TableBatchOperation now parse the entity index from the server response
+	17. Table: Floating-point number filter is now generated using invariant culture
+	
