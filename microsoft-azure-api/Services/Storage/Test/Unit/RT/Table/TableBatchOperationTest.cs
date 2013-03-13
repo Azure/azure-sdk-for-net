@@ -1046,6 +1046,40 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         [TestMethod]
+        // [Description("Ensure that a batch that contains multiple operations on the same entity fails")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task TableBatchWithMultipleOperationsOnSameEntityShouldFailAsync()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableBatchOperation batch = new TableBatchOperation();
+            string pk = Guid.NewGuid().ToString();
+            ITableEntity first = GenerateRandomEnitity(pk);
+            batch.Insert(first);
+
+            for (int m = 0; m < 99; m++)
+            {
+                batch.Insert(GenerateRandomEnitity(pk));
+            }
+
+            // Insert Duplicate entity
+            batch.Insert(first);
+
+            OperationContext opContext = new OperationContext();
+            try
+            {
+                await currentTable.ExecuteBatchAsync(batch, null, opContext);
+                Assert.Fail();
+            }
+            catch (Exception)
+            {
+                TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "InvalidInput" }, new string[] { "99:One of the request inputs is not valid." }, false);
+            }
+        }
+
+        [TestMethod]
         //[Description("Ensure that a batch with over 100 entities will throw")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]

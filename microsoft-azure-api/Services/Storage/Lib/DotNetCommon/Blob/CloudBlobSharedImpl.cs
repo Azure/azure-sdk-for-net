@@ -438,7 +438,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.ApplyRequestOptions(options);
             putCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => BlobHttpWebRequestFactory.AbortCopy(uri, serverTimeout, copyId, accessCondition, ctx);
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
-            putCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex, ctx);
+            putCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp, NullType.Value, cmd, ex, ctx);
 
             return putCmd;
         }

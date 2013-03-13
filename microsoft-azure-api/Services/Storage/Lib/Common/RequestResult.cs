@@ -34,6 +34,9 @@ namespace Microsoft.WindowsAzure.Storage
     /// <summary>
     /// Represents the result of a physical request.
     /// </summary>
+#if DNCP
+    [Serializable]
+#endif
     public sealed class RequestResult
     {
         private int httpStatusCode = -1;
@@ -171,7 +174,16 @@ namespace Microsoft.WindowsAzure.Storage
 
         #region XML Serializable
 
-        internal void ReadXml(XmlReader reader)
+        /// <summary>
+        /// Generates a serializable RequestResult from its XML representation.
+        /// </summary>
+        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the RequestResult is deserialized.</param>
+#if RTMD
+        internal
+#else
+        public
+#endif
+        void ReadXml(XmlReader reader)
         {
             reader.Read();
 
@@ -206,7 +218,16 @@ namespace Microsoft.WindowsAzure.Storage
             reader.ReadEndElement();
         }
 
-        internal void WriteXml(XmlWriter writer)
+        /// <summary>
+        /// Converts a serializable RequestResult object into its XML representation.
+        /// </summary>
+        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the RequestResult is serialized.</param>
+#if RTMD
+        internal
+#else
+        public
+#endif
+        void WriteXml(XmlWriter writer)
         {
             writer.WriteComment("An exception has occurred. For more information please deserialize this message via RequestResult.TranslateFromExceptionMessage.");
             writer.WriteStartElement("RequestResult");
@@ -220,8 +241,8 @@ namespace Microsoft.WindowsAzure.Storage
             writer.WriteElementString("RequestDate", this.RequestDate);
 
             // Dates - using RFC 1123 pattern
-            writer.WriteElementString("StartTime", this.StartTime.ToString("R", CultureInfo.InvariantCulture));
-            writer.WriteElementString("EndTime", this.EndTime.ToString("R", CultureInfo.InvariantCulture));
+            writer.WriteElementString("StartTime", this.StartTime.ToUniversalTime().ToString("R", CultureInfo.InvariantCulture));
+            writer.WriteElementString("EndTime", this.EndTime.ToUniversalTime().ToString("R", CultureInfo.InvariantCulture));
 
             // Extended info
             if (this.ExtendedErrorInformation != null)

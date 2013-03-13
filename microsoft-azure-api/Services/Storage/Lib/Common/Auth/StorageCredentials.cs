@@ -179,6 +179,12 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// <param name="keyName">The key name to update.</param>
         public void UpdateKey(string keyValue, string keyName)
         {
+            if (!this.IsSharedKey)
+            {
+                string errorMessage = string.Format(SR.CannotUpdateKeyWithoutAccountKeyCreds);
+                throw new InvalidOperationException(errorMessage);
+            }
+            
             if (string.IsNullOrEmpty(keyValue))
             {
                 throw new ArgumentNullException("keyValue");
@@ -189,7 +195,6 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         }
 
 #if DNCP
-
         /// <summary>
         /// Updates the key value and key name for the credentials.
         /// </summary>
@@ -197,6 +202,12 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// <param name="keyName">The key name to update.</param>
         public void UpdateKey(byte[] keyValue, string keyName)
         {
+            if (!this.IsSharedKey)
+            {
+                string errorMessage = string.Format(SR.CannotUpdateKeyWithoutAccountKeyCreds);
+                throw new InvalidOperationException(errorMessage);
+            }
+
             if (keyValue == null)
             {
                 throw new ArgumentNullException("keyValue");

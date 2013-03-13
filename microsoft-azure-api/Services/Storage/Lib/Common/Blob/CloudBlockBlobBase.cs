@@ -414,6 +414,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 throw new ArgumentException(error);
             }
 
+            if (parsedSnapshot.HasValue)
+            {
+                this.SnapshotTime = parsedSnapshot;
+            }
+
             this.ServiceClient = new CloudBlobClient(NavigationHelper.GetServiceClientBaseAddress(this.Uri, null /* usePathStyleUris */), credentials ?? parsedCredentials);
         }
     }

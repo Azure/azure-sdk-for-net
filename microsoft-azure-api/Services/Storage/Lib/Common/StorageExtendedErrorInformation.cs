@@ -31,6 +31,9 @@ namespace Microsoft.WindowsAzure.Storage
     /// <summary>
     /// Represents extended error information returned by the Windows Azure storage services.
     /// </summary>
+#if DNCP
+    [Serializable]
+#endif
     public sealed class StorageExtendedErrorInformation
     {
         /// <summary>
@@ -97,9 +100,18 @@ namespace Microsoft.WindowsAzure.Storage
 
         #region IXmlSerializable
 
-        internal void ReadXml(XmlReader reader)
+        /// <summary>
+        /// Generates a serializable StorageExtendedErrorInformation from its XML representation.
+        /// </summary>
+        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the StorageExtendedErrorInformation is deserialized.</param>
+#if RTMD
+        internal
+#else
+        public
+#endif
+        void ReadXml(XmlReader reader)
         {
-            General.SkipWhitespace(reader);
+            reader.MoveToContent();
 
             while (reader.NodeType == XmlNodeType.XmlDeclaration || reader.NodeType == XmlNodeType.Whitespace)
             {
@@ -156,7 +168,16 @@ namespace Microsoft.WindowsAzure.Storage
             reader.ReadEndElement();
         }
 
-        internal void WriteXml(XmlWriter writer)
+        /// <summary>
+        /// Converts a serializable StorageExtendedErrorInformation object into its XML representation.
+        /// </summary>
+        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the StorageExtendedErrorInformation is serialized.</param>
+#if RTMD
+        internal
+#else
+        public
+#endif
+        void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement(Constants.ErrorRootElement);
             writer.WriteElementString(Constants.ErrorCode, this.ErrorCode);

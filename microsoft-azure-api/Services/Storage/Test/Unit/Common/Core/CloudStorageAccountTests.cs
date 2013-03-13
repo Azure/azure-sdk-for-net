@@ -1,0 +1,538 @@
+// -----------------------------------------------------------------------------------------
+// <copyright file="CloudStorageAccountTests.cs" company="Microsoft">
+//    Copyright 2012 Microsoft Corporation
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+//      http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
+// -----------------------------------------------------------------------------------------
+
+using System;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Microsoft.WindowsAzure.Storage.Table;
+
+#if RTMD
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+#else
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
+
+namespace Microsoft.WindowsAzure.Storage.Core.Util
+{
+    [TestClass]
+    public class CloudStorageAccountTests : TestBase
+    {
+        private string token = "?sp=abcde&sig=1";
+
+        [TestMethod]
+        /// [Description("Anonymous credentials")]
+        [TestCategory(ComponentCategory.Auth)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void StorageCredentialsAnonymous()
+        {
+            StorageCredentials cred = new StorageCredentials();
+
+            Assert.IsNull(cred.AccountName);
+            Assert.IsTrue(cred.IsAnonymous);
+            Assert.IsFalse(cred.IsSAS);
+            Assert.IsFalse(cred.IsSharedKey);
+
+            Uri testUri = new Uri("http://test/abc?querya=1");
+            Assert.AreEqual(testUri, cred.TransformUri(testUri));
+
+            byte[] dummyKey = { 0, 1, 2 };
+            string base64EncodedDummyKey = Convert.ToBase64String(dummyKey);
+            TestHelper.ExpectedException<InvalidOperationException>(
+                () => cred.UpdateKey(base64EncodedDummyKey, null),
+                "Updating shared key on an anonymous credentials instance should fail.");
+        }
+
+        [TestMethod]
+        /// [Description("Shared key credentials")]
+        [TestCategory(ComponentCategory.Auth)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void StorageCredentialsSharedKey()
+        {
+            StorageCredentials cred = new StorageCredentials(TestBase.TargetTenantConfig.AccountName, TestBase.TargetTenantConfig.AccountKey);
+
+            Assert.AreEqual(TestBase.TargetTenantConfig.AccountName, cred.AccountName, false);
+            Assert.IsFalse(cred.IsAnonymous);
+            Assert.IsFalse(cred.IsSAS);
+            Assert.IsTrue(cred.IsSharedKey);
+
+            Uri testUri = new Uri("http://test/abc?querya=1");
+            Assert.AreEqual(testUri, cred.TransformUri(testUri));
+
+            Assert.AreEqual(TestBase.TargetTenantConfig.AccountKey, Convert.ToBase64String(cred.ExportKey()));
+            byte[] dummyKey = { 0, 1, 2 };
+            string base64EncodedDummyKey = Convert.ToBase64String(dummyKey);
+            cred.UpdateKey(base64EncodedDummyKey, null);
+            Assert.AreEqual(base64EncodedDummyKey, Convert.ToBase64String(cred.ExportKey()));
+
+#if !RTMD
+            dummyKey[0] = 3;
+            base64EncodedDummyKey = Convert.ToBase64String(dummyKey);
+            cred.UpdateKey(dummyKey, null);
+            Assert.AreEqual(base64EncodedDummyKey, Convert.ToBase64String(cred.ExportKey()));
+#endif
+        }
+
+        [TestMethod]
+        /// [Description("SAS token credentials")]
+        [TestCategory(ComponentCategory.Auth)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void StorageCredentialsSAS()
+        {
+            StorageCredentials cred = new StorageCredentials(token);
+
+            Assert.IsNull(cred.AccountName);
+            Assert.IsFalse(cred.IsAnonymous);
+            Assert.IsTrue(cred.IsSAS);
+            Assert.IsFalse(cred.IsSharedKey);
+
+            Uri testUri = new Uri("http://test/abc");
+            Assert.AreEqual(testUri.AbsoluteUri + token, cred.TransformUri(testUri).AbsoluteUri, true);
+
+            testUri = new Uri("http://test/abc?query=a&query2=b");
+            string expectedUri = testUri.AbsoluteUri + "&" + token.Substring(1);
+            Assert.AreEqual(expectedUri, cred.TransformUri(testUri).AbsoluteUri, true);
+
+            byte[] dummyKey = { 0, 1, 2 };
+            string base64EncodedDummyKey = Convert.ToBase64String(dummyKey);
+            TestHelper.ExpectedException<InvalidOperationException>(
+                () => cred.UpdateKey(base64EncodedDummyKey, null),
+                "Updating shared key on a SAS credentials instance should fail.");
+        }
+
+        [TestMethod]
+        /// [Description("Compare credentials for equality")]
+        [TestCategory(ComponentCategory.Auth)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void StorageCredentialsEquality()
+        {
+            StorageCredentials credSharedKey1 = new StorageCredentials(TestBase.TargetTenantConfig.AccountName, TestBase.TargetTenantConfig.AccountKey);
+            StorageCredentials credSharedKey2 = new StorageCredentials(TestBase.TargetTenantConfig.AccountName, TestBase.TargetTenantConfig.AccountKey);
+            StorageCredentials credSharedKey3 = new StorageCredentials(TestBase.TargetTenantConfig.AccountName + "1", TestBase.TargetTenantConfig.AccountKey);
+            StorageCredentials credSharedKey4 = new StorageCredentials(TestBase.TargetTenantConfig.AccountName, Convert.ToBase64String(new byte[] { 0, 1, 2 }));
+            StorageCredentials credSAS1 = new StorageCredentials(token);
+            StorageCredentials credSAS2 = new StorageCredentials(token);
+            StorageCredentials credSAS3 = new StorageCredentials(token + "1");
+            StorageCredentials credAnonymous1 = new StorageCredentials();
+            StorageCredentials credAnonymous2 = new StorageCredentials();
+
+            Assert.IsTrue(credSharedKey1.Equals(credSharedKey2));
+            Assert.IsFalse(credSharedKey1.Equals(credSharedKey3));
+            Assert.IsFalse(credSharedKey1.Equals(credSharedKey4));
+            Assert.IsTrue(credSAS1.Equals(credSAS2));
+            Assert.IsFalse(credSAS1.Equals(credSAS3));
+            Assert.IsTrue(credAnonymous1.Equals(credAnonymous2));
+            Assert.IsFalse(credSharedKey1.Equals(credSAS1));
+            Assert.IsFalse(credSharedKey1.Equals(credAnonymous1));
+            Assert.IsFalse(credSAS1.Equals(credAnonymous1));
+        }
+
+        private void AccountsAreEqual(CloudStorageAccount a, CloudStorageAccount b)
+        {
+            // endpoints are the same
+            Assert.AreEqual(a.BlobEndpoint, b.BlobEndpoint);
+            Assert.AreEqual(a.QueueEndpoint, b.QueueEndpoint);
+            Assert.AreEqual(a.TableEndpoint, b.TableEndpoint);
+            
+            // seralized representatons are the same.
+            string aToStringNoSecrets = a.ToString();
+            string aToStringWithSecrets = a.ToString(true);
+            string bToStringNoSecrets = b.ToString(false);
+            string bToStringWithSecrets = b.ToString(true);
+            Assert.AreEqual(aToStringNoSecrets, bToStringNoSecrets, false);
+            Assert.AreEqual(aToStringWithSecrets, bToStringWithSecrets, false);
+            
+            // credentials are the same
+            if (a.Credentials != null && b.Credentials != null)
+            {
+                Assert.AreEqual(a.Credentials.IsAnonymous, b.Credentials.IsAnonymous);
+                Assert.AreEqual(a.Credentials.IsSAS, b.Credentials.IsSAS);
+                Assert.AreEqual(a.Credentials.IsSharedKey, b.Credentials.IsSharedKey);
+
+                // make sure 
+                if (!a.Credentials.IsAnonymous &&
+                    a.Credentials != CloudStorageAccount.DevelopmentStorageAccount.Credentials &&
+                    b.Credentials != CloudStorageAccount.DevelopmentStorageAccount.Credentials)
+                {
+                    Assert.AreNotEqual(aToStringWithSecrets, bToStringNoSecrets, true);
+                }
+            }
+            else if (a.Credentials == null && b.Credentials == null)
+            {
+                return;
+            }
+            else
+            {
+                Assert.Fail("credentials mismatch");
+            }
+        }
+
+        [TestMethod]
+        /// [Description("DevStore account")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDevelopmentStorageAccount()
+        {
+            CloudStorageAccount devstoreAccount = CloudStorageAccount.DevelopmentStorageAccount;
+            Assert.AreEqual(devstoreAccount.BlobEndpoint, new Uri("http://127.0.0.1:10000/devstoreaccount1"));
+            Assert.AreEqual(devstoreAccount.QueueEndpoint, new Uri("http://127.0.0.1:10001/devstoreaccount1"));
+            Assert.AreEqual(devstoreAccount.TableEndpoint, new Uri("http://127.0.0.1:10002/devstoreaccount1"));
+            string devstoreAccountToStringNoSecrets = devstoreAccount.ToString();
+            string devstoreAccountToStringWithSecrets = devstoreAccount.ToString(true);
+            CloudStorageAccount testAccount = CloudStorageAccount.Parse(devstoreAccountToStringWithSecrets);
+
+            // make sure it round trips
+            AccountsAreEqual(testAccount, devstoreAccount);
+            CloudStorageAccount acct;
+            if (!CloudStorageAccount.TryParse(devstoreAccountToStringWithSecrets, out acct))
+            {
+                Assert.Fail("Expected TryParse success.");
+            }
+        }
+
+        [TestMethod]
+        /// [Description("Regular account with HTTP")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDefaultStorageAccountWithHttp()
+        {
+            StorageCredentials cred = new StorageCredentials(TestBase.TargetTenantConfig.AccountName, TestBase.TargetTenantConfig.AccountKey);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(cred, false);
+            Assert.AreEqual(cloudStorageAccount.BlobEndpoint,
+                new Uri(String.Format("http://{0}.blob.core.windows.net", TestBase.TargetTenantConfig.AccountName)));
+            Assert.AreEqual(cloudStorageAccount.QueueEndpoint,
+                new Uri(String.Format("http://{0}.queue.core.windows.net", TestBase.TargetTenantConfig.AccountName)));
+            Assert.AreEqual(cloudStorageAccount.TableEndpoint,
+                new Uri(String.Format("http://{0}.table.core.windows.net", TestBase.TargetTenantConfig.AccountName)));
+            string cloudStorageAccountToStringNoSecrets = cloudStorageAccount.ToString();
+            string cloudStorageAccountToStringWithSecrets = cloudStorageAccount.ToString(true);
+            CloudStorageAccount testAccount = CloudStorageAccount.Parse(cloudStorageAccountToStringWithSecrets);
+            // make sure it round trips
+            AccountsAreEqual(testAccount, cloudStorageAccount);
+        }
+
+        [TestMethod]
+        /// [Description("Regular account with HTTPS")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDefaultStorageAccountWithHttps()
+        {
+            StorageCredentials cred = new StorageCredentials(TestBase.TargetTenantConfig.AccountName, TestBase.TargetTenantConfig.AccountKey);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(cred, true);
+            Assert.AreEqual(cloudStorageAccount.BlobEndpoint,
+                new Uri(String.Format("https://{0}.blob.core.windows.net", TestBase.TargetTenantConfig.AccountName)));
+            Assert.AreEqual(cloudStorageAccount.QueueEndpoint,
+                new Uri(String.Format("https://{0}.queue.core.windows.net", TestBase.TargetTenantConfig.AccountName)));
+            Assert.AreEqual(cloudStorageAccount.TableEndpoint,
+                new Uri(String.Format("https://{0}.table.core.windows.net", TestBase.TargetTenantConfig.AccountName)));
+            string cloudStorageAccountToStringNoSecrets = cloudStorageAccount.ToString();
+            string cloudStorageAccountToStringWithSecrets = cloudStorageAccount.ToString(true);
+            CloudStorageAccount testAccount = CloudStorageAccount.Parse(cloudStorageAccountToStringWithSecrets);
+            // make sure it round trips
+            AccountsAreEqual(testAccount, cloudStorageAccount);
+        }
+
+        [TestMethod]
+        /// [Description("Service client creation methods")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountClientMethods()
+        {
+            CloudStorageAccount account = CloudStorageAccount.DevelopmentStorageAccount;
+            CloudBlobClient blob = account.CreateCloudBlobClient();
+            CloudQueueClient queue = account.CreateCloudQueueClient();
+            CloudTableClient table = account.CreateCloudTableClient();
+
+            // check endpoints
+            Assert.AreEqual(account.BlobEndpoint, blob.BaseUri, "Blob endpoint doesn't match account");
+            Assert.AreEqual(account.QueueEndpoint, queue.BaseUri, "Queue endpoint doesn't match account");
+            Assert.AreEqual(account.TableEndpoint, table.BaseUri, "Table endpoint doesn't match account");
+
+            // check creds
+            Assert.AreEqual(account.Credentials, blob.Credentials, "Blob creds don't match account");
+            Assert.AreEqual(account.Credentials, queue.Credentials, "Queue creds don't match account");
+            Assert.AreEqual(account.Credentials, table.Credentials, "Table creds don't match account");
+        }
+
+        [TestMethod]
+        /// [Description("Service client creation methods")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountClientUriVerify()
+        {
+            StorageCredentials cred = new StorageCredentials(TestBase.TargetTenantConfig.AccountName, TestBase.TargetTenantConfig.AccountKey);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(cred, true);
+
+            CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("container1");
+            Assert.AreEqual(cloudStorageAccount.BlobEndpoint.ToString() + "container1", container.Uri.ToString());
+
+            CloudQueueClient queueClient = cloudStorageAccount.CreateCloudQueueClient();
+            CloudQueue queue = queueClient.GetQueueReference("queue1");
+            Assert.AreEqual(cloudStorageAccount.QueueEndpoint.ToString() + "queue1", queue.Uri.ToString());
+
+            CloudTableClient tableClient = cloudStorageAccount.CreateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference("table1");
+            Assert.AreEqual(cloudStorageAccount.TableEndpoint.ToString() + "table1", table.Uri.ToString());
+        }
+
+        [TestMethod]
+        /// [Description("TryParse should return false for invalid connection strings")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountTryParseNullEmpty()
+        {
+            CloudStorageAccount account;
+            // TryParse should not throw exception when passing in null or empty string
+            Assert.IsFalse(CloudStorageAccount.TryParse(null, out account));
+            Assert.IsFalse(CloudStorageAccount.TryParse(string.Empty, out account));
+        }
+
+        [TestMethod]
+        /// [Description("UseDevelopmentStorage=false should fail")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDevStoreNonTrueFails()
+        {
+            CloudStorageAccount account;
+
+            Assert.IsFalse(CloudStorageAccount.TryParse("UseDevelopmentStorage=false", out account));
+        }
+
+        [TestMethod]
+        /// [Description("UseDevelopmentStorage should fail when used with an account name")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDevStorePlusAccountFails()
+        {
+            CloudStorageAccount account;
+
+            Assert.IsFalse(CloudStorageAccount.TryParse("UseDevelopmentStorage=false;AccountName=devstoreaccount1", out account));
+        }
+
+        [TestMethod]
+        /// [Description("UseDevelopmentStorage should fail when used with a custom endpoint")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDevStorePlusEndpointFails()
+        {
+            CloudStorageAccount account;
+
+            Assert.IsFalse(CloudStorageAccount.TryParse("UseDevelopmentStorage=false;BlobEndpoint=http://127.0.0.1:1000/devstoreaccount1", out account));
+        }
+
+        [TestMethod]
+        /// [Description("Custom endpoints")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDefaultEndpointOverride()
+        {
+            CloudStorageAccount account;
+
+            Assert.IsTrue(CloudStorageAccount.TryParse("DefaultEndpointsProtocol=http;BlobEndpoint=http://customdomain.com/;AccountName=asdf;AccountKey=123=", out account));
+            Assert.AreEqual(new Uri("http://customdomain.com/"), account.BlobEndpoint);
+        }
+
+        [TestMethod]
+        /// [Description("Use DevStore with a proxy")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDevStoreProxyUri()
+        {
+            CloudStorageAccount account;
+
+            Assert.IsTrue(CloudStorageAccount.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out account));
+            Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), account.BlobEndpoint);
+            Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1"), account.QueueEndpoint);
+            Assert.AreEqual(new Uri("http://ipv4.fiddler:10002/devstoreaccount1"), account.TableEndpoint);
+        }
+
+        [TestMethod]
+        /// [Description("ToString method for DevStore account should not return endpoint info")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDevStoreRoundtrip()
+        {
+            string accountString = "UseDevelopmentStorage=true";
+
+            Assert.AreEqual(accountString, CloudStorageAccount.Parse(accountString).ToString(true));
+        }
+
+        [TestMethod]
+        /// [Description("ToString method for DevStore account with a proxy should not return endpoint info")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDevStoreProxyRoundtrip()
+        {
+            string accountString = "UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler";
+
+            Assert.AreEqual(accountString, CloudStorageAccount.Parse(accountString).ToString(true));
+        }
+
+        [TestMethod]
+        /// [Description("ToString method for regular account should return the same connection string")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountDefaultCloudRoundtrip()
+        {
+            string accountString = "DefaultEndpointsProtocol=http;AccountName=test;AccountKey=abc=";
+
+            Assert.AreEqual(accountString, CloudStorageAccount.Parse(accountString).ToString(true));
+        }
+
+        [TestMethod]
+        /// [Description("ToString method for custom endpoints should return the same connection string")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountExplicitCloudRoundtrip()
+        {
+            string accountString = "BlobEndpoint=https://blobs/;AccountName=test;AccountKey=abc=";
+
+            Assert.AreEqual(accountString, CloudStorageAccount.Parse(accountString).ToString(true));
+        }
+
+        [TestMethod]
+        /// [Description("ToString method for anonymous credentials should return the same connection string")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountAnonymousRoundtrip()
+        {
+            string accountString = "BlobEndpoint=http://blobs/";
+
+            Assert.AreEqual(accountString, CloudStorageAccount.Parse(accountString).ToString(true));
+
+            CloudStorageAccount account = new CloudStorageAccount(null, new Uri("http://blobs/"), null, null);
+
+            AccountsAreEqual(account, CloudStorageAccount.Parse(account.ToString(true)));
+        }
+
+        [TestMethod]
+        /// [Description("Parse method should ignore empty values")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountEmptyValues()
+        {
+            string accountString = ";BlobEndpoint=http://blobs/;;AccountName=test;;AccountKey=abc=;";
+            string validAccountString = "BlobEndpoint=http://blobs/;AccountName=test;AccountKey=abc=";
+
+            Assert.AreEqual(validAccountString, CloudStorageAccount.Parse(accountString).ToString(true));
+        }
+
+        [TestMethod]
+        /// [Description("ToString method with custom blob endpoint should return the same connection string")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountJustBlobToString()
+        {
+            string accountString = "BlobEndpoint=http://blobs/;AccountName=test;AccountKey=abc=";
+
+            Assert.AreEqual(accountString, CloudStorageAccount.Parse(accountString).ToString(true));
+        }
+
+        [TestMethod]
+        /// [Description("ToString method with custom queue endpoint should return the same connection string")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountJustQueueToString()
+        {
+            string accountString = "QueueEndpoint=http://queue/;AccountName=test;AccountKey=abc=";
+
+            Assert.AreEqual(accountString, CloudStorageAccount.Parse(accountString).ToString(true));
+        }
+
+        [TestMethod]
+        /// [Description("ToString method with custom table endpoint should return the same connection string")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountJustTableToString()
+        {
+            string accountString = "TableEndpoint=http://table/;AccountName=test;AccountKey=abc=";
+
+            Assert.AreEqual(accountString, CloudStorageAccount.Parse(accountString).ToString(true));
+        }
+
+        [TestMethod]
+        /// [Description("Exporting account key should be possible as a byte array")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountExportKey()
+        {
+            string accountKeyString = "abc2564=";
+            string accountString = "BlobEndpoint=http://blobs/;AccountName=test;AccountKey=" + accountKeyString;
+            CloudStorageAccount account = CloudStorageAccount.Parse(accountString);
+            StorageCredentials accountAndKey = (StorageCredentials)account.Credentials;
+
+            byte[] keyBytes = accountAndKey.ExportKey();
+            byte[] expectedKeyBytes = Convert.FromBase64String(accountKeyString);
+            for (int i = 0; i < expectedKeyBytes.Length; i++)
+            {
+                Assert.AreEqual(expectedKeyBytes[i], keyBytes[i]);
+            }
+            Assert.AreEqual(expectedKeyBytes.Length, keyBytes.Length);
+        }
+    }
+}

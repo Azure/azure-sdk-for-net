@@ -74,6 +74,9 @@
     <Compile Include="..\Common\Blob\*.cs">
       <Link>Blob\Blob</Link>
     </Compile>
+    <Compile Include="..\Common\Core\*.cs">
+      <Link>Core\Core</Link>
+    </Compile>
     <Compile Include="..\Common\TestConfigProcess\*.cs">
       <Link>TestConfigProcess\TestConfigProcess</Link>
     </Compile>

@@ -43,6 +43,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public const string CannotCreateSASWithoutAccountKey = "Cannot create Shared Access Signature unless Account Key credentials are used.";
         public const string CannotModifySnapshot = "Cannot perform this operation on a blob representing a snapshot.";
         public const string CannotRetryNonSeekableStreamError = "Cannot retry operation using a source stream which does not support seek. To avoid this exception set the RetryPolicy to NoRetry or use a seekable stream.";
+        public const string CannotUpdateKeyWithoutAccountKeyCreds = "Cannot update key unless Account Key credentials are used.";
         public const string ClientSideTimeoutError = "Server operation did not finish within user specified timeout '{0}' seconds, check if operation is valid or try increasing the timeout.";
         public const string ConditionalRequiresDateTime = "If-Modified-Since and If-Unmodified-Since require a DateTime value.";
         public const string ConditionalRequiresETag = "If-Match and If-None-Match require an ETag value.";
@@ -61,6 +62,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public const string ListSnapshotsWithDelimiterError = "Listing snapshots is only supported in flat mode (no delimiter). Consider setting the useFlatBlobListing parameter to true.";
         public const string MD5MismatchError = "Calculated MD5 does not match existing property";
         public const string MD5NotPresentError = "MD5 does not exist. If you do not want to force validation, please disable UseTransactionalMD5.";
+        public const string MD5NotPossible = "MD5 cannot be calculated for an existing page blob because it would require reading the existing data. Please disable StoreBlobContentMD5.";
         public const string MessageTooLarge = "Messages cannot be larger than {0} bytes.";
         public const string MissingAccountInformationInUri = "Cannot find account information inside Uri '{0}'";
         public const string MissingContainerInformation = "Invalid blob address '{0}', missing container information";

@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -252,6 +253,61 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             }
             finally
             {
+                queue.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test queue sas with Italy regional settings")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void QueueRegionalSASTest()
+        {
+            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("it-IT");
+
+            CloudQueue queue = DefaultQueueClient.GetQueueReference(GenerateNewQueueName());
+
+            try
+            {
+                queue.Create();
+                string messageContent = Guid.NewGuid().ToString();
+                CloudQueueMessage message = new CloudQueueMessage(messageContent);
+                queue.AddMessage(message);
+
+                // Prepare SAS authentication with full permissions
+                string id = Guid.NewGuid().ToString();
+                DateTime start = DateTime.UtcNow;
+                DateTime expiry = start.AddMinutes(30);
+                QueuePermissions permissions = new QueuePermissions();
+                SharedAccessQueuePermissions queuePerm = SharedAccessQueuePermissions.Add | SharedAccessQueuePermissions.ProcessMessages | SharedAccessQueuePermissions.Read | SharedAccessQueuePermissions.Update;
+                permissions.SharedAccessPolicies.Add(id, new SharedAccessQueuePolicy()
+                {
+                    SharedAccessStartTime = start,
+                    SharedAccessExpiryTime = expiry,
+                    Permissions = queuePerm
+                });
+
+                queue.SetPermissions(permissions);
+                Thread.Sleep(30 * 1000);
+
+                string sasTokenFromId = queue.GetSharedAccessSignature(null, id);
+                StorageCredentials sasCredsFromId = new StorageCredentials(sasTokenFromId);
+                CloudQueue sasQueueFromId = new CloudQueue(queue.Uri, sasCredsFromId);
+                CloudQueueMessage receivedMessage1 = sasQueueFromId.PeekMessage();
+                Assert.AreEqual(messageContent, receivedMessage1.AsString);
+
+                string sasTokenFromPolicy = queue.GetSharedAccessSignature(permissions.SharedAccessPolicies[id], null);
+                StorageCredentials sasCredsFromPolicy = new StorageCredentials(sasTokenFromPolicy);
+                CloudQueue sasQueueFromPolicy = new CloudQueue(queue.Uri, sasCredsFromPolicy);
+                CloudQueueMessage receivedMessage2 = sasQueueFromPolicy.PeekMessage();
+                Assert.AreEqual(messageContent, receivedMessage2.AsString);
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = currentCulture;
                 queue.DeleteIfExists();
             }
         }

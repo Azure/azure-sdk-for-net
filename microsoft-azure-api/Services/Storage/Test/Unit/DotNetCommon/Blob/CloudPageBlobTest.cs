@@ -1038,10 +1038,80 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public void CloudPageBlobUploadFromStreamAPM()
+        public void CloudPageBlobUploadFromStreamWithAccessCondition()
         {
-            this.CloudPageBlobUploadFromStream(0, true);
-            this.CloudPageBlobUploadFromStream(1024, true);
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
+            try
+            {
+                AccessCondition accessCondition = AccessCondition.GenerateIfNoneMatchCondition("*");
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, false);
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                blob.Create(1024);
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                TestHelper.ExpectedException(
+                    () => this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, false),
+                    "Uploading a blob on top of an existing blob should fail if the ETag matches",
+                    HttpStatusCode.PreconditionFailed);
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, false);
+
+                blob = container.GetPageBlobReference("blob3");
+                blob.Create(1024);
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                TestHelper.ExpectedException(
+                    () => this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, false),
+                    "Uploading a blob on top of an existing blob should fail if the ETag matches",
+                    HttpStatusCode.PreconditionFailed);
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, false);
+            }
+            finally
+            {
+                container.Delete();
+            }
+        }
+
+        [TestMethod]
+        [Description("Single put blob and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudPageBlobUploadFromStreamAPMWithAccessCondition()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
+            try
+            {
+                AccessCondition accessCondition = AccessCondition.GenerateIfNoneMatchCondition("\"*\"");
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, true);
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                blob.Create(1024);
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                TestHelper.ExpectedException(
+                    () => this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, true),
+                    "Uploading a blob on top of an existing blob should fail if the ETag matches",
+                    HttpStatusCode.PreconditionFailed);
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, true);
+
+                blob = container.GetPageBlobReference("blob3");
+                blob.Create(1024);
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                TestHelper.ExpectedException(
+                    () => this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, true),
+                    "Uploading a blob on top of an existing blob should fail if the ETag matches",
+                    HttpStatusCode.PreconditionFailed);
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, accessCondition, 0, true);
+            }
+            finally
+            {
+                container.Delete();
+            }
         }
 
         [TestMethod]
@@ -1052,79 +1122,101 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void CloudPageBlobUploadFromStream()
         {
-            this.CloudPageBlobUploadFromStream(0, false);
-            this.CloudPageBlobUploadFromStream(1024, false);
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
+            try
+            {
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, null, 0, false);
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, null, 1024, false);
+            }
+            finally
+            {
+                container.Delete();
+            }
         }
 
-        private void CloudPageBlobUploadFromStream(int startOffset, bool async)
+        [TestMethod]
+        [Description("Single put blob and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudPageBlobUploadFromStreamAPM()
         {
-            byte[] buffer = GetRandomBuffer(1 * 1024 * 1024);
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
+            try
+            {
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, null, 0, true);
+                this.CloudPageBlobUploadFromStream(container, 6 * 512, null, 1024, true);
+            }
+            finally
+            {
+                container.Delete();
+            }
+        }
+
+        private void CloudPageBlobUploadFromStream(CloudBlobContainer container, int size, AccessCondition accessCondition, int startOffset, bool isAsync)
+        {
+            byte[] buffer = GetRandomBuffer(size);
 
             MD5 hasher = MD5.Create();
             string md5 = Convert.ToBase64String(hasher.ComputeHash(buffer, startOffset, buffer.Length - startOffset));
 
-            CloudBlobContainer container = GetRandomContainerReference();
-            try
+            CloudPageBlob blob = container.GetPageBlobReference("blob1");
+            blob.StreamWriteSizeInBytes = 512;
+
+            using (MemoryStream originalBlob = new MemoryStream())
             {
-                container.Create();
+                originalBlob.Write(buffer, startOffset, buffer.Length - startOffset);
 
-                CloudPageBlob blob = container.GetPageBlobReference("blob1");
-
-                using (MemoryStream originalBlob = new MemoryStream())
+                using (MemoryStream sourceStream = new MemoryStream(buffer))
                 {
-                    originalBlob.Write(buffer, startOffset, buffer.Length - startOffset);
-
-                    using (MemoryStream sourceStream = new MemoryStream(buffer))
+                    sourceStream.Seek(startOffset, SeekOrigin.Begin);
+                    BlobRequestOptions options = new BlobRequestOptions()
                     {
-                        sourceStream.Seek(startOffset, SeekOrigin.Begin);
-                        BlobRequestOptions options = new BlobRequestOptions()
+                        StoreBlobContentMD5 = true,
+                    };
+                    if (isAsync)
+                    {
+                        using (ManualResetEvent waitHandle = new ManualResetEvent(false))
                         {
-                            StoreBlobContentMD5 = true,
-                        };
-                        if (async)
-                        {
-                            using (ManualResetEvent waitHandle = new ManualResetEvent(false))
-                            {
-                                ICancellableAsyncResult result = blob.BeginUploadFromStream(sourceStream, null, options, null,
-                                    ar => waitHandle.Set(),
-                                    null);
-                                waitHandle.WaitOne();
-                                blob.EndUploadFromStream(result);
-                            }
-                        }
-                        else
-                        {
-                            blob.UploadFromStream(sourceStream, null, options);
+                            ICancellableAsyncResult result = blob.BeginUploadFromStream(sourceStream, accessCondition, options, null,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndUploadFromStream(result);
                         }
                     }
-
-                    blob.FetchAttributes();
-                    Assert.AreEqual(md5, blob.Properties.ContentMD5);
-
-                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    else
                     {
-                        if (async)
-                        {
-                            using (ManualResetEvent waitHandle = new ManualResetEvent(false))
-                            {
-                                ICancellableAsyncResult result = blob.BeginDownloadToStream(downloadedBlob,
-                                    ar => waitHandle.Set(),
-                                    null);
-                                waitHandle.WaitOne();
-                                blob.EndDownloadToStream(result);
-                            }
-                        }
-                        else
-                        {
-                            blob.DownloadToStream(downloadedBlob);
-                        }
-                        TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
+                        blob.UploadFromStream(sourceStream, accessCondition, options);
                     }
                 }
-            }
-            finally
-            {
-                container.DeleteIfExists();
+
+                blob.FetchAttributes();
+                Assert.AreEqual(md5, blob.Properties.ContentMD5);
+
+                using (MemoryStream downloadedBlob = new MemoryStream())
+                {
+                    if (isAsync)
+                    {
+                        using (ManualResetEvent waitHandle = new ManualResetEvent(false))
+                        {
+                            ICancellableAsyncResult result = blob.BeginDownloadToStream(downloadedBlob,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndDownloadToStream(result);
+                        }
+                    }
+                    else
+                    {
+                        blob.DownloadToStream(downloadedBlob);
+                    }
+
+                    TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
+                }
             }
         }
 
@@ -1141,8 +1233,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 container.Create();
 
+                MemoryStream originalData = new MemoryStream(GetRandomBuffer(1024));
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
-                blob.Create(1024);
+                blob.UploadFromStream(originalData);
 
                 CloudPageBlob snapshot1 = blob.CreateSnapshot();
                 Assert.AreEqual(blob.Properties.ETag, snapshot1.Properties.ETag);
@@ -1158,6 +1251,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 blob.FetchAttributes();
                 AssertAreEqual(snapshot1.Properties, blob.Properties);
 
+                CloudPageBlob snapshot1Clone = new CloudPageBlob(new Uri(blob.Uri + "?snapshot=" + snapshot1.SnapshotTime.Value.ToString("O")), blob.ServiceClient.Credentials);
+                Assert.IsNotNull(snapshot1Clone.SnapshotTime, "Snapshot clone does not have SnapshotTime set");
+                Assert.AreEqual(snapshot1.SnapshotTime.Value, snapshot1Clone.SnapshotTime.Value);
+                snapshot1Clone.FetchAttributes();
+                AssertAreEqual(snapshot1.Properties, snapshot1Clone.Properties);
+
                 CloudPageBlob snapshotCopy = container.GetPageBlobReference("blob2");
                 snapshotCopy.StartCopyFromBlob(TestHelper.Defiddler(snapshot1.Uri));
                 WaitForCopy(snapshotCopy);
@@ -1166,6 +1265,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 TestHelper.ExpectedException<InvalidOperationException>(
                     () => snapshot1.OpenWrite(1024),
                     "Trying to write to a blob snapshot should fail");
+
+                using (Stream snapshotStream = snapshot1.OpenRead())
+                {
+                    snapshotStream.Seek(0, SeekOrigin.End);
+                    TestHelper.AssertStreamsAreEqual(originalData, snapshotStream);
+                }
+
+                blob.Create(1024);
+
+                using (Stream snapshotStream = snapshot1.OpenRead())
+                {
+                    snapshotStream.Seek(0, SeekOrigin.End);
+                    TestHelper.AssertStreamsAreEqual(originalData, snapshotStream);
+                }
 
                 List<IListBlobItem> blobs = container.ListBlobs(null, true, BlobListingDetails.All, null, null).ToList();
                 Assert.AreEqual(4, blobs.Count);

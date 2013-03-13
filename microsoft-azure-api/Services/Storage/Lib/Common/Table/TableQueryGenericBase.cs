@@ -20,6 +20,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Text;
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Util;
@@ -75,7 +76,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 #if RT
             [ReadOnlyArray]
 #endif
- byte[] value)
+            byte[] value)
         {
             CommonUtils.AssertNotNull("value", value);
 
@@ -98,7 +99,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>A string containing the formatted filter condition.</returns>
         public static string GenerateFilterConditionForDate(string propertyName, string operation, DateTimeOffset value)
         {
-            return GenerateFilterCondition(propertyName, operation, value.UtcDateTime.ToString("o"), EdmType.DateTime);
+            return GenerateFilterCondition(propertyName, operation, value.UtcDateTime.ToString("o", CultureInfo.InvariantCulture), EdmType.DateTime);
         }
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>A string containing the formatted filter condition.</returns>
         public static string GenerateFilterConditionForDouble(string propertyName, string operation, double value)
         {
-            return GenerateFilterCondition(propertyName, operation, Convert.ToString(value), EdmType.Double);
+            return GenerateFilterCondition(propertyName, operation, Convert.ToString(value, CultureInfo.InvariantCulture), EdmType.Double);
         }
 
         /// <summary>
@@ -122,7 +123,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>A string containing the formatted filter condition.</returns>
         public static string GenerateFilterConditionForInt(string propertyName, string operation, int value)
         {
-            return GenerateFilterCondition(propertyName, operation, Convert.ToString(value), EdmType.Int32);
+            return GenerateFilterCondition(propertyName, operation, Convert.ToString(value, CultureInfo.InvariantCulture), EdmType.Int32);
         }
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>A string containing the formatted filter condition.</returns>
         public static string GenerateFilterConditionForLong(string propertyName, string operation, long value)
         {
-            return GenerateFilterCondition(propertyName, operation, Convert.ToString(value), EdmType.Int64);
+            return GenerateFilterCondition(propertyName, operation, Convert.ToString(value, CultureInfo.InvariantCulture), EdmType.Int64);
         }
 
         /// <summary>

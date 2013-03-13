@@ -43,7 +43,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <remarks>On the <see cref="System.IO.Stream"/> object returned by this method, the <see cref="System.IO.Stream.EndRead(IAsyncResult)"/> method must be called exactly once for every <see cref="System.IO.Stream.BeginRead(byte[], int, int, AsyncCallback, Object)"/> call. Failing to end a read process before beginning another read can cause unknown behavior.</remarks>
         public Stream OpenRead(AccessCondition accessCondition = null, BlobRequestOptions options = null, OperationContext operationContext = null)
         {
-            this.attributes.AssertNoSnapshot();
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.BlockBlob, this.ServiceClient);
             return new BlobReadStream(this, accessCondition, modifiedOptions, operationContext);
         }
@@ -59,6 +58,29 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.attributes.AssertNoSnapshot();
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.BlockBlob, this.ServiceClient);
+
+            if ((accessCondition != null) && accessCondition.IsConditional)
+            {
+                try
+                {
+                    this.FetchAttributes(accessCondition, modifiedOptions, operationContext);
+                }
+                catch (StorageException e)
+                {
+                    if ((e.RequestInformation != null) &&
+                        (e.RequestInformation.HttpStatusCode == (int)HttpStatusCode.NotFound) &&
+                        string.IsNullOrEmpty(accessCondition.IfMatchETag))
+                    {
+                        // If we got a 404 and the condition was not an If-Match,
+                        // we should continue with the operation.
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
             return new BlobWriteStream(this, accessCondition, modifiedOptions, operationContext);
         }
 
@@ -84,11 +106,56 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
         public ICancellableAsyncResult BeginOpenWrite(AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext, AsyncCallback callback, object state)
         {
-            ChainedAsyncResult<Stream> chainedResult = new ChainedAsyncResult<Stream>(callback, state)
+            this.attributes.AssertNoSnapshot();
+            BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.BlockBlob, this.ServiceClient);
+
+            ChainedAsyncResult<Stream> chainedResult = new ChainedAsyncResult<Stream>(callback, state);
+            if ((accessCondition != null) && accessCondition.IsConditional)
             {
-                Result = this.OpenWrite(accessCondition, options, operationContext),
-            };
-            chainedResult.OnComplete();
+                ICancellableAsyncResult result = this.BeginFetchAttributes(
+                    accessCondition,
+                    modifiedOptions,
+                    operationContext,
+                    ar =>
+                    {
+                        chainedResult.UpdateCompletedSynchronously(ar.CompletedSynchronously);
+
+                        try
+                        {
+                            this.EndFetchAttributes(ar);
+                        }
+                        catch (StorageException e)
+                        {
+                            if ((e.RequestInformation != null) &&
+                                (e.RequestInformation.HttpStatusCode == (int)HttpStatusCode.NotFound) &&
+                                string.IsNullOrEmpty(accessCondition.IfMatchETag))
+                            {
+                                // If we got a 404 and the condition was not an If-Match,
+                                // we should continue with the operation.
+                            }
+                            else
+                            {
+                                chainedResult.OnComplete(e);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            chainedResult.OnComplete(e);
+                        }
+
+                        chainedResult.Result = new BlobWriteStream(this, accessCondition, modifiedOptions, operationContext);
+                        chainedResult.OnComplete();
+                    },
+                    null /* state */);
+
+                chainedResult.CancelDelegate = result.Cancel;
+            }
+            else
+            {
+                chainedResult.Result = new BlobWriteStream(this, accessCondition, modifiedOptions, operationContext);
+                chainedResult.OnComplete();
+            }
+
             return chainedResult;
         }
 

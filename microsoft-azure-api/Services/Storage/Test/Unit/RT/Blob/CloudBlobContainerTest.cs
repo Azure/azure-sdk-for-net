@@ -21,6 +21,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Windows.Globalization;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
@@ -221,6 +223,31 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
+        /// [Description("Create a container with metadata")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlobContainerRegionalSetMetadataAsync()
+        {
+            string currentPrimaryLanguage = ApplicationLanguages.PrimaryLanguageOverride;
+            ApplicationLanguages.PrimaryLanguageOverride = "sk-SK";
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Metadata.Add("sequence", "value");
+                container.Metadata.Add("schema", "value");
+                await container.CreateAsync();
+            }
+            finally
+            {
+                ApplicationLanguages.PrimaryLanguageOverride = currentPrimaryLanguage;
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
         /// [Description("List blobs")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -298,6 +325,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 await container.CreateAsync();
 
+                SharedAccessBlobPolicy policy = new SharedAccessBlobPolicy()
+                {
+                    Permissions = SharedAccessBlobPermissions.Read,
+                    SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                    SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                };
+
                 CloudBlockBlob blockBlob = container.GetBlockBlobReference("bb");
                 await blockBlob.PutBlockListAsync(new List<string>());
 
@@ -315,6 +349,28 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
                 ICloudBlob blob4 = await container.ServiceClient.GetBlobReferenceFromServerAsync(pageBlob.Uri);
                 Assert.IsInstanceOfType(blob4, typeof(CloudPageBlob));
+
+                string blockBlobToken = blockBlob.GetSharedAccessSignature(policy);
+                StorageCredentials blockBlobSAS = new StorageCredentials(blockBlobToken);
+                Uri blockBlobSASUri = blockBlobSAS.TransformUri(blockBlob.Uri);
+
+                string pageBlobToken = pageBlob.GetSharedAccessSignature(policy);
+                StorageCredentials pageBlobSAS = new StorageCredentials(pageBlobToken);
+                Uri pageBlobSASUri = pageBlobSAS.TransformUri(pageBlob.Uri);
+
+                ICloudBlob blob5 = await container.ServiceClient.GetBlobReferenceFromServerAsync(blockBlobSASUri);
+                Assert.IsInstanceOfType(blob5, typeof(CloudBlockBlob));
+
+                ICloudBlob blob6 = await container.ServiceClient.GetBlobReferenceFromServerAsync(pageBlobSASUri);
+                Assert.IsInstanceOfType(blob6, typeof(CloudPageBlob));
+
+                CloudBlobClient client7 = new CloudBlobClient(container.ServiceClient.BaseUri, blockBlobSAS);
+                ICloudBlob blob7 = await client7.GetBlobReferenceFromServerAsync(blockBlobSASUri);
+                Assert.IsInstanceOfType(blob7, typeof(CloudBlockBlob));
+
+                CloudBlobClient client8 = new CloudBlobClient(container.ServiceClient.BaseUri, pageBlobSAS);
+                ICloudBlob blob8 = await client8.GetBlobReferenceFromServerAsync(pageBlobSASUri);
+                Assert.IsInstanceOfType(blob8, typeof(CloudPageBlob));
             }
             finally
             {
