@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.Storage.Queue.Protocol;
 using Microsoft.WindowsAzure.Storage.Auth;
+using Windows.Globalization;
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
@@ -215,6 +216,61 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             CloudQueueMessage receivedMessage2 = await sasQueueFromPolicy.PeekMessageAsync();
             Assert.AreEqual(messageContent, receivedMessage2.AsString);
             await queue.DeleteAsync();
+        }
+
+        [TestMethod]
+        //[Description("Test queue sas")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task QueueRegionalSASTestAsync()
+        {
+            string currentPrimaryLanguage = ApplicationLanguages.PrimaryLanguageOverride;
+            ApplicationLanguages.PrimaryLanguageOverride = "it";
+
+            CloudQueue queue = DefalutQueueClient.GetQueueReference(TestHelper.GenerateNewQueueName());
+
+            try
+            {
+                await queue.CreateAsync();
+                string messageContent = Guid.NewGuid().ToString();
+                CloudQueueMessage message = new CloudQueueMessage(messageContent);
+                await queue.AddMessageAsync(message);
+
+                // Prepare SAS authentication with full permissions
+                string id = Guid.NewGuid().ToString();
+                DateTime start = DateTime.UtcNow;
+                DateTime expiry = start.AddMinutes(30);
+                QueuePermissions permissions = new QueuePermissions();
+                SharedAccessQueuePermissions queuePerm = SharedAccessQueuePermissions.Add | SharedAccessQueuePermissions.ProcessMessages | SharedAccessQueuePermissions.Read | SharedAccessQueuePermissions.Update;
+                permissions.SharedAccessPolicies.Add(id, new SharedAccessQueuePolicy()
+                {
+                    SharedAccessStartTime = start,
+                    SharedAccessExpiryTime = expiry,
+                    Permissions = queuePerm
+                });
+
+                await queue.SetPermissionsAsync(permissions);
+                await Task.Delay(30 * 1000);
+
+                string sasTokenFromId = queue.GetSharedAccessSignature(null, id);
+                StorageCredentials sasCredsFromId = new StorageCredentials(sasTokenFromId);
+                CloudQueue sasQueueFromId = new CloudQueue(queue.Uri, sasCredsFromId);
+                CloudQueueMessage receivedMessage1 = await sasQueueFromId.PeekMessageAsync();
+                Assert.AreEqual(messageContent, receivedMessage1.AsString);
+
+                string sasTokenFromPolicy = queue.GetSharedAccessSignature(permissions.SharedAccessPolicies[id], null);
+                StorageCredentials sasCredsFromPolicy = new StorageCredentials(sasTokenFromPolicy);
+                CloudQueue sasQueueFromPolicy = new CloudQueue(queue.Uri, sasCredsFromPolicy);
+                CloudQueueMessage receivedMessage2 = await sasQueueFromPolicy.PeekMessageAsync();
+                Assert.AreEqual(messageContent, receivedMessage2.AsString);
+            }
+            finally
+            {
+                ApplicationLanguages.PrimaryLanguageOverride = currentPrimaryLanguage;
+                queue.DeleteAsync().AsTask().Wait();
+            }
         }
     }
 }

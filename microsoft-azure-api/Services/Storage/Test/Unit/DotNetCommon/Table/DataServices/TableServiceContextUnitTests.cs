@@ -235,6 +235,76 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         }
         #endregion
 
+        #region Start + End Time
+
+        [TestMethod]
+        [Description("TableServiceContext OperationContext StartEndTime")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableServiceContextOperationContextStartEndTime()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableServiceContext ctx = tableClient.GetTableServiceContext();
+            DateTime start = DateTime.Now;
+            for (int m = 0; m < 10; m++)
+            {
+                BaseEntity ent = new BaseEntity("testpartition", m.ToString());
+                ent.Randomize();
+                ent.A = ent.RowKey;
+                ctx.AddObject(currentTable.Name, ent);
+            }
+
+            OperationContext opContext = new OperationContext();
+            ctx.SaveChangesWithRetries(SaveChangesOptions.None, null, opContext);
+
+            Assert.IsNotNull(opContext.StartTime, "StartTime not set");
+            Assert.IsTrue(opContext.StartTime >= start, "StartTime not set correctly");
+            Assert.IsNotNull(opContext.EndTime, "EndTime not set");
+            Assert.IsTrue(opContext.EndTime <= DateTime.Now, "EndTime not set correctly");
+        }
+
+        [TestMethod]
+        [Description("TableServiceContext OperationContext StartEndTime APM ")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableServiceContextOperationContextStartEndTimeAPM()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableServiceContext ctx = tableClient.GetTableServiceContext();
+
+            DateTime start = DateTime.Now;
+            for (int m = 0; m < 10; m++)
+            {
+                BaseEntity ent = new BaseEntity("testpartition", m.ToString());
+                ent.Randomize();
+                ent.A = ent.RowKey;
+                ctx.AddObject(currentTable.Name, ent);
+            }
+
+
+            OperationContext opContext = new OperationContext();
+            using (ManualResetEvent evt = new ManualResetEvent(false))
+            {
+                ctx.BeginSaveChangesWithRetries(SaveChangesOptions.None, null, opContext,
+                    (res) =>
+                    {
+                        ctx.EndSaveChangesWithRetries(res);
+                        evt.Set();
+                    }, null);
+                evt.WaitOne();
+            }
+
+            Assert.IsNotNull(opContext.StartTime, "StartTime not set");
+            Assert.IsTrue(opContext.StartTime >= start, "StartTime not set correctly");
+            Assert.IsNotNull(opContext.EndTime, "EndTime not set");
+            Assert.IsTrue(opContext.EndTime <= DateTime.Now, "EndTime not set correctly");
+        }
+        #endregion
+
         #region ConcurrencyTests
 
         [TestMethod]

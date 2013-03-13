@@ -31,6 +31,42 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         readonly CloudQueueClient DefaultQueueClient = new CloudQueueClient(new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), TestBase.StorageCredentials);
 
         [TestMethod]
+        // [Description("Test CloudQueueMessage constructor.")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudQueueCreateMessageAsync()
+        {
+            CloudQueue queue = DefaultQueueClient.GetQueueReference(TestHelper.GenerateNewQueueName());
+
+            try
+            {
+                await queue.CreateIfNotExistsAsync();
+
+                CloudQueueMessage message = new CloudQueueMessage(Guid.NewGuid().ToString());
+                await queue.AddMessageAsync(message);
+
+                CloudQueueMessage retrMessage = await queue.GetMessageAsync();
+                string messageId = retrMessage.Id;
+                string popReceipt = retrMessage.PopReceipt;
+
+                // Recreate the message using the messageId and popReceipt.
+                CloudQueueMessage newMessage = new CloudQueueMessage(messageId, popReceipt);
+                Assert.AreEqual(messageId, newMessage.Id);
+                Assert.AreEqual(popReceipt, newMessage.PopReceipt);
+
+                await queue.UpdateMessageAsync(newMessage, TimeSpan.FromSeconds(30), MessageUpdateFields.Visibility);
+                CloudQueueMessage retrMessage2 = await queue.GetMessageAsync();
+                Assert.AreEqual(null, retrMessage2);
+            }
+            finally
+            {
+                queue.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+        
+        [TestMethod]
         /// [Description("Test add/update/get/delete message")]
         [TestCategory(ComponentCategory.Queue)]
         [TestCategory(TestTypeCategory.UnitTest)]

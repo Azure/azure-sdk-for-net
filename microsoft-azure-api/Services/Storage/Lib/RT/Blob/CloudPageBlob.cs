@@ -57,7 +57,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A stream to be used for reading from the blob.</returns>
         public IAsyncOperation<IRandomAccessStreamWithContentType> OpenReadAsync(AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
-            this.attributes.AssertNoSnapshot();
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
             IRandomAccessStreamWithContentType stream = new BlobReadStreamHelper(this, accessCondition, modifiedOptions, operationContext);
             return Task.FromResult(stream).AsAsyncOperation();
@@ -85,9 +84,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.attributes.AssertNoSnapshot();
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
+            bool createNew = size.HasValue;
+
+            if (!createNew && modifiedOptions.StoreBlobContentMD5.Value)
+            {
+                throw new ArgumentException(SR.MD5NotPossible);
+            }
+
             return AsyncInfo.Run(async (token) =>
             {
-                if (size.HasValue)
+                if (createNew)
                 {
                     await this.CreateAsync(size.Value, accessCondition, modifiedOptions, operationContext);
                 }
@@ -97,7 +103,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     size = this.Properties.Length;
                 }
 
-                return new BlobWriteStream(this, size.Value, accessCondition, modifiedOptions, operationContext).AsOutputStream();
+                if (accessCondition != null)
+                {
+                    accessCondition = AccessCondition.GenerateLeaseCondition(accessCondition.LeaseId);
+                }
+
+                return new BlobWriteStream(this, size.Value, createNew, accessCondition, modifiedOptions, operationContext).AsOutputStream();
             });
         }
 

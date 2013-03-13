@@ -19,8 +19,10 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Net.Http;
     using System.Text;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     internal static partial class CanonicalizationHelper
@@ -32,9 +34,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         /// <param name="canonicalizedString">The canonicalized string.</param>
         internal static void AddCanonicalizedHeaders(HttpRequestMessage request, CanonicalizedString canonicalizedString)
         {
-            // Look for header names that start with HeaderNames.PrefixForStorageHeader
-            // Then sort them in case-insensitive manner.
-            SortedDictionary<string, IEnumerable<string>> httpStorageHeaders = new SortedDictionary<string, IEnumerable<string>>();
+            CultureInfo sortingCulture = new CultureInfo("en-US");
+            StringComparer sortingComparer = new CultureStringComparer(sortingCulture, false);
+
+            // Look for header names that start with x-ms-, then sort them in case-insensitive manner.
+            SortedDictionary<string, IEnumerable<string>> httpStorageHeaders = new SortedDictionary<string, IEnumerable<string>>(sortingComparer);
             foreach (KeyValuePair<string, IEnumerable<string>> header in request.Headers)
             {
                 if (header.Key.StartsWith(Constants.HeaderConstants.PrefixForStorageHeader, StringComparison.OrdinalIgnoreCase))

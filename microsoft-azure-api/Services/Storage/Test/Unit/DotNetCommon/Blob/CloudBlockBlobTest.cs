@@ -929,81 +929,123 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
-        [Description("Put blob in blocks and get blob")]
+        [Description("Single put blob and get blob")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public void CloudBlockBlobUploadFromStreamInBlocks()
+        public void CloudBlockBlobUploadFromStreamWithAccessCondition()
         {
-            byte[] buffer = GetRandomBuffer(2 * 1024 * 1024);
             CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
             try
             {
-                container.Create();
+                AccessCondition accessCondition = AccessCondition.GenerateIfNoneMatchCondition("*");
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, false);
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, false, 0, false);
 
                 CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
-                blob.ServiceClient.SingleBlobUploadThresholdInBytes = 1 * 1024 * 1024;
-                blob.StreamWriteSizeInBytes = 512 * 1024;
-                using (MemoryStream originalBlob = new MemoryStream(buffer))
-                {
-                    blob.UploadFromStream(originalBlob);
+                CreateForTest(blob, 1, 1024, false);
+                blob.FetchAttributes();
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                TestHelper.ExpectedException(
+                    () => this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, false),
+                    "Uploading a blob on top of an existing blob should fail if the ETag matches",
+                    HttpStatusCode.PreconditionFailed);
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, false);
 
-                    using (MemoryStream downloadedBlob = new MemoryStream())
-                    {
-                        blob.DownloadToStream(downloadedBlob);
-                        TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
-                    }
-                }
+                blob = container.GetBlockBlobReference("blob3");
+                CreateForTest(blob, 1, 1024, false);
+                blob.FetchAttributes();
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                TestHelper.ExpectedException(
+                    () => this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, false),
+                    "Uploading a blob on top of an non-existing blob should fail when the ETag doesn't match",
+                    HttpStatusCode.PreconditionFailed);
+                TestHelper.ExpectedException(
+                    () => this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, false, 0, false),
+                    "Uploading a blob on top of an non-existing blob should fail when the ETag doesn't match",
+                    HttpStatusCode.NotFound);
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, false);
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, false, 0, false);
             }
             finally
             {
-                container.DeleteIfExists();
+                container.Delete();
             }
         }
 
         [TestMethod]
-        [Description("Put blob in blocks and get blob")]
+        [Description("Single put blob and get blob")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public void CloudBlockBlobUploadFromStreamInBlocksAPM()
+        public void CloudBlockBlobUploadFromStreamAPMWithAccessCondition()
         {
-            byte[] buffer = GetRandomBuffer(2 * 1024 * 1024);
             CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
             try
             {
-                container.Create();
+                AccessCondition accessCondition = AccessCondition.GenerateIfNoneMatchCondition("\"*\"");
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, true);
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, false, 0, true);
 
                 CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
-                blob.ServiceClient.SingleBlobUploadThresholdInBytes = 1 * 1024 * 1024;
-                blob.StreamWriteSizeInBytes = 512 * 1024;
-                using (MemoryStream originalBlob = new MemoryStream(buffer))
-                {
-                    using (AutoResetEvent waitHandle = new AutoResetEvent(false))
-                    {
-                        ICancellableAsyncResult result = blob.BeginUploadFromStream(originalBlob,
-                            ar => waitHandle.Set(),
-                            null);
-                        waitHandle.WaitOne();
-                        blob.EndUploadFromStream(result);
+                CreateForTest(blob, 1, 1024, false);
+                blob.FetchAttributes();
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                TestHelper.ExpectedException(
+                    () => this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, true),
+                    "Uploading a blob on top of an existing blob should fail if the ETag matches",
+                    HttpStatusCode.PreconditionFailed);
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, true);
 
-                        using (MemoryStream downloadedBlob = new MemoryStream())
-                        {
-                            result = blob.BeginDownloadToStream(downloadedBlob,
-                                ar => waitHandle.Set(),
-                                null);
-                            waitHandle.WaitOne();
-                            blob.EndDownloadToStream(result);
-                            TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
-                        }
-                    }
-                }
+                blob = container.GetBlockBlobReference("blob3");
+                CreateForTest(blob, 1, 1024, false);
+                blob.FetchAttributes();
+                accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
+                TestHelper.ExpectedException(
+                    () => this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, true),
+                    "Uploading a blob on top of an non-existing blob should fail when the ETag doesn't match",
+                    HttpStatusCode.PreconditionFailed);
+                TestHelper.ExpectedException(
+                    () => this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, false, 0, true),
+                    "Uploading a blob on top of an non-existing blob should fail when the ETag doesn't match",
+                    HttpStatusCode.NotFound);
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, true, 0, true);
+                this.CloudBlockBlobUploadFromStream(container, 2 * 1024 * 1024, accessCondition, true, false, 0, true);
             }
             finally
             {
-                container.DeleteIfExists();
+                container.Delete();
+            }
+        }
+
+        [TestMethod]
+        [Description("Single put blob and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlockBlobUploadFromStreamWithNonSeekableStream()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
+            try
+            {
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, false, true, 0, false);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, false, true, 1024, false);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, false, false, 0, false);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, false, false, 1024, false);
+            }
+            finally
+            {
+                container.Delete();
             }
         }
 
@@ -1015,32 +1057,19 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void CloudBlockBlobUploadFromStreamAPMWithNonSeekableStream()
         {
-            this.CloudBlockBlobUploadFromStream(false, 0, true);
-            this.CloudBlockBlobUploadFromStream(false, 1024, true);
-        }
-
-        [TestMethod]
-        [Description("Single put blob and get blob")]
-        [TestCategory(ComponentCategory.Blob)]
-        [TestCategory(TestTypeCategory.UnitTest)]
-        [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public void CloudBlockBlobUploadFromStreamWithNonSeekableStream()
-        {
-            this.CloudBlockBlobUploadFromStream(false, 0, false);
-            this.CloudBlockBlobUploadFromStream(false, 1024, false);
-        }
-
-        [TestMethod]
-        [Description("Single put blob and get blob")]
-        [TestCategory(ComponentCategory.Blob)]
-        [TestCategory(TestTypeCategory.UnitTest)]
-        [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public void CloudBlockBlobUploadFromStreamAPM()
-        {
-            this.CloudBlockBlobUploadFromStream(true, 0, true);
-            this.CloudBlockBlobUploadFromStream(true, 1024, true);
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
+            try
+            {
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, false, true, 0, true);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, false, true, 1024, true);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, false, false, 0, true);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, false, false, 1024, true);
+            }
+            finally
+            {
+                container.Delete();
+            }
         }
 
         [TestMethod]
@@ -1051,93 +1080,122 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void CloudBlockBlobUploadFromStream()
         {
-            this.CloudBlockBlobUploadFromStream(true, 0, false);
-            this.CloudBlockBlobUploadFromStream(true, 1024, false);
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
+            try
+            {
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, true, true, 0, false);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, true, true, 1024, false);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, true, false, 0, false);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, true, false, 1024, false);
+            }
+            finally
+            {
+                container.Delete();
+            }
         }
 
-        private void CloudBlockBlobUploadFromStream(bool seekableSourceStream, int startOffset, bool async)
+        [TestMethod]
+        [Description("Single put blob and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlockBlobUploadFromStreamAPM()
         {
-            byte[] buffer = GetRandomBuffer(1 * 1024 * 1024);
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.Create();
+            try
+            {
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, true, true, 0, true);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, true, true, 1024, true);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, true, false, 0, true);
+                this.CloudBlockBlobUploadFromStream(container, 5 * 1024 * 1024, null, true, false, 1024, true);
+            }
+            finally
+            {
+                container.Delete();
+            }
+        }
+
+        private void CloudBlockBlobUploadFromStream(CloudBlobContainer container, int size, AccessCondition accessCondition, bool seekableSourceStream, bool allowSinglePut, int startOffset, bool isAsync)
+        {
+            byte[] buffer = GetRandomBuffer(size);
 
             MD5 hasher = MD5.Create();
             string md5 = Convert.ToBase64String(hasher.ComputeHash(buffer, startOffset, buffer.Length - startOffset));
 
-            CloudBlobContainer container = GetRandomContainerReference();
-            try
+            CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+            blob.ServiceClient.SingleBlobUploadThresholdInBytes = allowSinglePut ? buffer.Length : buffer.Length / 2;
+            blob.StreamWriteSizeInBytes = 1 * 1024 * 1024;
+
+            using (MemoryStream originalBlob = new MemoryStream())
             {
-                container.Create();
+                originalBlob.Write(buffer, startOffset, buffer.Length - startOffset);
 
-                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
-
-                using (MemoryStream originalBlob = new MemoryStream())
+                Stream sourceStream;
+                if (seekableSourceStream)
                 {
-                    originalBlob.Write(buffer, startOffset, buffer.Length - startOffset);
+                    MemoryStream stream = new MemoryStream(buffer);
+                    stream.Seek(startOffset, SeekOrigin.Begin);
+                    sourceStream = stream;
+                }
+                else
+                {
+                    NonSeekableMemoryStream stream = new NonSeekableMemoryStream(buffer);
+                    stream.ForceSeek(startOffset, SeekOrigin.Begin);
+                    sourceStream = stream;
+                }
 
-                    Stream sourceStream;
-                    if (seekableSourceStream)
+                using (sourceStream)
+                {
+                    BlobRequestOptions options = new BlobRequestOptions()
                     {
-                        MemoryStream stream = new MemoryStream(buffer);
-                        stream.Seek(startOffset, SeekOrigin.Begin);
-                        sourceStream = stream;
+                        StoreBlobContentMD5 = true,
+                    };
+                    if (isAsync)
+                    {
+                        using (ManualResetEvent waitHandle = new ManualResetEvent(false))
+                        {
+                            ICancellableAsyncResult result = blob.BeginUploadFromStream(sourceStream, accessCondition, options, null,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndUploadFromStream(result);
+                        }
                     }
                     else
                     {
-                        NonSeekableMemoryStream stream = new NonSeekableMemoryStream(buffer);
-                        stream.ForceSeek(startOffset, SeekOrigin.Begin);
-                        sourceStream = stream;
-                    }
-
-                    using (sourceStream)
-                    {
-                        BlobRequestOptions options = new BlobRequestOptions()
-                        {
-                            StoreBlobContentMD5 = true,
-                        };
-                        if (async)
-                        {
-                            using (ManualResetEvent waitHandle = new ManualResetEvent(false))
-                            {
-                                ICancellableAsyncResult result = blob.BeginUploadFromStream(sourceStream, null, options, null,
-                                    ar => waitHandle.Set(),
-                                    null);
-                                waitHandle.WaitOne();
-                                blob.EndUploadFromStream(result);
-                            }
-                        }
-                        else
-                        {
-                            blob.UploadFromStream(sourceStream, null, options);
-                        }
-                    }
-
-                    blob.FetchAttributes();
-                    Assert.AreEqual(md5, blob.Properties.ContentMD5);
-
-                    using (MemoryStream downloadedBlob = new MemoryStream())
-                    {
-                        if (async)
-                        {
-                            using (ManualResetEvent waitHandle = new ManualResetEvent(false))
-                            {
-                                ICancellableAsyncResult result = blob.BeginDownloadToStream(downloadedBlob,
-                                    ar => waitHandle.Set(),
-                                    null);
-                                waitHandle.WaitOne();
-                                blob.EndDownloadToStream(result);
-                            }
-                        }
-                        else
-                        {
-                            blob.DownloadToStream(downloadedBlob);
-                        }
-                        TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
+                        blob.UploadFromStream(sourceStream, accessCondition, options);
                     }
                 }
+
+                blob.FetchAttributes();
+                Assert.AreEqual(md5, blob.Properties.ContentMD5);
+
+                using (MemoryStream downloadedBlob = new MemoryStream())
+                {
+                    if (isAsync)
+                    {
+                        using (ManualResetEvent waitHandle = new ManualResetEvent(false))
+                        {
+                            ICancellableAsyncResult result = blob.BeginDownloadToStream(downloadedBlob,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blob.EndDownloadToStream(result);
+                        }
+                    }
+                    else
+                    {
+                        blob.DownloadToStream(downloadedBlob);
+                    }
+
+                    TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
+                }
             }
-            finally
-            {
-                container.DeleteIfExists();
-            }
+
+            blob.Delete();
         }
 
         [TestMethod]
@@ -1153,8 +1211,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 container.Create();
 
+                MemoryStream originalData = new MemoryStream(GetRandomBuffer(1024));
                 CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
-                CreateForTest(blob, 2, 1024, false);
+                blob.UploadFromStream(originalData);
 
                 CloudBlockBlob snapshot1 = blob.CreateSnapshot();
                 Assert.AreEqual(blob.Properties.ETag, snapshot1.Properties.ETag);
@@ -1170,6 +1229,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 blob.FetchAttributes();
                 AssertAreEqual(snapshot1.Properties, blob.Properties);
 
+                CloudBlockBlob snapshot1Clone = new CloudBlockBlob(new Uri(blob.Uri + "?snapshot=" + snapshot1.SnapshotTime.Value.ToString("O")), blob.ServiceClient.Credentials);
+                Assert.IsNotNull(snapshot1Clone.SnapshotTime, "Snapshot clone does not have SnapshotTime set");
+                Assert.AreEqual(snapshot1.SnapshotTime.Value, snapshot1Clone.SnapshotTime.Value);
+                snapshot1Clone.FetchAttributes();
+                AssertAreEqual(snapshot1.Properties, snapshot1Clone.Properties);
+
                 CloudBlockBlob snapshotCopy = container.GetBlockBlobReference("blob2");
                 snapshotCopy.StartCopyFromBlob(TestHelper.Defiddler(snapshot1.Uri));
                 WaitForCopy(snapshotCopy);
@@ -1178,6 +1243,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 TestHelper.ExpectedException<InvalidOperationException>(
                     () => snapshot1.OpenWrite(),
                     "Trying to write to a blob snapshot should fail");
+
+                using (Stream snapshotStream = snapshot1.OpenRead())
+                {
+                    snapshotStream.Seek(0, SeekOrigin.End);
+                    TestHelper.AssertStreamsAreEqual(originalData, snapshotStream);
+                }
+
+                blob.PutBlockList(new List<string>());
+
+                using (Stream snapshotStream = snapshot1.OpenRead())
+                {
+                    snapshotStream.Seek(0, SeekOrigin.End);
+                    TestHelper.AssertStreamsAreEqual(originalData, snapshotStream);
+                }
 
                 List<IListBlobItem> blobs = container.ListBlobs(null, true, BlobListingDetails.All, null, null).ToList();
                 Assert.AreEqual(4, blobs.Count);

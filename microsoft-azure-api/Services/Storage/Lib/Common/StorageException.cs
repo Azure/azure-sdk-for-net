@@ -23,6 +23,8 @@ namespace Microsoft.WindowsAzure.Storage
 #if RTMD
     using System.IO;
     using System.Runtime.InteropServices;
+#else
+    using System.Runtime.Serialization;
 #endif
 
     using Microsoft.WindowsAzure.Storage.Core.Util;
@@ -36,6 +38,7 @@ namespace Microsoft.WindowsAzure.Storage
     /// <summary>
     /// Represents an exception for the Windows Azure storage service.
     /// </summary>
+    [Serializable]
     public class StorageException : Exception
 #endif
     {
@@ -59,6 +62,40 @@ namespace Microsoft.WindowsAzure.Storage
             this.RequestInformation = res;
             this.IsRetryable = true;
         }
+
+#if !RT
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StorageException"/> class with serialized data.
+        /// </summary>
+        /// <param name="context">The <see cref="System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
+        /// <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> object that holds the serialized object data for the exception being thrown.</param>
+        /// <remarks>This constructor is called during deserialization to reconstitute the exception object transmitted over a stream.</remarks>
+        protected StorageException(SerializationInfo info, StreamingContext context) :
+            base(info, context)
+        {
+            if (info != null)
+            {
+                this.IsRetryable = info.GetBoolean("IsRetryable");
+                this.RequestInformation = (RequestResult)info.GetValue("RequestInformation", typeof(RequestResult));
+            }
+        }
+
+        /// <summary>
+        /// Populates a <see cref="System.Runtime.Serialization.SerializationInfo"/> object with the data needed to serialize the target object.
+        /// </summary>
+        /// <param name="context">The destination context for this serialization.</param>
+        /// <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> object to populate with data.</param>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            if (info != null)
+            {
+                info.AddValue("IsRetryable", this.IsRetryable);
+                info.AddValue("RequestInformation", this.RequestInformation, typeof(RequestResult));
+            }
+
+            base.GetObjectData(info, context);
+        }
+#endif
 
         /// <summary>
         /// Translates the specified exception into a storage exception.
