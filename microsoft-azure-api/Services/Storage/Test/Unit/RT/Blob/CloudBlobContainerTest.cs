@@ -22,6 +22,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Core;
 using Windows.Globalization;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
@@ -341,8 +342,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 ICloudBlob blob1 = await container.GetBlobReferenceFromServerAsync("bb");
                 Assert.IsInstanceOfType(blob1, typeof(CloudBlockBlob));
 
+                CloudBlockBlob blob1Snapshot = await ((CloudBlockBlob)blob1).CreateSnapshotAsync();
+                await blob1.SetPropertiesAsync();
+                Uri blob1SnapshotUri = new Uri(blob1Snapshot.Uri.AbsoluteUri + "?snapshot=" + blob1Snapshot.SnapshotTime.Value.UtcDateTime.ToString("o"));
+                ICloudBlob blob1SnapshotReference = await container.ServiceClient.GetBlobReferenceFromServerAsync(blob1SnapshotUri);
+                AssertAreEqual(blob1Snapshot.Properties, blob1SnapshotReference.Properties);
+
                 ICloudBlob blob2 = await container.GetBlobReferenceFromServerAsync("pb");
                 Assert.IsInstanceOfType(blob2, typeof(CloudPageBlob));
+
+                CloudPageBlob blob2Snapshot = await ((CloudPageBlob)blob2).CreateSnapshotAsync();
+                await blob2.SetPropertiesAsync();
+                Uri blob2SnapshotUri = new Uri(blob2Snapshot.Uri.AbsoluteUri + "?snapshot=" + blob2Snapshot.SnapshotTime.Value.UtcDateTime.ToString("o"));
+                ICloudBlob blob2SnapshotReference = await container.ServiceClient.GetBlobReferenceFromServerAsync(blob2SnapshotUri);
+                AssertAreEqual(blob2Snapshot.Properties, blob2SnapshotReference.Properties);
 
                 ICloudBlob blob3 = await container.ServiceClient.GetBlobReferenceFromServerAsync(blockBlob.Uri);
                 Assert.IsInstanceOfType(blob3, typeof(CloudBlockBlob));
