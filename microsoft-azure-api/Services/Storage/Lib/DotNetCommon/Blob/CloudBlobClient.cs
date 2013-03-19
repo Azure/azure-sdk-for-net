@@ -466,7 +466,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             RESTCommand<ICloudBlob> getCmd = new RESTCommand<ICloudBlob>(client.Credentials, blobUri);
 
             getCmd.ApplyRequestOptions(options);
-            getCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => BlobHttpWebRequestFactory.GetProperties(uri, serverTimeout, null /* snapshot */, accessCondition, ctx);
+            getCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => BlobHttpWebRequestFactory.GetProperties(uri, serverTimeout, parsedSnapshot, accessCondition, ctx);
             getCmd.SignRequest = client.AuthenticationHandler.SignRequest;
             getCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {

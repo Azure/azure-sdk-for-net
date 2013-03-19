@@ -246,7 +246,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             getCmd.ApplyRequestOptions(options);
             getCmd.Handler = client.AuthenticationHandler;
             getCmd.BuildClient = HttpClientFactory.BuildHttpClient;
-            getCmd.BuildRequest = (cmd, cnt, ctx) => BlobHttpRequestMessageFactory.GetProperties(cmd.Uri, cmd.ServerTimeoutInSeconds, null /* snapshot */, accessCondition, cnt, ctx);
+            getCmd.BuildRequest = (cmd, cnt, ctx) => BlobHttpRequestMessageFactory.GetProperties(cmd.Uri, cmd.ServerTimeoutInSeconds, parsedSnapshot, accessCondition, cnt, ctx);
             getCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
                 HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);

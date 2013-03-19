@@ -645,8 +645,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 ICloudBlob blob1 = container.GetBlobReferenceFromServer("bb");
                 Assert.IsInstanceOfType(blob1, typeof(CloudBlockBlob));
 
+                CloudBlockBlob blob1Snapshot = ((CloudBlockBlob)blob1).CreateSnapshot();
+                blob1.SetProperties();
+                Uri blob1SnapshotUri = new Uri(blob1Snapshot.Uri.AbsoluteUri + "?snapshot=" + blob1Snapshot.SnapshotTime.Value.UtcDateTime.ToString("o"));
+                ICloudBlob blob1SnapshotReference = container.ServiceClient.GetBlobReferenceFromServer(blob1SnapshotUri);
+                AssertAreEqual(blob1Snapshot.Properties, blob1SnapshotReference.Properties);
+
                 ICloudBlob blob2 = container.GetBlobReferenceFromServer("pb");
                 Assert.IsInstanceOfType(blob2, typeof(CloudPageBlob));
+
+                CloudPageBlob blob2Snapshot = ((CloudPageBlob)blob2).CreateSnapshot();
+                blob2.SetProperties();
+                Uri blob2SnapshotUri = new Uri(blob2Snapshot.Uri.AbsoluteUri + "?snapshot=" + blob2Snapshot.SnapshotTime.Value.UtcDateTime.ToString("o"));
+                ICloudBlob blob2SnapshotReference = container.ServiceClient.GetBlobReferenceFromServer(blob2SnapshotUri);
+                AssertAreEqual(blob2Snapshot.Properties, blob2SnapshotReference.Properties);
 
                 ICloudBlob blob3 = container.ServiceClient.GetBlobReferenceFromServer(blockBlob.Uri);
                 Assert.IsInstanceOfType(blob3, typeof(CloudBlockBlob));
@@ -717,12 +729,48 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     ICloudBlob blob1 = container.EndGetBlobReferenceFromServer(result);
                     Assert.IsInstanceOfType(blob1, typeof(CloudBlockBlob));
 
+                    result = ((CloudBlockBlob)blob1).BeginCreateSnapshot(
+                        ar => waitHandle.Set(),
+                        null);
+                    waitHandle.WaitOne();
+                    CloudBlockBlob blob1Snapshot = ((CloudBlockBlob)blob1).EndCreateSnapshot(result);
+                    result = blob1.BeginSetProperties(
+                        ar => waitHandle.Set(),
+                        null);
+                    waitHandle.WaitOne();
+                    blob1.EndSetProperties(result);
+                    Uri blob1SnapshotUri = new Uri(blob1Snapshot.Uri.AbsoluteUri + "?snapshot=" + blob1Snapshot.SnapshotTime.Value.UtcDateTime.ToString("o"));
+                    result = container.ServiceClient.BeginGetBlobReferenceFromServer(blob1SnapshotUri,
+                        ar => waitHandle.Set(),
+                        null);
+                    waitHandle.WaitOne();
+                    ICloudBlob blob1SnapshotReference = container.ServiceClient.EndGetBlobReferenceFromServer(result);
+                    AssertAreEqual(blob1Snapshot.Properties, blob1SnapshotReference.Properties);
+
                     result = container.BeginGetBlobReferenceFromServer("pb",
                         ar => waitHandle.Set(),
                         null);
                     waitHandle.WaitOne();
                     ICloudBlob blob2 = container.EndGetBlobReferenceFromServer(result);
                     Assert.IsInstanceOfType(blob2, typeof(CloudPageBlob));
+
+                    result = ((CloudPageBlob)blob2).BeginCreateSnapshot(
+                        ar => waitHandle.Set(),
+                        null);
+                    waitHandle.WaitOne();
+                    CloudPageBlob blob2Snapshot = ((CloudPageBlob)blob2).EndCreateSnapshot(result);
+                    result = blob2.BeginSetProperties(
+                        ar => waitHandle.Set(),
+                        null);
+                    waitHandle.WaitOne();
+                    blob2.EndSetProperties(result);
+                    Uri blob2SnapshotUri = new Uri(blob2Snapshot.Uri.AbsoluteUri + "?snapshot=" + blob2Snapshot.SnapshotTime.Value.UtcDateTime.ToString("o"));
+                    result = container.ServiceClient.BeginGetBlobReferenceFromServer(blob2SnapshotUri,
+                        ar => waitHandle.Set(),
+                        null);
+                    waitHandle.WaitOne();
+                    ICloudBlob blob2SnapshotReference = container.ServiceClient.EndGetBlobReferenceFromServer(result);
+                    AssertAreEqual(blob2Snapshot.Properties, blob2SnapshotReference.Properties);
 
                     result = container.ServiceClient.BeginGetBlobReferenceFromServer(blockBlob.Uri,
                         ar => waitHandle.Set(),
