@@ -136,11 +136,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             else
                             {
                                 chainedResult.OnComplete(e);
+                                return;
                             }
                         }
                         catch (Exception e)
                         {
                             chainedResult.OnComplete(e);
+                            return;
                         }
 
                         chainedResult.Result = new BlobWriteStream(this, accessCondition, modifiedOptions, operationContext);
