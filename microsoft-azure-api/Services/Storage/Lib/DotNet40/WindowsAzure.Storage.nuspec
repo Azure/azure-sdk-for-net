@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>WindowsAzure.Storage</id>
-    <version>2.0.5.0</version>
+    <version>2.0.5.1</version>
     <title>Windows Azure Storage</title>
     <authors>Microsoft</authors>
     <owners>Microsoft</owners>
     <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>
     <projectUrl>http://go.microsoft.com/fwlink/?LinkId=235168</projectUrl>
-    <iconUrl>http://www.gravatar.com/avatar/c24270713c524575b0308e05c7e9ff61?s=128</iconUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>This client library enables working with the Windows Azure storage services which include the blob service for storing binary and text data, the table service for storing structured non-relational data, and the queue service for storing messages that may be accessed by a client. 
 For this release see notes - http://msdn.microsoft.com/en-us/library/windowsazure/jj721952.aspx
