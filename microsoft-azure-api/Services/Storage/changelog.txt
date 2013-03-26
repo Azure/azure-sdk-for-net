@@ -56,4 +56,4 @@ Issues fixed in 2.0.5 :
 
 Issues fixed in 2.0.5.1 :
 
-	1. All: Drain HttpWebResponse's response stream before closing it
+	1. All: Make sure the response stream is drained to prevent socket exhaustion
