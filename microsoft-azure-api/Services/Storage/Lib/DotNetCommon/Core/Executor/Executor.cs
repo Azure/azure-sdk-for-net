@@ -18,6 +18,7 @@
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
     using System;
+    using System.IO;
     using System.Net;
     using System.Threading;
     using Microsoft.WindowsAzure.Storage.Core.Util;
@@ -256,9 +257,14 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                             CheckCancellation(executionState);
 
                             // 8. (Potentially reads stream from server)
-                            if (executionState.RestCMD.RetrieveResponseStream && executionState.ExceptionRef == null)
+                            if (executionState.ExceptionRef == null)
                             {
                                 executionState.RestCMD.ResponseStream = executionState.Resp.GetResponseStream();
+
+                                if (!executionState.RestCMD.RetrieveResponseStream)
+                                {
+                                    executionState.RestCMD.DestinationStream = Stream.Null;
+                                }
 
                                 if (executionState.RestCMD.DestinationStream != null)
                                 {
@@ -311,6 +317,19 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
         private static void EndResponseStreamCopy<T>(ExecutionState<T> executionState)
         {
+            try
+            {
+                if (executionState.RestCMD.ResponseStream != null)
+                {
+                    executionState.RestCMD.ResponseStream.Dispose();
+                    executionState.RestCMD.ResponseStream = null;
+                }
+            }
+            catch (Exception)
+            {
+                // no-op, because HttpWebResponse.Close should take care of it
+            }
+
             EndOperation(executionState);
         }
         #endregion
@@ -492,9 +511,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     }
 
                     // 8. (Potentially reads stream from server)
-                    if (executionState.RestCMD.RetrieveResponseStream)
+                    executionState.RestCMD.ResponseStream = executionState.Resp.GetResponseStream();
+
+                    if (!executionState.RestCMD.RetrieveResponseStream)
                     {
-                        executionState.RestCMD.ResponseStream = executionState.Resp.GetResponseStream();
+                        executionState.RestCMD.DestinationStream = Stream.Null;
                     }
 
                     if (executionState.RestCMD.DestinationStream != null)
@@ -511,6 +532,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         finally
                         {
                             executionState.RestCMD.ResponseStream.Dispose();
+                            executionState.RestCMD.ResponseStream = null;
                         }
                     }
 

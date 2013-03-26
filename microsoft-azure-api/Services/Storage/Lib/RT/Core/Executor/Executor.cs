@@ -18,6 +18,7 @@
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
     using System;
+    using System.IO;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -124,20 +125,29 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     }
 
                     // 8. (Potentially reads stream from server)
-                    if (cmd.RetrieveResponseStream)
+                    cmd.ResponseStream = await executionState.Resp.Content.ReadAsStreamAsync();
+
+                    if (!cmd.RetrieveResponseStream)
                     {
-                        cmd.ResponseStream = await executionState.Resp.Content.ReadAsStreamAsync();
+                        cmd.DestinationStream = Stream.Null;
                     }
 
                     if (cmd.DestinationStream != null)
                     {
-                        if (cmd.StreamCopyState == null)
+                        try
                         {
-                            cmd.StreamCopyState = new StreamDescriptor();
-                        }
+                            if (cmd.StreamCopyState == null)
+                            {
+                                cmd.StreamCopyState = new StreamDescriptor();
+                            }
 
-                        await cmd.ResponseStream.WriteToAsync(cmd.DestinationStream, null /* MaxLength */, cmd.CalculateMd5ForResponseStream, executionState.OperationContext, cmd.StreamCopyState, tokenWithTimeout);
-                        cmd.ResponseStream.Dispose();
+                            await cmd.ResponseStream.WriteToAsync(cmd.DestinationStream, null /* MaxLength */, cmd.CalculateMd5ForResponseStream, executionState.OperationContext, cmd.StreamCopyState, tokenWithTimeout);
+                        }
+                        finally
+                        {
+                            cmd.ResponseStream.Dispose();
+                            cmd.ResponseStream = null;
+                        }
                     }
 
                     // 9. Evaluate Response & Parse Results, (Stream potentially available here) 
@@ -175,6 +185,14 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
                     delay = delay.TotalMilliseconds < 0 || delay > Constants.MaximumRetryBackoff ? Constants.MaximumRetryBackoff : delay;
                 }
+                finally
+                {
+                    if (executionState.Resp != null)
+                    {
+                        executionState.Resp.Dispose();
+                        executionState.Resp = null;
+                    }
+                }
 
                 // potentially backoff
                 if (!shouldRetry || (executionState.OperationExpiryTime.HasValue && (DateTime.Now + delay).CompareTo(executionState.OperationExpiryTime.Value) > 0))
@@ -200,7 +218,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         await Task.Delay(delay);
                     }
                 }
-            } 
+            }
             while (shouldRetry);
 
             // should never get here
