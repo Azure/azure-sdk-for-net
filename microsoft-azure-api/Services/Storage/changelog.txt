@@ -12,7 +12,7 @@ Issues fixed in 2.0.2 :
 
 Issues fixed in 2.0.3 :
 
-	1. All: General metadata correctness test fails when using the RT library to develop windows store apps
+	1. All (RT): General metadata correctness test fails when using the RT library to develop windows store apps
 	2. Queues: CloudQueueMessage.MaxNumberOfMessagesToPeek, CloudQueueMessage.MaxMessageSize and CloudQueueMessage.MaximumTimeToLive have disappeared from CloudQueueMessage
 	3. Queues: CloudQueue.BeginCreateIfNotExists and CloudQueue.BeginDeleteIfExists methods expect valid options argument
 	4. Tables: When one or more of the batches fails, but then succeeds on a retry, the "extra" TableResults of the failed transactions are also returned
@@ -21,6 +21,7 @@ Issues fixed in 2.0.3 :
 	7. Tables: CloudTable.EndListTablesSegmented method does not work correctly
 
 Issues fixed in 2.0.4 :
+
 	1. All: Flush HttpWebRequest's request stream before calling BeginGetResponse
 	2. All: Support Null Retry Policies
 	3. Blob: Continue ListContainers parsing if a container property is unknown 
@@ -30,10 +31,12 @@ Issues fixed in 2.0.4 :
 	7. Tables: Allow String.Empty in TableQuery Filters
 
 Issues fixed in 2.0.4.1 :
+
 	1. All: Updated Odata dependency to latest and also changed nuspec to allow any version >= 5.2.0
 
 Issues fixed in 2.0.5 :
-	1. All: StorageException is now serializable. Also, other useful objects for debugging(StorageExtendedErrorInformation and RequestResult) are also serializable
+
+	1. All: StorageException is now serializable. Also, other useful objects for debugging (StorageExtendedErrorInformation and RequestResult) are also serializable
 	2. All: SharedAccessSignature helper now uses culture invariant characteristics to calculate SAS
 	3. All: CloudStorageAccount can now parse connection strings with extra blank values
 	4. All: OperationContext StartTime and EndTime are now populated during execution
@@ -50,4 +53,7 @@ Issues fixed in 2.0.5 :
 	15. Queue: Ability to recreate CloudQueueMessage with Message Id and Pop Receipt
 	16. Table: Exceptions during TableBatchOperation now parse the entity index from the server response
 	17. Table: Floating-point number filter is now generated using invariant culture
-	
+
+Issues fixed in 2.0.5.1 :
+
+	1. All: Drain HttpWebResponse's response stream before closing it
