@@ -1,5 +1,5 @@
 ﻿//
-// Copyright 2012 Microsoft Corporation
+// Copyright Microsoft Corporation
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -31,13 +31,7 @@ namespace Microsoft.WindowsAzure
         private const string RoleEnvironmentExceptionTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironmentException";
         private const string IsAvailablePropertyName = "IsAvailable";
         private const string GetSettingValueMethodName = "GetConfigurationSettingValue";
-
-        // Keep this array sorted by the version in the descendant order.
-        private readonly string[] knownAssemblyNames = new string[]
-        {
-            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
-            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
-        };
+        private const string ServiceRuntimeAssemblyName = "Microsoft.WindowsAzure.ServiceRuntime, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL";
 
         private Type _roleEnvironmentExceptionType;         // Exception thrown for missing settings.
         private MethodInfo _getServiceSettingMethod;        // Method for getting values from the service configuration.
@@ -48,7 +42,7 @@ namespace Microsoft.WindowsAzure
         internal AzureApplicationSettings()
         {
             // Find out if the code is running in the cloud service context.
-            Assembly assembly = GetServiceRuntimeAssembly();
+            Assembly assembly = GetLatestServiceRuntimeAssembly();
             if (assembly != null)
             {
                 Type roleEnvironmentType = assembly.GetType(RoleEnvironmentTypeName, false);
@@ -179,28 +173,23 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
-        /// Loads and returns the latest available version of the servuce
-        /// runtime assembly.
+        /// Loads and returns the latest available version of the service runtime assembly.
         /// </summary>
         /// <returns>Loaded assembly, if any.</returns>
-        private Assembly GetServiceRuntimeAssembly()
+        private Assembly GetLatestServiceRuntimeAssembly()
         {
             Assembly assembly = null;
+            string assemblyPath = Utilities.GetAssemblyPath(ServiceRuntimeAssemblyName);
 
-            for (int i = 0; assembly == null && i < knownAssemblyNames.Length; i++)
+            try
             {
-                AssemblyName name = new AssemblyName(knownAssemblyNames[i]);
-                try
+                assembly = Assembly.LoadFrom(assemblyPath);
+            }
+            catch (Exception e)
+            {
+                if (!(e is FileNotFoundException || e is FileLoadException || e is BadImageFormatException))
                 {
-                    assembly = Assembly.Load(name);
-                    break;
-                }
-                catch (Exception e)
-                {
-                    if (!(e is FileNotFoundException || e is FileLoadException || e is BadImageFormatException))
-                    {
-                        throw;
-                    }
+                    throw;
                 }
             }
 
