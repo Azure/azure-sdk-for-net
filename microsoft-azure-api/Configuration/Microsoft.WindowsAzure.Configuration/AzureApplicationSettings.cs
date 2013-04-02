@@ -31,7 +31,12 @@ namespace Microsoft.WindowsAzure
         private const string RoleEnvironmentExceptionTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironmentException";
         private const string IsAvailablePropertyName = "IsAvailable";
         private const string GetSettingValueMethodName = "GetConfigurationSettingValue";
-        private const string ServiceRuntimeAssemblyName = "Microsoft.WindowsAzure.ServiceRuntime, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL";
+
+        // Keep this array sorted by the version in the descendant order.
+        private readonly string[] knownAssemblyNames = new string[]
+        {
+            "Microsoft.WindowsAzure.ServiceRuntime, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL"
+        };
 
         private Type _roleEnvironmentExceptionType;         // Exception thrown for missing settings.
         private MethodInfo _getServiceSettingMethod;        // Method for getting values from the service configuration.
@@ -42,7 +47,7 @@ namespace Microsoft.WindowsAzure
         internal AzureApplicationSettings()
         {
             // Find out if the code is running in the cloud service context.
-            Assembly assembly = GetLatestServiceRuntimeAssembly();
+            Assembly assembly = GetServiceRuntimeAssembly();
             if (assembly != null)
             {
                 Type roleEnvironmentType = assembly.GetType(RoleEnvironmentTypeName, false);
@@ -173,23 +178,28 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
-        /// Loads and returns the latest available version of the service runtime assembly.
+        /// Loads and returns the latest available version of the service 
+        /// runtime assembly.
         /// </summary>
         /// <returns>Loaded assembly, if any.</returns>
-        private Assembly GetLatestServiceRuntimeAssembly()
+        private Assembly GetServiceRuntimeAssembly()
         {
             Assembly assembly = null;
-            string assemblyPath = Utilities.GetAssemblyPath(ServiceRuntimeAssemblyName);
 
-            try
+            foreach (string assemblyName in knownAssemblyNames)
             {
-                assembly = Assembly.LoadFrom(assemblyPath);
-            }
-            catch (Exception e)
-            {
-                if (!(e is FileNotFoundException || e is FileLoadException || e is BadImageFormatException))
+                string assemblyPath = Utilities.GetAssemblyPath(assemblyName);
+
+                try
                 {
-                    throw;
+                    assembly = Assembly.LoadFrom(assemblyPath);
+                }
+                catch (Exception e)
+                {
+                    if (!(e is FileNotFoundException || e is FileLoadException || e is BadImageFormatException))
+                    {
+                        throw;
+                    }
                 }
             }
 
