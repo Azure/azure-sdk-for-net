@@ -196,7 +196,10 @@ namespace Microsoft.WindowsAzure
                 }
                 catch (Exception e)
                 {
-                    if (!(e is FileNotFoundException || e is FileLoadException || e is BadImageFormatException))
+                    if (!(e is FileNotFoundException || 
+                          e is FileLoadException || 
+                          e is BadImageFormatException ||
+                          e is ArgumentNullException))
                     {
                         throw;
                     }
