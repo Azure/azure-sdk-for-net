@@ -196,6 +196,8 @@ namespace Microsoft.WindowsAzure
                 }
                 catch (Exception e)
                 {
+                    // The following exceptions are ignored for enabling configuration manager to proceed
+                    // and load the configuration from application settings instead of using ServiceRuntime.
                     if (!(e is FileNotFoundException || 
                           e is FileLoadException || 
                           e is BadImageFormatException ||
