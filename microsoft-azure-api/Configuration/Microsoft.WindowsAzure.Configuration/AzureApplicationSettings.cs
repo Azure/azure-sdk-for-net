@@ -1,5 +1,5 @@
 ﻿//
-// Copyright 2012 Microsoft Corporation
+// Copyright Microsoft Corporation
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -35,8 +35,7 @@ namespace Microsoft.WindowsAzure
         // Keep this array sorted by the version in the descendant order.
         private readonly string[] knownAssemblyNames = new string[]
         {
-            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
-            "Microsoft.WindowsAzure.ServiceRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL",
+            "Microsoft.WindowsAzure.ServiceRuntime, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL"
         };
 
         private Type _roleEnvironmentExceptionType;         // Exception thrown for missing settings.
@@ -179,7 +178,7 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
-        /// Loads and returns the latest available version of the servuce
+        /// Loads and returns the latest available version of the service 
         /// runtime assembly.
         /// </summary>
         /// <returns>Loaded assembly, if any.</returns>
@@ -187,17 +186,24 @@ namespace Microsoft.WindowsAzure
         {
             Assembly assembly = null;
 
-            for (int i = 0; assembly == null && i < knownAssemblyNames.Length; i++)
+            foreach (string assemblyName in knownAssemblyNames)
             {
-                AssemblyName name = new AssemblyName(knownAssemblyNames[i]);
+                string assemblyPath = Utilities.GetAssemblyPath(assemblyName);
+
                 try
                 {
-                    assembly = Assembly.Load(name);
-                    break;
+                    if (!string.IsNullOrEmpty(assemblyPath))
+                    {
+                        assembly = Assembly.LoadFrom(assemblyPath);
+                    }
                 }
                 catch (Exception e)
                 {
-                    if (!(e is FileNotFoundException || e is FileLoadException || e is BadImageFormatException))
+                    // The following exceptions are ignored for enabling configuration manager to proceed
+                    // and load the configuration from application settings instead of using ServiceRuntime.
+                    if (!(e is FileNotFoundException || 
+                          e is FileLoadException || 
+                          e is BadImageFormatException))
                     {
                         throw;
                     }
