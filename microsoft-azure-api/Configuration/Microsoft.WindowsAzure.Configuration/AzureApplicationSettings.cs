@@ -192,11 +192,18 @@ namespace Microsoft.WindowsAzure
 
                 try
                 {
-                    assembly = Assembly.LoadFrom(assemblyPath);
+                    if (!string.IsNullOrEmpty(assemblyPath))
+                    {
+                        assembly = Assembly.LoadFrom(assemblyPath);
+                    }
                 }
                 catch (Exception e)
                 {
-                    if (!(e is FileNotFoundException || e is FileLoadException || e is BadImageFormatException))
+                    // The following exceptions are ignored for enabling configuration manager to proceed
+                    // and load the configuration from application settings instead of using ServiceRuntime.
+                    if (!(e is FileNotFoundException || 
+                          e is FileLoadException || 
+                          e is BadImageFormatException))
                     {
                         throw;
                     }
