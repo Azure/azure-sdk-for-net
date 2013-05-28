@@ -145,6 +145,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                         }
                         finally
                         {
+                            cmd.ResponseStream.Flush();
                             cmd.ResponseStream.Dispose();
                             cmd.ResponseStream = null;
                         }
