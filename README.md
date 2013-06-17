@@ -33,9 +33,7 @@ Service Bus, distributed caching through cache.</p>
 cd ./azure-sdk-for-net</pre>
 
 <h3>Option 2: Via NuGet</h3>
-<p>To get the binaries of this library as distributed by Microsoft, ready for use
-within your project you can also have them installed by the .NET package manager NuGet.<br/>
-<pre>Install-Package WindowsAzure.Storage</pre></p>
+<p>NuGet option is not supported for 1.7.1 - use 2.0 instead</p>
 
 <h2>Requirements</h2>
 <ul>
