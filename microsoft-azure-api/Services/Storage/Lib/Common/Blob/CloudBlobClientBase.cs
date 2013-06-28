@@ -17,13 +17,14 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
-    using System;
-    using System.Globalization;
     using Microsoft.WindowsAzure.Storage.Auth;
     using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Auth;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.RetryPolicies;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
+    using System.Globalization;
 
     /// <summary>
     /// Provides a client-side logical representation of the Windows Azure Blob Service. This client is used to configure and execute requests against the Blob Service.
@@ -60,6 +61,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Max execution time accross all potential retries.
         /// </summary>
         private TimeSpan? maximumExecutionTime;
+
+        private AuthenticationScheme authenticationScheme;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudBlobClient"/> class using the specified Blob service endpoint
@@ -113,6 +116,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             this.RetryPolicy = new ExponentialRetry();
             this.ServerTimeout = Constants.DefaultServerSideTimeout;
             this.DefaultDelimiter = NavigationHelper.Slash;
+            this.AuthenticationScheme = AuthenticationScheme.SharedKey;
 
             if (usePathStyleUris.HasValue)
             {
@@ -267,6 +271,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             CommonUtils.AssertNotNullOrEmpty("containerName", containerName);
             return new CloudBlobContainer(containerName, this);
+        }
+
+        private ICanonicalizer GetCanonicalizer()
+        {
+            if (this.AuthenticationScheme == AuthenticationScheme.SharedKeyLite)
+            {
+                return SharedKeyLiteCanonicalizer.Instance;
+            }
+
+            return SharedKeyCanonicalizer.Instance;
         }
 
         /// <summary>

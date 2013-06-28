@@ -24,8 +24,8 @@ Issues fixed in 2.0.4 :
 
 	1. All: Flush HttpWebRequest's request stream before calling BeginGetResponse
 	2. All: Support Null Retry Policies
-	3. Blob: Continue ListContainers parsing if a container property is unknown 
-	4. Queue (RT): DeleteMessageAsync(string messageId, string popReceipt) ignores the messageId and popReceipt
+	3. Blobs: Continue ListContainers parsing if a container property is unknown 
+	4. Queues (RT): DeleteMessageAsync(string messageId, string popReceipt) ignores the messageId and popReceipt
 	5. Tables: Add a TableConstant to define minimum DateTime supported
 	6. Tables: Correct count behavior with synchronous non segmented execution
 	7. Tables: Allow String.Empty in TableQuery Filters
@@ -43,17 +43,34 @@ Issues fixed in 2.0.5 :
 	5. All: StorageCredentials.UpdateKey does not work on SAS/Anonymous credentials anymore
 	6. All: Metadata headers are now sorted using en-US culture to prevent 403 errors in some cultures
 	7. All: Fixed issue where in some cases a sync method call could result in a 0 ms timeout being set on HttpWebRequest.
-	8. Blob: Snapshot time embedded in blob Uri is parsed in the constructor
-	9. Blob: GetBlobReferenceFromServer works with blob Uri that contain a SAS token
-	10. Blob: BlobWriteStream now honors AccessCondition
-	11. Blob: BlobWriteStream prevents using StoreBlobContentMD5 on existing page blobs
-	12. Blob: ICloudBlob now has OpenRead method
-	13. Blob: Cloud*Blob.OpenRead now can be used with snapshots
-	14. Blob: AbortCopy does not throw an exception anymore when a copy is successfully aborted
-	15. Queue: Ability to recreate CloudQueueMessage with Message Id and Pop Receipt
-	16. Table: Exceptions during TableBatchOperation now parse the entity index from the server response
-	17. Table: Floating-point number filter is now generated using invariant culture
+	8. Blobs: Snapshot time embedded in blob Uri is parsed in the constructor
+	9. Blobs: GetBlobReferenceFromServer works with blob Uri that contain a SAS token
+	10. Blobs: BlobWriteStream now honors AccessCondition
+	11. Blobs: BlobWriteStream prevents using StoreBlobContentMD5 on existing page blobs
+	12. Blobs: ICloudBlob now has OpenRead method
+	13. Blobs: Cloud*Blob.OpenRead now can be used with snapshots
+	14. Blobs: AbortCopy does not throw an exception anymore when a copy is successfully aborted
+	15. Queues: Ability to recreate CloudQueueMessage with Message Id and Pop Receipt
+	16. Tables: Exceptions during TableBatchOperation now parse the entity index from the server response
+	17. Tables: Floating-point number filter is now generated using invariant culture
 
 Issues fixed in 2.0.5.1 :
 
 	1. All: Make sure the response stream is drained to prevent socket exhaustion
+
+Issues fixed in 2.0.6.0 :
+
+	1. All: Default RetryPolicy filters updated to not retry 100-407, 409-499, 501, and 505
+	2. All: Support for all flavors of SharedKey and SharedKeyLite message signing through AuthenticationScheme property on client classes.
+	3. All: Unusable HttpWebRequestFactory and WebRequestExtensions are not public anymore
+	4. All: Updated Odata dependency to latest(5.4.0.0)
+	5. All: TranslateFromExceptionMessage has been deprecated in Microsoft.WindowsAzure.Storage.dll and is now available only in Microsoft.WindowsAzure.Storage.WinMD
+	6. All: StorageCredentials supports empty account keys.
+	7. All: RequestResult deserialization does not fail when Content-MD5 is missing
+	8. Blobs (RT): DownloadToStreamAsync and DownloadRangeToStreamAsync writes the entire data to the given stream before returning back to the caller.
+	9. Blobs (RT): UploadFromStreamAsync commits the blob in a worker thread to unblock UI.
+	10. Blobs: Blob stream now uses a GUID instead of a random number as block ID prefix to prevent collisions.
+	11. Queues: Changed return type of CloudQueue.BeginSetMetadata(AsyncCallback, object) to ICancellableAsyncResult.
+	12. Tables: Changed default message signing to SharedKey (except for Data Services).
+	13. Tables: EntityProperty updated to set the IsNull value for properties correctly in the case when the user sets an EntityProperty value through its setter.
+	14. Tables: EdmType for null values in EntityProperty is set correctly and does not default to string any more.

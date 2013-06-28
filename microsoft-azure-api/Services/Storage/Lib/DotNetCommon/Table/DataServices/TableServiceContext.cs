@@ -17,16 +17,18 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.DataServices
 {
+    using Microsoft.WindowsAzure.Storage.Auth.Protocol;
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Auth;
+    using Microsoft.WindowsAzure.Storage.Core.Executor;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using Microsoft.WindowsAzure.Storage.Table.Protocol;
     using System;
     using System.Data.Services.Client;
     using System.Globalization;
     using System.Net;
     using System.Threading;
-    using Microsoft.WindowsAzure.Storage.Core;
-    using Microsoft.WindowsAzure.Storage.Core.Executor;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-    using Microsoft.WindowsAzure.Storage.Table.Protocol;
 
     /// <summary>
     /// Represents a <see cref="DataServiceContext"/> object for use with the Windows Azure Table service.
@@ -34,6 +36,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
     /// <remarks>The <see cref="TableServiceContext"/> class does not support concurrent queries or requests.</remarks>
     public class TableServiceContext : DataServiceContext, IDisposable
     {
+        private IAuthenticationHandler authenticationHandler;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceContext"/> class.
         /// </summary>
@@ -138,7 +142,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             // Sign request
             if (this.ServiceClient.Credentials.IsSharedKey)
             {
-                this.ServiceClient.AuthenticationHandler.SignRequest(request, null /* operationContext */);
+                this.AuthenticationHandler.SignRequest(request, null /* operationContext */);
             }
             else if (this.ServiceClient.Credentials.IsSAS)
             {
@@ -180,6 +184,35 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// </summary>
         /// <value>A client object that specifies the Table service endpoint.</value>
         public CloudTableClient ServiceClient { get; private set; }
+
+        /// <summary>
+        /// Gets the authentication handler used to sign HTTP requests.
+        /// </summary>
+        /// <value>The authentication handler.</value>
+        private IAuthenticationHandler AuthenticationHandler
+        {
+            get
+            {
+                if (this.authenticationHandler == null)
+                {
+                    if (this.ServiceClient.Credentials.IsSharedKey)
+                    {
+                        // Always use Shared Key Lite because Data Services adds a Content-Type HTTP header to requests 
+                        // that is not available during signing
+                        this.authenticationHandler = new SharedKeyAuthenticationHandler(
+                            SharedKeyLiteTableCanonicalizer.Instance,
+                            this.ServiceClient.Credentials,
+                            this.ServiceClient.Credentials.AccountName);
+                    }
+                    else
+                    {
+                        this.authenticationHandler = new NoOpAuthenticationHandler();
+                    }
+                }
+
+                return this.authenticationHandler;
+            }
+        }
 
         /// <summary>
         /// Begins an asynchronous operation to save changes, using the retry policy specified for the service context.
@@ -299,6 +332,10 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             this.Dispose(true);  
         }
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="explicitDisposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool explicitDisposing)
         {
             if (explicitDisposing)

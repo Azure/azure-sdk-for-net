@@ -17,21 +17,7 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Text;
-#if RT
-    using System.Net.Http;
-#endif
-
     using Microsoft.WindowsAzure.Storage.Auth;
-
-#if !COMMON
-    using Microsoft.WindowsAzure.Storage.Auth.Protocol;
-#endif
-
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Auth;
     using Microsoft.WindowsAzure.Storage.Core.Executor;
@@ -39,6 +25,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using Microsoft.WindowsAzure.Storage.RetryPolicies;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
     /// Provides a client-side logical representation of the Windows Azure Table Service. This client is used to configure and execute requests against the Table Service.
@@ -55,6 +46,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Max execution time across all potential retries.
         /// </summary>
         private TimeSpan? maximumExecutionTime;
+
+        private AuthenticationScheme authenticationScheme;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudTableClient"/> class using the specified Blob service endpoint
@@ -106,6 +99,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             this.Credentials = credentials;
             this.RetryPolicy = new ExponentialRetry();
             this.ServerTimeout = Constants.DefaultServerSideTimeout;
+            this.AuthenticationScheme = AuthenticationScheme.SharedKey;
 
             if (usePathStyleUris.HasValue)
             {
@@ -201,60 +195,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 #endif
 
-#if RT
-        /// <summary>
-        /// Gets the authentication handler used to sign requests.
-        /// </summary>
-        /// <value>Authentication handler.</value>
-        internal HttpClientHandler AuthenticationHandler
+        private ICanonicalizer GetCanonicalizer()
         {
-            get
+            if (this.AuthenticationScheme == AuthenticationScheme.SharedKeyLite)
             {
-                HttpClientHandler authenticationHandler;
-                if (this.Credentials.IsSharedKey)
-                {
-                    authenticationHandler = new SharedKeyAuthenticationHttpHandler(
-                        SharedKeyLiteTableCanonicalizer.Instance,
-                        this.Credentials,
-                        this.Credentials.AccountName);
-                }
-                else
-                {
-                    authenticationHandler = new NoOpAuthenticationHttpHandler();
-                }
-
-                return authenticationHandler;
+                return SharedKeyLiteTableCanonicalizer.Instance;
             }
-        }
-#elif !COMMON        
-        private IAuthenticationHandler authenticationHandler;
 
-        /// <summary>
-        /// Gets the authentication handler used to sign requests.
-        /// </summary>
-        /// <value>Authentication handler.</value>
-        internal IAuthenticationHandler AuthenticationHandler
-        {
-            get
-            {
-                if (this.authenticationHandler == null)
-                {
-                    if (this.Credentials.IsSharedKey)
-                    {
-                        this.authenticationHandler = new SharedKeyLiteAuthenticationHandler(
-                            SharedKeyLiteTableCanonicalizer.Instance,
-                            this.Credentials,
-                            this.Credentials.AccountName);
-                    }
-                    else
-                    {
-                        this.authenticationHandler = new NoOpAuthenticationHandler();
-                    }
-                }
-
-                return this.authenticationHandler;
-            }
+            return SharedKeyTableCanonicalizer.Instance;
         }
-#endif
     }
 }

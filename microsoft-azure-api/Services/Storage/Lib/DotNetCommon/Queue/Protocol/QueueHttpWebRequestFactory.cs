@@ -25,34 +25,43 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
     using System.IO;
     using System.Net;
 
+    /// <summary>
+    /// A factory class for constructing a web request against the Queue service.
+    /// </summary>
     public static class QueueHttpWebRequestFactory
     {
         /// <summary>
-        /// Creates a web request to get the properties of the service.
+        /// Creates a web request to get the properties of the Queue service.
         /// </summary>
-        /// <param name="uri">The absolute URI to the service.</param>
+        /// <param name="uri">The absolute URI to the Queue service.</param>
+        /// <param name="builder">An object of type <see cref="UriQueryBuilder"/>, containing additional parameters to add to the URI query string.</param>
         /// <param name="timeout">The server timeout interval, in seconds.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to get the service properties.</returns>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to get the Queue service properties.
+        /// </returns>
         public static HttpWebRequest GetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
             return HttpWebRequestFactory.GetServiceProperties(uri, builder, timeout, operationContext);
         }
 
         /// <summary>
-        /// Creates a web request to set the properties of the service.
+        /// Creates a web request to set the properties of the Queue service.
         /// </summary>
-        /// <param name="uri">The absolute URI to the service.</param>
+        /// <param name="uri">The absolute URI to the Queue service.</param>
+        /// <param name="builder">An object of type <see cref="UriQueryBuilder"/>, containing additional parameters to add to the URI query string.</param>
         /// <param name="timeout">The server timeout interval, in seconds.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to set the service properties.</returns>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to set the Queue service properties.
+        /// </returns>
         public static HttpWebRequest SetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
             return HttpWebRequestFactory.SetServiceProperties(uri, builder, timeout, operationContext);
         }
 
         /// <summary>
-        /// Writes service properties to a stream, formatted in XML.
+        /// Writes Queue service properties to a stream, formatted in XML.
         /// </summary>
         /// <param name="properties">The service properties to format and write to the stream.</param>
         /// <param name="outputStream">The stream to which the formatted properties are to be written.</param>
@@ -218,8 +227,12 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to use to perform the operation.</returns>
+        /// <param name="timeToLiveInSeconds">The message time-to-live, in seconds.</param>
+        /// <param name="visibilityTimeoutInSeconds">The visibility timeout, in seconds.</param>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to use to perform the operation.
+        /// </returns>
         public static HttpWebRequest AddMessage(Uri uri, int? timeout, int? timeToLiveInSeconds, int? visibilityTimeoutInSeconds, OperationContext operationContext)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
@@ -280,8 +293,12 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to use to perform the operation.</returns>
+        /// <param name="numberOfMessages">The number of messages.</param>
+        /// <param name="visibilityTimeout">The visibility timeout.</param>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to use to perform the operation.
+        /// </returns>
         public static HttpWebRequest GetMessages(Uri uri, int? timeout, int numberOfMessages, TimeSpan? visibilityTimeout, OperationContext operationContext)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
@@ -302,8 +319,11 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the queue.</param>
         /// <param name="timeout">The server timeout interval.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to use to perform the operation.</returns>
+        /// <param name="numberOfMessages">The number of messages.</param>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to use to perform the operation.
+        /// </returns>
         public static HttpWebRequest PeekMessages(Uri uri, int? timeout, int numberOfMessages, OperationContext operationContext)
         {
             UriQueryBuilder builder = new UriQueryBuilder();

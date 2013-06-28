@@ -27,14 +27,15 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
 
+    /// <summary>
+    /// Represents a continuation token for listing operations. 
+    /// </summary>
+    /// <remarks>A method that may return a partial set of results via a <see cref="TableResultSegment"/> object also returns a continuation token, 
+    /// which can be used in a subsequent call to return the next set of available results. </remarks>
 #if DNCP
     [Serializable]
 #endif
 
-    /// <summary>
-    /// Represents a continuation token for listing operations. 
-    /// </summary>
-    /// <remarks> <see cref="TableContinuationToken"/> continuation tokens are used in methods that return a <see cref="TableResultSegment"/> object, such as <see cref="CloudTableClient.listTablesSegmented()"/>.</remarks>
     [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1001:CommasMustBeSpacedCorrectly", Justification = "Reviewed.")]
     public sealed class TableContinuationToken : IContinuationToken
 #if DNCP

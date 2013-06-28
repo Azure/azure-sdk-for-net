@@ -28,7 +28,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     /// <summary>
     /// Represents a container in the Windows Azure Blob service.
     /// </summary>
-    /// <remarks>Containers hold directories, which are encapsulated as <see cref="CloudBlobDirectory"/> objects, and directories hold block blobs and page blobs. Directories can also contain sub-directories.</remarks>
     public sealed partial class CloudBlobContainer
     {
         /// <summary>
@@ -63,8 +62,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CloudBlobContainer"/> class.
+        /// Initializes a new instance of the <see cref="CloudBlobContainer" /> class.
         /// </summary>
+        /// <param name="properties">The properties.</param>
+        /// <param name="metadata">The metadata.</param>
         /// <param name="containerName">The container name.</param>
         /// <param name="serviceClient">The client to be used.</param>
         internal CloudBlobContainer(BlobContainerProperties properties, IDictionary<string, string> metadata, string containerName, CloudBlobClient serviceClient)

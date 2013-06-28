@@ -26,34 +26,43 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
+    /// <summary>
+    /// A factory class for constructing a web request for working with blobs in the Blob service.
+    /// </summary>
     public static class BlobHttpWebRequestFactory
     {
         /// <summary>
-        /// Creates a web request to get the properties of the service.
+        /// Creates a web request to get the properties of the Blob service.
         /// </summary>
-        /// <param name="uri">The absolute URI to the service.</param>
+        /// <param name="uri">The absolute URI to the Blob service.</param>
+        /// <param name="builder">An object of type <see cref="UriQueryBuilder"/>, containing additional parameters to add to the URI query string.</param>
         /// <param name="timeout">The server timeout interval, in seconds.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to get the service properties.</returns>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to get the Blob service properties.
+        /// </returns>
         public static HttpWebRequest GetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
             return HttpWebRequestFactory.GetServiceProperties(uri, builder, timeout, operationContext);
         }
 
         /// <summary>
-        /// Creates a web request to set the properties of the service.
+        /// Creates a web request to set the properties of the Blob service.
         /// </summary>
-        /// <param name="uri">The absolute URI to the service.</param>
+        /// <param name="uri">The absolute URI to the Blob service.</param>
+        /// <param name="builder">An object of type <see cref="UriQueryBuilder"/>, containing additional parameters to add to the URI query string.</param>
         /// <param name="timeout">The server timeout interval, in seconds.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to set the service properties.</returns>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to set the Blob service properties.
+        /// </returns>
         public static HttpWebRequest SetServiceProperties(Uri uri, UriQueryBuilder builder, int? timeout, OperationContext operationContext)
         {
             return HttpWebRequestFactory.SetServiceProperties(uri, builder, timeout, operationContext);
         }
 
         /// <summary>
-        /// Writes service properties to a stream, formatted in XML.
+        /// Writes Blob service properties to a stream, formatted in XML.
         /// </summary>
         /// <param name="properties">The service properties to format and write to the stream.</param>
         /// <param name="outputStream">The stream to which the formatted properties are to be written.</param>
@@ -130,7 +139,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <summary>
         /// Adds the snapshot.
         /// </summary>
-        /// <param name="builder">The builder.</param>
+        /// <param name="builder">An object of type <see cref="UriQueryBuilder"/>, containing additional parameters to add to the URI query string.</param>
         /// <param name="snapshot">The snapshot version, if the blob is a snapshot.</param>
         private static void AddSnapshot(UriQueryBuilder builder, DateTimeOffset? snapshot)
         {
@@ -141,14 +150,18 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         /// <summary>
-        /// Constructs a web request to return the list of active page ranges for a page blob.
+        /// Constructs a web request to return the list of valid page ranges for a page blob.
         /// </summary>
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="snapshot">The snapshot timestamp, if the blob is a snapshot.</param>
+        /// <param name="offset">The starting offset of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
+        /// <param name="count">The length of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
         /// <param name="accessCondition">The access condition to apply to the request.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to use to perform the operation.</returns>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to use to perform the operation.
+        /// </returns>
         public static HttpWebRequest GetPageRanges(Uri uri, int? timeout, DateTimeOffset? snapshot, long? offset, long? count, AccessCondition accessCondition, OperationContext operationContext)
         {
             if (offset.HasValue)
@@ -529,9 +542,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// </summary>
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
-        /// <param name="accessCondition">The access condition to apply to the request.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to use to perform the operation.</returns>
+        /// <param name="pageRange">The page range, defined by an object of type <see cref="PageRange"/>.</param>
+        /// <param name="pageWrite">A value of type <see cref="PageWrite"/>, indicating the operation to perform on the page blob.</param>
+        /// <param name="accessCondition">The <see cref="AccessCondition"/> to apply to the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to use to perform the operation.
+        /// </returns>
         public static HttpWebRequest PutPage(Uri uri, int? timeout, PageRange pageRange, PageWrite pageWrite,  AccessCondition accessCondition, OperationContext operationContext)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
@@ -623,9 +640,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <param name="snapshot">The snapshot version, if the blob is a snapshot.</param>
         /// <param name="offset">The byte offset at which to begin returning content.</param>
         /// <param name="count">The number of bytes to return, or null to return all bytes through the end of the blob.</param>
+        /// <param name="rangeContentMD5">If set to <c>true</c>, request an MD5 header for the specified range.</param>
         /// <param name="accessCondition">The access condition to apply to the request.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A web request to use to perform the operation.</returns>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
+        /// <returns>
+        /// A web request to use to perform the operation.
+        /// </returns>
         public static HttpWebRequest Get(Uri uri, int? timeout, DateTimeOffset? snapshot, long? offset, long? count, bool rangeContentMD5, AccessCondition accessCondition, OperationContext operationContext)
         {
             if (offset.HasValue && rangeContentMD5)

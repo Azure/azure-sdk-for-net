@@ -238,8 +238,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 {
                     continue;
                 }
-
-                EntityProperty newProperty = EntityProperty.CreateEntityPropertyFromObject(property.GetValue(this, null), false);
+               
+                EntityProperty newProperty = EntityProperty.CreateEntityPropertyFromObject(property.GetValue(this, null), property.PropertyType);
 
                 // property will be null if unknown type
                 if (newProperty != null)

@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <summary>
         /// Retreives the parent name from a storage Uri.
         /// </summary>
-        /// <param name="blobAddress">The BLOB address.</param>
+        /// <param name="blobAddress">The blob address.</param>
         /// <param name="delimiter">The delimiter.</param>
         /// <param name="usePathStyleUris">If set to <c>true</c> use path style Uris.</param>
         /// <returns>The name of the parent.</returns>
@@ -190,7 +190,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <summary>
         /// Retrieves the parent address for a blob Uri.
         /// </summary>
-        /// <param name="blobAddress">The BLOB address.</param>
+        /// <param name="blobAddress">The blob address.</param>
         /// <param name="delimiter">The delimiter.</param>
         /// <param name="usePathStyleUris">If set to <c>true</c> use path style Uris.</param>
         /// <returns>The address of the parent.</returns>
@@ -252,9 +252,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         }
 
         /// <summary>
-        /// Appends a path to a Uri correctly using "/" as separator.
+        /// Appends a path to a URI correctly using "/" as separator.
         /// </summary>
-        /// <param name="uri">The base Uri.</param>
+        /// <param name="uri">The base URI.</param>
         /// <param name="relativeOrAbsoluteUri">The relative or absolute URI.</param>
         /// <returns>The appended Uri.</returns>
         /// <example>
@@ -269,9 +269,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         }
 
         /// <summary>
-        /// Append a relative path to a Uri, handling traling slashes appropiately.
+        /// Append a relative path to a URI, handling traling slashes appropiately.
         /// </summary>
-        /// <param name="uri">The base Uri.</param>
+        /// <param name="uri">The base URI.</param>
         /// <param name="relativeOrAbsoluteUri">The relative or absloute URI.</param>
         /// <param name="sep">The seperator.</param>
         /// <returns>The appended Uri.</returns>
@@ -392,7 +392,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <summary>
         /// Retrieve the container address and address.
         /// </summary>
-        /// <param name="blobAddress">The BLOB address.</param>
+        /// <param name="blobAddress">The blob address.</param>
         /// <param name="usePathStyleUris">True to use path style Uris.</param>
         /// <param name="containerName">Name of the container.</param>
         /// <param name="containerUri">The container URI.</param>
@@ -487,6 +487,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// </summary>
         /// <param name="address">The complete Uri.</param>
         /// <param name="parsedCredentials">The credentials to use.</param>
+        /// <param name="parsedSnapshot">The parsed snapshot.</param>
+        /// <returns>It returns the blob URI with no credentials and no snapshot info</returns>
+        /// <exception cref="System.ArgumentException">address</exception>
         /// <remarks>
         /// Validate that no other query parameters are passed in.
         /// Any SAS information will be recorded as corresponding credentials instance.

@@ -16,6 +16,7 @@
 // -----------------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft.WindowsAzure.Storage.Table
@@ -86,7 +87,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void TableEscapingWhiteSpaceOnly()
         {
             this.DoEscapeTest("    ", false, true);
@@ -97,10 +98,32 @@ namespace Microsoft.WindowsAzure.Storage.Table
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void TableEscapingWhiteSpaceOnlyInBatch()
         {
             this.DoEscapeTest("    ", true, true);
+        }
+
+        [TestMethod]
+        [Description("Escaping test for leading and trailing whitespace")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableEscapingWhiteSpaceLeadingTrailing()
+        {
+            this.DoEscapeTest("    foo    ", false, true);
+        }
+
+        [TestMethod]
+        [Description("Escaping test for leading and trailing whitespace in batch")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableEscapingWhiteSpaceLeadingTrailingInBatch()
+        {
+            this.DoEscapeTest("    foo    ", true, true);
         }
 
         [TestMethod]
@@ -152,7 +175,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void TableEscapingPercent25()
         {
             this.DoEscapeTest("foo%25", false, true);
@@ -281,6 +304,23 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             // Check equality
             DynamicTableEntity retrievedEntity = res.Result as DynamicTableEntity;
+            Assert.IsNotNull(retrievedEntity);
+            Assert.AreEqual(ent.PartitionKey, retrievedEntity.PartitionKey);
+            Assert.AreEqual(ent.RowKey, retrievedEntity.RowKey);
+            Assert.AreEqual(ent.ETag, retrievedEntity.ETag);
+            Assert.AreEqual(ent.Properties.Count, retrievedEntity.Properties.Count);
+            Assert.AreEqual(ent.Properties["foo"], retrievedEntity.Properties["foo"]);
+
+            // Query using data filter
+            TableQuery query = new TableQuery();
+            query.Where(string.Format(
+                "(PartitionKey eq \'{0}\') and (RowKey eq \'{1}\') and (foo eq \'{2}\')",
+                ent.PartitionKey,
+                ent.RowKey,
+                data.Replace("\'", "\'\'")));
+
+            retrievedEntity = currentTable.ExecuteQuery(query).Single();
+
             Assert.IsNotNull(retrievedEntity);
             Assert.AreEqual(ent.PartitionKey, retrievedEntity.PartitionKey);
             Assert.AreEqual(ent.RowKey, retrievedEntity.RowKey);
