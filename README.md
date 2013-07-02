@@ -10,17 +10,19 @@ Service Bus, distributed caching through cache.</p>
     <li>Tables
         <ul>
             <li>Create/Delete Tables</li>
-            <li>Query/Create/Read/Update/Delete Entities</li>
+            <li>Query/Create/Read/Update/Delete Entities</li></ul>
     </li>
     <li>BLOBs
         <ul>
-            <li>Create/Read/Update/Delete BLOBs</li>
+            <li>Create/Read/Update/Delete BLOBs</li></ul>
     </li>
     <li>Queues
         <ul>
             <li>Create/Delete Queues</li>
             <li>Insert/Peek Queue Messages</li>
-            <li>Advanced Queue Operations</li>
+            <li>Advanced Queue Operations</li></ul>
+    </li>
+    <li>Media - Available in separate <a href="http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client">Media Services repository</a>
     </li>
 </ul>
         
