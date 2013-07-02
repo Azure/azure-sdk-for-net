@@ -159,6 +159,7 @@
     <Compile Include="Blob\CopyBlobTest.cs" />
     <Compile Include="Blob\LeaseTests.cs" />
     <Compile Include="Blob\MD5FlagsTest.cs" />
+    <Compile Include="Blob\MemoryOutputStream.cs" />
     <Compile Include="Blob\SASTests.cs" />
     <Compile Include="Blob\ExceptionHResultTest.cs" />
     <Compile Include="Core\OperationContextUnitTests.cs" />

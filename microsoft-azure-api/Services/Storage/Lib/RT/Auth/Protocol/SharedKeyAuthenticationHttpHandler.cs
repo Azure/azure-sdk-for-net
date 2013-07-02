@@ -17,27 +17,27 @@
 
 namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core.Auth;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Globalization;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.WindowsAzure.Storage.Core.Auth;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     internal sealed class SharedKeyAuthenticationHttpHandler : HttpClientHandler
     {
-        private ICanonicalizer canonicalizer;
-        private StorageCredentials credentials;
-        private string resourceAccountName;
+        private readonly ICanonicalizer canonicalizer;
+        private readonly StorageCredentials credentials;
+        private readonly string accountName;
         
-        public SharedKeyAuthenticationHttpHandler(ICanonicalizer canonicalizer, StorageCredentials credentials, string resourceAccountName)
+        public SharedKeyAuthenticationHttpHandler(ICanonicalizer canonicalizer, StorageCredentials credentials, string accountName)
         {
             this.canonicalizer = canonicalizer;
             this.credentials = credentials;
-            this.resourceAccountName = resourceAccountName;
+            this.accountName = accountName;
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -47,17 +47,14 @@ namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
 
             if (this.credentials.IsSharedKey)
             {
-                // Canonicalize request
-                string message = this.canonicalizer.CanonicalizeHttpRequest(request, this.resourceAccountName);
+                string message = this.canonicalizer.CanonicalizeHttpRequest(request, this.accountName);
 
-                // Compute hash                
 #if RTMD
-                string computedBase64Signature = CryptoUtility.ComputeHmac256(this.credentials.KeyValue, message);
+                string signature = CryptoUtility.ComputeHmac256(this.credentials.KeyValue, message);
 #else
-                string computedBase64Signature = CryptoUtility.ComputeHmac256(this.credentials.ExportKey(), message);
+                string signature = CryptoUtility.ComputeHmac256(this.credentials.ExportKey(), message);
 #endif
 
-                // Add authorization headers
                 if (!string.IsNullOrEmpty(this.credentials.KeyName))
                 {
                     request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, this.credentials.KeyName);
@@ -65,7 +62,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
 
                 request.Headers.Authorization = new AuthenticationHeaderValue(
                     this.canonicalizer.AuthorizationScheme,
-                    string.Format(CultureInfo.InvariantCulture, "{0}:{1}", this.credentials.AccountName, computedBase64Signature));
+                    string.Format(CultureInfo.InvariantCulture, "{0}:{1}", this.credentials.AccountName, signature));
             }
 
             return base.SendAsync(request, cancellationToken);

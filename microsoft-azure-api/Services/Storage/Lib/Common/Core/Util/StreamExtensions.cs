@@ -54,12 +54,14 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// Reads synchronously the entire content of the stream and writes it to the given output stream.
         /// </summary>
         /// <param name="stream">The origin stream.</param>
-        /// <param name="toStream">The destination stream.</param> 
+        /// <param name="toStream">The destination stream.</param>
         /// <param name="maxLength">Maximum length of the stream to write.</param>
         /// <param name="expiryTime">DateTime indicating the expiry time.</param>
         /// <param name="calculateMd5">Bool value indicating whether the Md5 should be calculated.</param>
         /// <param name="syncRead">A boolean indicating whether the write happens synchronously.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
+        /// <param name="streamCopyState">State of the stream copy.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">stream</exception>
         [DebuggerNonUserCode]
         internal static void WriteToSync(this Stream stream, Stream toStream, long? maxLength, DateTime? expiryTime, bool calculateMd5, bool syncRead, OperationContext operationContext, StreamDescriptor streamCopyState)
         {
@@ -161,6 +163,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <summary>
         /// Reads synchronously the entire content of the stream and writes it to the given output stream.
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="stream">The origin stream.</param>
         /// <param name="toStream">The destination stream.</param>
         /// <param name="maxLength">Maximum length of the stream to write.</param>
@@ -168,6 +171,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <param name="calculateMd5">Bool value indicating whether the Md5 should be calculated.</param>
         /// <param name="executionState">StorageCommand that stores state about its execution.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
+        /// <param name="streamCopyState">State of the stream copy.</param>
         /// <param name="completed">The action taken when the execution is completed.</param>
         [DebuggerNonUserCode]
         internal static void WriteToAsync<T>(this Stream stream, Stream toStream, long? maxLength, DateTime? expiryTime, bool calculateMd5, ExecutionState<T> executionState, OperationContext operationContext, StreamDescriptor streamCopyState, Action<ExecutionState<T>> completed)

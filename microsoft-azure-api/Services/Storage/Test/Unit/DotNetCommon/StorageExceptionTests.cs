@@ -133,9 +133,7 @@ namespace Microsoft.WindowsAzure.Storage
         {
             Uri baseAddressUri = new Uri(TestBase.TargetTenantConfig.BlobServiceEndpoint);
             CloudBlobClient blobClient = new CloudBlobClient(baseAddressUri, TestBase.StorageCredentials);
-
             CloudBlobContainer container = blobClient.GetContainerReference(Guid.NewGuid().ToString("N"));
-            RequestResult retrResult = new RequestResult();
 
             OperationContext opContext = new OperationContext();
             Assert.IsNull(opContext.LastResult);
@@ -158,6 +156,7 @@ namespace Microsoft.WindowsAzure.Storage
                 opContext.LastResult.WriteXml(writer);
             }
 
+            RequestResult retrResult = new RequestResult();
             using (XmlReader reader = XmlReader.Create(new StringReader(sb.ToString())))
             {
                 retrResult.ReadXml(reader);
@@ -169,6 +168,30 @@ namespace Microsoft.WindowsAzure.Storage
             Assert.AreEqual(end, retrResult.EndTime);
             Assert.AreEqual(opContext.LastResult.HttpStatusCode, retrResult.HttpStatusCode);
             Assert.AreEqual(opContext.LastResult.HttpStatusMessage, retrResult.HttpStatusMessage);
+            Assert.AreEqual(opContext.LastResult.ContentMd5, retrResult.ContentMd5);
+            Assert.AreEqual(opContext.LastResult.Etag, retrResult.Etag);
+
+            // Now test with no indentation
+            sb = new StringBuilder();
+            using (XmlWriter writer = XmlWriter.Create(sb))
+            {
+                opContext.LastResult.WriteXml(writer);
+            }
+
+            retrResult = new RequestResult();
+            using (XmlReader reader = XmlReader.Create(new StringReader(sb.ToString())))
+            {
+                retrResult.ReadXml(reader);
+            }
+
+            Assert.AreEqual(opContext.LastResult.RequestDate, retrResult.RequestDate);
+            Assert.AreEqual(opContext.LastResult.ServiceRequestID, retrResult.ServiceRequestID);
+            Assert.AreEqual(start, retrResult.StartTime);
+            Assert.AreEqual(end, retrResult.EndTime);
+            Assert.AreEqual(opContext.LastResult.HttpStatusCode, retrResult.HttpStatusCode);
+            Assert.AreEqual(opContext.LastResult.HttpStatusMessage, retrResult.HttpStatusMessage);
+            Assert.AreEqual(opContext.LastResult.ContentMd5, retrResult.ContentMd5);
+            Assert.AreEqual(opContext.LastResult.Etag, retrResult.Etag);
         }
     }
 }

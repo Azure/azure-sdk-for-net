@@ -50,9 +50,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Initializes a new instance of the BlobWriteStreamBase class.
         /// </summary>
+        /// <param name="serviceClient">The service client.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
+        /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
         private BlobWriteStreamBase(CloudBlobClient serviceClient, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : base()
         {
@@ -80,7 +81,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.blockBlob = blockBlob;
             this.blockList = new List<string>();
-            this.blockIdPrefix = new Random().Next().ToString("X8") + "-";
+            this.blockIdPrefix = Guid.NewGuid().ToString("N") + "-";
             this.buffer = new MemoryStream(this.Blob.StreamWriteSizeInBytes);
         }
 

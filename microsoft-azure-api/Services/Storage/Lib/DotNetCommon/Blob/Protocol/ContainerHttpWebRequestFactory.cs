@@ -25,6 +25,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
+    /// <summary>
+    /// A factory class for constructing a web request for working with containers in the Blob service.
+    /// </summary>
     public static class ContainerHttpWebRequestFactory
     {
         /// <summary>

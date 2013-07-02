@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
     using System;
     using System.Net;
     
-    public static class WebRequestExtensions
+    internal static class WebRequestExtensions
     {
         /// <summary>
         /// Adds the lease id.

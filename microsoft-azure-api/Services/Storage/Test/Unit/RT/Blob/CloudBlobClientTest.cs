@@ -38,6 +38,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             CloudBlobClient blobClient = GenerateCloudBlobClient();
             Assert.IsTrue(blobClient.BaseUri.ToString().Contains(TestBase.TargetTenantConfig.BlobServiceEndpoint));
             Assert.AreEqual(TestBase.StorageCredentials, blobClient.Credentials);
+            Assert.AreEqual(AuthenticationScheme.SharedKey, blobClient.AuthenticationScheme);
         }
 
         [TestMethod]
@@ -223,6 +224,27 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 Assert.IsTrue(containerNames.Remove(containerName));
                 await blobClient.GetContainerReference(containerName).DeleteAsync();
             }
+        }
+
+        [TestMethod]
+        // [Description("Test Create Container with Shared Key Lite")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlobClientCreateContainerSharedKeyLiteAsync()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            blobClient.AuthenticationScheme = AuthenticationScheme.SharedKeyLite;
+
+            string containerName = GetRandomContainerName();
+            CloudBlobContainer blobContainer = blobClient.GetContainerReference(containerName);
+            await blobContainer.CreateAsync();
+
+            bool exists = await blobContainer.ExistsAsync();
+            Assert.IsTrue(exists);
+
+            await blobContainer.DeleteAsync();
         }
     }
 }

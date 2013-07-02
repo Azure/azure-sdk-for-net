@@ -21,6 +21,9 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
     using System.Net;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
+    /// <summary>
+    /// Provides a set of methods for parsing a response stream from the Table service.
+    /// </summary>
     public static class TableHttpWebResponseParsers
     {
         /// <summary>

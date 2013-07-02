@@ -19,16 +19,37 @@ namespace Microsoft.WindowsAzure.Storage.Table
 {
     /// <summary>
     /// Enumeration containing the types of operations that can be
-    /// performed by a <see cref="TableOperation"/>.
+    /// performed by a <see cref="TableOperation" />.
     /// </summary>
     public enum TableOperationType
     {
+        /// <summary>
+        /// Represents an insert operation.
+        /// </summary>
         Insert,
+        /// <summary>
+        /// Represents a delete operation.
+        /// </summary>
         Delete,
+        /// <summary>
+        /// Represents a replace operation.
+        /// </summary>
         Replace,
+        /// <summary>
+        /// Represents a merge operation.
+        /// </summary>
         Merge,
+        /// <summary>
+        /// Represents an insert or replace operation.
+        /// </summary>
         InsertOrReplace,
+        /// <summary>
+        /// Represents an insert or merge operation.
+        /// </summary>
         InsertOrMerge,
+        /// <summary>
+        /// Represents a retrieve operation.
+        /// </summary>
         Retrieve
     }
 }

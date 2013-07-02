@@ -18,10 +18,10 @@
 
 namespace Microsoft.WindowsAzure.Test.Network
 {
+    using Fiddler;
     using System;
     using System.Net;
     using System.Threading;
-    using Fiddler;
 
     /// <summary>
     /// HttpMangler is a test utility for mucking with the either the request to or the response from an HTTP server.
@@ -62,7 +62,8 @@ namespace Microsoft.WindowsAzure.Test.Network
         /// </summary>
         private readonly ProxyBehavior[] behaviors;
 
-        private bool drainSessions = true;
+        private bool drainSessions;
+
         private int outstandingEvents = 0;
 
         private bool shuttingDown = false;
@@ -82,15 +83,8 @@ namespace Microsoft.WindowsAzure.Test.Network
         /// </summary>
         /// <param name="behaviors">The behaviors to use while this class is alive</param>
         public HttpMangler(params ProxyBehavior[] behaviors)
+            : this(true, behaviors)
         {
-            this.sessionCount = 0;
-            this.behaviors = behaviors;
-
-            FiddlerApplication.BeforeRequest += this.FiddlerApplication_BeforeRequest;
-            FiddlerApplication.BeforeResponse += this.FiddlerApplication_BeforeResponse;
-            FiddlerApplication.BeforeReturningError += this.FiddlerApplication_BeforeReturningError;
-            FiddlerApplication.AfterSessionComplete += this.FiddlerApplication_AfterSessionComplete;
-            FiddlerApplication.ResponseHeadersAvailable += this.FiddlerApplication_ResponseHeadersAvailable;
         }
 
         /// <summary>
@@ -100,6 +94,8 @@ namespace Microsoft.WindowsAzure.Test.Network
         /// <param name="behaviors">The behaviors to use while this class is alive</param>
         public HttpMangler(bool drainEventsOnShutdown, ProxyBehavior[] behaviors)
         {
+            HttpMangler.Active = true;
+
             this.sessionCount = 0;
             this.behaviors = behaviors;
             this.drainSessions = drainEventsOnShutdown;
@@ -155,6 +151,7 @@ namespace Microsoft.WindowsAzure.Test.Network
 
                 FiddlerApplication.AfterSessionComplete -= this.FiddlerApplication_AfterSessionComplete;
 
+                HttpMangler.Active = false;
                 this.disposed = true;
 
                 if (disposing)
@@ -306,8 +303,6 @@ namespace Microsoft.WindowsAzure.Test.Network
 
                 this.oldProxy = WebRequest.DefaultWebProxy;
                 this.newProxy = new WebProxy("http://localhost:8877", true);
-
-                WebRequest.DefaultWebProxy = this.newProxy;
             }
 
             /// <summary>

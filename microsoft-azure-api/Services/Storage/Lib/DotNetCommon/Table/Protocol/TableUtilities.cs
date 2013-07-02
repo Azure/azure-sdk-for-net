@@ -30,7 +30,10 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// Translates the data service client exception.
         /// </summary>
         /// <param name="e">The exception.</param>
-        /// <returns>The translated exception.</returns>
+        /// <param name="reqResult">The request result.</param>
+        /// <returns>
+        /// The translated exception.
+        /// </returns>
         internal static StorageException TranslateDataServiceClientException(Exception e, RequestResult reqResult)
         {
             DataServiceClientException dsce = FindInnerExceptionOfType<DataServiceClientException>(e);
@@ -116,8 +119,12 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// <summary>
         /// Gets the query take count.
         /// </summary>
+        /// <typeparam name="TElement">The type of the element.</typeparam>
         /// <param name="query">The query.</param>
-        /// <returns>The take count of the query, if any.</returns>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>
+        /// The take count of the query, if any.
+        /// </returns>
         public static long GetQueryTakeCount<TElement>(DataServiceQuery<TElement> query, long defaultValue)
         {
             var expression = query.Expression as MethodCallExpression;

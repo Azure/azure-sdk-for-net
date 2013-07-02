@@ -20,6 +20,9 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
     using System;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
+    /// <summary>
+    /// A set of constants used in operations against the Table service.
+    /// </summary>
 #if DNCP
     public
 #else

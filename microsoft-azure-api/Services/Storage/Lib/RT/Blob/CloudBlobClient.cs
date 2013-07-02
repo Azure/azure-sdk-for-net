@@ -17,6 +17,14 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.WindowsAzure.Storage.Auth;
+    using Microsoft.WindowsAzure.Storage.Auth.Protocol;
+    using Microsoft.WindowsAzure.Storage.Blob.Protocol;
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Auth;
+    using Microsoft.WindowsAzure.Storage.Core.Executor;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -25,14 +33,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using System.Net.Http;
     using System.Runtime.InteropServices.WindowsRuntime;
     using System.Threading.Tasks;
-    using Microsoft.WindowsAzure.Storage.Auth;
-    using Microsoft.WindowsAzure.Storage.Auth.Protocol;
-    using Microsoft.WindowsAzure.Storage.Blob.Protocol;
-    using Microsoft.WindowsAzure.Storage.Core.Auth;
-    using Microsoft.WindowsAzure.Storage.Core.Executor;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-    using Microsoft.WindowsAzure.Storage.Core;
     using Windows.Foundation;
 
     /// <summary>
@@ -41,6 +41,21 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     /// <remarks>The service client encapsulates the base URI for the Blob service. If the service client will be used for authenticated access, it also encapsulates the credentials for accessing the storage account.</remarks>
     public sealed partial class CloudBlobClient
     {
+        /// <summary>
+        /// Gets or sets the authentication scheme to use to sign HTTP requests.
+        /// </summary>
+        public AuthenticationScheme AuthenticationScheme
+        {
+            get
+            {
+                return this.authenticationScheme;
+            }
+            set
+            {
+                this.authenticationScheme = value;
+            }
+        }
+
         /// <summary>
         /// Gets the authentication handler used to sign requests.
         /// </summary>
@@ -53,7 +68,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 if (this.Credentials.IsSharedKey)
                 {
                     authenticationHandler = new SharedKeyAuthenticationHttpHandler(
-                        SharedKeyCanonicalizer.Instance,
+                        this.GetCanonicalizer(),
                         this.Credentials,
                         this.Credentials.AccountName);
                 }
