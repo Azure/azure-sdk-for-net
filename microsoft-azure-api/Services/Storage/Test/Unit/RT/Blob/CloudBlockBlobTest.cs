@@ -359,10 +359,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     await blob.PutBlockListAsync(blocks);
 
                     CloudBlockBlob blob2 = container.GetBlockBlobReference("blob1");
-                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    using (MemoryOutputStream downloadedBlob = new MemoryOutputStream())
                     {
-                        await blob2.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
-                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                        await blob2.DownloadToStreamAsync(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob.UnderlyingStream);
                     }
                 }
             }
@@ -573,10 +573,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 await blob.FetchAttributesAsync();
                 Assert.AreEqual(md5, blob.Properties.ContentMD5);
 
-                using (MemoryStream downloadedBlob = new MemoryStream())
+                using (MemoryOutputStream downloadedBlob = new MemoryOutputStream())
                 {
-                    await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
-                    TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob);
+                    await blob.DownloadToStreamAsync(downloadedBlob);
+                    TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob.UnderlyingStream);
                 }
             }
         }

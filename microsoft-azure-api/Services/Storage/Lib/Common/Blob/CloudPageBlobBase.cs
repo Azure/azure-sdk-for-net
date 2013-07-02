@@ -379,7 +379,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             string accountName = this.ServiceClient.Credentials.AccountName;
             string containerName = this.Container.Name;
-            string blobName = this.Name;
+
+            // Replace \ with / for uri compatibility when running under .net 4.5. 
+            string blobName = this.Name.Replace('\\', '/');
 
             string canonicalName = string.Format("/{0}/{1}/{2}", accountName, containerName, blobName);
 

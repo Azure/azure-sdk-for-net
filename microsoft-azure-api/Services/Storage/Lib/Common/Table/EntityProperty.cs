@@ -323,13 +323,21 @@ byte[] input)
         {
             get
             {
-                this.EnforceType(EdmType.Binary);
+                if (!this.IsNull)
+                {
+                    this.EnforceType(EdmType.Binary);
+                }
+
                 return (byte[])this.PropertyAsObject;
             }
 
             set
             {
-                this.EnforceType(EdmType.Binary);
+                if (value != null)
+                {
+                    this.EnforceType(EdmType.Binary);
+                }
+
                 this.PropertyAsObject = value;
             }
         }
@@ -343,15 +351,22 @@ byte[] input)
         {
             get
             {
-                this.EnforceType(EdmType.Boolean);
+                if (!this.IsNull)
+                {
+                    this.EnforceType(EdmType.Boolean);
+                }
+
                 return (bool?)this.PropertyAsObject;
             }
 
             set
             {
-                this.EnforceType(EdmType.Boolean);
+                if (value.HasValue)
+                {
+                    this.EnforceType(EdmType.Boolean);
+                }
+
                 this.PropertyAsObject = value;
-                this.IsNull = value.HasValue;
             }
         }
 
@@ -365,7 +380,6 @@ byte[] input)
             set
             {
                 this.PropertyAsObject = value;
-                this.IsNull = value.HasValue;
             }
         }
 
@@ -378,23 +392,24 @@ byte[] input)
         {
             get
             {
-                this.EnforceType(EdmType.DateTime);
+                if (!this.IsNull)
+                {
+                    this.EnforceType(EdmType.DateTime);
+                }
 
                 return this.PropertyAsObject != null ? new DateTimeOffset((DateTime)this.PropertyAsObject) : (DateTimeOffset?)null;
             }
 
             set
             {
-                this.EnforceType(EdmType.DateTime);
-
                 if (value.HasValue)
                 {
+                    this.EnforceType(EdmType.DateTime);
                     // Convert to datetime
                     this.PropertyAsObject = value.Value.UtcDateTime;
                 }
                 else
                 {
-                    this.IsNull = true;
                     this.PropertyAsObject = (DateTime?)null;
                 }
             }
@@ -409,15 +424,22 @@ byte[] input)
         {
             get
             {
-                this.EnforceType(EdmType.Double);
+                if (!this.IsNull)
+                {
+                    this.EnforceType(EdmType.Double);
+                }
+
                 return (double?)this.PropertyAsObject;
             }
 
             set
             {
-                this.EnforceType(EdmType.Double);
+                if (value.HasValue)
+                {
+                    this.EnforceType(EdmType.Double);
+                }
+
                 this.PropertyAsObject = value;
-                this.IsNull = value.HasValue;
             }
         }
 
@@ -430,15 +452,22 @@ byte[] input)
         {
             get
             {
-                this.EnforceType(EdmType.Guid);
+                if (!this.IsNull)
+                {
+                    this.EnforceType(EdmType.Guid);
+                }
+
                 return (Guid?)this.PropertyAsObject;
             }
 
             set
             {
-                this.EnforceType(EdmType.Guid);
+                if (value.HasValue)
+                {
+                    this.EnforceType(EdmType.Guid);
+                }
+
                 this.PropertyAsObject = value;
-                this.IsNull = value.HasValue;
             }
         }
 
@@ -451,15 +480,22 @@ byte[] input)
         {
             get
             {
-                this.EnforceType(EdmType.Int32);
+                if (!this.IsNull)
+                {
+                    this.EnforceType(EdmType.Int32);
+                }
+
                 return (int?)this.PropertyAsObject;
             }
 
             set
             {
-                this.EnforceType(EdmType.Int32);
+                if (value.HasValue)
+                {
+                    this.EnforceType(EdmType.Int32);
+                }
+
                 this.PropertyAsObject = value;
-                this.IsNull = value.HasValue;
             }
         }
 
@@ -472,15 +508,22 @@ byte[] input)
         {
             get
             {
-                this.EnforceType(EdmType.Int64);
+                if (!this.IsNull)
+                {
+                    this.EnforceType(EdmType.Int64);
+                }
+
                 return (long?)this.PropertyAsObject;
             }
 
             set
             {
-                this.EnforceType(EdmType.Int64);
+                if (value.HasValue)
+                {
+                    this.EnforceType(EdmType.Int64);
+                }
+
                 this.PropertyAsObject = value;
-                this.IsNull = value.HasValue;
             }
         }
 
@@ -493,13 +536,21 @@ byte[] input)
         {
             get
             {
-                this.EnforceType(EdmType.String);
+                if (!this.IsNull)
+                {
+                    this.EnforceType(EdmType.String);
+                }
+
                 return (string)this.PropertyAsObject;
             }
 
             set
             {
-                this.EnforceType(EdmType.String);
+                if (value != null)
+                {
+                    this.EnforceType(EdmType.String);
+                }
+
                 this.PropertyAsObject = value;
             }
         }
@@ -633,6 +684,78 @@ byte[] input)
             else if (allowUnknownTypes)
             {
                 return new EntityProperty(value.ToString());
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        internal static EntityProperty CreateEntityPropertyFromObject(object value, Type type)
+        {
+            if (type == typeof(string))
+            {
+                return new EntityProperty((string)value);
+            }
+            else if (type == typeof(byte[]))
+            {
+                return new EntityProperty((byte[])value);
+            }
+            else if (type == typeof(bool))
+            {
+                return new EntityProperty((bool)value);
+            }
+            else if (type == typeof(bool?))
+            {
+                return new EntityProperty((bool?)value);
+            }
+            else if (type == typeof(DateTime))
+            {
+                return new EntityProperty((DateTime)value);
+            }
+            else if (type == typeof(DateTime?))
+            {
+                return new EntityProperty((DateTime?)value);
+            }
+            else if (type == typeof(DateTimeOffset))
+            {
+                return new EntityProperty((DateTimeOffset)value);
+            }
+            else if (type == typeof(DateTimeOffset?))
+            {
+                return new EntityProperty((DateTimeOffset?)value);
+            }
+            else if (type == typeof(double))
+            {
+                return new EntityProperty((double)value);
+            }
+            else if (type == typeof(double?))
+            {
+                return new EntityProperty((double?)value);
+            }
+            else if (type == typeof(Guid?))
+            {
+                return new EntityProperty((Guid?)value);
+            }
+            else if (type == typeof(Guid))
+            {
+                return new EntityProperty((Guid)value);
+            }
+            else if (type == typeof(int))
+            {
+                return new EntityProperty((int)value);
+            }
+            else if (type == typeof(int?))
+            {
+                return new EntityProperty((int?)value);
+            }
+            else if (type == typeof(long))
+            {
+                return new EntityProperty((long)value);
+            }
+            else if (type == typeof(long?))
+            {
+                return new EntityProperty((long?)value);
             }
             else
             {

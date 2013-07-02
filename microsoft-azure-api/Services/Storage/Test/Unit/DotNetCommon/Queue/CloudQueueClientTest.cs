@@ -42,6 +42,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             CloudQueueClient queueClient = new CloudQueueClient(baseAddressUri, TestBase.StorageCredentials);
             Assert.IsTrue(queueClient.BaseUri.ToString().StartsWith(TestBase.TargetTenantConfig.QueueServiceEndpoint));
             Assert.AreEqual(TestBase.StorageCredentials, queueClient.Credentials);
+            Assert.AreEqual(AuthenticationScheme.SharedKey, queueClient.AuthenticationScheme);
         }
 
         [TestMethod]
@@ -95,6 +96,25 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             }
 
             Assert.AreEqual<int>(0, queueNames.Count);
+        }
+
+        [TestMethod]
+        [Description("Test Create Queue with Shared Key Lite")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudQueueClientCreateQueueSharedKeyLite()
+        {
+            CloudQueueClient queueClient = new CloudQueueClient(DefaultQueueClient.BaseUri, DefaultQueueClient.Credentials);
+            queueClient.AuthenticationScheme = AuthenticationScheme.SharedKeyLite;
+
+            string queueName = Guid.NewGuid().ToString("N");
+            CloudQueue queue = queueClient.GetQueueReference(queueName);
+            queue.Create();
+
+            bool exists = queue.Exists();
+            Assert.IsTrue(exists);
         }
     }
 }

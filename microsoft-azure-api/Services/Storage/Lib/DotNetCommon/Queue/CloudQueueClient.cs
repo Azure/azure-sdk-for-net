@@ -39,29 +39,51 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         private IAuthenticationHandler authenticationHandler;
 
         /// <summary>
-        /// Gets the authentication handler used to sign requests.
+        /// Gets or sets the authentication scheme to use to sign HTTP requests.
         /// </summary>
-        /// <value>Authentication handler.</value>
+        public AuthenticationScheme AuthenticationScheme
+        {
+            get
+            {
+                return this.authenticationScheme;
+            }
+            set
+            {
+                if (value != this.authenticationScheme)
+                {
+                    this.authenticationScheme = value;
+                    this.authenticationHandler = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the authentication handler used to sign HTTP requests.
+        /// </summary>
+        /// <value>The authentication handler.</value>
         internal IAuthenticationHandler AuthenticationHandler
         {
             get
             {
-                if (this.authenticationHandler == null)
+                IAuthenticationHandler result = this.authenticationHandler;
+                if (result == null)
                 {
                     if (this.Credentials.IsSharedKey)
                     {
-                        this.authenticationHandler = new SharedKeyAuthenticationHandler(
-                            SharedKeyCanonicalizer.Instance,
+                        result = new SharedKeyAuthenticationHandler(
+                            this.GetCanonicalizer(),
                             this.Credentials,
                             this.Credentials.AccountName);
                     }
                     else
                     {
-                        this.authenticationHandler = new NoOpAuthenticationHandler();
+                        result = new NoOpAuthenticationHandler();
                     }
+
+                    this.authenticationHandler = result;
                 }
 
-                return this.authenticationHandler;
+                return result;
             }
         }
 

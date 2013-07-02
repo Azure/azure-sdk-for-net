@@ -29,8 +29,17 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
 
+    /// <summary>
+    /// A class for constructing a query against the Table service.
+    /// </summary>
+    /// <typeparam name="TElement">The type of the element.</typeparam>
     public class TableServiceQuery<TElement> : IQueryable<TElement>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableServiceQuery{TElement}"/> class.
+        /// </summary>
+        /// <param name="query">An object that implements <see cref="IQueryable"/>.</param>
+        /// <param name="context">A <see cref="TableServiceContext"/> object.</param>
         public TableServiceQuery(IQueryable<TElement> query, TableServiceContext context)
         {
             this.Query = query as DataServiceQuery<TElement>;
@@ -38,6 +47,12 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             this.IgnoreResourceNotFoundException = false;
         }
 
+        /// <summary>
+        /// Gets the table service context.
+        /// </summary>
+        /// <value>
+        /// An object of type <see cref="TableServiceContext"/>.
+        /// </value>
         public TableServiceContext Context { get; private set; }
 
         /// <summary>
@@ -91,6 +106,12 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             return new TableServiceQuery<TElement>(this.Query.Expand(path), this.Context);
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator<TElement> GetEnumerator()
         {
             return this.Execute(null /* RequestOptions */, null /* OperationContext */).GetEnumerator();
@@ -101,6 +122,12 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             return this.GetEnumerator() as IEnumerator;
         }
 
+        /// <summary>
+        /// Executes the request with any specified options.
+        /// </summary>
+        /// <param name="requestOptions">An object of type <see cref="TableRequestOptions"/>.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
+        /// <returns></returns>
         [DoesServiceRequest]
         public IEnumerable<TElement> Execute(TableRequestOptions requestOptions = null, OperationContext operationContext = null)
         {
@@ -157,6 +184,13 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             return new TableQuerySegment<TElement>(TableExecutor.EndExecuteAsync<ResultSegment<TElement>, IEnumerable<TElement>>(asyncResult));
         }
 
+        /// <summary>
+        /// Executes a segmented query against the Table service.
+        /// </summary>
+        /// <param name="continuationToken">The continuation token.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
+        /// <returns>A result segment containing objects of type <typeparamref name="TElement"/>.</returns>
         [DoesServiceRequest]
         public TableQuerySegment<TElement> ExecuteSegmented(TableContinuationToken continuationToken, TableRequestOptions requestOptions = null, OperationContext operationContext = null)
         {

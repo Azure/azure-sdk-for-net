@@ -19,6 +19,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
 {
     using System.Diagnostics.CodeAnalysis;
 
+    /// <summary>
+    /// Defines the set of Boolean operators for constructing queries.
+    /// </summary>
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1307:AccessibleFieldsMustBeginWithUpperCaseLetter", Justification = "Due to Javascript projection limitations.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = "Due to Javascript projection limitations..")]
     public sealed class TableOperators
@@ -43,8 +46,17 @@ namespace Microsoft.WindowsAzure.Storage.Table
             get { return or; }
         }
 #else        
+        /// <summary>
+        /// Represents the And operator.
+        /// </summary>
         public const string And = "and";
+        /// <summary>
+        /// Represents the Not operator.
+        /// </summary>
         public const string Not = "not";
+        /// <summary>
+        /// Represents the Or operator.
+        /// </summary>
         public const string Or = "or";
 #endif
     }

@@ -25,9 +25,9 @@ using Microsoft.WindowsAzure.Storage.Queue.Protocol;
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
     [TestClass]
-    public class CloudQueueClinetTest : TestBase
+    public class CloudQueueClientTest : TestBase
     {
-        readonly CloudQueueClient DefalutQueueClient = new CloudQueueClient(new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), TestBase.StorageCredentials);
+        readonly CloudQueueClient DefaultQueueClient = new CloudQueueClient(new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), TestBase.StorageCredentials);
 
         [TestMethod]
         //[Description("A test checks basic function of CloudQueueClient.")]
@@ -41,6 +41,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             CloudQueueClient queueClient = new CloudQueueClient(baseAddressUri, TestBase.StorageCredentials);
             Assert.IsTrue(queueClient.BaseUri.ToString().StartsWith(TestBase.TargetTenantConfig.QueueServiceEndpoint));
             Assert.AreEqual(TestBase.StorageCredentials, queueClient.Credentials);
+            Assert.AreEqual(AuthenticationScheme.SharedKey, queueClient.AuthenticationScheme);
         }
 
         [TestMethod]
@@ -59,15 +60,15 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 queueNames.Add(prefix + i);
             }
 
-            QueueResultSegment emptyResults = await DefalutQueueClient.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
+            QueueResultSegment emptyResults = await DefaultQueueClient.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
             Assert.AreEqual<int>(0, emptyResults.Results.Count());
 
             foreach (string name in queueNames)
             {
-                await DefalutQueueClient.GetQueueReference(name).CreateAsync();
+                await DefaultQueueClient.GetQueueReference(name).CreateAsync();
             }
 
-            QueueResultSegment results = await DefalutQueueClient.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
+            QueueResultSegment results = await DefaultQueueClient.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
             
             foreach (var queue in results.Results)
             {
@@ -82,6 +83,25 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             }
 
             Assert.AreEqual<int>(count, results.Results.Count());
+        }
+
+        [TestMethod]
+        // [Description("Test Create Queue with Shared Key Lite")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudQueueClientCreateQueueSharedKeyLiteAsync()
+        {
+            CloudQueueClient queueClient = new CloudQueueClient(DefaultQueueClient.BaseUri, DefaultQueueClient.Credentials);
+            queueClient.AuthenticationScheme = AuthenticationScheme.SharedKeyLite;
+
+            string queueName = TestHelper.GenerateNewQueueName();
+            CloudQueue queue = queueClient.GetQueueReference(queueName);
+            await queue.CreateAsync();
+
+            bool exists = await queue.ExistsAsync();
+            Assert.IsTrue(exists);
         }
     }
 }

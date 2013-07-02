@@ -17,10 +17,11 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core
 {
-    using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Storage.Blob;
     using Microsoft.WindowsAzure.Storage.RetryPolicies;
+    using System.IO;
+    using System.Net;
 
     [TestClass]
     public class RetryPoliciesTests : TestBase
@@ -38,6 +39,49 @@ namespace Microsoft.WindowsAzure.Storage.Core
 
             CloudBlobContainer container = blobClient.GetContainerReference("test");
             container.Exists();
+        }
+
+
+        [TestMethod]
+        [Description("Create a blob using blob stream by specifying an access condition")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void RetryPolicyEnsure304IsNotRetried()
+        {
+            CloudBlobContainer container = BlobTestBase.GetRandomContainerReference();
+            container.Create();
+
+            try
+            {
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob");
+                blob.UploadFromStream(new MemoryStream(new byte[50]));
+
+                AccessCondition accessCondition = AccessCondition.GenerateIfModifiedSinceCondition(blob.Properties.LastModified.Value.AddMinutes(10));
+                OperationContext context = new OperationContext();
+
+                TestHelper.ExpectedException(
+                    () => blob.FetchAttributes(accessCondition, new BlobRequestOptions() { RetryPolicy = new ExponentialRetry() }, context),
+                    "FetchAttributes with invalid modified condition should return NotModified",
+                    HttpStatusCode.NotModified);
+
+                TestHelper.AssertNAttempts(context, 1);
+
+
+                context = new OperationContext();
+
+                TestHelper.ExpectedException(
+                    () => blob.FetchAttributes(accessCondition, new BlobRequestOptions() { RetryPolicy = new LinearRetry() }, context),
+                    "FetchAttributes with invalid modified condition should return NotModified",
+                    HttpStatusCode.NotModified);
+
+                TestHelper.AssertNAttempts(context, 1);
+            }
+            finally
+            {
+                container.Delete();
+            }
         }
     }
 }

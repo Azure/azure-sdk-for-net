@@ -27,6 +27,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         /// Apply timeout options to StorageCommandBase
         /// </summary>
         /// <typeparam name="T">Return value type of StorageCommandBase</typeparam>
+        /// <param name="options">The options.</param>
         /// <param name="cmd">An instance of StorageCommandBase to apply options to</param>
         internal static void ApplyToStorageCommand<T>(this BlobRequestOptions options, StorageCommandBase<T> cmd)
         {
@@ -45,6 +46,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         /// Apply timeout options to StorageCommandBase
         /// </summary>
         /// <typeparam name="T">Return value type of StorageCommandBase</typeparam>
+        /// <param name="options">The options.</param>
         /// <param name="cmd">An instance of StorageCommandBase to apply options to</param>
         internal static void ApplyToStorageCommand<T>(this QueueRequestOptions options, StorageCommandBase<T> cmd)
         {
@@ -63,6 +65,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         /// Apply timeout options to StorageCommandBase
         /// </summary>
         /// <typeparam name="T">Return value type of StorageCommandBase</typeparam>
+        /// <param name="requestOptions">The request options.</param>
         /// <param name="cmd">An instance of StorageCommandBase to apply options to</param>
         internal static void ApplyToStorageCommand<T>(this TableRequestOptions requestOptions, StorageCommandBase<T> cmd)
         {

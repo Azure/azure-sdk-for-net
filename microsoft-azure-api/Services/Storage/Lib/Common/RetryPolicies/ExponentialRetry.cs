@@ -65,8 +65,10 @@ namespace Microsoft.WindowsAzure.Storage.RetryPolicies
         {
             retryInterval = TimeSpan.Zero;
 
-            if ((statusCode >= 400 && statusCode < 500)
-                || statusCode == 306 // Internal error / Cancellation
+            // If this method is called after a successful response, it means
+            // we failed during the response body download. So, we should not
+            // check for success codes here.
+            if ((statusCode >= 300 && statusCode < 500 && statusCode != 408)
                   || statusCode == 501 // Not Implemented
                     || statusCode == 505 // Version Not Supported
                 || lastException.Message == SR.BlobTypeMismatch)
