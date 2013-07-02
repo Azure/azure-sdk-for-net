@@ -30,40 +30,23 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
     internal static class CommonUtils
     {
         /// <summary>
-        /// If the values list is null or empty, return empty string,
-        /// otherwise return the first value.
+        /// Gets the first header value or null if no header values exist.
         /// </summary>
-        /// <typeparam name="T">Type of value</typeparam>
-        /// <param name="values">List of values</param>
-        /// <returns>A single value</returns>
-        internal static string GetSingleValueOrDefault<T>(IEnumerable<T> values)
+        /// <typeparam name="T">The type of header objects contained in the enumerable.</typeparam>
+        /// <param name="headerValues">An enumerable that contains header values.</param>
+        /// <returns>The first header value or null if no header values exist.</returns>
+        public static string GetFirstHeaderValue<T>(IEnumerable<T> headerValues) where T : class
         {
-            if (values == null)
+            if (headerValues != null)
             {
-                return null;
+                T result = headerValues.FirstOrDefault();
+                if (result != null)
+                {
+                    return result.ToString().TrimStart();
+                }
             }
-            else
-            {
-                T value = values.FirstOrDefault();
-                return (value == null) ? null : value.ToString().TrimStart();
-            }
-        }
 
-        /// <summary>
-        /// Returns the date/time in a DateTimeOffset or an empty string
-        /// </summary>
-        /// <param name="value">DateTimeOffset value</param>
-        /// <returns>String representation of the date/time</returns>
-        internal static string GetDateTimeValueOrDefault(DateTimeOffset? value)
-        {
-            if (value.HasValue)
-            {
-                return HttpUtility.ConvertDateTimeToHttpString(value.Value);
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         /// <summary>
@@ -167,9 +150,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         }
 
         /// <summary>
-        /// Determines if a Uri requires path style addressing.
+        /// Determines if a URI requires path style addressing.
         /// </summary>
-        /// <param name="uri">The Uri to check.</param>
+        /// <param name="uri">The URI to check.</param>
         /// <returns>Returns <c>true</c> if the Uri uses path style addressing; otherwise, <c>false</c>.</returns>
         internal static bool UsePathStyleAddressing(Uri uri)
         {

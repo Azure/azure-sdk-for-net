@@ -37,32 +37,25 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         {
             string res = null;
 
-            reader.ReadStartElement(elementName);
-            if (reader.NodeType == XmlNodeType.Text)
+            if (reader.IsStartElement(elementName))
             {
-                res = reader.ReadContentAsString();
-                reader.ReadEndElement();
+                if (reader.IsEmptyElement)
+                {
+                    reader.Skip();
+                }
+                else
+                {
+                    res = reader.ReadElementContentAsString();
+                }
             }
             else
             {
-                reader.Read();
+                throw new XmlException(elementName);
             }
 
-            SkipWhitespace(reader);
+            reader.MoveToContent();
 
             return res;
-        }
-
-        /// <summary>
-        /// Skip white spaces.
-        /// </summary>
-        /// <param name="reader">A reader that provides access to XML data.</param>
-        internal static void SkipWhitespace(XmlReader reader)
-        {
-            while (reader.NodeType == XmlNodeType.Whitespace)
-            {
-                reader.Read();
-            }
         }
 
         /// <summary>

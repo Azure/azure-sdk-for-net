@@ -184,6 +184,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 blob = container.GetBlockBlobReference("blob8");
                 accessCondition = AccessCondition.GenerateIfNotModifiedSinceCondition(existingBlob.Properties.LastModified.Value);
                 blobStream = existingBlob.OpenWrite(accessCondition);
+
+                // Wait 1 second so that the last modified time of the blob is in the past
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+
                 existingBlob.SetProperties();
                 TestHelper.ExpectedException(
                     () => blobStream.Dispose(),
@@ -376,6 +380,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         null);
                     waitHandle.WaitOne();
                     blobStream = existingBlob.EndOpenWrite(result);
+
+                    // Wait 1 second so that the last modified time of the blob is in the past
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+
                     existingBlob.SetProperties();
                     TestHelper.ExpectedException(
                         () => blobStream.Dispose(),

@@ -106,11 +106,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         /// <summary>
-        /// Constructs a web request to return the list of active page ranges for a page blob.
+        /// Constructs a web request to return the list of valid page ranges for a page blob.
         /// </summary>
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="snapshot">The snapshot timestamp, if the blob is a snapshot.</param>
+        /// <param name="offset">The starting offset of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
+        /// <param name="count">The length of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
         /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpRequestMessage GetPageRanges(Uri uri, int? timeout, DateTimeOffset? snapshot, long? offset, long? count, AccessCondition accessCondition, HttpContent content, OperationContext operationContext)

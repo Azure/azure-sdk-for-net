@@ -166,11 +166,17 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     streamCopyToken = tokenWithTimeout;
                 }
 
-                IOutputStream writeStream = await this.OpenWriteAsync(size, accessCondition, options, operationContext);
-                using (Stream blobStream = writeStream.AsStreamForWrite())
+                await Task.Run(async () =>
                 {
-                    await sourceAsStream.WriteToAsync(blobStream, null /* maxLength */, false, new OperationContext(), null /* streamCopyState */, streamCopyToken);
-                }
+                    IOutputStream writeStream = await this.OpenWriteAsync(size, accessCondition, options, operationContext);
+
+                    // We should always call AsStreamForWrite with bufferSize=0 to prevent buffering. Our
+                    // stream copier only writes 64K buffers at a time anyway, so no buffering is needed.
+                    using (Stream blobStream = writeStream.AsStreamForWrite(0))
+                    {
+                        await sourceAsStream.WriteToAsync(blobStream, null /* maxLength */, false, new OperationContext(), null /* streamCopyState */, streamCopyToken);
+                    }
+                });
             });
         }
 
@@ -227,8 +233,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             CommonUtils.AssertNotNull("target", target);
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
+
+            // We should always call AsStreamForWrite with bufferSize=0 to prevent buffering. Our
+            // stream copier only writes 64K buffers at a time anyway, so no buffering is needed.
             return AsyncInfo.Run(async (token) => await Executor.ExecuteAsyncNullReturn(
-                CloudBlobSharedImpl.GetBlobImpl(this, this.attributes, target.AsStreamForWrite(), offset, length, accessCondition, modifiedOptions),
+                CloudBlobSharedImpl.GetBlobImpl(this, this.attributes, target.AsStreamForWrite(0), offset, length, accessCondition, modifiedOptions),
                 modifiedOptions.RetryPolicy,
                 operationContext,
                 token));
@@ -350,7 +359,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Gets a collection of page ranges and their starting and ending bytes.
+        /// Gets a collection of valid page ranges and their starting and ending bytes.
         /// </summary>
         /// <returns>An enumerable collection of page ranges.</returns>
         [DoesServiceRequest]
@@ -360,10 +369,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Gets a collection of page ranges and their starting and ending bytes.
+        /// Gets a collection of valid page ranges and their starting and ending bytes.
         /// </summary>
-        /// <param name="offset">The starting offset of the data range, in bytes. Must be a multiple of 512.</param>
-        /// <param name="length">The length of the data range, in bytes. Must be a multiple of 512.</param>
+        /// <param name="offset">The starting offset of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
+        /// <param name="length">The length of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -1038,8 +1047,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Gets the page ranges impl.
         /// </summary>
-        /// <param name="offset">The starting offset of the data range, in bytes. Must be a multiple of 512.</param>
-        /// <param name="length">The length of the data range, in bytes. Must be a multiple of 512.</param>
+        /// <param name="offset">The starting offset of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
+        /// <param name="length">The length of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> for getting the page ranges.</returns>

@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
                 throw new InvalidOperationException(errorMessage);
             }
             
-            if (string.IsNullOrEmpty(keyValue))
+            if (keyValue == null)
             {
                 throw new ArgumentNullException("keyValue");
             }

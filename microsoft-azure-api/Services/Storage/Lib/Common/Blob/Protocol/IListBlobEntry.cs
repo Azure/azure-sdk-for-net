@@ -17,6 +17,9 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
+    /// <summary>
+    /// Represents an item that may be returned by a blob listing operation.
+    /// </summary>
 #if RTMD
     internal
 #else

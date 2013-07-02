@@ -22,6 +22,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
     using System.Collections.Generic;
     using System.Net;
 
+    /// <summary>
+    /// Provides a set of methods for parsing a response containing queue data from the Queue service.
+    /// </summary>
     public static partial class QueueHttpResponseParsers
     {
         /// <summary>
@@ -48,7 +51,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// Gets the user-defined metadata.
         /// </summary>
         /// <param name="response">The response from server.</param>
-        /// <returns>A <see cref="IDictionary"/> of the metadata.</returns>
+        /// <returns>An object of type <see cref="System.Collections.IDictionary"/> containing the metadata.</returns>
         public static IDictionary<string, string> GetMetadata(HttpWebResponse response)
         {
             return HttpResponseParsers.GetMetadata(response);

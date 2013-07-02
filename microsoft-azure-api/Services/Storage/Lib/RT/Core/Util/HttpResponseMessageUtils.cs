@@ -24,21 +24,19 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
     internal static class HttpResponseMessageUtils
     {
         /// <summary>
-        /// If the values list is null or empty, return empty string,
-        /// otherwise return the first value.
+        /// Gets the first header value for a specified header or an empty string if it does not exist.
         /// </summary>
-        /// <param name="values">List of values</param>
-        /// <returns>A single value</returns>
-        internal static string GetHeaderSingleValueOrDefault(this HttpHeaders headers, string name)
+        /// <param name="headers">A collection of headers and their values.</param>
+        /// <param name="name">The name of the header to return.</param>
+        /// <returns>The first header value or an empty string if the header does not exist.</returns>
+        public static string GetHeaderSingleValueOrDefault(this HttpHeaders headers, string name)
         {
             if (headers.Contains(name))
             {
-                return CommonUtils.GetSingleValueOrDefault(headers.GetValues(name));
+                return CommonUtils.GetFirstHeaderValue(headers.GetValues(name));
             }
-            else
-            {
-                return string.Empty;
-            }
+
+            return string.Empty;
         }
     }
 }

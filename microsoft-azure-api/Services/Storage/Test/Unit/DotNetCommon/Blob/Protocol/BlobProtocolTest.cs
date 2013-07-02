@@ -401,7 +401,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             try
             {
                 cloudOwnerAsync.ListContainersScenarioTest(listingContext, null, cloudSetup.ContainerName);
-                listingContext = new ListingContext("n", 10);
+                listingContext = new ListingContext("newcontainer", 10);
                 cloudOwnerAsync.ListContainersScenarioTest(listingContext, null, "newcontainer1", "newcontainer2");
             }
             finally

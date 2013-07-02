@@ -190,12 +190,17 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 }
                 else
                 {
-                    IOutputStream writeStream = await this.OpenWriteAsync(accessCondition, options, operationContext);
-                    using (Stream blobStream = writeStream.AsStreamForWrite())
+                    await Task.Run(async () =>
                     {
-                        await sourceAsStream.WriteToAsync(blobStream, null /* maxLength */, false, new OperationContext(), null /* streamCopyState */, streamCopyToken);
-                        await blobStream.FlushAsync();
-                    }
+                        IOutputStream writeStream = await this.OpenWriteAsync(accessCondition, options, operationContext);
+
+                        // We should always call AsStreamForWrite with bufferSize=0 to prevent buffering. Our
+                        // stream copier only writes 64K buffers at a time anyway, so no buffering is needed.
+                        using (Stream blobStream = writeStream.AsStreamForWrite(0))
+                        {
+                            await sourceAsStream.WriteToAsync(blobStream, null /* maxLength */, false, new OperationContext(), null /* streamCopyState */, streamCopyToken);
+                        }
+                    });
                 }
             });
         }
@@ -253,8 +258,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             CommonUtils.AssertNotNull("target", target);
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.BlockBlob, this.ServiceClient);
+
+            // We should always call AsStreamForWrite with bufferSize=0 to prevent buffering. Our
+            // stream copier only writes 64K buffers at a time anyway, so no buffering is needed.
             return AsyncInfo.Run(async (token) => await Executor.ExecuteAsyncNullReturn(
-                CloudBlobSharedImpl.GetBlobImpl(this, this.attributes, target.AsStreamForWrite(), offset, length, accessCondition, modifiedOptions),
+                CloudBlobSharedImpl.GetBlobImpl(this, this.attributes, target.AsStreamForWrite(0), offset, length, accessCondition, modifiedOptions),
                 modifiedOptions.RetryPolicy,
                 operationContext,
                 token));

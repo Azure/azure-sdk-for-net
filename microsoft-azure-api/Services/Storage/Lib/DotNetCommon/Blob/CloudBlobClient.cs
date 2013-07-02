@@ -17,11 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
     using Microsoft.WindowsAzure.Storage.Auth;
     using Microsoft.WindowsAzure.Storage.Auth.Protocol;
     using Microsoft.WindowsAzure.Storage.Blob.Protocol;
@@ -30,6 +25,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using Microsoft.WindowsAzure.Storage.Core.Executor;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
 
     /// <summary>
     /// Provides a client-side logical representation of the Windows Azure Blob Service. This client is used to configure and execute requests against the Blob Service.
@@ -40,29 +40,51 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         private IAuthenticationHandler authenticationHandler;
 
         /// <summary>
-        /// Gets the authentication handler used to sign requests.
+        /// Gets or sets the authentication scheme to use to sign HTTP requests.
         /// </summary>
-        /// <value>The authentication handler used to sign requests.</value>
+        public AuthenticationScheme AuthenticationScheme
+        {
+            get
+            {
+                return this.authenticationScheme;
+            }
+            set
+            {
+                if (value != this.authenticationScheme)
+                {
+                    this.authenticationScheme = value;
+                    this.authenticationHandler = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the authentication handler used to sign HTTP requests.
+        /// </summary>
+        /// <value>The authentication handler.</value>
         internal IAuthenticationHandler AuthenticationHandler
         {
             get
             {
-                if (this.authenticationHandler == null)
+                IAuthenticationHandler result = this.authenticationHandler;
+                if (result == null)
                 {
                     if (this.Credentials.IsSharedKey)
                     {
-                        this.authenticationHandler = new SharedKeyAuthenticationHandler(
-                            SharedKeyCanonicalizer.Instance,
+                        result = new SharedKeyAuthenticationHandler(
+                            this.GetCanonicalizer(),
                             this.Credentials,
                             this.Credentials.AccountName);
                     }
                     else
                     {
-                        this.authenticationHandler = new NoOpAuthenticationHandler();
+                        result = new NoOpAuthenticationHandler();
                     }
+
+                    this.authenticationHandler = result;
                 }
 
-                return this.authenticationHandler;
+                return result;
             }
         }
 
