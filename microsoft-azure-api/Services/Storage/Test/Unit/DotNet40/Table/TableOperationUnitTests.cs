@@ -1117,6 +1117,133 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region Retrieve
 
         #region Sync
+
+        [TestMethod]
+        [Description("A test to check retrieve functionality Sync")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableEdmTypeCheck()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string pk = Guid.NewGuid().ToString();
+            
+            DynamicTableEntity sendEnt = new DynamicTableEntity();
+            sendEnt.PartitionKey = pk;
+            sendEnt.RowKey = Guid.NewGuid().ToString();
+
+            ComplexEntity ent = new ComplexEntity();
+
+            ent.String = null;
+            sendEnt.Properties = ent.WriteEntity(null);
+
+            string value = sendEnt.Properties["String"].StringValue;
+            Assert.AreEqual(EdmType.String, sendEnt.Properties["String"].PropertyType);
+
+            sendEnt.Properties["String"].StringValue = "helloworld";
+            Assert.AreEqual(EdmType.String, sendEnt.Properties["String"].PropertyType);
+
+            sendEnt.Properties["String"].StringValue = null;
+            Assert.AreEqual(EdmType.String, sendEnt.Properties["String"].PropertyType);
+
+            ent.Binary = null;
+            sendEnt.Properties = ent.WriteEntity(null);
+
+            byte[] binaryValue = sendEnt.Properties["Binary"].BinaryValue;
+            Assert.AreEqual(EdmType.Binary, sendEnt.Properties["Binary"].PropertyType);
+
+            sendEnt.Properties["Binary"].BinaryValue = new byte[] { 1, 2 };
+            Assert.AreEqual(EdmType.Binary, sendEnt.Properties["Binary"].PropertyType);
+
+            sendEnt.Properties["Binary"].BinaryValue = null;
+            Assert.AreEqual(EdmType.Binary, sendEnt.Properties["Binary"].PropertyType);
+
+            ent.DateTimeN = null;
+            sendEnt.Properties = ent.WriteEntity(null);
+
+            DateTime? dateTimeValue = sendEnt.Properties["DateTimeN"].DateTime;
+            Assert.AreEqual(EdmType.DateTime, sendEnt.Properties["DateTimeN"].PropertyType);
+
+            sendEnt.Properties["DateTimeN"].DateTime = DateTime.Now;
+            Assert.AreEqual(EdmType.DateTime, sendEnt.Properties["DateTimeN"].PropertyType);
+
+            sendEnt.Properties["DateTimeN"].DateTime = null;
+            Assert.AreEqual(EdmType.DateTime, sendEnt.Properties["DateTimeN"].PropertyType);
+
+            ent.DateTimeOffsetN = null;
+            sendEnt.Properties = ent.WriteEntity(null);
+
+            DateTimeOffset? dateTimeOffsetValue = sendEnt.Properties["DateTimeOffsetN"].DateTimeOffsetValue;
+            Assert.AreEqual(EdmType.DateTime, sendEnt.Properties["DateTimeOffsetN"].PropertyType);
+
+            sendEnt.Properties["DateTimeOffsetN"].DateTimeOffsetValue = DateTimeOffset.Now;
+            Assert.AreEqual(EdmType.DateTime, sendEnt.Properties["DateTimeOffsetN"].PropertyType);
+
+            sendEnt.Properties["DateTimeOffsetN"].DateTimeOffsetValue = null;
+            Assert.AreEqual(EdmType.DateTime, sendEnt.Properties["DateTimeOffsetN"].PropertyType);
+
+            ent.DoubleN = null;
+            sendEnt.Properties = ent.WriteEntity(null);
+
+            double? doubleValue = sendEnt.Properties["DoubleN"].DoubleValue;
+            Assert.AreEqual(EdmType.Double, sendEnt.Properties["DoubleN"].PropertyType);
+
+            sendEnt.Properties["DoubleN"].DoubleValue = 1234.5678;
+            Assert.AreEqual(EdmType.Double, sendEnt.Properties["DoubleN"].PropertyType);
+
+            sendEnt.Properties["DoubleN"].DoubleValue = null;
+            Assert.AreEqual(EdmType.Double, sendEnt.Properties["DoubleN"].PropertyType);
+
+            ent.GuidN = null;
+            sendEnt.Properties = ent.WriteEntity(null);
+
+            Guid? guidValue = sendEnt.Properties["GuidN"].GuidValue;
+            Assert.AreEqual(EdmType.Guid, sendEnt.Properties["GuidN"].PropertyType);
+
+            sendEnt.Properties["GuidN"].GuidValue = Guid.NewGuid();
+            Assert.AreEqual(EdmType.Guid, sendEnt.Properties["GuidN"].PropertyType);
+
+            sendEnt.Properties["GuidN"].GuidValue = null;
+            Assert.AreEqual(EdmType.Guid, sendEnt.Properties["GuidN"].PropertyType);
+
+            ent.Int32N = null;
+            sendEnt.Properties = ent.WriteEntity(null);
+
+            int? intValue = sendEnt.Properties["Int32N"].Int32Value;
+            Assert.AreEqual(EdmType.Int32, sendEnt.Properties["Int32N"].PropertyType);
+
+            sendEnt.Properties["Int32N"].Int32Value = 123;
+            Assert.AreEqual(EdmType.Int32, sendEnt.Properties["Int32N"].PropertyType);
+
+            sendEnt.Properties["Int32N"].Int32Value = null;
+            Assert.AreEqual(EdmType.Int32, sendEnt.Properties["Int32N"].PropertyType);
+
+            ent.LongPrimitiveN = null;
+            sendEnt.Properties = ent.WriteEntity(null);
+
+            long? longValue = sendEnt.Properties["LongPrimitiveN"].Int64Value;
+            Assert.AreEqual(EdmType.Int64, sendEnt.Properties["LongPrimitiveN"].PropertyType);
+
+            sendEnt.Properties["LongPrimitiveN"].Int64Value = 1234;
+            Assert.AreEqual(EdmType.Int64, sendEnt.Properties["LongPrimitiveN"].PropertyType);
+
+            sendEnt.Properties["LongPrimitiveN"].Int64Value = null;
+            Assert.AreEqual(EdmType.Int64, sendEnt.Properties["LongPrimitiveN"].PropertyType);
+
+            ent.BoolN = null;
+            sendEnt.Properties = ent.WriteEntity(null);
+
+            bool? booleanValue = sendEnt.Properties["BoolN"].BooleanValue;
+            Assert.AreEqual(EdmType.Boolean, sendEnt.Properties["BoolN"].PropertyType);
+
+            sendEnt.Properties["BoolN"].BooleanValue = true;
+            Assert.AreEqual(EdmType.Boolean, sendEnt.Properties["BoolN"].PropertyType);
+
+            sendEnt.Properties["BoolN"].BooleanValue = null;
+            Assert.AreEqual(EdmType.Boolean, sendEnt.Properties["BoolN"].PropertyType);
+        }
+        
         [TestMethod]
         [Description("A test to check retrieve functionality Sync")]
         [TestCategory(ComponentCategory.Table)]
@@ -1298,6 +1425,57 @@ namespace Microsoft.WindowsAzure.Storage.Table
             Assert.AreEqual(sendEnt.DateTime, retrievedEntity.DateTime);
             Assert.AreEqual(sendEnt.DateTimeN, retrievedEntity.DateTimeN);
             Assert.AreEqual(sendEnt.DateTimeNull, retrievedEntity.DateTimeNull);
+        }
+
+        [TestMethod]
+        [Description("A test to check retrieve functionality Sync")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableRetrieveEntityPropertySetter()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string pk = Guid.NewGuid().ToString();
+
+            // Add insert
+            ComplexEntity sendEnt = new ComplexEntity();
+            sendEnt.PartitionKey = pk;
+            sendEnt.RowKey = Guid.NewGuid().ToString();
+
+            Dictionary<string, EntityProperty> properties = new Dictionary<string, EntityProperty>();
+
+            EntityProperty prop1 = properties["BoolN"] = EntityProperty.GeneratePropertyForBool(null);
+            sendEnt.BoolN = prop1.BooleanValue = true;
+
+            EntityProperty prop2 = properties["DoubleN"] = EntityProperty.GeneratePropertyForDouble(null);
+            sendEnt.DoubleN = prop2.DoubleValue = 3.1415;
+
+            EntityProperty prop3 = properties["GuidN"] = EntityProperty.GeneratePropertyForGuid(null);
+            sendEnt.GuidN = prop3.GuidValue = Guid.NewGuid();
+
+            EntityProperty prop4 = properties["Int32N"] = EntityProperty.GeneratePropertyForInt(null);
+            sendEnt.Int32N = prop4.Int32Value = 1;
+
+            EntityProperty prop5 = properties["Int64N"] = EntityProperty.GeneratePropertyForLong(null);
+            sendEnt.Int64N = prop5.Int64Value = 1234;
+
+            EntityProperty prop6 = properties["String"] = EntityProperty.GeneratePropertyForString(null);
+            sendEnt.String = prop6.StringValue = "hello";
+
+            EntityProperty prop7 = properties["DateTimeOffsetN"] = EntityProperty.GeneratePropertyForDateTimeOffset(null);
+            sendEnt.DateTimeOffsetN = prop7.DateTimeOffsetValue = DateTimeOffset.UtcNow;
+
+            ComplexEntity retrievedEntity = new ComplexEntity();
+            retrievedEntity.ReadEntity(properties, null);
+
+            Assert.AreEqual(sendEnt.BoolN, retrievedEntity.BoolN);
+            Assert.AreEqual(sendEnt.DoubleN, retrievedEntity.DoubleN);
+            Assert.AreEqual(sendEnt.GuidN, retrievedEntity.GuidN);
+            Assert.AreEqual(sendEnt.Int32N, retrievedEntity.Int32N);
+            Assert.AreEqual(sendEnt.Int64N, retrievedEntity.Int64N);
+            Assert.AreEqual(sendEnt.String, retrievedEntity.String);
+            Assert.AreEqual(sendEnt.DateTimeOffsetN, retrievedEntity.DateTimeOffsetN);
         }
 
         [TestMethod]

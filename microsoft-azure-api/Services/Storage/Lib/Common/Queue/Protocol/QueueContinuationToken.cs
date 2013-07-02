@@ -25,6 +25,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
     using System.Xml;
     using System.Xml.Serialization;
 
+    /// <summary>
+    /// Represents a continuation token returned by the Queue service.
+    /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1001:CommasMustBeSpacedCorrectly", Justification = "Reviewed.")]
     public sealed class QueueContinuationToken : IContinuationToken
 #if DNCP

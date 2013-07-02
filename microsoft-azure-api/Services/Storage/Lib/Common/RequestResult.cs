@@ -140,6 +140,9 @@ namespace Microsoft.WindowsAzure.Storage
         /// </summary>
         /// <param name="message">The message to translate.</param>
         /// <returns>The translated <see cref="RequestResult"/>.</returns>
+#if DNCP
+        [Obsolete("This should be available only in Microsoft.WindowsAzure.Storage.WinMD and not in Microsoft.WindowsAzure.Storage.dll. Please use ReadXML to de-serialize RequestResult when Microsoft.WindowsAzure.Storage.dll is used.")]
+#endif
         public static RequestResult TranslateFromExceptionMessage(string message)
         {
             RequestResult res = new RequestResult();

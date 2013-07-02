@@ -280,7 +280,7 @@ namespace Microsoft.WindowsAzure.Storage
                 throw new ArgumentNullException("connectionString");
             }
 
-            if (TryParse(connectionString, out ret, err => { throw new FormatException(err); }))
+            if (ParseImpl(connectionString, out ret, err => { throw new FormatException(err); }))
             {
                 return ret;
             }
@@ -300,11 +300,18 @@ namespace Microsoft.WindowsAzure.Storage
             if (string.IsNullOrEmpty(connectionString))
             {
                 account = null;
-
                 return false;
             }
 
-            return TryParse(connectionString, out account, err => { });
+            try
+            {
+                return ParseImpl(connectionString, out account, err => { });
+            }
+            catch (Exception)
+            {
+                account = null;
+                return false;
+            }
         }
 
         /// <summary>
@@ -466,7 +473,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <param name="accountInformation">The <see cref="CloudStorageAccount"/> to return.</param>
         /// <param name="error">A callback for reporting errors.</param>
         /// <returns>If true, the parse was successful. Otherwise, false.</returns>
-        internal static bool TryParse(string s, out CloudStorageAccount accountInformation, Action<string> error)
+        internal static bool ParseImpl(string s, out CloudStorageAccount accountInformation, Action<string> error)
         {
             IDictionary<string, string> settings = ParseStringIntoSettings(s, error);
 

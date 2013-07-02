@@ -1,5 +1,5 @@
-﻿// -----------------------------------------------------------------------------------------
-// <copyright file="NoOpAuthenticationHttpHandler.cs" company="Microsoft">
+// -----------------------------------------------------------------------------------------
+// <copyright file="AuthenticationScheme.cs" company="Microsoft">
 //    Copyright 2012 Microsoft Corporation
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,15 +15,21 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
+namespace Microsoft.WindowsAzure.Storage
 {
-    using System;
-    using System.Net.Http;
-
-    internal sealed class NoOpAuthenticationHttpHandler : HttpClientHandler
+    /// <summary>
+    /// Specifies the authentication scheme used to sign HTTP requests.
+    /// </summary>
+    public enum AuthenticationScheme
     {
-        public NoOpAuthenticationHttpHandler()
-        {
-        }
+        /// <summary>
+        /// Signs HTTP requests using the Shared Key Lite authentication scheme.
+        /// </summary>
+        SharedKeyLite,
+
+        /// <summary>
+        /// Signs HTTP requests using the Shared Key authentication scheme.
+        /// </summary>
+        SharedKey
     }
 }

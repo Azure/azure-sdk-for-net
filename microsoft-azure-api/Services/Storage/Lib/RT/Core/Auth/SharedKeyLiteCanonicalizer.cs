@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------------------------
-// <copyright file="SharedKeyCanonicalizer.cs" company="Microsoft">
+// <copyright file="SharedKeyLiteCanonicalizer.cs" company="Microsoft">
 //    Copyright 2012 Microsoft Corporation
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,23 +20,27 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
+    using System.Text;
 
-    internal sealed class SharedKeyCanonicalizer : ICanonicalizer
+    internal sealed class SharedKeyLiteCanonicalizer : ICanonicalizer
     {
-        private const string SharedKeyAuthorizationScheme = "SharedKey";
+        private const string SharedKeyLiteAuthorizationScheme = "SharedKeyLite";
+        private const int ExpectedCanonicalizedStringLength = 250;
 
-        private static SharedKeyCanonicalizer instance = new SharedKeyCanonicalizer();
+        private static SharedKeyLiteCanonicalizer instance = new SharedKeyLiteCanonicalizer();
 
-        public static SharedKeyCanonicalizer Instance
+        public static SharedKeyLiteCanonicalizer Instance
         {
             get
             {
-                return SharedKeyCanonicalizer.instance;
+                return SharedKeyLiteCanonicalizer.instance;
             }
         }
 
-        private SharedKeyCanonicalizer()
+        private SharedKeyLiteCanonicalizer()
         {
         }
 
@@ -44,21 +48,18 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         {
             get
             {
-                return SharedKeyAuthorizationScheme;
+                return SharedKeyLiteAuthorizationScheme;
             }
         }
 
         public string CanonicalizeHttpRequest(HttpRequestMessage request, string accountName)
         {
             // Add the method (GET, POST, PUT, or HEAD).
-            CanonicalizedString canonicalizedString = new CanonicalizedString(request.Method.Method);
+            CanonicalizedString canonicalizedString = new CanonicalizedString(request.Method.Method, ExpectedCanonicalizedStringLength);
 
             // Add the Content-* HTTP headers. Empty values are allowed.
             if (request.Content != null)
             {
-                canonicalizedString.AppendCanonicalizedElement(HttpUtility.CombineHttpHeaderValues(request.Content.Headers.ContentEncoding));
-                canonicalizedString.AppendCanonicalizedElement(HttpUtility.CombineHttpHeaderValues(request.Content.Headers.ContentLanguage));
-                AuthenticationUtility.AppendCanonicalizedContentLengthHeader(canonicalizedString, request);
                 canonicalizedString.AppendCanonicalizedElement((request.Content.Headers.ContentMD5 == null) ? null :
                     Convert.ToBase64String(request.Content.Headers.ContentMD5));
                 canonicalizedString.AppendCanonicalizedElement((request.Content.Headers.ContentType == null) ? null :
@@ -68,35 +69,16 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             {
                 canonicalizedString.AppendCanonicalizedElement(null);
                 canonicalizedString.AppendCanonicalizedElement(null);
-                if (request.Method == HttpMethod.Put || request.Method == HttpMethod.Delete)
-                {
-                    canonicalizedString.AppendCanonicalizedElement("0");
-                }
-                else
-                {
-                    canonicalizedString.AppendCanonicalizedElement(null);
-                }
-
-                canonicalizedString.AppendCanonicalizedElement(null);
-                canonicalizedString.AppendCanonicalizedElement(null);
             }
 
             // Add the Date HTTP header (only if the x-ms-date header is not being used)
             AuthenticationUtility.AppendCanonicalizedDateHeader(canonicalizedString, request);
 
-            // Add If-* headers and Range header
-            canonicalizedString.AppendCanonicalizedElement(AuthenticationUtility.GetCanonicalizedHeaderValue(request.Headers.IfModifiedSince));
-            canonicalizedString.AppendCanonicalizedElement(CommonUtils.GetFirstHeaderValue(request.Headers.IfMatch));
-            canonicalizedString.AppendCanonicalizedElement(CommonUtils.GetFirstHeaderValue(request.Headers.IfNoneMatch));
-            canonicalizedString.AppendCanonicalizedElement(AuthenticationUtility.GetCanonicalizedHeaderValue(request.Headers.IfUnmodifiedSince));
-            canonicalizedString.AppendCanonicalizedElement((request.Headers.Range == null) ? null :
-                CommonUtils.GetFirstHeaderValue(request.Headers.Range.Ranges));
-
             // Add any custom headers
             AuthenticationUtility.AppendCanonicalizedCustomHeaders(canonicalizedString, request);
 
             // Add the canonicalized URI element
-            string resourceString = AuthenticationUtility.GetCanonicalizedResourceString(request.RequestUri, accountName);
+            string resourceString = AuthenticationUtility.GetCanonicalizedResourceString(request.RequestUri, accountName, true);
             canonicalizedString.AppendCanonicalizedElement(resourceString);
 
             return canonicalizedString.ToString();

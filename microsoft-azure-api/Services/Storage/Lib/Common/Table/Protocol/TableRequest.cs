@@ -7,6 +7,9 @@
 #if RTMD
     internal
 #else
+    /// <summary>
+    /// Provides a set of helper methods for constructing a request against the Table service.
+    /// </summary>
     public
 #endif
         class TableRequest

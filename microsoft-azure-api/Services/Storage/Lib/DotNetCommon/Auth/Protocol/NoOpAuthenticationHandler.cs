@@ -20,8 +20,23 @@ namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
     using System;
     using System.Net;
 
+    /// <summary>
+    /// Represents a handler that signs HTTP requests with no authentication information.
+    /// </summary>
     public sealed class NoOpAuthenticationHandler : IAuthenticationHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NoOpAuthenticationHandler"/> class.
+        /// </summary>
+        public NoOpAuthenticationHandler()
+        {
+        }
+
+        /// <summary>
+        /// Signs the specified HTTP request with no authentication information.
+        /// </summary>
+        /// <param name="request">The HTTP request to sign.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         public void SignRequest(HttpWebRequest request, OperationContext operationContext)
         {
             // no op

@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
     using System.Text;
 
     /// <summary>
-    /// A <see cref="UriBuilder"/> style class for creating Uri query strings.
+    /// A convenience class for constructing URI query strings.
     /// </summary>
 #if RT
     internal
@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         private Dictionary<string, string> parameters = new Dictionary<string, string>();
 
         /// <summary>
-        /// Add the value with Uri escaping.
+        /// Add the value with URI escaping.
         /// </summary>
         /// <param name="name">The query name.</param>
         /// <param name="value">The query value.</param>
@@ -53,10 +53,10 @@ namespace Microsoft.WindowsAzure.Storage.Core
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// Returns a <see cref="System.String"/> containing the URI.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
+        /// A <see cref="System.String"/> containing the URI.
         /// </returns>
         public override string ToString()
         {
@@ -87,13 +87,13 @@ namespace Microsoft.WindowsAzure.Storage.Core
         }
 
         /// <summary>
-        /// Add query parameter to an existing Uri. This takes care of any existing query parameters in the Uri.
+        /// Add a query parameter to a URI.
         /// </summary>
-        /// <param name="uri">Original Uri which may contain query parameters already.</param>
-        /// <returns>The appended Uri.</returns>
+        /// <param name="uri">The original URI, including any existing query parameters.</param>
+        /// <returns>The URI with the new query parameter appended.</returns>
         public Uri AddToUri(Uri uri)
         {
-            // The correct way to add query parameters to a Uri http://msdn.microsoft.com/en-us/library/system.uribuilder.query.aspx
+            // The correct way to add query parameters to a URI http://msdn.microsoft.com/en-us/library/system.uribuilder.query.aspx
             string queryToAppend = this.ToString();
 
             if (queryToAppend.Length > 1)

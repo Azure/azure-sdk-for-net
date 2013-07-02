@@ -24,44 +24,50 @@ namespace Microsoft.WindowsAzure.Storage.Core
     /// </summary>
     internal class CanonicalizedString
     {
+        private const int DefaultCapacity = 300;
+        private const char ElementDelimiter = '\n';
+
         /// <summary>
         /// Stores the internal <see cref="StringBuilder"/> that holds the canonicalized string.
         /// </summary>
-        private StringBuilder canonicalizedString;
+        private readonly StringBuilder canonicalizedString;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CanonicalizedString"/> class.
         /// </summary>
         /// <param name="initialElement">The first canonicalized element to start the string with.</param>
-        internal CanonicalizedString(string initialElement)
+        public CanonicalizedString(string initialElement)
+            : this(initialElement, CanonicalizedString.DefaultCapacity)
         {
-            this.canonicalizedString = new StringBuilder(initialElement);
         }
 
         /// <summary>
-        /// Gets the canonicalized string.
+        /// Initializes a new instance of the <see cref="CanonicalizedString"/> class.
         /// </summary>
-        internal string Value
+        /// <param name="initialElement">The first canonicalized element to start the string with.</param>
+        /// <param name="capacity">The starting size of the string.</param>
+        public CanonicalizedString(string initialElement, int capacity)
         {
-            get
-            {
-                return this.canonicalizedString.ToString();
-            }
+            this.canonicalizedString = new StringBuilder(initialElement, capacity);
         }
 
         /// <summary>
         /// Append additional canonicalized element to the string.
         /// </summary>
         /// <param name="element">An additional canonicalized element to append to the string.</param>
-        internal void AppendCanonicalizedElement(string element)
+        public void AppendCanonicalizedElement(string element)
         {
-            this.canonicalizedString.Append("\n");
+            this.canonicalizedString.Append(CanonicalizedString.ElementDelimiter);
             this.canonicalizedString.Append(element);
         }
 
+        /// <summary>
+        /// Converts the value of this instance to a string.
+        /// </summary>
+        /// <returns>A string whose value is the same as this instance.</returns>
         public override string ToString()
         {
-            return this.Value;
+            return this.canonicalizedString.ToString();
         }
     }
 }

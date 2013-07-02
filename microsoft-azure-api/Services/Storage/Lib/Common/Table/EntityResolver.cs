@@ -22,6 +22,16 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using Microsoft.WindowsAzure.Storage.Table;
 
 #if !RTMD
+    /// <summary>
+    /// Returns a delegate for resolving entities.
+    /// </summary>
+    /// <typeparam name="T">The type into which the <see cref="EntityResolver"/> will project the query results.</typeparam>
+    /// <param name="partitionKey">The partition key.</param>
+    /// <param name="rowKey">The row key.</param>
+    /// <param name="timestamp">The timestamp.</param>
+    /// <param name="properties">A dictionary of properties.</param>
+    /// <param name="etag">The ETag.</param>
+    /// <returns></returns>
     public delegate T EntityResolver<T>(string partitionKey, string rowKey, DateTimeOffset timestamp, IDictionary<string, EntityProperty> properties, string etag);
 #endif
 

@@ -34,22 +34,30 @@ namespace Microsoft.WindowsAzure.Storage
 {
     public partial class TestBase
     {
+        private const AuthenticationScheme DefaultAuthenticationScheme = AuthenticationScheme.SharedKey;
+
         public static CloudTableClient GenerateCloudTableClient()
         {
             Uri baseAddressUri = new Uri(TestBase.TargetTenantConfig.TableServiceEndpoint);
-            return new CloudTableClient(baseAddressUri, TestBase.StorageCredentials);
+            CloudTableClient client = new CloudTableClient(baseAddressUri, TestBase.StorageCredentials);
+            client.AuthenticationScheme = DefaultAuthenticationScheme;
+            return client;
         }
 
         public static CloudBlobClient GenerateCloudBlobClient()
         {
             Uri baseAddressUri = new Uri(TestBase.TargetTenantConfig.BlobServiceEndpoint);
-            return new CloudBlobClient(baseAddressUri, TestBase.StorageCredentials);
+            CloudBlobClient client = new CloudBlobClient(baseAddressUri, TestBase.StorageCredentials);
+            client.AuthenticationScheme = DefaultAuthenticationScheme;
+            return client;
         }
 
         public static CloudQueueClient GenerateCloudQueueClient()
         {
             Uri baseAddressUri = new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint);
-            return new CloudQueueClient(baseAddressUri, TestBase.StorageCredentials);
+            CloudQueueClient client = new CloudQueueClient(baseAddressUri, TestBase.StorageCredentials);
+            client.AuthenticationScheme = DefaultAuthenticationScheme;
+            return client;
         }
 
         public static TestConfigurations TestConfigurations

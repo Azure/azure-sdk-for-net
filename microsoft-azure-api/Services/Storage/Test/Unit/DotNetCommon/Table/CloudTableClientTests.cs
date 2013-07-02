@@ -124,9 +124,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public void CloudTableClientConstructor()
         {
             Uri baseAddressUri = new Uri(TestBase.TargetTenantConfig.TableServiceEndpoint);
-            CloudTableClient blobClient = new CloudTableClient(baseAddressUri, TestBase.StorageCredentials);
-            Assert.IsTrue(blobClient.BaseUri.ToString().Contains(TestBase.TargetTenantConfig.TableServiceEndpoint));
-            Assert.AreEqual(TestBase.StorageCredentials, blobClient.Credentials);
+            CloudTableClient tableClient = new CloudTableClient(baseAddressUri, TestBase.StorageCredentials);
+            Assert.IsTrue(tableClient.BaseUri.ToString().Contains(TestBase.TargetTenantConfig.TableServiceEndpoint));
+            Assert.AreEqual(TestBase.StorageCredentials, tableClient.Credentials);
+            Assert.AreEqual(AuthenticationScheme.SharedKey, tableClient.AuthenticationScheme);
         }
 
         #endregion
@@ -328,6 +329,30 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 }
             }
         }
+
+        [TestMethod]
+        [Description("Test List Tables Iterator using Shared Key Lite")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableClientListTablesSharedKeyLite()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            tableClient.AuthenticationScheme = AuthenticationScheme.SharedKeyLite;
+
+            IEnumerable<CloudTable> actual = tableClient.ListTables();
+            Assert.IsNotNull(actual);
+
+            List<CloudTable> retrievedTables = actual.ToList();
+            Assert.IsTrue(retrievedTables.Count >= createdTables.Count);
+
+            foreach (CloudTable createdTable in createdTables)
+            {
+                Assert.IsNotNull(retrievedTables.Where((t) => t.Uri == createdTable.Uri).FirstOrDefault());
+            }
+        }
+
         #endregion
 
         #region List Tables Segmented

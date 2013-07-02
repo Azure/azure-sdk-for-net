@@ -17,14 +17,31 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Auth
 {
-    using System;
-    using System.Net;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
 
+    /// <summary>
+    /// Represents a canonicalizer that converts HTTP request data into a standard form appropriate for signing via 
+    /// the Shared Key Lite authentication scheme for the Table service.
+    /// </summary>
+    /// <seealso href="http://msdn.microsoft.com/en-us/library/windowsazure/dd179428.aspx">Authentication for the Windows Azure Storage Services</seealso>
     public sealed class SharedKeyLiteTableCanonicalizer : ICanonicalizer
     {
+        private const string SharedKeyLiteAuthorizationScheme = "SharedKeyLite";
+        private const int ExpectedCanonicalizedStringLength = 150;
+
         private static SharedKeyLiteTableCanonicalizer instance = new SharedKeyLiteTableCanonicalizer();
 
+        /// <summary>
+        /// Gets a static instance of the <see cref="SharedKeyLiteTableCanonicalizer"/> object.
+        /// </summary>
+        /// <value>The static instance of the class.</value>
+        /// <seealso href="http://msdn.microsoft.com/en-us/library/windowsazure/dd179428.aspx">Authentication for the Windows Azure Storage Services</seealso>
         public static SharedKeyLiteTableCanonicalizer Instance
         {
             get
@@ -37,26 +54,37 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         {
         }
 
+        /// <summary>
+        /// Gets the authorization scheme used for canonicalization.
+        /// </summary>
+        /// <value>The authorization scheme used for canonicalization.</value>
+        /// <seealso href="http://msdn.microsoft.com/en-us/library/windowsazure/dd179428.aspx">Authentication for the Windows Azure Storage Services</seealso>
         public string AuthorizationScheme
         {
-            get { return "SharedKeyLite"; }
+            get
+            {
+                return SharedKeyLiteAuthorizationScheme;
+            }
         }
 
+        /// <summary>
+        /// Converts the specified HTTP request data into a standard form appropriate for signing.
+        /// </summary>
+        /// <param name="request">The HTTP request that needs to be signed.</param>
+        /// <param name="accountName">The name of the storage account that the HTTP request will access.</param>
+        /// <returns>The canonicalized string containing the HTTP request data in a standard form appropriate for signing.</returns>
+        /// <seealso href="http://msdn.microsoft.com/en-us/library/windowsazure/dd179428.aspx">Authentication for the Windows Azure Storage Services</seealso>
         public string CanonicalizeHttpRequest(HttpWebRequest request, string accountName)
         {
-            // Start with x-ms-date or Date
-            string dateValue = request.Headers[Constants.HeaderConstants.Date];
-            if (string.IsNullOrEmpty(dateValue))
-            {
-                dateValue = request.Headers[HttpRequestHeader.Date];
-            }
+            // Add the x-ms-date or Date HTTP header
+            string dateHeaderValue = AuthenticationUtility.GetPreferredDateHeaderValue(request);
+            CanonicalizedString canonicalizedString = new CanonicalizedString(dateHeaderValue, ExpectedCanonicalizedStringLength);
 
-            CanonicalizedString canonicalizedString = new CanonicalizedString(dateValue);
+            // Add the canonicalized URI element
+            string resourceString = AuthenticationUtility.GetCanonicalizedResourceString(request.Address, accountName, true);
+            canonicalizedString.AppendCanonicalizedElement(resourceString);
 
-            // And we only need the canonicalized resource in addition to date
-            canonicalizedString.AppendCanonicalizedElement(CanonicalizationHelper.GetCanonicalizedResourceForSharedKeyLite(request.Address, accountName));
-
-            return canonicalizedString.Value;
+            return canonicalizedString.ToString();
         }
     }
 }

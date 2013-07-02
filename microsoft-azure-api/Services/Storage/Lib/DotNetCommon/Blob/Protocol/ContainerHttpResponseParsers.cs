@@ -21,6 +21,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     using System.Net;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
+    /// <summary>
+    /// Provides a set of methods for parsing a response containing container data from the Blob service.
+    /// </summary>
     public static partial class ContainerHttpResponseParsers
     {
         /// <summary>

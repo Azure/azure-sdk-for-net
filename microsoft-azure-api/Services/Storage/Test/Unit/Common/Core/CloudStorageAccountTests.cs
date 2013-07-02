@@ -16,6 +16,7 @@
 // -----------------------------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -118,6 +119,127 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             TestHelper.ExpectedException<InvalidOperationException>(
                 () => cred.UpdateKey(base64EncodedDummyKey, null),
                 "Updating shared key on a SAS credentials instance should fail.");
+        }
+
+        [TestMethod]
+        /// [Description("CloudStorageAccount object with an empty key value.")]
+        [TestCategory(ComponentCategory.Auth)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void StorageCredentialsEmptyKeyValue()
+        {
+            string accountName = TestBase.TargetTenantConfig.AccountName;
+            string keyValue = TestBase.TargetTenantConfig.AccountKey;
+            string emptyKeyValueAsString = string.Empty;
+            string emptyKeyConnectionString = string.Format(CultureInfo.InvariantCulture, "DefaultEndpointsProtocol=https;AccountName={0};AccountKey=", accountName);
+
+            StorageCredentials credentials1 = new StorageCredentials(accountName, emptyKeyValueAsString);
+            Assert.AreEqual(accountName, credentials1.AccountName);
+            Assert.IsFalse(credentials1.IsAnonymous);
+            Assert.IsFalse(credentials1.IsSAS);
+            Assert.IsTrue(credentials1.IsSharedKey);
+            Assert.AreEqual(emptyKeyValueAsString, Convert.ToBase64String(credentials1.ExportKey()));
+
+            CloudStorageAccount account1 = new CloudStorageAccount(credentials1, true);
+            Assert.AreEqual(emptyKeyConnectionString, account1.ToString(true));
+            Assert.IsNotNull(account1.Credentials);
+            Assert.AreEqual(accountName, account1.Credentials.AccountName);
+            Assert.IsFalse(account1.Credentials.IsAnonymous);
+            Assert.IsFalse(account1.Credentials.IsSAS);
+            Assert.IsTrue(account1.Credentials.IsSharedKey);
+            Assert.AreEqual(emptyKeyValueAsString, Convert.ToBase64String(account1.Credentials.ExportKey()));
+
+            CloudStorageAccount account2 = CloudStorageAccount.Parse(emptyKeyConnectionString);
+            Assert.AreEqual(emptyKeyConnectionString, account2.ToString(true));
+            Assert.IsNotNull(account2.Credentials);
+            Assert.AreEqual(accountName, account2.Credentials.AccountName);
+            Assert.IsFalse(account2.Credentials.IsAnonymous);
+            Assert.IsFalse(account2.Credentials.IsSAS);
+            Assert.IsTrue(account2.Credentials.IsSharedKey);
+            Assert.AreEqual(emptyKeyValueAsString, Convert.ToBase64String(account2.Credentials.ExportKey()));
+
+            CloudStorageAccount account3;
+            bool isValidAccount3 = CloudStorageAccount.TryParse(emptyKeyConnectionString, out account3);
+            Assert.IsTrue(isValidAccount3);
+            Assert.IsNotNull(account3);
+            Assert.AreEqual(emptyKeyConnectionString, account3.ToString(true));
+            Assert.IsNotNull(account3.Credentials);
+            Assert.AreEqual(accountName, account3.Credentials.AccountName);
+            Assert.IsFalse(account3.Credentials.IsAnonymous);
+            Assert.IsFalse(account3.Credentials.IsSAS);
+            Assert.IsTrue(account3.Credentials.IsSharedKey);
+            Assert.AreEqual(emptyKeyValueAsString, Convert.ToBase64String(account3.Credentials.ExportKey()));
+
+            StorageCredentials credentials2 = new StorageCredentials(accountName, keyValue);
+            Assert.AreEqual(accountName, credentials2.AccountName);
+            Assert.IsFalse(credentials2.IsAnonymous);
+            Assert.IsFalse(credentials2.IsSAS);
+            Assert.IsTrue(credentials2.IsSharedKey);
+            Assert.AreEqual(keyValue, Convert.ToBase64String(credentials2.ExportKey()));
+
+            credentials2.UpdateKey(emptyKeyValueAsString, null);
+            Assert.AreEqual(emptyKeyValueAsString, Convert.ToBase64String(credentials2.ExportKey()));
+
+#if !RTMD
+            byte[] emptyKeyValueAsByteArray = new byte[0];
+
+            StorageCredentials credentials3 = new StorageCredentials(accountName, keyValue);
+            Assert.AreEqual(accountName, credentials3.AccountName);
+            Assert.IsFalse(credentials3.IsAnonymous);
+            Assert.IsFalse(credentials3.IsSAS);
+            Assert.IsTrue(credentials3.IsSharedKey);
+            Assert.AreEqual(keyValue, Convert.ToBase64String(credentials3.ExportKey()));
+
+            credentials3.UpdateKey(emptyKeyValueAsByteArray, null);
+            Assert.AreEqual(Convert.ToBase64String(emptyKeyValueAsByteArray), Convert.ToBase64String(credentials3.ExportKey()));
+#endif
+        }
+
+        [TestMethod]
+        /// [Description("CloudStorageAccount object with a null key value.")]
+        [TestCategory(ComponentCategory.Auth)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void StorageCredentialsNullKeyValue()
+        {
+            string accountName = TestBase.TargetTenantConfig.AccountName;
+            string keyValue = TestBase.TargetTenantConfig.AccountKey;
+            string nullKeyValueAsString = null;
+
+            TestHelper.ExpectedException<ArgumentNullException>(() =>
+            {
+                StorageCredentials credentials1 = new StorageCredentials(accountName, nullKeyValueAsString);
+            }, "Cannot create key with a null value.");
+
+            StorageCredentials credentials2 = new StorageCredentials(accountName, keyValue);
+            Assert.AreEqual(accountName, credentials2.AccountName);
+            Assert.IsFalse(credentials2.IsAnonymous);
+            Assert.IsFalse(credentials2.IsSAS);
+            Assert.IsTrue(credentials2.IsSharedKey);
+            Assert.AreEqual(keyValue, Convert.ToBase64String(credentials2.ExportKey()));
+
+            TestHelper.ExpectedException<ArgumentNullException>(() =>
+            {
+                credentials2.UpdateKey(nullKeyValueAsString, null);
+            }, "Cannot update key with a null string value.");
+
+#if !RTMD
+            byte[] nullKeyValueAsByteArray = null;
+
+            StorageCredentials credentials3 = new StorageCredentials(accountName, keyValue);
+            Assert.AreEqual(accountName, credentials3.AccountName);
+            Assert.IsFalse(credentials3.IsAnonymous);
+            Assert.IsFalse(credentials3.IsSAS);
+            Assert.IsTrue(credentials3.IsSharedKey);
+            Assert.AreEqual(keyValue, Convert.ToBase64String(credentials3.ExportKey()));
+
+            TestHelper.ExpectedException<ArgumentNullException>(() =>
+            {
+                credentials3.UpdateKey(nullKeyValueAsByteArray, null);
+            }, "Cannot update key with a null byte array value.");
+#endif
         }
 
         [TestMethod]

@@ -17,12 +17,13 @@
 
 namespace Microsoft.WindowsAzure.Storage
 {
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 #if RT
     using Windows.Storage.Streams;
@@ -109,63 +110,62 @@ namespace Microsoft.WindowsAzure.Storage
 #else
         public
 #endif
-        void ReadXml(XmlReader reader)
+ void ReadXml(XmlReader reader)
         {
-            reader.MoveToContent();
-
-            while (reader.NodeType == XmlNodeType.XmlDeclaration || reader.NodeType == XmlNodeType.Whitespace)
-            {
-                reader.Read();
-            }
-
-            if (reader.LocalName == Constants.ErrorRootElement && reader.IsEmptyElement)
-            {
-                reader.Read();
-                return;
-            }
-
-            reader.ReadStartElement(reader.LocalName == Constants.ErrorRootElement ? Constants.ErrorRootElement : Constants.ErrorRootElement.ToLower());
-
-            General.SkipWhitespace(reader);
-
-            this.ErrorCode = General.ReadElementAsString(reader.LocalName == Constants.ErrorCode ? Constants.ErrorCode : Constants.ErrorCode.ToLower(), reader);
-            this.ErrorMessage = General.ReadElementAsString(reader.LocalName == Constants.ErrorMessage ? Constants.ErrorMessage : Constants.ErrorMessage.ToLower(), reader);
             this.AdditionalDetails = new Dictionary<string, string>();
 
-            // After error code and message we can have a number of additional details optionally followed
-            // by ExceptionDetails element - we'll read all of these into the additionalDetails collection
-            do
+            reader.ReadStartElement();
+            while (reader.IsStartElement())
             {
-                if (reader.IsStartElement())
+                if (reader.IsEmptyElement)
                 {
-                    // Exception
-                    if (string.Compare(reader.LocalName, Constants.ErrorException, StringComparison.Ordinal) == 0)
+                    reader.Skip();
+                }
+                else
+                {
+                    if ((string.Compare(reader.Name, Constants.ErrorCode, StringComparison.Ordinal) == 0) || (string.Compare(reader.Name, Constants.ErrorCodePreview, StringComparison.Ordinal) == 0))
                     {
-                        // Need to read exception details - we have message and stack trace
-                        reader.ReadStartElement(reader.LocalName);
+                        this.ErrorCode = reader.ReadElementContentAsString();
+                    }
+                    else if ((string.Compare(reader.Name, Constants.ErrorMessage, StringComparison.Ordinal) == 0) || (string.Compare(reader.Name, Constants.ErrorMessagePreview, StringComparison.Ordinal) == 0))
+                    {
+                        this.ErrorMessage = reader.ReadElementContentAsString();
+                    }
+                    else if ((string.Compare(reader.Name, Constants.ErrorException, StringComparison.Ordinal) == 0))
+                    {
+                        reader.ReadStartElement();
+                        while (reader.IsStartElement())
+                        {
+                            switch (reader.Name)
+                            {
+                                case Constants.ErrorExceptionMessage:
+                                    this.AdditionalDetails.Add(
+                                    Constants.ErrorExceptionMessage,
+                                    reader.ReadElementContentAsString(Constants.ErrorExceptionMessage, string.Empty));
+                                    break;
 
-                        this.AdditionalDetails.Add(
-                            Constants.ErrorExceptionMessage,
-                            reader.ReadElementContentAsString(Constants.ErrorExceptionMessage, string.Empty));
-                        this.AdditionalDetails.Add(
-                            Constants.ErrorExceptionStackTrace,
-                            reader.ReadElementContentAsString(Constants.ErrorExceptionStackTrace, string.Empty));
+                                case Constants.ErrorExceptionStackTrace:
+                                    this.AdditionalDetails.Add(
+                                    Constants.ErrorExceptionStackTrace,
+                                    reader.ReadElementContentAsString(Constants.ErrorExceptionStackTrace, string.Empty));
+                                    break;
 
-                        // End exception
+                                default:
+                                    reader.Skip();
+                                    break;
+                            }
+                        }
+
                         reader.ReadEndElement();
                     }
                     else
                     {
-                        // Name Value pair
-                        string elementName = reader.LocalName;
-                        this.AdditionalDetails.Add(elementName, reader.ReadElementContentAsString());
+                        this.AdditionalDetails.Add(
+                        reader.Name,
+                        reader.ReadInnerXml());
                     }
                 }
             }
-            while (reader.IsStartElement());
-
-            // End Error
-            reader.ReadEndElement();
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure.Storage
 
             foreach (string key in this.AdditionalDetails.Keys)
             {
-                writer.WriteElementString("key", this.AdditionalDetails[key]);
+                writer.WriteElementString(key, this.AdditionalDetails[key]);
             }
 
             // End StorageExtendedErrorInformation

@@ -125,9 +125,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public void CloudTableClientConstructor()
         {
             Uri baseAddressUri = new Uri(TestBase.TargetTenantConfig.TableServiceEndpoint);
-            CloudTableClient TableClient = new CloudTableClient(baseAddressUri, TestBase.StorageCredentials);
-            Assert.IsTrue(TableClient.BaseUri.ToString().StartsWith(TestBase.TargetTenantConfig.TableServiceEndpoint));
-            Assert.AreEqual(TestBase.StorageCredentials, TableClient.Credentials);
+            CloudTableClient tableClient = new CloudTableClient(baseAddressUri, TestBase.StorageCredentials);
+            Assert.IsTrue(tableClient.BaseUri.ToString().StartsWith(TestBase.TargetTenantConfig.TableServiceEndpoint));
+            Assert.AreEqual(TestBase.StorageCredentials, tableClient.Credentials);
+            Assert.AreEqual(AuthenticationScheme.SharedKey, tableClient.AuthenticationScheme);
         }
         #endregion
 
@@ -209,6 +210,30 @@ namespace Microsoft.WindowsAzure.Storage.Table
             {
                 Assert.IsTrue(tbl.Name.StartsWith(prefixTablesPrefix));
             }
+        }
+
+        [TestMethod]
+        // [Description("Test List Tables Segmented with Shared Key Lite")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudTableClientListTablesSegmentedSharedKeyLite()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            tableClient.AuthenticationScheme = AuthenticationScheme.SharedKeyLite;
+
+            TableResultSegment segment = null;
+            List<CloudTable> totalResults = new List<CloudTable>();
+
+            do
+            {
+                segment = await tableClient.ListTablesSegmentedAsync(segment != null ? segment.ContinuationToken : null);
+                totalResults.AddRange(segment);
+            }
+            while (segment.ContinuationToken != null);
+
+            Assert.IsTrue(totalResults.Count > 0);
         }
 
         #endregion
