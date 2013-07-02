@@ -718,10 +718,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Gets a collection of page ranges and their starting and ending bytes.
+        /// Gets a collection of valid page ranges and their starting and ending bytes.
         /// </summary>
-        /// <param name="offset">The starting offset of the data range, in bytes. Must be a multiple of 512.</param>
-        /// <param name="length">The length of the data range, in bytes. Must be a multiple of 512.</param>
+        /// <param name="offset">The starting offset of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
+        /// <param name="length">The length of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -737,7 +737,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Begins an asynchronous operation to return a collection of page ranges and their starting and ending bytes.
+        /// Begins an asynchronous operation to return a collection of valid page ranges and their starting and ending bytes.
         /// </summary>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -749,10 +749,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Begins an asynchronous operation to return a collection of page ranges and their starting and ending bytes.
+        /// Begins an asynchronous operation to return a collection of valid page ranges and their starting and ending bytes.
         /// </summary>
-        /// <param name="offset">The starting offset of the data range, in bytes. Must be a multiple of 512.</param>
-        /// <param name="length">The length of the data range, in bytes. Must be a multiple of 512.</param>
+        /// <param name="offset">The starting offset of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
+        /// <param name="length">The length of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -772,7 +772,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Ends an asynchronous operation to return a collection of page ranges and their starting and ending bytes.
+        /// Ends an asynchronous operation to return a collection of valid page ranges and their starting and ending bytes.
         /// </summary>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
         /// <returns>An enumerable collection of page ranges.</returns>
@@ -2047,8 +2047,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Gets the page ranges impl.
         /// </summary>
-        /// <param name="offset">The start offset. Must be multiples of 512.</param>
-        /// <param name="length">Length of the data range to be cleared. Must be multiples of 512.</param>
+        /// <param name="offset">The starting offset of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
+        /// <param name="length">The length of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> for getting the page ranges.</returns>

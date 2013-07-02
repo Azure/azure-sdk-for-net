@@ -24,6 +24,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.RetryPolicies;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using Microsoft.WindowsAzure.Storage.Core.Auth;
 
     /// <summary>
     /// Provides a client-side logical representation of the Windows Azure Queue Service. This client is used to configure and execute requests against the Queue Service.
@@ -40,6 +41,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Max execution time across all potential retries.
         /// </summary>
         private TimeSpan? maximumExecutionTime;
+
+        private AuthenticationScheme authenticationScheme;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudQueueClient"/> class using the specified queue service endpoint
@@ -92,6 +95,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             this.Credentials = credentials;
             this.RetryPolicy = new ExponentialRetry();
             this.ServerTimeout = Constants.DefaultServerSideTimeout;
+            this.AuthenticationScheme = AuthenticationScheme.SharedKey;
 
             if (usePathStyleUris.HasValue)
             {
@@ -181,6 +185,16 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         {
             CommonUtils.AssertNotNullOrEmpty("queueName", queueName);
             return new CloudQueue(queueName, this);
+        }
+
+        private ICanonicalizer GetCanonicalizer()
+        {
+            if (this.AuthenticationScheme == AuthenticationScheme.SharedKeyLite)
+            {
+                return SharedKeyLiteCanonicalizer.Instance;
+            }
+
+            return SharedKeyCanonicalizer.Instance;
         }
     }
 }

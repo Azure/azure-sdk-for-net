@@ -32,7 +32,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// <summary>
     /// Represents a query against a specified table.
     /// </summary>
-    /// <typeparam name="TElement">A class type which implements <see cref="ITableEntity"/>.</typeparam>
     public sealed partial class TableQuery<TElement> where TElement : ITableEntity, new()
     {
         #region Filter Generation

@@ -17,16 +17,17 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
+    using Microsoft.WindowsAzure.Storage.Auth.Protocol;
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Executor;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using Microsoft.WindowsAzure.Storage.Table.DataServices;
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// Provides a client-side logical representation of the Windows Azure Table Service. This client is used to configure and execute requests against the Table Service.
@@ -34,6 +35,58 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// <remarks>The service client encapsulates the base URI for the Table service. If the service client will be used for authenticated access, it also encapsulates the credentials for accessing the storage account.</remarks>    
     public sealed partial class CloudTableClient
     {
+        private IAuthenticationHandler authenticationHandler;
+
+        /// <summary>
+        /// Gets or sets the authentication scheme to use to sign HTTP requests.
+        /// </summary>
+        /// <remarks>Note that if you are using the legacy Table service API, which is based on WCF Data Services, the authentication scheme used by the TableServiceContext object will always be Shared Key Lite, regardless of the value of this property. </remarks>
+        public AuthenticationScheme AuthenticationScheme
+        {
+            get
+            {
+                return this.authenticationScheme;
+            }
+            set
+            {
+                if (value != this.authenticationScheme)
+                {
+                    this.authenticationScheme = value;
+                    this.authenticationHandler = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the authentication handler used to sign HTTP requests.
+        /// </summary>
+        /// <value>The authentication handler.</value>
+        internal IAuthenticationHandler AuthenticationHandler
+        {
+            get
+            {
+                IAuthenticationHandler result = this.authenticationHandler;
+                if (result == null)
+                {
+                    if (this.Credentials.IsSharedKey)
+                    {
+                        result = new SharedKeyAuthenticationHandler(
+                            this.GetCanonicalizer(),
+                            this.Credentials,
+                            this.Credentials.AccountName);
+                    }
+                    else
+                    {
+                        result = new NoOpAuthenticationHandler();
+                    }
+
+                    this.authenticationHandler = result;
+                }
+
+                return result;
+            }
+        }
+
         #region List Tables
 
         /// <summary>

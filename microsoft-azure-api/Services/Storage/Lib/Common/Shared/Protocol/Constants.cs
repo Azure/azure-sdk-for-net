@@ -543,9 +543,14 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         internal const string Permission = "Permission";
 
         /// <summary>
-        /// The Uri path component to access the messages in a queue.
+        /// The URI path component to access the messages in a queue.
         /// </summary>
         internal const string Messages = "messages";
+
+        /// <summary>
+        /// XML element for exception details.
+        /// </summary>
+        internal const string ErrorException = "exceptiondetails";
 
         /// <summary>
         /// XML root element for errors.
@@ -558,14 +563,19 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         internal const string ErrorCode = "Code";
 
         /// <summary>
+        /// XML element for error codes returned by the preview tenants.
+        /// </summary>
+        internal const string ErrorCodePreview = "code";
+
+        /// <summary>
         /// XML element for error messages.
         /// </summary>
         internal const string ErrorMessage = "Message";
 
         /// <summary>
-        /// XML element for exception details.
+        /// XML element for error messages.
         /// </summary>
-        internal const string ErrorException = "ExceptionDetails";
+        internal const string ErrorMessagePreview = "message";
 
         /// <summary>
         /// XML element for exception messages.
@@ -605,7 +615,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             /// <summary>
             /// Specifies the value to use for UserAgent header.
             /// </summary>
-            public const string UserAgentProductVersion = "2.0.5.1";
+            public const string UserAgentProductVersion = "2.0.6.0";
 
             /// <summary>
             /// Master Windows Azure Storage header prefix.

@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------------------------
-// <copyright file="SharedKeyLiteTableCanonicalizer.cs" company="Microsoft">
+// <copyright file="SharedKeyTableCanonicalizer.cs" company="Microsoft">
 //    Copyright 2012 Microsoft Corporation
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,22 +25,22 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
     using System.Net.Http;
     using System.Text;
 
-    internal sealed class SharedKeyLiteTableCanonicalizer : ICanonicalizer
+    internal sealed class SharedKeyTableCanonicalizer : ICanonicalizer
     {
-        private const string SharedKeyLiteAuthorizationScheme = "SharedKeyLite";
-        private const int ExpectedCanonicalizedStringLength = 150;
+        private const string SharedKeyAuthorizationScheme = "SharedKey";
+        private const int ExpectedCanonicalizedStringLength = 200;
 
-        private static SharedKeyLiteTableCanonicalizer instance = new SharedKeyLiteTableCanonicalizer();
+        private static SharedKeyTableCanonicalizer instance = new SharedKeyTableCanonicalizer();
 
-        public static SharedKeyLiteTableCanonicalizer Instance
+        public static SharedKeyTableCanonicalizer Instance
         {
             get
             {
-                return SharedKeyLiteTableCanonicalizer.instance;
+                return SharedKeyTableCanonicalizer.instance;
             }
         }
 
-        private SharedKeyLiteTableCanonicalizer()
+        private SharedKeyTableCanonicalizer()
         {
         }
 
@@ -48,15 +48,31 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         {
             get
             {
-                return SharedKeyLiteAuthorizationScheme;
+                return SharedKeyAuthorizationScheme;
             }
         }
 
         public string CanonicalizeHttpRequest(HttpRequestMessage request, string accountName)
         {
+            // Add the method (GET, POST, PUT, or HEAD).
+            CanonicalizedString canonicalizedString = new CanonicalizedString(request.Method.Method, ExpectedCanonicalizedStringLength);
+
+            // Add the Content-* HTTP headers. Empty values are allowed.
+            if (request.Content != null)
+            {
+                canonicalizedString.AppendCanonicalizedElement((request.Content.Headers.ContentMD5 == null) ? null :
+                    Convert.ToBase64String(request.Content.Headers.ContentMD5));
+                canonicalizedString.AppendCanonicalizedElement((request.Content.Headers.ContentType == null) ? null :
+                    request.Content.Headers.ContentType.ToString());
+            }
+            else
+            {
+                canonicalizedString.AppendCanonicalizedElement(null);
+                canonicalizedString.AppendCanonicalizedElement(null);
+            }
+
             // Add the Date HTTP header (or the x-ms-date header if it is being used)
-            string dateHeaderValue = AuthenticationUtility.GetPreferredDateHeaderValue(request);
-            CanonicalizedString canonicalizedString = new CanonicalizedString(dateHeaderValue, ExpectedCanonicalizedStringLength);
+            AuthenticationUtility.AppendCanonicalizedDateHeader(canonicalizedString, request, true);
 
             // Add the canonicalized URI element
             string resourceString = AuthenticationUtility.GetCanonicalizedResourceString(request.RequestUri, accountName, true);

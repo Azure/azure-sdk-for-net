@@ -13,56 +13,46 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-// <summary>
-//    Contains code for the CloudStorageAccount class.
-// </summary>
 //-----------------------------------------------------------------------
 
 namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
 {
-    using System;
-    using System.Globalization;
-    using System.Net;
     using Microsoft.WindowsAzure.Storage.Core.Auth;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
 
+    /// <summary>
+    /// Represents a handler that signs HTTP requests with a shared key.
+    /// </summary>
     public sealed class SharedKeyLiteAuthenticationHandler : IAuthenticationHandler
     {
-        private ICanonicalizer canonicalizer;
-        private StorageCredentials credentials;
-        private string resourceAccountName;
+        private readonly SharedKeyAuthenticationHandler authenticationHandler;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SharedKeyLiteAuthenticationHandler"/> class.
+        /// </summary>
+        /// <param name="canonicalizer">A canonicalizer that converts HTTP request data into a standard form appropriate for signing.</param>
+        /// <param name="credentials">A <see cref="StorageCredentials"/> object providing credentials for the request.</param>
+        /// <param name="resourceAccountName">The name of the storage account that the HTTP request will access.</param>
         public SharedKeyLiteAuthenticationHandler(ICanonicalizer canonicalizer, StorageCredentials credentials, string resourceAccountName)
         {
-            this.canonicalizer = canonicalizer;
-            this.credentials = credentials;
-            this.resourceAccountName = resourceAccountName;
+            this.authenticationHandler = new SharedKeyAuthenticationHandler(canonicalizer, credentials, resourceAccountName);
         }
 
+        /// <summary>
+        /// Signs the specified HTTP request with a shared key.
+        /// </summary>
+        /// <param name="request">The HTTP request to sign.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         public void SignRequest(HttpWebRequest request, OperationContext operationContext)
         {
-            string dateString = HttpUtility.ConvertDateTimeToHttpString(DateTime.UtcNow);
-            request.Headers.Add(Constants.HeaderConstants.Date, dateString);
-
-            if (this.credentials.IsSharedKey)
-            {
-                // Canonicalize request
-                string message = this.canonicalizer.CanonicalizeHttpRequest(request, this.resourceAccountName);
-
-                // Compute hash
-                string computedBase64Signature = CryptoUtility.ComputeHmac256(this.credentials.KeyValue, message);
-
-                // Add authorization headers
-                if (!string.IsNullOrEmpty(this.credentials.KeyName))
-                {
-                    request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, this.credentials.KeyName);
-                }
-
-                request.Headers.Add(
-                    "Authorization",
-                    string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", this.canonicalizer.AuthorizationScheme, this.credentials.AccountName, computedBase64Signature));
-            }
+            this.authenticationHandler.SignRequest(request, operationContext);
         }
     }
 }

@@ -132,10 +132,11 @@
     <Compile Include="Blob\Protocol\BlobHttpResponseParsers.cs" />
     <Compile Include="Blob\Protocol\ContainerHttpRequestMessageFactory.cs" />
     <Compile Include="Blob\Protocol\ContainerHttpResponseParsers.cs" />
-    <Compile Include="Core\Auth\CanonicalizationHelper.cs" />
     <Compile Include="Core\Auth\ICanonicalizer.cs" />
     <Compile Include="Core\Auth\SharedKeyCanonicalizer.cs" />
+    <Compile Include="Core\Auth\SharedKeyLiteCanonicalizer.cs" />
     <Compile Include="Core\Auth\SharedKeyLiteTableCanonicalizer.cs" />
+    <Compile Include="Core\Auth\SharedKeyTableCanonicalizer.cs" />
     <Compile Include="Core\Executor\Executor.cs" />
     <Compile Include="Core\Util\AsyncSemaphore.cs" />
     <Compile Include="Core\Util\CultureStringComparer.cs" />

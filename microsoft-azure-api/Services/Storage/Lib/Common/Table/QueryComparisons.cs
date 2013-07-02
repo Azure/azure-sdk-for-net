@@ -19,6 +19,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
 {
     using System.Diagnostics.CodeAnalysis;
 
+    /// <summary>
+    /// Defines the set of comparison operators that may be used for constructing queries.
+    /// </summary>
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1307:AccessibleFieldsMustBeginWithUpperCaseLetter", Justification = "Due to Javascript projection limitations.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = "Due to Javascript projection limitations..")]
     public sealed class QueryComparisons
@@ -61,11 +64,29 @@ namespace Microsoft.WindowsAzure.Storage.Table
             get { return lessThanOrEqual; }
         }
 #else
+        /// <summary>
+        /// Represents the Equal operator.
+        /// </summary>
         public const string Equal = "eq";
+        /// <summary>
+        /// Represents the Not Equal operator.
+        /// </summary>
         public const string NotEqual = "ne";
+        /// <summary>
+        /// Represents the Greater Than operator.
+        /// </summary>
         public const string GreaterThan = "gt";
+        /// <summary>
+        /// Represents the Greater Than or Equal operator.
+        /// </summary>
         public const string GreaterThanOrEqual = "ge";
+        /// <summary>
+        /// Represents the Less Than operator.
+        /// </summary>
         public const string LessThan = "lt";
+        /// <summary>
+        /// Represents the Less Than or Equal operator.
+        /// </summary>
         public const string LessThanOrEqual = "le";
 #endif
     }

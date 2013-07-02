@@ -373,10 +373,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     await blob.FetchAttributesAsync();
                     Assert.AreEqual(md5, blob.Properties.ContentMD5);
 
-                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    using (MemoryOutputStream downloadedBlob = new MemoryOutputStream())
                     {
-                        await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
-                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                        await blob.DownloadToStreamAsync(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob.UnderlyingStream);
                     }
                 }
             }
@@ -459,10 +459,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     await blob.FetchAttributesAsync();
                     Assert.AreEqual(md5, blob.Properties.ContentMD5);
 
-                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    using (MemoryOutputStream downloadedBlob = new MemoryOutputStream())
                     {
-                        await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
-                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                        await blob.DownloadToStreamAsync(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob.UnderlyingStream);
                     }
 
                     await TestHelper.ExpectedExceptionAsync<ArgumentException>(
@@ -488,11 +488,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     await blob.FetchAttributesAsync();
                     Assert.AreEqual(md5, blob.Properties.ContentMD5);
 
-                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    using (MemoryOutputStream downloadedBlob = new MemoryOutputStream())
                     {
                         options.DisableContentMD5Validation = true;
-                        await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream(), null, options, null);
-                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                        await blob.DownloadToStreamAsync(downloadedBlob, null, options, null);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob.UnderlyingStream);
                     }
                 }
             }
@@ -545,10 +545,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     await blob.FetchAttributesAsync();
                     Assert.IsNull(blob.Properties.ContentMD5);
 
-                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    using (MemoryOutputStream downloadedBlob = new MemoryOutputStream())
                     {
-                        await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
-                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                        await blob.DownloadToStreamAsync(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob.UnderlyingStream);
                     }
                 }
             }

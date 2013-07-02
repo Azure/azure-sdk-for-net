@@ -125,7 +125,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Gets the individual message address.
         /// </summary>
         /// <param name="messageId">The message id.</param>
-        /// <returns>The Uri of the message.</returns>
+        /// <returns>The URI of the message.</returns>
         internal Uri GetIndividualMessageAddress(string messageId)
         {
             Uri individualMessageUri = NavigationHelper.AppendPathToUri(this.GetMessageRequestAddress(), messageId);

@@ -165,8 +165,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             // add entity
             currentTable.Execute(TableOperation.Insert(ent));
 
-            TableBatchOperation batch = new TableBatchOperation();           
-            batch.Insert(GenerateRandomEnitity("foo"));
+            TableBatchOperation batch = new TableBatchOperation();
             batch.Insert(ent);
 
             OperationContext opContext = new OperationContext();
@@ -1937,15 +1936,17 @@ namespace Microsoft.WindowsAzure.Storage.Table
             TableBatchOperation batch = new TableBatchOperation();
             string pk = Guid.NewGuid().ToString();
 
+            // Add entity 0
             ITableEntity first = GenerateRandomEnitity(pk);
             batch.Insert(first);
 
-            for (int m = 0; m < 99; m++)
+            // Add entities 1 - 98
+            for (int m = 1; m < 99; m++)
             {
                 batch.Insert(GenerateRandomEnitity(pk));
             }
 
-            // Insert Duplicate entity
+            // Insert Duplicate of entity 0
             batch.Insert(first);
 
             OperationContext opContext = new OperationContext();

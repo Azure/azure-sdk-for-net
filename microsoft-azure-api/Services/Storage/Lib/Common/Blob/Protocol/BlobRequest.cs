@@ -26,6 +26,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     using Microsoft.WindowsAzure.Storage.Core.Auth;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
+    /// <summary>
+    /// Provides a set of helper methods for constructing a request against the Blob service.
+    /// </summary>
 #if RTMD
     internal
 #else

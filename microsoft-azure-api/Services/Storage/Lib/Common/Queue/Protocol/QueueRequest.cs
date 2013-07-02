@@ -24,6 +24,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
     using System.Text;
     using System.Xml;
 
+    /// <summary>
+    /// Provides a set of helper methods for constructing a request against the Queue service.
+    /// </summary>
 #if RTMD
     internal
 #else
