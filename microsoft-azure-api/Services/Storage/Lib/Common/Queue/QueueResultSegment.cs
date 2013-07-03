@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         public IEnumerable<CloudQueue> Results { get; private set; }
 
         /// <summary>
-        /// Gets the continuation token used to retrieve the next segment of <see cref="CloudQueue"/> results.
+        /// Gets the continuation token used to retrieve the next segment of <see cref="CloudQueue"/> results. Returns null if there are no more results.
         /// </summary>
         /// <value>The continuation token.</value>
         public QueueContinuationToken ContinuationToken { get; private set; }

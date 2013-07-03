@@ -74,14 +74,11 @@ namespace Microsoft.WindowsAzure.Storage
             this.Type = ex.GetType().Name;
             this.Message = ex.Message;
             this.StackTrace = ex.StackTrace;
-#if RTMD
+#if WINDOWS_RT
             this.HResult = ex.HResult;
 #endif
 
-#if COMMON
-#else
             this.Source = ex.Source;
-#endif
             if (ex.InnerException != null)
             {
                 this.InnerExceptionInfo = new ExceptionInfo(ex.InnerException);
@@ -109,14 +106,11 @@ namespace Microsoft.WindowsAzure.Storage
         {
             writer.WriteStartElement("ExceptionInfo");
             writer.WriteElementString("Type", this.Type);
-#if RTMD
+#if WINDOWS_RT
             writer.WriteElementString("HResult", Convert.ToString(this.HResult));
 #endif
             writer.WriteElementString("Message", this.Message);
-#if COMMON
-#else
             writer.WriteElementString("Source", this.Source);
-#endif
             writer.WriteElementString("StackTrace", this.StackTrace);
 
             if (this.InnerExceptionInfo != null)
@@ -133,17 +127,14 @@ namespace Microsoft.WindowsAzure.Storage
         internal void ReadXml(XmlReader reader)
         {
             reader.ReadStartElement("ExceptionInfo");
-            this.Type = General.ReadElementAsString("Type", reader);
+            this.Type = CommonUtility.ReadElementAsString("Type", reader);
 
-#if RTMD
-            this.HResult = int.Parse(General.ReadElementAsString("HResult", reader));
+#if WINDOWS_RT
+            this.HResult = int.Parse(CommonUtility.ReadElementAsString("HResult", reader));
 #endif
-            this.Message = General.ReadElementAsString("Message", reader);
-#if COMMON
-#else
-            this.Source = General.ReadElementAsString("Source", reader);
-#endif
-            this.StackTrace = General.ReadElementAsString("StackTrace", reader);
+            this.Message = CommonUtility.ReadElementAsString("Message", reader);
+            this.Source = CommonUtility.ReadElementAsString("Source", reader);
+            this.StackTrace = CommonUtility.ReadElementAsString("StackTrace", reader);
 
             if (reader.IsStartElement() && reader.LocalName == "InnerExceptionInfo")
             {

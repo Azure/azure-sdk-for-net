@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// to entity properties when only a subset of properties are returned (for example, by a select clause in a query), or for when your query can return multiple entity types 
     /// with different properties. You can also use this type to perform bulk table updates of heterogeneous entities without losing property information.</para>
     /// <para><see cref="TableEntity"/> is an implementation of <see cref="ITableEntity"/> that uses reflection-based serialization and de-serialization behavior in its <see cref="TableEntity.ReadEntity(IDictionary{string, EntityProperty}, OperationContext)"/> and <see cref="TableEntity.WriteEntity(OperationContext)"/> methods. 
-    /// <see cref="TableEntity"/>-derived classes with methods that follow a convention for types and naming are serialized and de-serialized automatically. <see cref="TableEntity"/>-derived classes must also provide a get-able and set-able public
+    /// <see cref="TableEntity"/>-derived classes with methods that follow a convention for types and naming are serialized and deserialized automatically. <see cref="TableEntity"/>-derived classes must also provide a get-able and set-able public
     /// property of a type that is supported by the Windows Azure Table Service.</para></remarks>
     public interface ITableEntity
     {
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Populates the entity's properties from the <see cref="EntityProperty"/> data values in the <paramref name="properties"/> dictionary. 
         /// </summary>
-        /// <param name="properties">The dictionary of string property names to <see cref="EntityProperty"/> data values to de-serialize and store in this table entity instance.</param>
+        /// <param name="properties">The dictionary of string property names to <see cref="EntityProperty"/> data values to deserialize and store in this table entity instance.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object used to track the execution of the operation.</param>
         void ReadEntity(IDictionary<string, EntityProperty> properties, OperationContext operationContext);
 

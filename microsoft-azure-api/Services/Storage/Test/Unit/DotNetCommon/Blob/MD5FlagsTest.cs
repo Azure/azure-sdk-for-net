@@ -15,21 +15,41 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
     public class MD5FlagsTest : BlobTestBase
     {
+
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         [Description("Test StoreBlobContentMD5 flag with UploadFromStream")]
         [TestCategory(ComponentCategory.Blob)]
@@ -483,7 +503,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 container.DeleteIfExists();
             }
         }
-
+        
         [TestMethod]
         [Description("Test UseTransactionalMD5 flag with PutBlock and WritePages")]
         [TestCategory(ComponentCategory.Blob)]
@@ -527,17 +547,21 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 checkCount = 0;
                 using (Stream blockData = new MemoryStream(buffer))
                 {
+                    lastCheckMD5 = "invalid_md5";
                     blockBlob.PutBlock(blockIds[0], blockData, null, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.IsNull(lastCheckMD5);
 
+                    lastCheckMD5 = "invalid_md5";
                     blockData.Seek(0, SeekOrigin.Begin);
                     blockBlob.PutBlock(blockIds[1], blockData, null, null, optionsWithMD5, opContextWithMD5Check);
                     Assert.AreEqual(md5, lastCheckMD5);
 
+                    lastCheckMD5 = "invalid_md5";
                     blockData.Seek(0, SeekOrigin.Begin);
                     blockBlob.PutBlock(blockIds[2], blockData, md5, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.AreEqual(md5, lastCheckMD5);
                 }
+
                 Assert.AreEqual(3, checkCount);
 
                 CloudPageBlob pageBlob = container.GetPageBlobReference("blob2");
@@ -545,19 +569,24 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 checkCount = 0;
                 using (Stream pageData = new MemoryStream(buffer))
                 {
+                    lastCheckMD5 = "invalid_md5";
                     pageBlob.WritePages(pageData, 0, null, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.IsNull(lastCheckMD5);
 
+                    lastCheckMD5 = "invalid_md5";
                     pageData.Seek(0, SeekOrigin.Begin);
                     pageBlob.WritePages(pageData, 0, null, null, optionsWithMD5, opContextWithMD5Check);
                     Assert.AreEqual(md5, lastCheckMD5);
 
+                    lastCheckMD5 = "invalid_md5";
                     pageData.Seek(0, SeekOrigin.Begin);
                     pageBlob.WritePages(pageData, 0, md5, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.AreEqual(md5, lastCheckMD5);
                 }
+
                 Assert.AreEqual(3, checkCount);
 
+                lastCheckMD5 = null;
                 blockBlob = container.GetBlockBlobReference("blob3");
                 checkCount = 0;
                 using (Stream blobStream = blockBlob.OpenWrite(null, optionsWithMD5, opContextWithMD5Check))
@@ -568,6 +597,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 Assert.IsNotNull(lastCheckMD5);
                 Assert.AreEqual(1, checkCount);
 
+                lastCheckMD5 = "invalid_md5";
                 blockBlob = container.GetBlockBlobReference("blob4");
                 checkCount = 0;
                 using (Stream blobStream = blockBlob.OpenWrite(null, optionsWithNoMD5, opContextWithMD5Check))
@@ -578,6 +608,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 Assert.IsNull(lastCheckMD5);
                 Assert.AreEqual(1, checkCount);
 
+                lastCheckMD5 = null;
                 pageBlob = container.GetPageBlobReference("blob5");
                 checkCount = 0;
                 using (Stream blobStream = pageBlob.OpenWrite(buffer.Length * 3, null, optionsWithMD5, opContextWithMD5Check))
@@ -588,6 +619,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 Assert.IsNotNull(lastCheckMD5);
                 Assert.AreEqual(1, checkCount);
 
+                lastCheckMD5 = "invalid_md5";
                 pageBlob = container.GetPageBlobReference("blob6");
                 checkCount = 0;
                 using (Stream blobStream = pageBlob.OpenWrite(buffer.Length * 3, null, optionsWithNoMD5, opContextWithMD5Check))
@@ -650,6 +682,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     checkCount = 0;
                     using (Stream blockData = new MemoryStream(buffer))
                     {
+                        lastCheckMD5 = "invalid_md5";
                         result = blockBlob.BeginPutBlock(blockIds[0], blockData, null, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -657,6 +690,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         blockBlob.EndPutBlock(result);
                         Assert.IsNull(lastCheckMD5);
 
+                        lastCheckMD5 = "invalid_md5";
                         blockData.Seek(0, SeekOrigin.Begin);
                         result = blockBlob.BeginPutBlock(blockIds[1], blockData, null, null, optionsWithMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
@@ -665,6 +699,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         blockBlob.EndPutBlock(result);
                         Assert.AreEqual(md5, lastCheckMD5);
 
+                        lastCheckMD5 = "invalid_md5";
                         blockData.Seek(0, SeekOrigin.Begin);
                         result = blockBlob.BeginPutBlock(blockIds[2], blockData, md5, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
@@ -673,6 +708,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         blockBlob.EndPutBlock(result);
                         Assert.AreEqual(md5, lastCheckMD5);
                     }
+
                     Assert.AreEqual(3, checkCount);
 
                     CloudPageBlob pageBlob = container.GetPageBlobReference("blob2");
@@ -680,6 +716,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     checkCount = 0;
                     using (Stream pageData = new MemoryStream(buffer))
                     {
+                        lastCheckMD5 = "invalid_md5";
                         result = pageBlob.BeginWritePages(pageData, 0, null, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -687,6 +724,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         pageBlob.EndWritePages(result);
                         Assert.IsNull(lastCheckMD5);
 
+                        lastCheckMD5 = "invalid_md5";
                         pageData.Seek(0, SeekOrigin.Begin);
                         result = pageBlob.BeginWritePages(pageData, 0, null, null, optionsWithMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
@@ -695,6 +733,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         pageBlob.EndWritePages(result);
                         Assert.AreEqual(md5, lastCheckMD5);
 
+                        lastCheckMD5 = "invalid_md5";
                         pageData.Seek(0, SeekOrigin.Begin);
                         result = pageBlob.BeginWritePages(pageData, 0, md5, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
@@ -703,6 +742,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         pageBlob.EndWritePages(result);
                         Assert.AreEqual(md5, lastCheckMD5);
                     }
+
                     Assert.AreEqual(3, checkCount);
                 }
             }
@@ -760,18 +800,23 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 checkCount = 0;
                 using (Stream stream = new MemoryStream())
                 {
+                    lastCheckMD5 = null;
                     blockBlob.DownloadToStream(stream, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.IsNotNull(lastCheckMD5);
 
+                    lastCheckMD5 = null;
                     blockBlob.DownloadToStream(stream, null, optionsWithMD5, opContextWithMD5Check);
                     Assert.IsNotNull(lastCheckMD5);
 
+                    lastCheckMD5 = "invalid_md5";
                     blockBlob.DownloadRangeToStream(stream, buffer.Length, buffer.Length, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.IsNull(lastCheckMD5);
 
+                    lastCheckMD5 = "invalid_md5";
                     blockBlob.DownloadRangeToStream(stream, buffer.Length, buffer.Length, null, optionsWithMD5, opContextWithMD5Check);
                     Assert.AreEqual(md5, lastCheckMD5);
 
+                    lastCheckMD5 = "invalid_md5";
                     blockBlob.DownloadRangeToStream(stream, 1024, 4 * 1024 * 1024 + 1, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.IsNull(lastCheckMD5);
 
@@ -779,8 +824,23 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         () => blockBlob.DownloadRangeToStream(stream, 1024, 4 * 1024 * 1024 + 1, null, optionsWithMD5, opContextWithMD5Check),
                         "Downloading more than 4MB with transactional MD5 should not be supported");
                     Assert.IsInstanceOfType(storageEx.InnerException, typeof(ArgumentOutOfRangeException));
+
+                    lastCheckMD5 = null;
+                    using (Stream blobStream = blockBlob.OpenRead(null, optionsWithMD5, opContextWithMD5Check))
+                    {
+                        blobStream.CopyTo(stream);
+                        Assert.IsNotNull(lastCheckMD5);
+                    }
+
+                    lastCheckMD5 = "invalid_md5";
+                    using (Stream blobStream = blockBlob.OpenRead(null, optionsWithNoMD5, opContextWithMD5Check))
+                    {
+                        blobStream.CopyTo(stream);
+                        Assert.IsNull(lastCheckMD5);
+                    }
                 }
-                Assert.AreEqual(5, checkCount);
+
+                Assert.AreEqual(9, checkCount);
 
                 CloudPageBlob pageBlob = container.GetPageBlobReference("blob2");
                 using (Stream blobStream = pageBlob.OpenWrite(buffer.Length * 2))
@@ -792,6 +852,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 checkCount = 0;
                 using (Stream stream = new MemoryStream())
                 {
+                    lastCheckMD5 = "invalid_md5";
                     pageBlob.DownloadToStream(stream, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.IsNull(lastCheckMD5);
 
@@ -799,12 +860,15 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         () => pageBlob.DownloadToStream(stream, null, optionsWithMD5, opContextWithMD5Check),
                         "Page blob will not have MD5 set by default; with UseTransactional, download should fail");
 
+                    lastCheckMD5 = "invalid_md5";
                     pageBlob.DownloadRangeToStream(stream, buffer.Length, buffer.Length, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.IsNull(lastCheckMD5);
 
+                    lastCheckMD5 = "invalid_md5";
                     pageBlob.DownloadRangeToStream(stream, buffer.Length, buffer.Length, null, optionsWithMD5, opContextWithMD5Check);
                     Assert.AreEqual(md5, lastCheckMD5);
 
+                    lastCheckMD5 = "invalid_md5";
                     pageBlob.DownloadRangeToStream(stream, 1024, 4 * 1024 * 1024 + 1, null, optionsWithNoMD5, opContextWithMD5Check);
                     Assert.IsNull(lastCheckMD5);
 
@@ -812,8 +876,23 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         () => pageBlob.DownloadRangeToStream(stream, 1024, 4 * 1024 * 1024 + 1, null, optionsWithMD5, opContextWithMD5Check),
                         "Downloading more than 4MB with transactional MD5 should not be supported");
                     Assert.IsInstanceOfType(storageEx.InnerException, typeof(ArgumentOutOfRangeException));
+
+                    lastCheckMD5 = null;
+                    using (Stream blobStream = pageBlob.OpenRead(null, optionsWithMD5, opContextWithMD5Check))
+                    {
+                        blobStream.CopyTo(stream);
+                        Assert.IsNotNull(lastCheckMD5);
+                    }
+
+                    lastCheckMD5 = "invalid_md5";
+                    using (Stream blobStream = pageBlob.OpenRead(null, optionsWithNoMD5, opContextWithMD5Check))
+                    {
+                        blobStream.CopyTo(stream);
+                        Assert.IsNull(lastCheckMD5);
+                    }
                 }
-                Assert.AreEqual(5, checkCount);
+
+                Assert.AreEqual(9, checkCount);
             }
             finally
             {
@@ -872,6 +951,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     checkCount = 0;
                     using (Stream stream = new MemoryStream())
                     {
+                        lastCheckMD5 = null;
                         result = blockBlob.BeginDownloadToStream(stream, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -879,6 +959,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         blockBlob.EndDownloadRangeToStream(result);
                         Assert.IsNotNull(lastCheckMD5);
 
+                        lastCheckMD5 = null;
                         result = blockBlob.BeginDownloadToStream(stream, null, optionsWithMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -886,6 +967,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         blockBlob.EndDownloadRangeToStream(result);
                         Assert.IsNotNull(lastCheckMD5);
 
+                        lastCheckMD5 = "invalid_md5";
                         result = blockBlob.BeginDownloadRangeToStream(stream, buffer.Length, buffer.Length, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -893,6 +975,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         blockBlob.EndDownloadRangeToStream(result);
                         Assert.IsNull(lastCheckMD5);
 
+                        lastCheckMD5 = "invalid_md5";
                         result = blockBlob.BeginDownloadRangeToStream(stream, buffer.Length, buffer.Length, null, optionsWithMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -900,6 +983,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         blockBlob.EndDownloadRangeToStream(result);
                         Assert.AreEqual(md5, lastCheckMD5);
 
+                        lastCheckMD5 = "invalid_md5";
                         result = blockBlob.BeginDownloadRangeToStream(stream, 1024, 4 * 1024 * 1024 + 1, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -915,8 +999,31 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             () => blockBlob.EndDownloadRangeToStream(result),
                             "Downloading more than 4MB with transactional MD5 should not be supported");
                         Assert.IsInstanceOfType(storageEx.InnerException, typeof(ArgumentOutOfRangeException));
+
+                        lastCheckMD5 = null;
+                        result = blockBlob.BeginOpenRead(null, optionsWithMD5, opContextWithMD5Check,
+                            ar => waitHandle.Set(),
+                            null);
+                        waitHandle.WaitOne();
+                        using (Stream blobStream = blockBlob.EndOpenRead(result))
+                        {
+                            blobStream.CopyTo(stream);
+                            Assert.IsNotNull(lastCheckMD5);
+                        }
+
+                        lastCheckMD5 = "invalid_md5";
+                        result = blockBlob.BeginOpenRead(null, optionsWithNoMD5, opContextWithMD5Check,
+                            ar => waitHandle.Set(),
+                            null);
+                        waitHandle.WaitOne();
+                        using (Stream blobStream = blockBlob.EndOpenRead(result))
+                        {
+                            blobStream.CopyTo(stream);
+                            Assert.IsNull(lastCheckMD5);
+                        }
                     }
-                    Assert.AreEqual(5, checkCount);
+
+                    Assert.AreEqual(9, checkCount);
 
                     CloudPageBlob pageBlob = container.GetPageBlobReference("blob2");
                     using (Stream blobStream = pageBlob.OpenWrite(buffer.Length * 2))
@@ -928,6 +1035,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     checkCount = 0;
                     using (Stream stream = new MemoryStream())
                     {
+                        lastCheckMD5 = "invalid_md5";
                         result = pageBlob.BeginDownloadToStream(stream, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -943,6 +1051,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             () => pageBlob.EndDownloadRangeToStream(result),
                             "Page blob will not have MD5 set by default; with UseTransactional, download should fail");
 
+                        lastCheckMD5 = "invalid_md5";
                         result = pageBlob.BeginDownloadRangeToStream(stream, buffer.Length, buffer.Length, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -950,6 +1059,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         pageBlob.EndDownloadRangeToStream(result);
                         Assert.IsNull(lastCheckMD5);
 
+                        lastCheckMD5 = "invalid_md5";
                         result = pageBlob.BeginDownloadRangeToStream(stream, buffer.Length, buffer.Length, null, optionsWithMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -957,6 +1067,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         pageBlob.EndDownloadRangeToStream(result);
                         Assert.AreEqual(md5, lastCheckMD5);
 
+                        lastCheckMD5 = "invalid_md5";
                         result = pageBlob.BeginDownloadRangeToStream(stream, 1024, 4 * 1024 * 1024 + 1, null, optionsWithNoMD5, opContextWithMD5Check,
                             ar => waitHandle.Set(),
                             null);
@@ -972,8 +1083,31 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             () => pageBlob.EndDownloadRangeToStream(result),
                             "Downloading more than 4MB with transactional MD5 should not be supported");
                         Assert.IsInstanceOfType(storageEx.InnerException, typeof(ArgumentOutOfRangeException));
+
+                        lastCheckMD5 = null;
+                        result = pageBlob.BeginOpenRead(null, optionsWithMD5, opContextWithMD5Check,
+                            ar => waitHandle.Set(),
+                            null);
+                        waitHandle.WaitOne();
+                        using (Stream blobStream = pageBlob.EndOpenRead(result))
+                        {
+                            blobStream.CopyTo(stream);
+                            Assert.IsNotNull(lastCheckMD5);
+                        }
+
+                        lastCheckMD5 = "invalid_md5";
+                        result = pageBlob.BeginOpenRead(null, optionsWithNoMD5, opContextWithMD5Check,
+                            ar => waitHandle.Set(),
+                            null);
+                        waitHandle.WaitOne();
+                        using (Stream blobStream = pageBlob.EndOpenRead(result))
+                        {
+                            blobStream.CopyTo(stream);
+                            Assert.IsNull(lastCheckMD5);
+                        }
                     }
-                    Assert.AreEqual(5, checkCount);
+
+                    Assert.AreEqual(9, checkCount);
                 }
             }
             finally

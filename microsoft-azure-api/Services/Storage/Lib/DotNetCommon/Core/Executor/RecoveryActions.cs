@@ -17,21 +17,21 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
     using System.IO;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
 
     internal static class RecoveryActions
     {
         internal static void RewindStream<T>(StorageCommandBase<T> cmd, Exception ex, OperationContext ctx)
         {
-            SeekStream(cmd, ex, ctx, 0);
+            RecoveryActions.SeekStream(cmd, 0);
         }
 
-        internal static void SeekStream<T>(StorageCommandBase<T> cmd, Exception ex, OperationContext ctx, long offset)
+        internal static void SeekStream<T>(StorageCommandBase<T> cmd, long offset)
         {
-            RESTCommand<T> restCMD = cmd as RESTCommand<T>;
-            CommonUtils.AssertNotNull("cmd", restCMD);
+            CommonUtility.AssertNotNull("cmd", cmd);
+            RESTCommand<T> restCMD = (RESTCommand<T>)cmd;
             restCMD.SendStream.Seek(offset, SeekOrigin.Begin);
         }
     }

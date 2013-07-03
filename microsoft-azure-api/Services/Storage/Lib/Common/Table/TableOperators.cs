@@ -24,9 +24,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1307:AccessibleFieldsMustBeginWithUpperCaseLetter", Justification = "Due to Javascript projection limitations.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = "Due to Javascript projection limitations..")]
-    public sealed class TableOperators
+    public static class TableOperators
     {
-#if RT
+#if WINDOWS_RT
         internal const string and = "and";
         internal const string not = "not";
         internal const string or = "or";
@@ -45,15 +45,17 @@ namespace Microsoft.WindowsAzure.Storage.Table
         {
             get { return or; }
         }
-#else        
+#else
         /// <summary>
         /// Represents the And operator.
         /// </summary>
         public const string And = "and";
+
         /// <summary>
         /// Represents the Not operator.
         /// </summary>
         public const string Not = "not";
+
         /// <summary>
         /// Represents the Or operator.
         /// </summary>

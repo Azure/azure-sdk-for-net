@@ -27,14 +27,14 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 
     internal static partial class HttpResponseParsers
     {
-        internal static T ProcessExpectedStatusCodeNoException<T>(HttpStatusCode expectedStatusCode, HttpResponseMessage resp, T retVal, StorageCommandBase<T> cmd, Exception ex, OperationContext operationContext)
+        internal static T ProcessExpectedStatusCodeNoException<T>(HttpStatusCode expectedStatusCode, HttpResponseMessage resp, T retVal, StorageCommandBase<T> cmd, Exception ex)
         {
-            return ProcessExpectedStatusCodeNoException(expectedStatusCode, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex, operationContext);
+            return ProcessExpectedStatusCodeNoException(expectedStatusCode, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex);
         }
 
-        internal static T ProcessExpectedStatusCodeNoException<T>(HttpStatusCode[] expectedStatusCodes, HttpResponseMessage resp, T retVal, StorageCommandBase<T> cmd, Exception ex, OperationContext operationContext)
+        internal static T ProcessExpectedStatusCodeNoException<T>(HttpStatusCode[] expectedStatusCodes, HttpResponseMessage resp, T retVal, StorageCommandBase<T> cmd, Exception ex)
         {
-            return ProcessExpectedStatusCodeNoException(expectedStatusCodes, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex, operationContext);
+            return ProcessExpectedStatusCodeNoException(expectedStatusCodes, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex);
         }
 
         /// <summary>

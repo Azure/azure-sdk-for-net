@@ -17,21 +17,18 @@
 
 namespace Microsoft.WindowsAzure.Storage
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Microsoft.WindowsAzure.Storage;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents a result segment that was retrieved from the total set of possible results.
     /// </summary>
     /// <typeparam name="TElement">The type of the element.</typeparam>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Microsoft.StyleCop.CSharp.MaintainabilityRules",
         "SA1402:FileMayOnlyContainASingleClass",
         Justification = "Other class is a non-generic static helper with the same name.")]
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
@@ -56,6 +53,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// Gets an enumerable collection of results.
         /// </summary>
         /// <value>An enumerable collection of results.</value>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Reviewed.")]
         public List<TElement> Results { get; internal set; }
 
         /// <summary>

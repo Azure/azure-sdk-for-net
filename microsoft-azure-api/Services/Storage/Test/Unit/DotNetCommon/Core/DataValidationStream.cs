@@ -25,22 +25,26 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
     {
         private byte[] streamContents;
         private bool completeSynchronously;
+        private bool isSeekable;
         private int delayInMs;
         private int currentOffset;
+        private int allowedSuccessfulRequests;
 
         internal Exception LastException { get; private set; }
         internal int ReadCallCount { get; private set; }
         internal int WriteCallCount { get; private set; }
 
-        public DataValidationStream(byte[] streamContents, bool completeSynchronously, int delayInMs)
+        public DataValidationStream(byte[] streamContents, bool completeSynchronously, int delayInMs, int allowedSuccessfulRequests, bool seekable)
         {
             this.streamContents = streamContents;
             this.completeSynchronously = completeSynchronously;
             this.delayInMs = delayInMs;
+            this.allowedSuccessfulRequests = allowedSuccessfulRequests;
             this.currentOffset = 0;
             this.LastException = null;
             this.ReadCallCount = 0;
             this.WriteCallCount = 0;
+            this.isSeekable = seekable;
         }
 
         public override bool CanRead
@@ -55,7 +59,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         {
             get
             {
-                return true;
+                return this.isSeekable;
             }
         }
 
@@ -75,6 +79,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         {
             get
             {
+                if (!this.isSeekable)
+                {
+                    throw new NotSupportedException();
+                }
+
                 return this.streamContents.Length;
             }
         }
@@ -83,16 +92,28 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         {
             get
             {
+                if (!this.isSeekable)
+                {
+                    throw new NotSupportedException();
+                }
+
                 return this.currentOffset;
             }
             set
             {
+                if (!this.isSeekable)
+                {
+                    throw new NotSupportedException();
+                }
+
                 this.currentOffset = (int)value;
             }
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
+            this.FailRequestIfNeeded();
+
             this.ReadCallCount++;
             Thread.Sleep(this.delayInMs);
             
@@ -105,21 +126,35 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
         {
-            ChainedAsyncResult<int> result = new ChainedAsyncResult<int>(callback, state);
+            StorageAsyncResult<int> result = new StorageAsyncResult<int>(callback, state);
 
             if (this.completeSynchronously)
             {
                 result.UpdateCompletedSynchronously(this.completeSynchronously);
-                result.Result = this.Read(buffer, offset, count);
-                result.OnComplete();
+                try
+                {
+                    result.Result = this.Read(buffer, offset, count);
+                    result.OnComplete();
+                }
+                catch (Exception e)
+                {
+                    result.OnComplete(e);
+                }
             }
             else
             {
                 ThreadPool.QueueUserWorkItem(_ =>
                     {
                         result.UpdateCompletedSynchronously(this.completeSynchronously);
-                        result.Result = this.Read(buffer, offset, count);
-                        result.OnComplete();
+                        try
+                        {
+                            result.Result = this.Read(buffer, offset, count);
+                            result.OnComplete();
+                        }
+                        catch (Exception e)
+                        {
+                            result.OnComplete(e);
+                        }
                     },
                     null);
             }
@@ -129,38 +164,19 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         public override int EndRead(IAsyncResult asyncResult)
         {
-            ChainedAsyncResult<int> result = (ChainedAsyncResult<int>)asyncResult;
+            StorageAsyncResult<int> result = (StorageAsyncResult<int>)asyncResult;
             result.End();
             return result.Result;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            long newOffset;
-            switch (origin)
+            if (!this.isSeekable)
             {
-                case SeekOrigin.Begin:
-                    newOffset = offset;
-                    break;
-
-                case SeekOrigin.Current:
-                    newOffset = this.currentOffset + offset;
-                    break;
-
-                case SeekOrigin.End:
-                    newOffset = this.Length + offset;
-                    break;
-
-                default:
-                    CommonUtils.ArgumentOutOfRange("origin", origin);
-                    throw new ArgumentOutOfRangeException();
+                throw new NotSupportedException();
             }
 
-            CommonUtils.AssertInBounds("offset", newOffset, 0, this.Length);
-
-            this.currentOffset = (int)newOffset;
-
-            return this.currentOffset;
+            return this.ForceSeek(offset, origin);
         }
 
         public override void SetLength(long value)
@@ -170,6 +186,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         public override void Write(byte[] buffer, int offset, int count)
         {
+            this.FailRequestIfNeeded();
+            
             this.WriteCallCount++;
             Thread.Sleep(this.delayInMs);
 
@@ -191,7 +209,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
         {
-            ChainedAsyncResult<NullType> result = new ChainedAsyncResult<NullType>(callback, state);
+            StorageAsyncResult<NullType> result = new StorageAsyncResult<NullType>(callback, state);
 
             if (this.completeSynchronously)
             {
@@ -229,8 +247,50 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         public override void EndWrite(IAsyncResult asyncResult)
         {
-            ChainedAsyncResult<NullType> result = (ChainedAsyncResult<NullType>)asyncResult;
+            StorageAsyncResult<NullType> result = (StorageAsyncResult<NullType>)asyncResult;
             result.End();
+        }
+
+        private void FailRequestIfNeeded()
+        {
+            if (this.allowedSuccessfulRequests == 0)
+            {
+                this.LastException = new IOException();
+                throw this.LastException;
+            }
+            else if (this.allowedSuccessfulRequests > 0)
+            {
+                this.allowedSuccessfulRequests--;
+            }
+        }
+
+        public long ForceSeek(long offset, SeekOrigin origin)
+        {
+            long newOffset;
+            switch (origin)
+            {
+                case SeekOrigin.Begin:
+                    newOffset = offset;
+                    break;
+
+                case SeekOrigin.Current:
+                    newOffset = this.currentOffset + offset;
+                    break;
+
+                case SeekOrigin.End:
+                    newOffset = this.Length + offset;
+                    break;
+
+                default:
+                    CommonUtility.ArgumentOutOfRange("origin", origin);
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            CommonUtility.AssertInBounds("offset", newOffset, 0, this.Length);
+
+            this.currentOffset = (int)newOffset;
+
+            return this.currentOffset;
         }
     }
 }

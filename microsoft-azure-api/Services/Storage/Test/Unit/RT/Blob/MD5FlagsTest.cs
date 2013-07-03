@@ -15,18 +15,12 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Security.Cryptography;
-using Windows.Security.Cryptography.Core;
-using Windows.Storage.Streams;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using System;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
+using Windows.Storage.Streams;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {

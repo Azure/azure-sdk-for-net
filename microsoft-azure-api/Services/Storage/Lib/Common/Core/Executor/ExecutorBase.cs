@@ -17,15 +17,14 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
-    using System;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
 
     internal abstract class ExecutorBase
     {
         protected static void ApplyUserHeaders<T>(ExecutionState<T> executionState)
         {
-#if !COMMON
             if (!string.IsNullOrEmpty(executionState.OperationContext.ClientRequestID))
             {
                 executionState.Req.Headers.Add(Constants.HeaderConstants.ClientRequestIdHeader, executionState.OperationContext.ClientRequestID);
@@ -38,7 +37,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     executionState.Req.Headers.Add(key, executionState.OperationContext.UserHeaders[key]);
                 }
             }
-#endif
         }
 
         protected static void StartRequestAttempt<T>(ExecutionState<T> executionState)
@@ -65,7 +63,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         protected static void FireSendingRequest<T>(ExecutionState<T> executionState)
         {
             RequestEventArgs args = new RequestEventArgs(executionState.Cmd.CurrentResult);
-#if RT
+#if WINDOWS_RT
             args.RequestUri = executionState.Req.RequestUri;
 #else
             args.Request = executionState.Req;
@@ -76,7 +74,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         protected static void FireResponseReceived<T>(ExecutionState<T> executionState)
         {
             RequestEventArgs args = new RequestEventArgs(executionState.Cmd.CurrentResult);
-#if RT
+#if WINDOWS_RT
             args.RequestUri = executionState.Req.RequestUri;
 #else
             args.Request = executionState.Req;
@@ -105,7 +103,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             return false;
         }
 
-#if DNCP
+#if WINDOWS_DESKTOP
         protected static bool CheckCancellation<T>(ExecutionState<T> executionState)
         {
             if (executionState.CancelRequested)

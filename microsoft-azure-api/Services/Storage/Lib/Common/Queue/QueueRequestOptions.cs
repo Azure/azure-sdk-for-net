@@ -44,19 +44,29 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 this.RetryPolicy = other.RetryPolicy;
                 this.ServerTimeout = other.ServerTimeout;
                 this.MaximumExecutionTime = other.MaximumExecutionTime;
+                this.OperationExpiryTime = other.OperationExpiryTime;
             }
         }
 
         internal static QueueRequestOptions ApplyDefaults(QueueRequestOptions options, CloudQueueClient serviceClient)
         {
             QueueRequestOptions modifiedOptions = new QueueRequestOptions(options);
-
             modifiedOptions.RetryPolicy = modifiedOptions.RetryPolicy ?? serviceClient.RetryPolicy;
             modifiedOptions.ServerTimeout = modifiedOptions.ServerTimeout ?? serviceClient.ServerTimeout;
             modifiedOptions.MaximumExecutionTime = modifiedOptions.MaximumExecutionTime ?? serviceClient.MaximumExecutionTime;
-
+            
+            if (!modifiedOptions.OperationExpiryTime.HasValue && modifiedOptions.MaximumExecutionTime.HasValue)
+            {
+                modifiedOptions.OperationExpiryTime = DateTime.Now + modifiedOptions.MaximumExecutionTime.Value;
+            }
+            
             return modifiedOptions;
         }
+
+        /// <summary>
+        ///  Gets or sets the absolute Expiry time across all potential retries etc. 
+        /// </summary>
+        internal DateTime? OperationExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets the retry policy for the request.
@@ -71,7 +81,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         public TimeSpan? ServerTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum execution time accross all potential retries etc. 
+        /// Gets or sets the maximum execution time across all potential retries etc. 
         /// </summary>
         /// <value>The maximum execution time.</value>
         public TimeSpan? MaximumExecutionTime { get; set; }

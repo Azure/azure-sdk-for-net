@@ -17,20 +17,20 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+    using Microsoft.WindowsAzure.Storage;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
-    using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-    using Microsoft.WindowsAzure.Storage;
 
     [TestClass]
     public class CloudBlobDirectoryTest : BlobTestBase
     {
-        String[] Delimiters = new String[] { "$", "@", "-", "%", "/", "|"};
+        string[] Delimiters = new string[] { "$", "@", "-", "%", "/", "|"};
 
-        private async Task<bool> CloudBlobDirectorySetupWithDelimiterAsync(CloudBlobContainer container, String delimiter = "/")
+        private async Task<bool> CloudBlobDirectorySetupWithDelimiterAsync(CloudBlobContainer container, string delimiter = "/")
         {
             try
             {
@@ -57,6 +57,28 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 throw e;
             }
 
+        }
+
+
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
         }
 
         [TestMethod]

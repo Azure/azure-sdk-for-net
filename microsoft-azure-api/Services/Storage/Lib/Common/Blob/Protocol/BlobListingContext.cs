@@ -17,13 +17,12 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
-    using System;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
     /// Provides a set of parameters for a blob listing operation.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

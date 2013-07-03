@@ -17,11 +17,12 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
-    using System;
-    using Microsoft.WindowsAzure.Storage.Table;
+#if WINDOWS_DESKTOP && ! WINDOWS_PHONE
     using Microsoft.WindowsAzure.Storage.Table.DataServices;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed.")]
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed.")]
     internal class TableCommand<T, INTERMEDIATE_TYPE> : StorageCommandBase<T>
     {
         public Func<INTERMEDIATE_TYPE> ExecuteFunc;
@@ -30,4 +31,5 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         public Func<INTERMEDIATE_TYPE, RequestResult, TableCommand<T, INTERMEDIATE_TYPE>, T> ParseResponse;
         public TableServiceContext Context = null;
     }
+#endif
 }

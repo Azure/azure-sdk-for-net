@@ -21,6 +21,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
+    using System.Globalization;
     using System.Net;
     
     internal static class WebRequestExtensions
@@ -62,7 +63,52 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         {
             if (value.HasValue)
             {
-                request.Headers.Add(name, value.Value.ToString());
+                request.Headers.Add(name, value.Value.ToString(CultureInfo.InvariantCulture));
+            }
+        }
+
+        /// <summary>
+        /// Adds an optional header to a request.
+        /// </summary>
+        /// <param name="request">The web request.</param>
+        /// <param name="name">The header name.</param>
+        /// <param name="value">The header value.</param>
+        internal static void AddOptionalHeader(this HttpWebRequest request, string name, long? value)
+        {
+            if (value.HasValue)
+            {
+                request.Headers.Add(name, value.Value.ToString(CultureInfo.InvariantCulture));
+            }
+        }
+
+        /// <summary>
+        /// Applies the lease condition to the web request.
+        /// </summary>
+        /// <param name="request">The request to be modified.</param>
+        /// <param name="accessCondition">Access condition to be added to the request.</param>
+        internal static void ApplyLeaseId(this HttpWebRequest request, AccessCondition accessCondition)
+        {
+            if (accessCondition != null)
+            {
+                if (!string.IsNullOrEmpty(accessCondition.LeaseId))
+                {
+                    request.Headers[Constants.HeaderConstants.LeaseIdHeader] = accessCondition.LeaseId;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Applies the sequence number condition to the web request.
+        /// </summary>
+        /// <param name="request">The request to be modified.</param>
+        /// <param name="accessCondition">Access condition to be added to the request.</param>
+        internal static void ApplySequenceNumberCondition(this HttpWebRequest request, AccessCondition accessCondition)
+        {
+            if (accessCondition != null)
+            {
+                request.AddOptionalHeader(Constants.HeaderConstants.IfSequenceNumberLEHeader, accessCondition.IfSequenceNumberLessThanOrEqual);
+                request.AddOptionalHeader(Constants.HeaderConstants.IfSequenceNumberLTHeader, accessCondition.IfSequenceNumberLessThan);
+                request.AddOptionalHeader(Constants.HeaderConstants.IfSequenceNumberEqHeader, accessCondition.IfSequenceNumberEqual);
             }
         }
 
@@ -87,20 +133,22 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 
                 if (accessCondition.IfModifiedSinceTime.HasValue)
                 {
+#if WINDOWS_PHONE
+                    request.Headers[HttpRequestHeader.IfModifiedSince] =
+                        HttpWebUtility.ConvertDateTimeToHttpString(accessCondition.IfModifiedSinceTime.Value);
+#else
                     // Not using this property will cause Restricted property exception to be thrown
                     request.IfModifiedSince = accessCondition.IfModifiedSinceTime.Value.UtcDateTime;
+#endif
                 }
 
                 if (accessCondition.IfNotModifiedSinceTime.HasValue)
                 {
                     request.Headers[HttpRequestHeader.IfUnmodifiedSince] =
-                        HttpUtility.ConvertDateTimeToHttpString(accessCondition.IfNotModifiedSinceTime.Value);
+                        HttpWebUtility.ConvertDateTimeToHttpString(accessCondition.IfNotModifiedSinceTime.Value);
                 }
 
-                if (!string.IsNullOrEmpty(accessCondition.LeaseId))
-                {
-                    request.Headers[Constants.HeaderConstants.LeaseIdHeader] = accessCondition.LeaseId;
-                }
+                request.ApplyLeaseId(accessCondition);
             }
         }
 
@@ -126,13 +174,13 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
                 if (accessCondition.IfModifiedSinceTime.HasValue)
                 {
                     request.Headers[Constants.HeaderConstants.SourceIfModifiedSinceHeader] =
-                        HttpUtility.ConvertDateTimeToHttpString(accessCondition.IfModifiedSinceTime.Value);
+                        HttpWebUtility.ConvertDateTimeToHttpString(accessCondition.IfModifiedSinceTime.Value);
                 }
 
                 if (accessCondition.IfNotModifiedSinceTime.HasValue)
                 {
                     request.Headers[Constants.HeaderConstants.SourceIfUnmodifiedSinceHeader] =
-                        HttpUtility.ConvertDateTimeToHttpString(accessCondition.IfNotModifiedSinceTime.Value);
+                        HttpWebUtility.ConvertDateTimeToHttpString(accessCondition.IfNotModifiedSinceTime.Value);
                 }
 
                 if (!string.IsNullOrEmpty(accessCondition.LeaseId))

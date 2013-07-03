@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+=======================================================================================
+<copyright file="CustomDictionary.xml" company="Microsoft">
+   Copyright 2012 Microsoft Corporation
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+</copyright>
+========================================================================================
+-->
+
+<Dictionary>
+  <Words>
+    <Recognized>
+      <Word>Auth</Word>
+      <Word>api</Word>
+      <Word>sas</Word>
+      <Word>dest</Word>
+      <Word>Acl</Word>
+      <Word>Md</Word>
+      <Word>Eq</Word>
+      <Word>Canonicalizer</Word>
+      <Word>Async</Word>
+      <Word>orderby</Word>
+      <Word>IBufferManager</Word>
+      <Word>DynamicTableEntity</Word>
+      <Word>GetDefaultBufferSize</Word>
+      <Word>ITableEntity</Word>
+      <Word>EndRead</Word>
+	  <Word>TableQuery</Word>
+	  <Word>EndFlush</Word>
+	  <Word>EntityProperty</Word>
+	  <Word>ExecuteQuery</Word>
+	  <Word>CloudTable</Word>
+	  <Word>CreateQuery</Word>
+	  <Word>Etag</Word>
+    </Recognized>
+    <Compound>
+      <Term CompoundAlternate="TableQuery">Tablequery</Term>
+      <Term CompoundAlternate="EntityProperty">Entityproperty</Term>
+      <Term CompoundAlternate="ExecuteQuery">Executequery</Term>
+      <Term CompoundAlternate="CloudTable">Cloudtable</Term>
+      <Term CompoundAlternate="CreateQuery">Createquery</Term>
+      <Term CompoundAlternate="EndFlush">Endflush</Term>
+      <Term CompoundAlternate="BeginFlush">Beginflush</Term>
+      <Term CompoundAlternate="EndRead">Endread</Term>
+      <Term CompoundAlternate="NumberLess">Numberless</Term>
+    </Compound>
+    <DiscreteExceptions>
+      <Term>etag</Term>
+      <Term>Etag</Term>
+    </DiscreteExceptions>
+  </Words>
+</Dictionary>

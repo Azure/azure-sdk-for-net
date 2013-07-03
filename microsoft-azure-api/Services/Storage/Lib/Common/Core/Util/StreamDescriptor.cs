@@ -20,7 +20,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
     using System.Threading;
 
     /// <summary>
-    /// Provides properties to keep track of Md5 / Length of a stream as it is being copied.
+    /// Provides properties to keep track of Md5 hash / Length of a stream as it is being copied.
     /// </summary>
     internal class StreamDescriptor
     {

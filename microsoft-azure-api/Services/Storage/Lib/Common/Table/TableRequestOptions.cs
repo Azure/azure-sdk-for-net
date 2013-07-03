@@ -17,8 +17,8 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
-    using System;
     using Microsoft.WindowsAzure.Storage.RetryPolicies;
+    using System;
 
     /// <summary>
     /// Represents a set of timeout and retry policy options that may be specified for a table operation request.
@@ -43,8 +43,29 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 this.ServerTimeout = other.ServerTimeout;
                 this.RetryPolicy = other.RetryPolicy;
                 this.MaximumExecutionTime = other.MaximumExecutionTime;
+                this.OperationExpiryTime = other.OperationExpiryTime;
             }
         }
+
+        internal static TableRequestOptions ApplyDefaults(TableRequestOptions requestOptions, CloudTableClient serviceClient)
+        {
+            TableRequestOptions modifiedOptions = new TableRequestOptions(requestOptions);
+            modifiedOptions.RetryPolicy = modifiedOptions.RetryPolicy ?? serviceClient.RetryPolicy;
+            modifiedOptions.ServerTimeout = modifiedOptions.ServerTimeout ?? serviceClient.ServerTimeout;
+            modifiedOptions.MaximumExecutionTime = modifiedOptions.MaximumExecutionTime ?? serviceClient.MaximumExecutionTime;
+
+            if (!modifiedOptions.OperationExpiryTime.HasValue && modifiedOptions.MaximumExecutionTime.HasValue)
+            {
+                modifiedOptions.OperationExpiryTime = DateTime.Now + modifiedOptions.MaximumExecutionTime.Value;
+            }
+
+            return modifiedOptions;
+        }
+
+        /// <summary>
+        ///  Gets or sets the absolute Expiry time across all potential retries etc. 
+        /// </summary>
+        internal DateTime? OperationExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets the retry policy for the request.
@@ -63,20 +84,5 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <value>A <see cref="TimeSpan"/> representing the maximum execution time for retries.</value>
         public TimeSpan? MaximumExecutionTime { get; set; }
-
-        internal static TableRequestOptions ApplyDefaults(TableRequestOptions requestOptions, CloudTableClient client)
-        {
-            requestOptions = new TableRequestOptions(requestOptions);
-            requestOptions.RetryPolicy = requestOptions.RetryPolicy == null
-                                             ? client.RetryPolicy
-                                             : requestOptions.RetryPolicy;
-            requestOptions.ServerTimeout = requestOptions.ServerTimeout == null
-                                                  ? client.ServerTimeout
-                                                  : requestOptions.ServerTimeout;
-            requestOptions.MaximumExecutionTime = requestOptions.MaximumExecutionTime == null
-                                                      ? client.MaximumExecutionTime
-                                                      : requestOptions.MaximumExecutionTime;
-            return requestOptions;
-        }
     }
 }

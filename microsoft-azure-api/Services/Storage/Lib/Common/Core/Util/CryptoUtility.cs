@@ -17,11 +17,11 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Util
 {
-#if RT
+#if WINDOWS_RT
     using Windows.Security.Cryptography;
     using Windows.Security.Cryptography.Core;
     using Windows.Storage.Streams;
-#elif! COMMON
+#else
     using System;
     using System.Security.Cryptography;
     using System.Text;
@@ -31,15 +31,13 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
     {
         internal static string ComputeHmac256(byte[] key, string message)
         {
-#if RT
+#if WINDOWS_RT
             MacAlgorithmProvider macAlgorithmProvider = MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA256");
             IBuffer keyMaterial = CryptographicBuffer.CreateFromByteArray(key);
             CryptographicKey hmacKey = macAlgorithmProvider.CreateKey(keyMaterial);
             IBuffer messageBuffer = CryptographicBuffer.ConvertStringToBinary(message, BinaryStringEncoding.Utf8);
             IBuffer signedMessage = CryptographicEngine.Sign(hmacKey, messageBuffer);
             return CryptographicBuffer.EncodeToBase64String(signedMessage);
-#elif COMMON
-            return null;
 #else
             using (HashAlgorithm hashAlgorithm = new HMACSHA256(key))
             {

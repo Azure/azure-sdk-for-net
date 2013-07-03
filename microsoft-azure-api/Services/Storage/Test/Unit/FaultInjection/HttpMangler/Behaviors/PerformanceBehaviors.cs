@@ -15,19 +15,10 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------
-// <copyright file="PerformanceBehaviors.cs" company="Microsoft">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <summary>
-//     This set of behaviors both measure and influence the performance of the sessions to which they are applied.
-// </summary>
-//-----------------------------------------------------------------------
-
 namespace Microsoft.WindowsAzure.Test.Network.Behaviors
 {
-    using System;
     using Fiddler;
+    using System;
 
     /// <summary>
     /// PerformanceBehaviors both measure and influence the performance of the sessions to which they are applied.
