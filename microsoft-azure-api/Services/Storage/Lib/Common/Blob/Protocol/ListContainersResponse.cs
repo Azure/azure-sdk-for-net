@@ -25,7 +25,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     /// <summary>
     /// Provides methods for parsing the response from a container listing operation.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

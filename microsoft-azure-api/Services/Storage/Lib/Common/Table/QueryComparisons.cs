@@ -24,9 +24,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1307:AccessibleFieldsMustBeginWithUpperCaseLetter", Justification = "Due to Javascript projection limitations.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = "Due to Javascript projection limitations..")]
-    public sealed class QueryComparisons
+    public static class QueryComparisons
     {
-#if RT
+#if WINDOWS_RT
         internal const string equal = "eq";
         internal const string notEqual = "ne";
         internal const string greaterThan = "gt";
@@ -68,22 +68,27 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Represents the Equal operator.
         /// </summary>
         public const string Equal = "eq";
+
         /// <summary>
         /// Represents the Not Equal operator.
         /// </summary>
         public const string NotEqual = "ne";
+
         /// <summary>
         /// Represents the Greater Than operator.
         /// </summary>
         public const string GreaterThan = "gt";
+
         /// <summary>
         /// Represents the Greater Than or Equal operator.
         /// </summary>
         public const string GreaterThanOrEqual = "ge";
+
         /// <summary>
         /// Represents the Less Than operator.
         /// </summary>
         public const string LessThan = "lt";
+
         /// <summary>
         /// Represents the Less Than or Equal operator.
         /// </summary>

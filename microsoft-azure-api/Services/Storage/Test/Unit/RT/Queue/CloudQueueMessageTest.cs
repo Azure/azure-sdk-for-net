@@ -15,20 +15,37 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Text;
-using System.Linq;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
     [TestClass]
-    public class CloudQueueMessageTest : TestBase
+    public class CloudQueueMessageTest : QueueTestBase
     {
-        readonly CloudQueueClient DefaultQueueClient = new CloudQueueClient(new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), TestBase.StorageCredentials);
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                TestBase.QueueBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.QueueBufferManager.OutstandingBufferCount);
+            }
+        }
 
         [TestMethod]
         // [Description("Test CloudQueueMessage constructor.")]
@@ -38,7 +55,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueCreateMessageAsync()
         {
-            CloudQueue queue = DefaultQueueClient.GetQueueReference(TestHelper.GenerateNewQueueName());
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
 
             try
             {
@@ -65,7 +83,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 queue.DeleteIfExistsAsync().AsTask().Wait();
             }
         }
-        
+
         [TestMethod]
         /// [Description("Test add/update/get/delete message")]
         [TestCategory(ComponentCategory.Queue)]
@@ -74,7 +92,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueMessageBasicOperation()
         {
-            CloudQueue queue = DefaultQueueClient.GetQueueReference(TestHelper.GenerateNewQueueName());
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
 
             await queue.CreateAsync();
 
@@ -97,7 +116,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         public async Task CloudQueueMessageAddDelete()
         {
             CloudQueueClient client = GenerateCloudQueueClient();
-            CloudQueue queue = client.GetQueueReference(TestHelper.GenerateNewQueueName());
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
 
             await queue.CreateAsync();
 
@@ -119,8 +138,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueGetMessageAsync()
         {
-            string name = TestHelper.GenerateNewQueueName();
-            CloudQueue queue = DefaultQueueClient.GetQueueReference(name);
+            CloudQueueClient client = GenerateCloudQueueClient();
+            string name = GenerateNewQueueName();
+            CloudQueue queue = client.GetQueueReference(name);
             await queue.CreateAsync();
 
             CloudQueueMessage emptyMessage = await queue.GetMessageAsync();
@@ -144,13 +164,14 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueGetMessagesAsync()
         {
-            string name = TestHelper.GenerateNewQueueName();
-            CloudQueue queue = DefaultQueueClient.GetQueueReference(name);
+            CloudQueueClient client = GenerateCloudQueueClient();
+            string name = GenerateNewQueueName();
+            CloudQueue queue = client.GetQueueReference(name);
             await queue.CreateAsync();
 
             int messageCount = 30;
 
-            var emptyMessages = (await queue.GetMessagesAsync(messageCount)).ToList();
+            List<CloudQueueMessage> emptyMessages = (await queue.GetMessagesAsync(messageCount)).ToList();
             Assert.AreEqual(0, emptyMessages.Count);
 
             List<string> messageContentList = new List<string>();
@@ -162,7 +183,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 messageContentList.Add(messageContent);
             }
 
-            var receivedMessages = (await queue.GetMessagesAsync(messageCount)).ToList();
+            List<CloudQueueMessage> receivedMessages = (await queue.GetMessagesAsync(messageCount)).ToList();
             Assert.AreEqual(messageCount, receivedMessages.Count);
 
             for (int i = 0; i < messageCount; i++)
@@ -181,8 +202,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueuePeekMessageAsync()
         {
-            string name = TestHelper.GenerateNewQueueName();
-            CloudQueue queue = DefaultQueueClient.GetQueueReference(name);
+            CloudQueueClient client = GenerateCloudQueueClient();
+            string name = GenerateNewQueueName();
+            CloudQueue queue = client.GetQueueReference(name);
             await queue.CreateAsync();
 
             CloudQueueMessage emptyMessage = await queue.PeekMessageAsync();
@@ -206,13 +228,14 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueuePeekMessagesAsync()
         {
-            string name = TestHelper.GenerateNewQueueName();
-            CloudQueue queue = DefaultQueueClient.GetQueueReference(name);
+            CloudQueueClient client = GenerateCloudQueueClient();
+            string name = GenerateNewQueueName();
+            CloudQueue queue = client.GetQueueReference(name);
             await queue.CreateAsync();
 
             int messageCount = 30;
 
-            var emptyMessages = (await queue.PeekMessagesAsync(messageCount)).ToList();
+            List<CloudQueueMessage> emptyMessages = (await queue.PeekMessagesAsync(messageCount)).ToList();
             Assert.AreEqual(0, emptyMessages.Count);
 
             List<string> messageContentList = new List<string>();
@@ -224,7 +247,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 messageContentList.Add(messageContent);
             }
 
-            var receivedMessages = (await queue.PeekMessagesAsync(messageCount)).ToList();
+            List<CloudQueueMessage> receivedMessages = (await queue.PeekMessagesAsync(messageCount)).ToList();
             Assert.AreEqual(messageCount, receivedMessages.Count);
 
             for (int i = 0; i < messageCount; i++)
@@ -243,8 +266,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueClearMessageAsync()
         {
-            string name = TestHelper.GenerateNewQueueName();
-            CloudQueue queue = DefaultQueueClient.GetQueueReference(name);
+            CloudQueueClient client = GenerateCloudQueueClient();
+            string name = GenerateNewQueueName();
+            CloudQueue queue = client.GetQueueReference(name);
             await queue.CreateAsync();
 
             string msgContent = Guid.NewGuid().ToString("N");

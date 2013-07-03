@@ -18,11 +18,13 @@
 namespace Microsoft.WindowsAzure.Storage.Table
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents a segment of results and contains continuation token information.
     /// </summary>
     /// <typeparam name="TElement">The type of the result that the segment contains.</typeparam>
+    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Back compatibility.")]
     public class TableQuerySegment<TElement> : IEnumerable<TElement>
     {
         /// <summary>
@@ -48,7 +50,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Gets an enumerable collection of results.
         /// </summary>
-        /// <value>An enumerable collection of results.</value>
+        /// <value>An enumerable collection of results.</value> 
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Reviewed.")]
         public List<TElement> Results { get; internal set; }
 
         /// <summary>

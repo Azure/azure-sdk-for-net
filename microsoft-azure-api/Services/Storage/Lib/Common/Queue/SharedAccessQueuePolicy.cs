@@ -17,6 +17,7 @@
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
     using System.Text;
 
@@ -90,6 +91,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <returns>A set of shared access permissions.</returns>
         public static SharedAccessQueuePermissions PermissionsFromString(string input)
         {
+            CommonUtility.AssertNotNull("input", input);
+
             SharedAccessQueuePermissions permissions = 0;
 
             foreach (char c in input)
@@ -113,7 +116,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                         break;
                     
                     default:
-                        throw new ArgumentOutOfRangeException("value");
+                        throw new ArgumentOutOfRangeException("input");
                 }
             }
 

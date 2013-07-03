@@ -17,6 +17,7 @@
 
 namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
@@ -44,6 +45,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <returns>The approximate count for the queue.</returns>
         public static string GetApproximateMessageCount(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             return response.Headers[Constants.HeaderConstants.ApproximateMessagesCount];
         }
 
@@ -64,6 +67,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <returns>The pop receipt stored in the header of the response.</returns>
         public static string GetPopReceipt(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             return response.Headers[Constants.HeaderConstants.PopReceipt];
         }
 
@@ -74,6 +79,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <returns>The time of next visibility stored in the header of the response.</returns>
         public static DateTime GetNextVisibleTime(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             return DateTime.Parse(
                 response.Headers[Constants.HeaderConstants.NextVisibleTime],
                 System.Globalization.DateTimeFormatInfo.InvariantInfo,

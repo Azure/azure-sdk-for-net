@@ -17,11 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
     /// Class representing the service properties pertaining to logging.
     /// </summary>

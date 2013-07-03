@@ -20,7 +20,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     /// <summary>
     /// Represents the blob name prefix that is returned in the XML response for a blob listing operation.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

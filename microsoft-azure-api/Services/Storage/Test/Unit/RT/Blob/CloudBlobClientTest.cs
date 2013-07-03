@@ -15,18 +15,41 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.Storage.Auth;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
     public class CloudBlobClientTest : BlobTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         /// [Description("Create a service client with URI and credentials")]
         [TestCategory(ComponentCategory.Blob)]
@@ -164,22 +187,29 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 await blobClient.GetContainerReference(containerName).CreateAsync();
             }
 
+            List<string> listedContainerNames = new List<string>();
             BlobContinuationToken token = null;
             do
             {
-                ContainerResultSegment results = await blobClient.ListContainersSegmentedAsync(token);
-                token = results.ContinuationToken;
+                ContainerResultSegment resultSegment = await blobClient.ListContainersSegmentedAsync(token);
+                token = resultSegment.ContinuationToken;
 
-                foreach (CloudBlobContainer container in results.Results)
+                foreach (CloudBlobContainer container in resultSegment.Results)
                 {
-                    if (containerNames.Remove(container.Name))
-                    {
-                        await container.DeleteAsync();
-                    }
+                    listedContainerNames.Add(container.Name);
                 }
             }
             while (token != null);
-            Assert.AreEqual<int>(0, containerNames.Count);
+
+            foreach (string containerName in listedContainerNames)
+            {
+                if (containerNames.Remove(containerName))
+                {
+                    await blobClient.GetContainerReference(containerName).DeleteAsync();
+                }
+            }
+
+            Assert.AreEqual(0, containerNames.Count);
         }
 
         [TestMethod]
@@ -245,6 +275,181 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             Assert.IsTrue(exists);
 
             await blobContainer.DeleteAsync();
+        }
+
+        [TestMethod]
+        /// [Description("Upload a blob with a small maximum execution time")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlobClientMaximumExecutionTimeoutAsync()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference(Guid.NewGuid().ToString("N"));
+            byte[] buffer = BlobTestBase.GetRandomBuffer(20 * 1024 * 1024);
+
+            try
+            {
+                await container.CreateAsync();
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference("blob1");
+                CloudPageBlob pageBlob = container.GetPageBlobReference("blob2");
+                blobClient.MaximumExecutionTime = TimeSpan.FromSeconds(5);
+
+                using (MemoryStream ms = new MemoryStream(buffer))
+                {
+                    try
+                    {
+                        await blockBlob.UploadFromStreamAsync(ms.AsInputStream());
+                    }
+                    catch (Exception ex)
+                    {
+                        Assert.AreEqual("The client could not finish the operation within specified timeout.", RequestResult.TranslateFromExceptionMessage(ex.Message).ExceptionInfo.Message);
+                    }
+                }
+
+                using (MemoryStream ms = new MemoryStream(buffer))
+                {
+                    try
+                    {
+                        await pageBlob.UploadFromStreamAsync(ms.AsInputStream());
+                    }
+                    catch (AggregateException ex)
+                    {
+                        Assert.AreEqual("The client could not finish the operation within specified timeout.", RequestResult.TranslateFromExceptionMessage(ex.InnerException.InnerException.Message).ExceptionInfo.Message);
+                    }
+                }
+            }
+
+            finally
+            {
+                blobClient.MaximumExecutionTime = null;
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        /// [Description("Make sure MaxExecutionTime is not enforced when using streams")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlobClientMaximumExecutionTimeoutShouldNotBeHonoredForStreamsAsync()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference(Guid.NewGuid().ToString("N"));
+            byte[] buffer = BlobTestBase.GetRandomBuffer(1024 * 1024);
+
+            try
+            {
+                await container.CreateAsync();
+
+                blobClient.MaximumExecutionTime = TimeSpan.FromSeconds(30);
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference("blob1");
+                CloudPageBlob pageBlob = container.GetPageBlobReference("blob2");
+                blockBlob.StreamWriteSizeInBytes = 1024 * 1024;
+                blockBlob.StreamMinimumReadSizeInBytes = 1024 * 1024;
+                blockBlob.StreamMinimumReadSizeInBytes = 1024 * 1024;
+                pageBlob.StreamMinimumReadSizeInBytes = 1024 * 1024;
+
+                using (ICloudBlobStream bos = await blockBlob.OpenWriteAsync())
+                {
+                    DateTime start = DateTime.Now;
+                    for (int i = 0; i < 7; i++)
+                    {
+                        await bos.WriteAsync(buffer.AsBuffer());
+                    }
+
+                    // Sleep to ensure we are over the Max execution time when we do the last write
+                    int msRemaining = (int)(blobClient.MaximumExecutionTime.Value - (DateTime.Now - start)).TotalMilliseconds;
+
+                    if (msRemaining > 0)
+                    {
+                        await Task.Delay(msRemaining);
+                    }
+
+                    await bos.WriteAsync(buffer.AsBuffer());
+                    await bos.CommitAsync();
+                }
+
+                using (Stream bis = (await blockBlob.OpenReadAsync()).AsStreamForRead())
+                {
+                    DateTime start = DateTime.Now;
+                    int total = 0;
+                    while (total < 7 * 1024 * 1024)
+                    {
+                        total += await bis.ReadAsync(buffer, 0, buffer.Length);
+                    }
+
+                    // Sleep to ensure we are over the Max execution time when we do the last read
+                    int msRemaining = (int)(blobClient.MaximumExecutionTime.Value - (DateTime.Now - start)).TotalMilliseconds;
+
+                    if (msRemaining > 0)
+                    {
+                        await Task.Delay(msRemaining);
+                    }
+
+                    while (true)
+                    {
+                        int count = await bis.ReadAsync(buffer, 0, buffer.Length);
+                        total += count;
+                        if (count == 0)
+                            break;
+                    }
+                }
+
+                using (ICloudBlobStream bos = await pageBlob.OpenWriteAsync(8 * 1024 * 1024))
+                {
+                    DateTime start = DateTime.Now;
+                    for (int i = 0; i < 7; i++)
+                    {
+                        await bos.WriteAsync(buffer.AsBuffer());
+                    }
+
+                    // Sleep to ensure we are over the Max execution time when we do the last write
+                    int msRemaining = (int)(blobClient.MaximumExecutionTime.Value - (DateTime.Now - start)).TotalMilliseconds;
+
+                    if (msRemaining > 0)
+                    {
+                        await Task.Delay(msRemaining);
+                    }
+
+                    await bos.WriteAsync(buffer.AsBuffer());
+                    await bos.CommitAsync();
+                }
+
+                using (Stream bis = (await pageBlob.OpenReadAsync()).AsStreamForRead())
+                {
+                    DateTime start = DateTime.Now;
+                    int total = 0;
+                    while (total < 7 * 1024 * 1024)
+                    {
+                        total += await bis.ReadAsync(buffer, 0, buffer.Length);
+                    }
+
+                    // Sleep to ensure we are over the Max execution time when we do the last read
+                    int msRemaining = (int)(blobClient.MaximumExecutionTime.Value - (DateTime.Now - start)).TotalMilliseconds;
+
+                    if (msRemaining > 0)
+                    {
+                        await Task.Delay(msRemaining);
+                    }
+
+                    while (true)
+                    {
+                        int count = await bis.ReadAsync(buffer, 0, buffer.Length);
+                        total += count;
+                        if (count == 0)
+                            break;
+                    }
+                }
+            }
+
+            finally
+            {
+                blobClient.MaximumExecutionTime = null;
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
         }
     }
 }

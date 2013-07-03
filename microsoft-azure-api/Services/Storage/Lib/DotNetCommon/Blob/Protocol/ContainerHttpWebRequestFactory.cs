@@ -17,16 +17,18 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Text;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.Net;
+    using System.Text;
 
     /// <summary>
-    /// A factory class for constructing a web request for working with containers in the Blob service.
+    /// A factory class for constructing a web request to manage containers in the Blob service.
     /// </summary>
     public static class ContainerHttpWebRequestFactory
     {
@@ -39,8 +41,28 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpWebRequest Create(Uri uri, int? timeout, OperationContext operationContext)
         {
+            return ContainerHttpWebRequestFactory.Create(uri, timeout, operationContext, BlobContainerPublicAccessType.Off);
+        }
+
+        /// <summary>
+        /// Constructs a web request to create a new container.
+        /// </summary>
+        /// <param name="uri">The absolute URI to the container.</param>
+        /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
+        /// <param name="accessType">An <see cref="BlobContainerPublicAccessType"/> object that specifies whether data in the container may be accessed publicly and the level of access.</param>                
+        /// <returns>A web request to use to perform the operation.</returns>
+        public static HttpWebRequest Create(Uri uri, int? timeout, OperationContext operationContext, BlobContainerPublicAccessType accessType)
+        {
             UriQueryBuilder containerBuilder = GetContainerUriQueryBuilder();
-            return HttpWebRequestFactory.Create(uri, timeout, containerBuilder, operationContext);
+            HttpWebRequest request = HttpWebRequestFactory.Create(uri, timeout, containerBuilder, operationContext);
+
+            if (accessType != BlobContainerPublicAccessType.Off)
+            {
+                request.Headers.Add(Constants.HeaderConstants.ContainerPublicAccessType, accessType.ToString().ToLower(CultureInfo.InvariantCulture));
+            }
+
+            return request;
         }
 
         /// <summary>
@@ -128,7 +150,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             builder.Add(Constants.QueryConstants.Component, "lease");
 
             HttpWebRequest request = HttpWebRequestFactory.CreateWebRequest(WebRequestMethods.Http.Put, uri, timeout, builder, operationContext);
-            request.ContentLength = 0;
 
             // Add Headers
             BlobHttpWebRequestFactory.AddLeaseAction(request, action);
@@ -226,13 +247,14 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <param name="accessCondition">The access condition to apply to the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A web request to use to perform the operation.</returns>
+        [SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower", Justification = "ToLower(CultureInfo) is not present in RT and ToLowerInvariant() also violates FxCop")]
         public static HttpWebRequest SetAcl(Uri uri, int? timeout, BlobContainerPublicAccessType publicAccess, AccessCondition accessCondition, OperationContext operationContext)
         {
             HttpWebRequest request = HttpWebRequestFactory.SetAcl(uri, GetContainerUriQueryBuilder(), timeout, operationContext);
 
             if (publicAccess != BlobContainerPublicAccessType.Off)
             {
-                request.Headers.Add("x-ms-blob-public-access", publicAccess.ToString().ToLower());
+                request.Headers.Add(Constants.HeaderConstants.ContainerPublicAccessType, publicAccess.ToString().ToLower());
             }
 
             request.ApplyAccessCondition(accessCondition);

@@ -15,15 +15,15 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Auth.Protocol;
 using Microsoft.WindowsAzure.Storage.Core.Auth;
 using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+using System;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {

@@ -17,6 +17,7 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
     using System.Text;
 
@@ -91,6 +92,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A set of shared access permissions.</returns>
         public static SharedAccessBlobPermissions PermissionsFromString(string input) 
         {
+            CommonUtility.AssertNotNull("input", input);
+
             SharedAccessBlobPermissions permissions = 0;
 
             foreach (char c in input)
@@ -114,7 +117,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException("value");
+                        throw new ArgumentOutOfRangeException("input");
                 }
             }
 

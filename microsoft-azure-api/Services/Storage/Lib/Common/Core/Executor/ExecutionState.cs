@@ -17,30 +17,29 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.RetryPolicies;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Globalization;
     using System.IO;
     using System.Threading;
 
-#if RT
-    using System.Linq;
+#if WINDOWS_RT
     using System.Net.Http;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
 #else
     using System.Net;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
 #endif
-    using Microsoft.WindowsAzure.Storage.RetryPolicies;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     // This class encapsulates a StorageCommand and stores state about its execution.
     // Note conceptually there is some overlap between ExecutionState and operationContext, however the 
     // operationContext is the user visible object and the ExecutionState is an internal object used to coordinate execution.
-    internal class ExecutionState<T>
-#if RT
-#elif !COMMON
-        // If we are exposing APM then derive this class from the StorageCommandAsyncResult
-        : StorageCommandAsyncResult, ICancellableAsyncResult
+#if WINDOWS_RT
+    internal class ExecutionState<T> : IDisposable
+#else
+    // If we are exposing APM then derive this class from the StorageCommandAsyncResult
+    internal class ExecutionState<T> : StorageCommandAsyncResult
 #endif
     {
         public ExecutionState(StorageCommandBase<T> cmd, IRetryPolicy policy, OperationContext operationContext)
@@ -49,7 +48,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             this.RetryPolicy = policy != null ? policy.CreateInstance() : new NoRetry();
             this.OperationContext = operationContext ?? new OperationContext();
 
-#if RT
+#if WINDOWS_RT
             if (this.OperationContext.StartTime == DateTimeOffset.MinValue)
             {
                 this.OperationContext.StartTime = DateTimeOffset.Now;
@@ -60,22 +59,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 this.OperationContext.StartTime = DateTime.Now;
             }
 #endif
-            if (!this.OperationContext.OperationExpiryTime.HasValue && cmd != null && cmd.ClientMaxTimeout.HasValue)
-            {
-                this.OperationExpiryTime = DateTime.Now + cmd.ClientMaxTimeout.Value;
-            }
-            else if (this.OperationContext.OperationExpiryTime.HasValue)
-            {
-                // Override timeout for complex actions
-#if RT
-                this.OperationExpiryTime = this.OperationContext.OperationExpiryTime.Value.UtcDateTime;
-#else
-                this.OperationExpiryTime = this.OperationContext.OperationExpiryTime.Value;
-#endif
-            }
         }
 
-#if DNCP
+#if WINDOWS_DESKTOP
         public ExecutionState(StorageCommandBase<T> cmd, IRetryPolicy policy, OperationContext operationContext, AsyncCallback callback, object asyncState)
             : base(callback, asyncState)
         {
@@ -87,16 +73,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             {
                 this.OperationContext.StartTime = DateTime.Now;
             }
-
-            if (!this.OperationContext.OperationExpiryTime.HasValue && cmd != null && cmd.ClientMaxTimeout.HasValue)
-            {
-                this.OperationExpiryTime = DateTime.Now + cmd.ClientMaxTimeout.Value;
-            }
-            else if (this.OperationContext.OperationExpiryTime.HasValue)
-            {
-                // Override timeout for complex actions
-                this.OperationExpiryTime = this.OperationContext.OperationExpiryTime.Value;
-            }
         }
 #endif
 
@@ -105,95 +81,48 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             this.Req = null;
             this.resp = null;
 
-#if !RT
+#if !WINDOWS_RT
             this.ReqTimedOut = false;
             this.CancelDelegate = null;
 #endif
         }
 
-        // Cancellation Suppport for DN35
-#if !RT
-        private object cancellationLockerObject = new object();
-
-        internal object CancellationLockerObject
+#if WINDOWS_RT
+        public void Dispose()
         {
-            get { return this.cancellationLockerObject; }
-            set { this.cancellationLockerObject = value; }
+            this.CheckDisposeSendStream();
         }
-
-        private volatile bool cancelRequested = false;
-
-        internal bool CancelRequested
+#else
+        protected override void Dispose(bool disposing)
         {
-            get { return this.cancelRequested; }
-            set { this.cancelRequested = value; }
-        }
-
-        private Action cancelDelegate = null;
-
-        internal Action CancelDelegate
-        {
-            get
+            if (disposing)
             {
-                lock (this.cancellationLockerObject)
+                Timer backoffTimer = this.BackoffTimer;
+                if (backoffTimer != null)
                 {
-                    return this.cancelDelegate;
+                    this.BackoffTimer = null;
+                    backoffTimer.Dispose();
                 }
+
+                this.CheckDisposeSendStream();
             }
 
-            set
-            {
-                lock (this.cancellationLockerObject)
-                {
-                    this.cancelDelegate = value;
-                }
-            }
+            base.Dispose(disposing);
         }
 
-        public void Cancel()
-        {
-            lock (this.cancellationLockerObject)
-            {
-                this.cancelRequested = true;
-                if (this.CancelDelegate != null)
-                {
-                    this.CancelDelegate();
-                }
-            }
-        }
+        internal Timer BackoffTimer { get; set; }
 #endif
 
-        private OperationContext operationContext = null;
-
-        internal OperationContext OperationContext
-        {
-            get { return this.operationContext; }
-            set { this.operationContext = value; }
-        }
-
-        private DateTime? operationExpiryTime = null;
+        internal OperationContext OperationContext { get; set; }
 
         internal DateTime? OperationExpiryTime
         {
-            get { return this.operationExpiryTime; }
-            set { this.operationExpiryTime = value; }
+            get { return this.Cmd.OperationExpiryTime; }
         }
 
-        private IRetryPolicy retryPolicy = null;
+        internal IRetryPolicy RetryPolicy { get; set; }
 
-        internal IRetryPolicy RetryPolicy
-        {
-            get { return this.retryPolicy; }
-            set { this.retryPolicy = value; }
-        }
-
-        private StorageCommandBase<T> cmd = null;
-
-        internal StorageCommandBase<T> Cmd
-        {
-            get { return this.cmd; }
-            set { this.cmd = value; }
-        }
+        internal StorageCommandBase<T> Cmd { get; set; }
 
         internal RESTCommand<T> RestCMD
         {
@@ -203,8 +132,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             }
         }
 
-#if DNCP
-        internal int RemainingTimeout
+        internal ExecutorOperation CurrentOperation { get; set; }
+
+        internal TimeSpan RemainingTimeout
         {
             get
             {
@@ -212,13 +142,13 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 {
                     // User did not specify a timeout, so we will set the request timeout to avoid
                     // waiting for the response infinitely
-                    return (int)Constants.DefaultClientSideTimeout.TotalMilliseconds;
+                    return Constants.DefaultClientSideTimeout;
                 }
                 else
                 {
-                    int potentialTimeout = (int)(this.OperationExpiryTime.Value - DateTime.Now).TotalMilliseconds;
+                    TimeSpan potentialTimeout = this.OperationExpiryTime.Value - DateTime.Now;
 
-                    if (potentialTimeout <= 0)
+                    if (potentialTimeout <= TimeSpan.Zero)
                     {
                         throw Exceptions.GenerateTimeoutException(this.Cmd.CurrentResult, null);
                     }
@@ -227,7 +157,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 }
             }
         }
-#endif
 
         private int retryCount = 0;
 
@@ -237,13 +166,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             set { this.retryCount = value; }
         }
 
-        private Stream reqStream = null;
+        internal Stream ReqStream { get; set; }
 
-        internal Stream ReqStream
-        {
-            get { return this.reqStream; }
-            set { this.reqStream = value; }
-        }
+        private volatile Exception exceptionRef = null;
 
         internal Exception ExceptionRef
         {
@@ -262,15 +187,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             }
         }
 
-        private volatile Exception exceptionRef = null;
-
-        private T result = default(T);
-
-        internal T Result
-        {
-            get { return this.result; }
-            set { this.result = value; }
-        }
+        internal T Result { get; set; }
 
         private object timeoutLockerObj = new object();
         private bool reqTimedOut = false;
@@ -294,22 +211,21 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             }
         }
 
-#if RT
-        private HttpClient client = null;
-
-        internal HttpClient Client
+        private void CheckDisposeSendStream()
         {
-            get { return this.client; }
-            set { this.client = value; }
+            RESTCommand<T> cmd = this.RestCMD;
+
+            if ((cmd != null) && (cmd.StreamToDispose != null))
+            {
+                cmd.StreamToDispose.Dispose();
+                cmd.StreamToDispose = null;
+            }
         }
 
-        private HttpRequestMessage req = null;
+#if WINDOWS_RT
+        internal HttpClient Client { get; set; }
 
-        internal HttpRequestMessage Req
-        {
-            get { return this.req; }
-            set { this.req = value; }
-        }
+        internal HttpRequestMessage Req { get; set; }
 
         private HttpResponseMessage resp = null;
 
@@ -336,13 +252,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             }
         }
 #else
-        private HttpWebRequest req = null;
-
-        internal HttpWebRequest Req
-        {
-            get { return this.req; }
-            set { this.req = value; }
-        }
+        internal HttpWebRequest Req { get; set; }
 
         private HttpWebResponse resp = null;
 
@@ -361,10 +271,10 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 {
                     if (value.Headers != null)
                     {
-#if DNCP
-                        this.Cmd.CurrentResult.ServiceRequestID = HttpUtility.TryGetHeader(this.resp, Constants.HeaderConstants.RequestIdHeader, null);
-                        this.Cmd.CurrentResult.ContentMd5 = HttpUtility.TryGetHeader(this.resp, "Content-MD5", null);
-                        string tempDate = HttpUtility.TryGetHeader(this.resp, "Date", null);
+#if WINDOWS_DESKTOP
+                        this.Cmd.CurrentResult.ServiceRequestID = HttpWebUtility.TryGetHeader(this.resp, Constants.HeaderConstants.RequestIdHeader, null);
+                        this.Cmd.CurrentResult.ContentMd5 = HttpWebUtility.TryGetHeader(this.resp, "Content-MD5", null);
+                        string tempDate = HttpWebUtility.TryGetHeader(this.resp, "Date", null);
                         this.Cmd.CurrentResult.RequestDate = string.IsNullOrEmpty(tempDate) ? DateTime.Now.ToString("R", CultureInfo.InvariantCulture) : tempDate;
                         this.Cmd.CurrentResult.Etag = this.resp.Headers[HttpResponseHeader.ETag];
 #endif

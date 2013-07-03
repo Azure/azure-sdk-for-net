@@ -15,17 +15,13 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Core.Util;
-using Microsoft.WindowsAzure.Storage.Blob;
-using System.IO;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using System;
+using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
@@ -34,23 +30,24 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     {
         private readonly CloudBlobClient DefaultBlobClient = new CloudBlobClient(new Uri(TestBase.TargetTenantConfig.BlobServiceEndpoint), TestBase.StorageCredentials);
 
-        [TestMethod]
-        [TestCategory(ComponentCategory.Blob)]
-        [TestCategory(TestTypeCategory.UnitTest)]
-        [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public async Task CloudContainerCreateNegativeBadRequestAsync()
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
         {
-            try
+            if (TestBase.BlobBufferManager != null)
             {
-                string name = "ABCD";
-                CloudBlobContainer container = DefaultBlobClient.GetContainerReference(name);
-                await container.CreateAsync();
-                Assert.Fail();
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
             }
-            catch (Exception e)
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
             {
-                Assert.AreEqual(WindowsAzureErrorCode.HttpBadRequest, e.HResult);
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
             }
         }
 
@@ -90,7 +87,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 await container.CreateAsync();
 
                 CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
-                var requestOptions = new BlobRequestOptions()
+                BlobRequestOptions requestOptions = new BlobRequestOptions()
                 {
                     MaximumExecutionTime = TimeSpan.FromSeconds(1),
                     RetryPolicy = new NoRetry()
@@ -128,7 +125,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 await container.CreateAsync();
 
                 CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
-                var requestOptions = new BlobRequestOptions()
+                BlobRequestOptions requestOptions = new BlobRequestOptions()
                 {
                     RetryPolicy = new NoRetry()
                 };

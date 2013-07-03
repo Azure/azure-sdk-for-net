@@ -15,11 +15,11 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -71,15 +71,28 @@ namespace Microsoft.WindowsAzure.Storage.Table
             CloudTableClient client = GenerateCloudTableClient();
             client.SetServicePropertiesAsync(startProperties).AsTask().Wait();
         }
+
         //
         // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
+        }
+
         #endregion
 
         #region Analytics RoundTrip

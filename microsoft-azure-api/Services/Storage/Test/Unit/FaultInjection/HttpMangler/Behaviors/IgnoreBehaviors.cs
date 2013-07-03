@@ -15,11 +15,10 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-
 namespace Microsoft.WindowsAzure.Test.Network.Behaviors
 {
-    using System;
     using Fiddler;
+    using System;
 
     /// <summary>
     /// IgnoreBehaviors contains a set of behaviors which allow sessions to be ignored.

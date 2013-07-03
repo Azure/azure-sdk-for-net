@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Gets the time the copy operation completed, whether completion was due to a successful copy, abortion, or a failure.
+        /// Gets the time the copy operation completed, whether completion was due to a successful copy, cancelled, or a failure.
         /// </summary>
         /// <value>A <see cref="DateTimeOffset"/> containing the completion time, or null.</value>
         public DateTimeOffset? CompletionTime

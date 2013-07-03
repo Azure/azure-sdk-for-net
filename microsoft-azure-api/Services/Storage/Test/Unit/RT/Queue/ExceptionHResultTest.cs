@@ -15,24 +15,36 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Queue.Protocol;
-using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Core.Util;
-using System.IO;
-using Microsoft.WindowsAzure.Storage.RetryPolicies;
-using System.Threading;
+using System;
+using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
     [TestClass]
     public class ExceptionHResultTest : TestBase
     {
-        readonly CloudQueueClient DefalutQueueClient = new CloudQueueClient(new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), TestBase.StorageCredentials);
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                TestBase.QueueBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.QueueBufferManager.OutstandingBufferCount);
+            }
+        }
 
         [TestMethod]
         [TestCategory(ComponentCategory.Queue)]
@@ -41,16 +53,17 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueCreateNegativeBadRequestAsync()
         {
+            CloudQueueClient client = GenerateCloudQueueClient();
             try
             {
-                string name = "ABCD";
-                CloudQueue queue = DefalutQueueClient.GetQueueReference(name);
-                await queue.CreateAsync();
+                string name = Guid.NewGuid().ToString("N");
+                CloudQueue queue = client.GetQueueReference(name);
+                await queue.FetchAttributesAsync();
                 Assert.Fail();
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
-                Assert.AreEqual(WindowsAzureErrorCode.HttpBadRequest, e.HResult);
+                Assert.AreEqual(WindowsAzureErrorCode.HttpNotFound, e.HResult);
             }
         }
     }

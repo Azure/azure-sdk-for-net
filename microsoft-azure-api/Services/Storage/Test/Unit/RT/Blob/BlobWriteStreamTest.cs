@@ -15,6 +15,7 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,13 +25,33 @@ using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
     public class BlobWriteStreamTest : BlobTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         /// [Description("Create blobs using blob stream")]
         [TestCategory(ComponentCategory.Blob)]
@@ -360,6 +381,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     using (IOutputStream writeStream = await blob.OpenWriteAsync(null, options, null))
                     {
                         Stream blobStream = writeStream.AsStreamForWrite();
+
                         for (int i = 0; i < 3; i++)
                         {
                             await blobStream.WriteAsync(buffer, 0, buffer.Length);
@@ -367,6 +389,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             Assert.AreEqual(wholeBlob.Position, blobStream.Position);
                             hasher.Append(buffer.AsBuffer());
                         }
+
+                        await blobStream.FlushAsync();
                     }
 
                     string md5 = CryptographicBuffer.EncodeToBase64String(hasher.GetValueAndReset());
@@ -415,6 +439,69 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
+        /// [Description("Test the effects of blob stream's flush functionality")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.FuntionalTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task BlockBlobWriteStreamFlushTestAsync()
+        {
+            byte[] buffer = GetRandomBuffer(512 * 1024);
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                await container.CreateAsync();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                blob.StreamWriteSizeInBytes = 1 * 1024 * 1024;
+                using (MemoryStream wholeBlob = new MemoryStream())
+                {
+                    OperationContext opContext = new OperationContext();
+                    using (ICloudBlobStream blobStream = await blob.OpenWriteAsync(null, null, opContext))
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            await blobStream.WriteAsync(buffer.AsBuffer());
+                            await wholeBlob.WriteAsync(buffer, 0, buffer.Length);
+                        }
+
+                        Assert.AreEqual(1, opContext.RequestResults.Count);
+
+                        await blobStream.FlushAsync();
+
+                        Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                        await blobStream.FlushAsync();
+
+                        Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                        await blobStream.WriteAsync(buffer.AsBuffer());
+                        await wholeBlob.WriteAsync(buffer, 0, buffer.Length);
+
+                        Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                        await blobStream.CommitAsync();
+
+                        Assert.AreEqual(4, opContext.RequestResults.Count);
+                    }
+
+                    Assert.AreEqual(4, opContext.RequestResults.Count);
+
+                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    {
+                        await blob.DownloadToStreamAsync(downloadedBlob.AsOutputStream());
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
         /// [Description("Upload a page blob using blob stream and verify contents")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.FuntionalTest)]
@@ -453,6 +540,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             Assert.AreEqual(wholeBlob.Position, blobStream.Position);
                             hasher.Append(buffer.AsBuffer());
                         }
+
+                        await blobStream.FlushAsync();
                     }
 
                     string md5 = CryptographicBuffer.EncodeToBase64String(hasher.GetValueAndReset());
@@ -482,7 +571,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             Assert.AreEqual(wholeBlob.Position, blobStream.Position);
                         }
 
-                        wholeBlob.Seek(0, SeekOrigin.End);
+                        await blobStream.FlushAsync();
                     }
 
                     await blob.FetchAttributesAsync();
@@ -541,9 +630,72 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         }
                     }
 
-                    wholeBlob.Seek(0, SeekOrigin.End);
                     await blob.FetchAttributesAsync();
                     Assert.IsNull(blob.Properties.ContentMD5);
+
+                    using (MemoryOutputStream downloadedBlob = new MemoryOutputStream())
+                    {
+                        await blob.DownloadToStreamAsync(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob.UnderlyingStream);
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        /// [Description("Test the effects of blob stream's flush functionality")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.FuntionalTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task PageBlobWriteStreamFlushTestAsync()
+        {
+            byte[] buffer = GetRandomBuffer(512);
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                await container.CreateAsync();
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                blob.StreamWriteSizeInBytes = 1024;
+                using (MemoryStream wholeBlob = new MemoryStream())
+                {
+                    BlobRequestOptions options = new BlobRequestOptions() { StoreBlobContentMD5 = true };
+                    OperationContext opContext = new OperationContext();
+                    using (ICloudBlobStream blobStream = await blob.OpenWriteAsync(4 * 512, null, options, opContext))
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            await blobStream.WriteAsync(buffer.AsBuffer());
+                            await wholeBlob.WriteAsync(buffer, 0, buffer.Length);
+                        }
+
+                        Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                        await blobStream.FlushAsync();
+
+                        Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                        await blobStream.FlushAsync();
+
+                        Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                        await blobStream.WriteAsync(buffer.AsBuffer());
+                        await wholeBlob.WriteAsync(buffer, 0, buffer.Length);
+
+                        Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                        await blobStream.CommitAsync();
+
+                        Assert.AreEqual(5, opContext.RequestResults.Count);
+                    }
+
+                    Assert.AreEqual(5, opContext.RequestResults.Count);
 
                     using (MemoryOutputStream downloadedBlob = new MemoryOutputStream())
                     {

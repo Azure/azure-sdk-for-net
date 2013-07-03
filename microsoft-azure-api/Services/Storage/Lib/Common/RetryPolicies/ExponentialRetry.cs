@@ -17,11 +17,13 @@
 
 namespace Microsoft.WindowsAzure.Storage.RetryPolicies
 {
-    using System;
     using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// Represents a retry policy that performs a specified number of retries, using a randomized exponential backoff scheme to determine the interval between retries. 
+    /// Represents a retry policy that performs a specified number of retries, using a randomized exponential back off scheme to determine the interval between retries. 
     /// </summary>
     public sealed class ExponentialRetry : IRetryPolicy
     {
@@ -44,8 +46,9 @@ namespace Microsoft.WindowsAzure.Storage.RetryPolicies
         /// <summary>
         /// Initializes a new instance of the <see cref="ExponentialRetry"/> class using the specified delta and maximum number of retries.
         /// </summary>
-        /// <param name="deltaBackoff">The backoff interval between retries.</param>
+        /// <param name="deltaBackoff">The back off interval between retries.</param>
         /// <param name="maxAttempts">The maximum number of retry attempts.</param>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Backoff", Justification = "Reviewed: Backoff is allowed.")]
         public ExponentialRetry(TimeSpan deltaBackoff, int maxAttempts)
         {
             this.deltaBackoff = deltaBackoff;
@@ -63,6 +66,8 @@ namespace Microsoft.WindowsAzure.Storage.RetryPolicies
         /// <returns><c>true</c> if the operation should be retried; otherwise, <c>false</c>.</returns>
         public bool ShouldRetry(int currentRetryCount, int statusCode, Exception lastException, out TimeSpan retryInterval, OperationContext operationContext)
         {
+            CommonUtility.AssertNotNull("lastException", lastException);
+
             retryInterval = TimeSpan.Zero;
 
             // If this method is called after a successful response, it means

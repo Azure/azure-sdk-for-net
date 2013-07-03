@@ -17,10 +17,12 @@
 
 namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// Provides error code strings that are common to all storage services.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
@@ -125,7 +127,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <summary>
         /// The specified MD5 hash does not match the server value.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Naming",
             "CA1709:IdentifiersShouldBeCasedCorrectly",
             MessageId = "Md",
@@ -135,7 +137,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <summary>
         /// The specified MD5 hash is invalid.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Naming",
             "CA1709:IdentifiersShouldBeCasedCorrectly",
             MessageId = "Md",

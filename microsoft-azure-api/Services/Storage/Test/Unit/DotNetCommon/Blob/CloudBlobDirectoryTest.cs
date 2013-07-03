@@ -17,18 +17,19 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Threading;
 
     [TestClass]
     public class CloudBlobDirectoryTest : BlobTestBase
     {
-        String[] Delimiters = new String[] {"$", "@", "-", "%", "/", "|"};
+        string[] Delimiters = new string[] {"$", "@", "-", "%", "/", "|"};
 
-        private bool CloudBlobDirectorySetupWithDelimiter(CloudBlobContainer container, String delimiter = "/")
+        private bool CloudBlobDirectorySetupWithDelimiter(CloudBlobContainer container, string delimiter = "/")
         {
             try
             {
@@ -54,8 +55,29 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 throw e;
             }
-
         }
+
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         [Description("CloudBlobDirectory get parent of Blob")]
         [TestCategory(ComponentCategory.Blob)]
@@ -157,6 +179,223 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         Assert.IsTrue(item41.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir1" + delimiter + "EndBlob1"));
 
                         IListBlobItem item42 = simpleList4.ElementAt(1);
+                        Assert.IsTrue(item42.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir2" + delimiter + "EndBlob2"));
+                    }
+                }
+                finally
+                {
+                    container.DeleteIfExists();
+                }
+            }
+        }
+
+        [TestMethod]
+        [Description("CloudBlobDirectory flat-listing and non flat-listing")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlobDirectoryFlatListingAPM()
+        {
+            foreach (String delimiter in Delimiters)
+            {
+                CloudBlobClient client = GenerateCloudBlobClient();
+                client.DefaultDelimiter = delimiter;
+                string name = GetRandomContainerName();
+                CloudBlobContainer container = client.GetContainerReference(name);
+
+                try
+                {
+                    container.Create();
+                    if (CloudBlobDirectorySetupWithDelimiter(container, delimiter))
+                    {
+                        using (AutoResetEvent waitHandle = new AutoResetEvent(false))
+                        {
+                            IAsyncResult result;
+                            BlobContinuationToken token = null;
+                            CloudBlobDirectory directory = container.GetDirectoryReference("TopDir1");
+                            List<IListBlobItem> list1 = new List<IListBlobItem>();
+                            do
+                            {
+                                result = directory.BeginListBlobsSegmented(token, ar => waitHandle.Set(), null);
+                                waitHandle.WaitOne();
+                                BlobResultSegment result1 = directory.EndListBlobsSegmented(result);
+                                list1.AddRange(result1.Results);
+                                token = result1.ContinuationToken;
+                            }
+                            while(token!=null);
+
+                            Assert.IsTrue(list1.Count == 3);
+
+                            IListBlobItem item11 = list1.ElementAt(0);
+                            Assert.IsTrue(item11.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "Blob1"));
+
+                            IListBlobItem item12 = list1.ElementAt(1);
+                            Assert.IsTrue(item12.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir1" + delimiter));
+
+                            IListBlobItem item13 = list1.ElementAt(2);
+                            Assert.IsTrue(item13.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter));
+
+                            CloudBlobDirectory midDir2 = (CloudBlobDirectory)item13;
+
+                            List<IListBlobItem> list2 = new List<IListBlobItem>();
+                            do
+                            {
+                                result = midDir2.BeginListBlobsSegmented(true, BlobListingDetails.None, null, token, null, null, ar => waitHandle.Set(), null);
+                                waitHandle.WaitOne();
+                                BlobResultSegment result2 = midDir2.EndListBlobsSegmented(result);
+                                list2.AddRange(result2.Results);
+                                token = result2.ContinuationToken;
+                            }
+                            while (token != null);
+
+                            Assert.IsTrue(list2.Count == 2);
+
+                            IListBlobItem item41 = list2.ElementAt(0);
+                            Assert.IsTrue(item41.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir1" + delimiter + "EndBlob1"));
+
+                            IListBlobItem item42 = list2.ElementAt(1);
+                            Assert.IsTrue(item42.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir2" + delimiter + "EndBlob2"));                 
+                        }
+                    }
+                }
+                finally
+                {
+                    container.DeleteIfExists();
+                }
+            }
+        }
+
+#if TASK
+        [TestMethod]
+        [Description("CloudBlobDirectory flat-listing and non flat-listing")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlobDirectoryFlatListingTask()
+        {
+            foreach (String delimiter in Delimiters)
+            {
+                CloudBlobClient client = GenerateCloudBlobClient();
+                client.DefaultDelimiter = delimiter;
+                string name = GetRandomContainerName();
+                CloudBlobContainer container = client.GetContainerReference(name);
+
+                try
+                {
+                    container.CreateAsync().Wait();
+                    if (CloudBlobDirectorySetupWithDelimiter(container, delimiter))
+                    {
+                        BlobContinuationToken token = null;
+                        CloudBlobDirectory directory = container.GetDirectoryReference("TopDir1");
+                        List<IListBlobItem> list1 = new List<IListBlobItem>();
+                        do
+                        {
+                            BlobResultSegment result1 = directory.ListBlobsSegmentedAsync(token).Result;
+                            list1.AddRange(result1.Results);
+                            token = result1.ContinuationToken;
+                        }
+                        while (token != null);
+
+                        Assert.IsTrue(list1.Count == 3);
+
+                        IListBlobItem item11 = list1.ElementAt(0);
+                        Assert.IsTrue(item11.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "Blob1"));
+
+                        IListBlobItem item12 = list1.ElementAt(1);
+                        Assert.IsTrue(item12.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir1" + delimiter));
+
+                        IListBlobItem item13 = list1.ElementAt(2);
+                        Assert.IsTrue(item13.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter));
+
+                        CloudBlobDirectory midDir2 = (CloudBlobDirectory)item13;
+
+                        List<IListBlobItem> list2 = new List<IListBlobItem>();
+                        do
+                        {
+                            BlobResultSegment result2 = midDir2.ListBlobsSegmentedAsync(true, BlobListingDetails.None, null, token, null, null).Result;
+                            list2.AddRange(result2.Results);
+                            token = result2.ContinuationToken;
+                        }
+                        while (token != null);
+
+                        Assert.IsTrue(list2.Count == 2);
+
+                        IListBlobItem item41 = list2.ElementAt(0);
+                        Assert.IsTrue(item41.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir1" + delimiter + "EndBlob1"));
+
+                        IListBlobItem item42 = list2.ElementAt(1);
+                        Assert.IsTrue(item42.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir2" + delimiter + "EndBlob2"));
+                    }
+                }
+                finally
+                {
+                    container.DeleteIfExistsAsync().Wait();
+                }
+            }
+        }
+#endif
+
+        [TestMethod]
+        [Description("CloudBlobDirectory flat-listing and non flat-listing")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlobDirectoryFlatListingWithPrefix()
+        {
+            foreach (String delimiter in Delimiters)
+            {
+                CloudBlobClient client = GenerateCloudBlobClient();
+                client.DefaultDelimiter = delimiter;
+                string name = GetRandomContainerName();
+                CloudBlobContainer container = client.GetContainerReference(name);
+
+                try
+                {
+                    container.Create();
+                    if (CloudBlobDirectorySetupWithDelimiter(container, delimiter))
+                    {
+                        BlobContinuationToken token = null;
+                        CloudBlobDirectory directory = container.GetDirectoryReference("TopDir1");
+                        List<IListBlobItem> list1 = new List<IListBlobItem>();
+                        do
+                        {
+                            BlobResultSegment result1 = directory.ListBlobsSegmented(token);
+                            token = result1.ContinuationToken;
+                            list1.AddRange(result1.Results);
+                        } 
+                        while (token != null);
+
+                        Assert.IsTrue(list1.Count == 3);
+
+                        IListBlobItem item11 = list1.ElementAt(0);
+                        Assert.IsTrue(item11.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "Blob1"));
+
+                        IListBlobItem item12 = list1.ElementAt(1);
+                        Assert.IsTrue(item12.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir1" + delimiter));
+
+                        IListBlobItem item13 = list1.ElementAt(2);
+                        Assert.IsTrue(item13.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter));
+
+                        CloudBlobDirectory midDir2 = (CloudBlobDirectory)item13;
+
+                        List<IListBlobItem> list2 = new List<IListBlobItem>();
+                        do
+                        {
+                            BlobResultSegment result2 = midDir2.ListBlobsSegmented(true, BlobListingDetails.None, null, token, null, null);
+                            token = result2.ContinuationToken;
+                            list2.AddRange(result2.Results);
+                        } 
+                        while (token != null);
+
+                        Assert.IsTrue(list2.Count == 2);
+
+                        IListBlobItem item41 = list2.ElementAt(0);
+                        Assert.IsTrue(item41.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir1" + delimiter + "EndBlob1"));
+
+                        IListBlobItem item42 = list2.ElementAt(1);
                         Assert.IsTrue(item42.Uri.Equals(container.Uri + "/TopDir1" + delimiter + "MidDir2" + delimiter + "EndDir2" + delimiter + "EndBlob2"));
                     }
                 }
@@ -334,7 +573,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 CloudBlobContainer container = client.GetContainerReference(name);
                 try
                 {
-                    CloudPageBlob blob = container.GetPageBlobReference("TopDir1" + delimiter + "MidDir1" + delimiter + "EndDir1" + delimiter + "EndBlob1");
+                    CloudBlockBlob blob = container.GetBlockBlobReference("TopDir1" + delimiter + "MidDir1" + delimiter + "EndDir1" + delimiter + "EndBlob1");
                     CloudBlobDirectory directory = blob.Parent;
                     Assert.AreEqual(directory.Prefix, "TopDir1" + delimiter + "MidDir1" + delimiter + "EndDir1" + delimiter);
                     Assert.AreEqual(directory.Uri, container.Uri + "/TopDir1" + delimiter + "MidDir1" + delimiter + "EndDir1" + delimiter);

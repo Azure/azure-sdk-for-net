@@ -17,6 +17,8 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using System.Globalization;
+
     /// <summary>
     /// Represents a range of pages in a page blob.
     /// </summary>
@@ -51,7 +53,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>The content of the page range.</returns>
         public override string ToString()
         {
-            return string.Format("bytes={0}-{1}", this.StartOffset, this.EndOffset);
+            return string.Format(CultureInfo.InvariantCulture, "bytes={0}-{1}", this.StartOffset, this.EndOffset);
         }
     }
 }

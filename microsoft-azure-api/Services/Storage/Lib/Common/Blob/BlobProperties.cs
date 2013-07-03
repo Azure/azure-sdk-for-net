@@ -17,7 +17,9 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents the system properties for a blob.
@@ -36,16 +38,21 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Initializes a new instance of the <see cref="BlobProperties"/> class based on an existing instance.
         /// </summary>
         /// <param name="other">The set of properties to clone.</param>
+        /// <remarks>Lease related properties will not be cloned, because a lease associated with the base blob is not copied to the snapshot.</remarks>
         public BlobProperties(BlobProperties other)
         {
+            CommonUtility.AssertNotNull("other", other);
+
             this.BlobType = other.BlobType;
+            this.ContentType = other.ContentType;
             this.ContentEncoding = other.ContentEncoding;
             this.ContentLanguage = other.ContentLanguage;
+            this.CacheControl = other.CacheControl;
+            this.ContentMD5 = other.ContentMD5;
             this.Length = other.Length;
-            this.ContentType = other.ContentType;
             this.ETag = other.ETag;
             this.LastModified = other.LastModified;
-            this.LeaseStatus = other.LeaseStatus;
+            this.PageBlobSequenceNumber = other.PageBlobSequenceNumber;
         }
 
         /// <summary>
@@ -97,11 +104,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Gets the blob's ETag value.
         /// </summary>
         /// <value>The blob's ETag value.</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Naming",
-            "CA1702:CompoundWordsShouldBeCasedCorrectly",
-            MessageId = "ETag",
-            Justification = "ETag is the proper capitalization.")]
         public string ETag { get; internal set; }
 
         /// <summary>
@@ -133,5 +135,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <value>A <see cref="LeaseDuration"/> object that indicates the blob's lease duration.</value>
         public LeaseDuration LeaseDuration { get; internal set; }
+
+        /// <summary>
+        /// If the blob is a page blob, gets the blob's current sequence number.
+        /// </summary>
+        /// <value>The blob's current sequence number.</value>
+        public long? PageBlobSequenceNumber { get; internal set; }
     }
 }

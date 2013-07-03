@@ -50,6 +50,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 return this.authenticationScheme;
             }
+
             set
             {
                 this.authenticationScheme = value;
@@ -90,6 +91,17 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public IAsyncOperation<ContainerResultSegment> ListContainersSegmentedAsync(BlobContinuationToken currentToken)
         {
             return this.ListContainersSegmentedAsync(null /* prefix */, ContainerListingDetails.None, null /* maxResults */, currentToken, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
+        /// Returns a result segment containing a collection of containers.
+        /// </summary>
+        /// <param name="currentToken">A continuation token returned by a previous listing operation.</param>
+        /// <returns>A result segment of containers.</returns>
+        [DoesServiceRequest]
+        public IAsyncOperation<ContainerResultSegment> ListContainersSegmentedAsync(string prefix, BlobContinuationToken currentToken)
+        {
+            return this.ListContainersSegmentedAsync(prefix, ContainerListingDetails.None, null /* maxResults */, currentToken, null /* options */, null /* operationContext */);
         }
 
         /// <summary>
@@ -179,7 +191,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [DoesServiceRequest]
         public IAsyncOperation<ICloudBlob> GetBlobReferenceFromServerAsync(Uri blobUri, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("blobUri", blobUri);
+            CommonUtility.AssertNotNull("blobUri", blobUri);
 
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.Unspecified, this);
             return AsyncInfo.Run(async (token) => await Executor.ExecuteAsync(
@@ -213,8 +225,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             getCmd.Handler = this.AuthenticationHandler;
             getCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             getCmd.BuildRequest = (cmd, cnt, ctx) => ContainerHttpRequestMessageFactory.List(cmd.Uri, cmd.ServerTimeoutInSeconds, listingContext, detailsIncluded, cnt, ctx);
-            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            getCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task.Factory.StartNew(() =>
                 {
@@ -264,8 +276,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             getCmd.BuildRequest = (cmd, cnt, ctx) => BlobHttpRequestMessageFactory.GetProperties(cmd.Uri, cmd.ServerTimeoutInSeconds, parsedSnapshot, accessCondition, cnt, ctx);
             getCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
                 BlobAttributes attributes = new BlobAttributes()
                 {
                     Uri = blobUri,
@@ -332,9 +343,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
 
-            retCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            retCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task.Factory.StartNew(() => BlobHttpResponseParsers.ReadServiceProperties(cmd.ResponseStream));
             };
@@ -375,7 +386,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         private RESTCommand<NullType> SetServicePropertiesImpl(ServiceProperties properties, BlobRequestOptions requestOptions)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            MultiBufferMemoryStream memoryStream = new MultiBufferMemoryStream(null /* bufferManager */, (int)(1 * Constants.KB));
             try
             {
                 properties.WriteServiceProperties(memoryStream);
@@ -394,7 +405,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex);
             retCmd.ApplyRequestOptions(requestOptions);
             return retCmd;
         }

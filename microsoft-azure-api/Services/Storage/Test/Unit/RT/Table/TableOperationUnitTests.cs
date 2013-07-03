@@ -15,13 +15,13 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.Storage.Table.Entities;
-using Microsoft.WindowsAzure.Storage.Table;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -74,6 +74,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
             CloudTableClient tableClient = GenerateCloudTableClient();
             currentTable = tableClient.GetTableReference(GenerateRandomTableName());
             currentTable.CreateIfNotExistsAsync().AsTask().Wait();
+
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
         }
 
         //
@@ -82,6 +87,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public void MyTestCleanup()
         {
             currentTable.DeleteIfExistsAsync().AsTask().Wait();
+
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
         }
 
         #endregion
@@ -584,7 +594,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             sendEnt.Properties = new ComplexEntity().WriteEntity(null);
             sendEnt.Properties.Add("foo", new EntityProperty("bar"));
 
-            EntityResolver<string> resolver= (pk, rk, ts, props, etag) => pk + rk + props["foo"].StringValue + props.Count;
+            EntityResolver<string> resolver = (pk, rk, ts, props, etag) => pk + rk + props["foo"].StringValue + props.Count;
 
             // not found
             TableResult result = await currentTable.ExecuteAsync(TableOperationFactory.Retrieve(sendEnt.PartitionKey, sendEnt.RowKey, resolver));
@@ -601,7 +611,151 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             Assert.AreEqual(result.HttpStatusCode, (int)HttpStatusCode.OK);
             // Since there are properties in ComplexEntity set to null, we do not receive those from the server. Hence we need to check for non null values.
-            Assert.AreEqual((string)result.Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt.Properties["foo"].StringValue + ComplexEntity.NumberOfNonNullProperties);            
+            Assert.AreEqual((string)result.Result, sendEnt.PartitionKey + sendEnt.RowKey + sendEnt.Properties["foo"].StringValue + ComplexEntity.NumberOfNonNullProperties);
+        }
+
+        [TestMethod]
+        // [Description("A test to check ignore property attribute while serializing an entity")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task TableRetrieveWithIgnoreAttributeWriteAsync()
+        {
+            string pk = Guid.NewGuid().ToString();
+            string rk = Guid.NewGuid().ToString();
+
+            IgnoreEntity sendEnt = new IgnoreEntity(pk, rk);
+            sendEnt.Bool = true;
+            sendEnt.BoolN = true;
+            sendEnt.BoolNull = null;
+            sendEnt.BoolPrimitive = true;
+            sendEnt.BoolPrimitiveN = true;
+            sendEnt.BoolPrimitiveNull = true;
+            sendEnt.DateTime = DateTime.UtcNow.AddMinutes(1);
+            sendEnt.DateTimeN = DateTime.UtcNow.AddMinutes(1);
+            sendEnt.DateTimeNull = null;
+            sendEnt.DateTimeOffset = DateTimeOffset.Now.AddMinutes(1);
+            sendEnt.DateTimeOffsetN = DateTimeOffset.Now.AddMinutes(1);
+            sendEnt.DateTimeOffsetNull = DateTimeOffset.Now.AddMinutes(1);
+
+            await currentTable.ExecuteAsync(TableOperation.Insert(sendEnt));
+
+            TableResult result = await currentTable.ExecuteAsync(TableOperation.Retrieve(sendEnt.PartitionKey, sendEnt.RowKey));
+            DynamicTableEntity retrievedEntity = result.Result as DynamicTableEntity;
+
+            Assert.IsFalse(retrievedEntity.Properties.ContainsKey("BoolPrimitiveNull"));
+            Assert.IsFalse(retrievedEntity.Properties.ContainsKey("Bool"));
+            Assert.AreEqual(sendEnt.BoolPrimitive, retrievedEntity.Properties["BoolPrimitive"].BooleanValue);
+            Assert.AreEqual(sendEnt.BoolPrimitiveN, retrievedEntity.Properties["BoolPrimitiveN"].BooleanValue);
+            Assert.AreEqual(sendEnt.BoolN, retrievedEntity.Properties["BoolN"].BooleanValue);
+
+            Assert.IsFalse(retrievedEntity.Properties.ContainsKey("DateTimeOffset"));
+            Assert.IsFalse(retrievedEntity.Properties.ContainsKey("DateTimeOffsetNull"));
+            Assert.AreEqual(sendEnt.DateTimeOffsetN, retrievedEntity.Properties["DateTimeOffsetN"].DateTimeOffsetValue);
+            Assert.AreEqual(sendEnt.DateTime, retrievedEntity.Properties["DateTime"].DateTime);
+            Assert.AreEqual(sendEnt.DateTimeN, retrievedEntity.Properties["DateTimeN"].DateTime);
+        }
+
+        [TestMethod]
+        // [Description("A test to check ignore property attribute while de-serializing an entity")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task TableRetrieveWithIgnoreAttributeReadAsync()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string pk = Guid.NewGuid().ToString();
+
+            // Add insert
+            DynamicTableEntity sendEnt = new DynamicTableEntity();
+            sendEnt.Properties.Add("foo", new EntityProperty("bar"));
+            sendEnt.Properties.Add("Bool", new EntityProperty(true));
+            sendEnt.Properties.Add("BoolN", new EntityProperty(true));
+            sendEnt.Properties.Add("BoolNull", new EntityProperty(true));
+            sendEnt.Properties.Add("BoolPrimitive", new EntityProperty(true));
+            sendEnt.Properties.Add("BoolPrimitiveN", new EntityProperty(true));
+            sendEnt.Properties.Add("BoolPrimitiveNull", new EntityProperty(true));
+            sendEnt.Properties.Add("DateTime", new EntityProperty(DateTime.UtcNow.AddMinutes(1)));
+            sendEnt.Properties.Add("DateTimeN", new EntityProperty(DateTime.UtcNow.AddMinutes(1)));
+            sendEnt.Properties.Add("DateTimeNull", new EntityProperty(DateTime.UtcNow.AddMinutes(1)));
+            sendEnt.Properties.Add("DateTimeOffset", new EntityProperty(DateTimeOffset.Now.AddMinutes(1)));
+            sendEnt.Properties.Add("DateTimeOffsetN", new EntityProperty(DateTimeOffset.Now.AddMinutes(1)));
+            sendEnt.Properties.Add("DateTimeOffsetNull", new EntityProperty(DateTimeOffset.Now.AddMinutes(1)));
+
+            sendEnt.PartitionKey = pk;
+            sendEnt.RowKey = Guid.NewGuid().ToString();
+
+            // insert entity
+            await currentTable.ExecuteAsync(TableOperation.Insert(sendEnt));
+
+            TableQuery<IgnoreEntity> query = new TableQuery<IgnoreEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, pk));
+            IEnumerable<IgnoreEntity> result = await currentTable.ExecuteQuerySegmentedAsync(query, null);
+            IgnoreEntity retrievedEntity = result.ToList().First() as IgnoreEntity;
+
+            Assert.AreEqual(sendEnt.Properties["BoolPrimitive"].BooleanValue, retrievedEntity.BoolPrimitive);
+            Assert.AreEqual(sendEnt.Properties["BoolPrimitiveN"].BooleanValue, retrievedEntity.BoolPrimitiveN);
+            Assert.AreNotEqual(sendEnt.Properties["BoolPrimitiveNull"].BooleanValue, retrievedEntity.BoolPrimitiveNull);
+            Assert.AreNotEqual(sendEnt.Properties["Bool"].BooleanValue, retrievedEntity.Bool);
+            Assert.AreEqual(sendEnt.Properties["BoolN"].BooleanValue, retrievedEntity.BoolN);
+            Assert.AreEqual(sendEnt.Properties["BoolNull"].BooleanValue, retrievedEntity.BoolNull);
+
+            Assert.AreNotEqual(sendEnt.Properties["DateTimeOffset"].DateTimeOffsetValue, retrievedEntity.DateTimeOffset);
+            Assert.AreEqual(sendEnt.Properties["DateTimeOffsetN"].DateTimeOffsetValue, retrievedEntity.DateTimeOffsetN);
+            Assert.AreNotEqual(sendEnt.Properties["DateTimeOffsetNull"].DateTimeOffsetValue, retrievedEntity.DateTimeOffsetNull);
+            Assert.IsNull(retrievedEntity.DateTimeOffsetNull);
+            Assert.AreEqual(sendEnt.Properties["DateTime"].DateTime, retrievedEntity.DateTime);
+            Assert.AreEqual(sendEnt.Properties["DateTimeN"].DateTime, retrievedEntity.DateTimeN);
+            Assert.AreEqual(sendEnt.Properties["DateTimeNull"].DateTime, retrievedEntity.DateTimeNull);
+        }
+
+        [TestMethod]
+        // [Description("A test to check retrieve functionality Sync")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task TableRetrieveSyncWithIgnoreAttributesAsync()
+        {
+            string pk = Guid.NewGuid().ToString();
+            string rk = Guid.NewGuid().ToString();
+
+            IgnoreEntity sendEnt = new IgnoreEntity(pk, rk);
+            sendEnt.Bool = true;
+            sendEnt.BoolN = true;
+            sendEnt.BoolNull = null;
+            sendEnt.BoolPrimitive = true;
+            sendEnt.BoolPrimitiveN = true;
+            sendEnt.BoolPrimitiveNull = true;
+            sendEnt.DateTime = DateTime.UtcNow.AddMinutes(1);
+            sendEnt.DateTimeN = DateTime.UtcNow.AddMinutes(1);
+            sendEnt.DateTimeNull = null;
+            sendEnt.DateTimeOffset = DateTimeOffset.Now.AddMinutes(1);
+            sendEnt.DateTimeOffsetN = DateTimeOffset.Now.AddMinutes(1);
+            sendEnt.DateTimeOffsetNull = DateTimeOffset.Now.AddMinutes(1);
+
+            await currentTable.ExecuteAsync(TableOperation.Insert(sendEnt));
+
+            TableQuery<IgnoreEntity> query = new TableQuery<IgnoreEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, pk));
+
+            IEnumerable<IgnoreEntity> result = await currentTable.ExecuteQuerySegmentedAsync(query, null);
+            IgnoreEntity retrievedEntity = result.ToList().First() as IgnoreEntity;
+
+            Assert.AreEqual(sendEnt.BoolPrimitive, retrievedEntity.BoolPrimitive);
+            Assert.AreEqual(sendEnt.BoolPrimitiveN, retrievedEntity.BoolPrimitiveN);
+            Assert.AreNotEqual(sendEnt.BoolPrimitiveNull, retrievedEntity.BoolPrimitiveNull);
+            Assert.AreNotEqual(sendEnt.Bool, retrievedEntity.Bool);
+            Assert.AreEqual(sendEnt.BoolN, retrievedEntity.BoolN);
+            Assert.AreEqual(sendEnt.BoolNull, retrievedEntity.BoolNull);
+
+            Assert.AreNotEqual(sendEnt.DateTimeOffset, retrievedEntity.DateTimeOffset);
+            Assert.AreEqual(sendEnt.DateTimeOffsetN, retrievedEntity.DateTimeOffsetN);
+            Assert.AreNotEqual(sendEnt.DateTimeOffsetNull, retrievedEntity.DateTimeOffsetNull);
+            Assert.IsNull(retrievedEntity.DateTimeOffsetNull);
+            Assert.AreEqual(sendEnt.DateTime, retrievedEntity.DateTime);
+            Assert.AreEqual(sendEnt.DateTimeN, retrievedEntity.DateTimeN);
+            Assert.AreEqual(sendEnt.DateTimeNull, retrievedEntity.DateTimeNull);
         }
         #endregion
 
@@ -721,6 +875,41 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "EntityTooLarge" }, "The entity is larger than allowed by the Table Service.");
             }
         }
+        #endregion
+
+        #region Serialization/De-serialization tests
+
+        [TestMethod]
+        // [Description("TableOperations with entities not derived from TableEntity")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableOpsWithNonDerivedEntitiesAsync()
+        {
+            List<ShapeEntity> DTOObjects = new List<ShapeEntity>(new ShapeEntity[3] { new ShapeEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "square", 4, 4), new ShapeEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "rectangle", 5, 4), new ShapeEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "parallelogram", 6, 4) });
+
+            IEnumerable<POCOAdapter<ShapeEntity>> azureObjects = DTOObjects.Select(ent => new POCOAdapter<ShapeEntity>(ent, ent.PartitionKey, ent.RowKey));
+
+            int i = 0;
+            foreach (POCOAdapter<ShapeEntity> azureObject in azureObjects)
+            {
+                IDictionary<string, EntityProperty> properties = azureObject.WriteEntity(null);
+                Assert.AreEqual(3, properties.Count);
+                Assert.AreEqual(DTOObjects.ElementAt(i).Name, properties["Name"].StringValue);
+                Assert.AreEqual(DTOObjects.ElementAt(i).Length, properties["Length"].Int32Value);
+                Assert.AreEqual(DTOObjects.ElementAt(i).Breadth, properties["Breadth"].Int32Value);
+
+                OperationContext context = new OperationContext();
+                POCOAdapter<ShapeEntity> ent = new POCOAdapter<ShapeEntity>(new ShapeEntity());
+                ent.ReadEntity(properties, context);
+                Assert.AreEqual(properties["Name"].StringValue, ent.Shape.Name);
+                Assert.AreEqual(properties["Length"].Int32Value, ent.Shape.Length);
+                Assert.AreEqual(properties["Breadth"].Int32Value, ent.Shape.Breadth);
+                i++;
+            }
+        }
+
         #endregion
     }
 }
