@@ -17,14 +17,14 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System.Collections.Generic;
     using System.IO;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
     /// Provides methods for parsing the response from an operation to return a block list.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

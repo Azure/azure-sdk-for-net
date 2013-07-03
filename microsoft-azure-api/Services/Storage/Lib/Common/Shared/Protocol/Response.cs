@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 
     internal static class Response
     {
-#if DNCP
+#if WINDOWS_DESKTOP
         /// <summary>
         /// Gets the request id.
         /// </summary>
@@ -31,14 +31,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <returns>The request ID.</returns>
         internal static string GetRequestId(HttpWebResponse response)
         {
-            string[] values = response.Headers.GetValues(Constants.HeaderConstants.RequestIdHeader);
-            
-            if (values.Length == 1)
-            {
-                return values[0];
-            }
-
-            return null;
+            return response.Headers[Constants.HeaderConstants.RequestIdHeader];
         }
 #endif
 

@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             TableRequestOptions modifiedOptions = TableRequestOptions.ApplyDefaults(requestOptions, client);
             operationContext = operationContext ?? new OperationContext();
 
-            CommonUtils.AssertNotNullOrEmpty("tableName", tableName);
+            CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
             RESTCommand<TableResult> cmdToExecute = null;
 
             if (this.OperationType == TableOperationType.Insert ||
@@ -48,8 +48,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
             {
                 if (!this.isTableEntity && this.OperationType != TableOperationType.Insert)
                 {
-                    CommonUtils.AssertNotNull("Upserts require a valid PartitionKey", this.Entity.PartitionKey);
-                    CommonUtils.AssertNotNull("Upserts require a valid RowKey", this.Entity.RowKey);
+                    CommonUtility.AssertNotNull("Upserts require a valid PartitionKey", this.Entity.PartitionKey);
+                    CommonUtility.AssertNotNull("Upserts require a valid RowKey", this.Entity.RowKey);
                 }
 
                 cmdToExecute = InsertImpl(this, client, tableName, modifiedOptions);
@@ -58,26 +58,26 @@ namespace Microsoft.WindowsAzure.Storage.Table
             {
                 if (!this.isTableEntity)
                 {
-                    CommonUtils.AssertNotNullOrEmpty("Delete requires a valid ETag", this.Entity.ETag);
-                    CommonUtils.AssertNotNull("Delete requires a valid PartitionKey", this.Entity.PartitionKey);
-                    CommonUtils.AssertNotNull("Delete requires a valid RowKey", this.Entity.RowKey);
+                    CommonUtility.AssertNotNullOrEmpty("Delete requires a valid ETag", this.Entity.ETag);
+                    CommonUtility.AssertNotNull("Delete requires a valid PartitionKey", this.Entity.PartitionKey);
+                    CommonUtility.AssertNotNull("Delete requires a valid RowKey", this.Entity.RowKey);
                 }
 
                 cmdToExecute = DeleteImpl(this, client, tableName, modifiedOptions);
             }
             else if (this.OperationType == TableOperationType.Merge)
             {
-                CommonUtils.AssertNotNullOrEmpty("Merge requires a valid ETag", this.Entity.ETag);
-                CommonUtils.AssertNotNull("Merge requires a valid PartitionKey", this.Entity.PartitionKey);
-                CommonUtils.AssertNotNull("Merge requires a valid RowKey", this.Entity.RowKey);
+                CommonUtility.AssertNotNullOrEmpty("Merge requires a valid ETag", this.Entity.ETag);
+                CommonUtility.AssertNotNull("Merge requires a valid PartitionKey", this.Entity.PartitionKey);
+                CommonUtility.AssertNotNull("Merge requires a valid RowKey", this.Entity.RowKey);
 
                 cmdToExecute = MergeImpl(this, client, tableName, modifiedOptions);
             }
             else if (this.OperationType == TableOperationType.Replace)
             {
-                CommonUtils.AssertNotNullOrEmpty("Replace requires a valid ETag", this.Entity.ETag);
-                CommonUtils.AssertNotNull("Replace requires a valid PartitionKey", this.Entity.PartitionKey);
-                CommonUtils.AssertNotNull("Replace requires a valid RowKey", this.Entity.RowKey);
+                CommonUtility.AssertNotNullOrEmpty("Replace requires a valid ETag", this.Entity.ETag);
+                CommonUtility.AssertNotNull("Replace requires a valid PartitionKey", this.Entity.PartitionKey);
+                CommonUtility.AssertNotNull("Replace requires a valid RowKey", this.Entity.RowKey);
 
                 cmdToExecute = ReplaceImpl(this, client, tableName, modifiedOptions);
             }
@@ -100,29 +100,16 @@ namespace Microsoft.WindowsAzure.Storage.Table
         private static RESTCommand<TableResult> InsertImpl(TableOperation operation, CloudTableClient client, string tableName, TableRequestOptions requestOptions)
         {
             RESTCommand<TableResult> insertCmd = new RESTCommand<TableResult>(client.Credentials, operation.GenerateRequestURI(client.BaseUri, tableName));
-            requestOptions.ApplyToStorageCommand(insertCmd);
+            insertCmd.ApplyRequestOptions(requestOptions);
 
             TableResult result = new TableResult() { Result = operation.Entity };
             insertCmd.RetrieveResponseStream = true;
             insertCmd.Handler = client.AuthenticationHandler;
             insertCmd.BuildClient = HttpClientFactory.BuildHttpClient;
-            insertCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd.Uri, cmd.ServerTimeoutInSeconds, operation, ctx);
+            insertCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd, cmd.ServerTimeoutInSeconds, operation, client, ctx);
             insertCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
 
-            insertCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
-                  Task.Run(async () =>
-                    {
-                        HttpResponseParsers.ProcessExpectedStatusCodeNoException(
-                                                operation.OperationType == TableOperationType.Insert ? HttpStatusCode.Created : HttpStatusCode.NoContent,
-                                                resp,
-                                                result,
-                                                cmd,
-                                                ex,
-                                                ctx);
-
-                        result = await TableOperationHttpResponseParsers.TableOperationPostProcess(result, operation, cmd, resp, ctx);
-                        return result;
-                    });
+            insertCmd.PostProcessResponse = (cmd, resp, ctx) => TableOperationHttpResponseParsers.TableOperationPostProcess(result, operation, cmd, resp, ctx);
 
             return insertCmd;
         }
@@ -130,18 +117,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         private static RESTCommand<TableResult> DeleteImpl(TableOperation operation, CloudTableClient client, string tableName, TableRequestOptions requestOptions)
         {
             RESTCommand<TableResult> deleteCmd = new RESTCommand<TableResult>(client.Credentials, operation.GenerateRequestURI(client.BaseUri, tableName));
-            requestOptions.ApplyToStorageCommand(deleteCmd);
+            deleteCmd.ApplyRequestOptions(requestOptions);
 
             TableResult result = new TableResult() { Result = operation.Entity };
             deleteCmd.RetrieveResponseStream = false;
             deleteCmd.Handler = client.AuthenticationHandler;
             deleteCmd.BuildClient = HttpClientFactory.BuildHttpClient;
-            deleteCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd.Uri, cmd.ServerTimeoutInSeconds, operation, ctx);
+            deleteCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd, cmd.ServerTimeoutInSeconds, operation, client, ctx);
             deleteCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
-            deleteCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
-                {
-                    return Task.Factory.StartNew(() => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.NoContent, resp, result, cmd, ex, ctx));
-                };
 
             return deleteCmd;
         }
@@ -149,18 +132,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         private static RESTCommand<TableResult> MergeImpl(TableOperation operation, CloudTableClient client, string tableName, TableRequestOptions requestOptions)
         {
             RESTCommand<TableResult> mergeCmd = new RESTCommand<TableResult>(client.Credentials, operation.GenerateRequestURI(client.BaseUri, tableName));
-            requestOptions.ApplyToStorageCommand(mergeCmd);
+            mergeCmd.ApplyRequestOptions(requestOptions);
 
             TableResult result = new TableResult() { Result = operation.Entity };
             mergeCmd.RetrieveResponseStream = false;
             mergeCmd.Handler = client.AuthenticationHandler;
             mergeCmd.BuildClient = HttpClientFactory.BuildHttpClient;
-            mergeCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd.Uri, cmd.ServerTimeoutInSeconds, operation, ctx);
+            mergeCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd, cmd.ServerTimeoutInSeconds, operation, client, ctx);
             mergeCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
-            mergeCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
-            {
-                return Task.Factory.StartNew(() => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.NoContent, resp, result, cmd, ex, ctx));
-            };
 
             return mergeCmd;
         }
@@ -168,33 +147,30 @@ namespace Microsoft.WindowsAzure.Storage.Table
         private static RESTCommand<TableResult> ReplaceImpl(TableOperation operation, CloudTableClient client, string tableName, TableRequestOptions requestOptions)
         {
             RESTCommand<TableResult> replaceCmd = new RESTCommand<TableResult>(client.Credentials, operation.GenerateRequestURI(client.BaseUri, tableName));
-            requestOptions.ApplyToStorageCommand(replaceCmd);
+            replaceCmd.ApplyRequestOptions(requestOptions);
 
             TableResult result = new TableResult() { Result = operation.Entity };
             replaceCmd.RetrieveResponseStream = false;
             replaceCmd.Handler = client.AuthenticationHandler;
             replaceCmd.BuildClient = HttpClientFactory.BuildHttpClient;
-            replaceCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd.Uri, cmd.ServerTimeoutInSeconds, operation, ctx);
+            replaceCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd, cmd.ServerTimeoutInSeconds, operation, client, ctx);
             replaceCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
-            replaceCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
-            {
-                return Task.Factory.StartNew(() => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.NoContent, resp, result, cmd, ex, ctx));
-            };
+
             return replaceCmd;
         }
 
         private static RESTCommand<TableResult> RetrieveImpl(TableOperation operation, CloudTableClient client, string tableName, TableRequestOptions requestOptions)
         {
             RESTCommand<TableResult> retrieveCmd = new RESTCommand<TableResult>(client.Credentials, operation.GenerateRequestURI(client.BaseUri, tableName));
-            requestOptions.ApplyToStorageCommand(retrieveCmd);
+            retrieveCmd.ApplyRequestOptions(requestOptions);
 
             TableResult result = new TableResult();
             retrieveCmd.RetrieveResponseStream = true;
             retrieveCmd.Handler = client.AuthenticationHandler;
             retrieveCmd.BuildClient = HttpClientFactory.BuildHttpClient;
-            retrieveCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd.Uri, cmd.ServerTimeoutInSeconds, operation, ctx);
+            retrieveCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableOperation(cmd, cmd.ServerTimeoutInSeconds, operation, client, ctx);
             retrieveCmd.PreProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableOperationPreProcess(result, operation, resp, ex, cmd, ctx);
-            retrieveCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            retrieveCmd.PostProcessResponse = (cmd, resp, ctx) =>
                   Task.Run(async () =>
                     {
                         if (resp.StatusCode == HttpStatusCode.NotFound)
@@ -202,7 +178,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
                             return result;
                         }
 
-                        HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, result, cmd, ex, ctx);
                         result = await TableOperationHttpResponseParsers.TableOperationPostProcess(result, operation, cmd, resp, ctx);
                         return result;
                     });

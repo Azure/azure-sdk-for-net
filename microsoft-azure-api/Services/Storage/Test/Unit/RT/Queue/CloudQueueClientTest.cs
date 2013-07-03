@@ -15,19 +15,38 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Queue.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Queue.Protocol;
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
     [TestClass]
-    public class CloudQueueClientTest : TestBase
+    public class CloudQueueClientTest : QueueTestBase
     {
-        readonly CloudQueueClient DefaultQueueClient = new CloudQueueClient(new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), TestBase.StorageCredentials);
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                TestBase.QueueBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.QueueBufferManager.OutstandingBufferCount);
+            }
+        }
 
         [TestMethod]
         //[Description("A test checks basic function of CloudQueueClient.")]
@@ -52,25 +71,26 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueClientListQueuesBasicAsync()
         {
-            string prefix = TestHelper.GenerateNewQueueName();
+            CloudQueueClient client = GenerateCloudQueueClient();
+            string prefix = GenerateNewQueueName();
             List<string> queueNames = new List<string>();
-            int count = 2;
+            int count = 30;
             for (int i = 0; i < count; i++)
             {
                 queueNames.Add(prefix + i);
             }
 
-            QueueResultSegment emptyResults = await DefaultQueueClient.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
+            QueueResultSegment emptyResults = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
             Assert.AreEqual<int>(0, emptyResults.Results.Count());
 
             foreach (string name in queueNames)
             {
-                await DefaultQueueClient.GetQueueReference(name).CreateAsync();
+                await client.GetQueueReference(name).CreateAsync();
             }
 
-            QueueResultSegment results = await DefaultQueueClient.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
+            QueueResultSegment results = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
             
-            foreach (var queue in results.Results)
+            foreach (CloudQueue queue in results.Results)
             {
                 if (queueNames.Remove(queue.Name))
                 {
@@ -93,15 +113,75 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueClientCreateQueueSharedKeyLiteAsync()
         {
-            CloudQueueClient queueClient = new CloudQueueClient(DefaultQueueClient.BaseUri, DefaultQueueClient.Credentials);
+            CloudQueueClient queueClient = GenerateCloudQueueClient();
             queueClient.AuthenticationScheme = AuthenticationScheme.SharedKeyLite;
 
-            string queueName = TestHelper.GenerateNewQueueName();
+            string queueName = GenerateNewQueueName();
             CloudQueue queue = queueClient.GetQueueReference(queueName);
             await queue.CreateAsync();
 
             bool exists = await queue.ExistsAsync();
             Assert.IsTrue(exists);
+        }
+
+        [TestMethod]
+        // [Description("List queues")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudQueueClientListQueuesSegmentedAsync()
+        {
+            CloudQueueClient client = GenerateCloudQueueClient();
+            string prefix = "rtqueuetest" + Guid.NewGuid().ToString("N");
+            List<string> queueNames = new List<string>();
+            int count = 3;
+            for (int i = 0; i < count; i++)
+            {
+                queueNames.Add(prefix + i);
+            }
+
+            QueueContinuationToken token = null;
+            List<CloudQueue> results = new List<CloudQueue>();
+
+            do
+            {
+                QueueResultSegment segment = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.None, null, token, null);
+                token = segment.ContinuationToken;
+                results.AddRange(segment.Results);
+            }
+            while (token != null);
+
+            Assert.AreEqual<int>(0, results.Count);
+
+            foreach (string name in queueNames)
+            {
+                await client.GetQueueReference(name).CreateAsync();
+            }
+
+            do
+            {
+                QueueResultSegment segment = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.None, 10, token, null);
+                token = segment.ContinuationToken;
+                results.AddRange(segment.Results);
+            }
+            while (token != null);
+
+            Assert.AreEqual<int>(results.Count, queueNames.Count);
+
+            foreach (CloudQueue queue in results)
+            {
+                if (queueNames.Remove(queue.Name))
+                {
+                    await queue.DeleteAsync();
+                }
+                else
+                {
+                    Assert.Fail();
+                }
+            }
+
+            Assert.AreEqual<int>(0, queueNames.Count);
         }
     }
 }

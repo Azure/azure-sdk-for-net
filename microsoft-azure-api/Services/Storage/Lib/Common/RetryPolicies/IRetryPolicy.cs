@@ -18,6 +18,7 @@
 namespace Microsoft.WindowsAzure.Storage.RetryPolicies
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents a retry policy.
@@ -39,6 +40,7 @@ namespace Microsoft.WindowsAzure.Storage.RetryPolicies
         /// <param name="retryInterval">The interval to wait until the next retry.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns><c>true</c> if the operation should be retried; otherwise, <c>false</c>.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "3#", Justification = "Back compatibility")]
         bool ShouldRetry(int currentRetryCount, int statusCode, Exception lastException, out TimeSpan retryInterval, OperationContext operationContext);
     }
 }

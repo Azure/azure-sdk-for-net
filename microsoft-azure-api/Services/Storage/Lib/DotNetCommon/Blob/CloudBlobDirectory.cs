@@ -17,8 +17,11 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Represents a virtual directory of blobs, designated by a delimiter character.
@@ -26,6 +29,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     /// <remarks>Containers, which are encapsulated as <see cref="CloudBlobContainer"/> objects, hold directories, and directories hold block blobs and page blobs. Directories can also contain sub-directories.</remarks>
     public sealed partial class CloudBlobDirectory
     {
+#if SYNC
         /// <summary>
         /// Returns an enumerable collection of the blobs in the container that are retrieved lazily.
         /// </summary>
@@ -68,7 +72,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public BlobResultSegment ListBlobsSegmented(bool useFlatBlobListing, BlobListingDetails blobListingDetails, int? maxResults, BlobContinuationToken currentToken, BlobRequestOptions options, OperationContext operationContext)
         {
             return this.Container.ListBlobsSegmented(this.Prefix, useFlatBlobListing, blobListingDetails, maxResults, currentToken, options, operationContext);
-        }
+        } 
+#endif
 
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection of blob items 
@@ -114,5 +119,69 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             return this.Container.EndListBlobsSegmented(asyncResult);
         }
+        
+#if TASK
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
+        /// in the container.
+        /// </summary>
+        /// <param name="currentToken">A continuation token returned by a previous listing operation.</param> 
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<BlobResultSegment> ListBlobsSegmentedAsync(BlobContinuationToken currentToken)
+        {
+            return this.ListBlobsSegmentedAsync(currentToken, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
+        /// in the container.
+        /// </summary>
+        /// <param name="currentToken">A continuation token returned by a previous listing operation.</param> 
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<BlobResultSegment> ListBlobsSegmentedAsync(BlobContinuationToken currentToken, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListBlobsSegmented, this.EndListBlobsSegmented, currentToken, cancellationToken);
+        }
+        
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
+        /// in the container.
+        /// </summary>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
+        /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>  
+        /// <param name="currentToken">A continuation token returned by a previous listing operation.</param> 
+        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<BlobResultSegment> ListBlobsSegmentedAsync(bool useFlatBlobListing, BlobListingDetails blobListingDetails, int? maxResults, BlobContinuationToken currentToken, BlobRequestOptions options, OperationContext operationContext)
+        {
+            return this.ListBlobsSegmentedAsync(useFlatBlobListing, blobListingDetails, maxResults, currentToken, options, operationContext, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
+        /// in the container.
+        /// </summary>
+        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
+        /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>  
+        /// <param name="currentToken">A continuation token returned by a previous listing operation.</param> 
+        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<BlobResultSegment> ListBlobsSegmentedAsync(bool useFlatBlobListing, BlobListingDetails blobListingDetails, int? maxResults, BlobContinuationToken currentToken, BlobRequestOptions options, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListBlobsSegmented, this.EndListBlobsSegmented, useFlatBlobListing, blobListingDetails, maxResults, currentToken, options, operationContext, cancellationToken);
+        }
+#endif    
     }
 }

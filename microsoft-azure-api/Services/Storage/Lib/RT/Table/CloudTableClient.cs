@@ -48,6 +48,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             {
                 return this.authenticationScheme;
             }
+
             set
             {
                 this.authenticationScheme = value;
@@ -82,7 +83,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region TableOperation Execute Methods
         internal IAsyncOperation<TableResult> ExecuteAsync(string tableName, TableOperation operation, TableRequestOptions requestOptions, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("operation", operation);
+            CommonUtility.AssertNotNull("operation", operation);
 
             return operation.ExecuteAsync(this, tableName, requestOptions, operationContext);
         }
@@ -91,7 +92,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region TableQuery Execute Methods
         internal IAsyncOperation<TableQuerySegment> ExecuteQuerySegmentedAsync(string tableName, TableQuery query, TableContinuationToken token, TableRequestOptions requestOptions, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("query", query);
+            CommonUtility.AssertNotNull("query", query);
             return query.ExecuteQuerySegmentedAsync(token, this, tableName, requestOptions, operationContext);
         }
         #endregion
@@ -99,7 +100,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region List Tables
         internal IEnumerable<CloudTable> ListTables()
         {
-            return this.ListTables(string.Empty);
+            return this.ListTables(null);
         }
 
         internal IEnumerable<CloudTable> ListTables(string prefix)
@@ -113,7 +114,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             operationContext = operationContext ?? new OperationContext();
 
             return this.GenerateListTablesQuery(prefix, null).Execute(this, TableConstants.TableServiceTablesName, requestOptions, operationContext).Select(
-                    tbl => new CloudTable(NavigationHelper.AppendPathToUri(this.BaseUri, tbl.Properties[TableConstants.TableName].StringValue), this));
+                    tbl => new CloudTable(tbl.Properties[TableConstants.TableName].StringValue, this));
         }
 
         /// <summary>
@@ -123,7 +124,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>The result segment containing the collection of tables.</returns>
         public IAsyncOperation<TableResultSegment> ListTablesSegmentedAsync(TableContinuationToken currentToken)
         {
-            return this.ListTablesSegmentedAsync(string.Empty, null /* maxResults */, currentToken, null /* TableRequestOptions */, null/* OperationContext */);
+            return this.ListTablesSegmentedAsync(null, null /* maxResults */, currentToken, null /* TableRequestOptions */, null /* OperationContext */);
         }
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>The result segment containing the collection of tables.</returns>
         public IAsyncOperation<TableResultSegment> ListTablesSegmentedAsync(string prefix, TableContinuationToken currentToken)
         {
-            return this.ListTablesSegmentedAsync(prefix, null /* maxResults */, currentToken, null /* TableRequestOptions */, null/* OperationContext */);
+            return this.ListTablesSegmentedAsync(prefix, null /* maxResults */, currentToken, null /* TableRequestOptions */, null /* OperationContext */);
         }
 
         /// <summary>
@@ -162,8 +163,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
             {
                 TableQuerySegment seg = await this.ExecuteQuerySegmentedAsync(TableConstants.TableServiceTablesName, query, currentToken, requestOptions, operationContext).AsTask(cancellationToken);
 
-                TableResultSegment retSegment = new TableResultSegment(seg.Results.Select(tbl => new CloudTable(NavigationHelper.AppendPathToUri(this.BaseUri, tbl.Properties[TableConstants.TableName].StringValue), this)).ToList());
-                retSegment.ContinuationToken = seg.ContinuationToken as TableContinuationToken;
+                TableResultSegment retSegment = new TableResultSegment(seg.Results.Select(tbl => new CloudTable(tbl.Properties[TableConstants.TableName].StringValue, this)).ToList());
+                retSegment.ContinuationToken = seg.ContinuationToken;
                 return retSegment;
             });
         }
@@ -233,9 +234,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
 
-            retCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            retCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task.Factory.StartNew(() => HttpResponseParsers.ReadServiceProperties(cmd.ResponseStream));
             };
@@ -276,7 +277,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
         private RESTCommand<NullType> SetServicePropertiesImpl(ServiceProperties properties, TableRequestOptions requestOptions)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            MultiBufferMemoryStream memoryStream = new MultiBufferMemoryStream(null /* bufferManager */, (int)(1 * Constants.KB));
             try
             {
                 properties.WriteServiceProperties(memoryStream);
@@ -294,7 +295,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex);
 
             retCmd.ApplyRequestOptions(requestOptions);
             return retCmd;

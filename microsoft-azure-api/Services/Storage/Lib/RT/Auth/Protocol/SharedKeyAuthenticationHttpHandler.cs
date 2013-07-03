@@ -42,22 +42,20 @@ namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            string dateString = HttpUtility.ConvertDateTimeToHttpString(DateTimeOffset.UtcNow);
+            string dateString = HttpWebUtility.ConvertDateTimeToHttpString(DateTimeOffset.UtcNow);
             request.Headers.Add(Constants.HeaderConstants.Date, dateString);
 
             if (this.credentials.IsSharedKey)
             {
                 string message = this.canonicalizer.CanonicalizeHttpRequest(request, this.accountName);
 
-#if RTMD
-                string signature = CryptoUtility.ComputeHmac256(this.credentials.KeyValue, message);
-#else
-                string signature = CryptoUtility.ComputeHmac256(this.credentials.ExportKey(), message);
-#endif
+                StorageAccountKey accountKey = this.credentials.Key;
 
-                if (!string.IsNullOrEmpty(this.credentials.KeyName))
+                string signature = CryptoUtility.ComputeHmac256(accountKey.KeyValue, message);
+
+                if (!string.IsNullOrEmpty(accountKey.KeyName))
                 {
-                    request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, this.credentials.KeyName);
+                    request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, accountKey.KeyName);
                 }
 
                 request.Headers.Authorization = new AuthenticationHeaderValue(

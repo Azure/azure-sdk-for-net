@@ -17,15 +17,14 @@
 
 namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Auth;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
-    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-    using System.Linq;
     using System.Net;
-    using System.Text;
 
     /// <summary>
     /// Represents a handler that signs HTTP requests with a shared key.
@@ -42,6 +41,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
         /// <param name="canonicalizer">A canonicalizer that converts HTTP request data into a standard form appropriate for signing.</param>
         /// <param name="credentials">A <see cref="StorageCredentials"/> object providing credentials for the request.</param>
         /// <param name="resourceAccountName">The name of the storage account that the HTTP request will access.</param>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "canonicalizer", Justification = "Reviewed: Canonicalizer can be used as an identifier name.")]
         public SharedKeyAuthenticationHandler(ICanonicalizer canonicalizer, StorageCredentials credentials, string resourceAccountName)
         {
             this.canonicalizer = canonicalizer;
@@ -56,17 +56,22 @@ namespace Microsoft.WindowsAzure.Storage.Auth.Protocol
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         public void SignRequest(HttpWebRequest request, OperationContext operationContext)
         {
-            string dateString = HttpUtility.ConvertDateTimeToHttpString(DateTime.UtcNow);
+            CommonUtility.AssertNotNull("request", request);
+
+            string dateString = HttpWebUtility.ConvertDateTimeToHttpString(DateTime.UtcNow);
             request.Headers.Add(Constants.HeaderConstants.Date, dateString);
 
             if (this.credentials.IsSharedKey)
             {
                 string message = this.canonicalizer.CanonicalizeHttpRequest(request, this.accountName);
-                string signature = CryptoUtility.ComputeHmac256(this.credentials.KeyValue, message);
+                Logger.LogVerbose(operationContext, SR.TraceStringToSign, message);
 
-                if (!string.IsNullOrEmpty(this.credentials.KeyName))
+                StorageAccountKey accountKey = this.credentials.Key;
+                string signature = CryptoUtility.ComputeHmac256(accountKey.KeyValue, message);
+
+                if (!string.IsNullOrEmpty(accountKey.KeyName))
                 {
-                    request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, this.credentials.KeyName);
+                    request.Headers.Add(Constants.HeaderConstants.KeyNameHeader, accountKey.KeyName);
                 }
 
                 request.Headers.Add(

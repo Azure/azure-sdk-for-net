@@ -15,18 +15,10 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------
-// <copyright file="Selectors.cs" company="Microsoft">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <summary>
-//     Selectors are predicates over Fiddler.Session objects.
-// </summary>
-//-----------------------------------------------------------------------
 namespace Microsoft.WindowsAzure.Test.Network
 {
-    using System;
     using Fiddler;
+    using System;
 
     /// <summary>
     /// Selectors are predicates over Fiddler.Session objects. This static class contains a good number of useful ones.

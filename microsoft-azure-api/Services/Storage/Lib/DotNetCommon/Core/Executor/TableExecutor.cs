@@ -17,14 +17,15 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
-    using System;
-    using System.Net;
-    using System.Threading;
+#if WINDOWS_DESKTOP && ! WINDOWS_PHONE
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.RetryPolicies;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-    using Microsoft.WindowsAzure.Storage.Table;
     using Microsoft.WindowsAzure.Storage.Table.DataServices;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Net;
+    using System.Threading;
 
     internal class TableExecutor : ExecutorBase
     {
@@ -45,7 +46,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         {
             ExecutionState<T> executionState = result as ExecutionState<T>;
 
-            CommonUtils.AssertNotNull("result", executionState);
+            CommonUtility.AssertNotNull("result", executionState);
 
             executionState.End();
 
@@ -63,6 +64,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         #endregion
 
         #region Setup Request
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Reviewed.")]
         public static void InitRequest<T, INTERMEDIATE_TYPE>(ExecutionState<T> executionState)
         {
             try
@@ -89,6 +91,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                     TableCommand<T, INTERMEDIATE_TYPE> tableCommandRef = executionState.Cmd as TableCommand<T, INTERMEDIATE_TYPE>;
 
                     // Execute Call
+                    Logger.LogInformational(executionState.OperationContext, SR.TraceStartRequestAsync, tableCommandRef.Context.BaseUri);
                     tableCommandRef.Begin(
                         (res) =>
                         {
@@ -104,12 +107,16 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                 // Attempt to populate response headers
                                 if (executionState.Req != null)
                                 {
-                                    executionState.Resp = GetResponseForRequest(executionState.Req);
+                                    executionState.Resp = GetResponseForRequest(executionState);
+
+                                    Logger.LogInformational(executionState.OperationContext, SR.TraceResponse, executionState.Cmd.CurrentResult.HttpStatusCode, executionState.Cmd.CurrentResult.ServiceRequestID, executionState.Cmd.CurrentResult.ContentMd5, executionState.Cmd.CurrentResult.Etag);
                                     FireResponseReceived(executionState);
                                 }
                             }
                             catch (Exception ex)
                             {
+                                Logger.LogWarning(executionState.OperationContext, SR.TraceGenericError, ex.Message);
+
                                 lock (executionState.CancellationLockerObject)
                                 {
                                     if (executionState.CancelRequested)
@@ -130,7 +137,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                     // Attempt to populate response headers
                                     if (executionState.Req != null)
                                     {
-                                        executionState.Resp = GetResponseForRequest(executionState.Req);
+                                        executionState.Resp = GetResponseForRequest(executionState);
+
+                                        Logger.LogInformational(executionState.OperationContext, SR.TraceResponse, executionState.Cmd.CurrentResult.HttpStatusCode, executionState.Cmd.CurrentResult.ServiceRequestID, executionState.Cmd.CurrentResult.ContentMd5, executionState.Cmd.CurrentResult.Etag);
                                         FireResponseReceived(executionState);
                                     }
 
@@ -141,6 +150,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                                 }
                                 catch (Exception parseEx)
                                 {
+                                    Logger.LogWarning(executionState.OperationContext, SR.TraceGenericError, ex.Message);
                                     executionState.ExceptionRef = parseEx;
                                 }
                             }
@@ -159,6 +169,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             }
             catch (Exception ex)
             {
+                Logger.LogWarning(executionState.OperationContext, SR.TraceGenericError, ex.Message);
+
                 // Store exception and invoke callback here. All operations in this try would be non-retryable by default
                 if (executionState.ExceptionRef == null || !(executionState.ExceptionRef is StorageException))
                 {
@@ -171,10 +183,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         #endregion
 
         #region Parse Response
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Reviewed.")]
         private static void EndOperation<T, INTERMEDIATE_TYPE>(ExecutionState<T> executionState)
         {
-            TableCommand<T, INTERMEDIATE_TYPE> tableCommandRef = executionState.Cmd as TableCommand<T, INTERMEDIATE_TYPE>;
-            
             TableExecutor.FinishRequestAttempt(executionState);
 
             lock (executionState.CancellationLockerObject)
@@ -186,7 +197,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                 // Handle Success
                 if (executionState.ExceptionRef == null)
                 {
-                    // Signal event handled and mark response
+                    Logger.LogInformational(executionState.OperationContext, SR.TraceSuccess);
                     executionState.OnComplete();
                     return;
                 }
@@ -197,22 +208,29 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             {
                 StorageException translatedException = StorageException.TranslateException(executionState.ExceptionRef, executionState.Cmd.CurrentResult);
                 executionState.ExceptionRef = translatedException;
+                Logger.LogInformational(executionState.OperationContext, SR.TraceRetryCheck, executionState.RetryCount, executionState.Cmd.CurrentResult.HttpStatusCode, translatedException.IsRetryable ? "yes" : "no", translatedException.Message);
 
-                TimeSpan delay = TimeSpan.FromMilliseconds(0);
-                bool shouldRetry = translatedException.IsRetryable &&
-                                   executionState.RetryPolicy != null ?
-                                        executionState.RetryPolicy.ShouldRetry(
-                                                                        executionState.RetryCount++,
-                                                                        executionState.Cmd.CurrentResult.HttpStatusCode,
-                                                                        executionState.ExceptionRef,
-                                                                        out delay,
-                                                                        executionState.OperationContext)
-                                        : false;
-                
-                delay = delay.TotalMilliseconds < 0 || delay > Constants.MaximumRetryBackoff ? Constants.MaximumRetryBackoff : delay;
+                bool shouldRetry = false;
+                TimeSpan delay = TimeSpan.Zero;
+                if (translatedException.IsRetryable && (executionState.RetryPolicy != null))
+                {
+                    shouldRetry = executionState.RetryPolicy.ShouldRetry(
+                        executionState.RetryCount++,
+                        executionState.Cmd.CurrentResult.HttpStatusCode,
+                        executionState.ExceptionRef,
+                        out delay,
+                        executionState.OperationContext);
+
+                    if ((delay < TimeSpan.Zero) || (delay > Constants.MaximumRetryBackoff))
+                    {
+                        delay = Constants.MaximumRetryBackoff;
+                    }
+                }
 
                 if (!shouldRetry || (executionState.OperationExpiryTime.HasValue && (DateTime.Now + delay).CompareTo(executionState.OperationExpiryTime.Value) > 0))
                 {
+                    Logger.LogError(executionState.OperationContext, shouldRetry ? SR.TraceRetryDecisionTimeout : SR.TraceRetryDecisionPolicy, executionState.ExceptionRef.Message);
+
                     // No Retry
                     executionState.OnComplete();
                 }
@@ -226,22 +244,43 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
                     if (delay > TimeSpan.Zero)
                     {
-                        Timer backoffTimer = null;
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceRetryDelay, (int)delay.TotalMilliseconds);
 
-                        backoffTimer = new Timer(
-                            (obj) =>
+                        executionState.UpdateCompletedSynchronously(false);
+                        if (executionState.BackoffTimer == null)
+                        {
+                            executionState.BackoffTimer = new Timer(
+                                TableExecutor.RetryRequest<T, INTERMEDIATE_TYPE>,
+                                executionState,
+                                (int)delay.TotalMilliseconds,
+                                Timeout.Infinite);
+                        }
+                        else
+                        {
+                            executionState.BackoffTimer.Change((int)delay.TotalMilliseconds, Timeout.Infinite);
+                        }
+
+                        executionState.CancelDelegate = () =>
+                        {
+                            // Disabling the timer here, but there is still a scenario where the user calls cancel after
+                            // the timer starts the next retry but before it sets the CancelDelegate back to null. However, even
+                            // if that happens, next retry will start and then stop immediately because of the cancelled flag.
+                            Timer backoffTimer = executionState.BackoffTimer;
+                            if (backoffTimer != null)
                             {
-                                backoffTimer.Change(Timeout.Infinite, Timeout.Infinite);
+                                executionState.BackoffTimer = null;
                                 backoffTimer.Dispose();
-                                InitRequest<T, INTERMEDIATE_TYPE>(executionState);
-                            },
-                            null /* state */,
-                            (int)delay.TotalMilliseconds,
-                            Timeout.Infinite);
+                            }
+
+                            Logger.LogWarning(executionState.OperationContext, SR.TraceAbortRetry);
+                            TableExecutor.CheckCancellation(executionState);
+                            executionState.OnComplete();
+                        };
                     }
                     else
                     {
                         // Start Next Request Immediately
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceRetry);
                         InitRequest<T, INTERMEDIATE_TYPE>(executionState);
                     }
                 }
@@ -249,22 +288,31 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             catch (Exception ex)
             {
                 // Catch all ( i.e. users retry policy throws etc.)
+                Logger.LogWarning(executionState.OperationContext, SR.TraceRetryError, ex.Message);
                 executionState.ExceptionRef = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
                 executionState.OnComplete();
             }
+        }
+
+        private static void RetryRequest<T, INTERMEDIATE_TYPE>(object state)
+        {
+            ExecutionState<T> executionState = (ExecutionState<T>)state;
+            Logger.LogInformational(executionState.OperationContext, SR.TraceRetry);
+            TableExecutor.InitRequest<T, INTERMEDIATE_TYPE>(executionState);
         }
         #endregion
 
         #endregion
 
         #region Sync
-
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Reviewed.")]
         public static T ExecuteSync<T, INTERMEDIATE_TYPE>(TableCommand<T, INTERMEDIATE_TYPE> cmd, IRetryPolicy policy, OperationContext operationContext)
         {
             // Note all code below will reference state, not params directly, this will allow common code with async executor
             ExecutionState<T> executionState = new ExecutionState<T>(cmd, policy, operationContext);
             TableExecutor.AcquireContext(cmd.Context, executionState);
             bool shouldRetry = false;
+            TimeSpan delay = TimeSpan.Zero;
 
             try
             {
@@ -284,6 +332,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
                         try
                         {
+                            Logger.LogInformational(executionState.OperationContext, SR.TraceStartRequestSync, cmd.Context.BaseUri);
                             tempResult = cmd.ExecuteFunc();
 
                             executionState.Result = cmd.ParseResponse(tempResult, executionState.Cmd.CurrentResult, cmd);
@@ -291,12 +340,16 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                             // Attempt to populate response headers
                             if (executionState.Req != null)
                             {
-                                executionState.Resp = GetResponseForRequest(executionState.Req);
+                                executionState.Resp = GetResponseForRequest(executionState);
+
+                                Logger.LogInformational(executionState.OperationContext, SR.TraceResponse, executionState.Cmd.CurrentResult.HttpStatusCode, executionState.Cmd.CurrentResult.ServiceRequestID, executionState.Cmd.CurrentResult.ContentMd5, executionState.Cmd.CurrentResult.Etag);
                                 TableExecutor.FireResponseReceived(executionState);
                             }
                         }
                         catch (Exception ex)
                         {
+                            Logger.LogWarning(executionState.OperationContext, SR.TraceGenericError, ex.Message);
+
                             // Store exception and invoke callback here. All operations in this try would be non-retryable by default
                             if (executionState.ExceptionRef == null || !(executionState.ExceptionRef is StorageException))
                             {
@@ -306,7 +359,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
                             // Attempt to populate response headers
                             if (executionState.Req != null)
                             {
-                                executionState.Resp = GetResponseForRequest(executionState.Req);
+                                executionState.Resp = GetResponseForRequest(executionState);
+
+                                Logger.LogInformational(executionState.OperationContext, SR.TraceResponse, executionState.Cmd.CurrentResult.HttpStatusCode, executionState.Cmd.CurrentResult.ServiceRequestID, executionState.Cmd.CurrentResult.ContentMd5, executionState.Cmd.CurrentResult.Etag);
                                 TableExecutor.FireResponseReceived(executionState);
                             }
 
@@ -318,6 +373,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
                         TableExecutor.FinishRequestAttempt(executionState);
 
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceSuccess);
                         return executionState.Result;
                     }
                     catch (Exception e)
@@ -326,39 +382,47 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
 
                         StorageException translatedException = StorageException.TranslateException(e, executionState.Cmd.CurrentResult);
                         executionState.ExceptionRef = translatedException;
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceRetryCheck, executionState.RetryCount, executionState.Cmd.CurrentResult.HttpStatusCode, translatedException.IsRetryable ? "yes" : "no", translatedException.Message);
 
-                        TimeSpan delay = TimeSpan.FromMilliseconds(0);
-                        shouldRetry = translatedException.IsRetryable &&
-                                            executionState.RetryPolicy != null ?
-                                                    executionState.RetryPolicy.ShouldRetry(
-                                                                                            executionState.RetryCount++,
-                                                                                            executionState.Cmd.CurrentResult.HttpStatusCode,
-                                                                                            executionState.ExceptionRef,
-                                                                                            out delay,
-                                                                                            executionState.OperationContext)
-                                            : false;
-
-                        delay = delay.TotalMilliseconds < 0 || delay > Constants.MaximumRetryBackoff ? Constants.MaximumRetryBackoff : delay;
-
-                        if (!shouldRetry || (executionState.OperationExpiryTime.HasValue && (DateTime.Now + delay).CompareTo(executionState.OperationExpiryTime.Value) > 0))
+                        shouldRetry = false;
+                        if (translatedException.IsRetryable && (executionState.RetryPolicy != null))
                         {
-                            throw executionState.ExceptionRef;
-                        }
-                        else
-                        {
-                            if (executionState.Cmd.RecoveryAction != null)
-                            {
-                                // I.E. Rewind stream etc.
-                                executionState.Cmd.RecoveryAction(executionState.Cmd, executionState.ExceptionRef, executionState.OperationContext);
-                            }
+                            shouldRetry = executionState.RetryPolicy.ShouldRetry(
+                                executionState.RetryCount++,
+                                executionState.Cmd.CurrentResult.HttpStatusCode,
+                                executionState.ExceptionRef,
+                                out delay,
+                                executionState.OperationContext);
 
-                            if (delay > TimeSpan.Zero)
+                            if ((delay < TimeSpan.Zero) || (delay > Constants.MaximumRetryBackoff))
                             {
-                                Thread.Sleep(delay);
+                                delay = Constants.MaximumRetryBackoff;
                             }
                         }
                     }
-                } 
+
+                    if (!shouldRetry || (executionState.OperationExpiryTime.HasValue && (DateTime.Now + delay).CompareTo(executionState.OperationExpiryTime.Value) > 0))
+                    {
+                        Logger.LogError(executionState.OperationContext, shouldRetry ? SR.TraceRetryDecisionTimeout : SR.TraceRetryDecisionPolicy, executionState.ExceptionRef.Message);
+                        throw executionState.ExceptionRef;
+                    }
+                    else
+                    {
+                        if (executionState.Cmd.RecoveryAction != null)
+                        {
+                            // I.E. Rewind stream etc.
+                            executionState.Cmd.RecoveryAction(executionState.Cmd, executionState.ExceptionRef, executionState.OperationContext);
+                        }
+
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceRetryDelay, (int)delay.TotalMilliseconds);
+                        if (delay > TimeSpan.Zero)
+                        {
+                            Thread.Sleep(delay);
+                        }
+
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceRetry);
+                    }
+                }
                 while (shouldRetry);
 
                 // should never get here, either return, or throw;
@@ -379,8 +443,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             // Handle multiple astoria transactions per execute
             if (executionState.Req != null)
             {
-                executionState.Resp = GetResponseForRequest(executionState.Req);
+                executionState.Resp = GetResponseForRequest(executionState);
 
+                Logger.LogInformational(executionState.OperationContext, SR.TraceResponse, executionState.Cmd.CurrentResult.HttpStatusCode, executionState.Cmd.CurrentResult.ServiceRequestID, executionState.Cmd.CurrentResult.ContentMd5, executionState.Cmd.CurrentResult.Etag);
                 TableExecutor.FireResponseReceived(executionState);
 
                 executionState.Req = null;
@@ -399,10 +464,12 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             }
 
             executionState.Req = req;
+
             TableExecutor.ApplyUserHeaders(executionState);
             TableExecutor.FireSendingRequest(executionState);
         }
 
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "TableServiceContext", Justification = "Splitting TableServiceContext can be confusing to the user")]
         internal static void AcquireContext<T>(TableServiceContext ctx, ExecutionState<T> executionState)
         {
             // This is a fail safe against deadlock in case a callback is ever lost etc and the context is not released
@@ -421,17 +488,19 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             ctx.ContextSemaphore.Release();
         }
 
-        internal static HttpWebResponse GetResponseForRequest(HttpWebRequest req)
+        internal static HttpWebResponse GetResponseForRequest<T>(ExecutionState<T> executionState)
         {
             try
             {
-                return (HttpWebResponse)req.GetResponse();
+                return (HttpWebResponse)executionState.Req.GetResponse();
             }
             catch (WebException e)
             {
+                Logger.LogWarning(executionState.OperationContext, SR.TraceGetResponseError, e.Message);
                 return (HttpWebResponse)e.Response;
             }
         }
         #endregion
     }
+#endif
 }

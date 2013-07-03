@@ -15,10 +15,10 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+using System;
+using System.Threading;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
@@ -70,15 +70,28 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             CloudBlobClient client = GenerateCloudBlobClient();
             client.SetServiceProperties(startProperties);
         }
+
         //
         // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         #endregion
 
         #region Analytics RoundTrip
@@ -171,6 +184,141 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         #endregion
 
+#region TASK
+        [TestMethod]
+        [Description("Test Analytics Round Trip Task")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlobTestAnalyticsRoundTripTask()
+        {
+            CloudBlobClient client = GenerateCloudBlobClient();
+
+            ServiceProperties props = new ServiceProperties();
+
+            props.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write;
+            props.Logging.RetentionDays = 5;
+            props.Logging.Version = "1.0";
+
+            props.Metrics.MetricsLevel = MetricsLevel.Service;
+            props.Metrics.RetentionDays = 6;
+            props.Metrics.Version = "1.0";
+
+            client.SetServicePropertiesAsync(props).Wait();
+
+            // Wait for analytics server to update
+            Thread.Sleep(60 * 1000);
+            AssertServicePropertiesAreEqual(props, client.GetServicePropertiesAsync().Result);
+        }
+
+        [TestMethod]
+        [Description("Test Blob GetServiceProperties and SetServiceProperties - Task")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void BlobGetSetServicePropertiesTask()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+
+            ServiceProperties serviceProperties = new ServiceProperties();
+            serviceProperties.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write | LoggingOperations.Delete;
+            serviceProperties.Logging.RetentionDays = 8;
+            serviceProperties.Logging.Version = "1.0";
+            serviceProperties.Metrics.MetricsLevel = MetricsLevel.Service;
+            serviceProperties.Metrics.RetentionDays = 8;
+            serviceProperties.Metrics.Version = "1.0";
+
+            blobClient.SetServicePropertiesAsync(serviceProperties).Wait();
+
+            ServiceProperties actual = blobClient.GetServicePropertiesAsync().Result;
+
+            AssertServicePropertiesAreEqual(serviceProperties, actual);
+        }
+
+        [TestMethod]
+        [Description("Test Blob GetServiceProperties and SetServiceProperties - Task")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void BlobGetSetServicePropertiesCancellationTokenTask()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            ServiceProperties serviceProperties = new ServiceProperties();
+            serviceProperties.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write | LoggingOperations.Delete;
+            serviceProperties.Logging.RetentionDays = 9;
+            serviceProperties.Logging.Version = "1.0";
+            serviceProperties.Metrics.MetricsLevel = MetricsLevel.Service;
+            serviceProperties.Metrics.RetentionDays = 9;
+            serviceProperties.Metrics.Version = "1.0";
+
+            blobClient.SetServicePropertiesAsync(serviceProperties, cancellationToken).Wait();
+
+            ServiceProperties actual = blobClient.GetServicePropertiesAsync(cancellationToken).Result;
+
+            AssertServicePropertiesAreEqual(serviceProperties, actual);
+        }
+
+        [TestMethod]
+        [Description("Test Blob GetServiceProperties and SetServiceProperties - Task")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void BlobGetSetServicePropertiesRequestOptionsOperationContextTask()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            BlobRequestOptions requestOptions = new BlobRequestOptions();
+            OperationContext operationContext = new OperationContext();
+
+            ServiceProperties serviceProperties = new ServiceProperties();
+            serviceProperties.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write | LoggingOperations.Delete;
+            serviceProperties.Logging.RetentionDays = 10;
+            serviceProperties.Logging.Version = "1.0";
+            serviceProperties.Metrics.MetricsLevel = MetricsLevel.Service;
+            serviceProperties.Metrics.RetentionDays = 10;
+            serviceProperties.Metrics.Version = "1.0";
+
+            blobClient.SetServicePropertiesAsync(serviceProperties, requestOptions, operationContext).Wait();
+
+            ServiceProperties actual = blobClient.GetServicePropertiesAsync(requestOptions, operationContext).Result;
+
+            AssertServicePropertiesAreEqual(serviceProperties, actual);
+        }
+
+        [TestMethod]
+        [Description("Test Blob GetServiceProperties and SetServiceProperties - Task")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void BlobGetSetServicePropertiesRequestOptionsOperationContextCancellationTokenTask()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            BlobRequestOptions requestOptions = new BlobRequestOptions();
+            OperationContext operationContext = new OperationContext();
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            ServiceProperties serviceProperties = new ServiceProperties();
+            serviceProperties.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write | LoggingOperations.Delete;
+            serviceProperties.Logging.RetentionDays = 11;
+            serviceProperties.Logging.Version = "1.0";
+            serviceProperties.Metrics.MetricsLevel = MetricsLevel.Service;
+            serviceProperties.Metrics.RetentionDays = 11;
+            serviceProperties.Metrics.Version = "1.0";
+
+            blobClient.SetServicePropertiesAsync(serviceProperties, requestOptions, operationContext, cancellationToken).Wait();
+
+            ServiceProperties actual = blobClient.GetServicePropertiesAsync(requestOptions, operationContext, cancellationToken).Result;
+
+            AssertServicePropertiesAreEqual(serviceProperties, actual);
+        }
+#endregion
+
         #endregion
 
         #region Analytics Permutations
@@ -213,7 +361,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             CloudBlobClient client = GenerateCloudBlobClient();
 
             ServiceProperties props = client.GetServiceProperties();
-            props.DefaultServiceVersion = "2009-09-19";          
+            props.DefaultServiceVersion = "2009-09-19";
             client.SetServiceProperties(props);
 
             // Wait for analytics server to update
@@ -233,7 +381,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             // Wait for analytics server to update
             Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
-            
+
             props.DefaultServiceVersion = null;
             client.SetServiceProperties(props);
 

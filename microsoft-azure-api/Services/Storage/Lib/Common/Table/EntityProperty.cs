@@ -18,9 +18,11 @@
 namespace Microsoft.WindowsAzure.Storage.Table
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Linq;
 
-#if RT
+#if WINDOWS_RT
     using System.Runtime.InteropServices.WindowsRuntime;
 #endif
 
@@ -34,14 +36,17 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
         private object propertyAsObject;
 
-        internal object PropertyAsObject
+        /// <summary>
+        /// Gets the <see cref="EntityProperty"/> as a generic object.
+        /// </summary>
+        public object PropertyAsObject
         {
             get
             {
                 return this.propertyAsObject;
             }
 
-            set
+            internal set
             {
                 this.IsNull = value == null;
                 this.propertyAsObject = value;
@@ -68,7 +73,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
         /// <returns>A new <see cref="EntityProperty"/> of the byte array.</returns>
         public static EntityProperty GeneratePropertyForByteArray(
-#if RT
+#if WINDOWS_RT
             [ReadOnlyArray]
 #endif
 byte[] input)
@@ -111,6 +116,7 @@ byte[] input)
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
         /// <returns>A new <see cref="EntityProperty"/> of the <see cref="Int32"/> type.</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "ForInt", Justification = "Reviewed")]
         public static EntityProperty GeneratePropertyForInt(int? input)
         {
             return new EntityProperty(input);
@@ -145,7 +151,7 @@ byte[] input)
         /// byte array value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
-#if RT
+#if WINDOWS_RT
         internal
 #else
         public
@@ -161,7 +167,7 @@ byte[] input)
         /// <see cref="Boolean"/> value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
-#if RT
+#if WINDOWS_RT
         internal
 #else
         public
@@ -178,7 +184,7 @@ byte[] input)
         /// <see cref="DateTime"/> offset value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
-#if RT
+#if WINDOWS_RT
         internal
 #else
         public
@@ -203,7 +209,7 @@ byte[] input)
         /// <see cref="DateTime"/> value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
-#if RT
+#if WINDOWS_RT
         internal
 #else
         public
@@ -220,7 +226,7 @@ byte[] input)
         /// <see cref="Double"/> value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
-#if RT
+#if WINDOWS_RT
         internal
 #else
         public
@@ -237,7 +243,7 @@ byte[] input)
         /// <see cref="Guid"/> value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
-#if RT
+#if WINDOWS_RT
         internal
 #else
         public
@@ -254,7 +260,7 @@ byte[] input)
         /// <see cref="Int32"/> value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
-#if RT
+#if WINDOWS_RT
         internal
 #else
         public
@@ -271,7 +277,7 @@ byte[] input)
         /// <see cref="Int64"/> value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
-#if RT
+#if WINDOWS_RT
         internal
 #else
         public
@@ -319,6 +325,7 @@ byte[] input)
         /// An exception will be thrown if you attempt to set this property to anything other than an byte array.
         /// </summary>
         /// <value>The byte array value of this <see cref="EntityProperty"/> object.</value>
+        [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = "Reviewed.")]
         public byte[] BinaryValue
         {
             get
@@ -405,6 +412,7 @@ byte[] input)
                 if (value.HasValue)
                 {
                     this.EnforceType(EdmType.DateTime);
+
                     // Convert to datetime
                     this.PropertyAsObject = value.Value.UtcDateTime;
                 }
@@ -571,6 +579,11 @@ byte[] input)
                 return false;
             }
 
+            if (this.IsNull)
+            {
+                return other.IsNull && other.PropertyType == this.PropertyType;
+            }
+
             switch (this.PropertyType)
             {
                 case EdmType.Binary:
@@ -611,6 +624,7 @@ byte[] input)
             return CreateEntityPropertyFromObject(value, true);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Code clarity.")]
         internal static EntityProperty CreateEntityPropertyFromObject(object value, bool allowUnknownTypes)
         {
             if (value is string)
@@ -772,6 +786,7 @@ byte[] input)
             if (this.PropertyType != requestedType)
             {
                 throw new InvalidOperationException(string.Format(
+                    CultureInfo.InvariantCulture,
                     "Cannot return {0} type for a {1} typed property.",
                     requestedType,
                     this.PropertyType));

@@ -19,21 +19,20 @@ namespace Microsoft.WindowsAzure.Storage.Table
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.WindowsAzure.Storage.Table;
+    using System.Diagnostics.CodeAnalysis;
 
-#if !RTMD
+#if !WINDOWS_RTMD
     /// <summary>
     /// Returns a delegate for resolving entities.
     /// </summary>
-    /// <typeparam name="T">The type into which the <see cref="EntityResolver"/> will project the query results.</typeparam>
+    /// <typeparam name="T">The type into which the query results are projected.</typeparam>
     /// <param name="partitionKey">The partition key.</param>
     /// <param name="rowKey">The row key.</param>
     /// <param name="timestamp">The timestamp.</param>
     /// <param name="properties">A dictionary of properties.</param>
     /// <param name="etag">The ETag.</param>
-    /// <returns></returns>
+    /// <returns></returns>  
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "etag", Justification = "Reviewed: etag can be used for identifier names.")]
     public delegate T EntityResolver<T>(string partitionKey, string rowKey, DateTimeOffset timestamp, IDictionary<string, EntityProperty> properties, string etag);
 #endif
-
-    internal delegate object EntityResolver(string partitionKey, string rowKey, DateTimeOffset timestamp, IDictionary<string, EntityProperty> properties, string etag);
 }

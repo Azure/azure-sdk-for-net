@@ -17,21 +17,20 @@
 
 namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Xml;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
     /// Provides methods for parsing the response from an operation to get messages from a queue.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
 #endif
-        class GetMessagesResponse : ResponseParsingBase<QueueMessage>
+ sealed class GetMessagesResponse : ResponseParsingBase<QueueMessage>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMessagesResponse"/> class.
@@ -55,104 +54,133 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         }
 
         /// <summary>
+        /// Parses a message entry in a queue get messages response.
+        /// </summary>
+        /// <returns>Message entry</returns>
+        private QueueMessage ParseMessageEntry()
+        {
+            QueueMessage message = null;
+            string id = null;
+            string popReceipt = null;
+            DateTime? insertionTime = null;
+            DateTime? expirationTime = null;
+            DateTime? timeNextVisible = null;
+            string text = null;
+            int dequeueCount = 0;
+
+            this.reader.ReadStartElement();
+            while (this.reader.IsStartElement())
+            {
+                if (this.reader.IsEmptyElement)
+                {
+                    this.reader.Skip();
+                }
+                else
+                {
+                    switch (reader.Name)
+                    {
+                        case Constants.MessageIdElement:
+                            id = reader.ReadElementContentAsString();
+                            break;
+
+                        case Constants.PopReceiptElement:
+                            popReceipt = reader.ReadElementContentAsString();
+                            break;
+
+                        case Constants.InsertionTimeElement:
+                            insertionTime = reader.ReadElementContentAsString().ToUTCTime();
+                            break;
+
+                        case Constants.ExpirationTimeElement:
+                            expirationTime = reader.ReadElementContentAsString().ToUTCTime();
+                            break;
+
+                        case Constants.TimeNextVisibleElement:
+                            timeNextVisible = reader.ReadElementContentAsString().ToUTCTime();
+                            break;
+
+                        case Constants.MessageTextElement:
+                            text = reader.ReadElementContentAsString();
+                            break;
+
+                        case Constants.DequeueCountElement:
+                            dequeueCount = reader.ReadElementContentAsInt();
+                            break;
+
+                        default:
+                            reader.Skip();
+                            break;
+                    }
+                }
+            }
+
+            this.reader.ReadEndElement();
+            message = new QueueMessage();
+            message.Text = text;
+            message.Id = id;
+            message.PopReceipt = popReceipt;
+            message.DequeueCount = dequeueCount;
+
+            if (insertionTime != null)
+            {
+                message.InsertionTime = (DateTime)insertionTime;
+            }
+
+            if (expirationTime != null)
+            {
+                message.ExpirationTime = (DateTime)expirationTime;
+            }
+
+            if (timeNextVisible != null)
+            {
+                message.NextVisibleTime = (DateTime)timeNextVisible;
+            }
+
+            return message;
+        }
+
+        /// <summary>
         /// Parses the XML response returned by an operation to get messages from a queue.
         /// </summary>
         /// <returns>An enumerable collection of <see cref="QueueMessage"/> objects.</returns>
         protected override IEnumerable<QueueMessage> ParseXml()
         {
-            // While we're still in the QueueMessageList section.
-            while (reader.Read())
+            if (this.reader.ReadToFollowing(Constants.MessagesElement))
             {
-                // We found a queue message.
-                if (reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement && reader.Name == Constants.MessageElement)
+                if (this.reader.IsEmptyElement)
                 {
-                    QueueMessage message = null;
-                    string id = null;
-                    string popReceipt = null;
-                    DateTime? insertionTime = null;
-                    DateTime? expirationTime = null;
-                    DateTime? timeNextVisible = null;
-                    string text = null;
-                    int dequeueCount = 0;
-
-                    // Go until we are out of the block.
-                    bool needToRead = true;
-                    while (true)
+                    this.reader.Skip();
+                }
+                else
+                {
+                    this.reader.ReadStartElement();
+                    while (this.reader.IsStartElement())
                     {
-                        if (needToRead && !reader.Read())
+                        if (this.reader.IsEmptyElement)
                         {
-                            break;
+                            this.reader.Skip();
                         }
-
-                        needToRead = true;
-
-                        if (reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                        else
                         {
-                            switch (reader.Name)
+                            switch (this.reader.Name)
                             {
-                                case Constants.MessageIdElement:
-                                    id = reader.ReadElementContentAsString();
-                                    needToRead = false;
+                                case Constants.MessageElement:
+                                    while (this.reader.IsStartElement())
+                                    {
+                                        yield return this.ParseMessageEntry();
+                                    }
+
                                     break;
-                                case Constants.PopReceiptElement:
-                                    popReceipt = reader.ReadElementContentAsString();
-                                    needToRead = false;
-                                    break;
-                                case Constants.InsertionTimeElement:
-                                    insertionTime = reader.ReadElementContentAsString().ToUTCTime();
-                                    needToRead = false;
-                                    break;
-                                case Constants.ExpirationTimeElement:
-                                    expirationTime = reader.ReadElementContentAsString().ToUTCTime();
-                                    needToRead = false;
-                                    break;
-                                case Constants.TimeNextVisibleElement:
-                                    timeNextVisible = reader.ReadElementContentAsString().ToUTCTime();
-                                    needToRead = false;
-                                    break;
-                                case Constants.MessageTextElement:
-                                    text = reader.ReadElementContentAsString();
-                                    needToRead = false;
-                                    break;
-                                case Constants.DequeueCountElement:
-                                    dequeueCount = reader.ReadElementContentAsInt();
-                                    needToRead = false;
+
+                                default:
+                                    reader.Skip();
                                     break;
                             }
-                        }
-                        else if (reader.NodeType == XmlNodeType.EndElement && reader.Name == Constants.MessageElement)
-                        {
-                            message = new QueueMessage();
-                            message.Text = text;
-                            message.Id = id;
-                            message.PopReceipt = popReceipt;
-                            message.DequeueCount = dequeueCount;
-
-                            if (insertionTime != null)
-                            {
-                                message.InsertionTime = (DateTime)insertionTime;
-                            }
-
-                            if (expirationTime != null)
-                            {
-                                message.ExpirationTime = (DateTime)expirationTime;
-                            }
-
-                            if (timeNextVisible != null)
-                            {
-                                message.NextVisibleTime = (DateTime)timeNextVisible;
-                            }
-
-                            break;
                         }
                     }
 
-                    yield return message;
-                }
-                else if (reader.NodeType == XmlNodeType.EndElement && reader.Name == Constants.MessagesElement)
-                {
                     this.allObjectsParsed = true;
-                    break;
+                    this.reader.ReadEndElement();
                 }
             }
         }

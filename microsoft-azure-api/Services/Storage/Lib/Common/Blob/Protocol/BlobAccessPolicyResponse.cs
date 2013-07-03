@@ -17,14 +17,11 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.IO;
-
-#if !COMMON
     using System.Xml.Linq;
-#endif
-
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
     /// Parses the response XML from an operation to set the access policy for a container.
@@ -40,7 +37,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         {
         }
 
-#if !COMMON
         /// <summary>
         /// Parses the current element.
         /// </summary>
@@ -48,6 +44,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>The shared access policy.</returns>
         protected override SharedAccessBlobPolicy ParseElement(XElement accessPolicyElement)
         {
+            CommonUtility.AssertNotNull("accessPolicyElement", accessPolicyElement);
+
             SharedAccessBlobPolicy accessPolicy = new SharedAccessBlobPolicy();
             string sharedAccessStartTimeString = (string)accessPolicyElement.Element(Constants.Start);
             if (!string.IsNullOrEmpty(sharedAccessStartTimeString))
@@ -69,6 +67,5 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
             return accessPolicy;
         }
-#endif
     }
 }

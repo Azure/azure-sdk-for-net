@@ -17,14 +17,9 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Text;
-    using Microsoft.WindowsAzure.Storage.Core;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
+    using System.Net.Http;
 
     internal static class TableHttpRequestMessageFactory
     {

@@ -17,14 +17,15 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
+    using Microsoft.Data.OData;
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Executor;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
-    using Microsoft.Data.OData;
-    using Microsoft.WindowsAzure.Storage.Core;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Table.Protocol;
 
     internal class TableOperationHttpRequestMessageFactory
     {
@@ -53,9 +54,9 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
             return msg;
         }
 
-        internal static HttpRequestMessage BuildRequestForTableOperation(Uri uri, int? timeout, TableOperation operation, OperationContext ctx)
+        internal static HttpRequestMessage BuildRequestForTableOperation<T>(RESTCommand<T> cmd, int? timeout, TableOperation operation, CloudTableClient client, OperationContext ctx)
         {
-            HttpRequestMessage msg = BuildRequestCore(uri, operation.HttpMethod, timeout, ctx);
+            HttpRequestMessage msg = BuildRequestCore(cmd.Uri, operation.HttpMethod, timeout, ctx);
 
             if (operation.OperationType == TableOperationType.InsertOrMerge || operation.OperationType == TableOperationType.Merge)
             {
@@ -84,7 +85,9 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                     Version = ODataVersion.V2 // set the Odata version to use when writing the entry 
                 };
 
-                HttpRequestAdapterMessage adapterMsg = new HttpRequestAdapterMessage(msg);
+                HttpRequestAdapterMessage adapterMsg = new HttpRequestAdapterMessage(msg, client.BufferManager, (int)Constants.KB);
+                cmd.StreamToDispose = adapterMsg.GetStream();
+
                 ODataMessageWriter odataWriter = new ODataMessageWriter(adapterMsg, writerSettings);
                 ODataWriter writer = odataWriter.CreateODataEntryWriter();
                 WriteOdataEntity(operation.Entity, operation.OperationType, ctx, writer);
@@ -95,9 +98,9 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
             return msg;
         }
 
-        internal static HttpRequestMessage BuildRequestForTableBatchOperation(Uri uri, int? timeout, Uri baseUri, string tableName, TableBatchOperation batch, OperationContext ctx)
+        internal static HttpRequestMessage BuildRequestForTableBatchOperation<T>(RESTCommand<T> cmd, int? timeout, Uri baseUri, string tableName, TableBatchOperation batch, CloudTableClient client, OperationContext ctx)
         {
-            HttpRequestMessage msg = BuildRequestCore(NavigationHelper.AppendPathToUri(uri, "$batch"), HttpMethod.Post, timeout, ctx);
+            HttpRequestMessage msg = BuildRequestCore(NavigationHelper.AppendPathToUri(cmd.Uri, "$batch"), HttpMethod.Post, timeout, ctx);
 
             // create the writer, indent for readability of the examples.  
             ODataMessageWriterSettings writerSettings = new ODataMessageWriterSettings()
@@ -106,7 +109,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                 Version = ODataVersion.V2 // set the Odata version to use when writing the entry 
             };
 
-            HttpRequestAdapterMessage adapterMsg = new HttpRequestAdapterMessage(msg);
+            HttpRequestAdapterMessage adapterMsg = new HttpRequestAdapterMessage(msg, client.BufferManager, 64 * (int)Constants.KB);
+            cmd.StreamToDispose = adapterMsg.GetStream();
 
             // Start Batch
             ODataMessageWriter odataWriter = new ODataMessageWriter(adapterMsg, writerSettings);

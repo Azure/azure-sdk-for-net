@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
     /// <summary>
     /// Represents a queue item returned in the XML response for a queue listing operation.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
@@ -35,6 +35,19 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// </summary>
         internal QueueEntry()
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueEntry"/> class.
+        /// </summary>
+        /// <param name="name">The name of the queue.</param>
+        /// <param name="uri">The Uri of the queue.</param>
+        /// <param name="metadata">The queue's metadata.</param>
+        internal QueueEntry(string name, Uri uri, IDictionary<string, string> metadata)
+        {
+            this.Name = name;
+            this.Uri = uri;
+            this.Metadata = metadata;
         }
 
         /// <summary>

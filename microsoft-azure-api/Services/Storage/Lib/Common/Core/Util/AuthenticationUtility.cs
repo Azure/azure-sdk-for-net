@@ -21,11 +21,12 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
     using System.Net;
     using System.Text;
-#if RT
+#if WINDOWS_RT
     using System.Net.Http;
 #endif
 
@@ -36,7 +37,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         private const char HeaderNameValueSeparator = ':';
         private const char HeaderValueDelimiter = ',';
 
-#if RT
+#if WINDOWS_RT
         /// <summary>
         /// Gets the value of the x-ms-date or Date header.
         /// </summary>
@@ -150,7 +151,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <returns>The value of the x-ms-date or Date header.</returns>
         public static string GetPreferredDateHeaderValue(HttpWebRequest request)
         {
-            string microsoftDateHeaderValue = CommonUtils.GetFirstHeaderValue(request.Headers.GetValues(Constants.HeaderConstants.Date));
+            string microsoftDateHeaderValue = request.Headers[Constants.HeaderConstants.Date];
             if (!string.IsNullOrEmpty(microsoftDateHeaderValue))
             {
                 return microsoftDateHeaderValue;
@@ -184,7 +185,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <param name="allowMicrosoftDateHeader">true if the value of the x-ms-date header can be used and is preferred; otherwise, false.</param>
         public static void AppendCanonicalizedDateHeader(CanonicalizedString canonicalizedString, HttpWebRequest request, bool allowMicrosoftDateHeader = false)
         {
-            string microsoftDateHeaderValue = CommonUtils.GetFirstHeaderValue(request.Headers.GetValues(Constants.HeaderConstants.Date));
+            string microsoftDateHeaderValue = request.Headers[Constants.HeaderConstants.Date];
             if (string.IsNullOrEmpty(microsoftDateHeaderValue))
             {
                 canonicalizedString.AppendCanonicalizedElement(request.Headers[HttpRequestHeader.Date]);
@@ -204,10 +205,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// </summary>
         /// <param name="canonicalizedString">The canonicalized string where the values are appended.</param>
         /// <param name="request">The request where the values are read from.</param>
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Reviewed.")]
         public static void AppendCanonicalizedCustomHeaders(CanonicalizedString canonicalizedString, HttpWebRequest request)
         {
-            List<string> headerNames = new List<string>(request.Headers.Keys.Count);
-            foreach (string headerName in request.Headers.Keys)
+            List<string> headerNames = new List<string>(request.Headers.AllKeys.Length);
+            foreach (string headerName in request.Headers.AllKeys)
             {
                 if (headerName.StartsWith(Constants.HeaderConstants.PrefixForStorageHeader, StringComparison.OrdinalIgnoreCase))
                 {
@@ -222,20 +224,15 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             StringBuilder canonicalizedElement = new StringBuilder(ExpectedHeaderNameAndValueLength);
             foreach (string headerName in headerNames)
             {
-                string[] values = request.Headers.GetValues(headerName);
-                if (values.Length > 0 && !string.IsNullOrEmpty(values[0]))
+                string value = request.Headers[headerName];
+                if (!string.IsNullOrEmpty(value))
                 {
                     canonicalizedElement.Length = 0;
                     canonicalizedElement.Append(headerName);
                     canonicalizedElement.Append(HeaderNameValueSeparator);
+                    canonicalizedElement.Append(value.TrimStart().Replace("\r\n", string.Empty));
 
-                    foreach (string value in values)
-                    {
-                        canonicalizedElement.Append(value.TrimStart().Replace("\r\n", string.Empty));
-                        canonicalizedElement.Append(HeaderValueDelimiter);
-                    }
-
-                    canonicalizedString.AppendCanonicalizedElement(canonicalizedElement.ToString(0, canonicalizedElement.Length - 1));
+                    canonicalizedString.AppendCanonicalizedElement(canonicalizedElement.ToString());
                 }
             }
         }
@@ -250,7 +247,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         {
             if (value.HasValue)
             {
-                return HttpUtility.ConvertDateTimeToHttpString(value.Value);
+                return HttpWebUtility.ConvertDateTimeToHttpString(value.Value);
             }
 
             return null;
@@ -263,6 +260,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <param name="accountName">The name of the storage account.</param>
         /// <param name="isSharedKeyLiteOrTableService">true when using the Shared Key Lite authentication scheme or the table service; otherwise, false.</param>
         /// <returns>The canonicalized resource string.</returns>
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Reviewed.")]
         public static string GetCanonicalizedResourceString(Uri uri, string accountName, bool isSharedKeyLiteOrTableService = false)
         {
             StringBuilder canonicalizedResource = new StringBuilder(ExpectedResourceStringLength);
@@ -270,7 +268,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             canonicalizedResource.Append(accountName);
             canonicalizedResource.Append(uri.AbsolutePath);
 
-            Dictionary<string, string> queryParameters = HttpUtility.ParseQueryString(uri.Query);
+            Dictionary<string, string> queryParameters = HttpWebUtility.ParseQueryString(uri.Query);
             if (!isSharedKeyLiteOrTableService)
             {
                 List<string> queryParameterNames = new List<string>(queryParameters.Keys);

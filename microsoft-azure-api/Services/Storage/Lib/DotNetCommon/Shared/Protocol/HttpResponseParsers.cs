@@ -17,21 +17,21 @@
 
 namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core.Executor;
     using System;
     using System.Collections.Generic;
     using System.Net;
-    using Microsoft.WindowsAzure.Storage.Core.Executor;
 
     internal static partial class HttpResponseParsers
     {
-        internal static T ProcessExpectedStatusCodeNoException<T>(HttpStatusCode expectedStatusCode, HttpWebResponse resp, T retVal, StorageCommandBase<T> cmd, Exception ex, OperationContext operationContext)
+        internal static T ProcessExpectedStatusCodeNoException<T>(HttpStatusCode expectedStatusCode, HttpWebResponse resp, T retVal, StorageCommandBase<T> cmd, Exception ex)
         {
-            return ProcessExpectedStatusCodeNoException(expectedStatusCode, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex, operationContext);
+            return ProcessExpectedStatusCodeNoException(expectedStatusCode, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex);
         }
 
-        internal static T ProcessExpectedStatusCodeNoException<T>(HttpStatusCode[] expectedStatusCodes, HttpWebResponse resp, T retVal, StorageCommandBase<T> cmd, Exception ex, OperationContext operationContext)
+        internal static T ProcessExpectedStatusCodeNoException<T>(HttpStatusCode[] expectedStatusCodes, HttpWebResponse resp, T retVal, StorageCommandBase<T> cmd, Exception ex)
         {
-            return ProcessExpectedStatusCodeNoException(expectedStatusCodes, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex, operationContext);
+            return ProcessExpectedStatusCodeNoException(expectedStatusCodes, resp != null ? resp.StatusCode : HttpStatusCode.Unused, retVal, cmd, ex);
         }
 
         /// <summary>
@@ -43,6 +43,19 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         {
             return response.Headers[HttpResponseHeader.ETag];
         }
+
+#if WINDOWS_PHONE
+        /// <summary>
+        /// Gets the Last-Modified date and time from a response.
+        /// </summary>
+        /// <param name="response">The web response.</param>
+        /// <returns>A <see cref="System.DateTimeOffset"/> that indicates the last modified date and time.</returns>
+        internal static DateTimeOffset? GetLastModified(HttpWebResponse response)
+        {
+            string lastModified = response.Headers[HttpResponseHeader.LastModified];
+            return string.IsNullOrEmpty(lastModified) ? (DateTimeOffset?)null : DateTimeOffset.Parse(lastModified);
+        }
+#endif
 
         /// <summary>
         /// Gets the user-defined metadata.
@@ -62,16 +75,14 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <returns>A <see cref="System.Collections.IDictionary"/> of the headers with the prefix.</returns>
         private static IDictionary<string, string> GetMetadataOrProperties(HttpWebResponse response, string prefix)
         {
-            IDictionary<string, string> nameValues = new Dictionary<string, string>();
-            WebHeaderCollection headers = response.Headers;
+            IDictionary<string, string> nameValues = new Dictionary<string, string>();            
             int prefixLength = prefix.Length;
 
-            for (int i = 0; i < headers.Count; i++)
+            foreach (string header in response.Headers.AllKeys)
             {
-                string header = headers.GetKey(i);
                 if (header.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    nameValues[header.Substring(prefixLength)] = headers[header];
+                    nameValues[header.Substring(prefixLength)] = response.Headers[header];
                 }
             }
 

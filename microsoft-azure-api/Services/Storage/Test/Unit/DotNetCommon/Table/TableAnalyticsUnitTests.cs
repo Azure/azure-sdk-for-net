@@ -15,11 +15,11 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 using System;
 using System.Net;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -71,15 +71,27 @@ namespace Microsoft.WindowsAzure.Storage.Table
             CloudTableClient tableClient = GenerateCloudTableClient();
             tableClient.SetServiceProperties(startProperties);
         }
+
         //
         // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
+        }
         #endregion
 
         #region Analytics RoundTrip
@@ -108,8 +120,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
         }
 
@@ -150,9 +160,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 client.EndSetServiceProperties(result);
             }
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
-
             ServiceProperties retrievedProps = null;
             using (ManualResetEvent evt = new ManualResetEvent(false))
             {
@@ -169,6 +176,143 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             AssertServicePropertiesAreEqual(props, retrievedProps);
         }
+
+        #endregion
+
+        #region Task
+
+#if TASK
+        [TestMethod]
+        [Description("Test Analytics Round Trip Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableTestAnalyticsRoundTripTask()
+        {
+            CloudTableClient client = GenerateCloudTableClient();
+
+            ServiceProperties props = new ServiceProperties();
+
+            props.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write;
+            props.Logging.RetentionDays = 5;
+            props.Logging.Version = "1.0";
+
+            props.Metrics.MetricsLevel = MetricsLevel.Service;
+            props.Metrics.RetentionDays = 6;
+            props.Metrics.Version = "1.0";
+
+            client.SetServicePropertiesAsync(props).Wait();
+
+            AssertServicePropertiesAreEqual(props, client.GetServicePropertiesAsync().Result);
+        }
+
+        [TestMethod]
+        [Description("Test Table GetServiceProperties and SetServiceProperties - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableGetSetServicePropertiesTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            ServiceProperties serviceProperties = new ServiceProperties();
+            serviceProperties.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write | LoggingOperations.Delete;
+            serviceProperties.Logging.RetentionDays = 8;
+            serviceProperties.Logging.Version = "1.0";
+            serviceProperties.Metrics.MetricsLevel = MetricsLevel.Service;
+            serviceProperties.Metrics.RetentionDays = 8;
+            serviceProperties.Metrics.Version = "1.0";
+
+            tableClient.SetServicePropertiesAsync(serviceProperties).Wait();
+
+            ServiceProperties actual = tableClient.GetServicePropertiesAsync().Result;
+
+            AssertServicePropertiesAreEqual(serviceProperties, actual);
+        }
+
+        [TestMethod]
+        [Description("Test Table GetServiceProperties and SetServiceProperties - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableGetSetServicePropertiesCancellationTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            ServiceProperties serviceProperties = new ServiceProperties();
+            serviceProperties.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write | LoggingOperations.Delete;
+            serviceProperties.Logging.RetentionDays = 9;
+            serviceProperties.Logging.Version = "1.0";
+            serviceProperties.Metrics.MetricsLevel = MetricsLevel.Service;
+            serviceProperties.Metrics.RetentionDays = 9;
+            serviceProperties.Metrics.Version = "1.0";
+
+            tableClient.SetServicePropertiesAsync(serviceProperties, cancellationToken).Wait();
+
+            ServiceProperties actual = tableClient.GetServicePropertiesAsync(cancellationToken).Result;
+
+            AssertServicePropertiesAreEqual(serviceProperties, actual);
+        }
+
+        [TestMethod]
+        [Description("Test Table GetServiceProperties and SetServiceProperties - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableGetSetServicePropertiesRequestOptionsOperationContextTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableRequestOptions requestOptions = new TableRequestOptions();
+            OperationContext operationContext = new OperationContext();
+
+            ServiceProperties serviceProperties = new ServiceProperties();
+            serviceProperties.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write | LoggingOperations.Delete;
+            serviceProperties.Logging.RetentionDays = 10;
+            serviceProperties.Logging.Version = "1.0";
+            serviceProperties.Metrics.MetricsLevel = MetricsLevel.Service;
+            serviceProperties.Metrics.RetentionDays = 10;
+            serviceProperties.Metrics.Version = "1.0";
+
+            tableClient.SetServicePropertiesAsync(serviceProperties, requestOptions, operationContext).Wait();
+
+            ServiceProperties actual = tableClient.GetServicePropertiesAsync(requestOptions, operationContext).Result;
+
+            AssertServicePropertiesAreEqual(serviceProperties, actual);
+        }
+
+        [TestMethod]
+        [Description("Test Table GetServiceProperties and SetServiceProperties - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableGetSetServicePropertiesRequestOptionsOperationContextCancellationTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableRequestOptions requestOptions = new TableRequestOptions();
+            OperationContext operationContext = new OperationContext();
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            ServiceProperties serviceProperties = new ServiceProperties();
+            serviceProperties.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write | LoggingOperations.Delete;
+            serviceProperties.Logging.RetentionDays = 11;
+            serviceProperties.Logging.Version = "1.0";
+            serviceProperties.Metrics.MetricsLevel = MetricsLevel.Service;
+            serviceProperties.Metrics.RetentionDays = 11;
+            serviceProperties.Metrics.Version = "1.0";
+
+            tableClient.SetServicePropertiesAsync(serviceProperties, requestOptions, operationContext, cancellationToken).Wait();
+
+            ServiceProperties actual = tableClient.GetServicePropertiesAsync(requestOptions, operationContext, cancellationToken).Result;
+
+            AssertServicePropertiesAreEqual(serviceProperties, actual);
+        }
+#endif
 
         #endregion
 
@@ -198,8 +342,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
         }
 
@@ -259,16 +401,12 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // None
             props.Logging.LoggingOperations = LoggingOperations.All;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
         }
 
@@ -290,24 +428,18 @@ namespace Microsoft.WindowsAzure.Storage.Table
             props.Metrics.Version = "1.0";
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Service
             props.Metrics.MetricsLevel = MetricsLevel.Service;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // ServiceAndAPI
             props.Metrics.MetricsLevel = MetricsLevel.ServiceAndApi;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
         }
 
@@ -328,8 +460,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
             props.Metrics.MetricsLevel = MetricsLevel.None;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy not null with metrics disabled.
@@ -337,8 +467,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
             props.Metrics.MetricsLevel = MetricsLevel.Service;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy not null with metrics enabled.
@@ -346,8 +474,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
             props.Metrics.RetentionDays = 2;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy null with logging disabled.
@@ -355,8 +481,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
             props.Logging.LoggingOperations = LoggingOperations.None;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy not null with logging disabled.
@@ -364,8 +488,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
             props.Logging.LoggingOperations = LoggingOperations.None;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy null with logging enabled.
@@ -373,8 +495,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
             props.Logging.LoggingOperations = LoggingOperations.All;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy not null with logging enabled.
@@ -382,8 +502,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
             props.Logging.LoggingOperations = LoggingOperations.All;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
         }
         #endregion

@@ -15,19 +15,18 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-
 namespace Microsoft.WindowsAzure.Test.Network
 {
-    using System;
     using Fiddler;
+    using System;
 
     /// <summary>
-    /// XStoreSelectors are selectors and selector extensions that handle XStore traffic.
+    /// XStoreSelectors are selectors and selector extensions that handle Azure Storage traffic.
     /// </summary>
     public static class XStoreSelectors
     {
         /// <summary>
-        /// BlobTraffic selects traffic intended for the XStore Blob FE.
+        /// BlobTraffic selects traffic intended for the Azure Storage Blob Front End.
         /// </summary>
         /// <returns>The relevant selector.</returns>
         public static Func<Session, bool> BlobTraffic()
@@ -36,7 +35,7 @@ namespace Microsoft.WindowsAzure.Test.Network
         }
 
         /// <summary>
-        /// ForBlobTraffic adds a selector that selects traffic intended for the XStore Blob FE.
+        /// ForBlobTraffic adds a selector that selects traffic intended for the Azure Storage Blob Front E.
         /// </summary>
         /// <param name="predicate">The initial predicate.</param>
         /// <returns>The relevant selector.</returns>
@@ -46,7 +45,7 @@ namespace Microsoft.WindowsAzure.Test.Network
         }
 
         /// <summary>
-        /// TableTraffic selects traffic intended for the XStore Table FE.
+        /// TableTraffic selects traffic intended for the Azure Storage Table Front End.
         /// </summary>
         /// <returns>The relevant selector.</returns>
         public static Func<Session, bool> TableTraffic()
@@ -55,7 +54,7 @@ namespace Microsoft.WindowsAzure.Test.Network
         }
 
         /// <summary>
-        /// ForTableTraffic selects traffic intended for the XStore Table FE.
+        /// ForTableTraffic selects traffic intended for the Azure Storage Table Front End.
         /// </summary>
         /// <param name="predicate">The initial predicate.</param>
         /// <returns>The relevant selector.</returns>
@@ -65,7 +64,7 @@ namespace Microsoft.WindowsAzure.Test.Network
         }
 
         /// <summary>
-        /// QueueTraffic selects traffic intended for the XStore Queue FE.
+        /// QueueTraffic selects traffic intended for the Azure Storage Queue Front End.
         /// </summary>
         /// <returns>The relevant selector.</returns>
         public static Func<Session, bool> QueueTraffic()
@@ -74,7 +73,7 @@ namespace Microsoft.WindowsAzure.Test.Network
         }
 
         /// <summary>
-        /// ForQueueTraffic selects traffic intended for the XStore Queue FE.
+        /// ForQueueTraffic selects traffic intended for the Azure Storage Queue Front End.
         /// </summary>
         /// <param name="predicate">The initial predicate.</param>
         /// <returns>The relevant selector</returns>

@@ -15,14 +15,13 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Table.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Table.Entities;
-using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -74,7 +73,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                 for (int j = 0; j < 100; j++)
                 {
-                    var ent = GenerateRandomEnitity("tables_batch_" + i.ToString());
+                    BaseEntity ent = GenerateRandomEnitity("tables_batch_" + i.ToString());
                     ent.RowKey = string.Format("{0:0000}", j);
                     batch.Insert(ent);
                 }
@@ -89,14 +88,27 @@ namespace Microsoft.WindowsAzure.Storage.Table
         {
             currentTable.DeleteIfExistsAsync().AsTask().Wait();
         }
+
         //
         // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        //public void MyTestInitialize(){}
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup(){}
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
+        }
 
         #endregion
 
@@ -226,6 +238,33 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 Assert.IsNotNull(ent.RowKey);
                 Assert.IsNotNull(ent.Timestamp);
                 Assert.IsNotNull(ent.ETag);
+
+                Assert.AreEqual(ent.A, "a");
+                Assert.IsNull(ent.B);
+                Assert.AreEqual(ent.C, "c");
+                Assert.IsNull(ent.D);
+            }
+        }
+
+        [TestMethod]
+        // [Description("Basic resolver test")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryResolverWithDynamic()
+        {
+            TableQuery query = new TableQuery().Select(new List<string>() { "A", "C" });
+            foreach (string ent in ExecuteQueryWithResolver(currentTable, query, (pk, rk, ts, prop, etag) => prop["A"].StringValue + prop["C"].StringValue))
+            {
+                Assert.AreEqual(ent, "ac");
+            }
+            foreach (BaseEntity ent in ExecuteQueryWithResolver(currentTable, query,
+                            (pk, rk, ts, prop, etag) => new BaseEntity() { PartitionKey = pk, RowKey = rk, Timestamp = ts, A = prop["A"].StringValue, C = prop["C"].StringValue, ETag = etag }))
+            {
+                Assert.IsNotNull(ent.PartitionKey);
+                Assert.IsNotNull(ent.RowKey);
+                Assert.IsNotNull(ent.Timestamp);
 
                 Assert.AreEqual(ent.A, "a");
                 Assert.IsNull(ent.B);
@@ -437,7 +476,24 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             while (currSeg == null || currSeg.ContinuationToken != null)
             {
-                var task = Task.Run(() => table.ExecuteQuerySegmentedAsync(query, currSeg != null ? currSeg.ContinuationToken : null).AsTask());
+                Task<TableQuerySegment<T>> task = Task.Run(() => table.ExecuteQuerySegmentedAsync(query, currSeg != null ? currSeg.ContinuationToken : null).AsTask());
+                task.Wait();
+                currSeg = task.Result;
+                retList.AddRange(currSeg.Results);
+            }
+
+            return retList;
+        }
+
+        private static List<TResult> ExecuteQueryWithResolver<TResult>(CloudTable table, TableQuery query, EntityResolver<TResult> resolver)
+        {
+            List<TResult> retList = new List<TResult>();
+
+            TableQuerySegment<TResult> currSeg = null;
+
+            while (currSeg == null || currSeg.ContinuationToken != null)
+            {
+                Task<TableQuerySegment<TResult>> task = Task.Run(() => table.ExecuteQuerySegmentedAsync(query, resolver, currSeg != null ? currSeg.ContinuationToken : null).AsTask());
                 task.Wait();
                 currSeg = task.Result;
                 retList.AddRange(currSeg.Results);
@@ -447,15 +503,15 @@ namespace Microsoft.WindowsAzure.Storage.Table
             return retList;
         }
 
-        private static List<R> ExecuteQuery<T,R>(CloudTable table, TableQuery<T> query, EntityResolver<R> resolver) where T : ITableEntity, new()
+        private static List<TResult> ExecuteQuery<T,TResult>(CloudTable table, TableQuery<T> query, EntityResolver<TResult> resolver) where T : ITableEntity, new()
         {
-            List<R> retList = new List<R>();
+            List<TResult> retList = new List<TResult>();
 
-            TableQuerySegment<R> currSeg = null;
+            TableQuerySegment<TResult> currSeg = null;
 
             while (currSeg == null || currSeg.ContinuationToken != null)
             {
-                var task = Task.Run(() => table.ExecuteQuerySegmentedAsync(query, resolver, currSeg != null ? currSeg.ContinuationToken : null).AsTask());
+                Task<TableQuerySegment<TResult>> task = Task.Run(() => table.ExecuteQuerySegmentedAsync(query, resolver, currSeg != null ? currSeg.ContinuationToken : null).AsTask());
                 task.Wait();
                 currSeg = task.Result;
                 retList.AddRange(currSeg.Results);

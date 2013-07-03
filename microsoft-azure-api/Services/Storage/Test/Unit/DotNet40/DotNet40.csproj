@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;DN40CP;DNCP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WINDOWS_DESKTOP;TASK</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -30,29 +30,18 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;DN40CP;DNCP</DefineConstants>
+    <DefineConstants>TRACE;WINDOWS_DESKTOP;TASK</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DelaySign>true</DelaySign>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FiddlerCore">
       <HintPath>..\FaultInjection\Dependencies\DotNet2\FiddlerCore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -69,6 +58,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WCFBufferManagerAdapter.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\Common\*.cs">
     </Compile>
     <Compile Include="..\Common\Blob\*.cs">
@@ -77,9 +70,20 @@
     <Compile Include="..\Common\Core\*.cs">
       <Link>Core\Core</Link>
     </Compile>
+    <Compile Include="..\Common\Queue\*.cs">
+      <Link>Queue\Queue</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\*.cs">
+      <Link>Table\Table</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\Entities\*.cs">
+      <Link>Table\Entities\Table</Link>
+    </Compile>
     <Compile Include="..\Common\TestConfigProcess\*.cs">
       <Link>TestConfigProcess\TestConfigProcess</Link>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\DotNetCommon\*.cs" />
     <Compile Include="..\DotNetCommon\Blob\*.cs">
       <Link>Blob\Blob</Link>
@@ -96,30 +100,21 @@
     <Compile Include="..\DotNetCommon\Queue\*.cs">
       <Link>Queue\Queue</Link>
     </Compile>
-    <Compile Include="..\DotNetCommon\Table\DataServices\*.cs">
-      <Link>Table\DataServices\DataServices</Link>
-    </Compile>
-    <Compile Include="..\DotNetCommon\Table\DataServices\Entities\*.cs">
-      <Link>Table\DataServices\Entities\Entities</Link>
-    </Compile>
-    <Compile Include="..\DotNetCommon\Table\DataServices\SAS\*.cs">
-      <Link>Table\DataServices\SAS\SAS</Link>
-    </Compile>
     <Compile Include="..\DotNetCommon\Table\*.cs">
       <Link>Table\Table</Link>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Table\CancellationUnitTests.cs" />
-    <Compile Include="Table\TableBatchOperationTest.cs" />
-    <Compile Include="Table\TableEscapingTests.cs" />
-    <Compile Include="Table\TableOperationUnitTests.cs" />
-    <Compile Include="Table\TableQueryGenericTests.cs" />
-    <Compile Include="Table\TableQueryTests.cs" />
-    <Compile Include="Table\TableRetryTests.cs" />
-    <Compile Include="Table\Entities\BaseEntity.cs" />
-    <Compile Include="Table\Entities\ComplexEntity.cs" />
-    <Compile Include="Table\SAS\TableSasFunctionalTests.cs" />
-    <Compile Include="Table\SAS\TableSasUnitTests.cs" />
+    <Compile Include="..\DotNetCommon\Table\Entities\*.cs">
+      <Link>Table\Entities\Entities</Link>
+    </Compile>
+    <Compile Include="..\DotNetCommon\Table\SAS\*.cs">
+      <Link>Table\SAS\SAS</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\DotNet40\Table\*.cs" />
+    <Compile Include="..\DotNet40\Table\DataServices\*.cs" />
+    <Compile Include="..\DotNet40\Table\DataServices\Entities\*.cs" />
+    <Compile Include="..\DotNet40\Table\DataServices\SAS\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Lib\DotNet40\DotNet40.csproj">
@@ -146,10 +141,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MSSharedLibKey.snk" />
-    <None Include="XSCL_40.testsettings">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
     </None>
+    <None Include="MSSharedLibKey.snk" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

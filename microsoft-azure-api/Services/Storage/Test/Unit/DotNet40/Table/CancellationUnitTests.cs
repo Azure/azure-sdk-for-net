@@ -15,16 +15,10 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Data.Services.Client;
-using System.Linq;
-using System.Threading;
-using System.Timers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.WindowsAzure.Storage.Table.DataServices;
-using Microsoft.WindowsAzure.Storage.Table.DataServices.Entities;
 using Microsoft.WindowsAzure.Test.Network;
 using Microsoft.WindowsAzure.Test.Network.Behaviors;
+using System;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -77,6 +71,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
             CloudTableClient tableClient = GenerateCloudTableClient();
             currentTable = tableClient.GetTableReference(GenerateRandomTableName());
             currentTable.CreateIfNotExists();
+
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
         }
         //
         // Use TestCleanup to run code after each test has run
@@ -84,6 +83,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public void MyTestCleanup()
         {
             currentTable.DeleteIfExists();
+
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
         }
 
         #endregion

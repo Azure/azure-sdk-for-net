@@ -15,15 +15,10 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Text;
-using System.Linq;
-using System.Collections.Generic;
-
-#if RTMD
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#else
+#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #endif
 
 namespace Microsoft.WindowsAzure.Storage

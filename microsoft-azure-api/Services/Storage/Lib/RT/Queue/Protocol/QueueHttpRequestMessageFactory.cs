@@ -252,7 +252,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         public static HttpRequestMessage PeekMessages(Uri uri, int? timeout, int numberOfMessages, HttpContent content, OperationContext operationContext)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
-            builder.Add("peekonly", "true");
+            builder.Add(Constants.HeaderConstants.PeekOnly, Constants.HeaderConstants.TrueHeader);
             builder.Add(Constants.QueryConstants.NumOfMessages, numberOfMessages.ToString());
 
             HttpRequestMessage request = HttpRequestMessageFactory.CreateRequestMessage(HttpMethod.Get, uri, timeout, builder, content, operationContext);

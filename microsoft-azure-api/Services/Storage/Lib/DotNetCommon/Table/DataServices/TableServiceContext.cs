@@ -26,9 +26,11 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
     using System;
     using System.Data.Services.Client;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Net;
     using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Represents a <see cref="DataServiceContext"/> object for use with the Windows Azure Table service.
@@ -44,16 +46,18 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         public TableServiceContext(CloudTableClient client)
             : base(client.BaseUri)
         {
+            CommonUtility.AssertNotNull("client", client);
+
             if (client.BaseUri == null)
             {
-                throw new ArgumentNullException("client.BaseUri");
+                throw new ArgumentNullException("client");
             }
 
             if (!client.BaseUri.IsAbsoluteUri)
             {
                 string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.RelativeAddressNotPermitted, client.BaseUri.ToString());
 
-                throw new ArgumentException(errorMessage, "client.BaseUri");
+                throw new ArgumentException(errorMessage, "client");
             }
 
             this.SendingRequest += this.TableServiceContext_SendingRequest;
@@ -109,7 +113,6 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         internal Semaphore ContextSemaphore
         {
             get { return this.contextSemaphore; }
-            set { this.contextSemaphore = value; }
         }
 
         /// <summary>
@@ -132,8 +135,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
                                            : request.RequestUri.Query.Substring(timeoutDex);
 
                 int result = -1;
-                int.TryParse(timeoutString, out result);
-                if (result > 0)
+                if (int.TryParse(timeoutString, out result) && result > 0)
                 {
                     request.Timeout = result * 1000; // Convert to ms
                 }
@@ -170,7 +172,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
                 Constants.HeaderConstants.StorageVersionHeader,
                 Constants.HeaderConstants.TargetStorageVersion);
 
-            CommonUtils.ApplyRequestOptimizations(request, -1);
+            CommonUtility.ApplyRequestOptimizations(request, -1);
 
             if (this.sendingSignedRequestAction != null)
             {
@@ -212,6 +214,32 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
 
                 return this.authenticationHandler;
             }
+        }
+
+        /// <summary>
+        /// Saves changes, using the retry policy specified for the service context.
+        /// </summary>
+        /// <returns>A <see cref="DataServiceResponse"/> that represents the result of the operation.</returns>
+        [DoesServiceRequest]
+        public DataServiceResponse SaveChangesWithRetries()
+        {
+            return this.SaveChangesWithRetries(this.SaveChangesDefaultOptions);
+        }
+
+        /// <summary>
+        /// Saves changes, using the retry policy specified for the service context.
+        /// </summary>
+        /// <param name="options">Additional options for saving changes.</param>
+        /// <param name="requestOptions"> </param>
+        /// <param name="operationContext"> </param>
+        /// <returns> A <see cref="DataServiceResponse"/> that represents the result of the operation.</returns>
+        [DoesServiceRequest]
+        public DataServiceResponse SaveChangesWithRetries(SaveChangesOptions options, TableRequestOptions requestOptions = null, OperationContext operationContext = null)
+        {
+            requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this.ServiceClient);
+            operationContext = operationContext ?? new OperationContext();
+            TableCommand<DataServiceResponse, DataServiceResponse> cmd = this.GenerateSaveChangesCommand(options, requestOptions);
+            return TableExecutor.ExecuteSync(cmd, requestOptions.RetryPolicy, operationContext);
         }
 
         /// <summary>
@@ -262,38 +290,83 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// </summary>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
         /// <returns> A <see cref="DataServiceResponse"/> that represents the result of the operation.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic",
-            Justification = "This is a member-operation")]
         public DataServiceResponse EndSaveChangesWithRetries(IAsyncResult asyncResult)
         {
             return TableExecutor.EndExecuteAsync<DataServiceResponse, DataServiceResponse>(asyncResult);
         }
-
+        
+#if TASK
         /// <summary>
-        /// Saves changes, using the retry policy specified for the service context.
+        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
-        /// <returns>A <see cref="DataServiceResponse"/> that represents the result of the operation.</returns>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
-        public DataServiceResponse SaveChangesWithRetries()
+        public Task<DataServiceResponse> SaveChangesWithRetriesAsync()
         {
-            return this.SaveChangesWithRetries(this.SaveChangesDefaultOptions);
+            return this.SaveChangesWithRetriesAsync(CancellationToken.None);
         }
 
         /// <summary>
-        /// Saves changes, using the retry policy specified for the service context.
+        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<DataServiceResponse> SaveChangesWithRetriesAsync(CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginSaveChangesWithRetries, this.EndSaveChangesWithRetries, cancellationToken);
+        }
+        
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
         /// <param name="options">Additional options for saving changes.</param>
-        /// <param name="requestOptions"> </param>
-        /// <param name="operationContext"> </param>
-        /// <returns> A <see cref="DataServiceResponse"/> that represents the result of the operation.</returns>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
-        public DataServiceResponse SaveChangesWithRetries(SaveChangesOptions options, TableRequestOptions requestOptions = null, OperationContext operationContext = null)
+        public Task<DataServiceResponse> SaveChangesWithRetriesAsync(SaveChangesOptions options)
         {
-            requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this.ServiceClient);
-            operationContext = operationContext ?? new OperationContext();
-            TableCommand<DataServiceResponse, DataServiceResponse> cmd = this.GenerateSaveChangesCommand(options, requestOptions);
-            return TableExecutor.ExecuteSync(cmd, requestOptions.RetryPolicy, operationContext);
+            return this.SaveChangesWithRetriesAsync(options, CancellationToken.None);
         }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// </summary>
+        /// <param name="options">Additional options for saving changes.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<DataServiceResponse> SaveChangesWithRetriesAsync(SaveChangesOptions options, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginSaveChangesWithRetries, this.EndSaveChangesWithRetries, options, cancellationToken);
+        }
+        
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// </summary>
+        /// <param name="options">Additional options for saving changes.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<DataServiceResponse> SaveChangesWithRetriesAsync(SaveChangesOptions options, TableRequestOptions requestOptions, OperationContext operationContext)
+        {
+            return this.SaveChangesWithRetriesAsync(options, requestOptions, operationContext, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// </summary>
+        /// <param name="options">Additional options for saving changes.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<DataServiceResponse> SaveChangesWithRetriesAsync(SaveChangesOptions options, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginSaveChangesWithRetries, this.EndSaveChangesWithRetries, options, requestOptions, operationContext, cancellationToken);
+        }
+#endif
 
         internal TableCommand<DataServiceResponse, DataServiceResponse> GenerateSaveChangesCommand(SaveChangesOptions options, TableRequestOptions requestOptions)
         {
@@ -325,30 +398,26 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         }
 
         /// <summary>
-        /// Releases unmanaged resources.
+        /// Releases all resources used by the TableServiceContext.
         /// </summary>
         public void Dispose()
         {
-            this.Dispose(true);  
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
+        /// Releases the unmanaged resources used by the TableServiceContext and optionally releases the managed resources.
         /// </summary>
-        /// <param name="explicitDisposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool explicitDisposing)
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
         {
-            if (explicitDisposing)
+            if (disposing)
             {
-                GC.SuppressFinalize(this);
-
                 if (this.contextSemaphore != null)
                 {
-#if DN35CP
-                    this.contextSemaphore.Close();
-#else
                     this.contextSemaphore.Dispose();
-#endif
+                    this.contextSemaphore = null;
                 }
             }
         }

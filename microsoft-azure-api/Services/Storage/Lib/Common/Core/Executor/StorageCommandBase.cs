@@ -17,15 +17,19 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
-    using System;
     using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Blob;
     using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using Microsoft.WindowsAzure.Storage.Queue;
+    using Microsoft.WindowsAzure.Storage.Table;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
 
-#if RT
+#if WINDOWS_RT
     using System.Net.Http;
 #endif
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed.")]
+
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed.")]
     internal abstract class StorageCommandBase<T>
     {
         public Uri Uri;
@@ -37,7 +41,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         public int? ServerTimeoutInSeconds = null;
 
         // Max client timeout, enforced over entire operation on client side
-        public TimeSpan? ClientMaxTimeout = null;
+        internal DateTime? OperationExpiryTime = null;
 
         // State- different than async state, this is used for ops to communicate state between invocations, i.e. bytes downloaded etc
         internal object OperationState = null;
@@ -59,23 +63,61 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
             set { this.currentResult = value; }
         }
 
-#if RT
+#if WINDOWS_RT
         public HttpClientHandler Handler = null;
 #endif
 
         // Delegate that will be executed in the event of an Exception after signing
         public Action<StorageCommandBase<T>, Exception, OperationContext> RecoveryAction = null;
 
-        internal void ApplyRequestOptions(IRequestOptions options)
+        internal void ApplyRequestOptions(BlobRequestOptions options)
         {
             if (options.ServerTimeout.HasValue)
             {
                 this.ServerTimeoutInSeconds = (int)options.ServerTimeout.Value.TotalSeconds;
             }
 
-            if (options.MaximumExecutionTime.HasValue)
+            if (options.OperationExpiryTime.HasValue)
             {
-                this.ClientMaxTimeout = options.MaximumExecutionTime.HasValue ? options.MaximumExecutionTime.Value : Constants.MaximumAllowedTimeout;
+                this.OperationExpiryTime = options.OperationExpiryTime;
+            }
+            else if (options.MaximumExecutionTime.HasValue)
+            {
+                this.OperationExpiryTime = DateTime.Now + options.MaximumExecutionTime.Value;
+            }
+        }
+
+        internal void ApplyRequestOptions(TableRequestOptions options)
+        {
+            if (options.ServerTimeout.HasValue)
+            {
+                this.ServerTimeoutInSeconds = (int)options.ServerTimeout.Value.TotalSeconds;
+            }
+
+            if (options.OperationExpiryTime.HasValue)
+            {
+                this.OperationExpiryTime = options.OperationExpiryTime;
+            }
+            else if (options.MaximumExecutionTime.HasValue)
+            {
+                this.OperationExpiryTime = DateTime.Now + options.MaximumExecutionTime.Value;
+            }
+        }
+
+        internal void ApplyRequestOptions(QueueRequestOptions options)
+        {
+            if (options.ServerTimeout.HasValue)
+            {
+                this.ServerTimeoutInSeconds = (int)options.ServerTimeout.Value.TotalSeconds;
+            }
+
+            if (options.OperationExpiryTime.HasValue)
+            {
+                this.OperationExpiryTime = options.OperationExpiryTime;
+            }
+            else if (options.MaximumExecutionTime.HasValue)
+            {
+                this.OperationExpiryTime = DateTime.Now + options.MaximumExecutionTime.Value;
             }
         }
     }

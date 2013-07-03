@@ -20,7 +20,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     /// <summary>
     /// Represents a block in a block list.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

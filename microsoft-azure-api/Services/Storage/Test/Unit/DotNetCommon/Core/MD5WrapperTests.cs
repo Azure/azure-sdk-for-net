@@ -15,24 +15,52 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Security.Cryptography;
 
 namespace Microsoft.WindowsAzure.Storage.Core.Util
 {
     [TestClass()]
     public class MD5WrapperTests
     {
-        byte[] data = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+        private byte[] data = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+
         /// <summary>
-        ///Basic .net MD5 and nativemd5 comparison test
-        ///</summary>
+        /// FISMA MD5 and nativemd5 comparison test
+        /// </summary>
         [TestMethod()]
         public void MD5ComparisonTest()
+        {
+            CloudStorageAccount.UseV1MD5 = false;
+
+            try
+            {
+                using (MD5Wrapper nativeHash = new MD5Wrapper())
+                {
+                    nativeHash.UpdateHash(data, 0, data.Length);
+                    string nativeResult = nativeHash.ComputeHash();
+
+                    MD5 hash = MD5.Create();
+                    hash.TransformBlock(data, 0, data.Length, null, 0);
+                    hash.TransformFinalBlock(new byte[0], 0, 0);
+                    byte[] bytes = hash.Hash;
+                    string result = Convert.ToBase64String(bytes);
+
+                    Assert.AreEqual(nativeResult, result);
+                }
+            }
+            finally
+            {
+                CloudStorageAccount.UseV1MD5 = true;
+            }
+        }
+        
+        /// <summary>
+        /// Basic .net MD5 and nativemd5 comparison test
+        /// </summary>
+        [TestMethod()]
+        public void MD5V1ComparisonTest()
         {
             using (MD5Wrapper nativeHash = new MD5Wrapper())
             {
@@ -42,98 +70,127 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 MD5 hash = MD5.Create();
                 hash.TransformBlock(data, 0, data.Length, null, 0);
                 hash.TransformFinalBlock(new byte[0], 0, 0);
-                var bytes = hash.Hash;
+                byte[] bytes = hash.Hash;
                 string result = Convert.ToBase64String(bytes);
-
+                
                 Assert.AreEqual(nativeResult, result);
             }
-
         }
 
         /// <summary>
         /// Test offset to the array
-        ///</summary>
+        /// </summary>
         [TestMethod()]
         public void MD5SingleByteTest()
         {
-            using (MD5Wrapper nativeHash = new MD5Wrapper())
+            CloudStorageAccount.UseV1MD5 = false;
+            try
             {
-                nativeHash.UpdateHash(data, 3, 2);
-                string nativeResult = nativeHash.ComputeHash();
+                using (MD5Wrapper nativeHash = new MD5Wrapper())
+                {
+                    nativeHash.UpdateHash(data, 3, 2);
+                    string nativeResult = nativeHash.ComputeHash();
 
-                MD5 hash = MD5.Create();
-                hash.TransformBlock(data, 3, 2, null, 0);
-                hash.TransformFinalBlock(new byte[0], 0, 0);
-                var bytes = hash.Hash;
-                string result = Convert.ToBase64String(bytes);
+                    MD5 hash = MD5.Create();
+                    hash.TransformBlock(data, 3, 2, null, 0);
+                    hash.TransformFinalBlock(new byte[0], 0, 0);
+                    byte[] bytes = hash.Hash;
+                    string result = Convert.ToBase64String(bytes);
 
-                Assert.AreEqual(nativeResult, result);
+                    Assert.AreEqual(nativeResult, result);
+                }
+            }
+            finally
+            {
+                CloudStorageAccount.UseV1MD5 = true;
             }
         }
 
         [TestMethod]
         public void MD5EmptyArrayTest()
         {
+            CloudStorageAccount.UseV1MD5 = false;
             byte[] data = new byte[] { };
-            using (MD5Wrapper nativeHash = new MD5Wrapper())
+            try
             {
-                nativeHash.UpdateHash(data, 0, data.Length);
-                string nativeResult = nativeHash.ComputeHash();
+                using (MD5Wrapper nativeHash = new MD5Wrapper())
+                {
+                    nativeHash.UpdateHash(data, 0, data.Length);
+                    string nativeResult = nativeHash.ComputeHash();
 
+                    MD5 hash = MD5.Create();
+                    hash.ComputeHash(data, 0, data.Length);
+                    byte[] varResult = hash.Hash;
+                    string result = Convert.ToBase64String(varResult);
 
-                MD5 hash = MD5.Create();
-                hash.ComputeHash(data, 0, data.Length);
-                var varResult = hash.Hash;
-                string result = Convert.ToBase64String(varResult);
-
-                Assert.AreEqual(nativeResult, result);
+                    Assert.AreEqual(nativeResult, result);
+                }
             }
-
+            finally
+            {
+                CloudStorageAccount.UseV1MD5 = true;
+            }
         }
 
         [TestMethod]
         public void MD5BigDataTest()
         {
+            CloudStorageAccount.UseV1MD5 = false;
             byte[] data = new byte[10000];
-            for (int i = 1; i < 10000; i++)
+            try
             {
-                data[i] = 1;
-            }
-
-            using (MD5Wrapper nativeHash = new MD5Wrapper())
-            {
-                MD5 hash = MD5.Create();
-                for (int i = 0; i < 999; i++)
+                for (int i = 1; i < 10000; i++)
                 {
-                    int index = 10 * i;
-                    nativeHash.UpdateHash(data, 0, 10);
-                    hash.TransformBlock(data, 0, 10, null, 0);
+                    data[i] = 1;
                 }
-                string nativeResult = nativeHash.ComputeHash();
 
-                hash.TransformFinalBlock(new byte[0], 0, 0);
-                var varResult = hash.Hash;
-                String result = Convert.ToBase64String(varResult);
+                using (MD5Wrapper nativeHash = new MD5Wrapper())
+                {
+                    MD5 hash = MD5.Create();
+                    for (int i = 0; i < 999; i++)
+                    {
+                        int index = 10 * i;
+                        nativeHash.UpdateHash(data, 0, 10);
+                        hash.TransformBlock(data, 0, 10, null, 0);
+                    }
+                    string nativeResult = nativeHash.ComputeHash();
 
-                Assert.AreEqual(nativeResult, result);
+                    hash.TransformFinalBlock(new byte[0], 0, 0);
+                    byte[] varResult = hash.Hash;
+                    String result = Convert.ToBase64String(varResult);
+
+                    Assert.AreEqual(nativeResult, result);
+                }
+            }
+            finally
+            {
+                CloudStorageAccount.UseV1MD5 = true;
             }
         }
 
         [TestMethod]
         public void MD5LastByteTest()
         {
-            using (MD5Wrapper nativeHash = new MD5Wrapper())
+            CloudStorageAccount.UseV1MD5 = false;
+            try
             {
-                nativeHash.UpdateHash(data, 8, 1);
-                string nativeResult = nativeHash.ComputeHash();
+                using (MD5Wrapper nativeHash = new MD5Wrapper())
+                {
+                    nativeHash.UpdateHash(data, 8, 1);
+                    string nativeResult = nativeHash.ComputeHash();
 
 
-                MD5 hash = MD5.Create();
-                hash.ComputeHash(data, 8, 1);
-                var varResult = hash.Hash;
-                string result = Convert.ToBase64String(varResult);
+                    MD5 hash = MD5.Create();
+                    hash.ComputeHash(data, 8, 1);
+                    byte[] varResult = hash.Hash;
+                    string result = Convert.ToBase64String(varResult);
 
-                Assert.AreEqual(nativeResult, result);
+                    Assert.AreEqual(nativeResult, result);
+                }
+            }
+            finally
+            {
+                CloudStorageAccount.UseV1MD5 = true;
             }
         }
     }
