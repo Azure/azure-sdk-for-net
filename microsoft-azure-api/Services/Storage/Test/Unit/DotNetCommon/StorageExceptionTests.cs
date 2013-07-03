@@ -17,12 +17,11 @@
 
 namespace Microsoft.WindowsAzure.Storage
 {
+#if !WINDOWS_PHONE
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Storage.Blob;
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using System.Xml;
@@ -194,4 +193,5 @@ namespace Microsoft.WindowsAzure.Storage
             Assert.AreEqual(opContext.LastResult.Etag, retrResult.Etag);
         }
     }
+#endif
 }

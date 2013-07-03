@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     /// Represents a container item returned in the XML response for a container listing operation.
     /// </summary>
     /// 
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

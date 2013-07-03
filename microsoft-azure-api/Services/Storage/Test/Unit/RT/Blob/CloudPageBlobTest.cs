@@ -15,6 +15,7 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,14 +25,33 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
-using Windows.Storage.Streams;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
     public class CloudPageBlobTest : BlobTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         /// [Description("Create a zero-length page blob and then delete it")]
         [TestCategory(ComponentCategory.Blob)]
@@ -76,10 +96,142 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 Assert.AreEqual(1024, blob.Properties.Length);
                 await blob2.FetchAttributesAsync();
                 Assert.AreEqual(1024, blob2.Properties.Length);
+                blob2.Properties.ContentType = "text/plain";
+                await blob2.SetPropertiesAsync();
                 await blob.ResizeAsync(2048);
                 Assert.AreEqual(2048, blob.Properties.Length);
+                await blob.FetchAttributesAsync();
+                Assert.AreEqual("text/plain", blob.Properties.ContentType);
                 await blob2.FetchAttributesAsync();
                 Assert.AreEqual(2048, blob2.Properties.Length);
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        /// [Description("Use sequence number conditions on a page blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudPageBlobSequenceNumberAsync()
+        {
+            byte[] buffer = GetRandomBuffer(1024);
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                await container.CreateAsync();
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+
+                await blob.CreateAsync(buffer.Length);
+                Assert.IsNull(blob.Properties.PageBlobSequenceNumber);
+
+                await blob.SetSequenceNumberAsync(SequenceNumberAction.Update, 5);
+                Assert.AreEqual(5, blob.Properties.PageBlobSequenceNumber);
+
+                await blob.SetSequenceNumberAsync(SequenceNumberAction.Max, 7);
+                Assert.AreEqual(7, blob.Properties.PageBlobSequenceNumber);
+
+                await blob.SetSequenceNumberAsync(SequenceNumberAction.Max, 3);
+                Assert.AreEqual(7, blob.Properties.PageBlobSequenceNumber);
+
+                await blob.SetSequenceNumberAsync(SequenceNumberAction.Increment, null);
+                Assert.AreEqual(8, blob.Properties.PageBlobSequenceNumber);
+
+                WrappedStorageException e = await TestHelper.ExpectedExceptionAsync<WrappedStorageException>(
+                    async () => await blob.SetSequenceNumberAsync(SequenceNumberAction.Update, null),
+                    "SetSequenceNumber with Update should require a value");
+                Assert.IsInstanceOfType(e.InnerException.InnerException, typeof(ArgumentNullException));
+
+                e = await TestHelper.ExpectedExceptionAsync<WrappedStorageException>(
+                    async () => await blob.SetSequenceNumberAsync(SequenceNumberAction.Update, -1),
+                    "Negative sequence numbers are not supported");
+                Assert.IsInstanceOfType(e.InnerException.InnerException, typeof(ArgumentOutOfRangeException));
+
+                e = await TestHelper.ExpectedExceptionAsync<WrappedStorageException>(
+                    async () => await blob.SetSequenceNumberAsync(SequenceNumberAction.Max, null),
+                    "SetSequenceNumber with Max should require a value");
+                Assert.IsInstanceOfType(e.InnerException.InnerException, typeof(ArgumentNullException));
+
+                e = await TestHelper.ExpectedExceptionAsync<WrappedStorageException>(
+                    async () => await blob.SetSequenceNumberAsync(SequenceNumberAction.Increment, 1),
+                    "SetSequenceNumber with Increment should require null value");
+                Assert.IsInstanceOfType(e.InnerException.InnerException, typeof(ArgumentException));
+
+                using (MemoryStream stream = new MemoryStream(buffer))
+                {
+                    stream.Seek(0, SeekOrigin.Begin);
+                    await blob.WritePagesAsync(stream.AsInputStream(), 0, null, AccessCondition.GenerateIfSequenceNumberEqualCondition(8), null, null);
+                    await blob.ClearPagesAsync(0, stream.Length, AccessCondition.GenerateIfSequenceNumberEqualCondition(8), null, null);
+
+                    stream.Seek(0, SeekOrigin.Begin);
+                    await blob.WritePagesAsync(stream.AsInputStream(), 0, null, AccessCondition.GenerateIfSequenceNumberLessThanOrEqualCondition(8), null, null);
+                    await blob.ClearPagesAsync(0, stream.Length, AccessCondition.GenerateIfSequenceNumberLessThanOrEqualCondition(8), null, null);
+
+                    stream.Seek(0, SeekOrigin.Begin);
+                    await blob.WritePagesAsync(stream.AsInputStream(), 0, null, AccessCondition.GenerateIfSequenceNumberLessThanOrEqualCondition(9), null, null);
+                    await blob.ClearPagesAsync(0, stream.Length, AccessCondition.GenerateIfSequenceNumberLessThanOrEqualCondition(9), null, null);
+
+                    stream.Seek(0, SeekOrigin.Begin);
+                    await blob.WritePagesAsync(stream.AsInputStream(), 0, null, AccessCondition.GenerateIfSequenceNumberLessThanCondition(9), null, null);
+                    await blob.ClearPagesAsync(0, stream.Length, AccessCondition.GenerateIfSequenceNumberLessThanCondition(9), null, null);
+
+                    stream.Seek(0, SeekOrigin.Begin);
+                    OperationContext context = new OperationContext();
+                    await TestHelper.ExpectedExceptionAsync(
+                        async () => await blob.WritePagesAsync(stream.AsInputStream(), 0, null, AccessCondition.GenerateIfSequenceNumberEqualCondition(9), null, context),
+                        context,
+                        "Sequence number condition should cause Put Page to fail",
+                        HttpStatusCode.PreconditionFailed,
+                        "SequenceNumberConditionNotMet");
+                    await TestHelper.ExpectedExceptionAsync(
+                        async () => await blob.ClearPagesAsync(0, stream.Length, AccessCondition.GenerateIfSequenceNumberEqualCondition(9), null, context),
+                        context,
+                        "Sequence number condition should cause Put Page to fail",
+                        HttpStatusCode.PreconditionFailed,
+                        "SequenceNumberConditionNotMet");
+
+                    stream.Seek(0, SeekOrigin.Begin);
+                    await TestHelper.ExpectedExceptionAsync(
+                        async () => await blob.WritePagesAsync(stream.AsInputStream(), 0, null, AccessCondition.GenerateIfSequenceNumberLessThanOrEqualCondition(7), null, context),
+                        context,
+                        "Sequence number condition should cause Put Page to fail",
+                        HttpStatusCode.PreconditionFailed,
+                        "SequenceNumberConditionNotMet");
+                    await TestHelper.ExpectedExceptionAsync(
+                        async () => await blob.ClearPagesAsync(0, stream.Length, AccessCondition.GenerateIfSequenceNumberLessThanOrEqualCondition(7), null, context),
+                        context,
+                        "Sequence number condition should cause Put Page to fail",
+                        HttpStatusCode.PreconditionFailed,
+                        "SequenceNumberConditionNotMet");
+
+                    stream.Seek(0, SeekOrigin.Begin);
+                    await TestHelper.ExpectedExceptionAsync(
+                        async () => await blob.WritePagesAsync(stream.AsInputStream(), 0, null, AccessCondition.GenerateIfSequenceNumberLessThanCondition(8), null, context),
+                        context,
+                        "Sequence number condition should cause Put Page to fail",
+                        HttpStatusCode.PreconditionFailed,
+                        "SequenceNumberConditionNotMet");
+                    await TestHelper.ExpectedExceptionAsync(
+                        async () => await blob.ClearPagesAsync(0, stream.Length, AccessCondition.GenerateIfSequenceNumberLessThanCondition(8), null, context),
+                        context,
+                        "Sequence number condition should cause Put Page to fail",
+                        HttpStatusCode.PreconditionFailed,
+                        "SequenceNumberConditionNotMet");
+
+                    stream.Seek(0, SeekOrigin.Begin);
+                    await blob.UploadFromStreamAsync(stream.AsInputStream(), AccessCondition.GenerateIfSequenceNumberEqualCondition(9), null, null);
+
+                    stream.Seek(0, SeekOrigin.Begin);
+                    await blob.UploadFromStreamAsync(stream.AsInputStream(), AccessCondition.GenerateIfSequenceNumberLessThanOrEqualCondition(7), null, null);
+
+                    stream.Seek(0, SeekOrigin.Begin);
+                    await blob.UploadFromStreamAsync(stream.AsInputStream(), AccessCondition.GenerateIfSequenceNumberLessThanCondition(8), null, null);
+                }
             }
             finally
             {
@@ -109,6 +261,39 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             finally
             {
                 container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        /// [Description("Check a blob's existence")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudPageBlobExistsAsync()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            await container.CreateAsync();
+
+            try
+            {
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                CloudPageBlob blob2 = container.GetPageBlobReference("blob1");
+
+                Assert.IsFalse(await blob2.ExistsAsync());
+
+                await blob.CreateAsync(2048);
+
+                Assert.IsTrue(await blob2.ExistsAsync());
+                Assert.AreEqual(2048, blob2.Properties.Length);
+
+                await blob.DeleteAsync();
+
+                Assert.IsFalse(await blob2.ExistsAsync());
+            }
+            finally
+            {
+                container.DeleteAsync().AsTask().Wait();
             }
         }
 
@@ -501,29 +686,29 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             try
             {
                 AccessCondition accessCondition = AccessCondition.GenerateIfNoneMatchCondition("\"*\"");
-                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, accessCondition, operationContext, 0, true);
 
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
                 await blob.CreateAsync(1024);
                 accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
                 await TestHelper.ExpectedExceptionAsync(
-                    async () => await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0),
+                    async () => await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, accessCondition, operationContext, 0, true),
                     operationContext,
                     "Uploading a blob on top of an existing blob should fail if the ETag matches",
                     HttpStatusCode.PreconditionFailed);
                 accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
-                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, accessCondition, operationContext, 0, true);
 
                 blob = container.GetPageBlobReference("blob3");
                 await blob.CreateAsync(1024);
                 accessCondition = AccessCondition.GenerateIfMatchCondition(blob.Properties.ETag);
                 await TestHelper.ExpectedExceptionAsync(
-                    async () => await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0),
+                    async () => await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, accessCondition, operationContext, 0, true),
                     operationContext,
                     "Uploading a blob on top of an non-existing blob should fail when the ETag doesn't match",
                     HttpStatusCode.PreconditionFailed);
                 accessCondition = AccessCondition.GenerateIfNoneMatchCondition(blob.Properties.ETag);
-                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, accessCondition, operationContext, 0);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, accessCondition, operationContext, 0, true);
             }
             finally
             {
@@ -543,8 +728,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             await container.CreateAsync();
             try
             {
-                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, null, 0);
-                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, null, 1024);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, null, null, 0, true);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, null, null, null, 1024, true);
             }
             finally
             {
@@ -552,20 +737,80 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             }
         }
 
-        private async Task CloudPageBlobUploadFromStreamAsync(CloudBlobContainer container, int size, AccessCondition accessCondition, OperationContext operationContext, int startOffset)
+        [TestMethod]
+        /// [Description("Single put blob and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudPageBlobUploadFromStreamLengthAsync()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            await container.CreateAsync();
+            try
+            {
+                // Upload half
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, 3 * 512, null, null, 0, true);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, 3 * 512, null, null, 1024, true);
+
+                // Upload full stream
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, 6 * 512, null, null, 0, true);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, 4 * 512, null, null, 1024, true);
+
+                // Exclude last page
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, 5 * 512, null, null, 0, true);
+                await this.CloudPageBlobUploadFromStreamAsync(container, 6 * 512, 3 * 512, null, null, 1024, true);
+            }
+            finally
+            {
+                container.DeleteAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        /// [Description("Single put blob and get blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudPageBlobUploadFromStreamLengthInvalidAsync()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            await container.CreateAsync();
+            try
+            {
+                await TestHelper.ExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                        async () => await this.CloudPageBlobUploadFromStreamAsync(container, 3 * 512, 4 * 512, null, null, 0, false),
+                        "The given stream does not contain the requested number of bytes from its given position.");
+
+                await TestHelper.ExpectedExceptionAsync<ArgumentOutOfRangeException>(
+                        async () => await this.CloudPageBlobUploadFromStreamAsync(container, 3 * 512, 2 * 512, null, null, 1024, false),
+                        "The given stream does not contain the requested number of bytes from its given position.");
+            }
+            finally
+            {
+                container.DeleteAsync().AsTask().Wait();
+            }
+        }
+
+        private async Task CloudPageBlobUploadFromStreamAsync(CloudBlobContainer container, int size, long? copyLength, AccessCondition accessCondition, OperationContext operationContext, int startOffset, bool testMd5)
         {
             byte[] buffer = GetRandomBuffer(size);
 
-            CryptographicHash hasher = HashAlgorithmProvider.OpenAlgorithm("MD5").CreateHash();
-            hasher.Append(buffer.AsBuffer(startOffset, buffer.Length - startOffset));
-            string md5 = CryptographicBuffer.EncodeToBase64String(hasher.GetValueAndReset());
+            string md5 = string.Empty;
+            if (testMd5)
+            {
+                CryptographicHash hasher = HashAlgorithmProvider.OpenAlgorithm("MD5").CreateHash();
+                hasher.Append(buffer.AsBuffer(startOffset, copyLength.HasValue ? (int)copyLength : buffer.Length - startOffset));
+                md5 = CryptographicBuffer.EncodeToBase64String(hasher.GetValueAndReset()); 
+            }
 
             CloudPageBlob blob = container.GetPageBlobReference("blob1");
             blob.StreamWriteSizeInBytes = 512;
 
-            using (MemoryStream originalBlob = new MemoryStream())
+            using (MemoryStream originalBlobStream = new MemoryStream())
             {
-                originalBlob.Write(buffer, startOffset, buffer.Length - startOffset);
+                originalBlobStream.Write(buffer, startOffset, buffer.Length - startOffset);
 
                 using (MemoryStream sourceStream = new MemoryStream(buffer))
                 {
@@ -574,16 +819,32 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     {
                         StoreBlobContentMD5 = true,
                     };
-                    await blob.UploadFromStreamAsync(sourceStream.AsInputStream(), accessCondition, options, operationContext);
+                    if (copyLength.HasValue)
+                    {
+                        await blob.UploadFromStreamAsync(sourceStream.AsInputStream(), copyLength.Value, accessCondition, options, operationContext); 
+                    }
+                    else
+                    {
+                        await blob.UploadFromStreamAsync(sourceStream.AsInputStream(), accessCondition, options, operationContext); 
+                    }
                 }
 
-                await blob.FetchAttributesAsync();
-                Assert.AreEqual(md5, blob.Properties.ContentMD5);
-
-                using (MemoryOutputStream downloadedBlob = new MemoryOutputStream())
+                if (testMd5)
                 {
-                    await blob.DownloadToStreamAsync(downloadedBlob);
-                    TestHelper.AssertStreamsAreEqual(originalBlob, downloadedBlob.UnderlyingStream);
+                    await blob.FetchAttributesAsync();
+                    Assert.AreEqual(md5, blob.Properties.ContentMD5); 
+                }
+
+                using (MemoryOutputStream downloadedBlobStream = new MemoryOutputStream())
+                {
+                    await blob.DownloadToStreamAsync(downloadedBlobStream);
+                    Assert.AreEqual(copyLength ?? originalBlobStream.Length, downloadedBlobStream.UnderlyingStream.Length);
+                    TestHelper.AssertStreamsAreEqualAtIndex(
+                        originalBlobStream,
+                        downloadedBlobStream.UnderlyingStream,
+                        0,
+                        0,
+                        copyLength.HasValue ? (int)copyLength : (int)originalBlobStream.Length);
                 }
             }
         }
@@ -604,12 +865,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 MemoryStream originalData = new MemoryStream(GetRandomBuffer(1024));
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
                 await blob.UploadFromStreamAsync(originalData.AsInputStream());
+                Assert.IsFalse(blob.IsSnapshot);
+                Assert.IsNull(blob.SnapshotTime, "Root blob has SnapshotTime set");
+                Assert.IsFalse(blob.SnapshotQualifiedUri.Query.Contains("snapshot"));
+                Assert.AreEqual(blob.Uri, blob.SnapshotQualifiedUri);
 
                 CloudPageBlob snapshot1 = await blob.CreateSnapshotAsync();
                 Assert.AreEqual(blob.Properties.ETag, snapshot1.Properties.ETag);
                 Assert.AreEqual(blob.Properties.LastModified, snapshot1.Properties.LastModified);
-
+                Assert.IsTrue(snapshot1.IsSnapshot);
                 Assert.IsNotNull(snapshot1.SnapshotTime, "Snapshot does not have SnapshotTime set");
+                Assert.AreEqual(blob.Uri, snapshot1.Uri);
+                Assert.AreNotEqual(blob.SnapshotQualifiedUri, snapshot1.SnapshotQualifiedUri);
+                Assert.AreNotEqual(snapshot1.Uri, snapshot1.SnapshotQualifiedUri);
+                Assert.IsTrue(snapshot1.SnapshotQualifiedUri.Query.Contains("snapshot"));
 
                 CloudPageBlob snapshot2 = await blob.CreateSnapshotAsync();
                 Assert.IsTrue(snapshot2.SnapshotTime.Value > snapshot1.SnapshotTime.Value);

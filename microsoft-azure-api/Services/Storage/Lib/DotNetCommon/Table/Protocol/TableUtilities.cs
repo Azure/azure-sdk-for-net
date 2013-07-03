@@ -17,6 +17,7 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
+#if WINDOWS_DESKTOP && ! WINDOWS_PHONE
     using System;
     using System.Data.Services.Client;
     using System.IO;
@@ -24,7 +25,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
     using System.Net;
     using System.Text;
 
-    internal class TableUtilities
+    internal static class TableUtilities
     {
         /// <summary>
         /// Translates the data service client exception.
@@ -51,9 +52,11 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
             }
             else
             {
-                reqResult.ExtendedErrorInformation =
-                    StorageExtendedErrorInformation.ReadFromStream(new MemoryStream(Encoding.UTF8.GetBytes(dsce.Message)));
                 reqResult.HttpStatusCode = dsce.StatusCode;
+                using (Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(dsce.Message)))
+                {
+                    reqResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(stream);
+                }
 
                 return new StorageException(
                     reqResult,
@@ -127,11 +130,11 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// </returns>
         public static long GetQueryTakeCount<TElement>(DataServiceQuery<TElement> query, long defaultValue)
         {
-            var expression = query.Expression as MethodCallExpression;
+            MethodCallExpression expression = query.Expression as MethodCallExpression;
 
             if (expression != null && expression.Method.Name == "Take")
             {
-                var argument = expression.Arguments[1] as ConstantExpression;
+                ConstantExpression argument = expression.Arguments[1] as ConstantExpression;
 
                 if (argument != null)
                 {
@@ -261,4 +264,5 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
             }
         }
     }
+#endif
 }

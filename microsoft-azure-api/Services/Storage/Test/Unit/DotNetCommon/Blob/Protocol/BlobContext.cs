@@ -15,8 +15,8 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
 using Microsoft.WindowsAzure.Storage.Auth;
+using System;
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
@@ -24,7 +24,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     {
         public int Timeout { get; private set; }
 
-        public bool Async { get; private set; }
+        public bool IsAsync { get; private set; }
 
         public string Account
         {
@@ -60,11 +60,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
         private bool owner;
 
-        public BlobContext(bool owner, bool async, int timeout)
+        public BlobContext(bool owner, bool isAsync, int timeout)
         {
             this.Timeout = timeout;
             this.owner = owner;
-            this.Async = async;
+            this.IsAsync = isAsync;
         }
     }
 }

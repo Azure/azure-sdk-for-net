@@ -15,14 +15,12 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Auth;
 using System;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob.Protocol;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
@@ -36,6 +34,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.testContainer = GetRandomContainerReference();
             this.testContainer.CreateAsync().AsTask().Wait();
+            
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
         }
 
         [TestCleanup]
@@ -43,6 +46,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.testContainer.DeleteAsync().AsTask().Wait();
             this.testContainer = null;
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
         }
 
         private static async Task TestAccessAsync(string sasToken, SharedAccessBlobPermissions permissions, CloudBlobContainer container, ICloudBlob blob)
@@ -145,6 +152,55 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
             string sasToken = testBlob.GetSharedAccessSignature(policy);
             await SASTests.TestAccessAsync(sasToken, permissions, null, testBlob);
+        }
+
+        [TestMethod]
+        // [Description("Test updateSASToken")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlobContainerUpdateSASTokenAsync()
+        {
+            // Create a policy with read/write acces and get SAS.
+            SharedAccessBlobPolicy policy = new SharedAccessBlobPolicy()
+            {
+                SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write,
+            };
+            string sasToken = this.testContainer.GetSharedAccessSignature(policy);
+            CloudBlockBlob testBlockBlob = this.testContainer.GetBlockBlobReference("blockblob");
+            await UploadTextAsync(testBlockBlob, "blob", Encoding.UTF8);
+            await TestAccessAsync(sasToken, SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write, this.testContainer, testBlockBlob);
+
+            StorageCredentials creds = new StorageCredentials(sasToken);
+
+            // Change the policy to only read and update SAS.
+            SharedAccessBlobPolicy policy2 = new SharedAccessBlobPolicy()
+            {
+                SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                Permissions = SharedAccessBlobPermissions.Read
+            };
+            string sasToken2 = this.testContainer.GetSharedAccessSignature(policy2);
+            creds.UpdateSASToken(sasToken2);
+            
+            // Extra check to make sure that we have actually uopdated the SAS token.
+            CloudBlobContainer container = new CloudBlobContainer(this.testContainer.Uri, creds);
+            CloudBlockBlob blob = container.GetBlockBlobReference("blockblob2");
+            OperationContext operationContext = new OperationContext();
+
+            await TestHelper.ExpectedExceptionAsync(
+                async () => await UploadTextAsync(blob, "blob", Encoding.UTF8, null, null, operationContext),
+                operationContext,
+                "Writing to a blob while SAS does not allow for writing",
+                HttpStatusCode.NotFound);
+
+            CloudPageBlob testPageBlob = this.testContainer.GetPageBlobReference("pageblob");
+            await testPageBlob.CreateAsync(0);
+            await TestAccessAsync(sasToken2, SharedAccessBlobPermissions.Read, this.testContainer, testPageBlob);
+
         }
 
         [TestMethod]

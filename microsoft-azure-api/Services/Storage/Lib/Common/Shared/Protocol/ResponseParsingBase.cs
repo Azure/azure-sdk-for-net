@@ -17,19 +17,20 @@
 
 namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Xml;
-    using Microsoft.WindowsAzure.Storage.Core;
 
     /// <summary>
     /// Provides a base class that is used internally to parse XML streams from storage service operations.
     /// </summary>
     /// <typeparam name="T">The type to be parsed.</typeparam>
     [EditorBrowsable(EditorBrowsableState.Never)]
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
@@ -39,7 +40,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <summary>
         /// Indicates that all parsable objects have been consumed. This field is reserved and should not be used.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.StyleCop.CSharp.MaintainabilityRules",
             "SA1401:FieldsMustBePrivate",
             Justification = "Unable to change while remaining backwards compatible.")]
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <summary>
         /// Stores any objects that have not yet been parsed. This field is reserved and should not be used.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.StyleCop.CSharp.MaintainabilityRules",
             "SA1401:FieldsMustBePrivate",
             Justification = "Unable to change while remaining backwards compatible.")]
@@ -57,7 +58,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <summary>
         /// The reader used for parsing. This field is reserved and should not be used.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.StyleCop.CSharp.MaintainabilityRules",
             "SA1401:FieldsMustBePrivate",
             Justification = "Unable to change while remaining backwards compatible.")]
@@ -77,7 +78,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// Initializes a new instance of the ResponseParsingBase class.
         /// </summary>
         /// <param name="stream">The stream to be parsed.</param>
-        public ResponseParsingBase(Stream stream)
+        protected ResponseParsingBase(Stream stream)
         {
             XmlReaderSettings readerSettings = new XmlReaderSettings();
             readerSettings.IgnoreWhitespace = false;
@@ -108,7 +109,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
                     }
                 }
 
-                foreach (var parsableObject in this.outstandingObjectsToParse)
+                foreach (T parsableObject in this.outstandingObjectsToParse)
                 {
                     yield return parsableObject;
                 }
@@ -144,9 +145,8 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             {
                 if (this.reader != null)
                 {
-#if RT
+#if WINDOWS_RT
                     this.reader.Dispose();
-#elif COMMON
 #else
                     this.reader.Close();
 #endif
@@ -160,7 +160,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// This method is reserved and should not be used.
         /// </summary>
         /// <param name="consumable"><c>True</c> when the object is consumable.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Design",
             "CA1045:DoNotPassTypesByReference",
             MessageId = "0#",
@@ -190,14 +190,13 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <returns>A list of parsed results.</returns>
         private IEnumerable<T> ParseXmlAndClose()
         {
-            foreach (var item in this.ParseXml())
+            foreach (T item in this.ParseXml())
             {
                 yield return item;
             }
 
-#if RT
+#if WINDOWS_RT
             this.reader.Dispose();
-#elif COMMON
 #else
             this.reader.Close();
 #endif

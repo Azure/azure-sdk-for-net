@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         {
             if (headers.Contains(name))
             {
-                return CommonUtils.GetFirstHeaderValue(headers.GetValues(name));
+                return CommonUtility.GetFirstHeaderValue(headers.GetValues(name));
             }
 
             return string.Empty;

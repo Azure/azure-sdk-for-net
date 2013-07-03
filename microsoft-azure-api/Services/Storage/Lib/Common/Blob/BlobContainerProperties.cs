@@ -18,6 +18,7 @@
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents the system properties for a container.
@@ -28,11 +29,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Gets the ETag value for the container.
         /// </summary>
         /// <value>The container's quoted ETag value.</value>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Naming",
-            "CA1702:CompoundWordsShouldBeCasedCorrectly",
-            MessageId = "ETag",
-            Justification = "ETag is the correct capitalization.")]
         public string ETag { get; internal set; }
 
         /// <summary>

@@ -15,12 +15,9 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
 using Fiddler;
+using System;
+using System.Timers;
 
 namespace Microsoft.WindowsAzure.Test.Network.Behaviors
 {

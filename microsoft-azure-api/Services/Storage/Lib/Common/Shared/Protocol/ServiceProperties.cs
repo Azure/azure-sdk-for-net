@@ -17,15 +17,14 @@
 
 namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
-    using System;
-#if !COMMON
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Util;
+    using System;
+    using System.Globalization;
     using System.IO;
     using System.Text;
     using System.Xml;
     using System.Xml.Linq;
-#endif
 
     /// <summary>
     /// Class representing a set of properties pertaining to a cloud storage service.
@@ -130,7 +129,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             get;
             set;
         }
-#if !COMMON
+
         /// <summary>
         /// Constructs a <c>ServiceProperties</c> object from an XML document received from the service.
         /// </summary>
@@ -160,8 +159,8 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <returns>An XML document containing the service properties.</returns>
         internal XDocument ToServiceXml()
         {
-            CommonUtils.AssertNotNull("Logging", this.Logging);
-            CommonUtils.AssertNotNull("Metrics", this.Metrics);
+            CommonUtility.AssertNotNull("Logging", this.Logging);
+            CommonUtility.AssertNotNull("Metrics", this.Metrics);
 
             XElement storageServiceElement = new XElement(
                     StorageServicePropertiesName,
@@ -325,7 +324,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             }
             else
             {
-                return int.Parse(element.Element(DaysName).Value);
+                return int.Parse(element.Element(DaysName).Value, CultureInfo.InvariantCulture);
             }
         }
 
@@ -345,6 +344,5 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
                 propertiesDocument.Save(writer);
             }
         }
-#endif
     }
 }

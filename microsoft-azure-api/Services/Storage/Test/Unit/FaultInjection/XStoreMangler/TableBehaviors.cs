@@ -15,18 +15,17 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-
 namespace Microsoft.WindowsAzure.Test.Network
 {
+    using Fiddler;
+    using Microsoft.WindowsAzure.Test.Network.Behaviors;
     using System;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Xml.Linq;
-    using Fiddler;
-    using Microsoft.WindowsAzure.Test.Network.Behaviors;
 
     /// <summary>
-    /// TableBehaviors contains behaviors for XStore tables
+    /// TableBehaviors contains behaviors for Azure Storage tables
     /// </summary>
     public static class TableBehaviors
     {
@@ -201,7 +200,7 @@ namespace Microsoft.WindowsAzure.Test.Network
                         TableConstants.OData + "TableName",
                         tableName))));
 
-            var responseString = response.ToString();
+            string responseString = response.ToString();
             session.utilSetResponseBody(responseString);
         }
 
@@ -235,7 +234,7 @@ namespace Microsoft.WindowsAzure.Test.Network
         /// <returns></returns>
         private static HTTPResponseHeaders CreateResponseHeaders(string tableUri)
         {
-            var headers = new HTTPResponseHeaders();
+            HTTPResponseHeaders headers = new HTTPResponseHeaders();
             headers["Transfer-Encoding"] = "chunked";
             headers["Date"] = DateTime.UtcNow.ToString("R");
             headers["Cache-Control"] = "no-cache";

@@ -18,6 +18,7 @@
 namespace Microsoft.WindowsAzure.Storage
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using Microsoft.WindowsAzure.Storage.Core.Util;
 
@@ -28,7 +29,7 @@ namespace Microsoft.WindowsAzure.Storage
             this.HResult = hres;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
         internal static int GenerateHResult(Exception ex, RequestResult reqResult)
         {
             int hResult = WindowsAzureErrorCode.UnknownException;

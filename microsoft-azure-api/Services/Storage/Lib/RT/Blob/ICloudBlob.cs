@@ -18,7 +18,9 @@
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     using System;
+    using System.Runtime.InteropServices.WindowsRuntime;
     using Windows.Foundation;
+    using Windows.Storage;
     using Windows.Storage.Streams;
 
     /// <summary>
@@ -53,6 +55,62 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         IAsyncAction UploadFromStreamAsync(IInputStream source, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
 
         /// <summary>
+        /// Uploads a stream to a blob. 
+        /// </summary>
+        /// <param name="source">The stream providing the blob content.</param>
+        /// <param name="length">The number of bytes to write from the source stream at its current position.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        IAsyncAction UploadFromStreamAsync(IInputStream source, long length);
+
+        /// <summary>
+        /// Uploads a stream to a blob. 
+        /// </summary>
+        /// <param name="source">The stream providing the blob content.</param>
+        /// <param name="length">The number of bytes to write from the source stream at its current position.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        IAsyncAction UploadFromStreamAsync(IInputStream source, long length, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
+        
+        /// Uploads a file to the Windows Azure Blob Service. 
+        /// </summary>
+        /// <param name="source">The file providing the blob content.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        IAsyncAction UploadFromFileAsync(StorageFile source);
+
+        /// <summary>
+        /// Uploads a file to a blob. 
+        /// </summary>
+        /// <param name="source">The file providing the blob content.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        IAsyncAction UploadFromFileAsync(StorageFile source, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
+
+        /// <summary>
+        /// Uploads the contents of a byte array to a blob.
+        /// </summary>
+        /// <param name="buffer">An array of bytes.</param>
+        /// <param name="index">The zero-based byte offset in buffer at which to begin uploading bytes to the blob.</param>
+        /// <param name="count">The number of bytes to be written to the blob.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        IAsyncAction UploadFromByteArrayAsync([ReadOnlyArray] byte[] buffer, int index, int count);
+
+        /// <summary>
+        /// Uploads the contents of a byte array to a blob.
+        /// </summary>
+        /// <param name="buffer">An array of bytes.</param>
+        /// <param name="index">The zero-based byte offset in buffer at which to begin uploading bytes to the blob.</param>
+        /// <param name="count">The number of bytes to be written to the blob.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        IAsyncAction UploadFromByteArrayAsync([ReadOnlyArray] byte[] buffer, int index, int count, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
+
+        /// <summary>
         /// Downloads the contents of a blob to a stream.
         /// </summary>
         /// <param name="target">The target stream.</param>
@@ -68,6 +126,42 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         IAsyncAction DownloadToStreamAsync(IOutputStream target, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
+
+        /// <summary>
+        /// Downloads the contents of a blob to a file.
+        /// </summary>
+        /// <param name="target">The target file.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        IAsyncAction DownloadToFileAsync(StorageFile target);
+
+        /// <summary>
+        /// Downloads the contents of a blob to a file.
+        /// </summary>
+        /// <param name="target">The target file.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        IAsyncAction DownloadToFileAsync(StorageFile target, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
+
+        /// <summary>
+        /// Downloads the contents of a blob to a byte array.
+        /// </summary>
+        /// <param name="target">The target byte array.</param>
+        /// <param name="index">The starting offset in the byte array.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
+        IAsyncOperation<int> DownloadToByteArrayAsync([WriteOnlyArray] byte[] target, int index);       
+
+        /// <summary>
+        /// Downloads the contents of a blob to a byte array.
+        /// </summary>
+        /// <param name="target">The target byte array.</param>
+        /// <param name="index">The starting offset in the byte array.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
+        IAsyncOperation<int> DownloadToByteArrayAsync([WriteOnlyArray] byte[] target, int index, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
 
         /// <summary>
         /// Downloads the contents of a blob to a stream.
@@ -89,6 +183,29 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         IAsyncAction DownloadRangeToStreamAsync(IOutputStream target, long? offset, long? length, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
+
+        /// <summary>
+        /// Downloads the contents of a blob to a byte array.
+        /// </summary>
+        /// <param name="target">The target byte array.</param>
+        /// <param name="index">The starting offset in the byte array.</param>
+        /// <param name="blobOffset">The starting offset of the data range, in bytes.</param>
+        /// <param name="length">The length of the data range, in bytes.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
+        IAsyncOperation<int> DownloadRangeToByteArrayAsync([WriteOnlyArray] byte[] target, int index, long? blobOffset, long? length);
+       
+        /// <summary>
+        /// Downloads the contents of a blob to a byte array.
+        /// </summary>
+        /// <param name="target">The target byte array.</param>
+        /// <param name="index">The starting offset in the byte array.</param>
+        /// <param name="blobOffset">The starting offset of the data range, in bytes.</param>
+        /// <param name="length">The length of the data range, in bytes.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
+        IAsyncOperation<int> DownloadRangeToByteArrayAsync([WriteOnlyArray] byte[] target, int index, long? blobOffset, long? length, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext);
 
         /// <summary>
         /// Checks existence of the blob.

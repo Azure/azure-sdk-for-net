@@ -17,28 +17,32 @@
 
 namespace Microsoft.WindowsAzure.Storage
 {
-    using System;
-    using System.Globalization;
-    using System.Net;
-#if RTMD
-    using System.IO;
-    using System.Runtime.InteropServices;
-#else
-    using System.Runtime.Serialization;
-#endif
-
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.Net;
     using System.Text;
 
-#if RTMD
-    internal class StorageException : COMException
-#else
+#if WINDOWS_DESKTOP
+    using System.Runtime.Serialization;
+#elif WINDOWS_RT
+    using System.IO;
+    using System.Runtime.InteropServices;
+#endif
+
     /// <summary>
     /// Represents an exception for the Windows Azure storage service.
     /// </summary>
+#if !WINDOWS_RT && !WINDOWS_PHONE
     [Serializable]
+#endif
+
+#if WINDOWS_RT
+    internal class StorageException : COMException
+#else
     public class StorageException : Exception
 #endif
     {
@@ -51,27 +55,40 @@ namespace Microsoft.WindowsAzure.Storage
         internal bool IsRetryable { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StorageException"/> class by using the specified parameters.
+        /// Initializes a new instance of the <see cref="StorageException"/> class.
         /// </summary>
-        /// <param name="res">The request result.</param>
-        /// <param name="message">The message.</param>
-        /// <param name="inner">The inner exception.</param>
-        public StorageException(RequestResult res, string message, Exception inner)
-            : base(message, inner)
+        public StorageException() : this(null /* res */, null /* message */, null /* inner */) 
         {
-            this.RequestInformation = res;
-            this.IsRetryable = true;
         }
 
-#if !RT
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StorageException"/> class using the specified error message.
+        /// </summary>
+        /// <param name="message">The message that describes the error.</param>
+        public StorageException(string message) : 
+            this(null /* res */, message, null /* inner */) 
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StorageException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// </summary>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="innerException">The inner exception.</param>
+        public StorageException(string message, Exception innerException) :
+            this(null /* res */, message, innerException) 
+        {
+        }
+
+#if !WINDOWS_RT && !WINDOWS_PHONE
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageException"/> class with serialized data.
         /// </summary>
         /// <param name="context">The <see cref="System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
-        /// <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> object that holds the serialized object data for the exception being thrown.</param>
-        /// <remarks>This constructor is called during deserialization to reconstitute the exception object transmitted over a stream.</remarks>
+        /// <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> object that holds the serialized object data about the exception being thrown.</param>
+        /// <remarks>This constructor is called during de-serialization to reconstitute the exception object transmitted over a stream.</remarks>
         protected StorageException(SerializationInfo info, StreamingContext context) :
-            base(info, context)
+            base(info, context) 
         {
             if (info != null)
             {
@@ -98,13 +115,32 @@ namespace Microsoft.WindowsAzure.Storage
 #endif
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StorageException"/> class by using the specified parameters.
+        /// </summary>
+        /// <param name="res">The request result.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="inner">The inner exception.</param>
+        public StorageException(RequestResult res, string message, Exception inner)
+            : base(message, inner)
+        {
+            this.RequestInformation = res;
+            this.IsRetryable = true;
+        }
+
+        /// <summary>
         /// Translates the specified exception into a storage exception.
         /// </summary>
         /// <param name="ex">The exception to translate.</param>
         /// <param name="reqResult">The request result.</param>
         /// <returns>The storage exception.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "General Exception wrapped as a StorageException.")]
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Code clarity.")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "req", Justification = "Reviewed : req is allowed.")]
         public static StorageException TranslateException(Exception ex, RequestResult reqResult)
         {
+            CommonUtility.AssertNotNull("reqResult", reqResult);
+            CommonUtility.AssertNotNull("ex", ex);
+
             // Dont re-wrap storage exceptions
             if (ex is StorageException)
             {
@@ -124,7 +160,7 @@ namespace Microsoft.WindowsAzure.Storage
                 reqResult.ExtendedErrorInformation = null;
                 return new StorageException(reqResult, ex.Message, ex) { IsRetryable = false };
             }
-#if RT
+#if WINDOWS_RT
             else if (ex is OperationCanceledException)
             {
                 reqResult.HttpStatusMessage = null;
@@ -132,7 +168,7 @@ namespace Microsoft.WindowsAzure.Storage
                 reqResult.ExtendedErrorInformation = null;
                 return new StorageException(reqResult, ex.Message, ex);
             }
-#elif DNCP
+#elif WINDOWS_DESKTOP && !WINDOWS_PHONE
             else
             {
                 StorageException tableEx = TableUtilities.TranslateDataServiceClientException(ex, reqResult);
@@ -156,15 +192,15 @@ namespace Microsoft.WindowsAzure.Storage
                         reqResult.HttpStatusCode = (int)response.StatusCode;
                         if (response.Headers != null)
                         {
-#if DNCP
-                            reqResult.ServiceRequestID = HttpUtility.TryGetHeader(response, Constants.HeaderConstants.RequestIdHeader, null);
-                            reqResult.ContentMd5 = HttpUtility.TryGetHeader(response, "Content-MD5", null);
-                            string tempDate = HttpUtility.TryGetHeader(response, "Date", null);
+#if WINDOWS_DESKTOP
+                            reqResult.ServiceRequestID = HttpWebUtility.TryGetHeader(response, Constants.HeaderConstants.RequestIdHeader, null);
+                            reqResult.ContentMd5 = HttpWebUtility.TryGetHeader(response, "Content-MD5", null);
+                            string tempDate = HttpWebUtility.TryGetHeader(response, "Date", null);
                             reqResult.RequestDate = string.IsNullOrEmpty(tempDate) ? DateTime.Now.ToString("R", CultureInfo.InvariantCulture) : tempDate;
                             reqResult.Etag = response.Headers[HttpResponseHeader.ETag];
 #endif
                         }
-#if RT
+#if WINDOWS_RT
                         reqResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(response.GetResponseStream().AsInputStream());
 #else
                         reqResult.ExtendedErrorInformation = StorageExtendedErrorInformation.ReadFromStream(response.GetResponseStream());

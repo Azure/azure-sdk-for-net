@@ -17,19 +17,20 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core.Auth;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Text;
     using System.Xml;
-    using Microsoft.WindowsAzure.Storage.Core.Auth;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
     /// Provides a set of helper methods for constructing a request against the Blob service.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
@@ -77,13 +78,15 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <param name="outputStream">The stream to which the block list is written.</param>
         public static void WriteBlockListBody(IEnumerable<PutBlockListItem> blocks, Stream outputStream)
         {
+            CommonUtility.AssertNotNull("blocks", blocks);
+
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Encoding = Encoding.UTF8;
             using (XmlWriter writer = XmlWriter.Create(outputStream, settings))
             {
                 writer.WriteStartElement(Constants.BlockListElement);
 
-                foreach (var block in blocks)
+                foreach (PutBlockListItem block in blocks)
                 {
                     if (block.SearchMode == BlockSearchMode.Committed)
                     {

@@ -15,12 +15,11 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
@@ -72,22 +71,35 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             CloudQueueClient client = GenerateCloudQueueClient();
             client.SetServicePropertiesAsync(startProperties).AsTask().Wait();
         }
+
         //
         // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                TestBase.QueueBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.QueueBufferManager.OutstandingBufferCount);
+            }
+        }
+
         #endregion
 
         #region Analytics RoundTrip
 
         [TestMethod]
         /// [Description("Test Analytics Round Trip Async")]
-        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(ComponentCategory.Queue)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
@@ -119,7 +131,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
         [TestMethod]
         /// [Description("Test Analytics Disable Service Properties")]
-        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(ComponentCategory.Queue)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
@@ -181,7 +193,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
         [TestMethod]
         /// [Description("Test Analytics Logging Operations")]
-        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(ComponentCategory.Queue)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
@@ -213,7 +225,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
         [TestMethod]
         /// [Description("Test Analytics Metrics Level")]
-        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(ComponentCategory.Queue)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
@@ -252,7 +264,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
         [TestMethod]
         /// [Description("Test Analytics Retention Policies")]
-        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(ComponentCategory.Queue)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]

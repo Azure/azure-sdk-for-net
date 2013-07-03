@@ -17,8 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
-    using System;
-
     /// <summary>
     /// Represents the permissions for a container.
     /// </summary>

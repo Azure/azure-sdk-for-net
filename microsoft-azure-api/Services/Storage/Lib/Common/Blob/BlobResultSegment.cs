@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public IEnumerable<IListBlobItem> Results { get; private set; }
 
         /// <summary>
-        /// Gets the continuation token used to retrieve the next segment of <see cref="IListBlobItem"/> results.
+        /// Gets the continuation token used to retrieve the next segment of <see cref="IListBlobItem"/> results. Returns null if there are no more results.
         /// </summary>
         /// <value>The continuation token.</value>
         public BlobContinuationToken ContinuationToken { get; private set; }

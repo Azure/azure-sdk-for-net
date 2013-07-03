@@ -17,15 +17,15 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.IO;
     using System.Net;
-    using Microsoft.WindowsAzure.Storage.Core;
-    using Microsoft.WindowsAzure.Storage.Core.Auth;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
-    /// Provides a set of methods for constructing requests against the Table service.
+    /// A factory class for constructing a web request to manage tables in the Table service.
     /// </summary>
     public static class TableHttpWebRequestFactory
     {
@@ -66,6 +66,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// <param name="outputStream">The stream to which the formatted properties are to be written.</param>
         public static void WriteServiceProperties(ServiceProperties properties, Stream outputStream)
         {
+            CommonUtility.AssertNotNull("properties", properties);
+
             properties.WriteServiceProperties(outputStream);
         }
 

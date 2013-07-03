@@ -17,9 +17,10 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
     using System.Collections.Generic;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// A <see cref="ITableEntity"/> type which allows callers direct access to the property map of the entity. This class eliminates the use of reflection for serialization and deserialization.
@@ -51,7 +52,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="rowKey">The entity's row key.</param>
         /// <param name="etag">The entity's current ETag.</param>
         /// <param name="properties">The entity's properties, indexed by property name.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is consistent with IDictionary<> itself.")]
         public DynamicTableEntity(string partitionKey, string rowKey, string etag, IDictionary<string, EntityProperty> properties)
             : this(partitionKey, rowKey, DateTimeOffset.MinValue, etag, properties)
         {
@@ -64,12 +64,12 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="rowKey">The entity's row key.</param>
         /// <param name="timestamp">The timestamp for this entity as returned by Windows Azure.</param>
         /// <param name="etag">The entity's current ETag; set to null to ignore the ETag during subsequent update operations.</param>
-        /// <param name="properties">An <see cref="IDictionary{TKey,TElement}"/> containg a map of <see cref="string"/> property names to <see cref="EntityProperty"/> data typed values to store in the new <see cref="DynamicTableEntity"/>.</param>
+        /// <param name="properties">An <see cref="IDictionary{TKey,TElement}"/> containing a map of <see cref="string"/> property names to <see cref="EntityProperty"/> data typed values to store in the new <see cref="DynamicTableEntity"/>.</param>
         internal DynamicTableEntity(string partitionKey, string rowKey, DateTimeOffset timestamp, string etag, IDictionary<string, EntityProperty> properties)
         {
-            CommonUtils.AssertNotNull("partitionKey", partitionKey);
-            CommonUtils.AssertNotNull("rowKey", rowKey);
-            CommonUtils.AssertNotNull("properties", properties);
+            CommonUtility.AssertNotNull("partitionKey", partitionKey);
+            CommonUtility.AssertNotNull("rowKey", rowKey);
+            CommonUtility.AssertNotNull("properties", properties);
 
             // Store the information about this entity.  Make a copy of
             // the properties list, in case the caller decides to reuse
@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <value>The entity Etag.</value>
         public string ETag { get; set; }
 
-#if !RT
+#if !WINDOWS_RT
         /// <summary>
         /// Gets or sets the entity's property, given the name of the property.
         /// </summary>

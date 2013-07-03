@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="83df37fc-f57f-461f-9e06-b648b73b78c1" Publisher="CN=sozler" Version="1.0.0.0" />
+  <Identity Name="83df37fc-f57f-461f-9e06-b648b73b7832" Publisher="CN=sozler" Version="1.0.0.0" />
   <Properties>
     <DisplayName>Microsoft.WindowsAzure.Storage.Test</DisplayName>
     <PublisherDisplayName>WindowsAzure</PublisherDisplayName>
     <Logo>Images\UnitTestStoreLogo.png</Logo>
-    <Description>XSCL_RT_Test</Description>
+    <Description>Microsoft.WindowsAzure.Storage.Test</Description>
   </Properties>
   <Prerequisites>
     <OSMinVersion>6.2</OSMinVersion>

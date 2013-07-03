@@ -19,6 +19,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
 {
     using System;
     using System.Data.Services.Common;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents an entity in the Windows Azure Table service.
@@ -31,7 +32,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// </summary>
         /// <param name="partitionKey">The partition key.</param>
         /// <param name="rowKey">The row key.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Reviewed.")]
+        [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Reviewed.")]
         protected TableServiceEntity(string partitionKey, string rowKey)
         {
             this.PartitionKey = partitionKey;

@@ -20,11 +20,12 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Net;
-    using Microsoft.WindowsAzure.Storage.Core.Executor;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
     /// Provides a set of methods for parsing a response containing blob data from the Blob service.
@@ -48,19 +49,25 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>The blob's properties.</returns>
         public static BlobProperties GetProperties(HttpWebResponse response)
         {
-            BlobProperties properties = new BlobProperties();
+            CommonUtility.AssertNotNull("response", response);
 
+            BlobProperties properties = new BlobProperties();
+            properties.ETag = HttpResponseParsers.GetETag(response);
+
+#if WINDOWS_PHONE 
+            properties.LastModified = HttpResponseParsers.GetLastModified(response);
+#else
             properties.LastModified = response.LastModified.ToUniversalTime();
+#endif
+
             properties.ContentEncoding = response.Headers[HttpResponseHeader.ContentEncoding];
             properties.ContentLanguage = response.Headers[HttpResponseHeader.ContentLanguage];
             properties.ContentMD5 = response.Headers[HttpResponseHeader.ContentMd5];
             properties.ContentType = response.Headers[HttpResponseHeader.ContentType];
             properties.CacheControl = response.Headers[HttpResponseHeader.CacheControl];
-            properties.ETag = HttpResponseParsers.GetETag(response);
-
-            string blobType = response.Headers[Constants.HeaderConstants.BlobType];
 
             // Get blob type
+            string blobType = response.Headers[Constants.HeaderConstants.BlobType];
             if (!string.IsNullOrEmpty(blobType))
             {
                 properties.BlobType = (BlobType)Enum.Parse(typeof(BlobType), blobType, true);
@@ -76,15 +83,22 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             string contentLengthHeader = response.Headers[Constants.HeaderConstants.ContentLengthHeader];
             if (!string.IsNullOrEmpty(rangeHeader))
             {
-                properties.Length = long.Parse(rangeHeader.Split('/')[1]);
+                properties.Length = long.Parse(rangeHeader.Split('/')[1], CultureInfo.InvariantCulture);
             }
             else if (!string.IsNullOrEmpty(contentLengthHeader))
             {
-                properties.Length = long.Parse(contentLengthHeader);
+                properties.Length = long.Parse(contentLengthHeader, CultureInfo.InvariantCulture);
             }
             else
             {
                 properties.Length = response.ContentLength;
+            }
+
+            // Get sequence number
+            string sequenceNumber = response.Headers[Constants.HeaderConstants.BlobSequenceNumber];
+            if (!string.IsNullOrEmpty(sequenceNumber))
+            {
+                properties.PageBlobSequenceNumber = long.Parse(sequenceNumber, CultureInfo.InvariantCulture);
             }
 
             return properties;
@@ -99,6 +113,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <exception cref="System.ArgumentException">The header contains an unrecognized value.</exception>
         public static LeaseStatus GetLeaseStatus(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             string leaseStatus = response.Headers[Constants.HeaderConstants.LeaseStatus];
             return GetLeaseStatus(leaseStatus);
         }
@@ -112,6 +128,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <exception cref="System.ArgumentException">The header contains an unrecognized value.</exception>
         public static LeaseState GetLeaseState(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             string leaseState = response.Headers[Constants.HeaderConstants.LeaseState];
             return GetLeaseState(leaseState);
         }
@@ -125,6 +143,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <exception cref="System.ArgumentException">The header contains an unrecognized value.</exception>
         public static LeaseDuration GetLeaseDuration(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             string leaseDuration = response.Headers[Constants.HeaderConstants.LeaseDurationHeader];
             return GetLeaseDuration(leaseDuration);
         }
@@ -136,6 +156,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>The lease ID.</returns>
         public static string GetLeaseId(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             return response.Headers[Constants.HeaderConstants.LeaseIdHeader];
         }
 
@@ -146,6 +168,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>The remaining lease time, in seconds.</returns>
         public static int? GetRemainingLeaseTime(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             int remainingLeaseTime;
             if (int.TryParse(response.Headers[Constants.HeaderConstants.LeaseTimeHeader], out remainingLeaseTime))
             {
@@ -174,6 +198,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>A <see cref="CopyState"/> object, or null if the web response does not contain a copy status.</returns>
         public static CopyState GetCopyAttributes(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             string copyStatusString = response.Headers[Constants.HeaderConstants.CopyStatusHeader];
             if (!string.IsNullOrEmpty(copyStatusString))
             {
@@ -198,6 +224,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>The snapshot timestamp.</returns>
         public static string GetSnapshotTime(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             return response.Headers[Constants.HeaderConstants.SnapshotHeader];
         }
     }

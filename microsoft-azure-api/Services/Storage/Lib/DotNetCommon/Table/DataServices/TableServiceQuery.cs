@@ -17,22 +17,27 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.DataServices
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data.Services.Client;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Net;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Core.Executor;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data.Services.Client;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// A class for constructing a query against the Table service.
     /// </summary>
-    /// <typeparam name="TElement">The type of the element.</typeparam>
+    /// <typeparam name="TElement">The type of the element.</typeparam>    
+    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Reviewed")]
     public class TableServiceQuery<TElement> : IQueryable<TElement>
     {
         /// <summary>
@@ -127,19 +132,31 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// </summary>
         /// <param name="requestOptions">An object of type <see cref="TableRequestOptions"/>.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns></returns>
+        /// <returns>An enumerable collection, specialized for type <c>TElement</c>, of the results of executing the query.</returns>
         [DoesServiceRequest]
         public IEnumerable<TElement> Execute(TableRequestOptions requestOptions = null, OperationContext operationContext = null)
         {
             requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this.Context.ServiceClient);
             operationContext = operationContext ?? new OperationContext();
             long takeCount = TableUtilities.GetQueryTakeCount(this.Query, long.MaxValue);
-            return
-                General.LazyEnumerable(
-                    (continuationToken) =>
-                    this.ExecuteSegmentedCore((TableContinuationToken)continuationToken, requestOptions, operationContext),
-                    takeCount,
-                    operationContext);
+            return CommonUtility.LazyEnumerable(
+                (continuationToken) => this.ExecuteSegmentedCore((TableContinuationToken)continuationToken, requestOptions, operationContext),
+                takeCount);
+        }
+
+        /// <summary>
+        /// Executes a segmented query against the Table service.
+        /// </summary>
+        /// <param name="continuationToken">The continuation token.</param>
+        /// <param name="requestOptions">The request options.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
+        /// <returns>A result segment containing objects of type <typeparamref name="TElement"/>.</returns>
+        [DoesServiceRequest]
+        public TableQuerySegment<TElement> ExecuteSegmented(TableContinuationToken continuationToken, TableRequestOptions requestOptions = null, OperationContext operationContext = null)
+        {
+            requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this.Context.ServiceClient);
+            operationContext = operationContext ?? new OperationContext();
+            return new TableQuerySegment<TElement>(this.ExecuteSegmentedCore(continuationToken, requestOptions, operationContext));
         }
 
         /// <summary>
@@ -159,10 +176,10 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// Begins an asynchronous operation to execute a query and return the results as a result segment.
         /// </summary>
         /// <param name="currentToken">A continuation token returned by a previous listing operation, can be null.</param>
-        /// <param name="operationContext"> </param>
+        /// <param name="requestOptions">An <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
-        /// <param name="requestOptions"> </param>
         /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous operation.</returns>
         [DoesServiceRequest]
         public ICancellableAsyncResult BeginExecuteSegmented(TableContinuationToken currentToken, TableRequestOptions requestOptions, OperationContext operationContext, AsyncCallback callback, object state)
@@ -183,26 +200,60 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         {
             return new TableQuerySegment<TElement>(TableExecutor.EndExecuteAsync<ResultSegment<TElement>, IEnumerable<TElement>>(asyncResult));
         }
-
+        
+#if TASK
         /// <summary>
-        /// Executes a segmented query against the Table service.
+        /// Returns a task that performs an asynchronous operation to execute a query and return the results as a result segment.
         /// </summary>
-        /// <param name="continuationToken">The continuation token.</param>
-        /// <param name="requestOptions">The request options.</param>
-        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns>A result segment containing objects of type <typeparamref name="TElement"/>.</returns>
+        /// <param name="currentToken">A continuation token returned by a previous listing operation, can be null.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
-        public TableQuerySegment<TElement> ExecuteSegmented(TableContinuationToken continuationToken, TableRequestOptions requestOptions = null, OperationContext operationContext = null)
+        public Task<TableQuerySegment<TElement>> ExecuteSegmentedAsync(TableContinuationToken currentToken)
         {
-            requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this.Context.ServiceClient);
-            operationContext = operationContext ?? new OperationContext();
-            return new TableQuerySegment<TElement>(this.ExecuteSegmentedCore(continuationToken, requestOptions, operationContext));
+            return this.ExecuteSegmentedAsync(currentToken, CancellationToken.None);
         }
 
-        internal ResultSegment<TElement> ExecuteSegmentedCore(
-                                                              TableContinuationToken continuationToken,
-                                                              TableRequestOptions requestOptions,
-                                                              OperationContext operationContext)
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to execute a query and return the results as a result segment.
+        /// </summary>
+        /// <param name="currentToken">A continuation token returned by a previous listing operation, can be null.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<TableQuerySegment<TElement>> ExecuteSegmentedAsync(TableContinuationToken currentToken, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginExecuteSegmented, this.EndExecuteSegmented, currentToken, cancellationToken);
+        }
+        
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to execute a query and return the results as a result segment.
+        /// </summary>
+        /// <param name="currentToken">A continuation token returned by a previous listing operation, can be null.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<TableQuerySegment<TElement>> ExecuteSegmentedAsync(TableContinuationToken currentToken, TableRequestOptions requestOptions, OperationContext operationContext)
+        {
+            return this.ExecuteSegmentedAsync(currentToken, requestOptions, operationContext, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to execute a query and return the results as a result segment.
+        /// </summary>
+        /// <param name="currentToken">A continuation token returned by a previous listing operation, can be null.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<TableQuerySegment<TElement>> ExecuteSegmentedAsync(TableContinuationToken currentToken, TableRequestOptions requestOptions, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginExecuteSegmented, this.EndExecuteSegmented, currentToken, requestOptions, operationContext, cancellationToken);
+        }
+#endif
+
+        internal ResultSegment<TElement> ExecuteSegmentedCore(TableContinuationToken continuationToken, TableRequestOptions requestOptions, OperationContext operationContext)
         {
             TableCommand<ResultSegment<TElement>, IEnumerable<TElement>> cmd = this.GenerateExecuteCommand(continuationToken, requestOptions);
 
@@ -218,7 +269,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
 
             if (requestOptions.ServerTimeout.HasValue)
             {
-                localQuery = localQuery.AddQueryOption("timeout", Convert.ToString(requestOptions.ServerTimeout.Value.TotalSeconds));
+                localQuery = localQuery.AddQueryOption("timeout", Convert.ToString(requestOptions.ServerTimeout.Value.TotalSeconds, CultureInfo.InvariantCulture));
             }
 
             TableCommand<ResultSegment<TElement>, IEnumerable<TElement>> cmd = new TableCommand<ResultSegment<TElement>, IEnumerable<TElement>>();
@@ -232,10 +283,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
             return cmd;
         }
 
-        private ResultSegment<TElement> ParseTableQueryResponse(
-                                                                IEnumerable<TElement> dataServiceQueryResponse,
-                                                                RequestResult reqResult,
-                                                                TableCommand<ResultSegment<TElement>, IEnumerable<TElement>> cmd)
+        private ResultSegment<TElement> ParseTableQueryResponse(IEnumerable<TElement> dataServiceQueryResponse, RequestResult reqResult, TableCommand<ResultSegment<TElement>, IEnumerable<TElement>> cmd)
         {
             if (reqResult.Exception != null)
             {

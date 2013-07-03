@@ -188,7 +188,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="value">The metadata value.</param>
         internal static void AddMetadata(HttpRequestMessage request, string name, string value)
         {
-            CommonUtils.AssertNotNullOrEmpty("value", value);
+            CommonUtility.AssertNotNullOrEmpty("value", value);
             request.Headers.Add("x-ms-meta-" + name, value);
         }
 

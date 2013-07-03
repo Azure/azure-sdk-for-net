@@ -48,6 +48,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             {
                 return this.authenticationScheme;
             }
+
             set
             {
                 this.authenticationScheme = value;
@@ -86,7 +87,18 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <returns>A result segment of queues.</returns>
         public IAsyncOperation<QueueResultSegment> ListQueuesSegmentedAsync(QueueContinuationToken currentToken)
         {
-            return this.ListQueuesSegmentedAsync(null, QueueListingDetails.None, 0, currentToken, null);
+            return this.ListQueuesSegmentedAsync(null, QueueListingDetails.None, null, currentToken, null);
+        }
+
+        /// <summary>
+        /// Returns a result segment containing a collection of queues.
+        /// </summary>
+        /// <param name="prefix">The queue name prefix.</param>
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> token returned by a previous listing operation.</param>
+        /// <returns>A result segment of queues.</returns>
+        public IAsyncOperation<QueueResultSegment> ListQueuesSegmentedAsync(string prefix, QueueContinuationToken currentToken)
+        {
+            return this.ListQueuesSegmentedAsync(prefix, QueueListingDetails.None, null, currentToken, null);
         }
 
         /// <summary>
@@ -136,8 +148,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             getCmd.Handler = this.AuthenticationHandler;
             getCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             getCmd.BuildRequest = (cmd, cnt, ctx) => QueueHttpRequestMessageFactory.List(cmd.Uri, cmd.ServerTimeoutInSeconds, listingContext, detailsIncluded, cnt, ctx);
-            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            getCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task.Factory.StartNew(() =>
                 {
@@ -206,8 +218,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            retCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            retCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task.Factory.StartNew(() => QueueHttpResponseParsers.ReadServiceProperties(cmd.ResponseStream));
             };
@@ -248,7 +260,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
         private RESTCommand<NullType> SetServicePropertiesImpl(ServiceProperties properties, QueueRequestOptions requestOptions)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            MultiBufferMemoryStream memoryStream = new MultiBufferMemoryStream(null /* bufferManager */, (int)(1 * Constants.KB));
             try
             {
                 properties.WriteServiceProperties(memoryStream);
@@ -261,12 +273,12 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             RESTCommand<NullType> retCmd = new RESTCommand<NullType>(this.Credentials, this.BaseUri);
             retCmd.ApplyRequestOptions(requestOptions);
             retCmd.BuildRequest = (cmd, cnt, ctx) => QueueHttpRequestMessageFactory.SetServiceProperties(cmd.Uri, cmd.ServerTimeoutInSeconds, cnt, ctx);
-            retCmd.BuildContent = (cmd, ctx) => HttpContentFactory.BuildContentFromStream(memoryStream, 0, memoryStream.Length, null, cmd, ctx);
+            retCmd.BuildContent = (cmd, ctx) => HttpContentFactory.BuildContentFromStream(memoryStream, 0, memoryStream.Length, null /* md5 */, cmd, ctx);
             retCmd.Handler = this.AuthenticationHandler;
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex);
             retCmd.ApplyRequestOptions(requestOptions);
             return retCmd;
         }

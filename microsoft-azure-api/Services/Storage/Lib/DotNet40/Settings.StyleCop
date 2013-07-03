@@ -1,4 +1,37 @@
 <StyleCopSettings Version="105">
+  <GlobalSettings>
+    <CollectionProperty Name="RecognizedWords">
+      <Value>abc</Value>
+      <Value>Acl</Value>
+      <Value>api</Value>
+      <Value>Auth</Value>
+      <Value>Bool</Value>
+      <Value>canonicalizing</Value>
+      <Value>creds</Value>
+      <Value>dequeue</Value>
+      <Value>dequeued</Value>
+      <Value>dest</Value>
+      <Value>Edm</Value>
+      <Value>EdmType</Value>
+      <Value>Enum</Value>
+      <Value>Eq</Value>
+      <Value>etag</Value>
+      <Value>ETag</Value>
+      <Value>Fisma</Value>
+      <Value>func</Value>
+      <Value>impl</Value>
+      <Value>Md</Value>
+      <Value>myblob</Value>
+      <Value>mycontainer</Value>
+      <Value>myfolder</Value>
+      <Value>parsable</Value>
+      <Value>Postcondition</Value>
+      <Value>Retryable</Value>
+      <Value>sas</Value>
+      <Value>testaccount</Value>
+      <Value>testcontainer</Value>
+    </CollectionProperty>
+  </GlobalSettings>
   <Analyzers>
     <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
       <Rules>

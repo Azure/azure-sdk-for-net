@@ -20,12 +20,108 @@ namespace Microsoft.WindowsAzure.Storage.Core
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Storage.Blob;
     using Microsoft.WindowsAzure.Storage.RetryPolicies;
+    using Microsoft.WindowsAzure.Storage.Table;
+    using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Net;
+    using System.Threading;
 
     [TestClass]
-    public class RetryPoliciesTests : TestBase
+    public class RetryPoliciesTests : TableTestBase
     {
+        [TestMethod]
+        [Description("Test to ensure that the time when we wait for a retry is cancellable")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void RetryDelayShouldBeCancellable()
+        {
+            using (ManualResetEvent responseWaitHandle = new ManualResetEvent(false),
+                callbackWaitHandle = new ManualResetEvent(false))
+            {
+                BlobRequestOptions options = new BlobRequestOptions();
+                options.RetryPolicy = new AlwaysRetry(TimeSpan.FromMinutes(1), 1);
+                OperationContext context = new OperationContext();
+                context.ResponseReceived += (sender, e) => responseWaitHandle.Set();
+
+                CloudBlobClient blobClient = GenerateCloudBlobClient();
+                CloudBlobContainer container = blobClient.GetContainerReference("test" + DateTime.UtcNow.Ticks.ToString());
+                ICancellableAsyncResult asyncResult = container.BeginFetchAttributes(null, options, context,
+                    ar =>
+                    {
+                        try
+                        {
+                            container.EndFetchAttributes(ar);
+                        }
+                        catch (Exception)
+                        {
+                            // This is expected, because we went for an invalid domain name.
+                        }
+
+                        callbackWaitHandle.Set();
+                    },
+                    null);
+
+                responseWaitHandle.WaitOne();
+                Thread.Sleep(10 * 1000);
+
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                
+                asyncResult.Cancel();
+                callbackWaitHandle.WaitOne();
+                
+                stopwatch.Stop();
+
+                Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromSeconds(10), stopwatch.Elapsed.ToString());
+                Assert.AreEqual(1, context.RequestResults.Count);
+            }
+        }
+
+        [TestMethod]
+        [Description("Test to ensure that the backoff time is set correctly in LinearRetry")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void VerifyLinearRetryBackOffTime()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            tableClient.RetryPolicy = new LinearRetry(TimeSpan.FromSeconds(10), 4);
+
+            OperationContext opContext = new OperationContext();
+            TimeSpan retryInterval;
+            Assert.IsTrue(tableClient.RetryPolicy.ShouldRetry(0, 503, new Exception(), out retryInterval, opContext));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), retryInterval);
+
+            Assert.IsTrue(tableClient.RetryPolicy.ShouldRetry(1, 503, new Exception(), out retryInterval, opContext));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), retryInterval);
+
+            Assert.IsTrue(tableClient.RetryPolicy.ShouldRetry(2, 503, new Exception(), out retryInterval, opContext));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), retryInterval);
+
+            Assert.IsTrue(tableClient.RetryPolicy.ShouldRetry(3, 503, new Exception(), out retryInterval, opContext));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), retryInterval);
+
+            Assert.IsFalse(tableClient.RetryPolicy.ShouldRetry(4, 503, new Exception(), out retryInterval, opContext));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), retryInterval);
+
+            tableClient.RetryPolicy = new LinearRetry();
+
+            Assert.IsTrue(tableClient.RetryPolicy.ShouldRetry(0, 503, new Exception(), out retryInterval, opContext));
+            Assert.AreEqual(TimeSpan.FromSeconds(30), retryInterval);
+
+            Assert.IsTrue(tableClient.RetryPolicy.ShouldRetry(1, 503, new Exception(), out retryInterval, opContext));
+            Assert.AreEqual(TimeSpan.FromSeconds(30), retryInterval);
+
+            Assert.IsTrue(tableClient.RetryPolicy.ShouldRetry(2, 503, new Exception(), out retryInterval, opContext));
+            Assert.AreEqual(TimeSpan.FromSeconds(30), retryInterval);
+
+            Assert.IsFalse(tableClient.RetryPolicy.ShouldRetry(3, 503, new Exception(), out retryInterval, opContext));
+            Assert.AreEqual(TimeSpan.FromSeconds(30), retryInterval);
+        }
+
         [TestMethod]
         [Description("Setting retry policy to null should not throw an exception")]
         [TestCategory(ComponentCategory.Core)]
