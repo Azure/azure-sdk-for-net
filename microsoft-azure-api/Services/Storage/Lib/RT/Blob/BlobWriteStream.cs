@@ -271,7 +271,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             this.noPendingWritesEvent.Reset();
 
             await this.parallelOperationSemaphore.WaitAsync();
-            this.blockBlob.PutBlockAsync(blockId, blockData.AsInputStream(), blockMD5, this.accessCondition, this.options, this.operationContext).AsTask().ContinueWith(task =>
+
+            // Without await have found last block doesn't get uploaded properly and noPendingWritesEvent will always equal 1.
+            // Then the putblocklist will never happen, therefore no blob. Bug #211
+            await this.blockBlob.PutBlockAsync(blockId, blockData.AsInputStream(), blockMD5, this.accessCondition, this.options, this.operationContext).AsTask().ContinueWith(task =>
                 {
                     if (task.Exception != null)
                     {
