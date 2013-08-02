@@ -1,4 +1,4 @@
-<h1>Windows Azure SDK for Windows 8 and .NET 4 (2.0.5.1)</h1>
+<h1>Windows Azure SDK for Windows 8 and .NET 4 (2.0.6.0)</h1>
 <p>This SDK allows you to build Windows Azure applications that take advantage of
 Azure scalable cloud computing resources: table and blob storage, messaging through
 Service Bus, distributed caching through cache.</p>
