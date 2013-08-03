@@ -73,6 +73,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public const string MustCallEndMoveNextSegmentFirst = "EndMoveNextSegment must be called before the Current property can be accessed.";
         public const string NoMoreResultsForSegmentCursor = "The segment cursor has no more results.";
         public const string NotSupportedForPageBlob = "This operation is not supported for creating a PageBlob. Use other operations to create a PageBlob.";
+        public const string ODataReaderNotInCompletedState = "OData Reader state expected to be Completed state. Actual state: {0}.";
         public const string PathStyleUriMissingAccountNameInformation = "Missing account name information inside path style uri. Path style uris should be of the form http://<IPAddressPlusPort>/<accountName>";
         public const string RelativeAddressNotPermitted = "Address '{0}' is not an absolute address. Relative addresses are not permitted in here.";
         public const string SeekTooFarError = "Attempting to seek past the end of the stream";
