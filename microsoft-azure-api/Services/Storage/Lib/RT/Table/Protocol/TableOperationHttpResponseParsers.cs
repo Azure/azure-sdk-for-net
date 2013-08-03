@@ -248,6 +248,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                         // Entry End => ?
                         reader.Read();
                     }
+
+                    DrainODataReader(reader);
                 }
 
                 return retSeg;
@@ -293,10 +295,25 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                         // Entry End => ?
                         reader.Read();
                     }
+
+                    DrainODataReader(reader);
                 }
 
                 return retSeg;
             });
+        }
+
+        private static void DrainODataReader(ODataReader reader)
+        {
+            if (reader.State == ODataReaderState.FeedEnd)
+            {
+                reader.Read();
+            }
+
+            if (reader.State != ODataReaderState.Completed)
+            {
+                throw new InvalidOperationException(string.Format(SR.ODataReaderNotInCompletedState, reader.State));
+            }
         }
 
         /// <summary>
@@ -363,6 +380,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                         }
                     }
                 }
+
+                DrainODataReader(reader);
             }
         }
 

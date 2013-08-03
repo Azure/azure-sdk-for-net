@@ -156,7 +156,7 @@
                         cmd.CurrentResult.HttpStatusCode = mimePartResponseMessage.StatusCode;
 
                         string indexString = Convert.ToString(index);
-                        
+
                         // Attempt to extract index of failing entity from extended error info
                         if (cmd.CurrentResult.ExtendedErrorInformation != null &&
                             !string.IsNullOrEmpty(cmd.CurrentResult.ExtendedErrorInformation.ErrorMessage))
@@ -235,9 +235,24 @@
                     // Entry End => ?
                     reader.Read();
                 }
+
+                DrainODataReader(reader);
             }
 
             return retSeg;
+        }
+
+        private static void DrainODataReader(ODataReader reader)
+        {
+            if (reader.State == ODataReaderState.FeedEnd)
+            {
+                reader.Read();
+            }
+
+            if (reader.State != ODataReaderState.Completed)
+            {
+                throw new InvalidOperationException(string.Format(SR.ODataReaderNotInCompletedState, reader.State));
+            }
         }
 
         /// <summary>
@@ -298,6 +313,8 @@
                         }
                     }
                 }
+
+                DrainODataReader(reader);
             }
         }
 
