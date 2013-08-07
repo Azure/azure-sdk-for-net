@@ -37,6 +37,20 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CloudQueueMessage"/> class with the message's ID and pop receipt.
+        /// </summary>
+        /// <remarks>
+        /// This can be used to reconstitute the CloudQueueMessage.
+        /// </remarks>
+        /// <param name="messageId">The message ID.</param>
+        /// <param name="popReceipt">The pop receipt value.</param>
+        public CloudQueueMessage(string messageId, string popReceipt)
+        {
+            this.Id = messageId;
+            this.PopReceipt = popReceipt;
+        }
+
+        /// <summary>
         /// Sets the content of this message.
         /// </summary>
         /// <param name="content">The new message content.</param>

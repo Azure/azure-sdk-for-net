@@ -124,6 +124,35 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         }
 
         [TestMethod]
+        [Description("Test whether we can recreate a message")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudQueueReconstituteMessage()
+        {
+            string name = GenerateNewQueueName();
+            CloudQueue queue = DefaultQueueClient.GetQueueReference(name);
+            queue.Create();
+
+            byte[] testData = new byte[20];
+            CloudQueueMessage message = new CloudQueueMessage(testData);
+            queue.AddMessage(message);
+
+            CloudQueueMessage receivedMessage1 = queue.GetMessage(TimeSpan.FromSeconds(1));
+
+            string messageId = receivedMessage1.Id;
+            string popReceipt = receivedMessage1.PopReceipt;
+             
+            CloudQueueMessage recreatedMessage = new CloudQueueMessage(messageId, popReceipt); 
+
+            queue.UpdateMessage(recreatedMessage, TimeSpan.FromSeconds(10), MessageUpdateFields.Visibility);
+            queue.DeleteMessage(recreatedMessage);
+
+            queue.Delete();
+        }
+
+        [TestMethod]
         [Description("Test whether get message.")]
         [TestCategory(ComponentCategory.Queue)]
         [TestCategory(TestTypeCategory.UnitTest)]
