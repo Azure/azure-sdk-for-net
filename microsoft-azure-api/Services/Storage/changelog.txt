@@ -73,3 +73,8 @@ Issues fixed in 2.0.6.0 :
 	11. Tables: Changed default message signing to SharedKey (except for Data Services).
 	12. Tables: EntityProperty updated to set the IsNull value for properties correctly in the case when the user sets an EntityProperty value through its setter.
 	13. Tables: EdmType for null values in EntityProperty is set correctly and does not default to string any more.
+
+Issues fixed in 2.0.6.1 :
+
+	1. Tables: Fix for Table Service layer to drain response stream
+
