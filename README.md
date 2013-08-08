@@ -29,7 +29,7 @@ For documentation please see the [http://www.windowsazure.com/en-us/develop/net/
 
 To get the source code of the SDK via git just type:
 
-```
+```bash
 git clone git://github.com/WindowsAzure/azure-sdk-for-net.git
 cd azure-sdk-for-net
 ```
@@ -72,7 +72,7 @@ The specific ODataLib packages are:
 First, include the classes you need (in this case we'll include the Storage and Table
 and further demonstrate creating a table):
 
-```
+```csharp
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 ```
@@ -81,7 +81,7 @@ To perform an operation on any Windows Azure resource you will first instantiate
 a *client* which allows performing actions on it. The resource is known as an 
 *entity*. To do so for Table you also have to authenticate your request:
 
-```
+```csharp
 var storageAccount = 
     CloudStorageAccount.DevelopmentStorageAccount;
 var tableClient = storageAccount.CreateCloudTableClient();
@@ -89,7 +89,7 @@ var tableClient = storageAccount.CreateCloudTableClient();
 
 Now, to create a table entity using the client:
 
-```
+```csharp
 CloudTable peopleTable = tableClient.GetTableReference("people");
 peopleTable.Create();
 ```
