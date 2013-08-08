@@ -62,9 +62,9 @@ The ODataLib libraries can be downloaded directly or referenced by your code pro
 
 The specific ODataLib packages are:
 
-- [http://nuget.org/packages/Microsoft.Data.OData/5.2.0](Microsoft.Data.OData 5.2.0)
-- [http://nuget.org/packages/Microsoft.Data.Edm/5.2.0](Microsoft.Data.Edm 5.2.0)
-- [http://nuget.org/packages/System.Spatial/5.2.0](System.Spatial 5.2.0)
+- [http://nuget.org/packages/Microsoft.Data.OData/](Microsoft.Data.OData)
+- [http://nuget.org/packages/Microsoft.Data.Edm/](Microsoft.Data.Edm)
+- [http://nuget.org/packages/System.Spatial/](System.Spatial)
 
 ### Test Dependencies
 
