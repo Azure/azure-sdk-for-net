@@ -1,18 +1,18 @@
 # Windows Azure SDK for Windows 8 and .NET 4 (2.0.6.1)
 
-This SDK allows you to build Windows Azure applications that take advantage of
-Azure scalable cloud computing resources: table and blob storage, messaging through
-Service Bus, distributed caching through cache.
+The Windows Azure SDK for .NET allows you to build Windows Azure applications 
+that take advantage of scalable cloud computing resources.
 
-For documentation please see the [http://www.windowsazure.com/en-us/develop/net/](Windows Azure .NET Developer Center).
+This repository contains the open source subset of the .NET SDK. For documentation of the 
+complete SDK, please see the [http://www.windowsazure.com/en-us/develop/net/](Windows Azure .NET Developer Center).
 
 # Features
 
 - Tables
     - Create/Delete Tables
     - Query/Create/Read/Update/Delete Entities
-- BLOBs
-    - Create/Read/Update/Delete BLOBs
+- Blobs
+    - Create/Read/Update/Delete Blobs
 - Queues
     - Create/Delete Queues
     - Insert/Peek Queue Messages
@@ -44,15 +44,17 @@ within your project you can also have them installed by the .NET package manager
 ## Target Frameworks
 
 - .NET Framework 3.5: At this time the majority of the Windows Azure SDK for .NET supports primarily the desktop .NET Framework 3.5 and above.
-- Windows Store / Windows RT: Storage Client Libraries are available for Windows Store applications.
+- Windows 8 for Windows Store and Windows RT app development: Storage Client Libraries are available for Windows Store applications.
 
 ## Requirements
 
-- Windows Azure Subscription: To use this SDK to call Windows Azure services, you need to first create an account.
+- Windows Azure Subscription: To call Windows Azure services, you need to first [https://account.windowsazure.com/Home/Index](create an account). Free trial subscriptions are available.
 - Hosting: To host your .NET code in Windows Azure, you additionally need to download the full Windows Azure SDK for .NET - which includes packaging,
     emulation, and deployment tools, or use Windows Azure Web Sites to deploy ASP.NET web applications.
 
 ## Dependencies
+
+### OData
 
 This version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.2.0) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.  
 
@@ -60,14 +62,31 @@ The ODataLib libraries can be downloaded directly or referenced by your code pro
 
 The specific ODataLib packages are:
 
-- http://nuget.org/packages/Microsoft.Data.OData/5.2.0
-- http://nuget.org/packages/Microsoft.Data.Edm/5.2.0
-- http://nuget.org/packages/System.Spatial/5.2.0
+- [http://nuget.org/packages/Microsoft.Data.OData/5.2.0](Microsoft.Data.OData 5.2.0)
+- [http://nuget.org/packages/Microsoft.Data.Edm/5.2.0](Microsoft.Data.Edm 5.2.0)
+- [http://nuget.org/packages/System.Spatial/5.2.0](System.Spatial 5.2.0)
+
+### Test Dependencies
+
+FiddlerCore is required by:
+
+- Test\Unit\FaultInjection\HttpMangler
+- Test\Unit\FaultInjection\XStoreMangler
+- Test\Unit\DotNet40
+
+This dependency is not included and must be downloaded from [http://www.fiddler2.com/Fiddler/Core/](http://www.fiddler2.com/Fiddler/Core/).
+
+Once installed:
+
+- Copy `FiddlerCore.dll` `\azure-sdk-for-net\microsoft-azure-api\Services\Storage\Test\Unit\FaultInjection\Dependencies\DotNet2`
+- Copy `FiddlerCore4.dll` to `azure-sdk-for-net\microsoft-azure-api\Services\Storage\Test\Unit\FaultInjection\Dependencies\DotNet4`
 
 ## Code Samples
 
 > Note:
 > How-Tos focused around accomplishing specific tasks are available on the [http://www.windowsazure.com/en-us/develop/net/](Windows Azure .NET Developer Center).
+
+### Creating a Table
 
 First, include the classes you need (in this case we'll include the Storage and Table
 and further demonstrate creating a table):
@@ -82,8 +101,8 @@ a *client* which allows performing actions on it. The resource is known as an
 *entity*. To do so for Table you also have to authenticate your request:
 
 ```csharp
-var storageAccount = 
-    CloudStorageAccount.DevelopmentStorageAccount;
+var storageAccount = CloudStorageAccount.Parse(
+    CloudConfigurationManager.GetSetting("StorageConnectionString"));
 var tableClient = storageAccount.CreateCloudTableClient();
 ```
 
@@ -100,7 +119,7 @@ StackOverflow.
 
 # Feedback
 
-For feedback related specificically to this SDK, please use the Issues section of the repository.
+For feedback related specificically to these open source client libraries, please use the Issues section of the repository.
 
 For general suggestions about Windows Azure please use our [http://www.mygreatwindowsazureidea.com/forums/34192-windows-azure-feature-voting](UserVoice forum).
 
