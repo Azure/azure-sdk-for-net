@@ -4,7 +4,7 @@ The Windows Azure SDK for .NET allows you to build Windows Azure applications
 that take advantage of scalable cloud computing resources.
 
 This repository contains the open source subset of the .NET SDK. For documentation of the 
-complete SDK, please see the [http://www.windowsazure.com/en-us/develop/net/](Windows Azure .NET Developer Center).
+complete SDK, please see the [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
 
 # Features
 
@@ -19,7 +19,7 @@ complete SDK, please see the [http://www.windowsazure.com/en-us/develop/net/](Wi
     - Advanced Queue Operations
 - Media
 
-    > Available in separate [http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client](Media Services repository)
+    > Available in separate [Media Services repository](http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client)
 
 # Getting Started
 
@@ -48,7 +48,7 @@ within your project you can also have them installed by the .NET package manager
 
 ## Requirements
 
-- Windows Azure Subscription: To call Windows Azure services, you need to first [https://account.windowsazure.com/Home/Index](create an account). Free trial subscriptions are available.
+- Windows Azure Subscription: To call Windows Azure services, you need to first [create an account](https://account.windowsazure.com/Home/Index). Free trial subscriptions are available.
 - Hosting: To host your .NET code in Windows Azure, you additionally need to download the full Windows Azure SDK for .NET - which includes packaging,
     emulation, and deployment tools, or use Windows Azure Web Sites to deploy ASP.NET web applications.
 
@@ -62,9 +62,9 @@ The ODataLib libraries can be downloaded directly or referenced by your code pro
 
 The specific ODataLib packages are:
 
-- [http://nuget.org/packages/Microsoft.Data.OData/](Microsoft.Data.OData)
-- [http://nuget.org/packages/Microsoft.Data.Edm/](Microsoft.Data.Edm)
-- [http://nuget.org/packages/System.Spatial/](System.Spatial)
+- [Microsoft.Data.OData](http://nuget.org/packages/Microsoft.Data.OData/)
+- [Microsoft.Data.Edm](http://nuget.org/packages/Microsoft.Data.Edm/)
+- [System.Spatial](http://nuget.org/packages/System.Spatial)
 
 ### Test Dependencies
 
@@ -114,16 +114,16 @@ peopleTable.Create();
 ```
 
 # Need Help?
-Be sure to check out the Windows Azure [http://go.microsoft.com/fwlink/?LinkId=234489](Developer Forums on MSDN) if you have trouble with the provided code or use 
+Be sure to check out the Windows Azure [Developer Forums on MSDN](http://go.microsoft.com/fwlink/?LinkId=234489) if you have trouble with the provided code or use 
 StackOverflow.
 
 # Feedback
 
 For feedback related specificically to these open source client libraries, please use the Issues section of the repository.
 
-For general suggestions about Windows Azure please use our [http://www.mygreatwindowsazureidea.com/forums/34192-windows-azure-feature-voting](UserVoice forum).
+For general suggestions about Windows Azure please use our [UserVoice forum](http://www.mygreatwindowsazureidea.com/forums/34192-windows-azure-feature-voting).
 
 # Learn More
 
-- [http://www.windowsazure.com/en-us/develop/net/](Windows Azure .NET Developer Center)
-- [http://msdn.microsoft.com/en-us/library/dd179380.aspx](Windows Azure SDK Reference for .NET - MSDN)
+- [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/)
+- [Windows Azure SDK Reference for .NET - MSDN](http://msdn.microsoft.com/en-us/library/dd179380.aspx)
