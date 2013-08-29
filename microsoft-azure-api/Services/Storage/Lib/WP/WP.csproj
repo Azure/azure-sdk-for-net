@@ -88,14 +88,14 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Data.Edm.WP71">
-      <HintPath>Dependencies\Microsoft.Data.Edm.WP71.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm.Portable">
+      <HintPath>Dependencies\Microsoft.Data.Edm.Portable.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.OData.WP71">
-      <HintPath>Dependencies\Microsoft.Data.OData.WP71.dll</HintPath>
+    <Reference Include="Microsoft.Data.OData.Portable">
+      <HintPath>Dependencies\Microsoft.Data.OData.Portable.dll</HintPath>
     </Reference>
-    <Reference Include="System.Spatial.WP71">
-      <HintPath>Dependencies\System.Spatial.WP71.dll</HintPath>
+    <Reference Include="System.Spatial.Portable">
+      <HintPath>Dependencies\System.Spatial.Portable.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
