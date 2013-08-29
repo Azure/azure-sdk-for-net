@@ -2,6 +2,8 @@
 <p>This SDK allows you to build Windows Azure applications that take advantage of
 Azure scalable cloud computing resources: table and blob storage, messaging through
 Service Bus, distributed caching through cache.</p>
+<p>Please note that Windows 8 and Windows Phone 8 libraries are CTP (Community
+Technology Preview) releases.</p>
 <p>For documentation please see the 
 <a href="http://www.windowsazure.com/en-us/develop/net/">Windows Azure .NET Developer Center</a>.</p>
 
