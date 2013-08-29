@@ -268,7 +268,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             canonicalizedResource.Append(accountName);
             canonicalizedResource.Append(uri.AbsolutePath);
 
-            Dictionary<string, string> queryParameters = HttpWebUtility.ParseQueryString(uri.Query);
+            IDictionary<string, string> queryParameters = HttpWebUtility.ParseQueryString(uri.Query);
             if (!isSharedKeyLiteOrTableService)
             {
                 List<string> queryParameterNames = new List<string>(queryParameters.Keys);

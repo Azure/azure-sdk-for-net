@@ -22,6 +22,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Net;
 
     internal static class HttpWebRequestFactory
@@ -45,21 +46,29 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
                 builder = new UriQueryBuilder();
             }
 
-            if (timeout != 0)
+            if (timeout.HasValue && timeout.Value > 0)
             {
-                builder.Add("timeout", timeout.ToString());
+                builder.Add("timeout", timeout.Value.ToString(CultureInfo.InvariantCulture));
             }
+
+#if WINDOWS_PHONE
+            // Windows Phone does not allow the caller to disable caching, so a random GUID
+            // is added to every URI to make it look a different request.
+            builder.Add("randomguid", Guid.NewGuid().ToString("N"));
+#endif
 
             Uri uriRequest = builder.AddToUri(uri);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriRequest);
             request.Method = method;
 
-            // Set the Content-Length of requests to 0 by default. If we do not
-            // upload a body, signing requires it to be 0. On Windows Phone, all
-            // requests need this. On desktop, however, only PUT requests need it.
+            // Set the Content-Length of requests to 0 by default. If we do not upload
+            // a body, signing requires it to be 0. On Windows Phone, all requests except
+            // GET need this. On desktop, however, only PUT requests need it.
 #if !WINDOWS_PHONE
             if (method.Equals(WebRequestMethods.Http.Put, StringComparison.OrdinalIgnoreCase))
+#else
+            if (!method.Equals(WebRequestMethods.Http.Get, StringComparison.OrdinalIgnoreCase))
 #endif
             {
                 request.ContentLength = 0;

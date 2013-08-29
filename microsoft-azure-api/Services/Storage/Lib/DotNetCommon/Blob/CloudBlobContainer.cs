@@ -187,7 +187,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Creates the container if it does not already exist and specify a level of access.
+        /// Creates the container if it does not already exist and specifies whether the container or its blobs are publicly accessible.
         /// </summary>
         /// <param name="accessType">An <see cref="BlobContainerPublicAccessType"/> object that specifies whether data in the container may be accessed publicly and what level of access is to be allowed.</param>                                        
         /// <param name="requestOptions">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
@@ -924,7 +924,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns an enumerable collection of the blobs in the container that are retrieved lazily.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -968,7 +968,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// in the container.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
@@ -989,7 +989,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// in the container.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>  
@@ -1040,7 +1040,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// in the container.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>  
@@ -1128,7 +1128,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// in the container.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>  
@@ -1147,7 +1147,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// in the container.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>  
@@ -1394,7 +1394,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
 #if SYNC
         /// <summary>
-        /// Checks existence of the container.
+        /// Checks whether the container exists.
         /// </summary>
         /// <param name="requestOptions">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -1410,7 +1410,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 #endif
         /// <summary>
-        /// Begins an asynchronous request to check existence of the container.
+        /// Begins an asynchronous request to check whether the container exists.
         /// </summary>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1422,7 +1422,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Begins an asynchronous request to check existence of the container.
+        /// Begins an asynchronous request to check whether the container exists.
         /// </summary>
         /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -1442,7 +1442,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Returns the asynchronous result of the request to check existence of the container.
+        /// Returns the asynchronous result of the request to check whether the container exists.
         /// </summary>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
         /// <returns><c>true</c> if the container exists.</returns>
@@ -1453,7 +1453,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
 #if TASK
         /// <summary>
-        /// Returns a task that checks existence of the container.
+        /// Returns a task that checks whether the container exists.
         /// </summary>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1463,7 +1463,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Returns a task that checks existence of the container.
+        /// Returns a task that checks whether the container exists.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -1474,7 +1474,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Returns a task that checks existence of the container.
+        /// Returns a task that checks whether the container exists.
         /// </summary>
         /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -1486,7 +1486,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Returns a task that checks existence of the container.
+        /// Returns a task that checks whether the container exists.
         /// </summary>
         /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -2715,7 +2715,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="prefix">The blob prefix.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="currentToken">A continuation token returned by a previous listing operation.</param>

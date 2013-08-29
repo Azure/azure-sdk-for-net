@@ -27,8 +27,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 #endif
 
     /// <summary>
-    /// Class for storing information about a single property in an Azure
-    /// Table entity.
+    /// Class for storing information about a single property in an entity in a table.
     /// </summary>
     public sealed class EntityProperty
     {
@@ -181,7 +180,7 @@ byte[] input)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EntityProperty"/> class by using the
-        /// <see cref="DateTime"/> offset value of the property.
+        /// <see cref="DateTimeOffset"/> value of the property.
         /// </summary>
         /// <param name="input">The value for the new <see cref="EntityProperty"/>.</param>
 #if WINDOWS_RT
@@ -619,9 +618,14 @@ byte[] input)
 
         internal bool IsNull { get; set; }
 
-        internal static EntityProperty CreateEntityPropertyFromObject(object value)
+        /// <summary>
+        /// Creates an <see cref="EntityProperty"/> from the object.
+        /// </summary>
+        /// <param name="val">The value of the object.</param>
+        /// <returns>The reference to the <see cref="EntityProperty"/> object created.</returns>
+        public static EntityProperty CreateEntityPropertyFromObject(object val)
         {
-            return CreateEntityPropertyFromObject(value, true);
+            return CreateEntityPropertyFromObject(val, true);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Code clarity.")]

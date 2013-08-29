@@ -15,12 +15,9 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ServiceModel.Channels;
 using System.Threading;
+
 namespace Microsoft.WindowsAzure.Storage
 {
     public class WCFBufferManagerAdapter : IBufferManager
@@ -40,6 +37,7 @@ namespace Microsoft.WindowsAzure.Storage
             {
                 return Interlocked.CompareExchange(ref outstandingBufferCount, 0, 0);
             }
+
             set
             {
                 Interlocked.Exchange(ref outstandingBufferCount, value);

@@ -212,10 +212,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Gets the date and time that the blob snapshot was taken, if this blob is a snapshot.
         /// </summary>
-        /// <value>The blob's snapshot time if the blob is a snapshot; otherwise, <c>null</c>.</value>
-        /// <remarks>
-        /// If the blob is not a snapshot, the value of this property is <c>null</c>.
-        /// </remarks>
+        /// <value>The blob's snapshot time, if the blob is a snapshot. If the blob is not a snapshot, the value of this property is <c>null</c>.</value>
         public DateTimeOffset? SnapshotTime
         {
             get
@@ -242,9 +239,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Gets the snapshot qualified URI to this blob.
+        /// Gets the qualified URI to this blob if it is a snapshot.
         /// </summary>
-        /// <value>The blob's snapshot qualified URI if the blob is a snapshot; otherwise the absolute URI to the blob.</value>
+        /// <value>The qualified URI to the blob if the blob is a snapshot; otherwise, returns the absolute URI to the blob.</value>
         public Uri SnapshotQualifiedUri
         {
             get
@@ -342,7 +339,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns a shared access signature for the blob.
         /// </summary>
         /// <param name="policy">The access policy for the shared access signature.</param>
-        /// <returns>A shared access signature.</returns>
+        /// <returns>A shared access signature, as a URI query string.</returns>
+        /// <remarks>The query string returned includes the leading question mark.</remarks>
         public string GetSharedAccessSignature(SharedAccessBlobPolicy policy)
         {
             return this.GetSharedAccessSignature(policy, null /* groupPolicyIdentifier */);
@@ -352,8 +350,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns a shared access signature for the blob.
         /// </summary>
         /// <param name="policy">The access policy for the shared access signature.</param>
-        /// <param name="groupPolicyIdentifier">A container-level access policy.</param>
-        /// <returns>A shared access signature.</returns>
+        /// <param name="groupPolicyIdentifier">A stored access policy.</param>
+        /// <returns>A shared access signature, as a URI query string.</returns>
+        /// <remarks>The query string returned includes the leading question mark.</remarks>
         public string GetSharedAccessSignature(SharedAccessBlobPolicy policy, string groupPolicyIdentifier)
         {
             if (!this.ServiceClient.Credentials.IsSharedKey)

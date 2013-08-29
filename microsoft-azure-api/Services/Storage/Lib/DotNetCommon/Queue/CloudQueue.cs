@@ -1584,6 +1584,19 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Begins an asynchronous operation to delete a message.
         /// </summary>
         /// <param name="message">A message.</param>
+        /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+        [DoesServiceRequest]
+        public ICancellableAsyncResult BeginDeleteMessage(CloudQueueMessage message, AsyncCallback callback, object state)
+        {
+            return this.BeginDeleteMessage(message, null /* options */, null /* operationContext */, callback, state);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous operation to delete a message.
+        /// </summary>
+        /// <param name="message">A message.</param>
         /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -1595,6 +1608,20 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             CommonUtility.AssertNotNull("message", message);
 
             return this.BeginDeleteMessage(message.Id, message.PopReceipt, options, operationContext, callback, state);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous operation to delete a message.
+        /// </summary>
+        /// <param name="messageId">The message ID.</param>
+        /// <param name="popReceipt">The pop receipt value.</param>
+        /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+        [DoesServiceRequest]
+        public ICancellableAsyncResult BeginDeleteMessage(string messageId, string popReceipt, AsyncCallback callback, object state)
+        {
+            return this.BeginDeleteMessage(messageId, popReceipt, null /* options */, null /* operationContext */, callback, state);
         }
 
         /// <summary>
@@ -1638,6 +1665,29 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Returns a task that performs an asynchronous operation to delete a message.
         /// </summary>
         /// <param name="message">A message.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task DeleteMessageAsync(CloudQueueMessage message)
+        {
+            return this.DeleteMessageAsync(message, null /* options */, null /* operationContext */, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to delete a message.
+        /// </summary>
+        /// <param name="message">A message.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task DeleteMessageAsync(CloudQueueMessage message, CancellationToken cancellationToken)
+        {
+            return this.DeleteMessageAsync(message, null /* options */, null /* operationContext */, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to delete a message.
+        /// </summary>
+        /// <param name="message">A message.</param>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -1659,6 +1709,31 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         public Task DeleteMessageAsync(CloudQueueMessage message, QueueRequestOptions options, OperationContext operationContext, CancellationToken cancellationToken)
         {
             return AsyncExtensions.TaskFromVoidApm(this.BeginDeleteMessage, this.EndDeleteMessage, message, options, operationContext, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to delete a message.
+        /// </summary>
+        /// <param name="messageId">The message ID.</param>
+        /// <param name="popReceipt">The pop receipt value.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task DeleteMessageAsync(string messageId, string popReceipt)
+        {
+            return this.DeleteMessageAsync(messageId, popReceipt, null /* options */, null /* operationContext */, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to delete a message.
+        /// </summary>
+        /// <param name="messageId">The message ID.</param>
+        /// <param name="popReceipt">The pop receipt value.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task DeleteMessageAsync(string messageId, string popReceipt, CancellationToken cancellationToken)
+        {
+            return this.DeleteMessageAsync(messageId, popReceipt, null /* options */, null /* operationContext */, cancellationToken);
         }
 
         /// <summary>
@@ -2527,19 +2602,19 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="message">A queue message.</param>
         /// <param name="visibilityTimeout">The visibility timeout for the message.</param>
-        /// <param name="updateFlags">Indicates whether to update the visibility delay, message contents, or both.</param>
+        /// <param name="updateFields">Indicates whether to update the visibility delay, message contents, or both.</param>
         /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that sets the permissions.</returns>
-        private RESTCommand<NullType> UpdateMessageImpl(CloudQueueMessage message, TimeSpan visibilityTimeout, MessageUpdateFields updateFlags, QueueRequestOptions options)
+        private RESTCommand<NullType> UpdateMessageImpl(CloudQueueMessage message, TimeSpan visibilityTimeout, MessageUpdateFields updateFields, QueueRequestOptions options)
         {
             CommonUtility.AssertNotNull("message", message);
             CommonUtility.AssertNotNullOrEmpty("messageId", message.Id);
             CommonUtility.AssertNotNullOrEmpty("popReceipt", message.PopReceipt);
             CommonUtility.AssertInBounds<TimeSpan>("visibilityTimeout", visibilityTimeout, TimeSpan.Zero, CloudQueueMessage.MaxTimeToLive);
 
-            if ((updateFlags & MessageUpdateFields.Visibility) == 0)
+            if ((updateFields & MessageUpdateFields.Visibility) == 0)
             {
-                throw new ArgumentException("Calls to UpdateMessage must include the Visibility flag.", "updateFlags");
+                throw new ArgumentException(SR.UpdateMessageVisibilityRequired, "updateFields");
             }
 
             Uri messageUri = this.GetIndividualMessageAddress(message.Id);
@@ -2548,7 +2623,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             putCmd.ApplyRequestOptions(options);
             putCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => QueueHttpWebRequestFactory.UpdateMessage(putCmd.Uri, serverTimeout, message.PopReceipt, visibilityTimeout.RoundUpToSeconds(), ctx);
 
-            if ((updateFlags & MessageUpdateFields.Content) != 0)
+            if ((updateFields & MessageUpdateFields.Content) != 0)
             {
                 MultiBufferMemoryStream memoryStream = new MultiBufferMemoryStream(this.ServiceClient.BufferManager, (int)(1 * Constants.KB));
                 QueueRequest.WriteMessageContent(message.GetMessageContentForTransfer(this.EncodeMessage), memoryStream);

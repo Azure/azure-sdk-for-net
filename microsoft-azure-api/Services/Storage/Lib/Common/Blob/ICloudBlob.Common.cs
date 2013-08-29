@@ -99,7 +99,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns a shared access signature for the blob.
         /// </summary>
         /// <param name="policy">The access policy for the shared access signature.</param>
-        /// <returns>A shared access signature.</returns>
+        /// <returns>A shared access signature, as a URI query string.</returns>
+        /// <remarks>The query string returned includes the leading question mark.</remarks>
         string GetSharedAccessSignature(SharedAccessBlobPolicy policy);
 
         /// <summary>
@@ -107,7 +108,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="policy">The access policy for the shared access signature.</param>
         /// <param name="groupPolicyIdentifier">A container-level access policy.</param>
-        /// <returns>A shared access signature.</returns>
+        /// <returns>A shared access signature, as a URI query string.</returns>
+        /// <remarks>The query string returned includes the leading question mark.</remarks>
         string GetSharedAccessSignature(SharedAccessBlobPolicy policy, string groupPolicyIdentifier);
     }
 }

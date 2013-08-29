@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 #else
     public
 #endif
-        static class Constants
+ static class Constants
     {
         /// <summary>
         /// Maximum number of shared access policy identifiers supported by server.
@@ -577,10 +577,28 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible", Justification = "Reviewed.")]
         public static class HeaderConstants
         {
+            static HeaderConstants()
+            {
+#if WINDOWS_PHONE
+                UserAgentComment = string.Format("(.NET CLR {0}; Windows Phone {1})", Environment.Version, Environment.OSVersion.Version);
+#elif WINDOWS_RT
+                UserAgentComment = "(Windows Runtime)";
+#else
+                UserAgentComment = string.Format("(.NET CLR {0}; {1} {2})", Environment.Version, Environment.OSVersion.Platform, Environment.OSVersion.Version);
+#endif
+
+                UserAgent = UserAgentProductName + "/" + UserAgentProductVersion + " " + UserAgentComment;
+            }
+
             /// <summary>
             /// Specifies the value to use for UserAgent header.
             /// </summary>
-            public const string UserAgent = UserAgentProductName + "/" + UserAgentProductVersion;
+            public static readonly string UserAgent;
+
+            /// <summary>
+            /// Specifies the comment to use for UserAgent header.
+            /// </summary>
+            public static readonly string UserAgentComment;
 
             /// <summary>
             /// Specifies the value to use for UserAgent header.
@@ -606,7 +624,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             /// False Header.
             /// </summary>
             public const string FalseHeader = "false";
-            
+
             /// <summary>
             /// Header prefix for properties.
             /// </summary>
@@ -616,6 +634,16 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             /// Header prefix for metadata.
             /// </summary>
             internal const string PrefixForStorageMetadata = "x-ms-meta-";
+
+            /// <summary>
+            /// Header that specifies content length.
+            /// </summary>
+            public const string ContentLengthHeader = "content-length";
+
+            /// <summary>
+            /// Header that specifies content language.
+            /// </summary>
+            public const string ContentLanguageHeader = "content-language";
 
             /// <summary>
             /// Header for data ranges.
@@ -673,11 +701,6 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             public const string IfSequenceNumberEqHeader = PrefixForStorageHeader + "if-sequence-number-eq";
 
             /// <summary>
-            /// Header for the blob content length.
-            /// </summary>
-            public const string Size = PrefixForStorageHeader + "blob-content-length";
-
-            /// <summary>
             /// Header for the blob type.
             /// </summary>
             public const string BlobType = PrefixForStorageHeader + "blob-type";
@@ -710,7 +733,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             /// <summary>
             /// Header that specifies blob content language.
             /// </summary>
-            public const string ContentLanguageHeader = PrefixForStorageHeader + "blob-content-language";
+            public const string BlobContentLanguageHeader = PrefixForStorageHeader + "blob-content-language";
 
             /// <summary>
             /// Header that specifies blob content MD5.
@@ -725,7 +748,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             /// <summary>
             /// Header that specifies blob content length.
             /// </summary>
-            public const string ContentLengthHeader = PrefixForStorageHeader + "blob-content-length";
+            public const string BlobContentLengthHeader = PrefixForStorageHeader + "blob-content-length";
 
             /// <summary>
             /// Header that specifies blob sequence number.

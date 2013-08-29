@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Storage
 #endif
 
     /// <summary>
-    /// Represents an exception for the Windows Azure storage service.
+    /// Represents an exception thrown by the Windows Azure storage service.
     /// </summary>
 #if !WINDOWS_RT && !WINDOWS_PHONE
     [Serializable]
@@ -71,9 +71,9 @@ namespace Microsoft.WindowsAzure.Storage
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StorageException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// Initializes a new instance of the <see cref="StorageException"/> class with a specified error message and a reference to the inner exception that generated this exception.
         /// </summary>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="message">The exception error message.</param>
         /// <param name="innerException">The inner exception.</param>
         public StorageException(string message, Exception innerException) :
             this(null /* res */, message, innerException) 
@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// Initializes a new instance of the <see cref="StorageException"/> class with serialized data.
         /// </summary>
         /// <param name="context">The <see cref="System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
-        /// <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> object that holds the serialized object data about the exception being thrown.</param>
+        /// <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> object that holds serialized object data for the exception being thrown.</param>
         /// <remarks>This constructor is called during de-serialization to reconstitute the exception object transmitted over a stream.</remarks>
         protected StorageException(SerializationInfo info, StreamingContext context) :
             base(info, context) 
@@ -118,7 +118,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// Initializes a new instance of the <see cref="StorageException"/> class by using the specified parameters.
         /// </summary>
         /// <param name="res">The request result.</param>
-        /// <param name="message">The message.</param>
+        /// <param name="message">The exception message.</param>
         /// <param name="inner">The inner exception.</param>
         public StorageException(RequestResult res, string message, Exception inner)
             : base(message, inner)
@@ -128,11 +128,11 @@ namespace Microsoft.WindowsAzure.Storage
         }
 
         /// <summary>
-        /// Translates the specified exception into a storage exception.
+        /// Translates the specified exception into a <see cref="StorageException"/>.
         /// </summary>
         /// <param name="ex">The exception to translate.</param>
         /// <param name="reqResult">The request result.</param>
-        /// <returns>The storage exception.</returns>
+        /// <returns>An exception of type <see cref="StorageException"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "General Exception wrapped as a StorageException.")]
         [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Code clarity.")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "req", Justification = "Reviewed : req is allowed.")]

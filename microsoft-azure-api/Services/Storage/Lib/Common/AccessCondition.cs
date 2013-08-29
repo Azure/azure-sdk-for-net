@@ -36,9 +36,9 @@ namespace Microsoft.WindowsAzure.Storage
         private DateTimeOffset? ifNotModifiedSinceDateTime;
 
         /// <summary>
-        /// Gets or sets an "etag" that must match the ETag of a resource.
+        /// Gets or sets an ETag value that must match the ETag of the specified resource.
         /// </summary>
-        /// <value>A quoted ETag string. If <c>null</c>, no condition exists.</value>
+        /// <value>A string containing an ETag value, or <c>"*"</c> to match any ETag. If <c>null</c>, no condition exists.</value>
         public string IfMatchETag
         {
             get;
@@ -46,9 +46,9 @@ namespace Microsoft.WindowsAzure.Storage
         }
 
         /// <summary>
-        /// Gets or sets an ETag that must not match the ETag of a resource.
+        /// Gets or sets an ETag value that must not match the ETag of the specified resource.
         /// </summary>
-        /// <value>A quoted ETag string, or <c>"*"</c> to match any ETag. If null, no condition exists.</value>
+        /// <value>A string containing an ETag value, or <c>"*"</c> to match any ETag. If <c>null</c>, no condition exists.</value>
         public string IfNoneMatchETag
         {
             get;
@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <summary>
         /// Gets or sets a time that must be before the last modification of a resource.
         /// </summary>
-        /// <value>A <c>DateTimeOffset</c> in UTC, or null if no condition exists.</value>
+        /// <value>A <c>DateTimeOffset</c> in UTC, or <c>null</c> if no condition exists.</value>
         public DateTimeOffset? IfModifiedSinceTime
         {
             get
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <summary>
         /// Gets or sets a time that must not be before the last modification of a resource.
         /// </summary>
-        /// <value>A <c>DateTimeOffset</c> in UTC, or null if no condition exists.</value>
+        /// <value>A <c>DateTimeOffset</c> in UTC, or <c>null</c> if no condition exists.</value>
         public DateTimeOffset? IfNotModifiedSinceTime
         {
             get
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <summary>
         /// Gets or sets a sequence number that the current sequence number of a page blob must be less than or equal to in order for the operation to proceed.
         /// </summary>
-        /// <value>A sequence number, or null if no condition exists.</value>
+        /// <value>A sequence number, or <c>null</c> if no condition exists.</value>
         /// <remarks>This condition only applies to page blobs.</remarks>
         public long? IfSequenceNumberLessThanOrEqual
         {
@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <summary>
         /// Gets or sets a sequence number that the current sequence number of a page blob must be less than in order for the operation to proceed.
         /// </summary>
-        /// <value>A sequence number, or null if no condition exists.</value>
+        /// <value>A sequence number, or <c>null</c> if no condition exists.</value>
         /// <remarks>This condition only applies to page blobs.</remarks>
         public long? IfSequenceNumberLessThan
         {
@@ -114,7 +114,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <summary>
         /// Gets or sets a sequence number that the current sequence number of a page blob must be equal to in order for the operation to proceed.
         /// </summary>
-        /// <value>A sequence number, or null if no condition exists.</value>
+        /// <value>A sequence number, or <c>null</c> if no condition exists.</value>
         /// <remarks>This condition only applies to page blobs.</remarks>
         public long? IfSequenceNumberEqual
         {
@@ -125,7 +125,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <summary>
         /// Gets or sets a lease ID that must match the lease on a resource.
         /// </summary>
-        /// <value>A lease ID, or null if no condition exists.</value>
+        /// <value>A lease ID, or <c>null</c> if no condition exists.</value>
         public string LeaseId
         {
             get;

@@ -34,9 +34,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Provides a client-side logical representation of the Windows Azure Blob Service. This client is used to configure and execute requests against the Blob Service.
+    /// Provides a client-side logical representation of the Windows Azure Blob service. This client is used to configure and execute requests against the Blob service.
     /// </summary>
-    /// <remarks>The service client encapsulates the base URI for the Blob service. If the service client will be used for authenticated access, it also encapsulates the credentials for accessing the storage account.</remarks>
+    /// <remarks>The service client encapsulates the base URI for the Blob service. If the service client will be used for authenticated access, 
+    /// it also encapsulates the credentials for accessing the storage account.</remarks>
     public sealed partial class CloudBlobClient
     {
         private IAuthenticationHandler authenticationHandler;
@@ -139,7 +140,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="prefix">The container name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -159,7 +160,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="prefix">The container name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -207,7 +208,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="prefix">The container name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
@@ -292,7 +293,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="prefix">The container name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
@@ -309,7 +310,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="prefix">The container name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
@@ -327,7 +328,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns an enumerable collection of the blobs in the container that are retrieved lazily.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -347,7 +348,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="prefix">The blob name prefix.</param>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
         [DoesServiceRequest]
@@ -360,11 +361,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param> 
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -385,7 +386,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Begins an asynchronous operation to return a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="prefix">The blob name prefix.</param>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -400,11 +401,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Begins an asynchronous operation to return a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param> 
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -467,7 +468,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="prefix">The blob name prefix.</param>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -495,10 +496,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// in the container.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param> 
         /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -514,10 +515,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// in the container.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param> 
         /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -660,7 +661,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="detailsIncluded">The details included.</param>
         /// <param name="currentToken">The continuation token.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="ResultSegment{T}"/> that lists the containers.</returns>
         private RESTCommand<ResultSegment<CloudBlobContainer>> ListContainersImpl(string prefix, ContainerListingDetails detailsIncluded, BlobContinuationToken currentToken, int? maxResults, BlobRequestOptions options)

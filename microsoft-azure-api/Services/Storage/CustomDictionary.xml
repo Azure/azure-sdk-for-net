@@ -36,13 +36,19 @@
       <Word>GetDefaultBufferSize</Word>
       <Word>ITableEntity</Word>
       <Word>EndRead</Word>
-	  <Word>TableQuery</Word>
-	  <Word>EndFlush</Word>
-	  <Word>EntityProperty</Word>
-	  <Word>ExecuteQuery</Word>
-	  <Word>CloudTable</Word>
-	  <Word>CreateQuery</Word>
-	  <Word>Etag</Word>
+      <Word>TableQuery</Word>
+      <Word>EndFlush</Word>
+      <Word>EntityProperty</Word>
+      <Word>ExecuteQuery</Word>
+      <Word>CloudTable</Word>
+      <Word>CreateQuery</Word>
+      <Word>TableQuery</Word>
+      <Word>EndFlush</Word>
+      <Word>EntityProperty</Word>
+      <Word>ExecuteQuery</Word>
+      <Word>CloudTable</Word>
+      <Word>CreateQuery</Word>
+      <Word>Etag</Word>
     </Recognized>
     <Compound>
       <Term CompoundAlternate="TableQuery">Tablequery</Term>

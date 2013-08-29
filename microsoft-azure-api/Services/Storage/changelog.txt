@@ -76,6 +76,7 @@ Issues fixed in 2.0.6 :
 
 Changes in 2.1.0 :
 
+  - All: Changed User-Agent header value to include .NET CLR and OS versions
   - All: Performance improvements across all services (major improvements detailed below).
   - All: Added logging functionality for all operations.
   - All: Added Task overloads for all asynchronous APIs.
@@ -99,6 +100,8 @@ Changes in 2.1.0 :
   - All: CloudStorageAccount.ToString can recreate the original connection string that was passed in to CloudStorageAccount.Parse.
   - All: Expose IBufferManager on ServiceClients enabling users to provide a buffer pooling implementation.
   - All: Abort a pending request if upload times out to prevent socket exhaustion
+  - All: Fixed a potential overflow in ExponentialRetry.
+  - All: Queue and Table SAS validation should not check for signed resource(sr). Tables should check the table name(tn).
   - Blobs: ICloudBlob exposes new BeginOpenRead/EndOpenRead methods to asynchronously open a stream to read from the blob.
   - Blobs: Cloud[Block|Page]Blob.OpenRead performs a service request.
   - Blobs: Streams opened with OpenRead methods do not discard the cache anymore if seeked to a position within the cached range.
@@ -127,6 +130,9 @@ Changes in 2.1.0 :
   - Queues: MaxResults argument in queue listing APIs is nullable.
   - Queues: CloudQueue.EndBeginClear is deprecated.
   - Queues: All queue APIs are correctly marked with DoesServiceRequest attribute.
+  - Queues: New CloudQueue.BeginDeleteMessage overloads with less arguments.
+  - Queues (RT): visibilityTimeout argument of CloudQueue.UpdateMessage is not nullable.
+  - Queues (RT): CloudQueueClient.ListQueuesSegmentedAsync takes a new argument of type QueueRequestOptions.
   - Tables: Table Service Layer supports queries with LINQ.
   - Tables: TableEntity derived classes now support compiled serializers to improve serialization performance.
   - Tables: Table allows query execution with a resolver against non-generic query types (dynamic entity types).
@@ -137,3 +143,4 @@ Changes in 2.1.0 :
   - Tables: Performance improvement to reduce Activator.CreateInstance usage for entity instantiation.
   - Tables: Exposed PropertyAsObject Property in EntityProperty as publicly readable.
   - Tables: Exposed table serialialization logic. Allow users to persist and read back entities that don't derive from TableEntity using static methods(ReadUserObject and WriteUserObject).
+  - Tables: Exposed CreateEntityPropertyFromObject in EntityProperty so users can pass in a value and get the corresponding EntityProperty.

@@ -21,7 +21,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
     using System.Collections.Generic;
 
     /// <summary>
-    /// Represents a segment of <see cref="CloudQueue"/> results and contains continuation and pagination information.
+    /// Represents a segment of <see cref="CloudQueue"/> results, with continuation information for pagination scenarios.
     /// </summary>
     public sealed class QueueResultSegment
     {

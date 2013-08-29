@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
     using System.Globalization;
 
     /// <summary>
-    /// Provides a client-side logical representation of the Windows Azure Queue Service. This client is used to configure and execute requests against the Queue Service.
+    /// Provides a client-side logical representation of the Windows Azure Queue service. This client is used to configure and execute requests against the Queue service.
     /// </summary>
     /// <remarks>The service client encapsulates the base URI for the Queue service. If the service client will be used for authenticated access, it also encapsulates the credentials for accessing the storage account.</remarks>
     public sealed partial class CloudQueueClient
@@ -109,7 +109,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         }
 
         /// <summary>
-        /// The IBufferManager to use for associated objects
+        /// Gets or sets a buffer manager that implements the <see cref="IBufferManager"/> interface, 
+        /// specifying a buffer pool for use with operations against the Queue service client.
         /// </summary>
         public IBufferManager BufferManager { get; set; }
 
@@ -126,13 +127,13 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         public Uri BaseUri { get; private set; }
 
         /// <summary>
-        /// Gets or sets the default retry policy for requests made via the queue service client.
+        /// Gets or sets the default retry policy for requests made via the Queue service client.
         /// </summary>
         /// <value>The retry policy.</value>
         public IRetryPolicy RetryPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets the default server and client timeout for requests.
+        /// Gets or sets the default server and client timeout for requests made via the Queue service client.
         /// </summary>
         /// <value>The server and client timeout interval.</value>
         public TimeSpan? ServerTimeout

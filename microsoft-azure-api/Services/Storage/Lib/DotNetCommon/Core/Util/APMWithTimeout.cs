@@ -96,6 +96,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 this.waitHandle = null;
             }
 
+            this.timeoutCallback = null;
+
 #if WINDOWS_PHONE
             if (this.fakeEvent != null)
             {

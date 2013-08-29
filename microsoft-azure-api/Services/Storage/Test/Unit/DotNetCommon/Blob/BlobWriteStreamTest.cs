@@ -1109,17 +1109,35 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
                             Assert.AreEqual(2, opContext.RequestResults.Count);
 
+                            cancellableResult = blobStream.BeginFlush(null, null);
+                            Assert.IsFalse(cancellableResult.IsCompleted);
+                            blobStream.EndFlush(cancellableResult);
+
+                            Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                            result = blobStream.BeginWrite(
+                                buffer,
+                                0,
+                                buffer.Length,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blobStream.EndWrite(result);
+                            wholeBlob.Write(buffer, 0, buffer.Length);
+
+                            Assert.AreEqual(3, opContext.RequestResults.Count);
+
                             result = blobStream.BeginCommit(
                                 ar => waitHandle.Set(),
                                 null);
                             waitHandle.WaitOne();
                             blobStream.EndCommit(result);
 
-                            Assert.AreEqual(4, opContext.RequestResults.Count);
+                            Assert.AreEqual(5, opContext.RequestResults.Count);
                         }
                     }
 
-                    Assert.AreEqual(4, opContext.RequestResults.Count);
+                    Assert.AreEqual(5, opContext.RequestResults.Count);
 
                     using (MemoryStream downloadedBlob = new MemoryStream())
                     {

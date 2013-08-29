@@ -275,6 +275,11 @@ namespace Microsoft.WindowsAzure.Storage
         }
 
         /// <summary>
+        /// Indicates whether this account is a development storage account.
+        /// </summary>
+        private bool IsDevStoreAccount { get; set; }
+
+        /// <summary>
         /// The storage service hostname suffix set by the user, if any.
         /// </summary>
         private string EndpointSuffix { get; set; }
@@ -472,7 +477,7 @@ namespace Microsoft.WindowsAzure.Storage
 
             List<string> listOfSettings = this.Settings.Select(pair => string.Format(CultureInfo.InvariantCulture, "{0}={1}", pair.Key, pair.Value)).ToList();
             
-            if ((this.Credentials != null) && (this.Credentials.ToString(true) != DevstoreCredentialInString))
+            if (this.Credentials != null && !this.IsDevStoreAccount)
             {
                 listOfSettings.Add(this.Credentials.ToString(exportSecrets));
             }
@@ -511,6 +516,8 @@ namespace Microsoft.WindowsAzure.Storage
             {
                 account.Settings.Add(DevelopmentStorageProxyUriSettingString, proxyUri.ToString());
             }
+
+            account.IsDevStoreAccount = true;
 
             return account;
         }

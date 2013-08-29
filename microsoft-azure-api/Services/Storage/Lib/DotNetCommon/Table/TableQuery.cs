@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Represents a query against a specified table.
+    /// Represents a query against a Windows Azure table.
     /// </summary>
     /// <typeparam name="TElement">A class which implements <see cref="ITableEntity"/>.</typeparam>
     public partial class TableQuery<TElement> : IQueryable<TElement>
@@ -89,7 +89,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Executes a query on a table, using the specified <see cref="TableRequestOptions"/> and <see cref="OperationContext"/>.
         /// </summary>
-        /// <typeparam name="TElement">The entity type of the query.</typeparam>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>An enumerable collection, specialized for type <c>TElement</c>, of the results of executing the query.</returns>       
@@ -241,7 +240,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Queries a table in segmented mode using the specified <see cref="TableContinuationToken"/> continuation token, <see cref="TableRequestOptions"/>, and <see cref="OperationContext"/>.
         /// </summary>
-        /// <typeparam name="TElement">The entity type of the query.</typeparam>
         /// <param name="continuationToken">A <see cref="TableContinuationToken"/> object representing a continuation token from the server when the operation returns a partial result.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
@@ -273,6 +271,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #endregion
 
         #region IQueryable implementation
+        /// <summary>
+        /// Returns an enumerator that iterates through the <see cref="TableQuery{TElement}"/>.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerator{TElement}"/> for the <see cref="TableQuery{TElement}"/>.</returns>
         public IEnumerator<TElement> GetEnumerator()
         {
             if (this.Expression == null)
@@ -304,16 +306,25 @@ namespace Microsoft.WindowsAzure.Storage.Table
             return this.GetEnumerator();
         }
 
+        /// <summary>
+        /// Gets the type of the element(s) that are returned when the expression tree is executed.
+        /// </summary>
         public Type ElementType
         {
             get { return typeof(TElement); }
         }
 
+        /// <summary>
+        /// Gets the expression tree.
+        /// </summary>
         public Expression Expression
         {
             get { return this.queryExpression; }
         }
 
+        /// <summary>
+        /// Gets the query provider that is associated with this data source.
+        /// </summary>
         public IQueryProvider Provider
         {
             get { return this.queryProvider; }

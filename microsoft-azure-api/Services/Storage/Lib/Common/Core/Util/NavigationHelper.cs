@@ -511,7 +511,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 }
             }
 
-            parsedCredentials = SharedAccessSignatureHelper.ParseQuery(queryParameters);
+            parsedCredentials = SharedAccessSignatureHelper.ParseQuery(queryParameters, true);
             return new Uri(address.GetComponents(UriComponents.SchemeAndServer | UriComponents.Path, UriFormat.UriEscaped));
         }
 
@@ -527,7 +527,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// exception will be thrown.
         /// Otherwise a new client is created based on SAS information or as anonymous credentials.
         /// </remarks>
-        internal static Uri ParseTableQueryAndVerify(Uri address, out StorageCredentials parsedCredentials)
+        internal static Uri ParseQueueTableQueryAndVerify(Uri address, out StorageCredentials parsedCredentials)
         {
             CommonUtility.AssertNotNull("address", address);
             if (!address.IsAbsoluteUri)
@@ -538,7 +538,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
             IDictionary<string, string> queryParameters = HttpWebUtility.ParseQueryString(address.Query);
 
-            parsedCredentials = SharedAccessSignatureHelper.ParseQuery(queryParameters);
+            parsedCredentials = SharedAccessSignatureHelper.ParseQuery(queryParameters, false);
             return new Uri(address.GetComponents(UriComponents.SchemeAndServer | UriComponents.Path, UriFormat.UriEscaped));
         }
     }

@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 queueNames.Add(prefix + i);
             }
 
-            QueueResultSegment emptyResults = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
+            QueueResultSegment emptyResults = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null, null);
             Assert.AreEqual<int>(0, emptyResults.Results.Count());
 
             foreach (string name in queueNames)
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 await client.GetQueueReference(name).CreateAsync();
             }
 
-            QueueResultSegment results = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null);
+            QueueResultSegment results = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.All, null, null, null, null);
             
             foreach (CloudQueue queue in results.Results)
             {
@@ -146,7 +146,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
             do
             {
-                QueueResultSegment segment = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.None, null, token, null);
+                QueueResultSegment segment = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.None, null, token, null, null);
                 token = segment.ContinuationToken;
                 results.AddRange(segment.Results);
             }
@@ -161,7 +161,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
             do
             {
-                QueueResultSegment segment = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.None, 10, token, null);
+                QueueResultSegment segment = await client.ListQueuesSegmentedAsync(prefix, QueueListingDetails.None, 10, token, null, null);
                 token = segment.ContinuationToken;
                 results.AddRange(segment.Results);
             }

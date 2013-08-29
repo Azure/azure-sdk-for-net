@@ -101,15 +101,15 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public string RowKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity's time stamp.
+        /// Gets or sets the entity's timestamp.
         /// </summary>
-        /// <value>The entity time stamp.</value>
+        /// <value>The entity timestamp.</value>
         public DateTimeOffset Timestamp { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity's current ETag.  Set this value to '*' in order to blindly overwrite an entity as part of an update operation.
+        /// Gets or sets the entity's current ETag. Set this value to '*' to blindly overwrite an entity as part of an update operation.
         /// </summary>
-        /// <value>The entity Etag.</value>
+        /// <value>The entity ETag.</value>
         public string ETag { get; set; }
 
 #if !WINDOWS_RT
@@ -126,9 +126,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
 #endif
 
         /// <summary>
-        /// Deserializes this <see cref="DynamicTableEntity"/> instance using the specified <see cref="Dictionary{TKey,TValue}"/> of property names to <see cref="EntityProperty"/> data typed values.
+        /// Deserializes this <see cref="DynamicTableEntity"/> instance using the specified <see cref="Dictionary{TKey,TValue}"/> of property names to values of type <see cref="EntityProperty"/>.
         /// </summary>
-        /// <param name="properties">A collection containing the <see cref="Dictionary{TKey,TValue}"/> of string property names mapped to <see cref="EntityProperty"/> data typed values to store in this <see cref="DynamicTableEntity"/> instance.</param>
+        /// <param name="properties">A collection containing the <see cref="Dictionary{TKey,TValue}"/> of string property names mapped to values of type <see cref="EntityProperty"/> to store in this <see cref="DynamicTableEntity"/> instance.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object used to track the execution of the operation.</param>
         public void ReadEntity(IDictionary<string, EntityProperty> properties, OperationContext operationContext)
         {
@@ -136,10 +136,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Serializes the <see cref="Dictionary{TKey,TValue}"/> of property names mapped to <see cref="EntityProperty"/> data values from this <see cref="DynamicTableEntity"/> instance.
+        /// Serializes the <see cref="Dictionary{TKey,TValue}"/> of property names mapped to values of type <see cref="EntityProperty"/> from this <see cref="DynamicTableEntity"/> instance.
         /// </summary>
         /// <param name="operationContext">An <see cref="OperationContext"/> object used to track the execution of the operation.</param>
-        /// <returns>A collection containing the map of <c>string</c> property names to <see cref="EntityProperty"/> data typed values stored in this <see cref="DynamicTableEntity"/> instance.</returns>
+        /// <returns>A collection containing the map of string property names to values of type <see cref="EntityProperty"/> stored in this <see cref="DynamicTableEntity"/> instance.</returns>
         public IDictionary<string, EntityProperty> WriteEntity(OperationContext operationContext)
         {
             return this.Properties;

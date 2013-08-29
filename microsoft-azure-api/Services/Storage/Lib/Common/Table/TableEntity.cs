@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 #endif
 
     /// <summary>
-    /// Represents the base object type for a table entity in the Table Storage service.
+    /// Represents the base object type for a table entity in the Table service.
     /// </summary>
     /// <remarks><see cref="TableEntity"/> provides a base implementation for the <see cref="ITableEntity"/> interface that provides <see cref="ReadEntity(IDictionary{string, EntityProperty}, OperationContext)"/> and <see cref="WriteEntity(OperationContext)"/> methods that by default serialize and 
     /// deserialize all properties via reflection. A table entity class may extend this class and override the <see cref="ITableEntity.ReadEntity(IDictionary{string, EntityProperty}, OperationContext)"/> and <see cref="ITableEntity.WriteEntity(OperationContext)"/> methods to provide customized or better performing serialization logic.</remarks>
@@ -343,7 +343,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             {
                 return true;
             }
-            
+
             MethodInfo setter = property.FindSetProp();
             MethodInfo getter = property.FindGetProp();
 
@@ -378,6 +378,16 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region CompiledSerialization Logic
 
 #if WINDOWS_DESKTOP && !WINDOWS_PHONE
+        private static void ReadNoOpAction(object obj, OperationContext ctx, IDictionary<string, EntityProperty> dict)
+        {
+            // no op
+        }
+
+        private static IDictionary<string, EntityProperty> WriteNoOpFunc(object obj, OperationContext ctx)
+        {
+            return new Dictionary<string, EntityProperty>();
+        }
+
         private static MethodInfo GetKeyOrNullFromDictionaryMethodInfo { get; set; }
 
         private static MethodInfo DictionaryAddMethodInfo { get; set; }
@@ -496,21 +506,33 @@ namespace Microsoft.WindowsAzure.Storage.Table
             List<Expression> exprs = new List<Expression>();
             foreach (PropertyInfo prop in objectProperties.Where(p => !ShouldSkipProperty(p, null /* OperationContext */)))
             {
-                exprs.Add(Expression.Assign(propName, Expression.Constant(prop.Name)));
-                exprs.Add(Expression.Assign(tempProp, Expression.Call(GetKeyOrNullFromDictionaryMethodInfo, propName, dictVariable, ctxParam)));
-                exprs.Add(
+                Expression readExpr = GeneratePropertyReadExpressionByType(type, prop, instanceParam, tempProp);
 
-                        // If property is not null
-                        Expression.IfThen(Expression.NotEqual(tempProp, Expression.Constant(null)),
+                if (readExpr != null)
+                {
+                    exprs.Add(Expression.Assign(propName, Expression.Constant(prop.Name)));
+                    exprs.Add(Expression.Assign(tempProp, Expression.Call(GetKeyOrNullFromDictionaryMethodInfo, propName, dictVariable, ctxParam)));
 
-                        // then if prop.Isnull, objProp.SetValue(null)
-                        Expression.IfThenElse(Expression.Call(tempProp, EntityPropertyIsNullInfo),
+                    exprs.Add(
 
-                        // then
-                        Expression.Call(Expression.Convert(instanceParam, type), prop.FindSetProp(), Expression.Convert(Expression.Constant(null), prop.PropertyType)),
+                            // If property is not null
+                            Expression.IfThen(Expression.NotEqual(tempProp, Expression.Constant(null)),
 
-                        // else set entity property based on type
-                        GeneratePropertyReadExpressionByType(type, prop, instanceParam, tempProp))));
+                            // then if prop.Isnull, objProp.SetValue(null)
+                            Expression.IfThenElse(Expression.Call(tempProp, EntityPropertyIsNullInfo),
+
+                            // then
+                            Expression.Call(Expression.Convert(instanceParam, type), prop.FindSetProp(), Expression.Convert(Expression.Constant(null), prop.PropertyType)),
+
+                            // else set entity property based on type
+                           readExpr)));
+                }
+            }
+
+            // If no additional property expressions were added return a no op lambda
+            if (exprs.Count == 0)
+            {
+                return TableEntity.ReadNoOpAction;
             }
 
             var lambda = Expression.Lambda<Action<object, OperationContext, IDictionary<string, EntityProperty>>>(
@@ -553,6 +575,12 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                 // if tempprop!=null dict.Add(propName, Prop);
                 exprs.Add(Expression.IfThen(Expression.NotEqual(tempProp, Expression.Constant(null)), Expression.Call(dictVar, DictionaryAddMethodInfo, propName, tempProp)));
+            }
+
+            // If no additional property expressions were added return a no op lambda
+            if (exprs.Count == 1)
+            {
+                return TableEntity.WriteNoOpFunc;
             }
 
             // return dictionary

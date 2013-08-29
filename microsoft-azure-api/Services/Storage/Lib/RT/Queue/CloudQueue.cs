@@ -409,7 +409,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="updateFields">The message update fields.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
-        public IAsyncAction UpdateMessageAsync(CloudQueueMessage message, TimeSpan? visibilityTimeout, MessageUpdateFields updateFields)
+        public IAsyncAction UpdateMessageAsync(CloudQueueMessage message, TimeSpan visibilityTimeout, MessageUpdateFields updateFields)
         {
             return this.UpdateMessageAsync(message, visibilityTimeout, updateFields, null /* options */, null /* operationContext */);
         }
@@ -424,7 +424,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
-        public IAsyncAction UpdateMessageAsync(CloudQueueMessage message, TimeSpan? visibilityTimeout, MessageUpdateFields updateFields, QueueRequestOptions options, OperationContext operationContext)
+        public IAsyncAction UpdateMessageAsync(CloudQueueMessage message, TimeSpan visibilityTimeout, MessageUpdateFields updateFields, QueueRequestOptions options, OperationContext operationContext)
         {
             QueueRequestOptions modifiedOptions = QueueRequestOptions.ApplyDefaults(options, this.ServiceClient);
             operationContext = operationContext ?? new OperationContext();
@@ -890,16 +890,16 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="updateFields">The message update fields.</param>
         /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that sets the permissions.</returns>
-        private RESTCommand<NullType> UpdateMessageImpl(CloudQueueMessage message, TimeSpan? visibilityTimeout, MessageUpdateFields updateFields, QueueRequestOptions options)
+        private RESTCommand<NullType> UpdateMessageImpl(CloudQueueMessage message, TimeSpan visibilityTimeout, MessageUpdateFields updateFields, QueueRequestOptions options)
         {
-            TimeSpan? effectiveVisibilityTimeout = visibilityTimeout;
-            if ((updateFields & MessageUpdateFields.Visibility) != 0)
+            CommonUtility.AssertNotNull("message", message);
+            CommonUtility.AssertNotNullOrEmpty("messageId", message.Id);
+            CommonUtility.AssertNotNullOrEmpty("popReceipt", message.PopReceipt);
+            CommonUtility.AssertInBounds<TimeSpan>("visibilityTimeout", visibilityTimeout, TimeSpan.Zero, CloudQueueMessage.MaxTimeToLive);
+
+            if ((updateFields & MessageUpdateFields.Visibility) == 0)
             {
-                CommonUtility.AssertNotNull("visibilityTimeout", visibilityTimeout);
-            }
-            else
-            {
-                effectiveVisibilityTimeout = TimeSpan.Zero;
+                throw new ArgumentException(SR.UpdateMessageVisibilityRequired, "updateFlags");
             }
 
             Uri messageUri = this.GetIndividualMessageAddress(message.Id);
@@ -908,7 +908,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             putCmd.ApplyRequestOptions(options);
             putCmd.Handler = this.ServiceClient.AuthenticationHandler;
             putCmd.BuildClient = HttpClientFactory.BuildHttpClient;
-            putCmd.BuildRequest = (cmd, cnt, ctx) => QueueHttpRequestMessageFactory.UpdateMessage(cmd.Uri, cmd.ServerTimeoutInSeconds, message.PopReceipt, effectiveVisibilityTimeout, cnt, ctx);
+            putCmd.BuildRequest = (cmd, cnt, ctx) => QueueHttpRequestMessageFactory.UpdateMessage(cmd.Uri, cmd.ServerTimeoutInSeconds, message.PopReceipt, visibilityTimeout, cnt, ctx);
 
             if ((updateFields & MessageUpdateFields.Content) != 0)
             {

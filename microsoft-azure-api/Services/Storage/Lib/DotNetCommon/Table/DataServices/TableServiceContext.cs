@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
     public class TableServiceContext : DataServiceContext, IDisposable
     {
         private IAuthenticationHandler authenticationHandler;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceContext"/> class.
         /// </summary>
@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         private void TableServiceContext_SendingRequest(object sender, SendingRequestEventArgs e)
         {
             HttpWebRequest request = e.Request as HttpWebRequest;
-
+            
             // Check timeout
             int timeoutDex = request.RequestUri.Query.LastIndexOf("&timeout=", System.StringComparison.Ordinal);
             if (timeoutDex > 0)

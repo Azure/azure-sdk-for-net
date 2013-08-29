@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Initializes a new instance of the <see cref="BlobProperties"/> class based on an existing instance.
         /// </summary>
         /// <param name="other">The set of properties to clone.</param>
-        /// <remarks>Lease related properties will not be cloned, because a lease associated with the base blob is not copied to the snapshot.</remarks>
+        /// <remarks>Lease-related properties will not be cloned, because a lease associated with the base blob is not copied to the snapshot.</remarks>
         public BlobProperties(BlobProperties other)
         {
             CommonUtility.AssertNotNull("other", other);

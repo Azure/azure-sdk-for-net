@@ -85,29 +85,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         }
 
         [TestMethod]
-        /// [Description("Test add/update/get/delete message")]
-        [TestCategory(ComponentCategory.Queue)]
-        [TestCategory(TestTypeCategory.UnitTest)]
-        [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public async Task CloudQueueMessageBasicOperation()
-        {
-            CloudQueueClient client = GenerateCloudQueueClient();
-            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
-
-            await queue.CreateAsync();
-
-            await queue.AddMessageAsync(new CloudQueueMessage("abcde"));
-
-            CloudQueueMessage receivedMessage1 = await queue.GetMessageAsync();
-
-            receivedMessage1.SetMessageContent(Guid.NewGuid().ToString("N"));
-            await queue.UpdateMessageAsync(receivedMessage1, null, MessageUpdateFields.Content);
-
-            await queue.DeleteMessageAsync(receivedMessage1);
-        }
-
-        [TestMethod]
         /// [Description("Test add/delete message")]
         [TestCategory(ComponentCategory.Queue)]
         [TestCategory(TestTypeCategory.UnitTest)]
