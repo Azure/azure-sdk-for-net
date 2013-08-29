@@ -141,18 +141,13 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="prefix">The table name prefix.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is zero the maximum possible number of results will be returned, up to 5000.</param>
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="currentToken">A <see cref="TableContinuationToken"/> returned by a previous listing operation.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
         /// <returns>An enumerable collection of tables that are retrieved lazily.</returns>
         [DoesServiceRequest]
-        public TableResultSegment ListTablesSegmented(
-                                                            string prefix,
-                                                            int? maxResults,
-                                                            TableContinuationToken currentToken,
-                                                            TableRequestOptions requestOptions = null,
-                                                            OperationContext operationContext = null)
+        public TableResultSegment ListTablesSegmented(string prefix, int? maxResults, TableContinuationToken currentToken, TableRequestOptions requestOptions = null, OperationContext operationContext = null)
         {
             requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this);
             operationContext = operationContext ?? new OperationContext();
@@ -203,7 +198,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="prefix">The table name prefix.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is zero the maximum possible number of results will be returned, up to 5000.</param>
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="currentToken">A <see cref="TableContinuationToken"/> returned by a previous listing operation.</param>
         /// <param name="requestOptions">The server timeout, maximum execution time, and retry policies for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
@@ -211,14 +206,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
         [DoesServiceRequest]
-        public ICancellableAsyncResult BeginListTablesSegmented(
-                                                                string prefix,
-                                                                int? maxResults,
-                                                                TableContinuationToken currentToken,
-                                                                TableRequestOptions requestOptions,
-                                                                OperationContext operationContext,
-                                                                AsyncCallback callback,
-                                                                object state)
+        public ICancellableAsyncResult BeginListTablesSegmented(string prefix, int? maxResults, TableContinuationToken currentToken, TableRequestOptions requestOptions, OperationContext operationContext, AsyncCallback callback, object state)
         {
             requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this);
             operationContext = operationContext ?? new OperationContext();
@@ -310,7 +298,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="prefix">The table name prefix.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is zero the maximum possible number of results will be returned, up to 5000.</param>
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="currentToken">A <see cref="TableContinuationToken"/> returned by a previous listing operation.</param>
         /// <param name="requestOptions">The server timeout, maximum execution time, and retry policies for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -327,7 +315,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="prefix">The table name prefix.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is zero the maximum possible number of results will be returned, up to 5000.</param>
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="currentToken">A <see cref="TableContinuationToken"/> returned by a previous listing operation.</param>
         /// <param name="requestOptions">The server timeout, maximum execution time, and retry policies for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -367,7 +355,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region Analytics
 #if SYNC
         /// <summary>
-        /// Gets the properties of the table service.
+        /// Gets the service properties for the Table service.
         /// </summary>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
@@ -382,7 +370,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 #endif
 
         /// <summary>
-        /// Begins an asynchronous operation to get the properties of the table service.
+        /// Begins an asynchronous operation to get the service properties of the Table service.
         /// </summary>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user defined object to be passed to the callback delegate.</param>
@@ -394,7 +382,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Begins an asynchronous operation to get the properties of the table service.
+        /// Begins an asynchronous operation to get the service properties of the Table service.
         /// </summary>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
@@ -410,7 +398,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Ends an asynchronous operation to get the properties of the table service.
+        /// Ends an asynchronous operation to get the service properties of the Table service.
         /// </summary>
         /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginGetServiceProperties(AsyncCallback, object)"/>.</param>
         /// <returns>The table service properties.</returns>
@@ -421,7 +409,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
 #if TASK
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to get the properties of the table service.
+        /// Returns a task that performs an asynchronous operation to get the service properties of the Table service.
         /// </summary>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -431,7 +419,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to get the properties of the table service.
+        /// Returns a task that performs an asynchronous operation to get the service properties of the Table service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -442,7 +430,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to get the properties of the table service.
+        /// Returns a task that performs an asynchronous operation to get the service properties of the Table service.
         /// </summary>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -454,7 +442,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to get the properties of the table service.
+        /// Returns a task that performs an asynchronous operation to get the service properties of the Table service.
         /// </summary>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -469,7 +457,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
 #if SYNC
         /// <summary>
-        /// Sets the properties of the table service.
+        /// Sets the service properties of the Table service.
         /// </summary>
         /// <param name="properties">The table service properties.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
@@ -484,7 +472,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 #endif
 
         /// <summary>
-        /// Begins an asynchronous operation to set the properties of the table service.
+        /// Begins an asynchronous operation to set the service properties of the Table service.
         /// </summary>
         /// <param name="properties">The table service properties.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -497,7 +485,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Begins an asynchronous operation to set the properties of the table service.
+        /// Begins an asynchronous operation to set the service properties of the Table service.
         /// </summary>
         /// <param name="properties">The table service properties.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
@@ -514,7 +502,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Ends an asynchronous operation to set the properties of the table service.
+        /// Ends an asynchronous operation to set the service properties of the Table service.
         /// </summary>
         /// <param name="asyncResult">The result returned from a prior call to <see cref="BeginSetServiceProperties(ServiceProperties, AsyncCallback, object)"/></param>
         public void EndSetServiceProperties(IAsyncResult asyncResult)
@@ -524,7 +512,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
 #if TASK
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to set the properties of the table service.
+        /// Returns a task that performs an asynchronous operation to set the service properties of the Table service.
         /// </summary>
         /// <param name="properties">The table service properties.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -535,7 +523,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to set the properties of the table service.
+        /// Returns a task that performs an asynchronous operation to set the service properties of the Table service.
         /// </summary>
         /// <param name="properties">The table service properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
@@ -547,7 +535,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to set the properties of the table service.
+        /// Returns a task that performs an asynchronous operation to set the service properties of the Table service.
         /// </summary>
         /// <param name="properties">The table service properties.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
@@ -560,7 +548,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to set the properties of the table service.
+        /// Returns a task that performs an asynchronous operation to set the service properties of the Table service.
         /// </summary>
         /// <param name="properties">The table service properties.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>

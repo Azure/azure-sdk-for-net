@@ -39,35 +39,51 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// </summary>
         /// <param name="query">Http query string.</param>
         /// <returns></returns>
-        public static Dictionary<string, string> ParseQueryString(string query)
+        public static IDictionary<string, string> ParseQueryString(string query)
         {
             Dictionary<string, string> retVal = new Dictionary<string, string>();
-            if (query == null || query.Length == 0)
+            if (string.IsNullOrEmpty(query))
             {
                 return retVal;
             }
 
-            // remove ? if present
             if (query.StartsWith("?", StringComparison.Ordinal))
             {
+                if (query.Length == 1)
+                {
+                    return retVal;
+                }
+
                 query = query.Substring(1);
             }
 
-            string[] valuePairs = query.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string vp in valuePairs)
+            string[] valuePairs = query.Split('&');
+            foreach (string pair in valuePairs)
             {
-                int equalDex = vp.IndexOf("=", StringComparison.Ordinal);
+                string key;
+                string value;
+
+                int equalDex = pair.IndexOf("=", StringComparison.Ordinal);
                 if (equalDex < 0)
                 {
-                    retVal.Add(Uri.UnescapeDataString(vp), null);
-                    continue;
+                    key = string.Empty;
+                    value = Uri.UnescapeDataString(pair);
+                }
+                else
+                {
+                    key = Uri.UnescapeDataString(pair.Substring(0, equalDex));
+                    value = Uri.UnescapeDataString(pair.Substring(equalDex + 1));
                 }
 
-                string key = vp.Substring(0, equalDex);
-                string value = vp.Substring(equalDex + 1);
-
-                retVal.Add(Uri.UnescapeDataString(key), Uri.UnescapeDataString(value));
+                string existingValue;
+                if (retVal.TryGetValue(key, out existingValue))
+                {
+                    retVal[key] = string.Concat(existingValue, ",", value);
+                }
+                else
+                {
+                    retVal[key] = value;
+                }
             }
 
             return retVal;

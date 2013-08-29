@@ -129,6 +129,52 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         [TestMethod]
+        // [Description("TableOperation Insert")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task TableOperationInsertSingleQuoteAsync()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            DynamicTableEntity ent = new DynamicTableEntity() { PartitionKey = "partition'key", RowKey = "row'key" };
+            ent.Properties.Add("stringprop", new EntityProperty("string'value"));
+            await currentTable.ExecuteAsync(TableOperation.InsertOrReplace(ent));
+
+            TableQuery<DynamicTableEntity> query = new TableQuery<DynamicTableEntity>().Where(TableQuery.CombineFilters(
+                (TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ent.PartitionKey)),
+                TableOperators.And,
+                (TableQuery.GenerateFilterCondition("stringprop", QueryComparisons.Equal, ent.Properties["stringprop"].StringValue))));
+
+            TableQuerySegment<DynamicTableEntity> seg = await currentTable.ExecuteQuerySegmentedAsync(query, null);
+
+            foreach (DynamicTableEntity retrievedEntity in seg)
+            {
+                Assert.IsNotNull(retrievedEntity);
+                Assert.AreEqual(ent.PartitionKey, retrievedEntity.PartitionKey);
+                Assert.AreEqual(ent.RowKey, retrievedEntity.RowKey);
+                Assert.AreEqual(ent.Properties["stringprop"].StringValue, retrievedEntity.Properties["stringprop"].StringValue);
+            }
+
+            ComplexEntity complexEntity = new ComplexEntity() { PartitionKey = "partition'key", RowKey = "row'key" };
+            await currentTable.ExecuteAsync(TableOperation.InsertOrReplace(complexEntity));
+
+            TableQuery<ComplexEntity> query2 = new TableQuery<ComplexEntity>().Where(TableQuery.CombineFilters(
+              (TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ent.PartitionKey)),
+              TableOperators.And,
+              (TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, ent.RowKey))));
+
+            TableQuerySegment<ComplexEntity> seg2 = await currentTable.ExecuteQuerySegmentedAsync(query2, null);
+            foreach (ComplexEntity retrievedComplexEntity in seg2)
+            {
+                Assert.IsNotNull(retrievedComplexEntity);
+                Assert.AreEqual(ent.PartitionKey, retrievedComplexEntity.PartitionKey);
+                Assert.AreEqual(ent.RowKey, retrievedComplexEntity.RowKey);
+            }
+        }
+
+        [TestMethod]
         //  [Description("TableOperation Insert Conflict")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]

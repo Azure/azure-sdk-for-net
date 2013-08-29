@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Represents a Windows Azure Table.
+    /// Represents a Windows Azure table.
     /// </summary>
     public sealed partial class CloudTable
     {
@@ -529,6 +529,17 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #endregion
 
         #region Generic
+        /// <summary>
+        /// A factory method that creates a query that can be modified using LINQ. The query may be subsequently executed using one of the execution methods available for <see cref="CloudTable"/>, 
+        /// such as <see cref="ExecuteQuery"/>, <see cref="ExecuteQuerySegmented"/>, or <see cref="ExecuteQuerySegmentedAsync(TableQuery,TableContinuationToken)"/>.
+        /// </summary>
+        /// <typeparam name="TElement">The entity type of the query.</typeparam>
+        /// <returns>A <see cref="TableQuery"/> object, specialized for type <c>TElement</c>, that may subsequently be executed.</returns>
+        /// <remarks>
+        /// The <see cref="Microsoft.WindowsAzure.Storage.Table.Queryable"/> namespace includes extension methods for the <see cref="TableQuery"/> object, 
+        /// including <see cref="M:WithOptions"/>, <see cref="M:WithContext"/>, and <see cref="M:AsTableQuery"/>. To use these methods, include a <c>using</c>
+        /// statement that references the <see cref="Microsoft.WindowsAzure.Storage.Table.Queryable"/> namespace.
+        /// </remarks>
         public TableQuery<TElement> CreateQuery<TElement>() where TElement : ITableEntity, new()
         {
             return new TableQuery<TElement>(this);
@@ -1345,7 +1356,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 #endif
 
         /// <summary>
-        /// Begins an asynchronous operation to delete the tables if it exists.
+        /// Begins an asynchronous operation to delete the table if it exists.
         /// </summary>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1357,7 +1368,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Begins an asynchronous operation to delete the tables if it exists.
+        /// Begins an asynchronous operation to delete the table if it exists.
         /// </summary>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
@@ -1464,7 +1475,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Ends an asynchronous operation to delete the tables if it exists.
+        /// Ends an asynchronous operation to delete the table if it exists.
         /// </summary>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
         /// <returns><c>true</c> if the table was deleted; otherwise, <c>false</c>.</returns>
@@ -1478,7 +1489,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
 #if TASK
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to delete the tables if it exists.
+        /// Returns a task that performs an asynchronous operation to delete the table if it exists.
         /// </summary>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1488,7 +1499,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to delete the tables if it exists.
+        /// Returns a task that performs an asynchronous operation to delete the table if it exists.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -1499,7 +1510,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to delete the tables if it exists.
+        /// Returns a task that performs an asynchronous operation to delete the table if it exists.
         /// </summary>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -1511,7 +1522,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to delete the tables if it exists.
+        /// Returns a task that performs an asynchronous operation to delete the table if it exists.
         /// </summary>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>

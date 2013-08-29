@@ -24,6 +24,9 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
     using System.Linq.Expressions;
     using System.Reflection;
 
+    /// <summary>
+    /// Provides a set of extension methods for objects of type <see cref="TableQuery"/>.
+    /// </summary>
     public static class TableQueryableExtensions
     {
         internal static MethodInfo WithOptionsMethodInfo { get; set; }
@@ -43,6 +46,14 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
             TableQueryableExtensions.ResolveMethodInfo = methods.Where(m => m.Name == "Resolve").FirstOrDefault();
         }
 
+        /// <summary>
+        /// Specifies a set of <see cref="TableRequestOptions"/> on the query.
+        /// </summary>
+        /// <typeparam name="TElement">The entity type of the query.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <param name="options">The options to specify on the request.</param>
+        /// <returns>A <see cref="TableQuery"/> object with the specified request options set.</returns>
+        /// <exception cref="System.NotSupportedException"></exception>
         public static TableQuery<TElement> WithOptions<TElement>(this IQueryable<TElement> query, TableRequestOptions options)
         {
             CommonUtility.AssertNotNull("options", options);
@@ -58,6 +69,14 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
                                                 new Expression[] { query.Expression, Expression.Constant(options, typeof(TableRequestOptions)) }));
         }
 
+        /// <summary>
+        /// Specifies an <see cref="OperationContext"/> for the query.
+        /// </summary>
+        /// <typeparam name="TElement">The entity type of the query.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <param name="operationContext">The operation context.</param>
+        /// <returns>A <see cref="TableQuery"/> object with the specified operation context.</returns>
+        /// <exception cref="System.NotSupportedException"></exception>
         public static TableQuery<TElement> WithContext<TElement>(this IQueryable<TElement> query, OperationContext operationContext)
         {
             CommonUtility.AssertNotNull("operationContext", operationContext);
@@ -73,6 +92,15 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
                                                 new Expression[] { query.Expression, Expression.Constant(operationContext, typeof(OperationContext)) }));
         }
 
+        /// <summary>
+        /// Specifies an entity resolver for the query.
+        /// </summary>
+        /// <typeparam name="TElement">The entity type of the query.</typeparam>
+        /// <typeparam name="TResolved">The type of the resolver.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <param name="resolver">The resolver.</param>
+        /// <returns>A <see cref="TableQuery"/> with the specified resolver.</returns>
+        /// <exception cref="System.NotSupportedException"></exception>
         public static TableQuery<TResolved> Resolve<TElement, TResolved>(this IQueryable<TElement> query, EntityResolver<TResolved> resolver)
         {
             CommonUtility.AssertNotNull("resolver", resolver);
@@ -88,6 +116,13 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
                                                 new Expression[] { query.Expression, Expression.Constant(resolver, typeof(EntityResolver<TResolved>)) }));
         }
 
+        /// <summary>
+        /// Specifies that a query be returned as a <see cref="TableQuery"/> object.
+        /// </summary>
+        /// <typeparam name="TElement">The entity type of the query.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <returns>An object of type <see cref="TableQuery"/>.</returns>
+        /// <exception cref="System.NotSupportedException"></exception>
         public static TableQuery<TElement> AsTableQuery<TElement>(this IQueryable<TElement> query)
         {
             TableQuery<TElement> retQuery = query as TableQuery<TElement>;

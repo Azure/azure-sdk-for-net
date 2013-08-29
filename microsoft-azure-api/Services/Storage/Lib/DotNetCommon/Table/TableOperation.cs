@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <typeparam name="TElement">The class of type for the entity to retrieve.</typeparam>
         /// <param name="partitionKey">A string containing the partition key of the entity to retrieve.</param>
         /// <param name="rowkey">A string containing the row key of the entity to retrieve.</param>        
-        /// <returns>The table operation.</returns>
+        /// <returns>The <see cref="TableOperation"/> object.</returns>
         [SuppressMessage("Microsoft.Design",
             "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Reviewed")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "rowkey",
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="partitionKey">A string containing the partition key of the entity to retrieve.</param>
         /// <param name="rowkey">A string containing the row key of the entity to retrieve.</param>
         /// <param name="resolver">The <see cref="EntityResolver{TResult}"/> implementation to project the entity to retrieve as a particular type in the result.</param>
-        /// <returns>The table operation.</returns>
+        /// <returns>The <see cref="TableOperation"/> object.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "rowkey", Justification = "Reviewed : rowkey is acceptable.")]
         public static TableOperation Retrieve<TResult>(string partitionKey, string rowkey, EntityResolver<TResult> resolver)
         {

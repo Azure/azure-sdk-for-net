@@ -36,9 +36,9 @@ namespace Microsoft.WindowsAzure.Storage.Core
         }
 #endif
 
+#if !WINDOWS_PHONE
         private static void Close()
         {
-#if !WINDOWS_PHONE
             Logger.isClosed = true;
 
             TraceSource source = Logger.traceSource;
@@ -47,26 +47,27 @@ namespace Microsoft.WindowsAzure.Storage.Core
                 Logger.traceSource = null;
                 source.Close();
             }
-#endif
         }
 
         private static void ProcessExitEvent(object sender, EventArgs e)
         {
-#if !WINDOWS_PHONE
             Logger.Close();
-#endif
         }
 
         private static void AppDomainUnloadEvent(object sender, EventArgs e)
         {
-#if !WINDOWS_PHONE
             Logger.Close();
-#endif
         }
+#endif
 
         internal static void LogError(OperationContext operationContext, string format, params object[] args)
         {
-#if !WINDOWS_PHONE
+#if WINDOWS_PHONE
+            if (Logger.ShouldLog(LogLevel.Error, operationContext))
+            {
+                Debug.WriteLine(Logger.FormatLine(operationContext, format, args));
+            }
+#else
             if (!Logger.isClosed &&
                 Logger.traceSource.Switch.ShouldTrace(TraceEventType.Error) &&
                 Logger.ShouldLog(LogLevel.Error, operationContext))
@@ -78,7 +79,12 @@ namespace Microsoft.WindowsAzure.Storage.Core
 
         internal static void LogWarning(OperationContext operationContext, string format, params object[] args)
         {
-#if !WINDOWS_PHONE
+#if WINDOWS_PHONE
+            if (Logger.ShouldLog(LogLevel.Warning, operationContext))
+            {
+                Debug.WriteLine(Logger.FormatLine(operationContext, format, args));
+            }
+#else
             if (!Logger.isClosed &&
                 Logger.traceSource.Switch.ShouldTrace(TraceEventType.Warning) &&
                 Logger.ShouldLog(LogLevel.Warning, operationContext))
@@ -90,7 +96,12 @@ namespace Microsoft.WindowsAzure.Storage.Core
 
         internal static void LogInformational(OperationContext operationContext, string format, params object[] args)
         {
-#if !WINDOWS_PHONE
+#if WINDOWS_PHONE
+            if (Logger.ShouldLog(LogLevel.Informational, operationContext))
+            {
+                Debug.WriteLine(Logger.FormatLine(operationContext, format, args));
+            }
+#else
             if (!Logger.isClosed &&
                 Logger.traceSource.Switch.ShouldTrace(TraceEventType.Information) &&
                 Logger.ShouldLog(LogLevel.Informational, operationContext))
@@ -102,7 +113,12 @@ namespace Microsoft.WindowsAzure.Storage.Core
 
         internal static void LogVerbose(OperationContext operationContext, string format, params object[] args)
         {
-#if !WINDOWS_PHONE
+#if WINDOWS_PHONE
+            if (Logger.ShouldLog(LogLevel.Verbose, operationContext))
+            {
+                Debug.WriteLine(Logger.FormatLine(operationContext, format, args));
+            }
+#else
             if (!Logger.isClosed &&
                 Logger.traceSource.Switch.ShouldTrace(TraceEventType.Verbose) &&
                 Logger.ShouldLog(LogLevel.Verbose, operationContext))

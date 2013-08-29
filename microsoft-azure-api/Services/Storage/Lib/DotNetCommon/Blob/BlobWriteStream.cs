@@ -273,13 +273,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public override void EndFlush(IAsyncResult asyncResult)
         {
             StorageAsyncResult<NullType> storageAsyncResult = (StorageAsyncResult<NullType>)asyncResult;
-
-            RegisteredWaitHandle waitHandle = (RegisteredWaitHandle)storageAsyncResult.OperationState;
-            if (waitHandle != null)
-            {
-                waitHandle.Unregister(null /* waitObject */);
-            }
-
             this.flushPending = false;
             storageAsyncResult.End();
         }
@@ -306,6 +299,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             StorageAsyncResult<NullType> storageAsyncResult = (StorageAsyncResult<NullType>)state;
             storageAsyncResult.UpdateCompletedSynchronously(false);
             storageAsyncResult.OnComplete(this.lastException);
+
+            RegisteredWaitHandle waitHandle = (RegisteredWaitHandle)storageAsyncResult.OperationState;
+            if (waitHandle != null)
+            {
+                waitHandle.Unregister(null /* waitObject */);
+            }
         }
 
         /// <summary>

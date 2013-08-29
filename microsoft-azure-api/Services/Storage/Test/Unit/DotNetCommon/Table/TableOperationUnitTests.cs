@@ -75,6 +75,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             CloudTableClient tableClient = GenerateCloudTableClient();
             currentTable = tableClient.GetTableReference(GenerateRandomTableName());
             currentTable.CreateIfNotExists();
+            TableEntity.DisableCompiledSerializers = false;
 
             if (TestBase.TableBufferManager != null)
             {
@@ -131,6 +132,62 @@ namespace Microsoft.WindowsAzure.Storage.Table
             Assert.AreEqual(ent.Properties["foo"], retrievedEntity.Properties["foo"]);
             Assert.AreEqual(ent.Properties["foo2"].StringValue, retrievedEntity.Properties["foo2"].StringValue);
             Assert.AreEqual(ent.Properties["foo2"], retrievedEntity.Properties["foo2"]);
+        }
+
+        [TestMethod]
+        [Description("TableOperation Insert")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableOperationInsertSingleQuoteSync()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            DynamicTableEntity ent = new DynamicTableEntity() { PartitionKey = "partition'key", RowKey = "row'key" };
+            ent.Properties.Add("stringprop", new EntityProperty("string'value"));
+            currentTable.Execute(TableOperation.InsertOrReplace(ent));
+
+            TableQuery<DynamicTableEntity> query = new TableQuery<DynamicTableEntity>().Where(TableQuery.CombineFilters(
+                (TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ent.PartitionKey)),
+                TableOperators.And,
+                (TableQuery.GenerateFilterCondition("stringprop", QueryComparisons.Equal, ent.Properties["stringprop"].StringValue))));
+
+            foreach (DynamicTableEntity retrievedEntity in currentTable.ExecuteQuery(query))
+            {
+                Assert.IsNotNull(retrievedEntity);
+                Assert.AreEqual(ent.PartitionKey, retrievedEntity.PartitionKey);
+                Assert.AreEqual(ent.RowKey, retrievedEntity.RowKey);
+                Assert.AreEqual(ent.Properties["stringprop"].StringValue, retrievedEntity.Properties["stringprop"].StringValue);
+            }
+
+            // Check the iqueryable way.
+            IEnumerable<DynamicTableEntity> result = (from entity in currentTable.CreateQuery<DynamicTableEntity>()
+                                                      where entity.PartitionKey == ent.PartitionKey && entity.Properties["stringprop"].StringValue == ent.Properties["stringprop"].StringValue
+                                                      select entity);
+
+            foreach (DynamicTableEntity retrievedEntity in result.ToList())
+            {
+                Assert.IsNotNull(retrievedEntity);
+                Assert.AreEqual(ent.PartitionKey, retrievedEntity.PartitionKey);
+                Assert.AreEqual(ent.RowKey, retrievedEntity.RowKey);
+                Assert.AreEqual(ent.Properties["stringprop"].StringValue, retrievedEntity.Properties["stringprop"].StringValue);
+            }
+
+            ComplexEntity tableEntity = new ComplexEntity() { PartitionKey = "partition'key", RowKey = "row'key" };
+            currentTable.Execute(TableOperation.InsertOrReplace(tableEntity));
+
+            TableQuery<ComplexEntity> query2 = new TableQuery<ComplexEntity>().Where(TableQuery.CombineFilters(
+                (TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ent.PartitionKey)),
+                TableOperators.And,
+                (TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, ent.RowKey))));
+
+            foreach (ComplexEntity retrievedComplexEntity in currentTable.ExecuteQuery(query2))
+            {
+                Assert.IsNotNull(retrievedComplexEntity);
+                Assert.AreEqual(ent.PartitionKey, retrievedComplexEntity.PartitionKey);
+                Assert.AreEqual(ent.RowKey, retrievedComplexEntity.RowKey);
+            }
         }
 
         [TestMethod]
@@ -1372,7 +1429,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             Assert.AreEqual(result.HttpStatusCode, (int)HttpStatusCode.OK);
             DynamicTableEntity retrievedEntity = result.Result as DynamicTableEntity;
-            
+
             // Validate entity
             Assert.AreEqual(sendEnt["String"], retrievedEntity["String"]);
 
@@ -1820,7 +1877,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             sendEnt.LongPrimitive = 5678;
             sendEnt.LongPrimitiveN = 5678;
             sendEnt.LongPrimitiveNull = null;
-            sendEnt.String = "ResetTestTotested";            
+            sendEnt.String = "ResetTestTotested";
             currentTable.Execute(TableOperation.Insert(sendEnt));
 
             TableEntity.DisableCompiledSerializers = true;
@@ -2161,9 +2218,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void TableOpsWithNonDerivedEntities()
         {
+            List<ShapeEntity> DTOObjects = new List<ShapeEntity>(new ShapeEntity[3] { new ShapeEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "square", 4, 4), new ShapeEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "rectangle", 5, 4), new ShapeEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "parallelogram", 6, 4) });
 
-            List<ShapeEntity> DTOObjects = new List<ShapeEntity>(new ShapeEntity[3] {new ShapeEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "square", 4, 4), new ShapeEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "rectangle", 5, 4), new ShapeEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "parallelogram", 6, 4)});
-            
             IEnumerable<POCOAdapter<ShapeEntity>> azureObjects = DTOObjects.Select(ent => new POCOAdapter<ShapeEntity>(ent, ent.PartitionKey, ent.RowKey));
 
             int i = 0;
@@ -2184,7 +2240,28 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 i++;
             }
         }
-        
+
+        [TestMethod]
+        [Description("Simple test to roundtrip a non derived TableEntity with and without CompiledSerializers")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void SimpleTableEntitySerilization()
+        {
+            TableEntity testEnt = new TableEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            currentTable.Execute(TableOperation.Insert(testEnt));
+            TableEntity retrievedEnt = currentTable.Execute(TableOperation.Retrieve<TableEntity>(testEnt.PartitionKey, testEnt.RowKey)).Result as TableEntity;
+            Assert.IsNotNull(retrievedEnt);
+
+            TableEntity.DisableCompiledSerializers = true;
+
+            TableEntity testEnt2 = new TableEntity(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+            currentTable.Execute(TableOperation.Insert(testEnt2));
+            TableEntity retrievedEnt2 = currentTable.Execute(TableOperation.Retrieve<TableEntity>(testEnt2.PartitionKey, testEnt2.RowKey)).Result as TableEntity;
+            Assert.IsNotNull(retrievedEnt2);
+        }
+
         #endregion
     }
 }

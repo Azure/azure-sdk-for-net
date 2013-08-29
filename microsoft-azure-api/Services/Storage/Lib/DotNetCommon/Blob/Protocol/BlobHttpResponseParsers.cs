@@ -56,12 +56,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
 #if WINDOWS_PHONE 
             properties.LastModified = HttpResponseParsers.GetLastModified(response);
+            properties.ContentLanguage = response.Headers[Constants.HeaderConstants.ContentLanguageHeader];
 #else
             properties.LastModified = response.LastModified.ToUniversalTime();
+            properties.ContentLanguage = response.Headers[HttpResponseHeader.ContentLanguage];
 #endif
 
             properties.ContentEncoding = response.Headers[HttpResponseHeader.ContentEncoding];
-            properties.ContentLanguage = response.Headers[HttpResponseHeader.ContentLanguage];
             properties.ContentMD5 = response.Headers[HttpResponseHeader.ContentMd5];
             properties.ContentType = response.Headers[HttpResponseHeader.ContentType];
             properties.CacheControl = response.Headers[HttpResponseHeader.CacheControl];
@@ -81,12 +82,19 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             // Get the content length. Prioritize range and x-ms over content length for the special cases.
             string rangeHeader = response.Headers[HttpResponseHeader.ContentRange];
             string contentLengthHeader = response.Headers[Constants.HeaderConstants.ContentLengthHeader];
+            string blobContentLengthHeader = response.Headers[Constants.HeaderConstants.BlobContentLengthHeader];
             if (!string.IsNullOrEmpty(rangeHeader))
             {
                 properties.Length = long.Parse(rangeHeader.Split('/')[1], CultureInfo.InvariantCulture);
             }
+            else if (!string.IsNullOrEmpty(blobContentLengthHeader))
+            {
+                properties.Length = long.Parse(blobContentLengthHeader, CultureInfo.InvariantCulture);
+            }
             else if (!string.IsNullOrEmpty(contentLengthHeader))
             {
+                // On Windows Phone, ContentLength property is not always same as Content-Length header,
+                // so we try to parse the header first.
                 properties.Length = long.Parse(contentLengthHeader, CultureInfo.InvariantCulture);
             }
             else

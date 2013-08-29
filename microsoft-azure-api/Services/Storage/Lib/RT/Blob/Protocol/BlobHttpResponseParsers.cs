@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
                 }
 
                 // Get the content length. Prioritize range and x-ms over content length for the special cases.
-                string contentLengthHeader = response.Headers.GetHeaderSingleValueOrDefault(Constants.HeaderConstants.ContentLengthHeader);
+                string contentLengthHeader = response.Headers.GetHeaderSingleValueOrDefault(Constants.HeaderConstants.BlobContentLengthHeader);
                 if ((response.Content.Headers.ContentRange != null) &&
                     response.Content.Headers.ContentRange.HasLength)
                 {

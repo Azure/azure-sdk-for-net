@@ -109,9 +109,9 @@ namespace Microsoft.WindowsAzure.Storage
         #region IXmlSerializable
 
         /// <summary>
-        /// Generates a serializable StorageExtendedErrorInformation from its XML representation.
+        /// Generates a serializable <see cref="StorageExtendedErrorInformation"/> object from its XML representation.
         /// </summary>
-        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the StorageExtendedErrorInformation is deserialized.</param>
+        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the <see cref="StorageExtendedErrorInformation"/> object is deserialized.</param>
 #if WINDOWS_RT
         internal
 #else
@@ -178,9 +178,9 @@ namespace Microsoft.WindowsAzure.Storage
         }
 
         /// <summary>
-        /// Converts a serializable StorageExtendedErrorInformation into its XML representation.
+        /// Converts a serializable <see cref="StorageExtendedErrorInformation"/> object into its XML representation.
         /// </summary>
-        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the StorageExtendedErrorInformation is serialized.</param>
+        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the <see cref="StorageExtendedErrorInformation"/> object is serialized.</param>
 #if WINDOWS_RT
         internal
 #else

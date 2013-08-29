@@ -38,13 +38,13 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Defines the property names of the table entity properties to return when the table query is executed. 
+        /// Specifies the names of the entity properties to return when the query is executed against the table. 
         /// </summary>
-        /// <remarks>The Project clause is optional on a table query, used to limit the table properties returned from the server. By default, a query will return all properties from the table entity.</remarks>
+        /// <remarks>The Project clause is optional on a query, used to limit the properties returned from the server. By default, a query will return all properties from the entity.</remarks>
         /// <typeparam name="T">The entity type of the query.</typeparam>       
         /// <param name="entity">The entity instance to project off of.</param>
-        /// <param name="columns">A list of string objects containing the property names of the table entity properties to return when the query is executed.</param>
-        /// <returns>A <see cref="TableQuery"/> instance set with the table entity properties to return.</returns>
+        /// <param name="columns">A list of string objects containing the names of the entity properties to return when the query is executed.</param>
+        /// <returns>A <see cref="TableQuery"/> instance set with the entity properties to return.</returns>
         public static T Project<T>(T entity, params string[] columns)
         {
             return entity;

@@ -84,17 +84,10 @@ namespace Microsoft.WindowsAzure.Storage.RetryPolicies
             if (currentRetryCount < this.maximumAttempts)
             {
                 Random r = new Random();
-                int increment = (int)((Math.Pow(2, currentRetryCount) - 1) * r.Next((int)(this.deltaBackoff.TotalMilliseconds * 0.8), (int)(this.deltaBackoff.TotalMilliseconds * 1.2)));
-
-                if (increment < 0 || increment > this.maxBackoff.TotalMilliseconds)
-                {
-                    retryInterval = this.maxBackoff;
-                }
-                else
-                {
-                    retryInterval = TimeSpan.FromMilliseconds(this.minBackoff.TotalMilliseconds + increment);
-                }
-
+                double increment = (Math.Pow(2, currentRetryCount) - 1) * r.Next((int)(this.deltaBackoff.TotalMilliseconds * 0.8), (int)(this.deltaBackoff.TotalMilliseconds * 1.2));
+                retryInterval = (increment < 0) ?
+                    this.maxBackoff :
+                    TimeSpan.FromMilliseconds(Math.Min(this.maxBackoff.TotalMilliseconds, this.minBackoff.TotalMilliseconds + increment));
                 return true;
             }
 

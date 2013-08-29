@@ -38,6 +38,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Entities
         {
         }
 
+        public CloudStorageAccount UnSupportedProperty { get; set; }
+
         private DateTimeOffset? dateTimeOffsetNull = null;
         public DateTimeOffset? DateTimeOffsetNull
         {

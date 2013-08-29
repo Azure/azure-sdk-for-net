@@ -214,15 +214,27 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
             string sasTokenFromId = queue.GetSharedAccessSignature(null, id);
             StorageCredentials sasCredsFromId = new StorageCredentials(sasTokenFromId);
-            CloudQueue sasQueueFromId = new CloudQueue(queue.Uri, sasCredsFromId);
-            CloudQueueMessage receivedMessage1 = await sasQueueFromId.PeekMessageAsync();
+
+            CloudStorageAccount sasAcc = new CloudStorageAccount(sasCredsFromId, new Uri(TestBase.TargetTenantConfig.BlobServiceEndpoint), new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), new Uri(TestBase.TargetTenantConfig.TableServiceEndpoint));
+            CloudQueueClient sasClient = sasAcc.CreateCloudQueueClient();
+            
+            CloudQueue sasQueueFromSasUri = new CloudQueue(sasClient.Credentials.TransformUri(queue.Uri));
+            CloudQueueMessage receivedMessage = await sasQueueFromSasUri.PeekMessageAsync();
+            Assert.AreEqual(messageContent, receivedMessage.AsString);
+
+            CloudQueue sasQueueFromSasUri1 = new CloudQueue(new Uri(queue.Uri.ToString() + sasTokenFromId));
+            CloudQueueMessage receivedMessage1 = await sasQueueFromSasUri1.PeekMessageAsync();
             Assert.AreEqual(messageContent, receivedMessage1.AsString);
+           
+            CloudQueue sasQueueFromId = new CloudQueue(queue.Uri, sasCredsFromId);
+            CloudQueueMessage receivedMessage2 = await sasQueueFromId.PeekMessageAsync();
+            Assert.AreEqual(messageContent, receivedMessage2.AsString);
 
             string sasTokenFromPolicy = queue.GetSharedAccessSignature(permissions.SharedAccessPolicies[id], null);
             StorageCredentials sasCredsFromPolicy = new StorageCredentials(sasTokenFromPolicy);
             CloudQueue sasQueueFromPolicy = new CloudQueue(queue.Uri, sasCredsFromPolicy);
-            CloudQueueMessage receivedMessage2 = await sasQueueFromPolicy.PeekMessageAsync();
-            Assert.AreEqual(messageContent, receivedMessage2.AsString);
+            CloudQueueMessage receivedMessage3 = await sasQueueFromPolicy.PeekMessageAsync();
+            Assert.AreEqual(messageContent, receivedMessage3.AsString);
             await queue.DeleteAsync();
         }
 

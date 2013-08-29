@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using System;
 
     /// <summary>
-    /// Represents a set of timeout and retry policy options that may be specified for a blob operation request.
+    /// Represents a set of timeout and retry policy options that may be specified for a request against the Blob service.
     /// </summary>
     public sealed class BlobRequestOptions : IRequestOptions
     {
@@ -66,22 +66,21 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 modifiedOptions.OperationExpiryTime = DateTime.Now + modifiedOptions.MaximumExecutionTime.Value;
             }
 
-            modifiedOptions.DisableContentMD5Validation = modifiedOptions.DisableContentMD5Validation ?? false;
-
-            modifiedOptions.StoreBlobContentMD5 =
 #if WINDOWS_PHONE
-            false;
+            modifiedOptions.DisableContentMD5Validation = true;
+            modifiedOptions.StoreBlobContentMD5 = false;
+            modifiedOptions.UseTransactionalMD5 = false;
 #else
-            modifiedOptions.StoreBlobContentMD5 ?? (blobType == BlobType.BlockBlob);
-#endif
-
+            modifiedOptions.DisableContentMD5Validation = modifiedOptions.DisableContentMD5Validation ?? false;
+            modifiedOptions.StoreBlobContentMD5 = modifiedOptions.StoreBlobContentMD5 ?? (blobType == BlobType.BlockBlob);
             modifiedOptions.UseTransactionalMD5 = modifiedOptions.UseTransactionalMD5 ?? false;
+#endif
 
             return modifiedOptions;
         }
 
         /// <summary>
-        ///  Gets or sets the absolute Expiry time across all potential retries etc. 
+        ///  Gets or sets the absolute expiry time across all potential retries for the request. 
         /// </summary>
         internal DateTime? OperationExpiryTime { get; set; }
 
@@ -98,9 +97,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public TimeSpan? ServerTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum execution time across all potential retries etc. 
+        /// Gets or sets the maximum execution time across all potential retries for the request. 
         /// </summary>
-        /// <value>The maximum execution time.</value>
+        /// <value>A <see cref="TimeSpan"/> representing the maximum execution time for retries for the request.</value>
         public TimeSpan? MaximumExecutionTime { get; set; }
 
         /// <summary>
@@ -176,7 +175,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             set
             {
 #if WINDOWS_PHONE
-                if (value.HasValue && value.Value)
+                if (value.HasValue && !value.Value)
                 {
                     throw new NotSupportedException(SR.WindowsPhoneDoesNotSupportMD5);
                 }

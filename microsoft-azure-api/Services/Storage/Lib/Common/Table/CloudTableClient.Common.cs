@@ -27,9 +27,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using System.Globalization;
 
     /// <summary>
-    /// Provides a client-side logical representation of the Windows Azure Table Service. This client is used to configure and execute requests against the Table Service.
+    /// Provides a client-side logical representation of the Windows Azure Table service. This client is used to configure and execute requests against the Table service.
     /// </summary>
-    /// <remarks>The service client encapsulates the base URI for the Table Service. If the service client will be used for authenticated access, it also encapsulates the credentials for accessing the storage account.</remarks>    
+    /// <remarks>The CloudTableClient object encapsulates the base URI for the Table service. If the service client will be used for authenticated access, 
+    /// it also encapsulates the credentials for accessing the storage account.</remarks>    
     public sealed partial class CloudTableClient
     {
         /// <summary>
@@ -45,21 +46,21 @@ namespace Microsoft.WindowsAzure.Storage.Table
         private AuthenticationScheme authenticationScheme;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CloudTableClient"/> class using the specified Blob service endpoint
+        /// Initializes a new instance of the <see cref="CloudTableClient"/> class using the specified Table service endpoint
         /// and anonymous credentials.
         /// </summary>
-        /// <param name="baseUri">The Blob service endpoint to use to create the client.</param>
+        /// <param name="baseUri">The Table service endpoint to use to create the client.</param>
         public CloudTableClient(Uri baseUri)
             : this(baseUri, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CloudTableClient"/> class using the specified Blob service endpoint
-        /// and account credentials.
+        /// Initializes a new instance of the <see cref="CloudTableClient"/> class using the specified Table service endpoint
+        /// and storage account credentials.
         /// </summary>
-        /// <param name="baseUri">The Blob service endpoint to use to create the client.</param>
-        /// <param name="credentials">The account credentials.</param>
+        /// <param name="baseUri">The Table service endpoint to use to create the client.</param>
+        /// <param name="credentials">The storage account credentials.</param>
         public CloudTableClient(Uri baseUri, StorageCredentials credentials)
             : this(null, baseUri, credentials)
         {
@@ -68,9 +69,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudTableClient"/> class.
         /// </summary>
-        /// <param name="usePathStyleUris">True to use path style Uris.</param>
-        /// <param name="baseUri">The Blob service endpoint to use to create the client.</param>
-        /// <param name="credentials">The account credentials.</param>
+        /// <param name="usePathStyleUris">True to use path-style URIs.</param>
+        /// <param name="baseUri">The Table service endpoint to use to create the client.</param>
+        /// <param name="credentials">The storage account credentials.</param>
         internal CloudTableClient(bool? usePathStyleUris, Uri baseUri, StorageCredentials credentials)
         {
             CommonUtility.AssertNotNull("baseUri", baseUri);
@@ -108,24 +109,25 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// The IBufferManager to use for associated objects
+        /// Gets or sets a buffer manager that implements the <see cref="IBufferManager"/> interface, 
+        /// specifying a buffer pool for use with operations against the Table service client.
         /// </summary>
         public IBufferManager BufferManager { get; set; }
 
         /// <summary>
-        /// Gets the account credentials used to create the Blob service client.
+        /// Gets the storage account credentials used to create the Table service client.
         /// </summary>
-        /// <value>The account credentials.</value>
+        /// <value>The storage account credentials.</value>
         public StorageCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets the base URI for the Blob service client.
+        /// Gets the base URI for the Table service client.
         /// </summary>
-        /// <value>The base URI used to construct the Blob service client.</value>
+        /// <value>The base URI used to construct the Table service client.</value>
         public Uri BaseUri { get; private set; }
 
         /// <summary>
-        /// Gets or sets the default retry policy for requests made via the Blob service client.
+        /// Gets or sets the default retry policy for requests made via the Table service client.
         /// </summary>
         /// <value>The retry policy.</value>
         public IRetryPolicy RetryPolicy { get; set; }
@@ -181,10 +183,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         internal bool UsePathStyleUris { get; private set; }
 
         /// <summary>
-        /// Gets a reference to the table at the specified address.
+        /// Gets a reference to the specified table.
         /// </summary>
         /// <param name="tableName">The name of the table.</param>
-        /// <returns>A reference to the table.</returns>
+        /// <returns>A <see cref="CloudTable"/> object.</returns>
         public CloudTable GetTableReference(string tableName)
         {
             CommonUtility.AssertNotNullOrEmpty("tableName", tableName);

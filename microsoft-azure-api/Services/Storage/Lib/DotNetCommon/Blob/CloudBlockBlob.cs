@@ -843,7 +843,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
 #if SYNC
         /// <summary>
-        /// Uploads a file to the Windows Azure Blob Service. 
+        /// Uploads a file to the Blob service. 
         /// </summary>
         /// <param name="path">The file providing the blob content.</param>
         /// <param name="mode">A constant that determines how to open the file.</param>

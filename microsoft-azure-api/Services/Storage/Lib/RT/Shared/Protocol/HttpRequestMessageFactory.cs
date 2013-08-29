@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
                 builder = new UriQueryBuilder();
             }
 
-            if (timeout != null && timeout != 0)
+            if (timeout.HasValue && timeout.Value > 0)
             {
                 builder.Add("timeout", timeout.ToString());
             }

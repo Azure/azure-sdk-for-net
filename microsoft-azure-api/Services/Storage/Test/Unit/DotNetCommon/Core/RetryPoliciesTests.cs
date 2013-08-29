@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
 
         [TestMethod]
         [Description("Test to ensure that the backoff time is set correctly in LinearRetry")]
-        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(ComponentCategory.Core)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
@@ -137,7 +137,6 @@ namespace Microsoft.WindowsAzure.Storage.Core
             container.Exists();
         }
 
-
         [TestMethod]
         [Description("Create a blob using blob stream by specifying an access condition")]
         [TestCategory(ComponentCategory.Blob)]
@@ -164,7 +163,6 @@ namespace Microsoft.WindowsAzure.Storage.Core
 
                 TestHelper.AssertNAttempts(context, 1);
 
-
                 context = new OperationContext();
 
                 TestHelper.ExpectedException(
@@ -178,6 +176,38 @@ namespace Microsoft.WindowsAzure.Storage.Core
             {
                 container.Delete();
             }
+        }
+
+        [TestMethod]
+        [Description("Test to ensure that the backoff time does not overflow")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void VerifyBackoffTimeOverflow()
+        {
+            ExponentialRetry exponentialRetry = new ExponentialRetry(TimeSpan.FromSeconds(4), 100000);
+            VerifyBackoffTimeOverflow(exponentialRetry, 100000);
+
+            LinearRetry linearRetry = new LinearRetry(TimeSpan.FromSeconds(4), 100000);
+            VerifyBackoffTimeOverflow(linearRetry, 100000);
+        }
+
+        private void VerifyBackoffTimeOverflow(IRetryPolicy retryPolicy, int maxAttempts)
+        {
+            StorageException e = new StorageException();
+            OperationContext context = new OperationContext();
+            TimeSpan retryInterval;
+            TimeSpan previousRetryInterval = TimeSpan.FromMilliseconds(1); // larger than zero to ensure we never get zero back
+
+            for (int i = 0; i < maxAttempts; i++)
+            {
+                Assert.IsTrue(retryPolicy.ShouldRetry(i, (int)HttpStatusCode.InternalServerError, e, out retryInterval, context), string.Format("Attempt: {0}", i));
+                Assert.IsTrue(retryInterval >= previousRetryInterval, string.Format("Retry Interval: {0}, Previous Retry Interval: {1}, Attempt: {2}", retryInterval, previousRetryInterval, i));
+                previousRetryInterval = retryInterval;
+            }
+
+            Assert.IsFalse(retryPolicy.ShouldRetry(maxAttempts, (int)HttpStatusCode.InternalServerError, e, out retryInterval, context));
         }
     }
 }

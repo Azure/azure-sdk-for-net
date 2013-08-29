@@ -188,7 +188,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
             }
             else
             {
-                valueOperand = string.Format(CultureInfo.InvariantCulture, "'{0}'", givenValue);
+                // OData readers expect single quote to be escaped in a param value.
+                valueOperand = string.Format(CultureInfo.InvariantCulture, "'{0}'", givenValue.Replace("'", "''"));
             }
 
             return string.Format(CultureInfo.InvariantCulture, "{0} {1} {2}", propertyName, operation, valueOperand);

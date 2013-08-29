@@ -21,7 +21,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// Represents a segment of <see cref="CloudTable"/> results and contains continuation token information.
+    /// Represents a segment of <see cref="CloudTable"/> results, with continuation information for pagination scenarios.
     /// </summary>
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Back compatibility.")]
     public sealed class TableResultSegment : IEnumerable<CloudTable>

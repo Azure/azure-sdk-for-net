@@ -248,8 +248,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         /// Parses the query.
         /// </summary>
         /// <param name="queryParameters">The query parameters.</param>
+        /// <param name="mandatorySignedResource">A boolean that represents whether SignedResource is part of Sas or not. True for blobs, False for Queues and Tables.</param>
         [SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower", Justification = "ToLower(CultureInfo) is not present in RT and ToLowerInvariant() also violates FxCop")]
-        internal static StorageCredentials ParseQuery(IDictionary<string, string> queryParameters)
+        internal static StorageCredentials ParseQuery(IDictionary<string, string> queryParameters, bool mandatorySignedResource)
         {
             string signature = null;
             string signedStart = null;
@@ -258,6 +259,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             string sigendPermissions = null;
             string signedIdentifier = null;
             string signedVersion = null;
+            string tableName = null;
 
             bool sasParameterFound = false;
 
@@ -300,6 +302,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                         sasParameterFound = true;
                         break;
 
+                    case Constants.QueryConstants.SasTableName:
+                        tableName = parameter.Value;
+                        sasParameterFound = true;
+                        break;
+
                     default:
                         break;
                 }
@@ -307,7 +314,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
 
             if (sasParameterFound)
             {
-                if (signature == null || signedResource == null)
+                if (signature == null || (mandatorySignedResource && signedResource == null))
                 {
                     string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.MissingMandatoryParametersForSAS);
                     throw new ArgumentException(errorMessage);
@@ -317,11 +324,16 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedStart, signedStart);
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedExpiry, signedExpiry);
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedPermissions, sigendPermissions);
-                builder.Add(Constants.QueryConstants.SignedResource, signedResource);
+                if (signedResource != null)
+                {
+                    builder.Add(Constants.QueryConstants.SignedResource, signedResource);
+                }
+
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedIdentifier, signedIdentifier);
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedVersion, signedVersion);
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.Signature, signature);
-
+                AddEscapedIfNotNull(builder, Constants.QueryConstants.SasTableName, tableName);
+               
                 return new StorageCredentials(builder.ToString());
             }
 

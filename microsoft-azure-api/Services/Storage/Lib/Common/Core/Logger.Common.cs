@@ -23,7 +23,6 @@ namespace Microsoft.WindowsAzure.Storage.Core
 
     internal static partial class Logger
     {
-#if !WINDOWS_PHONE
         private const string TraceFormat = "{0}: {1}";
 
         /// <summary>
@@ -52,6 +51,5 @@ namespace Microsoft.WindowsAzure.Storage.Core
         {
             return (operationContext == null) || (level <= operationContext.LogLevel);
         }
-#endif
     }
 }

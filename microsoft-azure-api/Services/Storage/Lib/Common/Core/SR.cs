@@ -92,6 +92,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public const string MultipleSnapshotTimesProvided = "Multiple different snapshot times provided as part of query '{0}' and as constructor parameter '{1}'.";
         public const string OffsetNotInRange = "The offset provided is out of range. The range must be between 0 and the length of the byte array.";
         public const string OperationCanceled = "Operation was canceled by user.";
+        public const string ODataReaderNotInCompletedState = "OData Reader state expected to be Completed state. Actual state: {0}.";
         public const string ParseError = "Error parsing value";
         public const string PartitionKey = "All entities in a given batch must have the same partition key.";
         public const string PathStyleUriMissingAccountNameInformation = "Missing account name information inside path style uri. Path style uris should be of the form http://<IPAddressPlusPort>/<accountName>";
@@ -148,6 +149,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         public const string UnexpectedContinuationType = "Unexpected Continuation Type";
         public const string UnexpectedResponseCode = "Unexpected response code, Expected:{0}, Received:{1}";
         public const string UnexpectedResponseCodeForOperation = "Unexpected response code for operation : ";
+        public const string UpdateMessageVisibilityRequired = "Calls to UpdateMessage must include the Visibility flag.";
 
 #if WINDOWS_PHONE
         public const string WindowsPhoneDoesNotSupportMD5 = "MD5 is not supported on Windows Phone";

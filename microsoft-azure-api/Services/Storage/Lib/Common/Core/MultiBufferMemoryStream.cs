@@ -471,11 +471,10 @@ namespace Microsoft.WindowsAzure.Storage.Core
 
                     ArraySegment<byte> currentBlock = this.GetCurrentBlock();
 
-                    // Copy the block
                     int blockReadLength = (int)Math.Min(leftToRead, currentBlock.Count);
-                    IAsyncResult asyncResult = copyState.Destination.BeginWrite(currentBlock.Array, currentBlock.Offset, blockReadLength, this.FastCopyToCallback, result);
-
                     this.AdvancePosition(ref leftToRead, blockReadLength);
+
+                    IAsyncResult asyncResult = copyState.Destination.BeginWrite(currentBlock.Array, currentBlock.Offset, blockReadLength, this.FastCopyToCallback, result);
 
                     if (!asyncResult.CompletedSynchronously)
                     {
@@ -520,6 +519,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
             try
             {
                 copyState.Destination.EndWrite(asyncResult);
+                this.FastCopyToInternal(result);
             }
             catch (Exception e)
             {
@@ -532,8 +532,6 @@ namespace Microsoft.WindowsAzure.Storage.Core
                     result.OnComplete(e);
                 }
             }
-
-            this.FastCopyToInternal(result);
         }
 
         /// <summary>

@@ -17,7 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage
 {
-#if !WINDOWS_PHONE
     /// <summary>
     /// Specifies what messages to output to the log.
     /// </summary>
@@ -48,5 +47,4 @@ namespace Microsoft.WindowsAzure.Storage
         /// </summary>
         Verbose,
     }
-#endif
 }

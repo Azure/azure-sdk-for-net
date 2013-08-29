@@ -31,11 +31,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
     public sealed partial class TableOperation
     {
         /// <summary>
-        /// Creates a new instance of the TableOperation class given the
+        /// Creates a new instance of the <see cref="TableOperation"/> class given the
         /// entity to operate on and the type of operation that is being
         /// performed.
         /// </summary>
-        /// <param name="entity">The entity that is being operated upon.</param>
+        /// <param name="entity">The entity on which the operation is being performed.</param>
         /// <param name="operationType">The type of operation.</param>
         internal TableOperation(ITableEntity entity, TableOperationType operationType)
         {
@@ -61,11 +61,20 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
         internal string RetrieveRowKey { get; set; }
 
-        private Func<string, string, DateTimeOffset, IDictionary<string, EntityProperty>, string, object> retrieveResolver = DynamicEntityResolver;
+        private Func<string, string, DateTimeOffset, IDictionary<string, EntityProperty>, string, object> retrieveResolver = null;
 
         internal Func<string, string, DateTimeOffset, IDictionary<string, EntityProperty>, string, object> RetrieveResolver
         {
-            get { return this.retrieveResolver; }
+            get
+            {
+                if (this.retrieveResolver == null)
+                {
+                    this.retrieveResolver = DynamicEntityResolver;
+                }
+
+                return this.retrieveResolver;
+            }
+
             set { this.retrieveResolver = value; }
         }
 
@@ -84,7 +93,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// from a table.
         /// </summary>
         /// <param name="entity">The entity to be deleted from the table.</param>
-        /// <returns>The table operation.</returns>
+        /// <returns>The <see cref="TableOperation"/> object.</returns>
         public static TableOperation Delete(ITableEntity entity)
         {
             // Validate the arguments.
@@ -105,7 +114,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// into a table.
         /// </summary>
         /// <param name="entity">The entity to be inserted into the table.</param>
-        /// <returns>The table operation.</returns>
+        /// <returns>The <see cref="TableOperation"/> object.</returns>
         public static TableOperation Insert(ITableEntity entity)
         {
             // Validate the arguments.
@@ -122,7 +131,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="entity">The entity whose contents are being inserted
         /// or merged.</param>
-        /// <returns>The table operation.</returns>
+        /// <returns>The <see cref="TableOperation"/> object.</returns>
         public static TableOperation InsertOrMerge(ITableEntity entity)
         {
             // Validate the arguments.
@@ -139,7 +148,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="entity">The entity whose contents are being inserted
         /// or replaced.</param>
-        /// <returns>The table operation.</returns>
+        /// <returns>The <see cref="TableOperation"/> object.</returns>
         public static TableOperation InsertOrReplace(ITableEntity entity)
         {
             // Validate the arguments.
@@ -154,7 +163,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// the given entity with the existing entity in a table.
         /// </summary>
         /// <param name="entity">The entity whose contents are being merged.</param>
-        /// <returns>The table operation.</returns>
+        /// <returns>The <see cref="TableOperation"/> object.</returns>
         public static TableOperation Merge(ITableEntity entity)
         {
             // Validate the arguments.
@@ -175,7 +184,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// the given entity in a table.
         /// </summary>
         /// <param name="entity">The entity whose contents are being replaced.</param>
-        /// <returns>The table operation.</returns>
+        /// <returns>The <see cref="TableOperation"/> object.</returns>
         public static TableOperation Replace(ITableEntity entity)
         {
             // Validate the arguments.
@@ -197,7 +206,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="partitionKey">The partition key of the entity to be replaced.</param>
         /// <param name="rowkey">The row key of the entity to be replaced.</param>
-        /// <returns>The table operation.</returns>
+        /// <returns>The <see cref="TableOperation"/> object.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "rowkey", Justification = "Reviewed : rowkey is allowed.")]
         public static TableOperation Retrieve(string partitionKey, string rowkey)
         {
@@ -237,11 +246,13 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 }
                 else if (this.OperationType == TableOperationType.Retrieve)
                 {
-                    identity = string.Format(CultureInfo.InvariantCulture, "{0}='{1}',{2}='{3}'", TableConstants.PartitionKey, this.RetrievePartitionKey, TableConstants.RowKey, this.RetrieveRowKey);
+                    // OData readers expect single quote to be escaped in a param value.
+                    identity = string.Format(CultureInfo.InvariantCulture, "{0}='{1}',{2}='{3}'", TableConstants.PartitionKey, this.RetrievePartitionKey.Replace("'", "''"), TableConstants.RowKey, this.RetrieveRowKey.Replace("'", "''"));
                 }
                 else
                 {
-                    identity = string.Format(CultureInfo.InvariantCulture, "{0}='{1}',{2}='{3}'", TableConstants.PartitionKey, this.Entity.PartitionKey, TableConstants.RowKey, this.Entity.RowKey);
+                    // OData readers expect single quote to be escaped in a param value.
+                    identity = string.Format(CultureInfo.InvariantCulture, "{0}='{1}',{2}='{3}'", TableConstants.PartitionKey, this.Entity.PartitionKey.Replace("'", "''"), TableConstants.RowKey, this.Entity.RowKey.Replace("'", "''"));
                 }
 
                 return NavigationHelper.AppendPathToUri(baseUri, string.Format(CultureInfo.InvariantCulture, "{0}({1})", tableName, identity));
