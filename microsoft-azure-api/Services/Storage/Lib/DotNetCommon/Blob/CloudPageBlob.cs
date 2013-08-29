@@ -2006,6 +2006,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 modifiedOptions.RetryPolicy,
                 operationContext);
         }
+#endif
 
         /// <summary>
         /// Begins an asynchronous operation to set the page blob's sequence number.
@@ -2111,6 +2112,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 #endif
 
+#if SYNC
         /// <summary>
         /// Checks existence of the blob.
         /// </summary>

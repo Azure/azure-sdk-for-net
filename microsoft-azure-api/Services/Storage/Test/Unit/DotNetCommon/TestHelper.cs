@@ -15,17 +15,9 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-#if !WINDOWS_PHONE
 using Fiddler;
-using Microsoft.WindowsAzure.Test.Network;
-#endif
-
-#if WINDOWS_PHONE
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-#endif
-
+using Microsoft.WindowsAzure.Test.Network;
 using System;
 using System.Diagnostics;
 using System.Net;

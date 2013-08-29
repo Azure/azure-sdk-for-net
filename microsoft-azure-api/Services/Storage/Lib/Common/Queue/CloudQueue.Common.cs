@@ -144,8 +144,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         private void ParseQueryAndVerify(Uri address, StorageCredentials credentials)
         {
             StorageCredentials parsedCredentials;
-            DateTimeOffset? parsedSnapshot;
-            this.Uri = NavigationHelper.ParseBlobQueryAndVerify(address, out parsedCredentials, out parsedSnapshot);
+            this.Uri = NavigationHelper.ParseQueueTableQueryAndVerify(address, out parsedCredentials);
 
             if ((parsedCredentials != null) && (credentials != null) && !parsedCredentials.Equals(credentials))
             {
@@ -225,7 +224,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="policy">The access policy for the shared access signature.</param>
         /// <param name="accessPolicyIdentifier">A queue-level access policy.</param>
-        /// <returns>A shared access signature.</returns>
+        /// <returns>A shared access signature, as a URI query string.</returns>
+        /// <remarks>The query string returned includes the leading question mark.</remarks>
         public string GetSharedAccessSignature(SharedAccessQueuePolicy policy, string accessPolicyIdentifier)
         {
             if (!this.ServiceClient.Credentials.IsSharedKey)

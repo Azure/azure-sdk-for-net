@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         //
         // Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
-        public static void MyClassInitialize(TestContext testContext)
+        public static async Task MyClassInitialize(TestContext testContext)
         {
             CloudTableClient tableClient = GenerateCloudTableClient();
 
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             for (int m = 0; m < 20; m++)
             {
                 CloudTable tableRef = tableClient.GetTableReference(GenerateRandomTableName());
-                tableRef.CreateIfNotExistsAsync().Wait();
+                await tableRef.CreateIfNotExistsAsync();
                 createdTables.Add(tableRef);
             }
 
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             for (int m = 0; m < 20; m++)
             {
                 CloudTable tableRef = tableClient.GetTableReference(prefixTablesPrefix + m.ToString());
-                tableRef.CreateIfNotExistsAsync().Wait();
+                await tableRef.CreateIfNotExistsAsync();
                 createdTables.Add(tableRef);
             }
         }
@@ -85,13 +85,13 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
         // Use ClassCleanup to run code after all tests in a class have run
         [ClassCleanup()]
-        public static void MyClassCleanup()
+        public static async Task MyClassCleanup()
         {
             foreach (CloudTable t in createdTables)
             {
                 try
                 {
-                    t.DeleteIfExistsAsync().Wait();
+                    await t.DeleteIfExistsAsync();
                 }
                 catch (Exception)
                 {

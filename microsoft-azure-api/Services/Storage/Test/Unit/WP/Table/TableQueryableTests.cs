@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -69,11 +70,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
         //
         // Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
-        public static void MyClassInitialize(TestContext testContext)
+        public static async Task MyClassInitialize(TestContext testContext)
         {
             CloudTableClient tableClient = GenerateCloudTableClient();
             currentTable = tableClient.GetTableReference(GenerateRandomTableName());
-            currentTable.CreateIfNotExistsAsync().Wait();
+            await currentTable.CreateIfNotExistsAsync();
 
             // Bulk Query Entities
             for (int i = 0; i < 15; i++)
@@ -87,12 +88,12 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     batch.Insert(ent);
                 }
 
-                currentTable.ExecuteBatchAsync(batch).Wait();
+                await currentTable.ExecuteBatchAsync(batch);
             }
 
 
             complexEntityTable = tableClient.GetTableReference(GenerateRandomTableName());
-            complexEntityTable.CreateAsync().Wait();
+            await complexEntityTable.CreateAsync();
 
             // Setup
             TableBatchOperation complexBatch = new TableBatchOperation();
@@ -128,15 +129,15 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 Thread.Sleep(100);
             }
 
-            complexEntityTable.ExecuteBatchAsync(complexBatch).Wait();
+            await complexEntityTable.ExecuteBatchAsync(complexBatch);
         }
         //
         // Use ClassCleanup to run code after all tests in a class have run
         [ClassCleanup()]
-        public static void MyClassCleanup()
+        public static async Task MyClassCleanup()
         {
-            currentTable.DeleteIfExistsAsync().Wait();
-            complexEntityTable.DeleteIfExistsAsync().Wait();
+            await currentTable.DeleteIfExistsAsync();
+            await complexEntityTable.DeleteIfExistsAsync();
         }
         //
         // Use TestInitialize to run code before running each test 
@@ -716,38 +717,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             Assert.AreEqual(50, complexFilter.AsTableQuery().Execute().Count());
         }
-
-        [TestMethod]
-        [Description("IQueryable Nested Select")]
-        [TestCategory(ComponentCategory.Table)]
-        [TestCategory(TestTypeCategory.UnitTest)]
-        [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public void TableQueryableInto()
-        {
-            OperationContext opContext = new OperationContext();
-
-            var res = (from ent in complexEntityTable.CreateQuery<ComplexEntity>()
-                       where ent.LongPrimitive >= middleRef.LongPrimitive
-                       select ent.LongPrimitive
-                           into tResult
-                           select tResult.ToString()).WithContext(opContext);
-
-
-            int count = 0;
-            foreach (var ent in res)
-            {
-                //   Assert.AreEqual(4, ent.Count);
-                //Assert.IsTrue(ent.Contains("a"));
-                //Assert.IsTrue(ent.Contains("b"));
-                //Assert.IsTrue(ent.Contains("c"));
-                //Assert.IsTrue(ent.Contains("test"));
-                count++;
-            }
-
-            Assert.AreEqual(count, 50);
-        }
-
         #endregion
 
         #region Negative Tests

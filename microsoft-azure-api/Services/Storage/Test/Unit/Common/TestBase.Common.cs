@@ -20,15 +20,11 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
 using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+using System;
 
 #if WINDOWS_DESKTOP
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ServiceModel.Channels;
-#else
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #endif
-
-using System;
 
 namespace Microsoft.WindowsAzure.Storage
 {
@@ -68,6 +64,7 @@ namespace Microsoft.WindowsAzure.Storage
 #if WINDOWS_DESKTOP
             client.BufferManager = BlobBufferManager;
 #endif
+
             return client;
         }
 
@@ -80,6 +77,7 @@ namespace Microsoft.WindowsAzure.Storage
 #if WINDOWS_DESKTOP
             client.BufferManager = TableBufferManager;
 #endif
+
             return client;
         }
 
@@ -87,40 +85,24 @@ namespace Microsoft.WindowsAzure.Storage
         {
             Uri baseAddressUri = new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint);
             CloudQueueClient client = new CloudQueueClient(baseAddressUri, TestBase.StorageCredentials);
+            client.AuthenticationScheme = DefaultAuthenticationScheme;
 
 #if WINDOWS_DESKTOP
             client.BufferManager = QueueBufferManager;
 #endif
 
-            client.AuthenticationScheme = DefaultAuthenticationScheme;
             return client;
         }
 
-        public static TestConfigurations TestConfigurations
-        {
-            get;
-            private set;
-        }
+        public static TestConfigurations TestConfigurations { get; private set; }
 
-        public static TenantConfiguration TargetTenantConfig
-        {
-            get;
-            private set;
-        }
+        public static TenantConfiguration TargetTenantConfig { get; private set; }
 
-        public static TenantType CurrentTenantType
-        {
-            get;
-            private set;
-        }
+        public static TenantType CurrentTenantType { get; private set; }
 
         /// <summary>
         /// The StorageCredentials created from account settings in the target tenant config.
         /// </summary>
-        public static StorageCredentials StorageCredentials
-        {
-            get;
-            private set;
-        }
+        public static StorageCredentials StorageCredentials { get; private set; }
     }
 }

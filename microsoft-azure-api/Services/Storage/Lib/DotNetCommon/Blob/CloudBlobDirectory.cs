@@ -31,9 +31,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     {
 #if SYNC
         /// <summary>
-        /// Returns an enumerable collection of the blobs in the container that are retrieved lazily.
+        /// Returns an enumerable collection of the blobs in the virtual directory that are retrieved lazily.
         /// </summary>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="options">An object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         /// <summary>
         /// Returns a result segment containing a collection of blob items 
-        /// in the container.
+        /// in the virtual directory.
         /// </summary>
         /// <param name="currentToken">A continuation token returned by a previous listing operation.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
@@ -58,9 +58,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         /// <summary>
         /// Returns a result segment containing a collection of blob items 
-        /// in the container.
+        /// in the virtual directory.
         /// </summary>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>    
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection of blob items 
-        /// in the container.
+        /// in the virtual directory.
         /// </summary>
         /// <param name="currentToken">A continuation token returned by a previous listing operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -91,9 +91,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection of blob items 
-        /// in the container.
+        /// in the virtual directory.
         /// </summary>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>  
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         /// <summary>
         /// Ends an asynchronous operation to return a result segment containing a collection of blob items 
-        /// in the container.
+        /// in the virtual directory.
         /// </summary>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 #if TASK
         /// <summary>
         /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
-        /// in the container.
+        /// in the virtual directory.
         /// </summary>
         /// <param name="currentToken">A continuation token returned by a previous listing operation.</param> 
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -135,7 +135,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         /// <summary>
         /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
-        /// in the container.
+        /// in the virtual directory.
         /// </summary>
         /// <param name="currentToken">A continuation token returned by a previous listing operation.</param> 
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
@@ -148,9 +148,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         
         /// <summary>
         /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
-        /// in the container.
+        /// in the virtual directory.
         /// </summary>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>  
@@ -166,9 +166,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         
         /// <summary>
         /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
-        /// in the container.
+        /// in the virtual directory.
         /// </summary>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>  

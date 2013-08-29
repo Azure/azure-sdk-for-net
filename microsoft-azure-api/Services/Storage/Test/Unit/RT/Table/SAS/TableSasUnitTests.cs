@@ -1065,6 +1065,52 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
         #endregion
 
+        #region SasUri
+        [TestMethod]
+        // [Description("Use table SasUri.")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task TableSasUriTestAsync()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference("T" + Guid.NewGuid().ToString("N"));
+
+            try
+            {
+                await table.CreateAsync();
+
+                BaseEntity entity = new BaseEntity("PK", "RK");
+                BaseEntity entity1 = new BaseEntity("PK", "RK1");
+                await table.ExecuteAsync(TableOperation.Insert(entity));
+                await table.ExecuteAsync(TableOperation.Insert(entity1));
+
+                SharedAccessTablePolicy policy = new SharedAccessTablePolicy()
+                {
+                    SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                    SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                    Permissions = SharedAccessTablePermissions.Delete,
+                };
+
+                string sasToken = table.GetSharedAccessSignature(policy, null, null, null, null, null);
+                StorageCredentials creds = new StorageCredentials(sasToken);
+                CloudStorageAccount sasAcc = new CloudStorageAccount(creds, new Uri(TestBase.TargetTenantConfig.BlobServiceEndpoint), new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), new Uri(TestBase.TargetTenantConfig.TableServiceEndpoint));
+                CloudTableClient client = sasAcc.CreateCloudTableClient();
+                
+                CloudTable sasTable = new CloudTable(client.Credentials.TransformUri(table.Uri));
+                await sasTable.ExecuteAsync(TableOperation.Delete(entity));
+
+                CloudTable sasTable2 = new CloudTable(new Uri(table.Uri.ToString() + sasToken));
+                await sasTable2.ExecuteAsync(TableOperation.Delete(entity1));
+            }
+            finally
+            {
+                table.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+        #endregion
+
         #region Test Helpers
         internal static void AssertPermissionsEqual(TablePermissions permissions1, TablePermissions permissions2)
         {

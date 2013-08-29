@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     public sealed class TablePermissions
     {
         /// <summary>
-        /// Initializes a new instance of the TablePermissions class.
+        /// Initializes a new instance of the <see cref="TablePermissions"/> class.
         /// </summary>
         public TablePermissions()
         {

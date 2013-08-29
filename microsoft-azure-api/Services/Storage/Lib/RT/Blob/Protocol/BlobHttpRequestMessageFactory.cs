@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             if (blobType == BlobType.PageBlob)
             {
                 request.Headers.Add(Constants.HeaderConstants.BlobType, Constants.HeaderConstants.PageBlob);
-                request.Headers.Add(Constants.HeaderConstants.Size, pageBlobSize.ToString(NumberFormatInfo.InvariantInfo));
+                request.Headers.Add(Constants.HeaderConstants.BlobContentLengthHeader, pageBlobSize.ToString(NumberFormatInfo.InvariantInfo));
                 properties.Length = pageBlobSize;
             }
             else
@@ -195,7 +195,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
             request.AddOptionalHeader(Constants.HeaderConstants.CacheControlHeader, properties.CacheControl);
             request.AddOptionalHeader(Constants.HeaderConstants.ContentEncodingHeader, properties.ContentEncoding);
-            request.AddOptionalHeader(Constants.HeaderConstants.ContentLanguageHeader, properties.ContentLanguage);
+            request.AddOptionalHeader(Constants.HeaderConstants.BlobContentLanguageHeader, properties.ContentLanguage);
             request.AddOptionalHeader(Constants.HeaderConstants.BlobContentMD5Header, properties.ContentMD5);
             request.AddOptionalHeader(Constants.HeaderConstants.ContentTypeHeader, properties.ContentType);
 
@@ -219,7 +219,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
             HttpRequestMessage request = HttpRequestMessageFactory.CreateRequestMessage(HttpMethod.Put, uri, timeout, builder, content, operationContext);
 
-            request.Headers.Add(Constants.HeaderConstants.Size, newBlobSize.ToString(NumberFormatInfo.InvariantInfo));
+            request.Headers.Add(Constants.HeaderConstants.BlobContentLengthHeader, newBlobSize.ToString(NumberFormatInfo.InvariantInfo));
 
             request.ApplyAccessCondition(accessCondition);
             return request;
@@ -487,7 +487,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             request.AddOptionalHeader(Constants.HeaderConstants.CacheControlHeader, properties.CacheControl);
             request.AddOptionalHeader(Constants.HeaderConstants.ContentTypeHeader, properties.ContentType);
             request.AddOptionalHeader(Constants.HeaderConstants.BlobContentMD5Header, properties.ContentMD5);
-            request.AddOptionalHeader(Constants.HeaderConstants.ContentLanguageHeader, properties.ContentLanguage);
+            request.AddOptionalHeader(Constants.HeaderConstants.BlobContentLanguageHeader, properties.ContentLanguage);
             request.AddOptionalHeader(Constants.HeaderConstants.ContentEncodingHeader, properties.ContentEncoding);
 
             request.ApplyAccessCondition(accessCondition);

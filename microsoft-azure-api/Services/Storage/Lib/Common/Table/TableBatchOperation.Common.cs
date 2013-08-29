@@ -141,7 +141,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// CAdds a <see cref="TableOperation"/> to the <see cref="TableBatchOperation"/> that retrieves an entity with the specified partition key and row key.
+        /// Adds a <see cref="TableOperation"/> to the <see cref="TableBatchOperation"/> that retrieves an entity with the specified partition key and row key.
         /// </summary>
         /// <param name="partitionKey">A string containing the partition key of the entity to retrieve.</param>
         /// <param name="rowKey">A string containing the row key of the entity to retrieve.</param>
@@ -199,7 +199,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Gets or sets the <see cref="TableOperation"/> item at the specified index.
         /// </summary>
-        /// <param name="index">The index at which to get or set the TableOperation.</param>
+        /// <param name="index">The index at which to get or set the <see cref="TableOperation"/> item.</param>
         /// <returns>The <see cref="TableOperation"/> item at the specified index.</returns>
         public TableOperation this[int index]
         {

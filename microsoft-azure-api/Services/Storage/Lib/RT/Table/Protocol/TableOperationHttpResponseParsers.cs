@@ -228,7 +228,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                 TableQuerySegment retSeg = new TableQuerySegment();
                 retSeg.ContinuationToken = ContinuationFromResponse(resp);
 
-                ODataMessageReaderSettings readerSettings = new ODataMessageReaderSettings() { DisablePrimitiveTypeConversion = true };
+                ODataMessageReaderSettings readerSettings = new ODataMessageReaderSettings();
                 readerSettings.MessageQuotas = new ODataMessageQuotas() { MaxPartsPerBatch = TableConstants.TableServiceMaxResults, MaxReceivedMessageSize = TableConstants.TableServiceMaxPayload };
 
                 using (ODataMessageReader responseReader = new ODataMessageReader(new HttpResponseAdapterMessage(resp, responseStream), readerSettings))
@@ -262,6 +262,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                         // Entry End => ?
                         reader.Read();
                     }
+
+                    DrainODataReader(reader);
                 }
 
                 return retSeg;
@@ -307,10 +309,25 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                         // Entry End => ?
                         reader.Read();
                     }
+
+                    DrainODataReader(reader);
                 }
 
                 return retSeg;
             });
+        }
+
+        private static void DrainODataReader(ODataReader reader)
+        {
+            if (reader.State == ODataReaderState.FeedEnd)
+            {
+                reader.Read();
+            }
+
+            if (reader.State != ODataReaderState.Completed)
+            {
+                throw new InvalidOperationException(string.Format(SR.ODataReaderNotInCompletedState, reader.State));
+            }
         }
 
         /// <summary>
@@ -377,6 +394,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                         }
                     }
                 }
+
+                DrainODataReader(reader);
             }
         }
 

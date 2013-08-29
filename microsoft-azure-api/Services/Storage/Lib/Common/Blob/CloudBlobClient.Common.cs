@@ -28,9 +28,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using System.Globalization;
 
     /// <summary>
-    /// Provides a client-side logical representation of the Windows Azure Blob Service. This client is used to configure and execute requests against the Blob Service.
+    /// Provides a client-side logical representation of the Windows Azure Blob service. This client is used to configure and execute requests against the Blob service.
     /// </summary>
-    /// <remarks>The service client encapsulates the base URI for the Blob service. If the service client will be used for authenticated access, it also encapsulates the credentials for accessing the storage account.</remarks>
+    /// <remarks>The service client encapsulates the base URI for the Blob service. If the service client will be used for authenticated access, it also encapsulates 
+    /// the credentials for accessing the storage account.</remarks>
     public sealed partial class CloudBlobClient
     {
         /// <summary>
@@ -131,7 +132,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// The IBufferManager to use for associated objects
+        /// Gets or sets a buffer manager that implements the <see cref="IBufferManager"/> interface, 
+        /// specifying a buffer pool for use with operations against the Blob service client.
         /// </summary>
         public IBufferManager BufferManager { get; set; }
 
@@ -154,7 +156,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public IRetryPolicy RetryPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets the default server and client timeout for requests.
+        /// Gets or sets the default server and client timeout for requests made via the Blob service client.
         /// </summary>
         /// <value>The server and client timeout interval.</value>
         public TimeSpan? ServerTimeout
@@ -260,7 +262,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         internal bool UsePathStyleUris { get; private set; }
 
         /// <summary>
-        /// Returns a reference to a <see cref="CloudBlobContainer"/> object.
+        /// Returns a reference to the root container for this service client.
         /// </summary>
         /// <returns>A reference to the root container.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]

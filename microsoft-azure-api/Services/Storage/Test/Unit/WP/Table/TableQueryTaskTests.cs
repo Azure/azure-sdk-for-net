@@ -65,11 +65,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
         //
         // Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
-        public static void MyClassInitialize(TestContext testContext)
+        public static async Task MyClassInitialize(TestContext testContext)
         {
             CloudTableClient tableClient = GenerateCloudTableClient();
             currentTable = tableClient.GetTableReference(GenerateRandomTableName());
-            currentTable.CreateIfNotExistsAsync().Wait();
+            await currentTable.CreateIfNotExistsAsync();
 
             for (int i = 0; i < 15; i++)
             {
@@ -82,15 +82,15 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     batch.Insert(ent);
                 }
 
-                currentTable.ExecuteBatchAsync(batch).Wait();
+                await currentTable.ExecuteBatchAsync(batch);
             }
         }
         //
         // Use ClassCleanup to run code after all tests in a class have run
         [ClassCleanup()]
-        public static void MyClassCleanup()
+        public static async Task MyClassCleanup()
         {
-            currentTable.DeleteIfExistsAsync().Wait();
+            await currentTable.DeleteIfExistsAsync();
         }
         //
         // Use TestInitialize to run code before running each test 

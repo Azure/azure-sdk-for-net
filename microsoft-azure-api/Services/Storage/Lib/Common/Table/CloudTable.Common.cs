@@ -26,7 +26,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using System.Globalization;
 
     /// <summary>
-    /// Represents a Windows Azure Table.
+    /// Represents a Windows Azure table.
     /// </summary>
     public sealed partial class CloudTable
     {
@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Initializes a new instance of the <see cref="CloudTable"/> class.
         /// </summary>
-        /// <param name="tableName">The Table name.</param>
+        /// <param name="tableName">The table name.</param>
         /// <param name="client">The client.</param>
         internal CloudTable(string tableName, CloudTableClient client)
         {
@@ -90,7 +90,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="startRowKey">The start row key, or null.</param>
         /// <param name="endPartitionKey">The end partition key, or null.</param>
         /// <param name="endRowKey">The end row key, or null.</param>
-        /// <returns>A shared access signature.</returns>
+        /// <returns>A shared access signature, as a URI query string.</returns>
+        /// <remarks>The query string returned includes the leading question mark.</remarks>
         /// <exception cref="InvalidOperationException">Thrown if the current credentials don't support creating a shared access signature.</exception>
         public string GetSharedAccessSignature(
             SharedAccessTablePolicy policy,
@@ -150,7 +151,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         private void ParseQueryAndVerify(Uri address, StorageCredentials credentials)
         {
             StorageCredentials parsedCredentials;
-            this.Uri = NavigationHelper.ParseTableQueryAndVerify(address, out parsedCredentials);
+            this.Uri = NavigationHelper.ParseQueueTableQueryAndVerify(address, out parsedCredentials);
 
             if ((parsedCredentials != null) && (credentials != null) && !parsedCredentials.Equals(credentials))
             {

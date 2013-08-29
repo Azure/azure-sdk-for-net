@@ -100,48 +100,44 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\DotNetCommon\*.cs" />
-    <!-- Compile Include="..\DotNetCommon\Blob\*.cs">
-      <Link>Blob\Blob</Link>
-    </Compile>
-    <Compile Include="..\DotNetCommon\Core\*.cs">
-      <Link>Core\Core</Link>
-    </Compile>
-    <Compile Include="..\DotNetCommon\Properties\*.cs">
-      <Link>Properties\Properties</Link>
-    </Compile>
-    <Compile Include="..\DotNetCommon\Blob\Protocol\*.cs">
-      <Link>Blob\Protocol\Protocol</Link>
-    </Compile>
-    <Compile Include="..\DotNetCommon\Queue\*.cs">
-      <Link>Queue\Queue</Link>
-    </Compile>
-	
-    <Compile Include="..\DotNetCommon\Table\*.cs">
-      <Link>Table\Table</Link>
-    </Compile>
-    <Compile Include="..\DotNetCommon\Table\Entities\*.cs">
-      <Link>Table\Entities\Entities</Link>
-    </Compile>
-    <Compile Include="..\DotNetCommon\Table\SAS\*.cs">
-      <Link>Table\SAS\SAS</Link>
-    </Compile-->
     <Compile Include="..\DotNetCommon\Table\Entities\*.cs">
       <Link>Table\Entities\Entities</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\WP\Table\CloudTableClientTaskTest.cs" />
-    <Compile Include="..\WP\Table\CloudTableCRUDUnitTaskTests.cs" />
-    <Compile Include="..\WP\Table\TableAnalyticsUnitTaskTests.cs" />
-    <Compile Include="..\WP\Table\TableBatchOperationTaskTest.cs" />
-    <Compile Include="..\WP\Table\TableEntitySerializationTests.cs" />
-    <Compile Include="..\WP\Table\TableEscapingTaskTests.cs" />
-    <Compile Include="..\WP\Table\TableOperationUnitTaskTests.cs" />
-    <Compile Include="..\WP\Table\TableQueryableTests.cs" />
-    <Compile Include="..\WP\Table\TableQueryGenericTaskTests.cs" />
-    <Compile Include="..\WP\Table\TableQueryTaskTests.cs" />
-    <Compile Include="..\WP\Table\TableTestBase.cs" />
+    <Compile Include="Blob\BlobAnalyticsUnitTests.cs" />
+    <Compile Include="Blob\BlobCancellationUnitTests.cs" />
+    <Compile Include="Blob\BlobReadStreamTest.cs" />
+    <Compile Include="Blob\BlobStreamTests.cs" />
+    <Compile Include="Blob\BlobTestBase.cs" />
+    <Compile Include="Blob\BlobUploadDownloadTest.cs" />
+    <Compile Include="Blob\BlobWriteStreamTest.cs" />
+    <Compile Include="Blob\CloudBlobClientTest.cs" />
+    <Compile Include="Blob\CloudBlobContainerTest.cs" />
+    <Compile Include="Blob\CloudBlockBlobTest.cs" />
+    <Compile Include="Blob\CloudBlobDirectoryTest.cs" />
+    <Compile Include="Blob\CloudPageBlobTest.cs" />
+    <Compile Include="Blob\CopyBlobTest.cs" />
+    <Compile Include="Blob\LeaseTests.cs" />
+    <Compile Include="Blob\MD5FlagsTest.cs" />
+    <Compile Include="Blob\SASTests.cs" />
+    <Compile Include="Queue\CloudQueueClientTest.cs" />
+    <Compile Include="Queue\QueueAnalyticsUnitTests.cs" />
+    <Compile Include="Queue\CloudQueueMessageTest.cs" />
+    <Compile Include="Queue\CloudQueueTest.cs" />
+    <Compile Include="Table\CloudTableClientTaskTest.cs" />
+    <Compile Include="Table\CloudTableCRUDUnitTaskTests.cs" />
+    <Compile Include="Table\TableAnalyticsUnitTaskTests.cs" />
+    <Compile Include="Table\TableBatchOperationTaskTest.cs" />
+    <Compile Include="Table\TableEntitySerializationTests.cs" />
+    <Compile Include="Table\TableEscapingTaskTests.cs" />
+    <Compile Include="Table\TableOperationUnitTaskTests.cs" />
+    <Compile Include="Table\TableQueryableTests.cs" />
+    <Compile Include="Table\TableQueryGenericTaskTests.cs" />
+    <Compile Include="Table\TableQueryTaskTests.cs" />
+    <Compile Include="Table\TableTestBase.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Common\Readme.txt">

@@ -148,12 +148,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
         /// <returns>The result segment containing the collection of tables.</returns>
-        public IAsyncOperation<TableResultSegment> ListTablesSegmentedAsync(
-                                                          string prefix,
-                                                          int? maxResults,
-                                                          TableContinuationToken currentToken,
-                                                          TableRequestOptions requestOptions,
-                                                          OperationContext operationContext)
+        public IAsyncOperation<TableResultSegment> ListTablesSegmentedAsync(string prefix, int? maxResults, TableContinuationToken currentToken, TableRequestOptions requestOptions, OperationContext operationContext)
         {
             requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this);
             operationContext = operationContext ?? new OperationContext();

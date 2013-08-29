@@ -960,7 +960,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        [TestCategory(TenantTypeCategory.Cloud)]
         public void TableQueryableMultipleContexts()
         {
             OperationContext opContext = new OperationContext();
@@ -986,7 +986,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        [TestCategory(TenantTypeCategory.Cloud)]
         public void TableQueryableWithOptions()
         {
             TableRequestOptions options = new TableRequestOptions();

@@ -21,7 +21,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using System;
 
     /// <summary>
-    /// Represents a set of timeout and retry policy options that may be specified for a table operation request.
+    /// Represents a set of timeout and retry policy options that may be specified for a request against the Table service.
     /// </summary>
     public sealed class TableRequestOptions : IRequestOptions
     {
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        ///  Gets or sets the absolute Expiry time across all potential retries etc. 
+        ///  Gets or sets the absolute expiry time across all potential retries for the request. 
         /// </summary>
         internal DateTime? OperationExpiryTime { get; set; }
 
@@ -80,9 +80,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public TimeSpan? ServerTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum execution time for all potential retries.
+        /// Gets or sets the maximum execution time for all potential retries for the request.
         /// </summary>
-        /// <value>A <see cref="TimeSpan"/> representing the maximum execution time for retries.</value>
+        /// <value>A <see cref="TimeSpan"/> representing the maximum execution time for retries for the request.</value>
         public TimeSpan? MaximumExecutionTime { get; set; }
     }
 }

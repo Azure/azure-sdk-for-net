@@ -58,18 +58,18 @@ namespace Microsoft.WindowsAzure.Storage.Table
         //
         // Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
-        public static void MyClassInitialize(TestContext testContext)
+        public static async Task MyClassInitialize(TestContext testContext)
         {
             CloudTableClient client = GenerateCloudTableClient();
-            startProperties = client.GetServicePropertiesAsync().Result;
+            startProperties = await client.GetServicePropertiesAsync();
         }
 
         // Use ClassCleanup to run code after all tests in a class have run
         [ClassCleanup()]
-        public static void MyClassCleanup()
+        public static async Task MyClassCleanup()
         {
             CloudTableClient client = GenerateCloudTableClient();
-            client.SetServicePropertiesAsync(startProperties).Wait();
+            await client.SetServicePropertiesAsync(startProperties);
         }
         //
         // Use TestInitialize to run code before running each test 
@@ -169,7 +169,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             }
             catch (Exception)
             {
-                Assert.AreEqual(ctx.LastResult.Exception.Message, "XML specified is not syntactically valid.");
+                Assert.AreEqual(ctx.LastResult.HttpStatusMessage, "XML specified is not syntactically valid.");
                 Assert.AreEqual(ctx.LastResult.HttpStatusCode, (int)HttpStatusCode.BadRequest);
                 TestHelper.AssertNAttempts(ctx, 1);
                 return;

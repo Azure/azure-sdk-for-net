@@ -22,16 +22,14 @@ namespace Microsoft.WindowsAzure.Storage
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// Represents the context for a request to the storage service and provides additional runtime information about its execution.
+    /// Represents the context for a request operation against the storage service, and provides additional runtime information about its execution.
     /// </summary>
     public sealed class OperationContext
     {
-#if !WINDOWS_PHONE
         static OperationContext()
         {
             OperationContext.DefaultLogLevel = LogLevel.Verbose;
         }
-#endif
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationContext"/> class.
@@ -39,15 +37,13 @@ namespace Microsoft.WindowsAzure.Storage
         public OperationContext()
         {
             this.ClientRequestID = Guid.NewGuid().ToString();
-#if !WINDOWS_PHONE
             this.LogLevel = OperationContext.DefaultLogLevel;
-#endif
         }
 
         #region Headers
 
         /// <summary>
-        /// Gets or sets additional headers, for example proxy or logging information.
+        /// Gets or sets additional headers on the request, for example, for proxy or logging information.
         /// </summary>
         /// <value>A <see cref="System.Collections.Generic.IDictionary{T, K}"/> object containing additional header information.</value>
         public IDictionary<string, string> UserHeaders { get; set; }
@@ -63,7 +59,6 @@ namespace Microsoft.WindowsAzure.Storage
 
         #region Events
 
-#if !WINDOWS_PHONE
         /// <summary>
         /// Gets or sets the default logging level to be used for subsequently created instances of the <see cref="OperationContext"/> class.
         /// </summary>
@@ -75,7 +70,6 @@ namespace Microsoft.WindowsAzure.Storage
         /// </summary>
         /// <value>A value of type <see cref="LogLevel"/> that specifies which events are logged by the <see cref="OperationContext"/>.</value>
         public LogLevel LogLevel { get; set; }
-#endif
 
         /// <summary>
         /// Occurs immediately before a request is signed.

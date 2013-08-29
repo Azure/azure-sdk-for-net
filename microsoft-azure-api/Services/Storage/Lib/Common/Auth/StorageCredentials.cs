@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// Initializes a new instance of the <see cref="StorageCredentials"/> class with the specified account name and key value.
         /// </summary>
         /// <param name="accountName">A string that represents the name of the storage account.</param>
-        /// <param name="keyValue">A string that represents the Base-64-encoded account access key.</param>
+        /// <param name="keyValue">A string that represents the Base64-encoded account access key.</param>
         public StorageCredentials(string accountName, string keyValue)
             : this(accountName, keyValue, null)
         {
@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// Initializes a new instance of the <see cref="StorageCredentials"/> class with the specified account name, key value, and key name.
         /// </summary>
         /// <param name="accountName">A string that represents the name of the storage account.</param>
-        /// <param name="keyValue">A string that represents the Base-64-encoded account access key.</param>
+        /// <param name="keyValue">A string that represents the Base64-encoded account access key.</param>
         /// <param name="keyName">A string that represents the name of the key.</param>
         public StorageCredentials(string accountName, string keyValue, string keyName)
         {
@@ -178,7 +178,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// <summary>
         /// Updates the key value for the credentials.
         /// </summary>
-        /// <param name="keyValue">The key value, as a Base-64 encoded string, to update.</param>
+        /// <param name="keyValue">The key value, as a Base64-encoded string, to update.</param>
         public void UpdateKey(string keyValue)
         {
             this.UpdateKey(keyValue, null);
@@ -198,7 +198,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// <summary>
         /// Updates the key value and key name for the credentials.
         /// </summary>
-        /// <param name="keyValue">The key value, as a Base-64 encoded string, to update.</param>
+        /// <param name="keyValue">The key value, as a Base64-encoded string, to update.</param>
         /// <param name="keyName">The key name to update.</param>
         public void UpdateKey(string keyValue, string keyName)
         {
@@ -240,9 +240,9 @@ namespace Microsoft.WindowsAzure.Storage.Auth
 #endif
         
         /// <summary>
-        /// Updates the sas token value for the credentials.
+        /// Updates the shared access signature (SAS) token value for storage credentials created with a shared access signature.
         /// </summary>
-        /// <param name="sasToken">The sasToken value,as a string, to update.</param>
+        /// <param name="sasToken">A string that specifies the SAS token value to update.</param>
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SAS", Justification = "Back compatibility.")]
         public void UpdateSASToken(string sasToken)
         {
@@ -262,7 +262,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         }
         
         /// <summary>
-        /// Returns the key for the credentials.
+        /// Returns the account key for the credentials.
         /// </summary>
         /// <returns>An array of bytes that contains the key.</returns>
         public byte[] ExportKey()
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         }
 
         /// <summary>
-        /// Exports the value of the access key to a Base64-encoded string.
+        /// Exports the value of the account access key to a Base64-encoded string.
         /// </summary>
         /// <returns>The account access key.</returns>
         public string ExportBase64EncodedKey()

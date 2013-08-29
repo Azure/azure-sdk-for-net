@@ -20,7 +20,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using System.Collections.Generic;
 
     /// <summary>
-    /// Represents a segment of <see cref="IListBlobItem"/> results and contains continuation and pagination information.
+    /// Represents a segment of <see cref="IListBlobItem"/> results, with continuation information for pagination scenarios.
     /// </summary>
     public sealed class BlobResultSegment
     {
@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public IEnumerable<IListBlobItem> Results { get; private set; }
 
         /// <summary>
-        /// Gets the continuation token used to retrieve the next segment of <see cref="IListBlobItem"/> results. Returns null if there are no more results.
+        /// Gets the continuation token used to retrieve the next segment of <see cref="IListBlobItem"/> results. Returns <c>null</c> if there are no more results.
         /// </summary>
         /// <value>The continuation token.</value>
         public BlobContinuationToken ContinuationToken { get; private set; }

@@ -69,19 +69,19 @@ namespace Microsoft.WindowsAzure.Storage.Table
         //
         // Use TestInitialize to run code before running each test 
         [TestInitialize()]
-        public void MyTestInitialize()
+        public async Task MyTestInitialize()
         {
             CloudTableClient tableClient = GenerateCloudTableClient();
             currentTable = tableClient.GetTableReference(GenerateRandomTableName());
-            currentTable.CreateIfNotExistsAsync().Wait();
+            await currentTable.CreateIfNotExistsAsync();
         }
 
         //
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
-        public void MyTestCleanup()
+        public async Task MyTestCleanup()
         {
-            currentTable.DeleteIfExistsAsync().Wait();
+            await currentTable.DeleteIfExistsAsync();
         }
 
         #endregion
