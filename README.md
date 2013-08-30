@@ -47,7 +47,8 @@ within your project you can also have them installed by the .NET package manager
 ## Target Frameworks
 
 - .NET Framework 3.5: At this time the majority of the Windows Azure SDK for .NET supports primarily the desktop .NET Framework 3.5 and above.
-- Windows 8 for Windows Store and Windows RT app development: Storage Client Libraries are available for Windows Store applications.
+- .NET Framework 4.0: Storage Client Library for .NET supports the desktop .NET Framework 4.0 and above.
+- Windows 8 for Windows Store app development: Storage Client Libraries are available for Windows Store applications.
 
 ## Requirements
 
