@@ -67,6 +67,51 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         }
 
         /// <summary>
+        /// Adds an optional header to a request.
+        /// </summary>
+        /// <param name="request">The web request.</param>
+        /// <param name="name">The header name.</param>
+        /// <param name="value">The header value.</param>
+        internal static void AddOptionalHeader(this HttpRequestMessage request, string name, long? value)
+        {
+            if (value.HasValue)
+            {
+                request.Headers.Add(name, value.Value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Applies the lease condition to the web request.
+        /// </summary>
+        /// <param name="request">The request to be modified.</param>
+        /// <param name="accessCondition">Access condition to be added to the request.</param>
+        internal static void ApplyLeaseId(this HttpRequestMessage request, AccessCondition accessCondition)
+        {
+            if (accessCondition != null)
+            {
+                if (!string.IsNullOrEmpty(accessCondition.LeaseId))
+                {
+                    request.Headers.Add(Constants.HeaderConstants.LeaseIdHeader, accessCondition.LeaseId);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Applies the sequence number condition to the web request.
+        /// </summary>
+        /// <param name="request">The request to be modified.</param>
+        /// <param name="accessCondition">Access condition to be added to the request.</param>
+        internal static void ApplySequenceNumberCondition(this HttpRequestMessage request, AccessCondition accessCondition)
+        {
+            if (accessCondition != null)
+            {
+                request.AddOptionalHeader(Constants.HeaderConstants.IfSequenceNumberLEHeader, accessCondition.IfSequenceNumberLessThanOrEqual);
+                request.AddOptionalHeader(Constants.HeaderConstants.IfSequenceNumberLTHeader, accessCondition.IfSequenceNumberLessThan);
+                request.AddOptionalHeader(Constants.HeaderConstants.IfSequenceNumberEqHeader, accessCondition.IfSequenceNumberEqual);
+            }
+        }
+
+        /// <summary>
         /// Applies the condition to the web request.
         /// </summary>
         /// <param name="request">The request to be modified.</param>
@@ -95,10 +140,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
                 request.Headers.IfModifiedSince = accessCondition.IfModifiedSinceTime;
                 request.Headers.IfUnmodifiedSince = accessCondition.IfNotModifiedSinceTime;
 
-                if (!string.IsNullOrEmpty(accessCondition.LeaseId))
-                {
-                    request.Headers.Add(Constants.HeaderConstants.LeaseIdHeader, accessCondition.LeaseId);
-                }
+                request.ApplyLeaseId(accessCondition);
             }
         }
 
@@ -125,14 +167,14 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
                 {
                     request.Headers.Add(
                         Constants.HeaderConstants.SourceIfModifiedSinceHeader,
-                        HttpUtility.ConvertDateTimeToHttpString(accessCondition.IfModifiedSinceTime.Value));
+                        HttpWebUtility.ConvertDateTimeToHttpString(accessCondition.IfModifiedSinceTime.Value));
                 }
 
                 if (accessCondition.IfNotModifiedSinceTime.HasValue)
                 {
                     request.Headers.Add(
                         Constants.HeaderConstants.SourceIfUnmodifiedSinceHeader,
-                        HttpUtility.ConvertDateTimeToHttpString(accessCondition.IfNotModifiedSinceTime.Value));
+                        HttpWebUtility.ConvertDateTimeToHttpString(accessCondition.IfNotModifiedSinceTime.Value));
                 }
 
                 if (!string.IsNullOrEmpty(accessCondition.LeaseId))

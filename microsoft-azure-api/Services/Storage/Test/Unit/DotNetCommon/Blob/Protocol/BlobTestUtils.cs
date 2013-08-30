@@ -15,14 +15,13 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
@@ -191,7 +190,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         public static void SetRequest(HttpWebRequest request, BlobContext context, byte[] content)
         {
             Assert.IsNotNull(request);
-            if (context.Async)
+            if (context.IsAsync)
             {
                 BlobTestUtils.SetRequestAsync(request, context, content);
             }

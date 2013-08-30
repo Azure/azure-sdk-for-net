@@ -15,13 +15,11 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading;
+using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -70,14 +68,28 @@ namespace Microsoft.WindowsAzure.Storage.Table
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
         //
+        //
         // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
+        }
         #endregion
 
         #region Table Create
@@ -136,6 +148,33 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 Assert.AreEqual(ex.RequestInformation.ExtendedErrorInformation.ErrorCode, "TableAlreadyExists");
                 Assert.AreEqual(ex.RequestInformation.HttpStatusCode, (int)HttpStatusCode.Conflict);
                 TestHelper.AssertNAttempts(ctx, 1);
+            }
+            finally
+            {
+                tableRef.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test Table Create From URI - Sync")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableCreateFromUriSync()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable tableRef = tableClient.GetTableReference(tableName);
+            tableRef.Create();
+
+            // Get reference from URI
+            CloudTable sameTableRef = new CloudTable(tableRef.Uri);
+
+            try
+            {
+                Assert.IsTrue(sameTableRef.Name.Equals(tableRef.Name));
+                Assert.IsTrue(sameTableRef.Uri.Equals(tableRef.Uri));
             }
             finally
             {
@@ -234,6 +273,78 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
         #endregion
 
+        #region Task
+
+#if TASK
+        [TestMethod]
+        [Description("Test Table Create - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableCreateTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable tableRef = tableClient.GetTableReference(tableName);
+
+            try
+            {
+                Assert.IsFalse(tableRef.ExistsAsync().Result);
+                tableRef.CreateAsync().Wait();
+                Assert.IsTrue(tableRef.ExistsAsync().Result);
+            }
+            finally
+            {
+                tableRef.DeleteIfExistsAsync().Wait();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test Table Create When Table Already Exists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableCreateAlreadyExistsTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable tableRef = tableClient.GetTableReference(tableName);
+            OperationContext ctx = new OperationContext();
+
+            try
+            {
+                Assert.IsFalse(tableRef.ExistsAsync().Result);
+                tableRef.CreateAsync().Wait();
+                Assert.IsTrue(tableRef.ExistsAsync().Result);
+
+                // This should throw with no retries               
+                tableRef.CreateAsync(null, ctx).Wait();
+              
+                Assert.Fail();
+            }
+            catch (AggregateException e)
+            {
+                StorageException ex = e.InnerException as StorageException;
+                if (ex == null)
+                {
+                    throw;
+                }
+                
+                Assert.AreEqual(ex.RequestInformation.ExtendedErrorInformation.ErrorCode, "TableAlreadyExists");
+                Assert.AreEqual(ex.RequestInformation.HttpStatusCode, (int)HttpStatusCode.Conflict);
+                TestHelper.AssertNAttempts(ctx, 1);
+            }
+            finally
+            {
+                tableRef.DeleteIfExists();
+            }
+        }
+#endif
+
+        #endregion
+
         #endregion
 
         #region Table CreateIfNotExists
@@ -323,6 +434,121 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 tableRef.DeleteIfExists();
             }
         }
+
+        #endregion
+
+        #region Task
+
+#if TASK
+        [TestMethod]
+        [Description("Test Table CreateIfNotExists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableCreateIfNotExistsTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable tableRef = tableClient.GetTableReference(tableName);
+
+            try
+            {
+                Assert.IsFalse(tableRef.ExistsAsync().Result);
+                Assert.IsTrue(tableRef.CreateIfNotExistsAsync().Result);
+                Assert.IsTrue(tableRef.ExistsAsync().Result);
+                Assert.IsFalse(tableRef.CreateIfNotExistsAsync().Result);
+            }
+            finally
+            {
+                tableRef.DeleteIfExistsAsync().Wait();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test Table CreateIfNotExists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableCreateIfNotExistsCancellationTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable table = tableClient.GetTableReference(tableName);
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            try
+            {
+                Assert.IsFalse(table.ExistsAsync().Result);
+                Assert.IsTrue(table.CreateIfNotExistsAsync(cancellationToken).Result);
+                Assert.IsTrue(table.ExistsAsync().Result);
+                Assert.IsFalse(table.CreateIfNotExistsAsync(cancellationToken).Result);
+                Assert.IsTrue(table.ExistsAsync().Result);
+            }
+            finally
+            {
+                table.DeleteIfExistsAsync().Wait();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test Table CreateIfNotExists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableCreateIfNotExistsRequestOptionsOperationContextTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable table = tableClient.GetTableReference(tableName);
+            TableRequestOptions requestOptions = new TableRequestOptions();
+            OperationContext operationContext = new OperationContext();
+
+            try
+            {
+                Assert.IsFalse(table.ExistsAsync().Result);
+                Assert.IsTrue(table.CreateIfNotExistsAsync(requestOptions, operationContext).Result);
+                Assert.IsTrue(table.ExistsAsync().Result);
+                Assert.IsFalse(table.CreateIfNotExistsAsync(requestOptions, operationContext).Result);
+                Assert.IsTrue(table.ExistsAsync().Result);
+            }
+            finally
+            {
+                table.DeleteIfExistsAsync().Wait();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test Table CreateIfNotExists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableCreateIfNotExistsRequestOptionsOperationContextCancellationTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable table = tableClient.GetTableReference(tableName);
+            TableRequestOptions requestOptions = new TableRequestOptions();
+            OperationContext operationContext = new OperationContext();
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            try
+            {
+                Assert.IsFalse(table.ExistsAsync().Result);
+                Assert.IsTrue(table.CreateIfNotExistsAsync(requestOptions, operationContext, cancellationToken).Result);
+                Assert.IsTrue(table.ExistsAsync().Result);
+                Assert.IsFalse(table.CreateIfNotExistsAsync(requestOptions, operationContext, cancellationToken).Result);
+                Assert.IsTrue(table.ExistsAsync().Result);
+            }
+            finally
+            {
+                table.DeleteIfExistsAsync().Wait();
+            }
+        }
+#endif
 
         #endregion
 
@@ -482,6 +708,77 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
         #endregion
 
+        #region Task
+
+#if TASK
+        [TestMethod]
+        [Description("Test Table Delete - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableDeleteTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable tableRef = tableClient.GetTableReference(tableName);
+
+            try
+            {
+                Assert.IsFalse(tableRef.ExistsAsync().Result);
+                tableRef.CreateAsync().Wait();
+                Assert.IsTrue(tableRef.ExistsAsync().Result);
+                tableRef.DeleteAsync().Wait();
+                Assert.IsFalse(tableRef.ExistsAsync().Result);
+            }
+            finally
+            {
+                tableRef.DeleteIfExistsAsync().Wait();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test Table Delete When Table Does Not Exist - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableDeleteWhenNotExistTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable tableRef = tableClient.GetTableReference(tableName);
+            OperationContext ctx = new OperationContext();
+
+            try
+            {
+                Assert.IsFalse(tableRef.ExistsAsync().Result);
+
+                // This should throw with no retries               
+                tableRef.DeleteAsync(null, ctx).Wait();
+                Assert.Fail();
+            }
+            catch (AggregateException e)
+            {
+                StorageException ex = e.InnerException as StorageException;
+                if (ex == null)
+                {
+                    throw;
+                }
+
+                Assert.AreEqual(ex.RequestInformation.HttpStatusCode, 404);
+                Assert.AreEqual(ex.RequestInformation.ExtendedErrorInformation.ErrorCode, "ResourceNotFound");
+                TestHelper.AssertNAttempts(ctx, 1);
+            }
+            finally
+            {
+                tableRef.DeleteIfExistsAsync().Wait();
+            }
+        }
+#endif
+
+        #endregion
+
         #endregion
 
         #region Table DeleteIfExists
@@ -577,6 +874,132 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 tableRef.DeleteIfExists();
             }
         }
+
+        #endregion
+        
+        #region Task
+
+#if TASK
+        [TestMethod]
+        [Description("Test Table DeleteIfExists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableDeleteIfExistsTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable tableRef = tableClient.GetTableReference(tableName);
+
+            try
+            {
+                Assert.IsFalse(tableRef.ExistsAsync().Result);
+                Assert.IsFalse(tableRef.DeleteIfExistsAsync().Result);
+                tableRef.CreateAsync().Wait();
+                Assert.IsTrue(tableRef.ExistsAsync().Result);
+                Assert.IsTrue(tableRef.DeleteIfExistsAsync().Result);
+                Assert.IsFalse(tableRef.DeleteIfExistsAsync().Result);
+            }
+            finally
+            {
+                tableRef.DeleteIfExistsAsync().Wait();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test Table DeleteIfExists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableDeleteIfExistsCancellationTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable table = tableClient.GetTableReference(tableName);
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            try
+            {
+                Assert.IsFalse(table.ExistsAsync().Result);
+                Assert.IsFalse(table.DeleteIfExistsAsync(cancellationToken).Result);
+                table.CreateAsync().Wait();
+                Assert.IsTrue(table.ExistsAsync().Result);
+                Assert.IsTrue(table.DeleteIfExistsAsync(cancellationToken).Result);
+                Assert.IsFalse(table.ExistsAsync().Result);
+                Assert.IsFalse(table.DeleteIfExistsAsync(cancellationToken).Result);
+                Assert.IsFalse(table.ExistsAsync().Result);
+            }
+            finally
+            {
+                table.DeleteIfExistsAsync().Wait();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test Table DeleteIfExists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableDeleteIfExistsRequestOptionsOperationContextTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable table = tableClient.GetTableReference(tableName);
+            TableRequestOptions requestOptions = new TableRequestOptions();
+            OperationContext operationContext = new OperationContext();
+
+            try
+            {
+                Assert.IsFalse(table.ExistsAsync().Result);
+                Assert.IsFalse(table.DeleteIfExistsAsync(requestOptions, operationContext).Result);
+                table.CreateAsync().Wait();
+                Assert.IsTrue(table.ExistsAsync().Result);
+                Assert.IsTrue(table.DeleteIfExistsAsync(requestOptions, operationContext).Result);
+                Assert.IsFalse(table.ExistsAsync().Result);
+                Assert.IsFalse(table.DeleteIfExistsAsync(requestOptions, operationContext).Result);
+                Assert.IsFalse(table.ExistsAsync().Result);
+            }
+            finally
+            {
+                table.DeleteIfExistsAsync().Wait();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test Table DeleteIfExists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableDeleteIfExistsRequestOptionsOperationContextCancellationTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable table = tableClient.GetTableReference(tableName);
+            TableRequestOptions requestOptions = new TableRequestOptions();
+            OperationContext operationContext = new OperationContext();
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            try
+            {
+                Assert.IsFalse(table.ExistsAsync().Result);
+                Assert.IsFalse(table.DeleteIfExistsAsync(requestOptions, operationContext, cancellationToken).Result);
+                table.CreateAsync().Wait();
+                Assert.IsTrue(table.ExistsAsync().Result);
+                Assert.IsTrue(table.DeleteIfExistsAsync(requestOptions, operationContext, cancellationToken).Result);
+                Assert.IsFalse(table.ExistsAsync().Result);
+                Assert.IsFalse(table.DeleteIfExistsAsync(requestOptions, operationContext, cancellationToken).Result);
+                Assert.IsFalse(table.ExistsAsync().Result);
+            }
+            finally
+            {
+                table.DeleteIfExistsAsync().Wait();
+            }
+        }
+#endif
 
         #endregion
 
@@ -683,6 +1106,38 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 tableRef.DeleteIfExists();
             }
         }
+
+        #endregion
+        
+        #region Task
+
+#if TASK
+        [TestMethod]
+        [Description("Test Table Exists - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudTableExistsTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string tableName = GenerateRandomTableName();
+            CloudTable tableRef = tableClient.GetTableReference(tableName);
+
+            try
+            {
+                Assert.IsFalse(tableRef.ExistsAsync().Result);
+                tableRef.CreateAsync().Wait();
+                Assert.IsTrue(tableRef.ExistsAsync().Result);
+                tableRef.DeleteAsync().Wait();
+                Assert.IsFalse(tableRef.ExistsAsync().Result);
+            }
+            finally
+            {
+                tableRef.DeleteIfExistsAsync().Wait();
+            }
+        }
+#endif
 
         #endregion
 

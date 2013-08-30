@@ -17,12 +17,13 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Util
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
     using Microsoft.WindowsAzure.Storage.Auth;
     using Microsoft.WindowsAzure.Storage.Core.Auth;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
 
     /// <summary>
     /// Contains methods for dealing with navigation.
@@ -69,9 +70,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// The trailing slash is always removed.
         /// <example>
         /// GetContainerName(new Uri("http://test.blob.core.windows.net/mycontainer/myfolder/myblob")) will return "mycontainer"
-        /// GetConatinerName(new Uri("http://test.blob.core.windows.net/mycontainer/")) will return "mycontainer"
-        /// GetConatinerName(new Uri("http://test.blob.core.windows.net/myblob")) will return "$root"
-        /// GetConatinerName(new Uri("http://test.blob.core.windows.net/")) will throw ArgumentException
+        /// GetContainerName(new Uri("http://test.blob.core.windows.net/mycontainer/")) will return "mycontainer"
+        /// GetContainerName(new Uri("http://test.blob.core.windows.net/myblob")) will return "$root"
+        /// GetContainerName(new Uri("http://test.blob.core.windows.net/")) will throw ArgumentException
         /// </example>
         /// </remarks>
         internal static string GetContainerName(Uri blobAddress, bool? usePathStyleUris)
@@ -97,11 +98,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
             GetContainerNameAndBlobName(blobAddress, usePathStyleUris, out containerName, out blobName);
 
-            return blobName;
+            return Uri.UnescapeDataString(blobName);
         }
 
         /// <summary>
-        /// Retreives the complete container address from a storage Uri
+        /// Retrieves the complete container address from a storage Uri
         /// Example GetContainerAddress(new Uri("http://test.blob.core.windows.net/mycontainer/myfolder/myblob"))
         /// will return http://test.blob.core.windows.net/mycontainer.
         /// </summary>
@@ -119,7 +120,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         }
 
         /// <summary>
-        /// Retreives the parent name from a storage Uri.
+        /// Retrieves the parent name from a storage Uri.
         /// </summary>
         /// <param name="blobAddress">The blob address.</param>
         /// <param name="delimiter">The delimiter.</param>
@@ -136,8 +137,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// </example>
         internal static string GetParentName(Uri blobAddress, string delimiter, bool? usePathStyleUris)
         {
-            CommonUtils.AssertNotNull("blobAbsoluteUriString", blobAddress);
-            CommonUtils.AssertNotNullOrEmpty("delimiter", delimiter);
+            CommonUtility.AssertNotNull("blobAbsoluteUriString", blobAddress);
+            CommonUtility.AssertNotNullOrEmpty("delimiter", delimiter);
 
             string containerName;
             Uri containerUri;
@@ -149,7 +150,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             string blobPath = blobPathUri.OriginalString;
             
             delimiter = Uri.EscapeUriString(delimiter);
-            if (blobPath.EndsWith(delimiter))
+            if (blobPath.EndsWith(delimiter, StringComparison.Ordinal))
             {
                 blobPath = blobPath.Substring(0, blobPath.Length - delimiter.Length);
             }
@@ -164,7 +165,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             }
             else
             {
-                int parentLength = blobPath.LastIndexOf(delimiter);
+                int parentLength = blobPath.LastIndexOf(delimiter, StringComparison.Ordinal);
 
                 if (parentLength <= 0)
                 {
@@ -217,18 +218,15 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <param name="usePathStyleUris">The use path style Uris.</param>
         /// <returns>The base address of the client.</returns>
         /// <example>
-        /// GetServiceClientBaseAddress("http://testaccount.blob.core.windows.net/testconatiner/blob1") 
+        /// GetServiceClientBaseAddress("http://testaccount.blob.core.windows.net/testcontainer/blob1") 
         /// returns "http://testaccount.blob.core.windows.net"
         /// </example>
         internal static Uri GetServiceClientBaseAddress(Uri addressUri, bool? usePathStyleUris)
         {
-#if COMMON
-            throw new PlatformNotSupportedException();
-#else
             if (usePathStyleUris == null)
             {
                 // Automatically determine whether to use path style vs host style uris
-                usePathStyleUris = CommonUtils.UsePathStyleAddressing(addressUri);
+                usePathStyleUris = CommonUtility.UsePathStyleAddressing(addressUri);
             }
 
             Uri authority = new Uri(addressUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped));
@@ -248,7 +246,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             {
                 return authority;
             }
-#endif
         }
 
         /// <summary>
@@ -269,11 +266,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         }
 
         /// <summary>
-        /// Append a relative path to a URI, handling traling slashes appropiately.
+        /// Append a relative path to a URI, handling trailing slashes appropriately.
         /// </summary>
         /// <param name="uri">The base URI.</param>
-        /// <param name="relativeOrAbsoluteUri">The relative or absloute URI.</param>
-        /// <param name="sep">The seperator.</param>
+        /// <param name="relativeOrAbsoluteUri">The relative or absolute URI.</param>
+        /// <param name="sep">The separator.</param>
         /// <returns>The appended Uri.</returns>
         internal static Uri AppendPathToUri(Uri uri, string relativeOrAbsoluteUri, string sep)
         {
@@ -301,7 +298,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
             UriBuilder ub = new UriBuilder(uri);
             string appendString = null;
-            if (ub.Path.EndsWith(sep))
+            if (ub.Path.EndsWith(sep, StringComparison.Ordinal))
             {
                 appendString = relativeOrAbsoluteUri;
             }
@@ -316,7 +313,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         /// <summary>
         /// Get container name from address for styles of paths
-        /// Eg: http://test.blob.core.windows.net/container/blob =&gt; container
+        /// Example: http://test.blob.core.windows.net/container/blob =&gt; container
         /// http://127.0.0.1:10000/test/container/blob =&gt; container.
         /// </summary>
         /// <param name="uri">The container Uri.</param>
@@ -327,7 +324,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             if (usePathStyleUris == null)
             {
                 // Automatically determine whether to use path style vs host style uris
-                usePathStyleUris = CommonUtils.UsePathStyleAddressing(uri);
+                usePathStyleUris = CommonUtility.UsePathStyleAddressing(uri);
             }
 
             if (usePathStyleUris.Value)
@@ -411,15 +408,12 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <param name="blobName">The resulting blob name.</param>
         private static void GetContainerNameAndBlobName(Uri blobAddress, bool? usePathStyleUris, out string containerName, out string blobName)
         {
-#if COMMON
-            throw new PlatformNotSupportedException();
-#else
-            CommonUtils.AssertNotNull("blobAddress", blobAddress);
+            CommonUtility.AssertNotNull("blobAddress", blobAddress);
 
             if (usePathStyleUris == null)
             {
                 // Automatically determine whether to use path style vs host style uris
-                usePathStyleUris = CommonUtils.UsePathStyleAddressing(blobAddress);
+                usePathStyleUris = CommonUtility.UsePathStyleAddressing(blobAddress);
             }
 
             string[] addressParts = blobAddress.Segments;
@@ -458,7 +452,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 Array.Copy(addressParts, firstBlobIndex, blobNameSegments, 0, blobNameSegments.Length);
                 blobName = string.Concat(blobNameSegments);
             }
-#endif
         }
 
         /// <summary>
@@ -476,7 +469,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 DateTimeStyles.AdjustToUniversal,
                 out snapshotTime))
             {
-                CommonUtils.ArgumentOutOfRange("snapshot", snapshot);
+                CommonUtility.ArgumentOutOfRange("snapshot", snapshot);
             }
 
             return snapshotTime;
@@ -488,7 +481,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <param name="address">The complete Uri.</param>
         /// <param name="parsedCredentials">The credentials to use.</param>
         /// <param name="parsedSnapshot">The parsed snapshot.</param>
-        /// <returns>It returns the blob URI with no credentials and no snapshot info</returns>
+        /// <returns>The blob URI without credentials or snapshot info</returns>
         /// <exception cref="System.ArgumentException">address</exception>
         /// <remarks>
         /// Validate that no other query parameters are passed in.
@@ -499,14 +492,14 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// </remarks>
         internal static Uri ParseBlobQueryAndVerify(Uri address, out StorageCredentials parsedCredentials, out DateTimeOffset? parsedSnapshot)
         {
-            CommonUtils.AssertNotNull("address", address);
+            CommonUtility.AssertNotNull("address", address);
             if (!address.IsAbsoluteUri)
             {
                 string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.RelativeAddressNotPermitted, address.ToString());
                 throw new ArgumentException(errorMessage, "address");
             }
 
-            IDictionary<string, string> queryParameters = HttpUtility.ParseQueryString(address.Query);
+            IDictionary<string, string> queryParameters = HttpWebUtility.ParseQueryString(address.Query);
 
             parsedSnapshot = null;
             string snapshot;
@@ -518,7 +511,34 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 }
             }
 
-            parsedCredentials = SharedAccessSignatureHelper.ParseQuery(queryParameters);
+            parsedCredentials = SharedAccessSignatureHelper.ParseQuery(queryParameters, true);
+            return new Uri(address.GetComponents(UriComponents.SchemeAndServer | UriComponents.Path, UriFormat.UriEscaped));
+        }
+
+        /// <summary>
+        /// Parse Uri for SAS (Shared access signature) information.
+        /// </summary>
+        /// <param name="address">The complete Uri.</param>
+        /// <param name="parsedCredentials">The credentials to use.</param>
+        /// <remarks>
+        /// Validate that no other query parameters are passed in.
+        /// Any SAS information will be recorded as corresponding credentials instance.
+        /// If credentials is passed in and it does not match the SAS information found, an
+        /// exception will be thrown.
+        /// Otherwise a new client is created based on SAS information or as anonymous credentials.
+        /// </remarks>
+        internal static Uri ParseQueueTableQueryAndVerify(Uri address, out StorageCredentials parsedCredentials)
+        {
+            CommonUtility.AssertNotNull("address", address);
+            if (!address.IsAbsoluteUri)
+            {
+                string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.RelativeAddressNotPermitted, address.ToString());
+                throw new ArgumentException(errorMessage, "address");
+            }
+
+            IDictionary<string, string> queryParameters = HttpWebUtility.ParseQueryString(address.Query);
+
+            parsedCredentials = SharedAccessSignatureHelper.ParseQuery(queryParameters, false);
             return new Uri(address.GetComponents(UriComponents.SchemeAndServer | UriComponents.Path, UriFormat.UriEscaped));
         }
     }

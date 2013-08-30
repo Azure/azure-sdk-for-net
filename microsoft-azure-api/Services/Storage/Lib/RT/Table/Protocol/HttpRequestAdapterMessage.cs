@@ -17,14 +17,14 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
+    using Microsoft.Data.OData;
+    using Microsoft.WindowsAzure.Storage.Core;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Net.Http;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Microsoft.Data.OData;
 
     internal class HttpRequestAdapterMessage : IODataRequestMessage, IDisposable
     {
@@ -37,10 +37,10 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 
         // Summary:
         //     Initializes a new instance of the System.Net.Http.HttpRequestMessage class.
-        public HttpRequestAdapterMessage(HttpRequestMessage msg)
+        public HttpRequestAdapterMessage(HttpRequestMessage msg, IBufferManager bufferManager, int bufferSize)
         {
             this.msg = msg;
-            this.outStr = new MemoryStream();
+            this.outStr = new MultiBufferMemoryStream(bufferManager, bufferSize);
             this.content = new StreamContent(this.outStr);
         }
 
@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 
         private HttpRequestMessage msg = null;
 
-        private MemoryStream outStr = null;
+        private MultiBufferMemoryStream outStr = null;
 
         public string GetHeader(string headerName)
         {
@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", Justification = "Members used after adaptermessage is disposed")]
+        [SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", Justification = "Members used after adaptermessage is disposed")]
         public void Dispose()
         {
             this.msg = null;

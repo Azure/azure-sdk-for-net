@@ -17,11 +17,14 @@
 
 namespace Microsoft.WindowsAzure.Storage
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// Specifies that the method will make one or more requests to the storage service. 
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Back compatibility.")]
     [System.AttributeUsage(System.AttributeTargets.Method, AllowMultiple = false)]
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

@@ -17,19 +17,16 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
+    using Microsoft.Data.OData;
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Executor;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Text;
     using System.Threading.Tasks;
-    using Microsoft.Data.OData;
-    using Microsoft.WindowsAzure.Storage.Core.Executor;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-    using Microsoft.WindowsAzure.Storage.Table.Protocol;
-    using Microsoft.WindowsAzure.Storage.Core;
 
     internal class TableOperationHttpResponseParsers
     {
@@ -46,7 +43,24 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
             }
             else
             {
-                resp.EnsureSuccessStatusCode();
+                if (ex != null)
+                {
+                    throw StorageException.TranslateException(ex, cmd.CurrentResult);
+                }
+                else if (operation.OperationType == TableOperationType.Insert)
+                {
+                    if (resp.StatusCode != HttpStatusCode.Created)
+                    {
+                        throw StorageException.TranslateException(ex, cmd.CurrentResult);
+                    }
+                }
+                else
+                {
+                    if (resp.StatusCode != HttpStatusCode.NoContent)
+                    {
+                        throw StorageException.TranslateException(ex, cmd.CurrentResult);
+                    }
+                }
             }
 
             if (resp.Headers.ETag != null)
@@ -207,14 +221,14 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
                 });
         }
 
-        internal static Task<TableQuerySegment> TableQueryPostProcess(Stream responseStream, HttpResponseMessage resp, Exception ex, OperationContext ctx)
+        internal static Task<TableQuerySegment> TableQueryPostProcess(Stream responseStream, HttpResponseMessage resp, OperationContext ctx)
         {
             return Task.Run(() =>
             {
                 TableQuerySegment retSeg = new TableQuerySegment();
                 retSeg.ContinuationToken = ContinuationFromResponse(resp);
 
-                ODataMessageReaderSettings readerSettings = new ODataMessageReaderSettings() { DisablePrimitiveTypeConversion = true };
+                ODataMessageReaderSettings readerSettings = new ODataMessageReaderSettings();
                 readerSettings.MessageQuotas = new ODataMessageQuotas() { MaxPartsPerBatch = TableConstants.TableServiceMaxResults, MaxReceivedMessageSize = TableConstants.TableServiceMaxPayload };
 
                 using (ODataMessageReader responseReader = new ODataMessageReader(new HttpResponseAdapterMessage(resp, responseStream), readerSettings))
@@ -256,7 +270,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
             });
         }
 
-        internal static Task<ResultSegment<TElement>> TableQueryPostProcessGeneric<TElement>(Stream responseStream, Func<string, string, DateTimeOffset, IDictionary<string, EntityProperty>, string, TElement> resolver, HttpResponseMessage resp, Exception ex, OperationContext ctx)
+        internal static Task<ResultSegment<TElement>> TableQueryPostProcessGeneric<TElement>(Stream responseStream, Func<string, string, DateTimeOffset, IDictionary<string, EntityProperty>, string, TElement> resolver, HttpResponseMessage resp, OperationContext ctx)
         {
             return Task.Run(() =>
             {
@@ -290,7 +304,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 
                         ODataEntry entry = (ODataEntry)reader.Item;
 
-                        retSeg.Results.Add((TElement)ReadAndResolve(entry, (pk, rk, ts, prop, etag) => resolver(pk, rk, ts, prop, etag)));
+                        retSeg.Results.Add(ReadAndResolve(entry, resolver));
 
                         // Entry End => ?
                         reader.Read();
@@ -385,7 +399,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
             }
         }
 
-        private static object ReadAndResolve(ODataEntry entry, EntityResolver resolver)
+        private static T ReadAndResolve<T>(ODataEntry entry, Func<string, string, DateTimeOffset, IDictionary<string, EntityProperty>, string, T> resolver)
         {
             string pk = null;
             string rk = null;

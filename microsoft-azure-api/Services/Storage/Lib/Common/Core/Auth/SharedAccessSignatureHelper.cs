@@ -25,12 +25,13 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
     using Microsoft.WindowsAzure.Storage.Table;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
     /// <summary>
     /// Contains helper methods for implementing shared access signatures.
     /// </summary>
-    internal static partial class SharedAccessSignatureHelper
+    internal static class SharedAccessSignatureHelper
     {
         /// <summary>
         /// Get the complete query builder for creating the Shared Access Signature query.
@@ -48,8 +49,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             string signature,
             string accountKeyName)
         {
-            CommonUtils.AssertNotNullOrEmpty("resourceType", resourceType);
-            CommonUtils.AssertNotNull("signature", signature);
+            CommonUtility.AssertNotNullOrEmpty("resourceType", resourceType);
+            CommonUtility.AssertNotNull("signature", signature);
 
             if (policy == null)
             {
@@ -103,7 +104,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             string signature,
             string accountKeyName)
         {
-            CommonUtils.AssertNotNull("signature", signature);
+            CommonUtility.AssertNotNull("signature", signature);
 
             if (policy == null)
             {
@@ -167,7 +168,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             string signature,
             string accountKeyName)
         {          
-            CommonUtils.AssertNotNull("signature", signature);
+            CommonUtility.AssertNotNull("signature", signature);
 
             if (policy == null)
             {
@@ -247,7 +248,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         /// Parses the query.
         /// </summary>
         /// <param name="queryParameters">The query parameters.</param>
-        internal static StorageCredentials ParseQuery(IDictionary<string, string> queryParameters)
+        /// <param name="mandatorySignedResource">A boolean that represents whether SignedResource is part of Sas or not. True for blobs, False for Queues and Tables.</param>
+        [SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower", Justification = "ToLower(CultureInfo) is not present in RT and ToLowerInvariant() also violates FxCop")]
+        internal static StorageCredentials ParseQuery(IDictionary<string, string> queryParameters, bool mandatorySignedResource)
         {
             string signature = null;
             string signedStart = null;
@@ -256,6 +259,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             string sigendPermissions = null;
             string signedIdentifier = null;
             string signedVersion = null;
+            string tableName = null;
 
             bool sasParameterFound = false;
 
@@ -298,18 +302,21 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                         sasParameterFound = true;
                         break;
 
+                    case Constants.QueryConstants.SasTableName:
+                        tableName = parameter.Value;
+                        sasParameterFound = true;
+                        break;
+
                     default:
                         break;
-                    //// string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.InvalidQueryParametersInsideBlobAddress, key.ToLower());
-                    //// throw new ArgumentException(errorMessage);
                 }
             }
 
             if (sasParameterFound)
             {
-                if (signature == null || signedResource == null)
+                if (signature == null || (mandatorySignedResource && signedResource == null))
                 {
-                    string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.MissingMandatoryParamtersForSAS);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.MissingMandatoryParametersForSAS);
                     throw new ArgumentException(errorMessage);
                 }
 
@@ -317,11 +324,16 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedStart, signedStart);
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedExpiry, signedExpiry);
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedPermissions, sigendPermissions);
-                builder.Add(Constants.QueryConstants.SignedResource, signedResource);
+                if (signedResource != null)
+                {
+                    builder.Add(Constants.QueryConstants.SignedResource, signedResource);
+                }
+
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedIdentifier, signedIdentifier);
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.SignedVersion, signedVersion);
                 AddEscapedIfNotNull(builder, Constants.QueryConstants.Signature, signature);
-
+                AddEscapedIfNotNull(builder, Constants.QueryConstants.SasTableName, tableName);
+               
                 return new StorageCredentials(builder.ToString());
             }
 
@@ -378,20 +390,19 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             return builder;
         }
 
-#if !COMMON
         /// <summary>
         /// Get the signature hash embedded inside the Shared Access Signature.
         /// </summary>
         /// <param name="policy">The shared access policy to hash.</param>
         /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
         /// <param name="resourceName">The canonical resource string, unescaped.</param>
-        /// <param name="credentials">Credentials to be used for signing.</param>
+        /// <param name="keyValue">The key value retrieved as an atomic operation used for signing.</param>
         /// <returns>The signed hash.</returns>
         internal static string GetSharedAccessSignatureHashImpl(
             SharedAccessBlobPolicy policy,
             string accessPolicyIdentifier,
             string resourceName,
-            StorageCredentials credentials)
+            byte[] keyValue)
         {
             if (policy == null)
             {
@@ -406,7 +417,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                     false /* not using table SAS */,
                     accessPolicyIdentifier,
                     resourceName,
-                    credentials);
+                    keyValue);
             }
 
             return GetSharedAccessSignatureHashImpl(
@@ -420,7 +431,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                 false /* not using table SAS */,
                 accessPolicyIdentifier,
                 resourceName,
-                credentials);
+                keyValue);
         }
 
         /// <summary>
@@ -429,13 +440,13 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         /// <param name="policy">The shared access policy to hash.</param>
         /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
         /// <param name="resourceName">The canonical resource string, unescaped.</param>
-        /// <param name="credentials">Credentials to be used for signing.</param>
+        /// <param name="keyValue">The key value retrieved as an atomic operation used for signing.</param>
         /// <returns>The signed hash.</returns>
         internal static string GetSharedAccessSignatureHashImpl(
             SharedAccessQueuePolicy policy,
             string accessPolicyIdentifier,
             string resourceName,
-            StorageCredentials credentials)
+            byte[] keyValue)
         {
             if (policy == null)
             {
@@ -450,7 +461,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                     false /* not using table SAS */,
                     accessPolicyIdentifier,
                     resourceName,
-                    credentials);
+                    keyValue);
             }
             else
             {
@@ -465,7 +476,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                     false /* not using table SAS */,
                     accessPolicyIdentifier,
                     resourceName,
-                    credentials);
+                    keyValue);
             }
         }
 
@@ -479,7 +490,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         /// <param name="endPartitionKey">The end partition key, or null.</param>
         /// <param name="endRowKey">The end row key, or null.</param>
         /// <param name="resourceName">The canonical resource string, unescaped.</param>
-        /// <param name="credentials">Credentials to be used for signing.</param>
+        /// <param name="keyValue">The key value retrieved as an atomic operation used for signing.</param>
         /// <returns>The signed hash.</returns>
         internal static string GetSharedAccessSignatureHashImpl(
             SharedAccessTablePolicy policy,
@@ -489,7 +500,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             string endPartitionKey,
             string endRowKey,
             string resourceName,
-            StorageCredentials credentials)
+            byte[] keyValue)
         {
             if (policy == null)
             {
@@ -504,7 +515,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                     true /* using table SAS */,
                     accessPolicyIdentifier,
                     resourceName,
-                    credentials);
+                    keyValue);
             }
 
             return GetSharedAccessSignatureHashImpl(
@@ -518,7 +529,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                 true /* using table SAS */,
                 accessPolicyIdentifier,
                 resourceName,
-                credentials);
+                keyValue);
         }
 
         /// <summary>
@@ -534,8 +545,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         /// <param name="useTableSas">Whether to use the table string-to-sign.</param>
         /// <param name="accessPolicyIdentifier">An optional identifier for the policy.</param>
         /// <param name="resourceName">The canonical resource string, unescaped.</param>
-        /// <param name="credentials">The credentials to be used for signing.</param>
+        /// <param name="keyValue">The key value retrieved as an atomic operation used for signing.</param>
         /// <returns>The signed hash.</returns>
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Microsoft.WindowsAzure.Storage.Core.Util.CryptoUtility.ComputeHmac256(System.Byte[],System.String)", Justification = "Reviewed")]
         private static string GetSharedAccessSignatureHashImpl(
             string permissions,
             DateTimeOffset? startTime,
@@ -547,15 +559,10 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             bool useTableSas,
             string accessPolicyIdentifier,
             string resourceName,
-            StorageCredentials credentials)
+            byte[] keyValue)
         {
-            CommonUtils.AssertNotNullOrEmpty("resourceName", resourceName);
-            CommonUtils.AssertNotNull("credentials", credentials);
-
-            if (!credentials.IsSharedKey)
-            {
-                throw new ArgumentException();
-            }
+            CommonUtility.AssertNotNullOrEmpty("resourceName", resourceName);
+            CommonUtility.AssertNotNull("keyValue", keyValue);
 
             //// StringToSign =      signedpermissions + "\n" +
             ////                     signedstart + "\n" +
@@ -573,6 +580,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             //// HMAC-SHA256(UTF8.Encode(StringToSign))
 
             string stringToSign = string.Format(
+                                     CultureInfo.InvariantCulture,
                                      "{0}\n{1}\n{2}\n{3}\n{4}\n{5}",
                                      permissions,
                                      GetDateTimeOrEmpty(startTime),
@@ -584,6 +592,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             if (useTableSas)
             {
                 stringToSign = string.Format(
+                    CultureInfo.InvariantCulture,
                     "{0}\n{1}\n{2}\n{3}\n{4}",
                     stringToSign,
                     startPartitionKey,
@@ -592,10 +601,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
                     endRowKey);
             }
 
-            string signature = CryptoUtility.ComputeHmac256(credentials.KeyValue, stringToSign);
+            string signature = CryptoUtility.ComputeHmac256(keyValue, stringToSign);
 
             return signature;
         }
-#endif
     }
 }

@@ -15,14 +15,13 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Core;
 using Windows.Globalization;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
@@ -30,6 +29,99 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     [TestClass]
     public class CloudBlobContainerTest : BlobTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
+        private static async Task TestAccessAsync(BlobContainerPublicAccessType accessType, CloudBlobContainer container, ICloudBlob inputBlob)
+        {
+            StorageCredentials credentials = new StorageCredentials();
+            container = new CloudBlobContainer(container.Uri, credentials);
+            CloudPageBlob blob = new CloudPageBlob(inputBlob.Uri, credentials);
+            OperationContext context = new OperationContext();
+            BlobRequestOptions options = new BlobRequestOptions();
+
+            if (accessType.Equals(BlobContainerPublicAccessType.Container))
+            {
+                await blob.FetchAttributesAsync();
+                await container.ListBlobsSegmentedAsync(null, true, BlobListingDetails.All, null, null, options, context);
+                await container.FetchAttributesAsync();
+            }
+            else if (accessType.Equals(BlobContainerPublicAccessType.Blob))
+            {
+                await blob.FetchAttributesAsync();
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await container.ListBlobsSegmentedAsync(null, true, BlobListingDetails.All, null, null, options, context),
+                    context,
+                    "List blobs while public access does not allow for listing",
+                    HttpStatusCode.NotFound);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await container.FetchAttributesAsync(null, options, context),
+                    context,
+                    "Fetch container attributes while public access does not allow",
+                    HttpStatusCode.NotFound);
+            }
+            else
+            {
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await blob.FetchAttributesAsync(null, options, context),
+                    context,
+                    "Fetch blob attributes while public access does not allow",
+                    HttpStatusCode.NotFound);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await container.ListBlobsSegmentedAsync(null, true, BlobListingDetails.All, null, null, options, context),
+                    context,
+                    "List blobs while public access does not allow for listing",
+                    HttpStatusCode.NotFound);
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await container.FetchAttributesAsync(null, options, context),
+                    context,
+                    "Fetch container attributes while public access does not allow",
+                    HttpStatusCode.NotFound);
+            }
+        }
+
+        [TestMethod]
+        // [Description("Validate container references")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlobContainerReference()
+        {
+            CloudBlobClient client = GenerateCloudBlobClient();
+            CloudBlobContainer container = client.GetContainerReference("container");
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference("directory1/blob1");
+            CloudPageBlob pageBlob = container.GetPageBlobReference("directory2/blob2");
+            CloudBlobDirectory directory = container.GetDirectoryReference("directory3");
+            CloudBlobDirectory directory2 = directory.GetSubdirectoryReference("directory4");
+
+            Assert.AreEqual(container, blockBlob.Container);
+            Assert.AreEqual(container, pageBlob.Container);
+            Assert.AreEqual(container, directory.Container);
+            Assert.AreEqual(container, directory2.Container);
+            Assert.AreEqual(container, directory2.Parent.Container);
+            Assert.AreEqual(container, blockBlob.Parent.Container);
+            Assert.AreEqual(container, blockBlob.Parent.Container);
+        }
+
         [TestMethod]
         /// [Description("Create and delete a container")]
         [TestCategory(ComponentCategory.Blob)]
@@ -84,6 +176,87 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
+        // [Description("Create a container with AccessType")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlobContainerCreateWithContainerAccessTypeAsyncOverload()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+
+            try
+            {
+                await container.CreateAsync(BlobContainerPublicAccessType.Container, null, null);
+                CloudPageBlob blob1 = container.GetPageBlobReference("blob1");
+                await blob1.CreateAsync(0);
+                CloudPageBlob blob2 = container.GetPageBlobReference("blob2");
+                await blob2.CreateAsync(0);
+
+                await TestAccessAsync(BlobContainerPublicAccessType.Container, container, blob1);
+                await TestAccessAsync(BlobContainerPublicAccessType.Container, container, blob2);
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        // [Description("Create a container with AccessType")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlobContainerCreateWithBlobAccessTypeAsyncOverload()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+
+            try
+            {
+                await container.CreateAsync(BlobContainerPublicAccessType.Blob, null, null);
+                CloudPageBlob blob1 = container.GetPageBlobReference("blob1");
+                await blob1.CreateAsync(0);
+                CloudPageBlob blob2 = container.GetPageBlobReference("blob2");
+                await blob2.CreateAsync(0);
+
+                await TestAccessAsync(BlobContainerPublicAccessType.Blob, container, blob1);
+                await TestAccessAsync(BlobContainerPublicAccessType.Blob, container, blob2);
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
+        // [Description("Create a container with AccessType")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CloudBlobContainerCreateWithPrivateAccessTypeAsyncOverload()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+
+            try
+            {
+                await container.CreateAsync(BlobContainerPublicAccessType.Off, null, null);
+                CloudPageBlob blob1 = container.GetPageBlobReference("blob1");
+                await blob1.CreateAsync(0);
+                CloudPageBlob blob2 = container.GetPageBlobReference("blob2");
+                await blob2.CreateAsync(0);
+
+                await TestAccessAsync(BlobContainerPublicAccessType.Off, container, blob1);
+                await TestAccessAsync(BlobContainerPublicAccessType.Off, container, blob2);
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+
+        [TestMethod]
         /// [Description("Check a container's existence")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -92,17 +265,23 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public async Task CloudBlobContainerExistsAsync()
         {
             CloudBlobContainer container = GetRandomContainerReference();
+            CloudBlobContainer container2 = container.ServiceClient.GetContainerReference(container.Name);
+
             try
             {
-                Assert.IsFalse(await container.ExistsAsync());
+                Assert.IsFalse(await container2.ExistsAsync());
+                
                 await container.CreateAsync();
-                Assert.IsTrue(await container.ExistsAsync());
+                
+                Assert.IsTrue(await container2.ExistsAsync());
+                Assert.IsNotNull(container2.Properties.ETag);
             }
             finally
             {
                 container.DeleteIfExistsAsync().AsTask().Wait();
             }
-            Assert.IsFalse(await container.ExistsAsync());
+
+            Assert.IsFalse(await container2.ExistsAsync());
         }
 
         [TestMethod]

@@ -24,7 +24,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     /// <summary>
     /// Provides methods for parsing the response from an operation to get a range of pages for a page blob.
     /// </summary>
-#if DNCP
+#if WINDOWS_DESKTOP
     public
 #else
     internal

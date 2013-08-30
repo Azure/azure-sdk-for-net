@@ -15,11 +15,14 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text;
 using System.Threading;
+using System.Xml;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -104,13 +107,25 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
         //
         // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
+        }
+
         #endregion
 
         #region Ctor Test
@@ -128,6 +143,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
             Assert.IsTrue(tableClient.BaseUri.ToString().Contains(TestBase.TargetTenantConfig.TableServiceEndpoint));
             Assert.AreEqual(TestBase.StorageCredentials, tableClient.Credentials);
             Assert.AreEqual(AuthenticationScheme.SharedKey, tableClient.AuthenticationScheme);
+
+            CloudTableClient tableClient2 = new CloudTableClient(baseAddressUri);
+            Assert.IsTrue(tableClient2.BaseUri.ToString().Contains(TestBase.TargetTenantConfig.TableServiceEndpoint));
+            Assert.AreEqual(AuthenticationScheme.SharedKey, tableClient2.AuthenticationScheme);
         }
 
         #endregion
@@ -360,6 +379,98 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region Sync
 
         [TestMethod]
+        [Description("Verify GetSchema, WriteXml and ReadXml on TableContinuationToken")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableContinuationTokenVerifyXmlFunctions()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            TableResultSegment segment = null;
+            List<CloudTable> totalResults = new List<CloudTable>();
+            TableContinuationToken token = null;
+            do
+            {
+                segment = tableClient.ListTablesSegmented("prefixtable", 5, segment != null ? segment.ContinuationToken : null);
+                totalResults.AddRange(segment);
+                token = segment.ContinuationToken;
+                if (token != null)
+                {
+                    Assert.AreEqual(null, token.GetSchema());
+
+                    XmlWriterSettings settings = new XmlWriterSettings();
+                    settings.Indent = true;
+                    StringBuilder sb = new StringBuilder();
+                    using (XmlWriter writer = XmlWriter.Create(sb, settings))
+                    {
+                        token.WriteXml(writer);
+                    }
+
+                    using (XmlReader reader = XmlReader.Create(new StringReader(sb.ToString())))
+                    {
+                        token = new TableContinuationToken();
+                        token.ReadXml(reader);
+                    }
+                }
+            }
+            while (token != null);
+
+            Assert.AreEqual(totalResults.Count, tableClient.ListTables("prefixtable").Count());
+        }
+
+        [TestMethod]
+        [Description("Verify WriteXml and ReadXml on TableContinuationToken within another XML")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableContinuationTokenVerifyXmlWithinXml()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+
+            TableResultSegment segment = null;
+            List<CloudTable> totalResults = new List<CloudTable>();
+            TableContinuationToken token = null;
+            do
+            {
+                segment = tableClient.ListTablesSegmented("prefixtable", 5, segment != null ? segment.ContinuationToken : null);
+                totalResults.AddRange(segment);
+                token = segment.ContinuationToken;
+                if (token != null)
+                {
+                    Assert.AreEqual(null, token.GetSchema());
+
+                    XmlWriterSettings settings = new XmlWriterSettings();
+                    settings.Indent = true;
+                    StringBuilder sb = new StringBuilder();
+                    using (XmlWriter writer = XmlWriter.Create(sb, settings))
+                    {
+                        writer.WriteStartElement("test1");
+                        writer.WriteStartElement("test2");
+                        token.WriteXml(writer);
+                        writer.WriteEndElement();
+                        writer.WriteEndElement();
+                    }
+
+                    using (XmlReader reader = XmlReader.Create(new StringReader(sb.ToString())))
+                    {
+                        token = new TableContinuationToken();
+                        reader.ReadStartElement();
+                        reader.ReadStartElement();
+                        token.ReadXml(reader);
+                        reader.ReadEndElement();
+                        reader.ReadEndElement();
+                    }
+                }
+            }
+            while (token != null);
+
+            Assert.AreEqual(totalResults.Count, tableClient.ListTables("prefixtable").Count());
+        }
+
+        [TestMethod]
         [Description("Test List Tables Segmented Basic Sync")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -511,6 +622,8 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     segment = tableClient.EndListTablesSegmented(asyncRes);
                 }
 
+                Assert.IsTrue(segment.Count() <= 10);
+
                 totalResults.AddRange(segment);
                 segCount++;
             }
@@ -565,6 +678,185 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 Assert.IsTrue(tbl.Name.StartsWith(prefixTablesPrefix));
             }
         }
+
+        #endregion
+
+        #region Task
+
+#if TASK
+        [TestMethod]
+        [Description("Test TableClient ListTablesSegmented - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ListTablesSegmentedTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableContinuationToken token = null;
+
+            do
+            {
+                TableResultSegment resultSegment = tableClient.ListTablesSegmentedAsync(token).Result;
+                token = resultSegment.ContinuationToken;
+            }
+            while (token != null);
+        }
+
+        [TestMethod]
+        [Description("Test TableClient ListTablesSegmented - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ListTablesSegmentedPrefixTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string prefix = prefixTablesPrefix;
+            TableContinuationToken token = null;
+
+            int totalCount = 0;
+            do
+            {
+                TableResultSegment resultSegment = tableClient.ListTablesSegmentedAsync(prefix, token).Result;
+                token = resultSegment.ContinuationToken;
+
+                foreach (CloudTable table in resultSegment)
+                {
+                    Assert.IsTrue(table.Name.StartsWith(prefix));
+                    ++totalCount;
+                }
+            }
+            while (token != null);
+
+            Assert.AreEqual(20, totalCount);
+        }
+
+        [TestMethod]
+        [Description("Test TableClient ListTablesSegmented - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ListTablesSegmentedTokenCancellationTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            TableContinuationToken token = null;
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            do
+            {
+                TableResultSegment resultSegment = tableClient.ListTablesSegmentedAsync(token, cancellationToken).Result;
+                token = resultSegment.ContinuationToken;
+            }
+            while (token != null);
+        }
+
+        [TestMethod]
+        [Description("Test TableClient ListTablesSegmented - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ListTablesSegmentedPrefixTokenCancellationTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string prefix = prefixTablesPrefix;
+            TableContinuationToken token = null;
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            int totalCount = 0;
+            do
+            {
+                TableResultSegment resultSegment = tableClient.ListTablesSegmentedAsync(prefix, token, cancellationToken).Result;
+                token = resultSegment.ContinuationToken;
+
+                foreach (CloudTable table in resultSegment)
+                {
+                    Assert.IsTrue(table.Name.StartsWith(prefix));
+                    ++totalCount;
+                }
+            }
+            while (token != null);
+
+            Assert.AreEqual(20, totalCount);
+        }
+
+        [TestMethod]
+        [Description("Test TableClient ListTablesSegmented - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ListTablesSegmentedPrefixMaxResultsTokenRequestOptionsOperationContextTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string prefix = prefixTablesPrefix;
+            int? maxResults = 10;
+            TableContinuationToken token = null;
+            TableRequestOptions requestOptions = new TableRequestOptions();
+            OperationContext operationContext = new OperationContext();
+
+            int totalCount = 0;
+            do
+            {
+                TableResultSegment resultSegment = tableClient.ListTablesSegmentedAsync(prefix, maxResults, token, requestOptions, operationContext).Result;
+                token = resultSegment.ContinuationToken;
+
+                int count = 0;
+                foreach (CloudTable table in resultSegment)
+                {
+                    Assert.IsTrue(table.Name.StartsWith(prefix));
+                    ++count;
+                }
+
+                totalCount += count;
+
+                Assert.IsTrue(count <= maxResults.Value);
+            }
+            while (token != null);
+
+            Assert.AreEqual(20, totalCount);
+        }
+
+        [TestMethod]
+        [Description("Test TableClient ListTablesSegmented - Task")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ListTablesSegmentedPrefixMaxResultsTokenRequestOptionsOperationContextCancellationTokenTask()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            string prefix = prefixTablesPrefix;
+            int? maxResults = 10;
+            TableContinuationToken token = null;
+            TableRequestOptions requestOptions = new TableRequestOptions();
+            OperationContext operationContext = new OperationContext();
+            CancellationToken cancellationToken = CancellationToken.None;
+
+            int totalCount = 0;
+            do
+            {
+                TableResultSegment resultSegment = tableClient.ListTablesSegmentedAsync(prefix, maxResults, token, requestOptions, operationContext, cancellationToken).Result;
+                token = resultSegment.ContinuationToken;
+
+                int count = 0;
+                foreach (CloudTable table in resultSegment)
+                {
+                    Assert.IsTrue(table.Name.StartsWith(prefix));
+                    ++count;
+                }
+
+                totalCount += count;
+
+                Assert.IsTrue(count <= maxResults.Value);
+            }
+            while (token != null);
+
+            Assert.AreEqual(20, totalCount);
+        }
+#endif
 
         #endregion
 

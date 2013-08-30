@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// Gets the hash code for the specified object.
         /// </summary>
         /// <param name="obj">An object.</param>
-        /// <returns>A 32-bit signed hash code calculated from the value of the obj parameter.</returns>
+        /// <returns>A 32-bit signed hash code calculated from the value of the parameter.</returns>
         public override int GetHashCode(string obj)
         {
             return obj.GetHashCode();

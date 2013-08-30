@@ -17,10 +17,13 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// Enumeration containing the types of values that can be stored in
     /// a table entity property.
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Edm", Justification = "Reviewed")]
     public enum EdmType
     {
         /// <summary>

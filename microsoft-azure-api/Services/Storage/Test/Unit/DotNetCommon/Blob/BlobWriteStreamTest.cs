@@ -15,19 +15,40 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
     public class BlobWriteStreamTest : BlobTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         [Description("Create blobs using blob stream")]
         [TestCategory(ComponentCategory.Blob)]
@@ -397,6 +418,47 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             }
         }
 
+#if TASK
+        [TestMethod]
+        [Description("Create a blob using blob stream by specifying an access condition")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void BlockBlobWriteStreamOpenWithAccessConditionTask()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.CreateAsync().Wait();
+
+            try
+            {
+                CloudBlockBlob existingBlob = container.GetBlockBlobReference("blob");
+                existingBlob.PutBlockListAsync(new List<string>()).Wait();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob2");
+                AccessCondition accessCondition = AccessCondition.GenerateIfMatchCondition(existingBlob.Properties.ETag);
+                TestHelper.ExpectedExceptionTask(
+                    blob.OpenWriteAsync(accessCondition, null, null),
+                    "OpenWrite with a non-met condition should fail",
+                    HttpStatusCode.NotFound);
+
+                blob = container.GetBlockBlobReference("blob3");
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(existingBlob.Properties.ETag);
+                Stream blobStream = blob.OpenWriteAsync(accessCondition, null ,null).Result;
+                blobStream.Dispose();
+
+                blob = container.GetBlockBlobReference("blob4");
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition("*");
+                blobStream = blob.OpenWriteAsync(accessCondition, null, null).Result;
+                blobStream.Dispose();
+            }
+            finally
+            {
+                container.DeleteAsync().Wait();
+            }
+        }
+#endif
+
         [TestMethod]
         [Description("Create a blob using blob stream by specifying an access condition")]
         [TestCategory(ComponentCategory.Blob)]
@@ -646,6 +708,47 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             }
         }
 
+#if TASK
+        [TestMethod]
+        [Description("Create a blob using blob stream by specifying an access condition")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void PageBlobWriteStreamOpenWithAccessConditionTask()
+        {
+            CloudBlobContainer container = GetRandomContainerReference();
+            container.CreateAsync().Wait();
+
+            try
+            {
+                CloudPageBlob existingBlob = container.GetPageBlobReference("blob");
+                existingBlob.CreateAsync(1024).Wait();
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob2");
+                AccessCondition accessCondition = AccessCondition.GenerateIfMatchCondition(existingBlob.Properties.ETag);
+                TestHelper.ExpectedExceptionTask(
+                    blob.OpenWriteAsync(1024, accessCondition, null, null),
+                    "OpenWrite with a non-met condition should fail",
+                    HttpStatusCode.PreconditionFailed);
+
+                blob = container.GetPageBlobReference("blob3");
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition(existingBlob.Properties.ETag);
+                Stream blobStream = blob.OpenWriteAsync(1024, accessCondition, null, null).Result;
+                blobStream.Dispose();
+
+                blob = container.GetPageBlobReference("blob4");
+                accessCondition = AccessCondition.GenerateIfNoneMatchCondition("*");
+                blobStream = blob.OpenWriteAsync(1024, accessCondition, null, null).Result;
+                blobStream.Dispose();
+            }
+            finally
+            {
+                container.DeleteAsync().Wait();
+            }
+        }
+#endif
+
         [TestMethod]
         [Description("Upload a block blob using blob stream and verify contents")]
         [TestCategory(ComponentCategory.Blob)]
@@ -778,7 +881,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     {
                         StoreBlobContentMD5 = true,
                     };
-                    using (Stream blobStream = blob.OpenWrite(null, options))
+                    using (CloudBlobStream blobStream = blob.OpenWrite(null, options))
                     {
                         IAsyncResult[] results = new IAsyncResult[blobClient.ParallelOperationThreadCount * 2];
                         for (int i = 0; i < results.Length; i++)
@@ -787,17 +890,29 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             wholeBlob.Write(buffer, 0, buffer.Length);
                             Assert.AreEqual(wholeBlob.Position, blobStream.Position);
                         }
+
                         for (int i = 0; i < blobClient.ParallelOperationThreadCount; i++)
                         {
                             Assert.IsTrue(results[i].IsCompleted);
                         }
+
                         for (int i = blobClient.ParallelOperationThreadCount; i < results.Length; i++)
                         {
                             Assert.IsFalse(results[i].IsCompleted);
                         }
+
                         for (int i = 0; i < results.Length; i++)
                         {
                             blobStream.EndWrite(results[i]);
+                        }
+
+                        using (ManualResetEvent waitHandle = new ManualResetEvent(false))
+                        {
+                            IAsyncResult result = blobStream.BeginCommit(
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blobStream.EndCommit(result);
                         }
                     }
 
@@ -820,7 +935,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
-        [Description("Upload a block blob using blob stream and verify contents")]
+        [Description("Seek in a blob write stream")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.FuntionalTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -838,6 +953,197 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     TestHelper.ExpectedException<NotSupportedException>(
                         () => blobStream.Seek(1, SeekOrigin.Begin),
                         "Block blob write stream should not be seekable");
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test the effects of blob stream's flush functionality")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.FuntionalTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void BlockBlobWriteStreamFlushTest()
+        {
+            byte[] buffer = GetRandomBuffer(512 * 1024);
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                blob.StreamWriteSizeInBytes = 1 * 1024 * 1024;
+                using (MemoryStream wholeBlob = new MemoryStream())
+                {
+                    OperationContext opContext = new OperationContext();
+                    using (CloudBlobStream blobStream = blob.OpenWrite(null, null, opContext))
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            blobStream.Write(buffer, 0, buffer.Length);
+                            wholeBlob.Write(buffer, 0, buffer.Length);
+                        }
+
+                        Assert.AreEqual(1, opContext.RequestResults.Count);
+
+                        blobStream.Flush();
+
+                        Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                        blobStream.Flush();
+
+                        Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                        blobStream.Write(buffer, 0, buffer.Length);
+                        wholeBlob.Write(buffer, 0, buffer.Length);
+
+                        Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                        blobStream.Commit();
+
+                        Assert.AreEqual(4, opContext.RequestResults.Count);
+                    }
+
+                    Assert.AreEqual(4, opContext.RequestResults.Count);
+
+                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    {
+                        blob.DownloadToStream(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test the effects of blob stream's flush functionality")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.FuntionalTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void BlockBlobWriteStreamFlushTestAPM()
+        {
+            byte[] buffer = GetRandomBuffer(512 * 1024);
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                blob.StreamWriteSizeInBytes = 1 * 1024 * 1024;
+                using (MemoryStream wholeBlob = new MemoryStream())
+                {
+                    OperationContext opContext = new OperationContext();
+                    using (CloudBlobStream blobStream = blob.OpenWrite(null, null, opContext))
+                    {
+                        using (AutoResetEvent waitHandle = new AutoResetEvent(false))
+                        {
+                            IAsyncResult result;
+                            for (int i = 0; i < 3; i++)
+                            {
+                                result = blobStream.BeginWrite(
+                                    buffer,
+                                    0,
+                                    buffer.Length,
+                                    ar => waitHandle.Set(),
+                                    null);
+                                waitHandle.WaitOne();
+                                blobStream.EndWrite(result);
+                                wholeBlob.Write(buffer, 0, buffer.Length);
+                            }
+
+                            Assert.AreEqual(1, opContext.RequestResults.Count);
+
+                            ICancellableAsyncResult cancellableResult = blobStream.BeginFlush(
+                                ar => waitHandle.Set(),
+                                null);
+                            Assert.IsFalse(cancellableResult.IsCompleted);
+                            cancellableResult.Cancel();
+                            waitHandle.WaitOne();
+                            blobStream.EndFlush(cancellableResult);
+
+                            result = blobStream.BeginFlush(
+                                ar => waitHandle.Set(),
+                                null);
+                            Assert.IsFalse(result.IsCompleted);
+                            TestHelper.ExpectedException<InvalidOperationException>(
+                                () => blobStream.BeginFlush(null, null),
+                                null);
+                            waitHandle.WaitOne();
+                            TestHelper.ExpectedException<InvalidOperationException>(
+                                () => blobStream.BeginFlush(null, null),
+                                null);
+                            blobStream.EndFlush(result);
+                            Assert.IsFalse(result.CompletedSynchronously);
+
+                            Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                            result = blobStream.BeginFlush(
+                                ar => waitHandle.Set(),
+                                null);
+                            Assert.IsTrue(result.CompletedSynchronously);
+                            waitHandle.WaitOne();
+                            blobStream.EndFlush(result);
+
+                            Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                            result = blobStream.BeginWrite(
+                                buffer,
+                                0,
+                                buffer.Length,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blobStream.EndWrite(result);
+                            wholeBlob.Write(buffer, 0, buffer.Length);
+
+                            Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                            cancellableResult = blobStream.BeginFlush(null, null);
+                            Assert.IsFalse(cancellableResult.IsCompleted);
+                            blobStream.EndFlush(cancellableResult);
+
+                            Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                            result = blobStream.BeginWrite(
+                                buffer,
+                                0,
+                                buffer.Length,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blobStream.EndWrite(result);
+                            wholeBlob.Write(buffer, 0, buffer.Length);
+
+                            Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                            result = blobStream.BeginCommit(
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blobStream.EndCommit(result);
+
+                            Assert.AreEqual(5, opContext.RequestResults.Count);
+                        }
+                    }
+
+                    Assert.AreEqual(5, opContext.RequestResults.Count);
+
+                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    {
+                        blob.DownloadToStream(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                    }
                 }
             }
             finally
@@ -1023,7 +1329,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             ar => waitHandle.Set(),
                             null);
                         waitHandle.WaitOne();
-                        using (Stream blobStream = blob.EndOpenWrite(result))
+                        using (CloudBlobStream blobStream = blob.EndOpenWrite(result))
                         {
                             IAsyncResult[] results = new IAsyncResult[blobClient.ParallelOperationThreadCount * 2];
                             for (int i = 0; i < results.Length; i++)
@@ -1047,6 +1353,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             {
                                 blobStream.EndWrite(results[i]);
                             }
+
+                            result = blobStream.BeginCommit(
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blobStream.EndCommit(result);
                         }
                     }
 
@@ -1124,7 +1436,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
-        [Description("Upload a page blob using blob stream and verify contents")]
+        [Description("Seek in a blob write stream")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.FuntionalTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -1161,9 +1473,183 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         }
                     }
 
-                    wholeBlob.Seek(0, SeekOrigin.End);
                     blob.FetchAttributes();
                     Assert.IsNull(blob.Properties.ContentMD5);
+
+                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    {
+                        blob.DownloadToStream(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test the effects of blob stream's flush functionality")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.FuntionalTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void PageBlobWriteStreamFlushTest()
+        {
+            byte[] buffer = GetRandomBuffer(512);
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                blob.StreamWriteSizeInBytes = 1024;
+                using (MemoryStream wholeBlob = new MemoryStream())
+                {
+                    BlobRequestOptions options = new BlobRequestOptions() { StoreBlobContentMD5 = true };
+                    OperationContext opContext = new OperationContext();
+                    using (CloudBlobStream blobStream = blob.OpenWrite(4 * 512, null, options, opContext))
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            blobStream.Write(buffer, 0, buffer.Length);
+                            wholeBlob.Write(buffer, 0, buffer.Length);
+                        }
+
+                        Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                        blobStream.Flush();
+
+                        Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                        blobStream.Flush();
+
+                        Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                        blobStream.Write(buffer, 0, buffer.Length);
+                        wholeBlob.Write(buffer, 0, buffer.Length);
+
+                        Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                        blobStream.Commit();
+
+                        Assert.AreEqual(5, opContext.RequestResults.Count);
+                    }
+
+                    Assert.AreEqual(5, opContext.RequestResults.Count);
+
+                    using (MemoryStream downloadedBlob = new MemoryStream())
+                    {
+                        blob.DownloadToStream(downloadedBlob);
+                        TestHelper.AssertStreamsAreEqual(wholeBlob, downloadedBlob);
+                    }
+                }
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Test the effects of blob stream's flush functionality")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.FuntionalTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void PageBlobWriteStreamFlushTestAPM()
+        {
+            byte[] buffer = GetRandomBuffer(512 * 1024);
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                container.Create();
+
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                blob.StreamWriteSizeInBytes = 1 * 1024 * 1024;
+                using (MemoryStream wholeBlob = new MemoryStream())
+                {
+                    BlobRequestOptions options = new BlobRequestOptions() { StoreBlobContentMD5 = true };
+                    OperationContext opContext = new OperationContext();
+                    using (CloudBlobStream blobStream = blob.OpenWrite(4 * buffer.Length, null, options, opContext))
+                    {
+                        using (AutoResetEvent waitHandle = new AutoResetEvent(false))
+                        {
+                            IAsyncResult result;
+                            for (int i = 0; i < 3; i++)
+                            {
+                                result = blobStream.BeginWrite(
+                                    buffer,
+                                    0,
+                                    buffer.Length,
+                                    ar => waitHandle.Set(),
+                                    null);
+                                waitHandle.WaitOne();
+                                blobStream.EndWrite(result);
+                                wholeBlob.Write(buffer, 0, buffer.Length);
+                            }
+
+                            Assert.AreEqual(2, opContext.RequestResults.Count);
+
+                            ICancellableAsyncResult cancellableResult = blobStream.BeginFlush(
+                                ar => waitHandle.Set(),
+                                null);
+                            Assert.IsFalse(cancellableResult.IsCompleted);
+                            cancellableResult.Cancel();
+                            waitHandle.WaitOne();
+                            blobStream.EndFlush(cancellableResult);
+
+                            result = blobStream.BeginFlush(
+                                ar => waitHandle.Set(),
+                                null);
+                            Assert.IsFalse(result.IsCompleted);
+                            TestHelper.ExpectedException<InvalidOperationException>(
+                                () => blobStream.BeginFlush(null, null),
+                                null);
+                            waitHandle.WaitOne();
+                            TestHelper.ExpectedException<InvalidOperationException>(
+                                () => blobStream.BeginFlush(null, null),
+                                null);
+                            blobStream.EndFlush(result);
+                            Assert.IsFalse(result.CompletedSynchronously);
+
+                            Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                            result = blobStream.BeginFlush(
+                                ar => waitHandle.Set(),
+                                null);
+                            Assert.IsTrue(result.CompletedSynchronously);
+                            waitHandle.WaitOne();
+                            blobStream.EndFlush(result);
+
+                            Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                            result = blobStream.BeginWrite(
+                                buffer,
+                                0,
+                                buffer.Length,
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blobStream.EndWrite(result);
+                            wholeBlob.Write(buffer, 0, buffer.Length);
+
+                            Assert.AreEqual(3, opContext.RequestResults.Count);
+
+                            result = blobStream.BeginCommit(
+                                ar => waitHandle.Set(),
+                                null);
+                            waitHandle.WaitOne();
+                            blobStream.EndCommit(result);
+
+                            Assert.AreEqual(5, opContext.RequestResults.Count);
+                        }
+                    }
+
+                    Assert.AreEqual(5, opContext.RequestResults.Count);
 
                     using (MemoryStream downloadedBlob = new MemoryStream())
                     {

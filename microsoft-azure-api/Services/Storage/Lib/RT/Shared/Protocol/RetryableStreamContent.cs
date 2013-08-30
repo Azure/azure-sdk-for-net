@@ -17,7 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
-    using System;
     using System.IO;
     using System.Net.Http;
 

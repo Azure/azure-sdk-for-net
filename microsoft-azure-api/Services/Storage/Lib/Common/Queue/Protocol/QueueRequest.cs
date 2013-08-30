@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
     /// <summary>
     /// Provides a set of helper methods for constructing a request against the Queue service.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <param name="outputStream">An output stream.</param>
         internal static void WriteMessageContent(string messageContent, Stream outputStream)
         {
-            CommonUtils.AssertNotNull("outputStream", outputStream);
+            CommonUtility.AssertNotNull("outputStream", outputStream);
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Encoding = Encoding.UTF8;

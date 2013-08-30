@@ -17,12 +17,13 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
-    using System;
     using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.RetryPolicies;
+    using System;
 
     /// <summary>
-    /// Represents a set of timeout and retry policy options that may be specified for a blob operation request.
+    /// Represents a set of timeout and retry policy options that may be specified for a request against the Blob service.
     /// </summary>
     public sealed class BlobRequestOptions : IRequestOptions
     {
@@ -45,13 +46,14 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 this.RetryPolicy = other.RetryPolicy;
                 this.ServerTimeout = other.ServerTimeout;
                 this.MaximumExecutionTime = other.MaximumExecutionTime;
+                this.OperationExpiryTime = other.OperationExpiryTime;
                 this.UseTransactionalMD5 = other.UseTransactionalMD5;
                 this.StoreBlobContentMD5 = other.StoreBlobContentMD5;
                 this.DisableContentMD5Validation = other.DisableContentMD5Validation;
             }
         }
 
-        internal static BlobRequestOptions ApplyDefaults(BlobRequestOptions options, BlobType blobType, CloudBlobClient serviceClient)
+        internal static BlobRequestOptions ApplyDefaults(BlobRequestOptions options, BlobType blobType, CloudBlobClient serviceClient, bool applyExpiry = true)
         {
             BlobRequestOptions modifiedOptions = new BlobRequestOptions(options);
 
@@ -59,12 +61,28 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             modifiedOptions.ServerTimeout = modifiedOptions.ServerTimeout ?? serviceClient.ServerTimeout;
             modifiedOptions.MaximumExecutionTime = modifiedOptions.MaximumExecutionTime ?? serviceClient.MaximumExecutionTime;
 
+            if (applyExpiry && !modifiedOptions.OperationExpiryTime.HasValue && modifiedOptions.MaximumExecutionTime.HasValue)
+            {
+                modifiedOptions.OperationExpiryTime = DateTime.Now + modifiedOptions.MaximumExecutionTime.Value;
+            }
+
+#if WINDOWS_PHONE
+            modifiedOptions.DisableContentMD5Validation = true;
+            modifiedOptions.StoreBlobContentMD5 = false;
+            modifiedOptions.UseTransactionalMD5 = false;
+#else
             modifiedOptions.DisableContentMD5Validation = modifiedOptions.DisableContentMD5Validation ?? false;
             modifiedOptions.StoreBlobContentMD5 = modifiedOptions.StoreBlobContentMD5 ?? (blobType == BlobType.BlockBlob);
             modifiedOptions.UseTransactionalMD5 = modifiedOptions.UseTransactionalMD5 ?? false;
+#endif
 
             return modifiedOptions;
         }
+
+        /// <summary>
+        ///  Gets or sets the absolute expiry time across all potential retries for the request. 
+        /// </summary>
+        internal DateTime? OperationExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets the retry policy.
@@ -79,27 +97,93 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public TimeSpan? ServerTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum execution time accross all potential retries etc. 
+        /// Gets or sets the maximum execution time across all potential retries for the request. 
         /// </summary>
-        /// <value>The maximum execution time.</value>
+        /// <value>A <see cref="TimeSpan"/> representing the maximum execution time for retries for the request.</value>
         public TimeSpan? MaximumExecutionTime { get; set; }
 
         /// <summary>
         /// Gets or sets a value to calculate and send/validate content MD5 for transactions.
         /// </summary>
-        /// <value>Use <c>true</c> to calculate and send/validate content MD5 for transactions; otherwise, <c>false</c>.</value>
-        public bool? UseTransactionalMD5 { get; set; }
+        /// <value>Use <c>true</c> to calculate and send/validate content MD5 for transactions; otherwise, <c>false</c>.</value>       
+#if WINDOWS_PHONE
+        /// <remarks>This property is not supported for Windows Phone.</remarks>
+#endif
+        public bool? UseTransactionalMD5
+        {
+            get
+            {
+                return this.useTransactionalMD5;
+            }
+
+            set
+            {
+#if WINDOWS_PHONE
+                if (value.HasValue && value.Value)
+                {
+                    throw new NotSupportedException(SR.WindowsPhoneDoesNotSupportMD5);
+                }
+#endif
+                this.useTransactionalMD5 = value;
+            }
+        }
+
+        private bool? useTransactionalMD5;
 
         /// <summary>
         /// Gets or sets a value to indicate that an MD5 hash will be calculated and stored when uploading a blob.
         /// </summary>
-        /// <value>Use true to calculate and store an MD5 hash when uploading a blob; otherwise, false.</value>
-        public bool? StoreBlobContentMD5 { get; set; }
+        /// <value>Use <c>true</c> to calculate and store an MD5 hash when uploading a blob; otherwise, <c>false</c>.</value>
+#if WINDOWS_PHONE
+        /// <remarks>This property is not supported for Windows Phone.</remarks>
+#endif
+        public bool? StoreBlobContentMD5
+        {
+            get
+            {
+                return this.storeBlobContentMD5;
+            }
+
+            set
+            {
+#if WINDOWS_PHONE
+                if (value.HasValue && value.Value)
+                {
+                    throw new NotSupportedException(SR.WindowsPhoneDoesNotSupportMD5);
+                }
+#endif
+                this.storeBlobContentMD5 = value;
+            }
+        }
+
+        private bool? storeBlobContentMD5;
 
         /// <summary>
         /// Gets or sets a value to indicate that MD5 validation will be disabled when downloading blobs.
         /// </summary>
-        /// <value>Use true to disable MD5 validation; false to enable MD5 validation.</value>
-        public bool? DisableContentMD5Validation { get; set; }
+        /// <value>Use <c>true</c> to disable MD5 validation; <c>false</c> to enable MD5 validation.</value>
+#if WINDOWS_PHONE
+        /// <remarks>This property is not supported for Windows Phone.</remarks>
+#endif
+        public bool? DisableContentMD5Validation
+        {
+            get
+            {
+                return this.disableContentMD5Validation;
+            }
+
+            set
+            {
+#if WINDOWS_PHONE
+                if (value.HasValue && !value.Value)
+                {
+                    throw new NotSupportedException(SR.WindowsPhoneDoesNotSupportMD5);
+                }
+#endif
+                this.disableContentMD5Validation = value;
+            }
+        }
+
+        private bool? disableContentMD5Validation;
     }
 }

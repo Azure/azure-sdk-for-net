@@ -15,13 +15,12 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Data.Services.Client;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using Microsoft.WindowsAzure.Test.Network;
 using Microsoft.WindowsAzure.Test.Network.Behaviors;
+using System;
+using System.Linq;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -74,13 +73,24 @@ namespace Microsoft.WindowsAzure.Storage.Table
             CloudTableClient tableClient = GenerateCloudTableClient();
             currentTable = tableClient.GetTableReference(GenerateRandomTableName());
             currentTable.CreateIfNotExists();
+
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
         }
+
         //
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
             currentTable.DeleteIfExists();
+
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
         }
 
         #endregion
@@ -225,7 +235,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             TableQuery query = new TableQuery().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "insert test"));
 
-
             TestHelper.ExecuteAPMMethodWithRetry(
                2, // 1 failure, one success
                 new[] {
@@ -272,6 +281,47 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 Assert.Fail();
             }
         }
+
+        [TestMethod]
+        [Description("Test to ensure setting NoRetry on client does not retry")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableOperationNoRetry()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            tableClient.RetryPolicy = new NoRetry();
+            CloudTable currentTable = tableClient.GetTableReference("noretrytable");
+            currentTable.CreateIfNotExists();
+            DynamicTableEntity insertEntity = new DynamicTableEntity("insert test", "foo");
+            currentTable.Execute(TableOperation.Insert(insertEntity));
+            TableQuery query = new TableQuery().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "insert test"));
+            try
+            {
+                TestHelper.ExecuteMethodWithRetry(
+                    1,
+                    new[] {
+                    //Insert upstream network delay to prevent upload to server @ 1000ms / kb
+                    PerformanceBehaviors.InsertDownstreamNetworkDelay(10000,
+                                                                    XStoreSelectors.TableTraffic().IfHostNameContains(tableClient.Credentials.AccountName).Alternating(true)),
+                    // After 100 ms return throttle message
+                    DelayedActionBehaviors.ExecuteAfter(Actions.ThrottleTableRequest,
+                                                            100,
+                                                            XStoreSelectors.TableTraffic().IfHostNameContains(tableClient.Credentials.AccountName).Alternating(true))
+                    },
+                    (options, opContext) => currentTable.ExecuteQuery(query, (TableRequestOptions)options, opContext).ToList());
+            }
+            catch (StorageException ex)
+            {
+                Assert.IsTrue(ex.RequestInformation.HttpStatusCode == 503);
+            }
+            finally
+            {
+                currentTable.DeleteIfExists();
+            }
+        }
+
         #endregion
     }
 }

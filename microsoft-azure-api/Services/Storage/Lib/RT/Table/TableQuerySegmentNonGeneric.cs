@@ -23,12 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     /// Represents a table query segment.
     /// </summary>
     public sealed class TableQuerySegment : IEnumerable<DynamicTableEntity>
-    {
-        /// <summary>
-        /// Stores the continuation token used to retrieve the next segment of results.
-        /// </summary>
-        private TableContinuationToken continuationToken;
-
+    { 
         internal TableQuerySegment()
         {
             this.Results = new List<DynamicTableEntity>();
@@ -46,7 +41,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         internal TableQuerySegment(ResultSegment<DynamicTableEntity> resSeg)
             : this(resSeg.Results)
         {
-            this.continuationToken = resSeg.ContinuationToken as TableContinuationToken;
+            this.ContinuationToken = resSeg.ContinuationToken as TableContinuationToken;
         }
 
         /// <summary>
@@ -59,23 +54,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Gets a continuation token to use to retrieve the next set of results with a subsequent call to the operation.
         /// </summary>
         /// <value>The continuation token.</value>
-        public TableContinuationToken ContinuationToken
-        {
-            get
-            {
-                if (this.continuationToken != null)
-                {
-                    return this.continuationToken as TableContinuationToken;
-                }
-
-                return null;
-            }
-
-            internal set
-            {
-                this.continuationToken = value;
-            }
-        }
+        public TableContinuationToken ContinuationToken { get; internal set; }
 
         /// <summary>
         /// Returns an enumerator that iterates through the <see cref="DynamicTableEntity"/> collection.

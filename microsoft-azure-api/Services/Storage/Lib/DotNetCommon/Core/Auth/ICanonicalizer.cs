@@ -17,14 +17,15 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Auth
 {
-    using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Net;
-
+    
     /// <summary>
     /// <para>Represents a canonicalizer that converts HTTP request data into a standard form appropriate for signing.</para>
     /// <para>For detailed information on how to authenticate a request, 
     /// see <see href="http://msdn.microsoft.com/en-us/library/windowsazure/dd179428.aspx">Authentication for the Windows Azure Storage Services</see>.</para>
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Canonicalizer", Justification = "Reviewed: Canonicalizer can be used as an identifier name.")]    
     public interface ICanonicalizer
     {
         /// <summary>

@@ -18,8 +18,8 @@
 
 namespace Microsoft.WindowsAzure.Test.Network
 {
-    using System;
     using Fiddler;
+    using System;
 
     /// <summary>
     /// The ProxyBehavior class controls how the HttpMangler processes the incoming and outgoing network data.
