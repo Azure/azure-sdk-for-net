@@ -1,105 +1,133 @@
-<h1>Windows Azure SDK for .NET 4, Windows 8, and Windows Phone 8 (2.1.0.0)</h1>
-<p>This SDK allows you to build Windows Azure applications that take advantage of
-Azure scalable cloud computing resources: table and blob storage, messaging through
-Service Bus, distributed caching through cache.</p>
-<p>Please note that Windows 8 and Windows Phone 8 libraries are CTP (Community
-Technology Preview) releases.</p>
-<p>For documentation please see the 
-<a href="http://www.windowsazure.com/en-us/develop/net/">Windows Azure .NET Developer Center</a>.</p>
+# Windows Azure SDK for .NET 4, Windows 8, and Windows Phone 8 (2.1.0.0)
 
-<h1>Features</h1>
-<ul>
-    <li>Tables
-        <ul>
-            <li>Create/Delete Tables</li>
-            <li>Query/Create/Read/Update/Delete Entities</li></ul>
-    </li>
-    <li>BLOBs
-        <ul>
-            <li>Create/Read/Update/Delete BLOBs</li></ul>
-    </li>
-    <li>Queues
-        <ul>
-            <li>Create/Delete Queues</li>
-            <li>Insert/Peek Queue Messages</li>
-            <li>Advanced Queue Operations</li></ul>
-    </li>
-    <li>Media - Available in separate <a href="http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client">Media Services repository</a>
-    </li>
-</ul>
-        
-<h1>Getting Started</h1>
-<h2>Download</h2>
+The Windows Azure SDK for .NET allows you to build Windows Azure applications 
+that take advantage of scalable cloud computing resources.
 
-<h3>Option 1: Via Git</h3>
-<p>To get the source code of the SDK via git just type:<br/>
-<pre>git clone git://github.com/WindowsAzure/azure-sdk-for-net.git<br/>
-cd ./azure-sdk-for-net</pre>
+Please note that Windows 8 and Windows Phone 8 libraries are CTP (Community
+Technology Preview) releases.
 
-<h3>Option 2: Via NuGet</h3>
-<p>To get the binaries of this library as distributed by Microsoft, ready for use
-within your project you can also have them installed by the .NET package manager NuGet.<br/>
-<pre>Install-Package WindowsAzure.Storage</pre></p>
+This repository contains the open source subset of the .NET SDK. For documentation of the 
+complete SDK, please see the [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
 
-<h2>Requirements</h2>
-<ul>
-    <li>Account: To use this SDK to call Windows Azure services, you need to first
-    create an account.</li>
-    <li>Hosting: To host your .NET code in Windows Azure, you additionally need
-    to download the full Windows Azure SDK for .NET - which includes packaging,
-    emulation, and deployment tools.</li>
-    <li>Windows 8 or .NET Framework 4.0</li>
-</ul>
+# Features
 
-<h2>Dependencies</h2>
-<p>
-This version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.2.0) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.  
+- Tables
+    - Create/Delete Tables
+    - Query/Create/Read/Update/Delete Entities
+- Blobs
+    - Create/Read/Update/Delete Blobs
+- Queues
+    - Create/Delete Queues
+    - Insert/Peek Queue Messages
+    - Advanced Queue Operations
+- Media
+
+    > Available in separate [Media Services repository](http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client)
+
+# Getting Started
+
+## Download & Install
+
+### Via Git
+
+To get the source code of the SDK via git just type:
+
+```bash
+git clone git://github.com/WindowsAzure/azure-sdk-for-net.git
+cd azure-sdk-for-net
+```
+
+### Via NuGet
+
+To get the binaries of this library as distributed by Microsoft, ready for use
+within your project you can also have them installed by the .NET package manager [http://www.nuget.org/](NuGet).
+
+`Install-Package WindowsAzure.Storage`
+
+## Target Frameworks
+
+- .NET Framework 3.5: At this time the majority of the Windows Azure SDK for .NET supports primarily the desktop .NET Framework 3.5 and above.
+- .NET Framework 4.0: Storage Client Library for .NET supports the desktop .NET Framework 4.0 and above.
+- Windows 8 for Windows Store app development: Storage Client Libraries are available for Windows Store applications.
+
+## Requirements
+
+- Windows Azure Subscription: To call Windows Azure services, you need to first [create an account](https://account.windowsazure.com/Home/Index). Free trial subscriptions are available.
+- Hosting: To host your .NET code in Windows Azure, you additionally need to download the full Windows Azure SDK for .NET - which includes packaging,
+    emulation, and deployment tools, or use Windows Azure Web Sites to deploy ASP.NET web applications.
+
+## Dependencies
+
+### OData
+
+This version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.2.0) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.
+
 The ODataLib libraries can be downloaded directly or referenced by your code project through NuGet.  
-The specific ODataLib packages are:<br/>
-http://nuget.org/packages/Microsoft.Data.OData/5.2.0<br/>
-http://nuget.org/packages/Microsoft.Data.Edm/5.2.0<br/>
-http://nuget.org/packages/System.Spatial/5.2.0<br/>
-</p>
 
-<h2>Code Samples</h2>
-<p>Note:</p>
-<ul>
-    <li>How-Tos focused around accomplishing specific tasks are available on the
-    <a href="http://www.windowsazure.com/en-us/develop/net/">Windows Azure .NET
-    Developer Center</a>.</li>
-</ul>
+The specific ODataLib packages are:
 
-<p>First, include the classes you need (in this case we'll include the Storage and Table
-and further demonstrate creating a table):<br/>
-<pre>using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Table;</pre></p>
+- [Microsoft.Data.OData](http://nuget.org/packages/Microsoft.Data.OData/)
+- [Microsoft.Data.Edm](http://nuget.org/packages/Microsoft.Data.Edm/)
+- [System.Spatial](http://nuget.org/packages/System.Spatial)
 
-<p>To perform an operation on any Windows Azure resource you will first instantiate
-a <strong>client</strong> which allows performing actions on it. The resource is known as an
-<strong>entity</strong>. To do so for Table you also have to authenticate your request:<br/>
-<pre>var storageAccount = 
-    CloudStorageAccount.DevelopmentStorageAccount;
-var tableClient = storageAccount.CreateCloudTableClient();</pre></p>
+### Test Dependencies
 
-<p>Now, to create a table entity using the client:<br/>
-<pre>CloudTable peopleTable = tableClient.GetTableReference("people");
+FiddlerCore is required by:
+
+- Test\Unit\FaultInjection\HttpMangler
+- Test\Unit\FaultInjection\XStoreMangler
+- Test\Unit\DotNet40
+
+This dependency is not included and must be downloaded from [http://www.fiddler2.com/Fiddler/Core/](http://www.fiddler2.com/Fiddler/Core/).
+
+Once installed:
+
+- Copy `FiddlerCore.dll` `\azure-sdk-for-net\microsoft-azure-api\Services\Storage\Test\Unit\FaultInjection\Dependencies\DotNet2`
+- Copy `FiddlerCore4.dll` to `azure-sdk-for-net\microsoft-azure-api\Services\Storage\Test\Unit\FaultInjection\Dependencies\DotNet4`
+
+## Code Samples
+
+> Note:
+> How-Tos focused around accomplishing specific tasks are available on the [http://www.windowsazure.com/en-us/develop/net/](Windows Azure .NET Developer Center).
+
+### Creating a Table
+
+First, include the classes you need (in this case we'll include the Storage and Table
+and further demonstrate creating a table):
+
+```csharp
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table;
+```
+
+To perform an operation on any Windows Azure resource you will first instantiate
+a *client* which allows performing actions on it. The resource is known as an 
+*entity*. To do so for Table you also have to authenticate your request:
+
+```csharp
+var storageAccount = CloudStorageAccount.Parse(
+    CloudConfigurationManager.GetSetting("StorageConnectionString"));
+var tableClient = storageAccount.CreateCloudTableClient();
+```
+
+Now, to create a table entity using the client:
+
+```csharp
+CloudTable peopleTable = tableClient.GetTableReference("people");
 peopleTable.Create();
-</pre></p>
+```
 
-<h1>Need Help?</h1>
-<p>Be sure to check out the Windows Azure <a href="http://go.microsoft.com/fwlink/?LinkId=234489">
-Developer Forums on MSDN</a> if you have trouble with the provided code.</p>
+# Need Help?
+Be sure to check out the Windows Azure [Developer Forums on MSDN](http://go.microsoft.com/fwlink/?LinkId=234489) if you have trouble with the provided code or use 
+StackOverflow.
 
-<h1>Feedback</h1>
-<p>For feedback related specificically to this SDK, please use the Issues
-section of the repository.</p>
-<p>For general suggestions about Windows Azure please use our
-<a href="http://www.mygreatwindowsazureidea.com/forums/34192-windows-azure-feature-voting">UserVoice forum</a>.</p>
+# Feedback
 
-<h1>Learn More</h1>
-<ul>
-    <li><a href="http://www.windowsazure.com/en-us/develop/net/">Windows Azure .NET
-    Developer Center</a></li>
-    <li><a href="http://msdn.microsoft.com/en-us/library/dd179380.aspx">
-    Windows Azure SDK Reference for .NET (MSDN)</a></li>
-</ul>
+For feedback related specificically to these open source client libraries, please use the Issues section of the repository.
+
+For general suggestions about Windows Azure please use our [UserVoice forum](http://www.mygreatwindowsazureidea.com/forums/34192-windows-azure-feature-voting).
+
+# Learn More
+
+- [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/)
+- [Windows Azure SDK Reference for .NET - MSDN](http://msdn.microsoft.com/en-us/library/dd179380.aspx)

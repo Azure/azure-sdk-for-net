@@ -74,6 +74,10 @@ Issues fixed in 2.0.6 :
   - Tables: EntityProperty updated to set the IsNull value for properties correctly in the case when the user sets an EntityProperty value through its setter.
   - Tables: EdmType for null values in EntityProperty is set correctly and does not default to string any more.
 
+Issues fixed in 2.0.6.1 :
+
+  - Tables: Fix for Table Service layer to drain response stream
+
 Changes in 2.1.0 :
 
   - All: Changed User-Agent header value to include .NET CLR and OS versions
