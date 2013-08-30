@@ -49,6 +49,7 @@
       <Word>CloudTable</Word>
       <Word>CreateQuery</Word>
       <Word>Etag</Word>
+      <Word>OData</Word>
     </Recognized>
     <Compound>
       <Term CompoundAlternate="TableQuery">Tablequery</Term>

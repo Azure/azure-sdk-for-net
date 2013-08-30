@@ -312,6 +312,7 @@
 // CA1810
 [assembly: SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Core.Logger.#.cctor()", Justification = "Reviewed - Used to initilialize static data before any static members are referenced")]
 [assembly: SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Table.TableEntity.#.cctor()", Justification = "Reviewed - Used to initilialize static data before any static members are referenced")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Shared.Protocol.Constants+HeaderConstants.#.cctor()", Justification = "Execution Order matters.")]
 
 // CA1822
 [assembly: SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Table.Queryable.ExpressionParser.#VisitCustomQueryOptions(System.Collections.Generic.Dictionary`2<System.Linq.Expressions.ConstantExpression,System.Linq.Expressions.ConstantExpression>)", Justification = "Reviewed")]
