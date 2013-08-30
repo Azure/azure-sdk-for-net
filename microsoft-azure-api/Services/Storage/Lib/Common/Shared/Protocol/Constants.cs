@@ -19,6 +19,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
 
     /// <summary>
     /// Contains storage constants.
@@ -580,11 +581,11 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             static HeaderConstants()
             {
 #if WINDOWS_PHONE
-                UserAgentComment = string.Format("(.NET CLR {0}; Windows Phone {1})", Environment.Version, Environment.OSVersion.Version);
+                UserAgentComment = string.Format(CultureInfo.InvariantCulture, "(.NET CLR {0}; Windows Phone {1})", Environment.Version, Environment.OSVersion.Version);
 #elif WINDOWS_RT
                 UserAgentComment = "(Windows Runtime)";
 #else
-                UserAgentComment = string.Format("(.NET CLR {0}; {1} {2})", Environment.Version, Environment.OSVersion.Platform, Environment.OSVersion.Version);
+                UserAgentComment = string.Format(CultureInfo.InvariantCulture, "(.NET CLR {0}; {1} {2})", Environment.Version, Environment.OSVersion.Platform, Environment.OSVersion.Version);
 #endif
 
                 UserAgent = UserAgentProductName + "/" + UserAgentProductVersion + " " + UserAgentComment;

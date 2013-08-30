@@ -51,9 +51,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
                 return true;
             }
-            catch (StorageException e)
+            catch (StorageException)
             {
-                throw e;
+                throw;
             }
         }
 

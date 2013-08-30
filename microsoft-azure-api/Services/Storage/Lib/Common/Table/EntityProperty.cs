@@ -621,11 +621,11 @@ byte[] input)
         /// <summary>
         /// Creates an <see cref="EntityProperty"/> from the object.
         /// </summary>
-        /// <param name="val">The value of the object.</param>
+        /// <param name="entityValue">The value of the object.</param>
         /// <returns>The reference to the <see cref="EntityProperty"/> object created.</returns>
-        public static EntityProperty CreateEntityPropertyFromObject(object val)
+        public static EntityProperty CreateEntityPropertyFromObject(object entityValue)
         {
-            return CreateEntityPropertyFromObject(val, true);
+            return CreateEntityPropertyFromObject(entityValue, true);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Code clarity.")]
