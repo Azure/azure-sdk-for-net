@@ -15,18 +15,15 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+using Microsoft.WindowsAzure.Storage.Table.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-using Microsoft.WindowsAzure.Storage.Table.Entities;
-using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -69,16 +66,27 @@ namespace Microsoft.WindowsAzure.Storage.Table
         // Use ClassCleanup to run code after all tests in a class have run
         // [ClassCleanup()]
         // public static void MyClassCleanup() { }
+        
         //
         // Use TestInitialize to run code before running each test 
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
+        }
 
         #endregion
 
@@ -995,6 +1003,112 @@ namespace Microsoft.WindowsAzure.Storage.Table
             }
         }
 
+        #endregion
+
+        #region Update SAS token
+        [TestMethod]
+        // [Description("Update table SAS.")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task TableUpdateSasTestAsync()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference("T" + Guid.NewGuid().ToString("N"));
+
+            try
+            {
+                await table.CreateAsync();
+
+                BaseEntity entity = new BaseEntity("PK", "RK");
+                await table.ExecuteAsync(TableOperation.Insert(entity));
+
+                SharedAccessTablePolicy policy = new SharedAccessTablePolicy()
+                {
+                    SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                    SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                    Permissions = SharedAccessTablePermissions.Delete,
+                };
+
+                string sasToken = table.GetSharedAccessSignature(policy, null, null, null, null, null);
+                StorageCredentials creds = new StorageCredentials(sasToken);
+                CloudTable sasTable = new CloudTable(table.Uri, creds);
+                OperationContext context = new OperationContext();
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await sasTable.ExecuteAsync(TableOperation.Insert(new BaseEntity("PK", "RK2")), null, context),
+                    context,
+                    "Try to insert an entity when SAS doesn't allow inserts",
+                    HttpStatusCode.NotFound);
+
+                await sasTable.ExecuteAsync(TableOperation.Delete(entity));
+
+                SharedAccessTablePolicy policy2 = new SharedAccessTablePolicy()
+                {
+                    SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                    SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                    Permissions = SharedAccessTablePermissions.Delete | SharedAccessTablePermissions.Add,
+                };
+
+                string sasToken2 = table.GetSharedAccessSignature(policy2, null, null, null, null, null);
+                creds.UpdateSASToken(sasToken2);
+
+                sasTable = new CloudTable(table.Uri, creds);
+
+                await sasTable.ExecuteAsync(TableOperation.Insert(new BaseEntity("PK", "RK2")));
+
+            }
+            finally
+            {
+                table.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+        #endregion
+
+        #region SasUri
+        [TestMethod]
+        // [Description("Use table SasUri.")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task TableSasUriTestAsync()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference("T" + Guid.NewGuid().ToString("N"));
+
+            try
+            {
+                await table.CreateAsync();
+
+                BaseEntity entity = new BaseEntity("PK", "RK");
+                BaseEntity entity1 = new BaseEntity("PK", "RK1");
+                await table.ExecuteAsync(TableOperation.Insert(entity));
+                await table.ExecuteAsync(TableOperation.Insert(entity1));
+
+                SharedAccessTablePolicy policy = new SharedAccessTablePolicy()
+                {
+                    SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                    SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                    Permissions = SharedAccessTablePermissions.Delete,
+                };
+
+                string sasToken = table.GetSharedAccessSignature(policy, null, null, null, null, null);
+                StorageCredentials creds = new StorageCredentials(sasToken);
+                CloudStorageAccount sasAcc = new CloudStorageAccount(creds, new Uri(TestBase.TargetTenantConfig.BlobServiceEndpoint), new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), new Uri(TestBase.TargetTenantConfig.TableServiceEndpoint));
+                CloudTableClient client = sasAcc.CreateCloudTableClient();
+                
+                CloudTable sasTable = new CloudTable(client.Credentials.TransformUri(table.Uri));
+                await sasTable.ExecuteAsync(TableOperation.Delete(entity));
+
+                CloudTable sasTable2 = new CloudTable(new Uri(table.Uri.ToString() + sasToken));
+                await sasTable2.ExecuteAsync(TableOperation.Delete(entity1));
+            }
+            finally
+            {
+                table.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
         #endregion
 
         #region Test Helpers

@@ -15,14 +15,13 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.WindowsAzure.Storage.Auth;
 using System;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob.Protocol;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
@@ -36,6 +35,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.testContainer = GetRandomContainerReference();
             this.testContainer.Create();
+
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
         }
 
         [TestCleanup]
@@ -43,6 +47,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             this.testContainer.Delete();
             this.testContainer = null;
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
         }
 
         private static void TestAccess(string sasToken, SharedAccessBlobPermissions permissions, CloudBlobContainer container, ICloudBlob blob)
@@ -53,7 +61,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
             if (container != null)
             {
-                container = new CloudBlobContainer(container.Uri, credentials);
+                container = new CloudBlobContainer(credentials.TransformUri(container.Uri));
                 if (blob.BlobType == BlobType.BlockBlob)
                 {
                     blob = container.GetBlockBlobReference(blob.Name);
@@ -67,11 +75,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 if (blob.BlobType == BlobType.BlockBlob)
                 {
-                    blob = new CloudBlockBlob(blob.Uri, credentials);
+                    blob = new CloudBlockBlob(credentials.TransformUri(blob.Uri));
                 }
                 else
                 {
-                    blob = new CloudPageBlob(blob.Uri, credentials);
+                    blob = new CloudPageBlob(credentials.TransformUri(blob.Uri));
                 }
             }
 
@@ -143,6 +151,52 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
+        [Description("Test updateSASToken")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlobContainerUpdateSASToken()
+        {
+            // Create a policy with read/write access and get SAS.
+            SharedAccessBlobPolicy policy = new SharedAccessBlobPolicy()
+            {
+                SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write,
+            };
+            string sasToken = this.testContainer.GetSharedAccessSignature(policy);
+            CloudBlockBlob testBlockBlob = this.testContainer.GetBlockBlobReference("blockblob");
+            UploadText(testBlockBlob, "blob", Encoding.UTF8);
+            TestAccess(sasToken, SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write, this.testContainer, testBlockBlob);
+
+            StorageCredentials creds = new StorageCredentials(sasToken);
+
+            // Change the policy to only read and update SAS.
+            SharedAccessBlobPolicy policy2 = new SharedAccessBlobPolicy()
+            {
+                SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                Permissions = SharedAccessBlobPermissions.Read
+            };
+            string sasToken2 = this.testContainer.GetSharedAccessSignature(policy2);
+            creds.UpdateSASToken(sasToken2);
+
+            // Extra check to make sure that we have actually uopdated the SAS token.
+            CloudBlobContainer container = new CloudBlobContainer(this.testContainer.Uri, creds);
+            CloudBlockBlob blob = container.GetBlockBlobReference("blockblob2");
+
+            TestHelper.ExpectedException(
+                () => UploadText(blob, "blob", Encoding.UTF8),
+                "Writing to a blob while SAS does not allow for writing",
+                HttpStatusCode.NotFound);
+
+            CloudPageBlob testPageBlob = this.testContainer.GetPageBlobReference("pageblob");
+            testPageBlob.Create(0);
+            TestAccess(sasToken2, SharedAccessBlobPermissions.Read, this.testContainer, testPageBlob);
+        }
+
+        [TestMethod]
         [Description("Test all combinations of blob permissions against a container")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -189,15 +243,52 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
             permissions.PublicAccess = BlobContainerPublicAccessType.Container;
             this.testContainer.SetPermissions(permissions);
-            Thread.Sleep(30 * 1000);
+            Thread.Sleep(35 * 1000);
             SASTests.TestAccess(null, SharedAccessBlobPermissions.List | SharedAccessBlobPermissions.Read, this.testContainer, testBlockBlob);
             SASTests.TestAccess(null, SharedAccessBlobPermissions.List | SharedAccessBlobPermissions.Read, this.testContainer, testPageBlob);
 
             permissions.PublicAccess = BlobContainerPublicAccessType.Blob;
             this.testContainer.SetPermissions(permissions);
-            Thread.Sleep(30 * 1000);
+            Thread.Sleep(35 * 1000);
             SASTests.TestAccess(null, SharedAccessBlobPermissions.Read, this.testContainer, testBlockBlob);
             SASTests.TestAccess(null, SharedAccessBlobPermissions.Read, this.testContainer, testPageBlob);
+        }
+
+        [TestMethod]
+        [Description("Test access on a public container")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudBlobContainerPolicy()
+        {
+            CloudBlockBlob testBlockBlob = this.testContainer.GetBlockBlobReference("blockblob");
+            UploadText(testBlockBlob, "blob", Encoding.UTF8);
+
+            CloudPageBlob testPageBlob = this.testContainer.GetPageBlobReference("pageblob");
+            UploadText(testPageBlob, "blob", Encoding.UTF8);
+
+            SharedAccessBlobPolicy policy = new SharedAccessBlobPolicy()
+            {
+                SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                Permissions = SharedAccessBlobPermissions.Read,
+            };
+
+            BlobContainerPermissions permissions = new BlobContainerPermissions();
+            permissions.SharedAccessPolicies.Add("testpolicy", policy);
+            this.testContainer.SetPermissions(permissions);
+            Thread.Sleep(35 * 1000);
+
+            string sasToken = testBlockBlob.GetSharedAccessSignature(null, "testpolicy");
+            SASTests.TestAccess(sasToken, policy.Permissions, null, testBlockBlob);
+
+            sasToken = testPageBlob.GetSharedAccessSignature(null, "testpolicy");
+            SASTests.TestAccess(sasToken, policy.Permissions, null, testPageBlob);
+
+            sasToken = this.testContainer.GetSharedAccessSignature(null, "testpolicy");
+            SASTests.TestAccess(sasToken, policy.Permissions, this.testContainer, testBlockBlob);
+            SASTests.TestAccess(sasToken, policy.Permissions, this.testContainer, testPageBlob);
         }
 
         [TestMethod]
@@ -217,7 +308,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         [TestMethod]
-        [Description("Test all combinations of blob permissions against a block blob")]
+        [Description("Test all combinations of blob permissions against a page blob")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]

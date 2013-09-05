@@ -17,10 +17,10 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.WindowsAzure.Storage.Core;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using Microsoft.WindowsAzure.Storage.Core;
 
     internal sealed class BlobAttributes
     {
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         internal void AssertNoSnapshot()
         {
-            if (this.SnapshotTime != null)
+            if (this.SnapshotTime.HasValue)
             {
                 string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.CannotModifySnapshot);
                 throw new InvalidOperationException(errorMessage);

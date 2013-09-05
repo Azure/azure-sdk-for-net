@@ -7,7 +7,7 @@ Generally speaking, every test method is written with a brief description and 4 
 
 The following is a test example. 
         [TestMethod]
-        /// [Description("A test verifies all the constructor of the class StorageCredentials.")]
+        [Description("A test verifies all the constructor of the class StorageCredentials.")]
         [TestCategory("Auth")]
         [TestCategory("UnitTest")]
         [TestCategory("Smoke")]

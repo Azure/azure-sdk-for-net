@@ -22,11 +22,12 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Net;
 
     /// <summary>
-    /// A factory class for constructing a web request against the Queue service.
+    /// A factory class for constructing a web request to manage queues in the Queue service.
     /// </summary>
     public static class QueueHttpWebRequestFactory
     {
@@ -67,6 +68,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <param name="outputStream">The stream to which the formatted properties are to be written.</param>
         public static void WriteServiceProperties(ServiceProperties properties, Stream outputStream)
         {
+            CommonUtility.AssertNotNull("properties", properties);
+
             properties.WriteServiceProperties(outputStream);
         }
 
@@ -265,7 +268,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
             UriQueryBuilder builder = new UriQueryBuilder();
 
             builder.Add(Constants.QueryConstants.PopReceipt, popReceipt);
-            builder.Add(Constants.QueryConstants.VisibilityTimeout, visibilityTimeoutInSeconds.ToString());
+            builder.Add(Constants.QueryConstants.VisibilityTimeout, visibilityTimeoutInSeconds.ToString(CultureInfo.InvariantCulture));
 
             HttpWebRequest request = HttpWebRequestFactory.CreateWebRequest(WebRequestMethods.Http.Put, uri, timeout, builder, operationContext);
             return request;
@@ -303,11 +306,11 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         {
             UriQueryBuilder builder = new UriQueryBuilder();
 
-            builder.Add(Constants.QueryConstants.NumOfMessages, numberOfMessages.ToString());
+            builder.Add(Constants.QueryConstants.NumOfMessages, numberOfMessages.ToString(CultureInfo.InvariantCulture));
 
             if (visibilityTimeout != null)
             {
-                builder.Add(Constants.QueryConstants.VisibilityTimeout, visibilityTimeout.Value.RoundUpToSeconds().ToString());
+                builder.Add(Constants.QueryConstants.VisibilityTimeout, visibilityTimeout.Value.RoundUpToSeconds().ToString(CultureInfo.InvariantCulture));
             }
 
             HttpWebRequest request = HttpWebRequestFactory.CreateWebRequest(WebRequestMethods.Http.Get, uri, timeout, builder, operationContext);
@@ -327,9 +330,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         public static HttpWebRequest PeekMessages(Uri uri, int? timeout, int numberOfMessages, OperationContext operationContext)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
-            builder.Add("peekonly", "true");
+            builder.Add(Constants.HeaderConstants.PeekOnly, Constants.HeaderConstants.TrueHeader);
 
-            builder.Add(Constants.QueryConstants.NumOfMessages, numberOfMessages.ToString());
+            builder.Add(Constants.QueryConstants.NumOfMessages, numberOfMessages.ToString(CultureInfo.InvariantCulture));
 
             HttpWebRequest request = HttpWebRequestFactory.CreateWebRequest(WebRequestMethods.Http.Get, uri, timeout, builder, operationContext);
             return request;

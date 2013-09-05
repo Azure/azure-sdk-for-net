@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;RT;RTMD</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_RT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -34,90 +34,9 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;RTMD</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_RT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\ARM\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>true</DelaySign>
-    <OutputPath>bin\ARM\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>true</DelaySign>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>true</DelaySign>
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;RT;RTMD</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <AppXPackage>True</AppXPackage>
@@ -137,18 +56,20 @@
     <Compile Include="..\Common\Core\*.cs">
       <Link>Core\Core</Link>
     </Compile>
+    <Compile Include="..\Common\Queue\*.cs">
+      <Link>Queue\Queue</Link>
+    </Compile>
+    <Compile Include="..\Common\Table\Entities\*.cs">
+      <Link>Table\Entities\Table</Link>
+    </Compile>
     <Compile Include="..\Common\TestConfigProcess\*.cs">
       <Link>TestConfigProcess\TestConfigProcess</Link>
     </Compile>
-    <Compile Include="..\..\..\Lib\Common\Blob\Protocol\BlobErrorCodeStrings.cs">
-      <Link>Blob\BlobErrorCodeStrings.cs</Link>
-    </Compile>
-    <Compile Include="Auth\WindRTSampleTestClass.cs" />
     <Compile Include="Blob\BlobAnalyticsUnitTests.cs" />
     <Compile Include="Blob\BlobCancellationUnitTests.cs" />
     <Compile Include="Blob\BlobReadStreamTest.cs" />
     <Compile Include="Blob\BlobStreamTests.cs" />
-    <Compile Include="Blob\BlobTestBaseRT.cs" />
+    <Compile Include="Blob\BlobTestBase.cs" />
     <Compile Include="Blob\BlobUploadDownloadTest.cs" />
     <Compile Include="Blob\BlobWriteStreamTest.cs" />
     <Compile Include="Blob\CloudBlobClientTest.cs" />
@@ -162,8 +83,12 @@
     <Compile Include="Blob\MemoryOutputStream.cs" />
     <Compile Include="Blob\SASTests.cs" />
     <Compile Include="Blob\ExceptionHResultTest.cs" />
+    <Compile Include="Core\LoggingTests.cs" />
+    <Compile Include="Core\MultiBufferMemoryStreamTests.cs" />
     <Compile Include="Core\OperationContextUnitTests.cs" />
     <Compile Include="Core\RetryPoliciesTests.cs" />
+    <Compile Include="Core\WriteToAsyncTests.cs" />
+    <Compile Include="Core\TestLogListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\CloudQueueClientTest.cs" />
     <Compile Include="Queue\ExceptionHResultTest.cs" />
@@ -176,15 +101,13 @@
     <Compile Include="Table\SAS\TableSasUnitTests.cs" />
     <Compile Include="Table\TableAnalyticsUnitTests.cs" />
     <Compile Include="Table\TableEscapingTests.cs" />
-    <Compile Include="Table\Entities\BaseEntity.cs" />
     <Compile Include="Table\TableQueryGenericTests.cs" />
     <Compile Include="Table\TableQueryTests.cs" />
-    <Compile Include="Table\Entities\ComplexEntity.cs" />
     <Compile Include="Table\TableBatchOperationTest.cs" />
     <Compile Include="Table\TableEntitySerializationTests.cs" />
     <Compile Include="Table\TableOperationUnitTests.cs" />
     <Compile Include="Table\TableTestBase.cs" />
-    <Compile Include="TestBaseLibRT.cs" />
+    <Compile Include="TestBase.cs" />
     <Compile Include="TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -214,11 +137,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="MSSharedLibKey.snk" />
     <None Include="RT_Test_TemporaryKey.pfx" />
+    <None Include="MSSharedLibKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Lib\RT\RT.csproj">
@@ -230,18 +150,6 @@
       <Name>RTTable</Name>
     </ProjectReference>
   </ItemGroup>
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' ">
-    <VisualStudioVersion>11.0</VisualStudioVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>XSCL_RT_Test_TemporaryKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DelaySign>false</DelaySign>
-  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

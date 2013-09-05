@@ -15,14 +15,13 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Table.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Table.Entities;
-using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
@@ -75,6 +74,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
             CloudTableClient tableClient = GenerateCloudTableClient();
             currentTable = tableClient.GetTableReference(GenerateRandomTableName());
             currentTable.CreateIfNotExistsAsync().AsTask().Wait();
+
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
         }
 
         //
@@ -83,6 +87,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public void MyTestCleanup()
         {
             currentTable.DeleteIfExistsAsync().AsTask().Wait();
+
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
         }
 
         #endregion
@@ -738,7 +747,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             // Retrieve Entity
             TableBatchOperation retrieveBatch = new TableBatchOperation();
             retrieveBatch.Retrieve(ent.PartitionKey, ent.RowKey);
-            TableResult result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First(); ;
+            TableResult result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First();
 
             DynamicTableEntity retrievedEntity = result.Result as DynamicTableEntity;
             Assert.IsNotNull(retrievedEntity);
@@ -757,7 +766,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             batch.InsertOrMerge(insertOrMergeEntity);
             await currentTable.ExecuteBatchAsync(batch);
 
-            result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First(); ;
+            result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First();
             retrievedEntity = result.Result as DynamicTableEntity;
             Assert.IsNotNull(retrievedEntity);
             Assert.AreEqual(insertOrMergeEntity.Properties["foo3"], retrievedEntity.Properties["foo3"]);
@@ -769,7 +778,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             batch.InsertOrReplace(insertOrReplaceEntity);
             await currentTable.ExecuteBatchAsync(batch);
 
-            result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First(); ;
+            result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First();
             retrievedEntity = result.Result as DynamicTableEntity;
             Assert.IsNotNull(retrievedEntity);
             Assert.AreEqual(1, retrievedEntity.Properties.Count);
@@ -783,7 +792,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             await currentTable.ExecuteBatchAsync(batch);
 
             // Retrieve Entity & Verify Contents
-            result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First(); ;
+            result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First();
             retrievedEntity = result.Result as DynamicTableEntity;
 
             Assert.IsNotNull(retrievedEntity);
@@ -809,7 +818,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             await currentTable.ExecuteBatchAsync(batch);
 
             // Retrieve Entity
-            result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First(); ;
+            result = (await currentTable.ExecuteBatchAsync(retrieveBatch)).First();
             Assert.IsNull(result.Result);
         }
 
@@ -829,7 +838,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         [TestMethod]
-        // [Description("A test to peform batch insert and delete with batch size of 1")]
+        // [Description("A test to peform batch insert and delete with batch size of 10")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -841,7 +850,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
 
         [TestMethod]
-        // [Description("A test to peform batch insert and delete with batch size of 1")]
+        // [Description("A test to peform batch insert and delete with batch size of 99")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -852,7 +861,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         [TestMethod]
-        // [Description("A test to peform batch insert and delete with batch size of 1")]
+        // [Description("A test to peform batch insert and delete with batch size of 100")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -903,7 +912,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         [TestMethod]
-        // [Description("A test to peform batch InsertOrMerge with batch size of 1")]
+        // [Description("A test to peform batch InsertOrMerge with batch size of 10")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -915,7 +924,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
 
         [TestMethod]
-        // [Description("A test to peform batch InsertOrMerge with batch size of 1")]
+        // [Description("A test to peform batch InsertOrMerge with batch size of 99")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -926,7 +935,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         [TestMethod]
-        // [Description("A test to peform batch InsertOrMerge with batch size of 1")]
+        // [Description("A test to peform batch InsertOrMerge with batch size of 100")]
         [TestCategory(ComponentCategory.Table)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -1147,10 +1156,12 @@ namespace Microsoft.WindowsAzure.Storage.Table
             TableBatchOperation batch = new TableBatchOperation();
             string pk = Guid.NewGuid().ToString();
 
-            for (int m = 0; m < 8; m++)
+            for (int m = 0; m < 65; m++)
             {
                 DynamicTableEntity ent = GenerateRandomEnitity(pk);
-                ent.Properties.Add("binary", EntityProperty.GeneratePropertyForByteArray(new byte[512 * 1024]));
+
+                // Maximum Entity size is 64KB
+                ent.Properties.Add("binary", EntityProperty.GeneratePropertyForByteArray(new byte[64 * 1024]));
                 batch.Insert(ent);
             }
 
@@ -1251,23 +1262,12 @@ namespace Microsoft.WindowsAzure.Storage.Table
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public async Task TableBatchEmptyBatchShouldThrow()
+        public async Task TableBatchEmptyBatchShouldThrowAsync()
         {
             TableBatchOperation batch = new TableBatchOperation();
-
-            try
-            {
-                await currentTable.ExecuteBatchAsync(batch);
-                Assert.Fail();
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                // no op
-            }
-            catch (Exception)
-            {
-                Assert.Fail();
-            }
+            await TestHelper.ExpectedExceptionAsync<InvalidOperationException>(
+                async () => await currentTable.ExecuteBatchAsync(batch),
+                "Empty batch operation should fail");
         }
 
         [TestMethod]

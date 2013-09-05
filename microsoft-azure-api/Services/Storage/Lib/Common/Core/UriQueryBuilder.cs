@@ -19,13 +19,12 @@ namespace Microsoft.WindowsAzure.Storage.Core
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
 
     /// <summary>
     /// A convenience class for constructing URI query strings.
     /// </summary>
-#if RT
+#if WINDOWS_RT
     internal
 #else
     public
@@ -63,7 +62,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
             StringBuilder sb = new StringBuilder();
             bool first = true;
 
-            foreach (var pair in this.parameters)
+            foreach (KeyValuePair<string, string> pair in this.parameters)
             {
                 if (first)
                 {
@@ -87,7 +86,7 @@ namespace Microsoft.WindowsAzure.Storage.Core
         }
 
         /// <summary>
-        /// Add a query parameter to a URI.
+        /// Adds a query parameter to a URI.
         /// </summary>
         /// <param name="uri">The original URI, including any existing query parameters.</param>
         /// <returns>The URI with the new query parameter appended.</returns>

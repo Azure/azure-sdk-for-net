@@ -17,9 +17,10 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System.IO;
     using System.Net;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
     /// Provides a set of methods for parsing a response stream from the Table service.
@@ -53,6 +54,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// <param name="permissions">The permissions object to which the policies are to be written.</param>
         public static void ReadSharedAccessIdentifiers(Stream inputStream, TablePermissions permissions)
         {
+            CommonUtility.AssertNotNull("permissions", permissions);
+
             HttpResponseParsers.ReadSharedAccessIdentifiers(permissions.SharedAccessPolicies, new TableAccessPolicyResponse(inputStream));
         }
     }

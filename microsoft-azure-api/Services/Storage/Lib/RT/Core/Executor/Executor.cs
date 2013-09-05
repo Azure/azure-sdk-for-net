@@ -17,15 +17,15 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.RetryPolicies;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.RetryPolicies;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-    using System.Diagnostics.CodeAnalysis;
 
     internal class Executor : ExecutorBase
     {
@@ -57,172 +57,211 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
         private async static Task<T> ExecuteAsyncInternal<T>(RESTCommand<T> cmd, IRetryPolicy policy, OperationContext operationContext, CancellationToken token)
         {
             // Note all code below will reference state, not params directly, this will allow common code with multiple executors (APM, Sync, Async)
-            ExecutionState<T> executionState = new ExecutionState<T>(cmd, policy, operationContext);
-            bool shouldRetry = false;
-            TimeSpan delay = TimeSpan.FromMilliseconds(0);
-
-            // Steps 1-4
-            HttpClient client = cmd.BuildClient(cmd, operationContext);
-
-            if (executionState.OperationExpiryTime.HasValue)
+            using (ExecutionState<T> executionState = new ExecutionState<T>(cmd, policy, operationContext))
             {
-                client.Timeout = executionState.OperationExpiryTime.Value - DateTime.Now;
-            }
-            else
-            {
-                client.Timeout = TimeSpan.FromDays(15);
-            }
+                bool shouldRetry = false;
+                TimeSpan delay = TimeSpan.Zero;
 
-            // Setup token
-            CancellationTokenSource cts = new CancellationTokenSource(client.Timeout);
-            CancellationToken tokenWithTimeout = cts.Token;
+                // Create a new client
+                HttpClient client = cmd.BuildClient(cmd, executionState.OperationContext);
+                client.Timeout = TimeSpan.FromMilliseconds(int.MaxValue);
 
-            // Hookup users token
-            token.Register(() => cts.Cancel());
-
-            do
-            {
-                Executor.StartRequestAttempt(executionState);
-
-                // Enter Retryable Section of execution
-                try
+                do
                 {
-                    // Typically this would be out of the try, but do to the unique need for RTMD to translate exception it is included.
-                    if (executionState.OperationExpiryTime.HasValue && executionState.Cmd.CurrentResult.StartTime.CompareTo(executionState.OperationExpiryTime.Value) > 0)
+                    try
                     {
-                        throw Exceptions.GenerateTimeoutException(executionState.Cmd.CurrentResult, null);
+                        executionState.Init();
+
+                        // 0. Begin Request 
+                        Executor.StartRequestAttempt(executionState);
+
+                        // 1. Build request and content
+                        executionState.CurrentOperation = ExecutorOperation.BeginOperation;
+
+                        // Content is re-created every retry, as HttpClient disposes it after a successful request
+                        HttpContent content = cmd.BuildContent != null ? cmd.BuildContent(cmd, executionState.OperationContext) : null;
+
+                        // This is so the old auth header etc is cleared out, the content is where serialization occurs which is the major perf hit
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceStartRequestAsync, cmd.Uri);
+                        executionState.Req = cmd.BuildRequest(cmd, content, executionState.OperationContext);
+
+                        // 2. Set Headers
+                        Executor.ApplyUserHeaders(executionState);
+
+                        // Let the user know we are ready to send
+                        Executor.FireSendingRequest(executionState);
+
+                        // 3. Sign Request is not needed, as HttpClient will call us
+
+                        // 4. Set timeout
+                        if (executionState.OperationExpiryTime.HasValue)
+                        {
+                            client.Timeout = executionState.RemainingTimeout;
+                        }
+
+                        Executor.CheckTimeout<T>(executionState, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError(executionState.OperationContext, SR.TraceInitRequestError, ex.Message);
+
+                        // Store exception and throw here. All operations in this try would be non-retryable by default
+                        StorageException storageEx = StorageException.TranslateException(ex, executionState.Cmd.CurrentResult);
+                        storageEx.IsRetryable = false;
+                        executionState.ExceptionRef = storageEx;
+#if WINDOWS_RT
+                        // Need to throw wrapped Exception with message as serialized exception info stuff. 
+                        int hResult = WrappedStorageException.GenerateHResult(executionState.ExceptionRef, executionState.Cmd.CurrentResult);
+                        throw new WrappedStorageException(executionState.Cmd.CurrentResult.WriteAsXml(), executionState.ExceptionRef, hResult);
+#else
+                    throw executionState.ExceptionRef; // throw base exception for desktop
+#endif
                     }
 
-                    // Content is re-created every retry, as HttpClient disposes it after a successful request
-                    HttpContent content = cmd.BuildContent != null ? cmd.BuildContent(cmd, operationContext) : null;
-
-                    // This is so the old auth header etc is cleared out, the content is where serialization occurs which is the major perf hit
-                    executionState.Req = cmd.BuildRequest(cmd, content, operationContext);
-
-                    // User Headers
-                    Executor.ApplyUserHeaders(executionState);
-
-                    Executor.FireSendingRequest(executionState);
-
-                    // Send Request 
-                    executionState.Resp = await client.SendAsync(executionState.Req, HttpCompletionOption.ResponseHeadersRead, tokenWithTimeout);
-
-                    // Since HttpClient wont throw for non success, manually check and populate an exception
-                    if (!executionState.Resp.IsSuccessStatusCode)
+                    // Enter Retryable Section of execution
+                    try
                     {
-                        executionState.ExceptionRef = await Exceptions.PopulateStorageExceptionFromHttpResponseMessage(executionState.Resp, executionState.Cmd.CurrentResult);
-                    }
+                        // Send Request 
+                        executionState.CurrentOperation = ExecutorOperation.BeginGetResponse;
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceGetResponse);
+                        executionState.Resp = await client.SendAsync(executionState.Req, HttpCompletionOption.ResponseHeadersRead, token);
+                        executionState.CurrentOperation = ExecutorOperation.EndGetResponse;
 
-                    Executor.FireResponseReceived(executionState);
+                        // Since HttpClient wont throw for non success, manually check and populate an exception
+                        if (!executionState.Resp.IsSuccessStatusCode)
+                        {
+                            executionState.ExceptionRef = await Exceptions.PopulateStorageExceptionFromHttpResponseMessage(executionState.Resp, executionState.Cmd.CurrentResult);
+                        }
 
-                    // 7. Do Response parsing (headers etc, no stream available here)
-                    if (cmd.PreProcessResponse != null)
-                    {
-                        executionState.Result = cmd.PreProcessResponse(cmd, executionState.Resp, executionState.ExceptionRef, executionState.OperationContext);
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceResponse, executionState.Cmd.CurrentResult.HttpStatusCode, executionState.Cmd.CurrentResult.ServiceRequestID, executionState.Cmd.CurrentResult.ContentMd5, executionState.Cmd.CurrentResult.Etag);
+                        Executor.FireResponseReceived(executionState);
 
-                        // clear exception
-                        executionState.ExceptionRef = null;
-                    }
+                        // 7. Do Response parsing (headers etc, no stream available here)
+                        if (cmd.PreProcessResponse != null)
+                        {
+                            executionState.CurrentOperation = ExecutorOperation.PreProcess;
+                            executionState.Result = cmd.PreProcessResponse(cmd, executionState.Resp, executionState.ExceptionRef, executionState.OperationContext);
 
-                    // 8. (Potentially reads stream from server)
-                    cmd.ResponseStream = await executionState.Resp.Content.ReadAsStreamAsync();
+                            // clear exception
+                            executionState.ExceptionRef = null;
+                            Logger.LogInformational(executionState.OperationContext, SR.TracePreProcessDone);
+                        }
 
-                    if (!cmd.RetrieveResponseStream)
-                    {
-                        cmd.DestinationStream = Stream.Null;
-                    }
+                        // 8. (Potentially reads stream from server)
+                        executionState.CurrentOperation = ExecutorOperation.GetResponseStream;
+                        cmd.ResponseStream = await executionState.Resp.Content.ReadAsStreamAsync();
 
-                    if (cmd.DestinationStream != null)
-                    {
-                        try
+                        if (!cmd.RetrieveResponseStream)
+                        {
+                            cmd.DestinationStream = Stream.Null;
+                        }
+
+                        if (cmd.DestinationStream != null)
                         {
                             if (cmd.StreamCopyState == null)
                             {
                                 cmd.StreamCopyState = new StreamDescriptor();
                             }
 
-                            await cmd.ResponseStream.WriteToAsync(cmd.DestinationStream, null /* MaxLength */, cmd.CalculateMd5ForResponseStream, executionState.OperationContext, cmd.StreamCopyState, tokenWithTimeout);
+                            try
+                            {
+                                executionState.CurrentOperation = ExecutorOperation.BeginDownloadResponse;
+                                Logger.LogInformational(executionState.OperationContext, SR.TraceDownload);
+                                await cmd.ResponseStream.WriteToAsync(cmd.DestinationStream, null /* copyLength */, null /* maxLength */, cmd.CalculateMd5ForResponseStream, executionState, cmd.StreamCopyState, token);
+                            }
+                            finally
+                            {
+                                cmd.ResponseStream.Dispose();
+                                cmd.ResponseStream = null;
+                            }
                         }
-                        finally
+
+                        // 9. Evaluate Response & Parse Results, (Stream potentially available here) 
+                        if (cmd.PostProcessResponse != null)
                         {
-                            cmd.ResponseStream.Dispose();
-                            cmd.ResponseStream = null;
+                            executionState.CurrentOperation = ExecutorOperation.PostProcess;
+                            Logger.LogInformational(executionState.OperationContext, SR.TracePostProcess);
+                            executionState.Result = await cmd.PostProcessResponse(cmd, executionState.Resp, executionState.OperationContext);
+                        }
+
+                        executionState.CurrentOperation = ExecutorOperation.EndOperation;
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceSuccess);
+                        Executor.FinishRequestAttempt(executionState);
+
+                        return executionState.Result;
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.LogWarning(executionState.OperationContext, SR.TraceGenericError, e.Message);
+                        Executor.FinishRequestAttempt(executionState);
+
+                        if (e is TaskCanceledException && (executionState.OperationExpiryTime.HasValue && DateTime.Now.CompareTo(executionState.OperationExpiryTime.Value) > 0))
+                        {
+                            e = new TimeoutException(SR.TimeoutExceptionMessage, e);
+                        }
+
+                        StorageException translatedException = StorageException.TranslateException(e, executionState.Cmd.CurrentResult);
+                        executionState.ExceptionRef = translatedException;
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceRetryCheck, executionState.RetryCount, executionState.Cmd.CurrentResult.HttpStatusCode, translatedException.IsRetryable ? "yes" : "no", translatedException.Message);
+
+                        shouldRetry = false;
+                        if (translatedException.IsRetryable && (executionState.RetryPolicy != null))
+                        {
+                            shouldRetry = executionState.RetryPolicy.ShouldRetry(
+                                executionState.RetryCount++,
+                                executionState.Cmd.CurrentResult.HttpStatusCode,
+                                executionState.ExceptionRef,
+                                out delay,
+                                executionState.OperationContext);
+
+                            if ((delay < TimeSpan.Zero) || (delay > Constants.MaximumRetryBackoff))
+                            {
+                                delay = Constants.MaximumRetryBackoff;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        if (executionState.Resp != null)
+                        {
+                            executionState.Resp.Dispose();
+                            executionState.Resp = null;
                         }
                     }
 
-                    // 9. Evaluate Response & Parse Results, (Stream potentially available here) 
-                    if (cmd.PostProcessResponse != null)
+                    // potentially backoff
+                    if (!shouldRetry || (executionState.OperationExpiryTime.HasValue && (DateTime.Now + delay).CompareTo(executionState.OperationExpiryTime.Value) > 0))
                     {
-                        executionState.Result = await cmd.PostProcessResponse(cmd, executionState.Resp, executionState.ExceptionRef, executionState.OperationContext);
-                    }
-
-                    Executor.FinishRequestAttempt(executionState);
-
-                    return executionState.Result;
-                }
-                catch (Exception e)
-                {
-                    Executor.FinishRequestAttempt(executionState);
-
-                    if (e is TaskCanceledException && (executionState.OperationExpiryTime.HasValue && DateTime.Now.CompareTo(executionState.OperationExpiryTime.Value) > 0))
-                    {
-                        e = new TimeoutException(SR.TimeoutExceptionMessage, e);
-                    }
-
-                    StorageException translatedException = StorageException.TranslateException(e, executionState.Cmd.CurrentResult);
-                    executionState.ExceptionRef = translatedException;
-
-                    delay = TimeSpan.FromMilliseconds(0);
-                    shouldRetry = translatedException.IsRetryable &&
-                                      executionState.RetryPolicy != null ?
-                                              executionState.RetryPolicy.ShouldRetry(
-                                                                                      executionState.RetryCount++,
-                                                                                      executionState.Cmd.CurrentResult.HttpStatusCode,
-                                                                                      executionState.ExceptionRef,
-                                                                                      out delay,
-                                                                                      executionState.OperationContext)
-                                      : false;
-
-                    delay = delay.TotalMilliseconds < 0 || delay > Constants.MaximumRetryBackoff ? Constants.MaximumRetryBackoff : delay;
-                }
-                finally
-                {
-                    if (executionState.Resp != null)
-                    {
-                        executionState.Resp.Dispose();
-                        executionState.Resp = null;
-                    }
-                }
-
-                // potentially backoff
-                if (!shouldRetry || (executionState.OperationExpiryTime.HasValue && (DateTime.Now + delay).CompareTo(executionState.OperationExpiryTime.Value) > 0))
-                {
-#if RTMD
-                    // Need to throw wrapped Exception with message as serialized exception info stuff. 
-                    int hResult = WrappedStorageException.GenerateHResult(executionState.ExceptionRef, executionState.Cmd.CurrentResult);
-                    throw new WrappedStorageException(executionState.Cmd.CurrentResult.WriteAsXml(), executionState.ExceptionRef, hResult);
+                        Logger.LogError(executionState.OperationContext, shouldRetry ? SR.TraceRetryDecisionTimeout : SR.TraceRetryDecisionPolicy, executionState.ExceptionRef.Message);
+#if WINDOWS_RT
+                        // Need to throw wrapped Exception with message as serialized exception info stuff. 
+                        int hResult = WrappedStorageException.GenerateHResult(executionState.ExceptionRef, executionState.Cmd.CurrentResult);
+                        throw new WrappedStorageException(executionState.Cmd.CurrentResult.WriteAsXml(), executionState.ExceptionRef, hResult);
 #else
                     throw executionState.ExceptionRef; // throw base exception for desktop
 #endif
-                }
-                else
-                {
-                    if (cmd.RecoveryAction != null)
-                    {
-                        // I.E. Rewind stream etc.
-                        cmd.RecoveryAction(cmd, executionState.Cmd.CurrentResult.Exception, executionState.OperationContext);
                     }
+                    else
+                    {
+                        if (cmd.RecoveryAction != null)
+                        {
+                            // I.E. Rewind stream etc.
+                            cmd.RecoveryAction(cmd, executionState.Cmd.CurrentResult.Exception, executionState.OperationContext);
+                        }
 
-                    if (delay > TimeSpan.Zero)
-                    {
-                        await Task.Delay(delay);
+                        if (delay > TimeSpan.Zero)
+                        {
+                            await Task.Delay(delay, token);
+                        }
+
+                        Logger.LogInformational(executionState.OperationContext, SR.TraceRetry);
                     }
                 }
+                while (shouldRetry);
+
+                // should never get here
+                throw new NotImplementedException(SR.InternalStorageError);
             }
-            while (shouldRetry);
-
-            // should never get here
-            throw new NotImplementedException(SR.InternalStorageError);
         }
     }
 }

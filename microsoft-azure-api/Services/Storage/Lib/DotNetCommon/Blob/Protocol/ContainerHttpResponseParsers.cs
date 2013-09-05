@@ -17,12 +17,13 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System.Collections.Generic;
     using System.Net;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
-    /// Provides a set of methods for parsing a response containing container data from the Blob service.
+    /// Provides a set of methods for parsing container responses from the Blob service.
     /// </summary>
     public static partial class ContainerHttpResponseParsers
     {
@@ -43,10 +44,17 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>The container's attributes.</returns>
         public static BlobContainerProperties GetProperties(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             // Set the container properties
             BlobContainerProperties containerProperties = new BlobContainerProperties();
             containerProperties.ETag = HttpResponseParsers.GetETag(response);
+
+#if WINDOWS_PHONE
+            containerProperties.LastModified = HttpResponseParsers.GetLastModified(response);
+#else
             containerProperties.LastModified = response.LastModified.ToUniversalTime();
+#endif
 
             // Get lease properties
             containerProperties.LeaseStatus = BlobHttpResponseParsers.GetLeaseStatus(response);
@@ -73,6 +81,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>A value indicating the public access level for the container.</returns>
         public static BlobContainerPublicAccessType GetAcl(HttpWebResponse response)
         {
+            CommonUtility.AssertNotNull("response", response);
+
             string acl = response.Headers[Constants.HeaderConstants.BlobPublicAccess];
             return GetContainerAcl(acl);
         }

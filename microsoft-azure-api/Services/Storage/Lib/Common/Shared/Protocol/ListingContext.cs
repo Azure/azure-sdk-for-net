@@ -17,12 +17,10 @@
 
 namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
-    using System;
-
     /// <summary>
     /// Represents the listing context for enumeration operations.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

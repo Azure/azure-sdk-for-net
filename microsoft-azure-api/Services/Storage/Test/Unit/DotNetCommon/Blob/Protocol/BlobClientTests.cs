@@ -15,17 +15,16 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Text;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
@@ -43,9 +42,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
         private Random random = new Random();
 
-        public BlobClientTests(bool owner, bool async, int timeout)
+        public BlobClientTests(bool owner, bool isAsync, int timeout)
         {
-            BlobContext = new BlobContext(owner, async, timeout);
+            BlobContext = new BlobContext(owner, isAsync, timeout);
         }
 
         public void Initialize()
@@ -835,7 +834,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
                 int i = 0;
                 foreach (IListBlobEntry item in listBlobsResponse.Blobs)
                 {
-                    var blob = item as ListBlobEntry;
+                    ListBlobEntry blob = item as ListBlobEntry;
                     if (expectedBlobs == null)
                     {
                         Assert.Fail("Should not have blobs.");

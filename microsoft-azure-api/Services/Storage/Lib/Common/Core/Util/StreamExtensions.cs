@@ -17,18 +17,16 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Util
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
     using Microsoft.WindowsAzure.Storage.Core.Executor;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-
-#if RT
-    using System.Threading.Tasks;
+    using System;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
     using System.Threading;
+
+#if WINDOWS_RT
+    using System.Threading.Tasks;
 #endif
 
     /// <summary>
@@ -49,22 +47,38 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             }
         }
 
-#if !RT
+#if !WINDOWS_RT
         /// <summary>
-        /// Reads synchronously the entire content of the stream and writes it to the given output stream.
+        /// Reads synchronously the specified content of the stream and writes it to the given output stream.
         /// </summary>
         /// <param name="stream">The origin stream.</param>
-        /// <param name="toStream">The destination stream.</param>
-        /// <param name="maxLength">Maximum length of the stream to write.</param>
-        /// <param name="expiryTime">DateTime indicating the expiry time.</param>
-        /// <param name="calculateMd5">Bool value indicating whether the Md5 should be calculated.</param>
+        /// <param name="toStream">The destination stream.</param>    
+        /// <param name="copyLength">Number of bytes to copy from source stream to destination stream. Cannot be passed with a value for maxLength.</param>
+        /// <param name="maxLength">Maximum length of the stream to write.</param>        
+        /// <param name="calculateMd5"><c>true</c> to calculate the MD5 hash.</param>
         /// <param name="syncRead">A boolean indicating whether the write happens synchronously.</param>
-        /// <param name="operationContext">An object that represents the context for the current operation.</param>
+        /// <param name="executionState">An object that stores state of the operation.</param>
         /// <param name="streamCopyState">State of the stream copy.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">stream</exception>
         [DebuggerNonUserCode]
-        internal static void WriteToSync(this Stream stream, Stream toStream, long? maxLength, DateTime? expiryTime, bool calculateMd5, bool syncRead, OperationContext operationContext, StreamDescriptor streamCopyState)
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Reviewed")]
+        internal static void WriteToSync<T>(this Stream stream, Stream toStream, long? copyLength, long? maxLength, bool calculateMd5, bool syncRead, ExecutionState<T> executionState, StreamDescriptor streamCopyState)
         {
+            if (copyLength.HasValue && maxLength.HasValue)
+            {
+                throw new ArgumentException(SR.StreamLengthMismatch);
+            }
+
+            if (stream.CanSeek && maxLength.HasValue && stream.Length - stream.Position > maxLength)
+            {
+                throw new InvalidOperationException(SR.StreamLengthError);
+            }
+
+            if (stream.CanSeek && copyLength.HasValue && stream.Length - stream.Position < copyLength)
+            {
+                throw new ArgumentOutOfRangeException("copyLength", SR.StreamLengthShortError);
+            }
+            
             byte[] buffer = new byte[GetBufferSize(stream)];
 
             if (streamCopyState != null && calculateMd5 && streamCopyState.Md5HashRef == null)
@@ -72,43 +86,101 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 streamCopyState.Md5HashRef = new MD5Wrapper();
             }
 
-            int readCount;
-            do
+            RegisteredWaitHandle waitHandle = null;
+            ManualResetEvent completedEvent = null;
+            if (!syncRead && executionState.OperationExpiryTime.HasValue)
             {
-                if (expiryTime.HasValue && DateTime.Now.CompareTo(expiryTime.Value) > 0)
+                completedEvent = new ManualResetEvent(false);
+                waitHandle = ThreadPool.RegisterWaitForSingleObject(
+                    completedEvent,
+                    StreamExtensions.MaximumCopyTimeCallback<T>,
+                    executionState,
+                    executionState.RemainingTimeout,
+                    true);
+            }
+            
+            try
+            {
+                long? bytesRemaining = copyLength;
+                int readCount;
+                do
                 {
-                    throw Exceptions.GenerateTimeoutException(operationContext.LastResult, null);
-                }
+                    if (executionState.OperationExpiryTime.HasValue && DateTime.Now.CompareTo(executionState.OperationExpiryTime.Value) > 0)
+                    {
+                        throw Exceptions.GenerateTimeoutException(executionState.Cmd != null ? executionState.Cmd.CurrentResult : null, null);
+                    }
 
-                if (syncRead)
+                    // Determine how many bytes to read this time so that no more than copyLength bytes are read
+                    int bytesToRead = MinBytesToRead(bytesRemaining, buffer.Length);
+
+                    if (bytesToRead == 0)
+                    {
+                        break;
+                    }
+
+                    // Read synchronously or asynchronously
+                    readCount = syncRead
+                                    ? stream.Read(buffer, 0, bytesToRead)
+                                    : stream.EndRead(stream.BeginRead(buffer, 0, bytesToRead, null /* Callback */, null /* State */));
+
+                    // Decrement bytes to write from bytes read
+                    if (bytesRemaining.HasValue)
+                    {
+                        bytesRemaining -= readCount;
+                    }
+
+                    // Write
+                    if (readCount > 0)
+                    {
+                        toStream.Write(buffer, 0, readCount);
+
+                        // Update the StreamDescriptor after the bytes are successfully committed to the output stream
+                        if (streamCopyState != null)
+                        {
+                            streamCopyState.Length += readCount;
+
+                            if (maxLength.HasValue && streamCopyState.Length > maxLength.Value)
+                            {
+                                throw new InvalidOperationException(SR.StreamLengthError);
+                            }
+
+                            if (streamCopyState.Md5HashRef != null)
+                            {
+                                streamCopyState.Md5HashRef.UpdateHash(buffer, 0, readCount);
+                            }
+                        }
+                    }
+                }
+                while (readCount != 0);
+
+                if (bytesRemaining.HasValue && bytesRemaining != 0)
                 {
-                    readCount = stream.Read(buffer, 0, buffer.Length);
+                    throw new ArgumentOutOfRangeException("copyLength", SR.StreamLengthShortError);
+                }
+            }
+            catch (Exception)
+            {
+                if (executionState.OperationExpiryTime.HasValue && DateTime.Now.CompareTo(executionState.OperationExpiryTime.Value) > 0)
+                {
+                    throw Exceptions.GenerateTimeoutException(executionState.Cmd != null ? executionState.Cmd.CurrentResult : null, null);
                 }
                 else
                 {
-                    // Use an async read since Sync read on ConnectStream will not throw for prematurely closed connections 
-                    readCount = stream.EndRead(stream.BeginRead(buffer, 0, buffer.Length, null /* Callback */, null /* State */));
-                }
-
-                toStream.Write(buffer, 0, readCount);
-
-                // Update the StreamDescriptor after the bytes are successfully committed to the output stream
-                if (streamCopyState != null)
-                {
-                    streamCopyState.Length += readCount;
-
-                    if (maxLength.HasValue && streamCopyState.Length > maxLength.Value)
-                    {
-                        throw new ArgumentOutOfRangeException("stream");
-                    }
-
-                    if (streamCopyState.Md5HashRef != null)
-                    {
-                        streamCopyState.Md5HashRef.UpdateHash(buffer, 0, readCount);
-                    }
+                    throw;
                 }
             }
-            while (readCount != 0);
+            finally
+            {
+                if (waitHandle != null)
+                {
+                    waitHandle.Unregister(null);
+                }
+
+                if (completedEvent != null)
+                {
+                    completedEvent.Close();
+                }
+            }
 
             if (streamCopyState != null && streamCopyState.Md5HashRef != null)
             {
@@ -116,41 +188,139 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 streamCopyState.Md5HashRef = null;
             }
         }
+
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "If aborting the request fails, we can still continue executing it.")]
+        private static void MaximumCopyTimeCallback<T>(object state, bool timedOut)
+        {
+            ExecutionState<T> executionState = (ExecutionState<T>)state;
+
+            if (timedOut)
+            {
+                if (executionState.Req != null)
+                {
+                    try
+                    {
+                        executionState.ReqTimedOut = true;
+                        executionState.Req.Abort();
+                    }
+                    catch (Exception)
+                    {
+                        // no op
+                    }
+                }
+            }
+        }
+
+        private static int MinBytesToRead(long? val1, int val2)
+        {
+            if (val1.HasValue && val1 < val2)
+            {
+                return (int)val1;
+            }
+
+            return val2;
+        }
 #endif
 
-#if RT
-        internal static async Task WriteToAsync(this Stream stream, Stream toStream, long? maxLength, bool calculateMd5, OperationContext operationContext, StreamDescriptor streamCopyState, CancellationToken token)
+#if WINDOWS_RT
+        /// <summary>
+        /// Asynchronously reads the entire content of the stream and writes it to the given output stream.
+        /// </summary>
+        /// <param name="stream">The origin stream.</param>
+        /// <param name="toStream">The destination stream.</param>
+        /// <param name="copyLength">Number of bytes to copy from source stream to destination stream. Cannot be passed with a value for maxLength.</param>
+        /// <param name="maxLength">Maximum length of the source stream. Cannot be passed with a value for copyLength.</param>
+        /// <param name="calculateMd5">Bool value indicating whether the Md5 should be calculated.</param>
+        /// <param name="executionState">An object that stores state of the operation.</param>
+        /// <param name="streamCopyState">An object that represents the current state for the copy operation.</param>
+        /// <param name="token">A CancellationToken to observe while waiting for the copy to complete.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        internal static async Task WriteToAsync<T>(this Stream stream, Stream toStream, long? copyLength, long? maxLength, bool calculateMd5, ExecutionState<T> executionState, StreamDescriptor streamCopyState, CancellationToken token)
         {
-            byte[] buffer = new byte[GetBufferSize(stream)];
+            if (copyLength.HasValue && maxLength.HasValue)
+            {
+                throw new ArgumentException(SR.StreamLengthMismatch);
+            }
 
+            if (stream.CanSeek && maxLength.HasValue && stream.Length - stream.Position > maxLength)
+            {
+                throw new InvalidOperationException(SR.StreamLengthError);
+            }
+
+            if (stream.CanSeek && copyLength.HasValue && stream.Length - stream.Position < copyLength)
+            {
+                throw new ArgumentOutOfRangeException("copyLength", SR.StreamLengthShortError);
+            }
+            
             if (streamCopyState != null && calculateMd5 && streamCopyState.Md5HashRef == null)
             {
                 streamCopyState.Md5HashRef = new MD5Wrapper();
             }
 
+            if (executionState.OperationExpiryTime.HasValue)
+            {                
+                // Setup token for timeout
+                CancellationTokenSource cts = new CancellationTokenSource(executionState.RemainingTimeout);
+                CancellationToken tokenWithTimeout = cts.Token;
+
+                // Hookup user's token
+                token.Register(() => cts.Cancel());
+
+                // Switch tokens
+                token = tokenWithTimeout;
+            }
+
+            byte[] buffer = new byte[GetBufferSize(stream)];
+            long? bytesRemaining = copyLength;
             int readCount;
             do
             {
-                readCount = await stream.ReadAsync(buffer, 0, buffer.Length, token);
-                await toStream.WriteAsync(buffer, 0, readCount, token);
+                // Determine how many bytes to read this time so that no more than count bytes are read
+                int bytesToRead = bytesRemaining.HasValue && bytesRemaining < buffer.Length ? (int)bytesRemaining : buffer.Length;
 
-                // Update the StreamDescriptor after the bytes are successfully committed to the output stream
-                if (streamCopyState != null)
+                if (bytesToRead == 0)
                 {
-                    streamCopyState.Length += readCount;
+                    break;
+                }
+                
+                readCount = await stream.ReadAsync(buffer, 0, bytesToRead, token);
 
-                    if (maxLength.HasValue && streamCopyState.Length > maxLength.Value)
-                    {
-                        throw new ArgumentOutOfRangeException("stream");
-                    }
+                if (bytesRemaining.HasValue)
+                {
+                    bytesRemaining -= readCount;
+                }
 
-                    if (streamCopyState.Md5HashRef != null)
+                if (readCount > 0)
+                {
+                    await toStream.WriteAsync(buffer, 0, readCount, token);
+
+                    // Update the StreamDescriptor after the bytes are successfully committed to the output stream
+                    if (streamCopyState != null)
                     {
-                        streamCopyState.Md5HashRef.UpdateHash(buffer, 0, readCount);
+                        streamCopyState.Length += readCount;
+
+                        if (maxLength.HasValue && streamCopyState.Length > maxLength.Value)
+                        {
+                            throw new InvalidOperationException(SR.StreamLengthError);
+                        }
+
+                        if (streamCopyState.Md5HashRef != null)
+                        {
+                            streamCopyState.Md5HashRef.UpdateHash(buffer, 0, readCount);
+                        }
                     }
                 }
             }
-            while (readCount != 0);
+            while (readCount > 0);
+
+            if (bytesRemaining.HasValue && bytesRemaining != 0)
+            {
+                throw new ArgumentOutOfRangeException("copyLength", SR.StreamLengthShortError);
+            }
+
+            // Streams opened with AsStreamForWrite extension need to be flushed
+            // to write all buffered data to the underlying Windows Runtime stream.
+            await toStream.FlushAsync();
 
             if (streamCopyState != null && streamCopyState.Md5HashRef != null)
             {
@@ -159,25 +329,24 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             }
         }
 
-#elif DNCP
+#elif WINDOWS_DESKTOP
         /// <summary>
-        /// Reads synchronously the entire content of the stream and writes it to the given output stream.
+        /// Asynchronously reads the entire content of the stream and writes it to the given output stream.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The result type of the ExecutionState</typeparam>
         /// <param name="stream">The origin stream.</param>
         /// <param name="toStream">The destination stream.</param>
-        /// <param name="maxLength">Maximum length of the stream to write.</param>
-        /// <param name="expiryTime">DateTime indicating the expiry time.</param>
+        /// <param name="copyLength">Number of bytes to copy from source stream to destination stream. Cannot be passed with a value for maxLength.</param>
+        /// <param name="maxLength">Maximum length of the source stream. Cannot be passed with a value for copyLength.</param>
         /// <param name="calculateMd5">Bool value indicating whether the Md5 should be calculated.</param>
-        /// <param name="executionState">StorageCommand that stores state about its execution.</param>
-        /// <param name="operationContext">An object that represents the context for the current operation.</param>
+        /// <param name="executionState">An object that stores state of the operation.</param>
         /// <param name="streamCopyState">State of the stream copy.</param>
         /// <param name="completed">The action taken when the execution is completed.</param>
         [DebuggerNonUserCode]
-        internal static void WriteToAsync<T>(this Stream stream, Stream toStream, long? maxLength, DateTime? expiryTime, bool calculateMd5, ExecutionState<T> executionState, OperationContext operationContext, StreamDescriptor streamCopyState, Action<ExecutionState<T>> completed)
+        internal static void WriteToAsync<T>(this Stream stream, Stream toStream, long? copyLength, long? maxLength, bool calculateMd5, ExecutionState<T> executionState, StreamDescriptor streamCopyState, Action<ExecutionState<T>> completed)
         {
-            AsyncStreamCopier<T> copier = new AsyncStreamCopier<T>(stream, toStream, executionState, GetBufferSize(stream), calculateMd5, operationContext, streamCopyState);
-            copier.StartCopyStream(completed, maxLength, expiryTime);
+            AsyncStreamCopier<T> copier = new AsyncStreamCopier<T>(stream, toStream, executionState, GetBufferSize(stream), calculateMd5, streamCopyState);
+            copier.StartCopyStream(completed, copyLength, maxLength);
         }
 #endif
     }

@@ -15,11 +15,11 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 using System;
 using System.Net;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
@@ -62,6 +62,10 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         {
             CloudQueueClient client = GenerateCloudQueueClient();
             startProperties = client.GetServiceProperties();
+            if (TestBase.QueueBufferManager != null)
+            {
+                TestBase.QueueBufferManager.OutstandingBufferCount = 0;
+            }
         }
 
         // Use ClassCleanup to run code after all tests in a class have run
@@ -70,16 +74,33 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         {
             CloudQueueClient client = GenerateCloudQueueClient();
             client.SetServiceProperties(startProperties);
+
+            if (TestBase.QueueBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.QueueBufferManager.OutstandingBufferCount);
+            }
         }
+
         //
         // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                TestBase.QueueBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.QueueBufferManager.OutstandingBufferCount);
+            }
+        }
         #endregion
 
         #region Analytics RoundTrip
@@ -108,8 +129,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
         }
 
@@ -150,9 +169,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 client.EndSetServiceProperties(result);
             }
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
-
             ServiceProperties retrievedProps = null;
             using (ManualResetEvent evt = new ManualResetEvent(false))
             {
@@ -172,8 +188,37 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
         #endregion
 
+        #region Task
+
+        [TestMethod]
+        [Description("Test Analytics Round Trip Task")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudQueueTestAnalyticsRoundTripTask()
+        {
+            CloudQueueClient client = GenerateCloudQueueClient();
+
+            ServiceProperties props = new ServiceProperties();
+
+            props.Logging.LoggingOperations = LoggingOperations.Read | LoggingOperations.Write;
+            props.Logging.RetentionDays = 5;
+            props.Logging.Version = "1.0";
+
+            props.Metrics.MetricsLevel = MetricsLevel.Service;
+            props.Metrics.RetentionDays = 6;
+            props.Metrics.Version = "1.0";
+
+            client.SetServicePropertiesAsync(props).Wait();
+
+            AssertServicePropertiesAreEqual(props, client.GetServicePropertiesAsync().Result);
+        }
+
         #endregion
-        
+
+        #endregion
+
         #region Analytics Permutations
 
         [TestMethod]
@@ -198,8 +243,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
         }
 
@@ -259,16 +302,12 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // None
             props.Logging.LoggingOperations = LoggingOperations.All;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
         }
 
@@ -290,24 +329,18 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             props.Metrics.Version = "1.0";
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Service
             props.Metrics.MetricsLevel = MetricsLevel.Service;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // ServiceAndAPI
             props.Metrics.MetricsLevel = MetricsLevel.ServiceAndApi;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
         }
 
@@ -328,8 +361,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             props.Metrics.MetricsLevel = MetricsLevel.None;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy not null with metrics disabled.
@@ -337,8 +368,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             props.Metrics.MetricsLevel = MetricsLevel.Service;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy not null with metrics enabled.
@@ -346,8 +375,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             props.Metrics.RetentionDays = 2;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy null with logging disabled.
@@ -355,8 +382,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             props.Logging.LoggingOperations = LoggingOperations.None;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy not null with logging disabled.
@@ -364,8 +389,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             props.Logging.LoggingOperations = LoggingOperations.None;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy null with logging enabled.
@@ -373,8 +396,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             props.Logging.LoggingOperations = LoggingOperations.All;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
 
             // Set retention policy not null with logging enabled.
@@ -382,10 +403,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             props.Logging.LoggingOperations = LoggingOperations.All;
             client.SetServiceProperties(props);
 
-            // Wait for analytics server to update
-            Thread.Sleep(60 * 1000);
             AssertServicePropertiesAreEqual(props, client.GetServiceProperties());
-        } 
+        }
         #endregion
 
         #region Test Helpers

@@ -17,29 +17,29 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Xml;
-    using System.Xml.Serialization;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Core;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.Xml;
+    using System.Xml.Schema;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// Represents a continuation token for listing operations. 
     /// </summary>
     /// <remarks>A method that may return a partial set of results via a <see cref="TableResultSegment"/> object also returns a continuation token, 
     /// which can be used in a subsequent call to return the next set of available results. </remarks>
-#if DNCP
+#if WINDOWS_DESKTOP && !WINDOWS_PHONE
     [Serializable]
 #endif
-
     [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1001:CommasMustBeSpacedCorrectly", Justification = "Reviewed.")]
     public sealed class TableContinuationToken : IContinuationToken
-#if DNCP
-, IXmlSerializable
+#if WINDOWS_DESKTOP && !WINDOWS_PHONE
+        , IXmlSerializable
 #endif
     {
         /// <summary>
@@ -60,14 +60,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <value>The name of the next table.</value>
         public string NextTableName { get; set; }
 
-#if !RTMD
+#if !WINDOWS_RT
         /// <summary>
         /// Gets an XML representation of an object.
         /// </summary>
         /// <returns>
         /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
         /// </returns>
-        public System.Xml.Schema.XmlSchema GetSchema()
+        public XmlSchema GetSchema()
         {
             return null;
         }
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Generates a serializable continuation token from its XML representation.
         /// </summary>
         /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the continuation token is deserialized.</param>
-        public void ReadXml(System.Xml.XmlReader reader)
+        public void ReadXml(XmlReader reader)
         {
             if (reader == null)
             {
@@ -85,14 +85,20 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             reader.MoveToContent();
 
-            bool isEmptyElement = reader.IsEmptyElement;
-            reader.ReadStartElement(Constants.ContinuationConstants.ContinuationTopElement);
-
-            if (!isEmptyElement)
+            if (reader.IsEmptyElement)
             {
-                while (true)
+                reader.Skip();
+            }
+            else
+            {
+                reader.ReadStartElement();
+                while (reader.IsStartElement())
                 {
-                    if (reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                    if (reader.IsEmptyElement)
+                    {
+                        reader.Skip();
+                    }
+                    else
                     {
                         switch (reader.Name)
                         {
@@ -100,37 +106,39 @@ namespace Microsoft.WindowsAzure.Storage.Table
                                 string version = reader.ReadElementContentAsString();
                                 if (version != Constants.ContinuationConstants.CurrentVersion)
                                 {
-                                    throw new System.Xml.XmlException(string.Format(SR.UnexpectedElement, version));
+                                    throw new XmlException(string.Format(CultureInfo.InvariantCulture, SR.UnexpectedElement, version));
                                 }
 
                                 break;
+
                             case Constants.ContinuationConstants.NextPartitionKeyElement:
                                 this.NextPartitionKey = reader.ReadElementContentAsString();
                                 break;
+
                             case Constants.ContinuationConstants.NextRowKeyElement:
                                 this.NextRowKey = reader.ReadElementContentAsString();
                                 break;
+
                             case Constants.ContinuationConstants.NextTableNameElement:
                                 this.NextTableName = reader.ReadElementContentAsString();
                                 break;
+
                             case Constants.ContinuationConstants.TypeElement:
                                 string continuationType = reader.ReadElementContentAsString();
-                                if ("Table" != continuationType)
+                                if (Constants.ContinuationConstants.TableType != continuationType)
                                 {
-                                    throw new System.Xml.XmlException(SR.UnexpectedContinuationType);
+                                    throw new XmlException(SR.UnexpectedContinuationType);
                                 }
 
                                 break;
+
                             default:
-                                throw new System.Xml.XmlException(string.Format(SR.UnexpectedElement, reader.Name));
+                                throw new XmlException(string.Format(CultureInfo.InvariantCulture, SR.UnexpectedElement, reader.Name));
                         }
                     }
-                    else
-                    {
-                        reader.ReadEndElement();
-                        return;
-                    }
                 }
+
+                reader.ReadEndElement();
             }
         }
 
@@ -149,7 +157,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             writer.WriteElementString(Constants.ContinuationConstants.VersionElement, Constants.ContinuationConstants.CurrentVersion);
 
-            writer.WriteElementString(Constants.ContinuationConstants.TypeElement, "Table");
+            writer.WriteElementString(Constants.ContinuationConstants.TypeElement, Constants.ContinuationConstants.TableType);
 
             if (this.NextPartitionKey != null)
             {
