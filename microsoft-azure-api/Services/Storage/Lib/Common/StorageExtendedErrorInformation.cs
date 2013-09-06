@@ -175,6 +175,8 @@ namespace Microsoft.WindowsAzure.Storage
                     }
                 }
             }
+
+            reader.ReadEndElement();
         }
 
         /// <summary>
