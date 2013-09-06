@@ -212,18 +212,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Data.Edm.WindowsStore, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\Microsoft.Data.Edm.WindowsStore.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm.Portable">
+      <HintPath>Dependencies\Microsoft.Data.Edm.Portable.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.OData.WindowsStore, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\Microsoft.Data.OData.WindowsStore.dll</HintPath>
+    <Reference Include="Microsoft.Data.OData.Portable">
+      <HintPath>Dependencies\Microsoft.Data.OData.Portable.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Spatial.WindowsStore, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\System.Spatial.WindowsStore.dll</HintPath>
+    <Reference Include="System.Spatial.Portable">
+      <HintPath>Dependencies\System.Spatial.Portable.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
