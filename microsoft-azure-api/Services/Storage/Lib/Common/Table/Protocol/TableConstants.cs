@@ -17,18 +17,18 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
-    using System;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
 
     /// <summary>
     /// A set of constants used in operations against the Table service.
     /// </summary>
-#if DNCP
+#if WINDOWS_DESKTOP
     public
 #else
     internal
 #endif
- class TableConstants
+ static class TableConstants
     {
         /// <summary>
         /// Stores the header prefix for continuation information.
@@ -58,72 +58,62 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// <summary>
         /// The maximum size of a string property for the table service in bytes.
         /// </summary>
-        internal const int TableServiceMaxStringPropertySizeInBytes = 64 * 1024;
+        public const int TableServiceMaxStringPropertySizeInBytes = 64 * 1024;
 
         /// <summary>
         /// The maximum size of a string property for the table service in bytes.
         /// </summary>
-        internal const long TableServiceMaxPayload = 20 * Constants.MB;
+        public const long TableServiceMaxPayload = 20 * Constants.MB;
 
         /// <summary>
         /// The maximum size of a string property for the table service in chars.
         /// </summary>
-        internal const int TableServiceMaxStringPropertySizeInChars = TableServiceMaxStringPropertySizeInBytes / 2;
+        public const int TableServiceMaxStringPropertySizeInChars = TableServiceMaxStringPropertySizeInBytes / 2;
 
         /// <summary>
         /// The name of the special table used to store tables.
         /// </summary>
-        internal const string TableServiceTablesName = "Tables";
-
-        /// <summary>
-        /// XML element for table error codes.
-        /// </summary>
-        internal const string TableErrorCodeElement = "code";
-
-        /// <summary>
-        /// XML element for table error messages.
-        /// </summary>
-        internal const string TableErrorMessageElement = "message";
+        public const string TableServiceTablesName = "Tables";
 
         /// <summary>
         /// The name of the partition key property.
         /// </summary>
-        internal const string PartitionKey = "PartitionKey";
+        public const string PartitionKey = "PartitionKey";
 
         /// <summary>
         /// The name of the row key property.
         /// </summary>
-        internal const string RowKey = "RowKey";
+        public const string RowKey = "RowKey";
 
         /// <summary>
         /// The name of the Timestamp property.
         /// </summary>
-        internal const string Timestamp = "Timestamp";
-
+        public const string Timestamp = "Timestamp";
+        
         /// <summary>
-        /// The name of the special table used to store tables.
+        /// The name of the ETag property.
         /// </summary>
-        internal const string Tables = "Tables";
+        public const string Etag = "ETag";
 
         /// <summary>
         /// The name of the property that stores the table name.
         /// </summary>
-        internal const string TableName = "TableName";
+        public const string TableName = "TableName";
 
         /// <summary>
         /// The query filter clause name.
         /// </summary>
-        internal const string Filter = "$filter";
+        public const string Filter = "$filter";
 
         /// <summary>
         /// The query top clause name.
         /// </summary>
-        internal const string Top = "$top";
+        public const string Top = "$top";
 
         /// <summary>
         /// The query select clause name.
         /// </summary>
-        internal const string Select = "$select";
+        public const string Select = "$select";
 
         /// <summary>
         /// The minimum DateTime supported.

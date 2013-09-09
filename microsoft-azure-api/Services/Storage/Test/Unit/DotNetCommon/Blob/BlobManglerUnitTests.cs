@@ -15,19 +15,39 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.IO;
-using System.Threading;
-using System.Security.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAzure.Test.Network;
 using Microsoft.WindowsAzure.Test.Network.Behaviors;
+using System;
+using System.IO;
+using System.Threading;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
     public class BlobManglerUnitTests : BlobTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         [Description("Force blob download to retry")]
         [TestCategory(ComponentCategory.Blob)]

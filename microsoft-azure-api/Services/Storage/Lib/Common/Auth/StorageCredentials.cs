@@ -22,6 +22,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
 
     /// <summary>
     /// Represents a set of credentials used to authenticate access to a Windows Azure storage account.
@@ -34,6 +35,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// Gets the associated shared access signature token for the credentials.
         /// </summary>
         /// <value>The shared access signature token.</value>
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SAS", Justification = "Back compatibility.")]
         public string SASToken { get; private set; }
 
         /// <summary>
@@ -46,9 +48,15 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// Gets the associated key name for the credentials.
         /// </summary>
         /// <value>The key name.</value>
-        public string KeyName { get; private set; }
+        public string KeyName 
+        { 
+            get 
+            { 
+                return this.Key.KeyName; 
+            } 
+        }
 
-        internal byte[] KeyValue { get; private set; }
+        internal StorageAccountKey Key { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the credentials are for anonymous access.
@@ -66,6 +74,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// Gets a value indicating whether the credentials are a shared access signature token.
         /// </summary>
         /// <value><c>true</c> if the credentials are a shared access signature token; otherwise, <c>false</c>.</value>
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SAS", Justification = "Back compatibility.")]
         public bool IsSAS
         {
             get
@@ -97,13 +106,13 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// Initializes a new instance of the <see cref="StorageCredentials"/> class with the specified account name and key value.
         /// </summary>
         /// <param name="accountName">A string that represents the name of the storage account.</param>
-        /// <param name="keyValue">A string that represents the Base-64-encoded account access key.</param>
+        /// <param name="keyValue">A string that represents the Base64-encoded account access key.</param>
         public StorageCredentials(string accountName, string keyValue)
             : this(accountName, keyValue, null)
         {
         }
 
-#if DNCP
+#if WINDOWS_DESKTOP
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageCredentials"/> class with the specified account name and key value.
         /// </summary>
@@ -119,7 +128,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         /// Initializes a new instance of the <see cref="StorageCredentials"/> class with the specified account name, key value, and key name.
         /// </summary>
         /// <param name="accountName">A string that represents the name of the storage account.</param>
-        /// <param name="keyValue">A string that represents the Base-64-encoded account access key.</param>
+        /// <param name="keyValue">A string that represents the Base64-encoded account access key.</param>
         /// <param name="keyName">A string that represents the name of the key.</param>
         public StorageCredentials(string accountName, string keyValue, string keyName)
         {
@@ -132,7 +141,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
             this.UpdateKey(keyValue, keyName);
         }
 
-#if DNCP
+#if WINDOWS_DESKTOP
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageCredentials"/> class with the specified account name, key value, and key name.
         /// </summary>
@@ -162,26 +171,40 @@ namespace Microsoft.WindowsAzure.Storage.Auth
                 throw new ArgumentNullException("sasToken");
             }
 
-            this.queryBuilder = new UriQueryBuilder();
-            IDictionary<string, string> parameters = HttpUtility.ParseQueryString(sasToken);
-            foreach (KeyValuePair<string, string> parameter in parameters)
-            {
-                this.queryBuilder.Add(parameter.Key, parameter.Value);
-            }
-
             this.SASToken = sasToken;
+            this.UpdateQueryBuilder();
         }
+
+        /// <summary>
+        /// Updates the key value for the credentials.
+        /// </summary>
+        /// <param name="keyValue">The key value, as a Base64-encoded string, to update.</param>
+        public void UpdateKey(string keyValue)
+        {
+            this.UpdateKey(keyValue, null);
+        }
+
+#if WINDOWS_DESKTOP
+        /// <summary>
+        /// Updates the key value for the credentials.
+        /// </summary>
+        /// <param name="keyValue">The key value, as an array of bytes, to update.</param>
+        public void UpdateKey(byte[] keyValue)
+        {
+            this.UpdateKey(keyValue, null);
+        }
+#endif
 
         /// <summary>
         /// Updates the key value and key name for the credentials.
         /// </summary>
-        /// <param name="keyValue">The key value, as a Base-64 encoded string, to update.</param>
+        /// <param name="keyValue">The key value, as a Base64-encoded string, to update.</param>
         /// <param name="keyName">The key name to update.</param>
         public void UpdateKey(string keyValue, string keyName)
         {
             if (!this.IsSharedKey)
             {
-                string errorMessage = string.Format(SR.CannotUpdateKeyWithoutAccountKeyCreds);
+                string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.CannotUpdateKeyWithoutAccountKeyCreds);
                 throw new InvalidOperationException(errorMessage);
             }
             
@@ -190,11 +213,10 @@ namespace Microsoft.WindowsAzure.Storage.Auth
                 throw new ArgumentNullException("keyValue");
             }
 
-            this.KeyName = keyName;
-            this.KeyValue = Convert.FromBase64String(keyValue);
+            this.Key = new StorageAccountKey(keyName, Convert.FromBase64String(keyValue));
         }
 
-#if DNCP
+#if WINDOWS_DESKTOP
         /// <summary>
         /// Updates the key value and key name for the credentials.
         /// </summary>
@@ -204,7 +226,7 @@ namespace Microsoft.WindowsAzure.Storage.Auth
         {
             if (!this.IsSharedKey)
             {
-                string errorMessage = string.Format(SR.CannotUpdateKeyWithoutAccountKeyCreds);
+                string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.CannotUpdateKeyWithoutAccountKeyCreds);
                 throw new InvalidOperationException(errorMessage);
             }
 
@@ -213,18 +235,39 @@ namespace Microsoft.WindowsAzure.Storage.Auth
                 throw new ArgumentNullException("keyValue");
             }
 
-            this.KeyName = keyName;
-            this.KeyValue = (byte[])keyValue.Clone();
+            this.Key = new StorageAccountKey(keyName, keyValue);
         }
 #endif
-
+        
         /// <summary>
-        /// Returns the key for the credentials.
+        /// Updates the shared access signature (SAS) token value for storage credentials created with a shared access signature.
+        /// </summary>
+        /// <param name="sasToken">A string that specifies the SAS token value to update.</param>
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SAS", Justification = "Back compatibility.")]
+        public void UpdateSASToken(string sasToken)
+        {
+            if (!this.IsSAS)
+            {
+                string errorMessage = string.Format(CultureInfo.CurrentCulture, SR.CannotUpdateSasWithoutSasCreds);
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            if (string.IsNullOrEmpty(sasToken))
+            {
+                throw new ArgumentNullException("sasToken");
+            }
+
+            this.SASToken = sasToken;
+            this.UpdateQueryBuilder();
+        }
+        
+        /// <summary>
+        /// Returns the account key for the credentials.
         /// </summary>
         /// <returns>An array of bytes that contains the key.</returns>
         public byte[] ExportKey()
         {
-            return (byte[])this.KeyValue.Clone();
+            return (byte[])this.Key.KeyValue.Clone();
         }
 
         /// <summary>
@@ -244,9 +287,14 @@ namespace Microsoft.WindowsAzure.Storage.Auth
             }
         }
 
-        internal string GetBase64EncodedKey()
+        /// <summary>
+        /// Exports the value of the account access key to a Base64-encoded string.
+        /// </summary>
+        /// <returns>The account access key.</returns>
+        public string ExportBase64EncodedKey()
         {
-            return (this.KeyValue == null) ? null : Convert.ToBase64String(this.KeyValue);
+            StorageAccountKey localKey = this.Key;
+            return (localKey.KeyValue == null) ? null : Convert.ToBase64String(localKey.KeyValue);
         }
 
         internal string ToString(bool exportSecrets)
@@ -254,16 +302,17 @@ namespace Microsoft.WindowsAzure.Storage.Auth
             if (this.IsSharedKey)
             {
                 return string.Format(
+                    CultureInfo.InvariantCulture,
                     "{0}={1};{2}={3}",
                     CloudStorageAccount.AccountNameSettingString,
                     this.AccountName,
                     CloudStorageAccount.AccountKeySettingString,
-                    exportSecrets ? this.GetBase64EncodedKey() : "[key hidden]");
+                    exportSecrets ? this.ExportBase64EncodedKey() : "[key hidden]");
             }
 
             if (this.IsSAS)
             {
-                return string.Format("{0}={1}", CloudStorageAccount.SharedAccessSignatureSettingString, exportSecrets ? this.SASToken : "[signature hidden]");
+                return string.Format(CultureInfo.InvariantCulture, "{0}={1}", CloudStorageAccount.SharedAccessSignatureSettingString, exportSecrets ? this.SASToken : "[signature hidden]");
             }
 
             return string.Empty;
@@ -285,7 +334,17 @@ namespace Microsoft.WindowsAzure.Storage.Auth
                 return string.Equals(this.SASToken, other.SASToken) &&
                     string.Equals(this.AccountName, other.AccountName) &&
                     string.Equals(this.KeyName, other.KeyName) &&
-                    string.Equals(this.GetBase64EncodedKey(), other.GetBase64EncodedKey());
+                    string.Equals(this.ExportBase64EncodedKey(), other.ExportBase64EncodedKey());
+            }
+        }
+
+        private void UpdateQueryBuilder()
+        {
+            this.queryBuilder = new UriQueryBuilder();
+            IDictionary<string, string> parameters = HttpWebUtility.ParseQueryString(this.SASToken);
+            foreach (KeyValuePair<string, string> parameter in parameters)
+            {
+                this.queryBuilder.Add(parameter.Key, parameter.Value);
             }
         }
     }

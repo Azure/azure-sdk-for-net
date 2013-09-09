@@ -14,24 +14,17 @@
 //    limitations under the License.
 // </copyright>
 // -----------------------------------------------------------------------------------------
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Net;
-using System.Text;
- 
-#if !COMMON
-using System.Xml;
-using System.Xml.Linq;
-#endif
-
-using Microsoft.WindowsAzure.Storage.Core;
-using Microsoft.WindowsAzure.Storage.Core.Util;
-
+﻿
 namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.Net;
+
     internal static class HttpWebRequestFactory
     {
         /// <summary>
@@ -45,6 +38,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <returns>
         /// A web request for performing the operation.
         /// </returns>
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "operationContext")]
         internal static HttpWebRequest CreateWebRequest(string method, Uri uri, int? timeout, UriQueryBuilder builder, OperationContext operationContext)
         {
             if (builder == null)
@@ -52,21 +46,43 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
                 builder = new UriQueryBuilder();
             }
 
-            if (timeout != 0)
+            if (timeout.HasValue && timeout.Value > 0)
             {
-                builder.Add("timeout", timeout.ToString());
+                builder.Add("timeout", timeout.Value.ToString(CultureInfo.InvariantCulture));
             }
+
+#if WINDOWS_PHONE
+            // Windows Phone does not allow the caller to disable caching, so a random GUID
+            // is added to every URI to make it look a different request.
+            builder.Add("randomguid", Guid.NewGuid().ToString("N"));
+#endif
 
             Uri uriRequest = builder.AddToUri(uri);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriRequest);
             request.Method = method;
-            request.Headers.Add(Constants.HeaderConstants.StorageVersionHeader, Constants.HeaderConstants.TargetStorageVersion);
+
+            // Set the Content-Length of requests to 0 by default. If we do not upload
+            // a body, signing requires it to be 0. On Windows Phone, all requests except
+            // GET need this. On desktop, however, only PUT requests need it.
+#if !WINDOWS_PHONE
+            if (method.Equals(WebRequestMethods.Http.Put, StringComparison.OrdinalIgnoreCase))
+#else
+            if (!method.Equals(WebRequestMethods.Http.Get, StringComparison.OrdinalIgnoreCase))
+#endif
+            {
+                request.ContentLength = 0;
+            }
+
             request.UserAgent = Constants.HeaderConstants.UserAgent;
+            request.Headers[Constants.HeaderConstants.StorageVersionHeader] = Constants.HeaderConstants.TargetStorageVersion;
+
+#if !WINDOWS_PHONE
             request.KeepAlive = true;
 
             // Disable the Expect 100-Continue
             request.ServicePoint.Expect100Continue = false;
+#endif
 
             return request;
         }
@@ -82,7 +98,6 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         internal static HttpWebRequest Create(Uri uri, int? timeout, UriQueryBuilder builder, OperationContext operationContext)
         {
             HttpWebRequest request = CreateWebRequest(WebRequestMethods.Http.Put, uri, timeout, builder, operationContext);
-            request.ContentLength = 0;
             return request;
         }
 
@@ -125,7 +140,6 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             builder.Add(Constants.QueryConstants.Component, "acl");
 
             HttpWebRequest request = CreateWebRequest(WebRequestMethods.Http.Put, uri, timeout, builder, operationContext);
-            request.ContentLength = 0;
             return request;
         }
 
@@ -182,7 +196,6 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             builder.Add(Constants.QueryConstants.Component, "metadata");
 
             HttpWebRequest request = CreateWebRequest(WebRequestMethods.Http.Put, uri, timeout, builder, operationContext);
-            request.ContentLength = 0;
             return request;
         }
 
@@ -210,7 +223,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <param name="value">The metadata value.</param>
         internal static void AddMetadata(HttpWebRequest request, string name, string value)
         {
-            CommonUtils.AssertNotNullOrEmpty("value", value);
+            CommonUtility.AssertNotNullOrEmpty("value", value);
             request.Headers.Add("x-ms-meta-" + name, value);
         }
 
@@ -244,7 +257,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             {
                 builder = new UriQueryBuilder();
             }
-            
+
             builder.Add(Constants.QueryConstants.Component, "properties");
             builder.Add(Constants.QueryConstants.ResourceType, "service");
 

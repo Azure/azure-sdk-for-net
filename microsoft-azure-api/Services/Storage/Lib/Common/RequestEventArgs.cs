@@ -19,7 +19,7 @@ namespace Microsoft.WindowsAzure.Storage
 {
     using System;
 
-#if !RTMD
+#if !WINDOWS_RT
     using System.Net;
 #endif
 
@@ -27,8 +27,8 @@ namespace Microsoft.WindowsAzure.Storage
     /// Provides information and event data that is associated with a request event.
     /// </summary>
     public sealed class RequestEventArgs
-#if !RT
- : EventArgs
+#if !WINDOWS_RT
+        : EventArgs
 #endif
     {
         /// <summary>
@@ -36,6 +36,9 @@ namespace Microsoft.WindowsAzure.Storage
         /// </summary>
         /// <param name="res">The <see cref="RequestResult"/> object.</param>
         public RequestEventArgs(RequestResult res)
+#if !WINDOWS_RT
+            : base()
+#endif
         {
             this.RequestInformation = res;
         }
@@ -45,9 +48,9 @@ namespace Microsoft.WindowsAzure.Storage
         /// </summary>
         /// <value>The request information associated with this event.</value>
         public RequestResult RequestInformation { get; internal set; }
-#if RT
-        public Uri RequestUri { get; internal set; }
 
+#if WINDOWS_RT
+        public Uri RequestUri { get; internal set; }
 #else
         /// <summary>
         /// Gets the HTTP request associated with this event.

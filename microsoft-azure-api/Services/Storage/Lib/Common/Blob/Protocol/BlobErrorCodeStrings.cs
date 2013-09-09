@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     /// <summary>
     /// Provides error code strings that are specific to the Blob service.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

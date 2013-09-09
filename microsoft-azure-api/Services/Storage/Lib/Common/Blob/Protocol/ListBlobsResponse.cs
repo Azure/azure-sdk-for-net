@@ -21,12 +21,14 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.IO;
 
     /// <summary>
     /// Provides methods for parsing the response from a blob listing operation.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
@@ -100,16 +102,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         {
             get
             {
-                string prefix = this.Prefix;
-                int maxResults = this.MaxResults;
-                string delimiter = this.Delimiter;
-                string nextMarker = this.NextMarker;
+                string prefixString = this.Prefix;
+                int maximumResults = this.MaxResults;
+                string delimiterString = this.Delimiter;
+                string nextMarkerString = this.NextMarker;
                 BlobListingContext listingContext = new BlobListingContext(
-                    prefix,
-                    maxResults,
-                    delimiter,
+                    prefixString,
+                    maximumResults,
+                    delimiterString,
                     BlobListingDetails.None);
-                listingContext.Marker = nextMarker;
+                listingContext.Marker = nextMarkerString;
                 return listingContext;
             }
         }
@@ -200,6 +202,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// Parses a blob entry in a blob listing response.
         /// </summary>
         /// <returns>Blob listing entry</returns>
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Reviewed.")]
         private IListBlobEntry ParseBlobEntry()
         {
             BlobAttributes blob = new BlobAttributes();
@@ -254,7 +257,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
                                             break;
 
                                         case Constants.EtagElement:
-                                            blob.Properties.ETag = string.Format("\"{0}\"", reader.ReadElementContentAsString());
+                                            blob.Properties.ETag = string.Format(CultureInfo.InvariantCulture, "\"{0}\"", reader.ReadElementContentAsString());
                                             break;
 
                                         case Constants.ContentLengthElement:
@@ -355,9 +358,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
             this.reader.ReadEndElement();
 
-            var blobNameSectionIndex = url.LastIndexOf(NavigationHelper.Slash + name);
+            int blobNameSectionIndex = url.LastIndexOf(NavigationHelper.Slash + name, StringComparison.Ordinal);
             string baseUri = url.Substring(0, blobNameSectionIndex + 1);
-            var ub = new UriBuilder(baseUri);
+            UriBuilder ub = new UriBuilder(baseUri);
             ub.Path += Uri.EscapeUriString(name);
             if (baseUri.Length + name.Length < url.Length)
             {

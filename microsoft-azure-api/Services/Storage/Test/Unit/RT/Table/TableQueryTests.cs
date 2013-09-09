@@ -15,14 +15,13 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Table.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Table.Entities;
-using Microsoft.WindowsAzure.Storage.Table;
 using Windows.Globalization;
 
 namespace Microsoft.WindowsAzure.Storage.Table
@@ -77,7 +76,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                 for (int j = 0; j < 100; j++)
                 {
-                    var ent = GenerateRandomEnitity("tables_batch_" + i.ToString());
+                    DynamicTableEntity ent = GenerateRandomEntity("tables_batch_" + i.ToString());
                     ent.RowKey = string.Format("{0:0000}", j);
                     batch.Insert(ent);
                 }
@@ -92,14 +91,27 @@ namespace Microsoft.WindowsAzure.Storage.Table
         {
             currentTable.DeleteIfExistsAsync().AsTask().Wait();
         }
+
         //
         // Use TestInitialize to run code before running each test 
-        //[TestInitialize()]
-        //public void MyTestInitialize(){}
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                TestBase.TableBufferManager.OutstandingBufferCount = 0;
+            }
+        }
         //
         // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup(){}
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.TableBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.TableBufferManager.OutstandingBufferCount);
+            }
+        }
 
         #endregion
 
@@ -570,7 +582,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             while (currSeg == null || currSeg.ContinuationToken != null)
             {
-                var task = Task.Run(() => table.ExecuteQuerySegmentedAsync(query, currSeg != null ? currSeg.ContinuationToken : null).AsTask());
+                Task<TableQuerySegment> task = Task.Run(() => table.ExecuteQuerySegmentedAsync(query, currSeg != null ? currSeg.ContinuationToken : null).AsTask());
                 task.Wait();
                 currSeg = task.Result;
                 retList.AddRange(currSeg.Results);
@@ -584,7 +596,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             Assert.AreEqual(expectedResults, ExecuteQuery(table, new TableQuery().Where(filter)).Count());
         }
 
-        private static DynamicTableEntity GenerateRandomEnitity(string pk)
+        private static DynamicTableEntity GenerateRandomEntity(string pk)
         {
             DynamicTableEntity ent = new DynamicTableEntity();
             ent.Properties.Add("foo", new EntityProperty("bar"));

@@ -17,6 +17,8 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// Represents the result of a table operation.
     /// </summary>
@@ -36,9 +38,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public int HttpStatusCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the Etag returned with the <see cref="TableOperation"/> request results.
+        /// Gets or sets the ETag returned with the <see cref="TableOperation"/> request results.
         /// </summary>
-        /// <value>The Etag returned with the <see cref="TableOperation"/> request results.</value>
+        /// <value>The ETag returned with the <see cref="TableOperation"/> request results.</value>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Etag", Justification = "Reviewed: Etag can be used for identifier names.")]
         public string Etag { get; set; }
     }
 }

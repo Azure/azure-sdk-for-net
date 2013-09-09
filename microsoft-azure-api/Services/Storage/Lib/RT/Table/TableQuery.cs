@@ -38,30 +38,29 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region Impl
         internal IEnumerable<DynamicTableEntity> Execute(CloudTableClient client, string tableName, TableRequestOptions requestOptions, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNullOrEmpty("tableName", tableName);
+            CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
             TableRequestOptions modifiedOptions = TableRequestOptions.ApplyDefaults(requestOptions, client);
             operationContext = operationContext ?? new OperationContext();
 
             IEnumerable<DynamicTableEntity> enumerable =
-                General.LazyEnumerable<DynamicTableEntity>(
+                CommonUtility.LazyEnumerable<DynamicTableEntity>(
                 (continuationToken) =>
                 {
-                    var task = Task.Run(() => this.ExecuteQuerySegmentedAsync((TableContinuationToken)continuationToken, client, tableName, modifiedOptions, operationContext).AsTask());
+                    Task<TableQuerySegment> task = Task.Run(() => this.ExecuteQuerySegmentedAsync((TableContinuationToken)continuationToken, client, tableName, modifiedOptions, operationContext).AsTask());
                     task.Wait();
 
                     TableQuerySegment seg = task.Result;
 
                     return new ResultSegment<DynamicTableEntity>((List<DynamicTableEntity>)seg.Results) { ContinuationToken = seg.ContinuationToken };
                 },
-                this.takeCount.HasValue ? this.takeCount.Value : long.MaxValue,
-                operationContext);
+                this.takeCount.HasValue ? this.takeCount.Value : long.MaxValue);
 
             return enumerable;
         }
 
         internal IAsyncOperation<TableQuerySegment> ExecuteQuerySegmentedAsync(TableContinuationToken continuationToken, CloudTableClient client, string tableName, TableRequestOptions requestOptions, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNullOrEmpty("tableName", tableName);
+            CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
             TableRequestOptions modifiedOptions = TableRequestOptions.ApplyDefaults(requestOptions, client);
             operationContext = operationContext ?? new OperationContext();
 
@@ -87,14 +86,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
             Uri reqUri = builder.AddToUri(tempUri);
 
             RESTCommand<TableQuerySegment> queryCmd = new RESTCommand<TableQuerySegment>(client.Credentials, reqUri);
-            requestOptions.ApplyToStorageCommand(queryCmd);
+            queryCmd.ApplyRequestOptions(requestOptions);
 
             queryCmd.RetrieveResponseStream = true;
             queryCmd.Handler = client.AuthenticationHandler;
             queryCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             queryCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableQuery(cmd.Uri, cmd.ServerTimeoutInSeconds, ctx);
-            queryCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp.StatusCode, null /* retVal */, cmd, ex, ctx);
-            queryCmd.PostProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableQueryPostProcess(cmd.ResponseStream, resp, ex, ctx);
+            queryCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp.StatusCode, null /* retVal */, cmd, ex);
+            queryCmd.PostProcessResponse = (cmd, resp, ctx) => TableOperationHttpResponseParsers.TableQueryPostProcess(cmd.ResponseStream, resp, ctx);
 
             return queryCmd;
         }

@@ -17,13 +17,11 @@
 
 namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.IO;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-
-#if !COMMON
     using System.Xml.Linq;
-#endif
 
     /// <summary>
     /// Parses the response XML from an operation to set the access policy for a queue.
@@ -39,7 +37,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         {
         }
 
-#if !COMMON
         /// <summary>
         /// Parses the current element.
         /// </summary>
@@ -47,6 +44,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <returns>The shared access policy.</returns>
         protected override SharedAccessQueuePolicy ParseElement(XElement accessPolicyElement)
         {
+            CommonUtility.AssertNotNull("accessPolicyElement", accessPolicyElement);
+
             SharedAccessQueuePolicy accessPolicy = new SharedAccessQueuePolicy();
             string sharedAccessStartTimeString = (string)accessPolicyElement.Element(Constants.Start);
             if (!string.IsNullOrEmpty(sharedAccessStartTimeString))
@@ -68,6 +67,5 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
 
             return accessPolicy;
         }
-#endif
     }
 }

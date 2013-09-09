@@ -39,28 +39,45 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             if (response.Content != null)
             {
                 properties.LastModified = response.Content.Headers.LastModified;
+                properties.ContentEncoding = HttpWebUtility.CombineHttpHeaderValues(response.Content.Headers.ContentEncoding);
+                properties.ContentLanguage = HttpWebUtility.CombineHttpHeaderValues(response.Content.Headers.ContentLanguage);
 
-                properties.ContentEncoding = HttpUtility.CombineHttpHeaderValues(response.Content.Headers.ContentEncoding);
-                properties.ContentLanguage = HttpUtility.CombineHttpHeaderValues(response.Content.Headers.ContentLanguage);
-                properties.ContentMD5 = (response.Content.Headers.ContentMD5 == null) ? null :
-                    Convert.ToBase64String(response.Content.Headers.ContentMD5);
-                properties.ContentType = (response.Content.Headers.ContentType == null) ? null :
-                    response.Content.Headers.ContentType.ToString();
+                if (response.Content.Headers.ContentMD5 != null)
+                {
+                    properties.ContentMD5 = Convert.ToBase64String(response.Content.Headers.ContentMD5);
+                }
+
+                if (response.Content.Headers.ContentType != null)
+                {
+                    properties.ContentType = response.Content.Headers.ContentType.ToString();
+                }
+
+                // Get the content length. Prioritize range and x-ms over content length for the special cases.
+                string contentLengthHeader = response.Headers.GetHeaderSingleValueOrDefault(Constants.HeaderConstants.BlobContentLengthHeader);
+                if ((response.Content.Headers.ContentRange != null) &&
+                    response.Content.Headers.ContentRange.HasLength)
+                {
+                    properties.Length = response.Content.Headers.ContentRange.Length.Value;
+                }
+                else if (!string.IsNullOrEmpty(contentLengthHeader))
+                {
+                    properties.Length = long.Parse(contentLengthHeader);
+                }
+                else if (response.Content.Headers.ContentLength.HasValue)
+                {
+                    properties.Length = response.Content.Headers.ContentLength.Value;
+                }
             }
-            else
+
+            if (response.Headers.CacheControl != null)
             {
-                properties.LastModified = null;
-                properties.ContentEncoding = null;
-                properties.ContentLanguage = null;
-                properties.ContentMD5 = null;
-                properties.ContentType = null;
+                properties.CacheControl = response.Headers.CacheControl.ToString();
             }
 
-            properties.CacheControl = (response.Headers.CacheControl == null) ? null :
-                response.Headers.CacheControl.ToString();
-            
-            properties.ETag = (response.Headers.ETag == null) ? null :
-                response.Headers.ETag.ToString();
+            if (response.Headers.ETag != null)
+            {
+                properties.ETag = response.Headers.ETag.ToString();
+            }
 
             // Get blob type
             string blobType = response.Headers.GetHeaderSingleValueOrDefault(Constants.HeaderConstants.BlobType);
@@ -74,24 +91,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             properties.LeaseState = GetLeaseState(response);
             properties.LeaseDuration = GetLeaseDuration(response);
 
-            // Get the content length. Prioritize range and x-ms over content length for the special cases.
-            string contentLengthHeader = response.Headers.GetHeaderSingleValueOrDefault(Constants.HeaderConstants.ContentLengthHeader);
-            if ((response.Content.Headers.ContentRange != null) &&
-                response.Content.Headers.ContentRange.HasLength)
+            // Get sequence number
+            string sequenceNumber = response.Headers.GetHeaderSingleValueOrDefault(Constants.HeaderConstants.BlobSequenceNumber);
+            if (!string.IsNullOrEmpty(sequenceNumber))
             {
-                properties.Length = response.Content.Headers.ContentRange.Length.Value;
-            }
-            else if (!string.IsNullOrEmpty(contentLengthHeader))
-            {
-                properties.Length = long.Parse(contentLengthHeader);
-            }
-            else if (response.Content.Headers.ContentLength.HasValue)
-            {
-                properties.Length = response.Content.Headers.ContentLength.Value;
-            }
-            else
-            {
-                properties.Length = -1;
+                properties.PageBlobSequenceNumber = long.Parse(sequenceNumber);
             }
 
             return properties;

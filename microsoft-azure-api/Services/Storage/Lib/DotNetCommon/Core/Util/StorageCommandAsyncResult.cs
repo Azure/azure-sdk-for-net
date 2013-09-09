@@ -22,9 +22,9 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
     using System.Threading;
 
     /// <summary>
-    /// Represnts the async result returned by a storage command.
+    /// Represents the async result returned by a storage command.
     /// </summary>
-    internal class StorageCommandAsyncResult : IAsyncResult, IDisposable
+    internal class StorageCommandAsyncResult : CancellableOperationBase, ICancellableAsyncResult, IDisposable
     {
         /// <summary>
         /// The callback provided by the user.
@@ -54,8 +54,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         [DebuggerNonUserCode]
         protected StorageCommandAsyncResult()
         {
-            // We don't need finalization, we just implement IDisposable to let users close the event
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -68,9 +66,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         {
             this.userCallback = callback;
             this.userState = state;
-
-            // We don't need finalization, we just implement IDisposable to let users close the event
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -148,7 +143,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             ManualResetEvent newHandle = new ManualResetEvent(false);
             if (Interlocked.CompareExchange(ref this.asyncWaitEvent, newHandle, null) != null)
             {
-                // We lost the race. Release the handle we created, it's garbage.
+                // Handle already created. Release the handle we created, it's garbage.
                 newHandle.Close();
             }
 
@@ -157,7 +152,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 // If the result has already completed, we must ensure we return the
                 // handle in a signaled state. The read of this.isCompleted must never move
                 // before the read of m_waitHandle earlier; the use of an interlocked
-                // compare-exchange just above ensures that. And there's a race that could
+                // compare-exchange just above ensures that. And there's a scenario that could
                 // lead to multiple threads setting the event; that's no problem.
                 this.asyncWaitEvent.Set();
             }
@@ -184,7 +179,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             // And then, if the wait handle was created, we need to signal it. Note the
             // use of a memory barrier. This is required to ensure the read of m_waitHandle
             // never moves before the store of m_isCompleted; otherwise we might encounter a
-            // race that leads us to not signal the handle, leading to a deadlock. We can't
+            // scenario that leads us to not signal the handle, leading to a deadlock. We can't
             // just do a volatile read of m_waitHandle, because it is possible for an acquire
             // load to move before a store release.
             Thread.MemoryBarrier();
@@ -209,6 +204,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             {
                 this.AsyncWaitHandle.WaitOne();
             }
+
+            this.Dispose();
         }
 
         /// <summary>

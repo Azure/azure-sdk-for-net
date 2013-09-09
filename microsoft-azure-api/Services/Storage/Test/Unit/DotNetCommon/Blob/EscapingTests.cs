@@ -15,9 +15,9 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
@@ -27,6 +27,27 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         internal const string UnreservedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-._~";
         internal const string GenDelimeters = "?:#[]@";
         internal const string SubDelimeters = "!$'()*+,;=";
+
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
 
         [TestMethod]
         [Description("The test case for unsafe chars")]
@@ -122,8 +143,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 IListBlobItem blobFromContainerListingBlobs = container.ListBlobs(null, true).First();
                 Assert.AreEqual(originalBlob.Uri, blobFromContainerListingBlobs.Uri);
 
+                CloudBlockBlob uriBlob = new CloudBlockBlob(originalBlob.Uri, service.Credentials);
+
                 // Check Name
                 Assert.AreEqual<string>(prefix + "/" + blobName, originalBlob.Name);
+                Assert.AreEqual<string>(prefix + "/" + blobName, uriBlob.Name);
 
                 // Absolute URI access from CloudBlockBlob
                 CloudBlockBlob blobInfo = new CloudBlockBlob(originalBlob.Uri, service.Credentials);

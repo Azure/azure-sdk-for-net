@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;RTMD;RT</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_RT;WINDOWS_RTMD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -31,90 +31,9 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;RTMD;RT;SIGN</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_RT;WINDOWS_RTMD;SIGN</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\ARM\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>true</DelaySign>
-    <OutputPath>bin\ARM\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;SIGN</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>true</DelaySign>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;SIGN</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;SIGN</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>true</DelaySign>
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;RTMD;RT;SIGN</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ExpressRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Auth\Protocol\NoOpAuthenticationHttpHandler.cs" />
@@ -122,12 +41,14 @@
     <Compile Include="Blob\BlobReadStream.cs" />
     <Compile Include="Blob\BlobReadStreamHelper.cs" />
     <Compile Include="Blob\BlobWriteStream.cs" />
+    <Compile Include="Blob\BlobWriteStreamHelper.cs" />
     <Compile Include="Blob\CloudBlobClient.cs" />
     <Compile Include="Blob\CloudBlobContainer.cs" />
     <Compile Include="Blob\CloudBlobSharedImpl.cs" />
     <Compile Include="Blob\CloudBlockBlob.cs" />
     <Compile Include="Blob\CloudPageBlob.cs" />
     <Compile Include="Blob\CloudBlobDirectory.cs" />
+    <Compile Include="Blob\ICloudBlobStream.cs" />
     <Compile Include="Blob\ICloudBlob.cs" />
     <Compile Include="Blob\Protocol\BlobHttpResponseParsers.cs" />
     <Compile Include="Blob\Protocol\ContainerHttpRequestMessageFactory.cs" />
@@ -138,6 +59,8 @@
     <Compile Include="Core\Auth\SharedKeyLiteTableCanonicalizer.cs" />
     <Compile Include="Core\Auth\SharedKeyTableCanonicalizer.cs" />
     <Compile Include="Core\Executor\Executor.cs" />
+    <Compile Include="Core\Logger.cs" />
+    <Compile Include="Core\StorageEventSource.cs" />
     <Compile Include="Core\Util\AsyncSemaphore.cs" />
     <Compile Include="Core\Util\CultureStringComparer.cs" />
     <Compile Include="Core\Util\HttpResponseMessageUtils.cs" />
@@ -150,6 +73,7 @@
     <Compile Include="Queue\CloudQueueMessage.cs" />
     <Compile Include="Queue\Protocol\QueueHttpRequestMessageFactory.cs" />
     <Compile Include="Queue\Protocol\QueueHttpResponseParsers.cs" />
+    <Compile Include="Shared\Protocol\CappedLengthReadOnlyStream.cs" />
     <Compile Include="Shared\Protocol\HttpContentFactory.cs" />
     <Compile Include="Shared\Protocol\HttpRequestMessageFactory.cs" />
     <Compile Include="Shared\Protocol\HttpClientFactory.cs" />
@@ -168,10 +92,6 @@
     <Compile Include="Table\TableBatchOperation.cs" />
     <Compile Include="Table\TableQuerySegmentNonGeneric.cs" />
     <Compile Include="WrappedStorageException.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <!-- Root -->
@@ -209,10 +129,10 @@
     <Compile Include="..\Common\Queue\Protocol\*.cs">
       <Link>Queue\Protocol\Protocol</Link>
     </Compile>
-    <Compile Include="..\Common\Table\CloudTableBase.cs">
+    <Compile Include="..\Common\Table\CloudTable.Common.cs">
       <Link>Table\Table</Link>
     </Compile>
-    <Compile Include="..\Common\Table\CloudTableClientBase.cs">
+    <Compile Include="..\Common\Table\CloudTableClient.Common.cs">
       <Link>Table\Table</Link>
     </Compile>
     <Compile Include="..\Common\Table\DynamicTableEntity.cs">
@@ -251,13 +171,13 @@
     <Compile Include="..\Common\Table\SharedAccessTablePolicy.cs">
       <Link>Table\Table</Link>
     </Compile>
-    <Compile Include="..\Common\Table\TableBatchOperationBase.cs">
+    <Compile Include="..\Common\Table\TableBatchOperation.Common.cs">
       <Link>Table\Table</Link>
     </Compile>
     <Compile Include="..\Common\Table\TableContinuationToken.cs">
       <Link>Table\Table</Link>
     </Compile>
-    <Compile Include="..\Common\Table\TableOperationBase.cs">
+    <Compile Include="..\Common\Table\TableOperation.Common.cs">
       <Link>Table\Table</Link>
     </Compile>
     <Compile Include="..\Common\Table\TableOperationType.cs">
@@ -269,7 +189,7 @@
     <Compile Include="..\Common\Table\TablePermissions.cs">
       <Link>Table\Table</Link>
     </Compile>
-    <Compile Include="..\Common\Table\TableQueryBase.cs">
+    <Compile Include="..\Common\Table\TableQuery.Common.cs">
       <Link>Table\Table</Link>
     </Compile>
     <Compile Include="..\Common\Table\TableRequestOptions.cs">
@@ -292,18 +212,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Data.Edm.WindowsStore, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\Microsoft.Data.Edm.WindowsStore.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm.Portable">
+      <HintPath>Dependencies\Microsoft.Data.Edm.Portable.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.OData.WindowsStore, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\Microsoft.Data.OData.WindowsStore.dll</HintPath>
+    <Reference Include="Microsoft.Data.OData.Portable">
+      <HintPath>Dependencies\Microsoft.Data.OData.Portable.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Spatial.WindowsStore, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\System.Spatial.WindowsStore.dll</HintPath>
+    <Reference Include="System.Spatial.Portable">
+      <HintPath>Dependencies\System.Spatial.Portable.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
