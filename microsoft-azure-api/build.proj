@@ -8,6 +8,7 @@
     <StorageSln Include=".\Services\Storage\Lib\DotNet40\DotNet40.csproj" />
     <StorageSln Include=".\Services\Storage\Lib\RT\RT.csproj" />
     <StorageSln Include=".\Services\Storage\Lib\RTTable\RTTable.csproj" />
+    <StorageSln Include=".\Services\Storage\Lib\WP\WP.csproj" />
     <ConfigSln Include=".\Configuration\microsoft-windowsazure-configuration.sln" />
   </ItemGroup>
   

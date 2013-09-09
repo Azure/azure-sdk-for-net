@@ -262,7 +262,7 @@ namespace Microsoft.WindowsAzure.Storage
             {
                 // Write empty
                 writer.WriteStartElement(Constants.ErrorRootElement);
-                writer.WriteEndElement();
+                writer.WriteFullEndElement();
             }
 #if WINDOWS_RT
             // Exception
@@ -274,7 +274,7 @@ namespace Microsoft.WindowsAzure.Storage
             {
                 // Write empty
                 writer.WriteStartElement("ExceptionInfo");
-                writer.WriteEndElement();
+                writer.WriteFullEndElement();
             }
 #endif
 
