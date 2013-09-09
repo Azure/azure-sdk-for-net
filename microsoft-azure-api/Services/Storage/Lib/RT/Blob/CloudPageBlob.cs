@@ -17,22 +17,22 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.WindowsAzure.Storage.Blob.Protocol;
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Executor;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Net;
     using System.Net.Http;
     using System.Runtime.InteropServices.WindowsRuntime;
-    using System.Threading;
     using System.Threading.Tasks;
     using Windows.Foundation;
     using Windows.Foundation.Metadata;
+    using Windows.Storage;
     using Windows.Storage.Streams;
-    using Microsoft.WindowsAzure.Storage.Blob.Protocol;
-    using Microsoft.WindowsAzure.Storage.Core;
-    using Microsoft.WindowsAzure.Storage.Core.Executor;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
     /// Represents a Windows Azure page blob.
@@ -43,6 +43,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Opens a stream for reading from the blob.
         /// </summary>
         /// <returns>A stream to be used for reading from the blob.</returns>
+        [DoesServiceRequest]
         public IAsyncOperation<IRandomAccessStreamWithContentType> OpenReadAsync()
         {
             return this.OpenReadAsync(null /* accessCondition */, null /* options */, null /* operationContext */);
@@ -55,11 +56,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A stream to be used for reading from the blob.</returns>
+        [DoesServiceRequest]
         public IAsyncOperation<IRandomAccessStreamWithContentType> OpenReadAsync(AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
-            BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
-            IRandomAccessStreamWithContentType stream = new BlobReadStreamHelper(this, accessCondition, modifiedOptions, operationContext);
-            return Task.FromResult(stream).AsAsyncOperation();
+            return AsyncInfo.Run<IRandomAccessStreamWithContentType>(async (token) =>
+            {
+                await this.FetchAttributesAsync(accessCondition, options, operationContext).AsTask(token);
+                AccessCondition streamAccessCondition = AccessCondition.CloneConditionWithETag(accessCondition, this.Properties.ETag);
+                BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, this.BlobType, this.ServiceClient, false);
+                return new BlobReadStreamHelper(this, streamAccessCondition, modifiedOptions, operationContext);
+            });
         }
 
         /// <summary>
@@ -67,7 +73,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="size">The size of the write operation, in bytes. The size must be a multiple of 512.</param>
         /// <returns>A stream to be used for writing to the blob.</returns>
-        public IAsyncOperation<IOutputStream> OpenWriteAsync(long? size)
+        [DoesServiceRequest]
+        public IAsyncOperation<ICloudBlobStream> OpenWriteAsync(long? size)
         {
             return this.OpenWriteAsync(size, null /* accessCondition */, null /* options */, null /* operationContext */);
         }
@@ -80,12 +87,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A stream to be used for writing to the blob.</returns>
-        public IAsyncOperation<IOutputStream> OpenWriteAsync(long? size, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        [DoesServiceRequest]
+        public IAsyncOperation<ICloudBlobStream> OpenWriteAsync(long? size, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
             this.attributes.AssertNoSnapshot();
-            BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
             bool createNew = size.HasValue;
-
+            BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient, false);
             if (!createNew && modifiedOptions.StoreBlobContentMD5.Value)
             {
                 throw new ArgumentException(SR.MD5NotPossible);
@@ -95,11 +102,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 if (createNew)
                 {
-                    await this.CreateAsync(size.Value, accessCondition, modifiedOptions, operationContext);
+                    await this.CreateAsync(size.Value, accessCondition, options, operationContext).AsTask(token);
                 }
                 else
                 {
-                    await this.FetchAttributesAsync(accessCondition, modifiedOptions, operationContext);
+                    await this.FetchAttributesAsync(accessCondition, options, operationContext).AsTask(token);
                     size = this.Properties.Length;
                 }
 
@@ -108,19 +115,32 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     accessCondition = AccessCondition.GenerateLeaseCondition(accessCondition.LeaseId);
                 }
 
-                return new BlobWriteStream(this, size.Value, createNew, accessCondition, modifiedOptions, operationContext).AsOutputStream();
+                ICloudBlobStream stream = new BlobWriteStreamHelper(this, size.Value, createNew, accessCondition, modifiedOptions, operationContext);
+                return stream;
             });
         }
 
         /// <summary>
-        /// Uploads a stream to a block blob. 
+        /// Uploads a stream to a page blob. 
         /// </summary>
         /// <param name="source">The stream providing the blob content.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
         public IAsyncAction UploadFromStreamAsync(IInputStream source)
         {
-            return this.UploadFromStreamAsync(source, null /* accessCondition */, null /* options */, null /* operationContext */);
+            return this.UploadFromStreamAsyncHelper(source, null /* length */, null /* accessCondition */, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
+        /// Uploads a stream to a block blob. 
+        /// </summary>
+        /// <param name="source">The stream providing the blob content.</param>
+        /// <param name="length">The number of bytes to write from the source stream at its current position.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction UploadFromStreamAsync(IInputStream source, long length)
+        {
+            return this.UploadFromStreamAsyncHelper(source, length, null /* accessCondition */, null /* options */, null /* operationContext */);
         }
 
         /// <summary>
@@ -134,50 +154,139 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [DoesServiceRequest]
         public IAsyncAction UploadFromStreamAsync(IInputStream source, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("source", source);
-            this.attributes.AssertNoSnapshot();
-            BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
-            operationContext = operationContext ?? new OperationContext();
+            return this.UploadFromStreamAsyncHelper(source, null /* length */, accessCondition, options, operationContext);
+        }
+
+        /// <summary>
+        /// Uploads a stream to a page blob. 
+        /// </summary>
+        /// <param name="source">The stream providing the blob content.</param>
+        /// <param name="length">The number of bytes to write from the source stream at its current position.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction UploadFromStreamAsync(IInputStream source, long length, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        {
+            return this.UploadFromStreamAsyncHelper(source, length, accessCondition, options, operationContext);
+        }
+
+        /// <summary>
+        /// Uploads a stream to a page blob. 
+        /// </summary>
+        /// <param name="source">The stream providing the blob content.</param>
+        /// <param name="length">The number of bytes to write from the source stream at its current position.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        internal IAsyncAction UploadFromStreamAsyncHelper(IInputStream source, long? length, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        {
+            CommonUtility.AssertNotNull("source", source);
 
             Stream sourceAsStream = source.AsStreamForRead();
+
             if (!sourceAsStream.CanSeek)
             {
                 throw new InvalidOperationException();
             }
 
-            long size = sourceAsStream.Length - sourceAsStream.Position;
-            if ((size % Constants.PageSize) != 0)
+            if (length.HasValue)
+            {
+                CommonUtility.AssertInBounds("length", length.Value, 1, sourceAsStream.Length - sourceAsStream.Position);
+            }
+            else
+            {
+                length = sourceAsStream.Length - sourceAsStream.Position;
+            }
+
+            this.attributes.AssertNoSnapshot();
+            BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
+            operationContext = operationContext ?? new OperationContext();
+            ExecutionState<NullType> tempExecutionState = CommonUtility.CreateTemporaryExecutionState(modifiedOptions);
+
+            if ((length % Constants.PageSize) != 0)
             {
                 throw new ArgumentException(SR.InvalidPageSize, "source");
             }
 
             return AsyncInfo.Run(async (token) =>
             {
-                CancellationToken streamCopyToken = token;
-                if (modifiedOptions.MaximumExecutionTime.HasValue)
+                using (ICloudBlobStream blobStream = await this.OpenWriteAsync(length, accessCondition, options, operationContext).AsTask(token))
                 {
-                    // Setup token
-                    CancellationTokenSource cts = new CancellationTokenSource(modifiedOptions.MaximumExecutionTime.Value);
-                    CancellationToken tokenWithTimeout = cts.Token;
-
-                    // Hookup users token
-                    token.Register(() => cts.Cancel());
-
-                    streamCopyToken = tokenWithTimeout;
-                }
-
-                await Task.Run(async () =>
-                {
-                    IOutputStream writeStream = await this.OpenWriteAsync(size, accessCondition, options, operationContext);
-
                     // We should always call AsStreamForWrite with bufferSize=0 to prevent buffering. Our
                     // stream copier only writes 64K buffers at a time anyway, so no buffering is needed.
-                    using (Stream blobStream = writeStream.AsStreamForWrite(0))
-                    {
-                        await sourceAsStream.WriteToAsync(blobStream, null /* maxLength */, false, new OperationContext(), null /* streamCopyState */, streamCopyToken);
-                    }
-                });
+                    await sourceAsStream.WriteToAsync(blobStream.AsStreamForWrite(0), length, null /* maxLength */, false, tempExecutionState, null /* streamCopyState */, token);
+                    await blobStream.CommitAsync().AsTask(token);
+                }
             });
+        }
+
+        /// <summary>
+        /// Uploads a file to the Windows Azure Blob Service. 
+        /// </summary>
+        /// <param name="source">The file providing the blob content.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction UploadFromFileAsync(StorageFile source)
+        {
+            return this.UploadFromFileAsync(source, null /* accessCondition */, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
+        /// Uploads a file to a blob. 
+        /// </summary>
+        /// <param name="source">The file providing the blob content.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction UploadFromFileAsync(StorageFile source, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        {
+            CommonUtility.AssertNotNull("source", source);
+
+            return AsyncInfo.Run(async (token) =>
+            {
+                using (IRandomAccessStreamWithContentType stream = await source.OpenReadAsync().AsTask(token))
+                {
+                    await this.UploadFromStreamAsync(stream, accessCondition, options, operationContext).AsTask(token);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Uploads the contents of a byte array to a blob.
+        /// </summary>
+        /// <param name="buffer">An array of bytes.</param>
+        /// <param name="index">The zero-based byte offset in buffer at which to begin uploading bytes to the blob.</param>
+        /// <param name="count">The number of bytes to be written to the blob.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction UploadFromByteArrayAsync([ReadOnlyArray] byte[] buffer, int index, int count)
+        {
+            return this.UploadFromByteArrayAsync(buffer, index, count, null /* accessCondition */, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
+        /// Uploads the contents of a byte array to a blob.
+        /// </summary>
+        /// <param name="buffer">An array of bytes.</param>
+        /// <param name="index">The zero-based byte offset in buffer at which to begin uploading bytes to the blob.</param>
+        /// <param name="count">The number of bytes to be written to the blob.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction UploadFromByteArrayAsync([ReadOnlyArray] byte[] buffer, int index, int count, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        {
+            CommonUtility.AssertNotNull("buffer", buffer);
+
+            SyncMemoryStream stream = new SyncMemoryStream(buffer, index, count);
+            return this.UploadFromStreamAsync(stream.AsInputStream(), accessCondition, options, operationContext);
         }
 
         /// <summary>
@@ -206,11 +315,72 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
+        /// Downloads the contents of a blob to a file.
+        /// </summary>
+        /// <param name="target">The target file.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction DownloadToFileAsync(StorageFile target)
+        {
+            return this.DownloadToFileAsync(target, null /* accessCondition */, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
+        /// Downloads the contents of a blob to a file.
+        /// </summary>
+        /// <param name="target">The target file.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction DownloadToFileAsync(StorageFile target, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        {
+            CommonUtility.AssertNotNull("target", target);
+
+            return AsyncInfo.Run(async (token) =>
+            {
+                using (StorageStreamTransaction transaction = await target.OpenTransactedWriteAsync().AsTask(token))
+                {
+                    await this.DownloadToStreamAsync(transaction.Stream, accessCondition, options, operationContext).AsTask(token);
+                    await transaction.CommitAsync();
+                }
+            });
+        }
+
+        /// <summary>
+        /// Downloads the contents of a blob to a byte array.
+        /// </summary>
+        /// <param name="target">The target byte array.</param>
+        /// <param name="index">The starting offset in the byte array.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
+        [DoesServiceRequest]
+        public IAsyncOperation<int> DownloadToByteArrayAsync([WriteOnlyArray] byte[] target, int index)
+        {
+            return this.DownloadToByteArrayAsync(target, index, null /* accessCondition */, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
+        /// Downloads the contents of a blob to a byte array.
+        /// </summary>
+        /// <param name="target">The target byte array.</param>
+        /// <param name="index">The starting offset in the byte array.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
+        [DoesServiceRequest]
+        public IAsyncOperation<int> DownloadToByteArrayAsync([WriteOnlyArray] byte[] target, int index, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        {
+            return this.DownloadRangeToByteArrayAsync(target, index, null /* blobOffset */, null /* length */, accessCondition, options, operationContext);
+        }
+
+        /// <summary>
         /// Downloads the contents of a blob to a stream.
         /// </summary>
         /// <param name="target">The target stream.</param>
-        /// <param name="offset">The starting offset of the data range, in bytes. Must be a multiple of 512.</param>
-        /// <param name="length">The length of the data range, in bytes. Must be a multiple of 512.</param>
+        /// <param name="offset">The offset at which to begin downloading the blob, in bytes.</param>
+        /// <param name="length">The length of the data to download from the blob, in bytes.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
         public IAsyncAction DownloadRangeToStreamAsync(IOutputStream target, long? offset, long? length)
@@ -222,8 +392,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Downloads the contents of a blob to a stream.
         /// </summary>
         /// <param name="target">The target stream.</param>
-        /// <param name="offset">The starting offset of the data range, in bytes. Must be a multiple of 512.</param>
-        /// <param name="length">The length of the data range, in bytes. Must be a multiple of 512.</param>
+        /// <param name="offset">The offset at which to begin downloading the blob, in bytes.</param>
+        /// <param name="length">The length of the data to download from the blob, in bytes.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -231,7 +401,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [DoesServiceRequest]
         public IAsyncAction DownloadRangeToStreamAsync(IOutputStream target, long? offset, long? length, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("target", target);
+            CommonUtility.AssertNotNull("target", target);
+
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
 
             // We should always call AsStreamForWrite with bufferSize=0 to prevent buffering. Our
@@ -241,6 +412,44 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 modifiedOptions.RetryPolicy,
                 operationContext,
                 token));
+        }
+
+        /// <summary>
+        /// Downloads the contents of a blob to a byte array.
+        /// </summary>
+        /// <param name="target">The target byte array.</param>
+        /// <param name="index">The starting offset in the byte array.</param>
+        /// <param name="blobOffset">The starting offset of the data range, in bytes.</param>
+        /// <param name="length">The length of the data range, in bytes.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
+        [DoesServiceRequest]
+        public IAsyncOperation<int> DownloadRangeToByteArrayAsync([WriteOnlyArray] byte[] target, int index, long? blobOffset, long? length)
+        {
+            return this.DownloadRangeToByteArrayAsync(target, index, blobOffset, length, null /* accessCondition */, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
+        /// Downloads the contents of a blob to a byte array.
+        /// </summary>
+        /// <param name="target">The target byte array.</param>
+        /// <param name="index">The starting offset in the byte array.</param>
+        /// <param name="blobOffset">The starting offset of the data range, in bytes.</param>
+        /// <param name="length">The length of the data range, in bytes.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>The total number of bytes read into the buffer.</returns>
+        [DoesServiceRequest]
+        public IAsyncOperation<int> DownloadRangeToByteArrayAsync([WriteOnlyArray] byte[] target, int index, long? blobOffset, long? length, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        {
+            return AsyncInfo.Run(async (token) =>
+            {
+                using (SyncMemoryStream stream = new SyncMemoryStream(target, index))
+                {
+                    await this.DownloadRangeToStreamAsync(stream.AsOutputStream(), blobOffset, length, accessCondition, options, operationContext).AsTask(token);
+                    return (int)stream.Position;
+                }
+            });
         }
 
         /// <summary>
@@ -274,7 +483,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Creates a page blob.
+        /// Resizes the page blob to the specified size.
         /// </summary>
         /// <param name="size">The maximum size of the page blob, in bytes.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
@@ -285,7 +494,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Creates a page blob.
+        /// Resizes the page blob to the specified size.
         /// </summary>
         /// <param name="size">The maximum size of the page blob, in bytes.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
@@ -298,6 +507,38 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
             return AsyncInfo.Run(async (token) => await Executor.ExecuteAsyncNullReturn(
                 this.ResizeImpl(size, accessCondition, modifiedOptions),
+                modifiedOptions.RetryPolicy,
+                operationContext,
+                token));
+        }
+
+        /// <summary>
+        /// Sets the page blob's sequence number.
+        /// </summary>
+        /// <param name="sequenceNumberAction">A value of type <see cref="SequenceNumberAction"/>, indicating the operation to perform on the sequence number.</param>
+        /// <param name="sequenceNumber">The sequence number. Set this parameter to <c>null</c> if <paramref name="sequenceNumberAction"/> is equal to <see cref="F:SequenceNumberAction.Increment"/>.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction SetSequenceNumberAsync(SequenceNumberAction sequenceNumberAction, long? sequenceNumber)
+        {
+            return this.SetSequenceNumberAsync(sequenceNumberAction, sequenceNumber, null /* accessCondition */, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
+        /// Sets the page blob's sequence number.
+        /// </summary>
+        /// <param name="sequenceNumberAction">A value of type <see cref="SequenceNumberAction"/>, indicating the operation to perform on the sequence number.</param>
+        /// <param name="sequenceNumber">The sequence number. Set this parameter to <c>null</c> if <paramref name="sequenceNumberAction"/> is equal to <see cref="F:SequenceNumberAction.Increment"/>.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="operationContext">An object that represents the context for the current operation.</param>
+        /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
+        [DoesServiceRequest]
+        public IAsyncAction SetSequenceNumberAsync(SequenceNumberAction sequenceNumberAction, long? sequenceNumber, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        {
+            BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
+            return AsyncInfo.Run(async (token) => await Executor.ExecuteAsyncNullReturn(
+                this.SetSequenceNumberImpl(sequenceNumberAction, sequenceNumber, accessCondition, modifiedOptions),
                 modifiedOptions.RetryPolicy,
                 operationContext,
                 token));
@@ -496,14 +737,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [DoesServiceRequest]
         public IAsyncOperation<bool> DeleteIfExistsAsync(DeleteSnapshotsOption deleteSnapshotsOption, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
-            BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
+            BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, this.BlobType, this.ServiceClient);
+            operationContext = operationContext ?? new OperationContext();
+
             return AsyncInfo.Run(async (token) =>
             {
-                bool exists = await Executor.ExecuteAsync(
-                    CloudBlobSharedImpl.ExistsImpl(this, this.attributes, modifiedOptions),
-                    modifiedOptions.RetryPolicy,
-                    operationContext,
-                    token);
+                bool exists = await this.ExistsAsync(modifiedOptions, operationContext).AsTask(token);
 
                 if (!exists)
                 {
@@ -512,19 +751,23 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
                 try
                 {
-                    await Executor.ExecuteAsync(
-                        CloudBlobSharedImpl.DeleteBlobImpl(this, this.attributes, deleteSnapshotsOption, accessCondition, modifiedOptions),
-                        modifiedOptions.RetryPolicy,
-                        operationContext,
-                        token);
-
+                    await this.DeleteAsync(deleteSnapshotsOption, accessCondition, modifiedOptions, operationContext).AsTask(token);                   
                     return true;
                 }
-                catch (StorageException e)
+                catch (Exception)
                 {
-                    if (e.RequestInformation.HttpStatusCode == (int)HttpStatusCode.NotFound)
+                    if (operationContext.LastResult.HttpStatusCode == (int)HttpStatusCode.NotFound)
                     {
-                        return false;
+                        StorageExtendedErrorInformation extendedInfo = operationContext.LastResult.ExtendedErrorInformation;
+                        if ((extendedInfo == null) ||
+                            (extendedInfo.ErrorCode == BlobErrorCodeStrings.BlobNotFound))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
                     else
                     {
@@ -754,6 +997,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
             bool requiresContentMD5 = (contentMD5 == null) && modifiedOptions.UseTransactionalMD5.Value;
             operationContext = operationContext ?? new OperationContext();
+            ExecutionState<NullType> tempExecutionState = CommonUtility.CreateTemporaryExecutionState(modifiedOptions);
 
             return AsyncInfo.Run(async (token) =>
             {
@@ -761,20 +1005,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 Stream seekableStream = pageDataAsStream;
                 if (!pageDataAsStream.CanSeek || requiresContentMD5)
                 {
-                    DateTime streamCopyStartTime = DateTime.Now;
-                    CancellationToken streamCopyToken = token;
-                    if (modifiedOptions.MaximumExecutionTime.HasValue)
-                    {
-                        // Setup token
-                        CancellationTokenSource cts = new CancellationTokenSource(modifiedOptions.MaximumExecutionTime.Value);
-                        CancellationToken tokenWithTimeout = cts.Token;
-
-                        // Hookup users token
-                        token.Register(() => cts.Cancel());
-
-                        streamCopyToken = tokenWithTimeout;
-                    }
-
                     Stream writeToStream;
                     if (pageDataAsStream.CanSeek)
                     {
@@ -782,24 +1012,18 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     }
                     else
                     {
-                        seekableStream = new MemoryStream();
+                        seekableStream = new MultiBufferMemoryStream(this.ServiceClient.BufferManager);
                         writeToStream = seekableStream;
                     }
 
-                    OperationContext tempOperationContext = new OperationContext();
                     StreamDescriptor streamCopyState = new StreamDescriptor();
                     long startPosition = seekableStream.Position;
-                    await pageDataAsStream.WriteToAsync(writeToStream, Constants.MaxBlockSize, requiresContentMD5, tempOperationContext, streamCopyState, streamCopyToken);
+                    await pageDataAsStream.WriteToAsync(writeToStream, null /* copyLength */, Constants.MaxBlockSize, requiresContentMD5, tempExecutionState, streamCopyState, token);
                     seekableStream.Position = startPosition;
 
                     if (requiresContentMD5)
                     {
                         contentMD5 = streamCopyState.Md5;
-                    }
-
-                    if (modifiedOptions.MaximumExecutionTime.HasValue)
-                    {
-                        modifiedOptions.MaximumExecutionTime -= DateTime.Now.Subtract(streamCopyStartTime);
                     }
                 }
 
@@ -891,6 +1115,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [DefaultOverload]
         public IAsyncOperation<string> StartCopyFromBlobAsync(Uri source, AccessCondition sourceAccessCondition, AccessCondition destAccessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
+            CommonUtility.AssertNotNull("source", source);
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.PageBlob, this.ServiceClient);
             return AsyncInfo.Run(async (token) => await Executor.ExecuteAsync(
                 CloudBlobSharedImpl.StartCopyFromBlobImpl(this, this.attributes, source, sourceAccessCondition, destAccessCondition, modifiedOptions),
@@ -970,8 +1195,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             };
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, NullType.Value, cmd, ex, ctx);
-                CloudBlobSharedImpl.ParseSizeAndLastModified(this.attributes, resp);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, NullType.Value, cmd, ex);
+                CloudBlobSharedImpl.UpdateETagLMTAndSequenceNumber(this.attributes, resp);
                 return NullType.Value;
             };
 
@@ -995,9 +1220,35 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.BuildRequest = (cmd, cnt, ctx) => BlobHttpRequestMessageFactory.Resize(cmd.Uri, cmd.ServerTimeoutInSeconds, sizeInBytes, accessCondition, cnt, ctx);
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex, ctx);
-                CloudBlobSharedImpl.ParseSizeAndLastModified(attributes, resp);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex);
+                CloudBlobSharedImpl.UpdateETagLMTAndSequenceNumber(attributes, resp);
                 this.Properties.Length = sizeInBytes;
+                return NullType.Value;
+            };
+
+            return putCmd;
+        }
+
+        /// <summary>
+        /// Implementation for the SetSequenceNumber method.
+        /// </summary>
+        /// <param name="sequenceNumberAction">A value of type <see cref="SequenceNumberAction"/>, indicating the operation to perform on the sequence number.</param>
+        /// <param name="sequenceNumber">The sequence number. Set this parameter to <c>null</c> if this operation is an increment action.</param>
+        /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <returns>A <see cref="RESTCommand"/> that sets the metadata.</returns>
+        private RESTCommand<NullType> SetSequenceNumberImpl(SequenceNumberAction sequenceNumberAction, long? sequenceNumber, AccessCondition accessCondition, BlobRequestOptions options)
+        {
+            RESTCommand<NullType> putCmd = new RESTCommand<NullType>(this.ServiceClient.Credentials, this.Uri);
+
+            putCmd.ApplyRequestOptions(options);
+            putCmd.Handler = this.ServiceClient.AuthenticationHandler;
+            putCmd.BuildClient = HttpClientFactory.BuildHttpClient;
+            putCmd.BuildRequest = (cmd, cnt, ctx) => BlobHttpRequestMessageFactory.SetSequenceNumber(cmd.Uri, cmd.ServerTimeoutInSeconds, sequenceNumberAction, sequenceNumber, accessCondition, cnt, ctx);
+            putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
+            {
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex);
+                CloudBlobSharedImpl.UpdateETagLMTAndSequenceNumber(attributes, resp);
                 return NullType.Value;
             };
 
@@ -1032,12 +1283,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, null /* retVal */, cmd, ex);
                 DateTimeOffset snapshotTime = NavigationHelper.ParseSnapshotTime(BlobHttpResponseParsers.GetSnapshotTime(resp));
                 CloudPageBlob snapshot = new CloudPageBlob(this.Name, snapshotTime, this.Container);
                 snapshot.attributes.Metadata = new Dictionary<string, string>(metadata ?? this.Metadata);
                 snapshot.attributes.Properties = new BlobProperties(this.Properties);
-                CloudBlobSharedImpl.ParseSizeAndLastModified(snapshot.attributes, resp);
+                CloudBlobSharedImpl.UpdateETagLMTAndSequenceNumber(snapshot.attributes, resp);
                 return snapshot;
             };
 
@@ -1045,7 +1296,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Gets the page ranges impl.
+        /// Implementation for get page ranges.
         /// </summary>
         /// <param name="offset">The starting offset of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
         /// <param name="length">The length of the data range over which to list page ranges, in bytes. Must be a multiple of 512.</param>
@@ -1067,10 +1318,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 return msg;
             };
 
-            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            getCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
-                CloudBlobSharedImpl.ParseSizeAndLastModified(this.attributes, resp);
+                CloudBlobSharedImpl.UpdateETagLMTAndSequenceNumber(this.attributes, resp);
                 return Task.Factory.StartNew(() =>
                 {
                     GetPageRangesResponse getPageRangesResponse = new GetPageRangesResponse(cmd.ResponseStream);
@@ -1096,7 +1347,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             if (startOffset % Constants.PageSize != 0)
             {
-                CommonUtils.ArgumentOutOfRange("startOffset", startOffset);
+                CommonUtility.ArgumentOutOfRange("startOffset", startOffset);
             }
 
             long offset = pageData.Position;
@@ -1108,7 +1359,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             if ((1 + pageRange.EndOffset - pageRange.StartOffset) % Constants.PageSize != 0 ||
                 (1 + pageRange.EndOffset - pageRange.StartOffset) == 0)
             {
-                CommonUtils.ArgumentOutOfRange("pageData", pageData);
+                CommonUtility.ArgumentOutOfRange("pageData", pageData);
             }
 
             RESTCommand<NullType> putCmd = new RESTCommand<NullType>(this.ServiceClient.Credentials, this.Uri);
@@ -1120,8 +1371,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.BuildRequest = (cmd, cnt, ctx) => BlobHttpRequestMessageFactory.PutPage(cmd.Uri, cmd.ServerTimeoutInSeconds, pageRange, pageWrite, accessCondition, cnt, ctx);
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, NullType.Value, cmd, ex, ctx);
-                CloudBlobSharedImpl.ParseSizeAndLastModified(this.attributes, resp);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, NullType.Value, cmd, ex);
+                CloudBlobSharedImpl.UpdateETagLMTAndSequenceNumber(this.attributes, resp);
                 return NullType.Value;
             };
 
@@ -1138,16 +1389,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A <see cref="RESTCommand"/> that writes the pages.</returns>
         private RESTCommand<NullType> ClearPageImpl(long startOffset, long length, AccessCondition accessCondition, BlobRequestOptions options)
         {
-            CommonUtils.AssertNotNull("options", options);
+            CommonUtility.AssertNotNull("options", options);
 
             if (startOffset < 0 || startOffset % Constants.PageSize != 0)
             {
-                CommonUtils.ArgumentOutOfRange("startOffset", startOffset);
+                CommonUtility.ArgumentOutOfRange("startOffset", startOffset);
             }
 
             if (length <= 0 || length % Constants.PageSize != 0)
             {
-                CommonUtils.ArgumentOutOfRange("length", length);
+                CommonUtility.ArgumentOutOfRange("length", length);
             }
 
             PageRange pageRange = new PageRange(startOffset, startOffset + length - 1);
@@ -1161,8 +1412,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.BuildRequest = (cmd, cnt, ctx) => BlobHttpRequestMessageFactory.PutPage(cmd.Uri, cmd.ServerTimeoutInSeconds, pageRange, pageWrite, accessCondition, cnt, ctx);
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, NullType.Value, cmd, ex, ctx);
-                CloudBlobSharedImpl.ParseSizeAndLastModified(this.attributes, resp);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, NullType.Value, cmd, ex);
+                CloudBlobSharedImpl.UpdateETagLMTAndSequenceNumber(this.attributes, resp);
                 return NullType.Value;
             };
 

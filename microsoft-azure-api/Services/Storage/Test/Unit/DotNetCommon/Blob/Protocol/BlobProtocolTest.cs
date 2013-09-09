@@ -15,12 +15,12 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 {
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         [TestMethod]
-        [Description("owner, async : Make a valid Put Index Blob request and get the response")]
+        [Description("owner, isAsync : Make a valid Put Index Blob request and get the response")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         [TestMethod]
-        [Description("anonymous, async : Make an invalid Put Index Blob request and get the response")]
+        [Description("anonymous, isAsync : Make an invalid Put Index Blob request and get the response")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -134,7 +134,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         [TestMethod]
-        [Description("owner, async : Make a valid Put Stream Blob request and get the response")]
+        [Description("owner, isAsync : Make a valid Put Stream Blob request and get the response")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -148,7 +148,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         [TestMethod]
-        [Description("anonymous, async : Make an invalid Put Stream Blob request and get the response")]
+        [Description("anonymous, isAsync : Make an invalid Put Stream Blob request and get the response")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -177,7 +177,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         [TestMethod]
-        [Description("owner, async : Make a valid Get Blob request and get the response")]
+        [Description("owner, isAsync : Make a valid Get Blob request and get the response")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -201,7 +201,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         [TestMethod]
-        [Description("anonymous, async : Make an invalid Get Blob request and get the response")]
+        [Description("anonymous, isAsync : Make an invalid Get Blob request and get the response")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -225,7 +225,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         [TestMethod]
-        [Description("owner, async : Make a public valid Get Blob request and get the response")]
+        [Description("owner, isAsync : Make a public valid Get Blob request and get the response")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -249,7 +249,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         [TestMethod]
-        [Description("anonymous, async : Make a public valid Get Blob request and get the response")]
+        [Description("anonymous, isAsync : Make a public valid Get Blob request and get the response")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -300,7 +300,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         [TestMethod]
-        [Description("owner, async, range : Make valid Get Blob range requests and get the response")]
+        [Description("owner, isAsync, range : Make valid Get Blob range requests and get the response")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -450,7 +450,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
         #region PutBlock, DownloadBlockList, and PutBlockList
         [TestMethod]
-        [Description("owner, async : PutBlock, DownloadBlockList, and PutBlockList scenarios")]
+        [Description("owner, isAsync : PutBlock, DownloadBlockList, and PutBlockList scenarios")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -462,7 +462,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
             // use a unique name since temp blocks from previous runs can exist
             string blobName = "blob1" + DateTime.UtcNow.Ticks;
-            var blobProperties = new BlobProperties();
+            BlobProperties blobProperties = new BlobProperties();
             List<PutBlockListItem> blocks = new List<PutBlockListItem>();
             PutBlockListItem block1 = new PutBlockListItem(blockId1, BlockSearchMode.Uncommitted);
             blocks.Add(block1);

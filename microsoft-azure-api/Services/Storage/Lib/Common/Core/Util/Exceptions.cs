@@ -17,21 +17,19 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Util
 {
-    using System;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
 
-#if RT
-    using System.Runtime.InteropServices;
-    using System.Net.Http;
-    using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
+#if WINDOWS_RT
     using System.Globalization;
+    using System.IO;
+    using System.Net.Http;
+    using System.Threading.Tasks;
 #endif
 
     internal class Exceptions
     {
-#if RT
+#if WINDOWS_RT
         internal async static Task<StorageException> PopulateStorageExceptionFromHttpResponseMessage(HttpResponseMessage response, RequestResult currentResult)
         {
             if (!response.IsSuccessStatusCode)
@@ -93,7 +91,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             };
         }
 
-#if DNCP
+#if WINDOWS_DESKTOP
         internal static StorageException GenerateCancellationException(RequestResult res, Exception inner)
         {
             if (res != null)
@@ -103,7 +101,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             }
 
             OperationCanceledException cancelEx = new OperationCanceledException(SR.OperationCanceled, inner);
-            return new StorageException(res, cancelEx.Message, inner) { IsRetryable = false };
+            return new StorageException(res, cancelEx.Message, cancelEx) { IsRetryable = false };
         }
 #endif
     }

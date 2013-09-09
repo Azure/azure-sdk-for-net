@@ -17,19 +17,17 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Util
 {
+#if WINDOWS_DESKTOP && ! WINDOWS_PHONE
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Runtime.InteropServices;
-    using System.Runtime.Serialization.Formatters.Binary;
     using System.Security.Cryptography;
-    using System.Text;
 
     /// <summary>
-    /// The class is provides the helper functions to do Fisma compliant MD5.
+    /// The class is provides the helper functions to do FISMA compliant MD5.
     /// </summary>
-    internal class NativeMD5 : IDisposable
+    internal sealed class NativeMD5 : MD5
     {
         /// <summary>
         /// Cryptographic service provider.
@@ -54,11 +52,13 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// <summary>
         /// The address to which the function copies a handle to the new hash object. Has to be released by calling the CryptDestroyHash function after we are finished using the hash object.
         /// </summary>
+        [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources", Justification = "We release this handle using CryptDestroyHash")]
         private IntPtr hashHandle;
 
         /// <summary>
         /// A handle to a CSP created by a call to CryptAcquireContext.
         /// </summary>
+        [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources", Justification = "We release this handle using CryptReleaseContext")]
         private IntPtr hashProv;
 
         /// <summary>
@@ -66,11 +66,14 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// </summary>
         private bool disposed = false;
 
-        private NativeMD5()
+        /// <summary>
+        /// Initializes a new instance of NativeMD5.
+        /// </summary> 
+        public NativeMD5()
+            : base()
         {
-
-            this.ValidateReturnCode(CryptAcquireContext(out this.hashProv, null, null, ProvRsaFull, CryptVerifyContext));
-            this.ValidateReturnCode(CryptCreateHash(this.hashProv, CalgMD5, IntPtr.Zero, 0, out this.hashHandle));
+            NativeMD5.ValidateReturnCode(NativeMethods.CryptAcquireContextW(out this.hashProv, null, null, ProvRsaFull, CryptVerifyContext));
+            this.Initialize();
         }
 
         /// <summary>
@@ -78,35 +81,41 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         /// </summary>
         ~NativeMD5()
         {
-            this.DisposeUnmanagedResources();
+            this.Dispose(false);
         }
 
         /// <summary>
-        /// Create a Fisma hash.
-        /// </summary> 
-        public static NativeMD5 Create()
-        {
-            return new NativeMD5();
-        }
-
-        /// <summary>
-        /// Calculates an ongoing hash.
+        /// Initializes an implementation of the NativeMD5 class.
         /// </summary>
-        /// <param name="inputBuffer">The data to calculate the hash on.</param>
-        /// <param name="inputOffset">The offset in the input buffer to calculate from.</param>
-        /// <param name="inputCount">The number of bytes to use from input.</param> 
-        public void TransformBlock(byte[] inputBuffer, int inputOffset, int inputCount)
+        public override void Initialize()
         {
-            GCHandle handle = GCHandle.Alloc(inputBuffer, GCHandleType.Pinned);
+            if (this.hashHandle != IntPtr.Zero)
+            {
+                NativeMethods.CryptDestroyHash(this.hashHandle);
+                this.hashHandle = IntPtr.Zero;
+            }
+
+            NativeMD5.ValidateReturnCode(NativeMethods.CryptCreateHash(this.hashProv, CalgMD5, IntPtr.Zero, 0, out this.hashHandle));
+        }
+
+        /// <summary>
+        /// Routes data written to the object into the hash algorithm for computing the hash.
+        /// </summary>
+        /// <param name="array">The input to compute the hash code for.</param>
+        /// <param name="offset">The offset into the byte array from which to begin using data.</param>
+        /// <param name="dataLen">The number of bytes in the byte array to use as data.</param>
+        protected override void HashCore(byte[] array, int offset, int dataLen)
+        {
+            GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
             try
             {
                 IntPtr buffPtr = handle.AddrOfPinnedObject();
-                if (inputOffset != 0)
+                if (offset != 0)
                 {
-                    buffPtr = new IntPtr(buffPtr.ToInt64() + inputOffset);
+                    buffPtr = IntPtr.Add(buffPtr, offset);
                 }
 
-                this.ValidateReturnCode(CryptHashData(this.hashHandle, buffPtr, inputCount, 0));
+                NativeMD5.ValidateReturnCode(NativeMethods.CryptHashData(this.hashHandle, buffPtr, dataLen, 0));
             }
             finally
             {
@@ -115,114 +124,55 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         }
 
         /// <summary>
-        /// Retrieves the string representation of the hash. (Completes the creation of the hash).
+        /// Finalizes the hash computation after the last data is processed by the cryptographic stream object.
         /// </summary>
-        /// <param name="inputBuffer">The data to calculate the hash on.</param>
-        /// <param name="inputOffset">The offset in the input buffer to calculate from.</param>
-        /// <param name="inputCount">The number of bytes to use from input.</param>
-        /// <returns>A byte aray that is the content of the hash.</returns>
-        public byte[] TransformFinalBlock(byte[] inputBuffer, int inputOffset, int inputCount)
+        /// <returns>The computed hash code.</returns>
+        protected override byte[] HashFinal()
         {
-            if (inputCount != 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
             byte[] hashBytes = new byte[16];
             int hashLength = hashBytes.Length;
-            this.ValidateReturnCode(CryptGetHashParam(this.hashHandle, HashVal, hashBytes, ref hashLength, 0));
-
+            NativeMD5.ValidateReturnCode(NativeMethods.CryptGetHashParam(this.hashHandle, HashVal, hashBytes, ref hashLength, 0));
             return hashBytes;
         }
 
         /// <summary>
-        /// Validates the status returned by all the crypto functions and throws exception.
+        /// Releases the unmanaged resources used by the NativeMD5.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (this.hashHandle != IntPtr.Zero)
+                {
+                    NativeMethods.CryptDestroyHash(this.hashHandle);
+                    this.hashHandle = IntPtr.Zero;
+                }
+
+                if (this.hashProv != IntPtr.Zero)
+                {
+                    NativeMethods.CryptReleaseContext(this.hashProv, 0);
+                    this.hashProv = IntPtr.Zero;
+                }
+
+                this.disposed = true;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Validates the status returned by all the crypto functions and throws exception per the return code.
         /// </summary>
         /// <param name="status">The boolean status returned by the crypto functions.</param>
-        public void ValidateReturnCode(bool status)
+        private static void ValidateReturnCode(bool status)
         {
             if (!status)
             {
                 int error = Marshal.GetLastWin32Error();
-                throw new InvalidOperationException(string.Format(SR.CryptoFunctionFailed, error));
+                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, SR.CryptoFunctionFailed, error));
             }
         }
-
-        /// <summary>
-        /// Releases the unmanaged resources and optionally releases the managed resources.
-        /// </summary>
-        public void Dispose()
-        {
-            if (!this.disposed)
-            {
-                this.DisposeUnmanagedResources();
-                this.disposed = true;
-                GC.SuppressFinalize(this);
-            }
-        }
-
-        /// <summary>
-        /// Releases the unmanaged resources.
-        /// </summary>
-        public void DisposeUnmanagedResources()
-        {
-            if (this.hashHandle != IntPtr.Zero)
-            {
-                CryptDestroyHash(this.hashHandle);
-                this.hashHandle = IntPtr.Zero;
-            }
-
-            if (this.hashProv != IntPtr.Zero)
-            {
-                CryptReleaseContext(this.hashProv, 0);
-                this.hashProv = IntPtr.Zero;
-            }
-        }
-
-        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool CryptAcquireContext(
-            out IntPtr hashProv,
-            string pszContainer,
-            string pszProvider,
-            uint provType,
-            uint flags);
-
-        [DllImport("advapi32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool CryptDestroyHash(
-            IntPtr hashHandle);
-
-        [DllImport("advapi32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool CryptReleaseContext(
-            IntPtr hashProv,
-            Int32 dwFlags);  // Reserved. Must be 0.
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool CryptGetHashParam(
-            IntPtr hashHandle,
-            uint param,
-            byte[] data,
-            ref int pdwDataLen,
-            uint flags);
-
-        [DllImport("advapi32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool CryptCreateHash(
-            IntPtr hashProv,
-            uint algId,
-            IntPtr hashKey,
-            uint flags,
-            out IntPtr hashHandle);
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool CryptHashData(
-            IntPtr hashHandle,
-            IntPtr data,
-            int dataLen,
-            uint flags);
     }
+#endif
 }

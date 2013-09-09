@@ -22,10 +22,10 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
 
-#if RTMD
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-#else
+#if WINDOWS_DESKTOP
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#else
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #endif
 
 namespace Microsoft.WindowsAzure.Storage.Core.Util
@@ -56,8 +56,10 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             byte[] dummyKey = { 0, 1, 2 };
             string base64EncodedDummyKey = Convert.ToBase64String(dummyKey);
             TestHelper.ExpectedException<InvalidOperationException>(
-                () => cred.UpdateKey(base64EncodedDummyKey, null),
+                () => cred.UpdateKey(base64EncodedDummyKey),
                 "Updating shared key on an anonymous credentials instance should fail.");
+
+
         }
 
         [TestMethod]
@@ -78,17 +80,17 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             Uri testUri = new Uri("http://test/abc?querya=1");
             Assert.AreEqual(testUri, cred.TransformUri(testUri));
 
-            Assert.AreEqual(TestBase.TargetTenantConfig.AccountKey, Convert.ToBase64String(cred.ExportKey()));
+            Assert.AreEqual(TestBase.TargetTenantConfig.AccountKey, cred.ExportBase64EncodedKey());
             byte[] dummyKey = { 0, 1, 2 };
             string base64EncodedDummyKey = Convert.ToBase64String(dummyKey);
-            cred.UpdateKey(base64EncodedDummyKey, null);
-            Assert.AreEqual(base64EncodedDummyKey, Convert.ToBase64String(cred.ExportKey()));
+            cred.UpdateKey(base64EncodedDummyKey);
+            Assert.AreEqual(base64EncodedDummyKey, cred.ExportBase64EncodedKey());
 
-#if !RTMD
+#if !WINDOWS_RT
             dummyKey[0] = 3;
             base64EncodedDummyKey = Convert.ToBase64String(dummyKey);
-            cred.UpdateKey(dummyKey, null);
-            Assert.AreEqual(base64EncodedDummyKey, Convert.ToBase64String(cred.ExportKey()));
+            cred.UpdateKey(dummyKey);
+            Assert.AreEqual(base64EncodedDummyKey, cred.ExportBase64EncodedKey());
 #endif
         }
 
@@ -117,7 +119,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             byte[] dummyKey = { 0, 1, 2 };
             string base64EncodedDummyKey = Convert.ToBase64String(dummyKey);
             TestHelper.ExpectedException<InvalidOperationException>(
-                () => cred.UpdateKey(base64EncodedDummyKey, null),
+                () => cred.UpdateKey(base64EncodedDummyKey),
                 "Updating shared key on a SAS credentials instance should fail.");
         }
 
@@ -181,7 +183,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             credentials2.UpdateKey(emptyKeyValueAsString, null);
             Assert.AreEqual(emptyKeyValueAsString, Convert.ToBase64String(credentials2.ExportKey()));
 
-#if !RTMD
+#if !WINDOWS_RT
             byte[] emptyKeyValueAsByteArray = new byte[0];
 
             StorageCredentials credentials3 = new StorageCredentials(accountName, keyValue);
@@ -225,7 +227,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 credentials2.UpdateKey(nullKeyValueAsString, null);
             }, "Cannot update key with a null string value.");
 
-#if !RTMD
+#if !WINDOWS_RT
             byte[] nullKeyValueAsByteArray = null;
 
             StorageCredentials credentials3 = new StorageCredentials(accountName, keyValue);
@@ -323,7 +325,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             Assert.AreEqual(devstoreAccount.BlobEndpoint, new Uri("http://127.0.0.1:10000/devstoreaccount1"));
             Assert.AreEqual(devstoreAccount.QueueEndpoint, new Uri("http://127.0.0.1:10001/devstoreaccount1"));
             Assert.AreEqual(devstoreAccount.TableEndpoint, new Uri("http://127.0.0.1:10002/devstoreaccount1"));
-            string devstoreAccountToStringNoSecrets = devstoreAccount.ToString();
             string devstoreAccountToStringWithSecrets = devstoreAccount.ToString(true);
             CloudStorageAccount testAccount = CloudStorageAccount.Parse(devstoreAccountToStringWithSecrets);
 
@@ -375,11 +376,113 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
                 new Uri(String.Format("https://{0}.queue.core.windows.net", TestBase.TargetTenantConfig.AccountName)));
             Assert.AreEqual(cloudStorageAccount.TableEndpoint,
                 new Uri(String.Format("https://{0}.table.core.windows.net", TestBase.TargetTenantConfig.AccountName)));
-            string cloudStorageAccountToStringNoSecrets = cloudStorageAccount.ToString();
+
             string cloudStorageAccountToStringWithSecrets = cloudStorageAccount.ToString(true);
             CloudStorageAccount testAccount = CloudStorageAccount.Parse(cloudStorageAccountToStringWithSecrets);
             // make sure it round trips
             AccountsAreEqual(testAccount, cloudStorageAccount);
+        }
+
+        [TestMethod]
+        /// [Description("Regular account with HTTP")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountEndpointSuffix()
+        {
+            const string TestEndpointSuffix = "fake.endpoint.suffix";
+
+            CloudStorageAccount testAccount =
+                CloudStorageAccount.Parse(
+                    string.Format(
+                        "DefaultEndpointsProtocol=http;AccountName={0};AccountKey={1};EndpointSuffix={2};",
+                        TestBase.TargetTenantConfig.AccountName,
+                        TestBase.TargetTenantConfig.AccountKey,
+                        TestEndpointSuffix));
+            
+            StorageCredentials cred = new StorageCredentials(TestBase.TargetTenantConfig.AccountName, TestBase.TargetTenantConfig.AccountKey);
+            CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(cred, TestEndpointSuffix, false);
+           
+            // make sure it round trips
+            this.AccountsAreEqual(testAccount, cloudStorageAccount);
+        }
+
+        [TestMethod]
+        /// [Description("Regular account with HTTP")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountEndpointSuffixWithBlob()
+        {
+            const string TestEndpointSuffix = "fake.endpoint.suffix";
+            const string AlternateBlobEndpoint = "http://blob.other.endpoint/";
+
+            CloudStorageAccount testAccount =
+                CloudStorageAccount.Parse(
+                    string.Format(
+                        "DefaultEndpointsProtocol=http;AccountName={0};AccountKey={1};EndpointSuffix={2};BlobEndpoint={3}",
+                        TestBase.TargetTenantConfig.AccountName,
+                        TestBase.TargetTenantConfig.AccountKey,
+                        TestEndpointSuffix,
+                        AlternateBlobEndpoint));
+
+            CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(testAccount.ToString(true));
+            
+            // make sure it round trips
+            this.AccountsAreEqual(testAccount, cloudStorageAccount);
+        }
+
+        [TestMethod]
+        /// [Description("Regular account with HTTP")]
+        [TestCategory(ComponentCategory.Core)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void CloudStorageAccountConnectionStringRoundtrip()
+        {
+            string accountString1 =
+                string.Format(
+                    "DefaultEndpointsProtocol=http;AccountName={0};AccountKey={1};EndpointSuffix={2};",
+                    TestBase.TargetTenantConfig.AccountName,
+                    TestBase.TargetTenantConfig.AccountKey,
+                    "fake.endpoint.suffix");
+
+            string accountString2 =
+                string.Format(
+                    "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};",
+                    TestBase.TargetTenantConfig.AccountName,
+                    TestBase.TargetTenantConfig.AccountKey);
+
+            string accountString3 =
+                string.Format(
+                    "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};QueueEndpoint={2}",
+                    TestBase.TargetTenantConfig.AccountName,
+                    TestBase.TargetTenantConfig.AccountKey,
+                    "https://alternate.queue.endpoint/");
+
+            string accountString4 =
+                string.Format(
+                    "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix={2};QueueEndpoint={3}",
+                    TestBase.TargetTenantConfig.AccountName,
+                    TestBase.TargetTenantConfig.AccountKey,
+                    "fake.endpoint.suffix",
+                    "https://alternate.queue.endpoint/");
+
+            connectionStringRoundtripHelper(accountString1);
+            connectionStringRoundtripHelper(accountString2);
+            connectionStringRoundtripHelper(accountString3);
+            connectionStringRoundtripHelper(accountString4);
+        }
+
+        private void connectionStringRoundtripHelper(string accountString)
+        {
+            CloudStorageAccount originalAccount = CloudStorageAccount.Parse(accountString);
+            CloudStorageAccount copiedAccount = CloudStorageAccount.Parse(originalAccount.ToString(true));
+
+            // make sure it round trips
+            this.AccountsAreEqual(originalAccount, copiedAccount);
         }
 
         [TestMethod]
@@ -534,7 +637,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void CloudStorageAccountDevStoreProxyRoundtrip()
         {
-            string accountString = "UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler";
+            string accountString = "UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler/";
 
             Assert.AreEqual(accountString, CloudStorageAccount.Parse(accountString).ToString(true));
         }
@@ -636,7 +739,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         }
 
         [TestMethod]
-        /// [Description("Exporting account key should be possible as a byte array")]
+        /// [Description("Exporting account key should be possible both as a byte array and a Base64 encoded string")]
         [TestCategory(ComponentCategory.Core)]
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
@@ -647,6 +750,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
             string accountString = "BlobEndpoint=http://blobs/;AccountName=test;AccountKey=" + accountKeyString;
             CloudStorageAccount account = CloudStorageAccount.Parse(accountString);
             StorageCredentials accountAndKey = (StorageCredentials)account.Credentials;
+            string key = accountAndKey.ExportBase64EncodedKey();
+            Assert.AreEqual(accountKeyString, key);
 
             byte[] keyBytes = accountAndKey.ExportKey();
             byte[] expectedKeyBytes = Convert.FromBase64String(accountKeyString);

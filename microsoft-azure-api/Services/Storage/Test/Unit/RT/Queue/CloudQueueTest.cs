@@ -15,36 +15,38 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Queue.Protocol;
 using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Queue.Protocol;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 using Windows.Globalization;
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
     [TestClass]
-    public class CloudQueueTest : TestBase
+    public class CloudQueueTest : QueueTestBase
     {
-        readonly CloudQueueClient DefalutQueueClient = new CloudQueueClient(new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), TestBase.StorageCredentials);
-
-        [TestMethod]
-        /// [Description("Create and delete a queue")]
-        [TestCategory(ComponentCategory.Queue)]
-        [TestCategory(TestTypeCategory.UnitTest)]
-        [TestCategory(SmokeTestCategory.NonSmoke)]
-        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
-        public async Task CloudQueueCreateAsync()
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
         {
-            string name = TestHelper.GenerateNewQueueName();
-            CloudQueue queue = DefalutQueueClient.GetQueueReference(name);
-
-            await queue.CreateAsync();
-            await queue.CreateAsync();
-            await queue.DeleteAsync();
+            if (TestBase.QueueBufferManager != null)
+            {
+                TestBase.QueueBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.QueueBufferManager.OutstandingBufferCount);
+            }
         }
 
         [TestMethod]
@@ -55,8 +57,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueCreateAndDeleteAsync()
         {
-            string name = TestHelper.GenerateNewQueueName();
-            CloudQueue queue = DefalutQueueClient.GetQueueReference(name);
+            string name = GenerateNewQueueName();
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(name);
              
             await queue.CreateAsync();
             await queue.DeleteAsync();
@@ -70,8 +73,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueCreateIfNotExistsAsync()
         {
-            string name = TestHelper.GenerateNewQueueName();
-            CloudQueue queue = DefalutQueueClient.GetQueueReference(name);
+            string name = GenerateNewQueueName();
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(name);
 
             try
             {
@@ -92,8 +96,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueDeleteIfExistsAsync()
         {
-            string name = TestHelper.GenerateNewQueueName();
-            CloudQueue queue = DefalutQueueClient.GetQueueReference(name);
+            string name = GenerateNewQueueName();
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(name);
 
             Assert.IsFalse(await queue.DeleteIfExistsAsync());
             await queue.CreateAsync();
@@ -109,7 +114,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueGetSetPermissionsAsync()
         {
-            CloudQueue queue = DefalutQueueClient.GetQueueReference(TestHelper.GenerateNewQueueName());
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
 
             await queue.CreateAsync();
             QueuePermissions emptyPermission = await queue.GetPermissionsAsync();
@@ -131,7 +137,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
             await queue.FetchAttributesAsync();
 
-            CloudQueue queueToRetrieve = DefalutQueueClient.GetQueueReference(queue.Name);
+            CloudQueue queueToRetrieve = client.GetQueueReference(queue.Name);
             QueuePermissions permissionsToRetrieve = await queueToRetrieve.GetPermissionsAsync();
 
             Assert.AreEqual(permissions.SharedAccessPolicies.Count, permissionsToRetrieve.SharedAccessPolicies.Count);
@@ -150,11 +156,12 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task CloudQueueSetGetMetadataAsync()
         {
-            CloudQueue queue = DefalutQueueClient.GetQueueReference(TestHelper.GenerateNewQueueName());
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
 
             await queue.CreateAsync();
 
-            CloudQueue queueToRetrieve = DefalutQueueClient.GetQueueReference(queue.Name);
+            CloudQueue queueToRetrieve = client.GetQueueReference(queue.Name);
             await queueToRetrieve.FetchAttributesAsync();
             Assert.AreEqual<int>(0, queueToRetrieve.Metadata.Count);
 
@@ -182,7 +189,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public async Task QueueSASTestAsync()
         {
-            CloudQueue queue = DefalutQueueClient.GetQueueReference(TestHelper.GenerateNewQueueName());
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
             await queue.CreateAsync();
             string messageContent = Guid.NewGuid().ToString();
             CloudQueueMessage message = new CloudQueueMessage(messageContent);
@@ -206,18 +214,87 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
             string sasTokenFromId = queue.GetSharedAccessSignature(null, id);
             StorageCredentials sasCredsFromId = new StorageCredentials(sasTokenFromId);
-            CloudQueue sasQueueFromId = new CloudQueue(queue.Uri, sasCredsFromId);
-            CloudQueueMessage receivedMessage1 = await sasQueueFromId.PeekMessageAsync();
+
+            CloudStorageAccount sasAcc = new CloudStorageAccount(sasCredsFromId, new Uri(TestBase.TargetTenantConfig.BlobServiceEndpoint), new Uri(TestBase.TargetTenantConfig.QueueServiceEndpoint), new Uri(TestBase.TargetTenantConfig.TableServiceEndpoint));
+            CloudQueueClient sasClient = sasAcc.CreateCloudQueueClient();
+            
+            CloudQueue sasQueueFromSasUri = new CloudQueue(sasClient.Credentials.TransformUri(queue.Uri));
+            CloudQueueMessage receivedMessage = await sasQueueFromSasUri.PeekMessageAsync();
+            Assert.AreEqual(messageContent, receivedMessage.AsString);
+
+            CloudQueue sasQueueFromSasUri1 = new CloudQueue(new Uri(queue.Uri.ToString() + sasTokenFromId));
+            CloudQueueMessage receivedMessage1 = await sasQueueFromSasUri1.PeekMessageAsync();
             Assert.AreEqual(messageContent, receivedMessage1.AsString);
+           
+            CloudQueue sasQueueFromId = new CloudQueue(queue.Uri, sasCredsFromId);
+            CloudQueueMessage receivedMessage2 = await sasQueueFromId.PeekMessageAsync();
+            Assert.AreEqual(messageContent, receivedMessage2.AsString);
 
             string sasTokenFromPolicy = queue.GetSharedAccessSignature(permissions.SharedAccessPolicies[id], null);
             StorageCredentials sasCredsFromPolicy = new StorageCredentials(sasTokenFromPolicy);
             CloudQueue sasQueueFromPolicy = new CloudQueue(queue.Uri, sasCredsFromPolicy);
-            CloudQueueMessage receivedMessage2 = await sasQueueFromPolicy.PeekMessageAsync();
-            Assert.AreEqual(messageContent, receivedMessage2.AsString);
+            CloudQueueMessage receivedMessage3 = await sasQueueFromPolicy.PeekMessageAsync();
+            Assert.AreEqual(messageContent, receivedMessage3.AsString);
             await queue.DeleteAsync();
         }
 
+        [TestMethod]
+        // [Description("Update queue sas")]
+        [TestCategory(ComponentCategory.Queue)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task UpdateQueueSASTestAsync()
+        {
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
+
+            try
+            {
+                await queue.CreateAsync();
+                string messageContent = Guid.NewGuid().ToString();
+                CloudQueueMessage message = new CloudQueueMessage(messageContent);
+                await queue.AddMessageAsync(message);
+                SharedAccessQueuePolicy policy = new SharedAccessQueuePolicy()
+                {
+                    SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                    SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                    Permissions = SharedAccessQueuePermissions.Add | SharedAccessQueuePermissions.ProcessMessages,
+                };
+                string id = Guid.NewGuid().ToString();
+                string sasToken = queue.GetSharedAccessSignature(policy, null);
+
+                StorageCredentials sasCreds = new StorageCredentials(sasToken);
+                CloudQueue sasQueue = new CloudQueue(queue.Uri, sasCreds);
+                OperationContext context = new OperationContext();
+
+                await TestHelper.ExpectedExceptionAsync(
+                    async () => await sasQueue.PeekMessageAsync(null, context),
+                    context,
+                    "Peek when Sas does not allow Read access on the queue",
+                    HttpStatusCode.NotFound);
+
+                await sasQueue.AddMessageAsync(message);
+
+                SharedAccessQueuePolicy policy2 = new SharedAccessQueuePolicy()
+                {
+                    SharedAccessStartTime = DateTimeOffset.UtcNow.AddMinutes(-5),
+                    SharedAccessExpiryTime = DateTimeOffset.UtcNow.AddMinutes(30),
+                    Permissions = SharedAccessQueuePermissions.Add | SharedAccessQueuePermissions.ProcessMessages | SharedAccessQueuePermissions.Read,
+                };
+
+                string sasToken2 = queue.GetSharedAccessSignature(policy2, null);
+                sasCreds.UpdateSASToken(sasToken2);
+                sasQueue = new CloudQueue(queue.Uri, sasCreds);
+
+                await sasQueue.PeekMessageAsync();
+            }
+            finally
+            {
+                queue.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+          
         [TestMethod]
         //[Description("Test queue sas")]
         [TestCategory(ComponentCategory.Queue)]
@@ -229,7 +306,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             string currentPrimaryLanguage = ApplicationLanguages.PrimaryLanguageOverride;
             ApplicationLanguages.PrimaryLanguageOverride = "it";
 
-            CloudQueue queue = DefalutQueueClient.GetQueueReference(TestHelper.GenerateNewQueueName());
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
 
             try
             {

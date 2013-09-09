@@ -15,12 +15,12 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
 namespace Microsoft.WindowsAzure.Storage
 {
@@ -53,15 +53,6 @@ namespace Microsoft.WindowsAzure.Storage
                 }
             }
             while (srcRead > 0);
-        }
-
-        /// <summary>
-        /// Generate the random queue name for the test. 
-        /// </summary>
-        /// <returns></returns>
-        internal static string GenerateNewQueueName()
-        {
-            return "librtqueuetest" + Guid.NewGuid().ToString("N");
         }
 
         /// <summary>
@@ -107,7 +98,7 @@ namespace Microsoft.WindowsAzure.Storage
             {
                 await operation();
             }
-            catch
+            catch (Exception)
             {
                 Assert.AreEqual((int)expectedStatusCode, operationContext.LastResult.HttpStatusCode, "Http status code is unexpected.");
                 if (!string.IsNullOrEmpty(requestErrorCode))

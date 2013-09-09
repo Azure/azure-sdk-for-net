@@ -31,9 +31,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         Uri Uri { get; }
 
         /// <summary>
-        /// Gets the blob item's parent.
+        /// Gets the blob item's parent virtual directory.
         /// </summary>
-        /// <value>The blob item's parent.</value>
+        /// <value>The blob item's parent virtual directory.</value>
         CloudBlobDirectory Parent { get; }
 
         /// <summary>

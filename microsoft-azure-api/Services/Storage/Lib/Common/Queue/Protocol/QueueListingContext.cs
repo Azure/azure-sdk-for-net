@@ -22,7 +22,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
     /// <summary>
     /// Provides a set of parameters for a queue listing operation.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public

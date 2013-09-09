@@ -18,12 +18,7 @@
 namespace Microsoft.WindowsAzure.Storage.Core.Auth
 {
     using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
-    using System.Text;
 
     /// <summary>
     /// Represents a canonicalizer that converts HTTP request data into a standard form appropriate for signing via 
@@ -76,6 +71,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
         /// <seealso href="http://msdn.microsoft.com/en-us/library/windowsazure/dd179428.aspx">Authentication for the Windows Azure Storage Services</seealso>
         public string CanonicalizeHttpRequest(HttpWebRequest request, string accountName)
         {
+            CommonUtility.AssertNotNull("request", request);
+
             // Add the method (GET, POST, PUT, or HEAD).
             CanonicalizedString canonicalizedString = new CanonicalizedString(request.Method, ExpectedCanonicalizedStringLength);
 
@@ -90,7 +87,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             AuthenticationUtility.AppendCanonicalizedCustomHeaders(canonicalizedString, request);
 
             // Add the canonicalized URI element
-            string resourceString = AuthenticationUtility.GetCanonicalizedResourceString(request.Address, accountName, true);
+            string resourceString = AuthenticationUtility.GetCanonicalizedResourceString(request.RequestUri, accountName, true);
             canonicalizedString.AppendCanonicalizedElement(resourceString);
 
             return canonicalizedString.ToString();

@@ -17,10 +17,12 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// Provides error code strings that are specific to the Windows Azure Table service.
     /// </summary>    
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
@@ -93,7 +95,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         public const string OperatorInvalid = "OperatorInvalid";
 
         /// <summary>
-        /// The specified update condition was not satsified.
+        /// The specified update condition was not satisfied.
         /// </summary>
         public const string UpdateConditionNotSatisfied = "UpdateConditionNotSatisfied";
 
@@ -160,12 +162,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
         /// <summary>
         /// JSON format is not supported.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Naming",
-            "CA1704:IdentifiersShouldBeSpelledCorrectly",
-            MessageId = "Json",
-            Justification = "The casing matches the storage constant the identifier represents.")] public const string
-            JsonFormatNotSupported = "JsonFormatNotSupported";
+        public const string JsonFormatNotSupported = "JsonFormatNotSupported";
 
         /// <summary>
         /// The specified method is not allowed.

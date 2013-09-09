@@ -1,0 +1,3 @@
+Known Issues:
+
+	- Windows Phone: When a request times out or is cancelled by the user, the asynchronous method might not invoke the user specified callback.

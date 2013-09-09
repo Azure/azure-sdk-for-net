@@ -15,19 +15,10 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------
-// <copyright file="TamperBehaviors.cs" company="Microsoft">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <summary>
-//     This set of behaviors modify the outgoing (request) and incoming (response) data streams.
-// </summary>
-//-----------------------------------------------------------------------
-
 namespace Microsoft.WindowsAzure.Test.Network.Behaviors
 {
-    using System;
     using Fiddler;
+    using System;
 
     /// <summary>
     /// TamperBehaviors modify the outgoing (request) and incoming (response) data streams.

@@ -17,22 +17,22 @@
 
 namespace Microsoft.WindowsAzure.Storage
 {
-    using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Xml;
 
-#if RT
+#if WINDOWS_RT
     using Windows.Storage.Streams;
 #endif
 
     /// <summary>
     /// Represents extended error information returned by the Windows Azure storage services.
     /// </summary>
-#if DNCP
+#if WINDOWS_DESKTOP && !WINDOWS_PHONE
     [Serializable]
 #endif
     public sealed class StorageExtendedErrorInformation
@@ -62,7 +62,7 @@ namespace Microsoft.WindowsAzure.Storage
         /// <value>The additional error details.</value>
         public IDictionary<string, string> AdditionalDetails { get; internal set; }
 
-#if RT
+#if WINDOWS_RT
         public static StorageExtendedErrorInformation ReadFromStream(IInputStream inputStream)
         {
             return ReadFromStream(inputStream.AsStreamForRead());
@@ -74,13 +74,20 @@ namespace Microsoft.WindowsAzure.Storage
         /// </summary>
         /// <param name="inputStream">The input stream.</param>
         /// <returns>The error details.</returns>
-#if RT
+#if WINDOWS_RT
         internal
 #else
         public
 #endif
  static StorageExtendedErrorInformation ReadFromStream(Stream inputStream)
         {
+            CommonUtility.AssertNotNull("inputStream", inputStream);
+
+            if (inputStream.CanSeek && inputStream.Length < 1)
+            {
+                return null;
+            }
+            
             StorageExtendedErrorInformation extendedErrorInfo = new StorageExtendedErrorInformation();
             try
             {
@@ -102,16 +109,18 @@ namespace Microsoft.WindowsAzure.Storage
         #region IXmlSerializable
 
         /// <summary>
-        /// Generates a serializable StorageExtendedErrorInformation from its XML representation.
+        /// Generates a serializable <see cref="StorageExtendedErrorInformation"/> object from its XML representation.
         /// </summary>
-        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the StorageExtendedErrorInformation is deserialized.</param>
-#if RTMD
+        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the <see cref="StorageExtendedErrorInformation"/> object is deserialized.</param>
+#if WINDOWS_RT
         internal
 #else
         public
 #endif
  void ReadXml(XmlReader reader)
         {
+            CommonUtility.AssertNotNull("reader", reader);
+
             this.AdditionalDetails = new Dictionary<string, string>();
 
             reader.ReadStartElement();
@@ -131,7 +140,7 @@ namespace Microsoft.WindowsAzure.Storage
                     {
                         this.ErrorMessage = reader.ReadElementContentAsString();
                     }
-                    else if ((string.Compare(reader.Name, Constants.ErrorException, StringComparison.Ordinal) == 0))
+                    else if (string.Compare(reader.Name, Constants.ErrorException, StringComparison.Ordinal) == 0)
                     {
                         reader.ReadStartElement();
                         while (reader.IsStartElement())
@@ -166,19 +175,23 @@ namespace Microsoft.WindowsAzure.Storage
                     }
                 }
             }
+
+            reader.ReadEndElement();
         }
 
         /// <summary>
-        /// Converts a serializable StorageExtendedErrorInformation object into its XML representation.
+        /// Converts a serializable <see cref="StorageExtendedErrorInformation"/> object into its XML representation.
         /// </summary>
-        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the StorageExtendedErrorInformation is serialized.</param>
-#if RTMD
+        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the <see cref="StorageExtendedErrorInformation"/> object is serialized.</param>
+#if WINDOWS_RT
         internal
 #else
         public
 #endif
         void WriteXml(XmlWriter writer)
         {
+            CommonUtility.AssertNotNull("writer", writer);
+
             writer.WriteStartElement(Constants.ErrorRootElement);
             writer.WriteElementString(Constants.ErrorCode, this.ErrorCode);
             writer.WriteElementString(Constants.ErrorMessage, this.ErrorMessage);

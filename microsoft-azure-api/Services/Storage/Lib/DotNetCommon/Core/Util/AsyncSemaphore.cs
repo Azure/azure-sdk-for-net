@@ -18,10 +18,12 @@
 namespace Microsoft.WindowsAzure.Storage.Core.Util
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// This class provides asynchronous semaphore functionality (based on Stephen Toub's blog).
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed - Stephen Toub is a proper noun.")]
     internal partial class AsyncSemaphore
     {
         public delegate void AsyncSemaphoreCallback(bool calledSynchronously);
@@ -31,7 +33,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 
         public bool WaitAsync(AsyncSemaphoreCallback callback)
         {
-            CommonUtils.AssertNotNull("callback", callback);
+            CommonUtility.AssertNotNull("callback", callback);
 
             lock (this.pendingWaits)
             {

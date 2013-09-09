@@ -38,10 +38,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
             TableRequestOptions modifiedOptions = TableRequestOptions.ApplyDefaults(requestOptions, client);
             operationContext = operationContext ?? new OperationContext();
 
-            CommonUtils.AssertNotNullOrEmpty("tableName", tableName);
+            CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
             if (this.operations.Count == 0)
             {
-                throw new ArgumentOutOfRangeException(SR.EmptyBatchOperation);
+                throw new InvalidOperationException(SR.EmptyBatchOperation);
             }
 
             RESTCommand<IList<TableResult>> cmdToExecute = BatchImpl(this, client, tableName, modifiedOptions);
@@ -56,16 +56,16 @@ namespace Microsoft.WindowsAzure.Storage.Table
         private static RESTCommand<IList<TableResult>> BatchImpl(TableBatchOperation batch, CloudTableClient client, string tableName, TableRequestOptions requestOptions)
         {
             RESTCommand<IList<TableResult>> batchCmd = new RESTCommand<IList<TableResult>>(client.Credentials, client.BaseUri);
-            requestOptions.ApplyToStorageCommand(batchCmd);
+            batchCmd.ApplyRequestOptions(requestOptions);
 
             List<TableResult> results = new List<TableResult>();
 
             batchCmd.RetrieveResponseStream = true;
             batchCmd.Handler = client.AuthenticationHandler;
             batchCmd.BuildClient = HttpClientFactory.BuildHttpClient;
-            batchCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableBatchOperation(cmd.Uri, cmd.ServerTimeoutInSeconds, client.BaseUri, tableName, batch, ctx);
-            batchCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Accepted, resp.StatusCode, results, cmd, ex, ctx);
-            batchCmd.PostProcessResponse = (cmd, resp, ex, ctx) => TableOperationHttpResponseParsers.TableBatchOperationPostProcess(results, batch, cmd, resp, ctx);
+            batchCmd.BuildRequest = (cmd, cnt, ctx) => TableOperationHttpRequestMessageFactory.BuildRequestForTableBatchOperation(cmd, cmd.ServerTimeoutInSeconds, client.BaseUri, tableName, batch, client, ctx);
+            batchCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Accepted, resp.StatusCode, results, cmd, ex);
+            batchCmd.PostProcessResponse = (cmd, resp, ctx) => TableOperationHttpResponseParsers.TableBatchOperationPostProcess(results, batch, cmd, resp, ctx);
             batchCmd.RecoveryAction = (cmd, ex, ctx) => results.Clear();
 
             return batchCmd;

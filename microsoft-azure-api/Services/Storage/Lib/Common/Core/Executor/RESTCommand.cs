@@ -22,7 +22,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Executor
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
 
-#if RT
+#if WINDOWS_RT
 using System.Net.Http;
 using System.Threading.Tasks;
 #else
@@ -43,7 +43,7 @@ using System.Threading.Tasks;
             this.Uri = credentials.TransformUri(uri);
             this.Builder = builder;
         }
-        #endregion    
+        #endregion
 
         // Reference to hold stream from webresponse
         public Stream ResponseStream = null;
@@ -57,7 +57,9 @@ using System.Threading.Tasks;
         // if true the executor will calculate the md5 on retrieved data
         public bool CalculateMd5ForResponseStream = false;
 
-#if RT
+        public Stream StreamToDispose { get; set; }
+
+#if WINDOWS_RT
         public Func<RESTCommand<T>, OperationContext, HttpClient> BuildClient;
 
         public Func<RESTCommand<T>, OperationContext, HttpContent> BuildContent;
@@ -68,10 +70,32 @@ using System.Threading.Tasks;
         public Func<RESTCommand<T>, HttpResponseMessage, Exception, OperationContext, T> PreProcessResponse;
 
         // Post-Stream Retrieval Func ( if retreiveStream is true after ProcessResponse, the stream is retrieved and then PostProcess is called
-        public Func<RESTCommand<T>, HttpResponseMessage, Exception, OperationContext, Task<T>> PostProcessResponse;
+        public Func<RESTCommand<T>, HttpResponseMessage, OperationContext, Task<T>> PostProcessResponse;
 #else
         // Stream to send to server
-        public Stream SendStream = null;
+        private Stream sendStream = null;
+
+        public Stream SendStream
+        {
+            get
+            {
+                return this.sendStream;
+            }
+
+            set
+            {
+                MultiBufferMemoryStream tempStream = value as MultiBufferMemoryStream;
+                if (tempStream != null)
+                {
+                    this.StreamToDispose = tempStream;
+                }
+
+                this.sendStream = value;
+            }
+        }
+
+        // Length of data to send to server from stream.
+        public long? SendStreamLength = null;
 
         // Func to construct the request
         public Func<Uri, UriQueryBuilder, int?, OperationContext, HttpWebRequest> BuildRequestDelegate = null;
@@ -87,7 +111,7 @@ using System.Threading.Tasks;
         public Func<RESTCommand<T>, HttpWebResponse, Exception, OperationContext, T> PreProcessResponse = null;
 
         // Post-Stream Retrieval Func ( if retreiveStream is true after ProcessResponse, the stream is retrieved and then PostProcess is called
-        public Func<RESTCommand<T>, HttpWebResponse, Exception, OperationContext, T> PostProcessResponse = null;
+        public Func<RESTCommand<T>, HttpWebResponse, OperationContext, T> PostProcessResponse = null;
 #endif
     }
 }

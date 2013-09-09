@@ -19,10 +19,7 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 {
     using System.Collections.Generic;
     using System.IO;
-
-#if !COMMON
     using System.Xml.Linq;
-#endif
 
     /// <summary>
     /// Parses the response XML from an operation to set the access policy for a cloud object.
@@ -51,14 +48,12 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
             }
         }
 
-#if !COMMON
         /// <summary>
         /// Parses the current element.
         /// </summary>
         /// <param name="accessPolicyElement">The shared access policy element to parse.</param>
         /// <returns>The shared access policy.</returns>
         protected abstract T ParseElement(XElement accessPolicyElement);
-#endif
 
         /// <summary>
         /// Parses the response XML from a Set Container ACL operation to retrieve container-level access policy data.
@@ -66,16 +61,13 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <returns>A list of enumerable key-value pairs.</returns>
         protected override IEnumerable<KeyValuePair<string, T>> ParseXml()
         {
-#if COMMON
-            return null;
-#else
             XElement root = XElement.Load(reader);
             IEnumerable<XElement> elements = root.Elements(Constants.SignedIdentifier);
-            foreach (var signedIdentifierElement in elements)
+            foreach (XElement signedIdentifierElement in elements)
             {
                 string id = (string)signedIdentifierElement.Element(Constants.Id);
                 T accessPolicy;
-                var accessPolicyElement = signedIdentifierElement.Element(Constants.AccessPolicy);
+                XElement accessPolicyElement = signedIdentifierElement.Element(Constants.AccessPolicy);
                 if (accessPolicyElement != null)
                 {
                     accessPolicy = this.ParseElement(accessPolicyElement);
@@ -87,7 +79,6 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
 
                 yield return new KeyValuePair<string, T>(id, accessPolicy);
             }
-#endif
         }
     }
 }

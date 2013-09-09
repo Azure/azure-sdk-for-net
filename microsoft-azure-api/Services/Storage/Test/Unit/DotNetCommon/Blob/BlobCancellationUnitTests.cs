@@ -15,18 +15,38 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.IO;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAzure.Test.Network;
 using Microsoft.WindowsAzure.Test.Network.Behaviors;
+using System.IO;
+using System.Threading;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
     public class BlobCancellationUnitTests : BlobTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         [Description("Cancel blob download to stream")]
         [TestCategory(ComponentCategory.Blob)]
@@ -90,7 +110,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void CloudBlockBlobUploadFromStreamAPMCancel()
         {
-            byte[] buffer = GetRandomBuffer(1 * 1024 * 1024);
+            byte[] buffer = GetRandomBuffer(24 * 1024 * 1024);
             CloudBlobContainer container = GetRandomContainerReference();
             try
             {
@@ -105,7 +125,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                         ICancellableAsyncResult result = blob.BeginUploadFromStream(originalBlob, null, null, operationContext,
                             ar => waitHandle.Set(),
                             null);
-                        Thread.Sleep(100);
+                        Thread.Sleep(500);
                         result.Cancel();
                         waitHandle.WaitOne();
                         try
@@ -118,6 +138,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                             Assert.AreEqual(ex.RequestInformation.HttpStatusCode, 306);
                             Assert.AreEqual(ex.RequestInformation.HttpStatusMessage, "Unused");
                         }
+
                         TestHelper.AssertNAttempts(operationContext, 1);
                     }
                 }

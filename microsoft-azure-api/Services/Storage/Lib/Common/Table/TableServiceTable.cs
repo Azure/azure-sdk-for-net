@@ -17,11 +17,11 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table
 {
-#if DNCP
-    using System;
-    using System.Data.Services.Common;
+#if WINDOWS_DESKTOP && ! WINDOWS_PHONE
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
+    using System;
+    using System.Data.Services.Common;
 
     /// <summary>
     /// Internal table service entity for creating tables.
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="name">The name of the table.</param>
         public TableServiceTable(string name)
         {
-            CommonUtils.CheckStringParameter(name, false, "name", TableConstants.TableServiceMaxStringPropertySizeInChars);
+            CommonUtility.CheckStringParameter(name, false, "name", TableConstants.TableServiceMaxStringPropertySizeInChars);
             this.TableName = name;
         }
 
@@ -64,7 +64,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             set
             {
-                CommonUtils.CheckStringParameter(value, false, "TableName", TableConstants.TableServiceMaxStringPropertySizeInChars);
+                CommonUtility.CheckStringParameter(value, false, "TableName", TableConstants.TableServiceMaxStringPropertySizeInChars);
                 this.tableName = value;
             }
         }

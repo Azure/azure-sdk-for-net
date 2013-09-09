@@ -19,35 +19,37 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
 {
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Xml;
+    using System.Xml.Schema;
     using System.Xml.Serialization;
 
     /// <summary>
     /// Represents a continuation token returned by the Queue service.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1001:CommasMustBeSpacedCorrectly", Justification = "Reviewed.")]
+    /// <remarks><see cref="QueueContinuationToken"/> continuation tokens are used in methods that return a <see cref="QueueResultSegment"/> object, such as <see cref="CloudQueueClient.ListQueuesSegmented(QueueContinuationToken)"/>.</remarks>    
+    [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1001:CommasMustBeSpacedCorrectly", Justification = "Reviewed.")]
     public sealed class QueueContinuationToken : IContinuationToken
-#if DNCP
-        , IXmlSerializable
+#if WINDOWS_DESKTOP
+, IXmlSerializable
 #endif
     {
         /// <summary>
-        /// Gets or sets the NextMarker for continuing results for CloudQueeu enumeration operations.
+        /// Gets or sets the NextMarker for continuing results for CloudQueue enumeration operations.
         /// </summary>
         /// <value>The next marker.</value>
         public string NextMarker { get; set; }
 
-#if DNCP
+#if WINDOWS_DESKTOP
         /// <summary>
         /// Gets an XML representation of an object.
         /// </summary>
         /// <returns>
         /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
         /// </returns>
-        public System.Xml.Schema.XmlSchema GetSchema()
+        public XmlSchema GetSchema()
         {
             return null;
         }
@@ -56,46 +58,54 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// Generates a serializable continuation token from its XML representation.
         /// </summary>
         /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the continuation token is deserialized.</param>
-        public void ReadXml(System.Xml.XmlReader reader)
+        public void ReadXml(XmlReader reader)
         {
-            CommonUtils.AssertNotNull("reader", reader);
+            CommonUtility.AssertNotNull("reader", reader);
 
             reader.MoveToContent();
 
-            bool isEmptyElement = reader.IsEmptyElement;
-            reader.ReadStartElement();
-
-            if (!isEmptyElement)
+            if (reader.IsEmptyElement)
             {
-                while (reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                reader.Skip();
+            }
+            else
+            {
+                reader.ReadStartElement();
+                while (reader.IsStartElement())
                 {
-                    if (!reader.IsEmptyElement)
+                    if (reader.IsEmptyElement)
+                    {
+                        reader.Skip();
+                    }
+                    else
                     {
                         switch (reader.Name)
                         {
                             case Constants.ContinuationConstants.VersionElement:
                                 string version = reader.ReadElementContentAsString();
-
-                                // For future versioning
-                                break;
-                            case Constants.ContinuationConstants.NextMarkerElement:
-                                this.NextMarker = reader.ReadElementContentAsString();
-                                break;
-                            case Constants.ContinuationConstants.TypeElement:
-                                string continuationType = reader.ReadElementContentAsString();
-                                if ("Queue" != continuationType)
+                                if (version != Constants.ContinuationConstants.CurrentVersion)
                                 {
-                                    throw new System.Xml.XmlException(SR.UnexpectedContinuationType);
+                                    throw new XmlException(string.Format(CultureInfo.InvariantCulture, SR.UnexpectedElement, version));
                                 }
 
                                 break;
+
+                            case Constants.ContinuationConstants.NextMarkerElement:
+                                this.NextMarker = reader.ReadElementContentAsString();
+                                break;
+
+                            case Constants.ContinuationConstants.TypeElement:
+                                string continuationType = reader.ReadElementContentAsString();
+                                if (Constants.ContinuationConstants.QueueType != continuationType)
+                                {
+                                    throw new XmlException(SR.UnexpectedContinuationType);
+                                }
+
+                                break;
+
                             default:
-                                throw new XmlException(string.Format(SR.UnexpectedElement, reader.Name));
+                                throw new XmlException(string.Format(CultureInfo.InvariantCulture, SR.UnexpectedElement, reader.Name));
                         }
-                    }
-                    else
-                    {
-                        throw new XmlException(string.Format(SR.UnexpectedEmptyElement, reader.Name));
                     }
                 }
 
@@ -109,13 +119,13 @@ namespace Microsoft.WindowsAzure.Storage.Queue.Protocol
         /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the continuation token is serialized.</param>
         public void WriteXml(XmlWriter writer)
         {
-            CommonUtils.AssertNotNull("writer", writer);
+            CommonUtility.AssertNotNull("writer", writer);
 
             writer.WriteStartElement(Constants.ContinuationConstants.ContinuationTopElement);
 
             writer.WriteElementString(Constants.ContinuationConstants.VersionElement, Constants.ContinuationConstants.CurrentVersion);
 
-            writer.WriteElementString(Constants.ContinuationConstants.TypeElement, "Queue");
+            writer.WriteElementString(Constants.ContinuationConstants.TypeElement, Constants.ContinuationConstants.QueueType);
 
             if (this.NextMarker != null)
             {

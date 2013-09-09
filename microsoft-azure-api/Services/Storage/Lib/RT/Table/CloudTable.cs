@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>A <see cref="TableResult"/> containing the result of executing the operation on the table.</returns>
         public IAsyncOperation<TableResult> ExecuteAsync(TableOperation operation, TableRequestOptions requestOptions, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("operation", operation);
+            CommonUtility.AssertNotNull("operation", operation);
 
             return operation.ExecuteAsync(this.ServiceClient, this.Name, requestOptions, operationContext);
         }
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>An enumerable collection of <see cref="TableResult"/> objects that contains the results, in order, of each operation in the <see cref="TableBatchOperation"/> on the table.</returns>
         public IAsyncOperation<IList<TableResult>> ExecuteBatchAsync(TableBatchOperation batch, TableRequestOptions requestOptions, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("batch", batch);
+            CommonUtility.AssertNotNull("batch", batch);
             return batch.ExecuteAsync(this.ServiceClient, this.Name, requestOptions, operationContext);
         }
         #endregion
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
         internal IEnumerable<DynamicTableEntity> ExecuteQuery(TableQuery query, TableRequestOptions requestOptions, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("query", query);
+            CommonUtility.AssertNotNull("query", query);
             return query.Execute(this.ServiceClient, this.Name, requestOptions, operationContext);
         }
 
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>A <see cref="TableQuerySegment"/> object containing the results of executing the query.</returns>        
         public IAsyncOperation<TableQuerySegment> ExecuteQuerySegmentedAsync(TableQuery query, TableContinuationToken token, TableRequestOptions requestOptions, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("query", query);
+            CommonUtility.AssertNotNull("query", query);
             return query.ExecuteQuerySegmentedAsync(token, this.ServiceClient, this.Name, requestOptions, operationContext);
         }
 
@@ -195,10 +195,18 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     }
                     catch (Exception)
                     {
-                        StorageExtendedErrorInformation extendedInfo = operationContext.LastResult.ExtendedErrorInformation;
-                        if (extendedInfo != null && extendedInfo.ErrorCode == TableErrorCodeStrings.TableAlreadyExists)
+                        if (operationContext.LastResult.HttpStatusCode == (int)HttpStatusCode.Conflict)
                         {
-                            return false;
+                            StorageExtendedErrorInformation extendedInfo = operationContext.LastResult.ExtendedErrorInformation;
+                            if ((extendedInfo == null) ||
+                                (extendedInfo.ErrorCode == TableErrorCodeStrings.TableAlreadyExists))
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                throw;
+                            }
                         }
                         else
                         {
@@ -261,6 +269,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public IAsyncOperation<bool> DeleteIfExistsAsync(TableRequestOptions requestOptions, OperationContext operationContext)
         {
             requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this.ServiceClient);
+
             operationContext = operationContext ?? new OperationContext();
 
             return AsyncInfo.Run(async (cancellationToken) =>
@@ -278,10 +287,18 @@ namespace Microsoft.WindowsAzure.Storage.Table
                     }
                     catch (Exception)
                     {
-                        if (operationContext.LastResult.ExtendedErrorInformation != null &&
-                            operationContext.LastResult.ExtendedErrorInformation.ErrorCode == TableErrorCodeStrings.TableNotFound)
+                        if (operationContext.LastResult.HttpStatusCode == (int)HttpStatusCode.NotFound)
                         {
-                            return false;
+                            StorageExtendedErrorInformation extendedInfo = operationContext.LastResult.ExtendedErrorInformation;
+                            if ((extendedInfo == null) ||
+                                (extendedInfo.ErrorCode == TableErrorCodeStrings.TableNotFound))
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                throw;
+                            }
                         }
                         else
                         {
@@ -297,7 +314,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Creates the Table.
         /// </summary>
-        /// <returns><c>true</c> if the table was created sucessfully; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the table was created successfully; otherwise, <c>false</c>.</returns>
         public IAsyncOperation<bool> ExistsAsync()
         {
             return this.ExistsAsync(null /* RequestOptions */, null /* OperationContext */);
@@ -308,7 +325,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// </summary>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
-        /// <returns><c>true</c> if the table was created sucessfully; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the table was created successfully; otherwise, <c>false</c>.</returns>
         public IAsyncOperation<bool> ExistsAsync(TableRequestOptions requestOptions, OperationContext operationContext)
         {
             requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this.ServiceClient);
@@ -367,19 +384,19 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <returns>A <see cref="RESTCommand"/> that sets the permissions.</returns>
         private RESTCommand<NullType> SetPermissionsImpl(TablePermissions acl, TableRequestOptions requestOptions)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            MultiBufferMemoryStream memoryStream = new MultiBufferMemoryStream(null /* bufferManager */, (int)(1 * Constants.KB));
             TableRequest.WriteSharedAccessIdentifiers(acl.SharedAccessPolicies, memoryStream);
 
             RESTCommand<NullType> putCmd = new RESTCommand<NullType>(this.ServiceClient.Credentials, this.Uri);
 
-            requestOptions.ApplyToStorageCommand(putCmd);
+            putCmd.ApplyRequestOptions(requestOptions);
             putCmd.Handler = this.ServiceClient.AuthenticationHandler;
             putCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             putCmd.BuildRequest = (cmd, cnt, ctx) => TableHttpRequestMessageFactory.SetAcl(cmd.Uri, cmd.ServerTimeoutInSeconds, cnt, ctx);
             putCmd.BuildContent = (cmd, ctx) => HttpContentFactory.BuildContentFromStream(memoryStream, 0, memoryStream.Length, null /* md5 */, cmd, ctx);
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.NoContent, resp, NullType.Value, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.NoContent, resp, NullType.Value, cmd, ex);
                 return NullType.Value;
             };
 
@@ -422,13 +439,13 @@ namespace Microsoft.WindowsAzure.Storage.Table
         {
             RESTCommand<TablePermissions> getCmd = new RESTCommand<TablePermissions>(this.ServiceClient.Credentials, this.Uri);
 
-            requestOptions.ApplyToStorageCommand(getCmd);
+            getCmd.ApplyRequestOptions(requestOptions);
             getCmd.Handler = this.ServiceClient.AuthenticationHandler;
             getCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             getCmd.RetrieveResponseStream = true;
             getCmd.BuildRequest = (cmd, cnt, ctx) => TableHttpRequestMessageFactory.GetAcl(cmd.Uri, cmd.ServerTimeoutInSeconds, cnt, ctx);
-            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            getCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task<TablePermissions>.Factory.StartNew(() =>
                 {
