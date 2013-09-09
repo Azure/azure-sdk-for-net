@@ -21,8 +21,10 @@ namespace Microsoft.WindowsAzure.Storage
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Storage.Blob;
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
+    using System.Security.Cryptography;
     using System.Text;
     using System.Xml;
 
@@ -115,6 +117,71 @@ namespace Microsoft.WindowsAzure.Storage
 
                 Assert.AreEqual(e.RequestInformation.ExtendedErrorInformation.ErrorCode, retrErrorInfo.ErrorCode);
                 Assert.AreEqual(e.RequestInformation.ExtendedErrorInformation.ErrorMessage, retrErrorInfo.ErrorMessage);
+            }
+            finally
+            {
+                container.DeleteIfExists();
+            }
+        }
+
+        [TestMethod]
+        [Description("Persist and read back ExtendedErrorInfo")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void ExtendedErrorInfoVerifyXmlWithAdditionalDetails()
+        {
+            Uri baseAddressUri = new Uri(TestBase.TargetTenantConfig.BlobServiceEndpoint);
+            CloudBlobClient client = new CloudBlobClient(baseAddressUri, TestBase.StorageCredentials);
+            CloudBlobContainer container = client.GetContainerReference(Guid.NewGuid().ToString("N"));
+
+            byte[] buffer = TestBase.GetRandomBuffer(4 * 1024 * 1024);
+            MD5 md5 = MD5.Create();
+            string contentMD5 = Convert.ToBase64String(md5.ComputeHash(buffer));
+
+            try
+            {
+                container.Create();
+                CloudBlockBlob blob = container.GetBlockBlobReference("blob1");
+                List<string> blocks = new List<string>();
+                for (int i = 0; i < 2; i++)
+                {
+                    blocks.Add(Convert.ToBase64String(Guid.NewGuid().ToByteArray()));
+                }
+
+                using (MemoryStream memoryStream = new MemoryStream(buffer))
+                {
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    blob.PutBlock(blocks[0], memoryStream, contentMD5);
+
+                    int offset = buffer.Length - 1024;
+                    memoryStream.Seek(offset, SeekOrigin.Begin);
+                    StorageException e = TestHelper.ExpectedException<StorageException>(
+                        () => blob.PutBlock(blocks[1], memoryStream, contentMD5),
+                        "Invalid MD5 should fail with mismatch");
+
+                    Assert.IsNotNull(e.RequestInformation.ExtendedErrorInformation);
+
+                    StorageExtendedErrorInformation retrErrorInfo = new StorageExtendedErrorInformation();
+                    XmlWriterSettings settings = new XmlWriterSettings();
+                    settings.Indent = true;
+                    StringBuilder sb = new StringBuilder();
+                    using (XmlWriter writer = XmlWriter.Create(sb, settings))
+                    {
+                        e.RequestInformation.ExtendedErrorInformation.WriteXml(writer);
+                    }
+
+                    using (XmlReader reader = XmlReader.Create(new StringReader(sb.ToString())))
+                    {
+                        retrErrorInfo.ReadXml(reader);
+                    }
+
+                    Assert.AreEqual(e.RequestInformation.ExtendedErrorInformation.ErrorCode, retrErrorInfo.ErrorCode);
+                    Assert.AreEqual(e.RequestInformation.ExtendedErrorInformation.ErrorMessage, retrErrorInfo.ErrorMessage);
+                    Assert.AreNotEqual(0, retrErrorInfo.AdditionalDetails.Count);
+                    Assert.AreEqual(e.RequestInformation.ExtendedErrorInformation.AdditionalDetails.Count, retrErrorInfo.AdditionalDetails.Count);
+                }
             }
             finally
             {
