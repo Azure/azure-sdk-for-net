@@ -148,3 +148,4 @@ Changes in 2.1.0 :
   - Tables: Exposed PropertyAsObject Property in EntityProperty as publicly readable.
   - Tables: Exposed table serialialization logic. Allow users to persist and read back entities that don't derive from TableEntity using static methods(ReadUserObject and WriteUserObject).
   - Tables: Exposed CreateEntityPropertyFromObject in EntityProperty so users can pass in a value and get the corresponding EntityProperty.
+  - Tables: Escape single quote in PartitionKey and RowKey correctly while generating URIs.
