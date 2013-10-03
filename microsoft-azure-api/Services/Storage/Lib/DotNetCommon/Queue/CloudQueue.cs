@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Creates the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         [DoesServiceRequest]
         public void Create(QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous operation to create a queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -124,7 +124,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to create a queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to create a queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -151,7 +151,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Creates the queue if it does not already exist.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <returns><c>true</c> if the queue did not already exist and was created; otherwise <c>false</c>.</returns>
         [DoesServiceRequest]
@@ -213,7 +213,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous request to create the queue if it does not already exist.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -356,7 +356,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous request to create the queue if it does not already exist.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -368,7 +368,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous request to create the queue if it does not already exist.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -383,7 +383,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Deletes the queue if it already exists.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <returns><c>true</c> if the queue did not already exist and was created; otherwise <c>false</c>.</returns>
         [DoesServiceRequest]
@@ -440,7 +440,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous request to delete the queue if it already exists.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -582,7 +582,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous request to delete the queue if it already exists.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -594,7 +594,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous request to delete the queue if it already exists.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -609,7 +609,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Deletes the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         [DoesServiceRequest]
         public void Delete(QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -639,7 +639,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous operation to delete a queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>    
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -692,7 +692,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to delete a queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -704,7 +704,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to delete a queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -720,7 +720,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Sets permissions for the queue.
         /// </summary>
         /// <param name="permissions">The permissions to apply to the queue.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         [DoesServiceRequest]
         public void SetPermissions(QueuePermissions permissions, QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -752,7 +752,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Begins an asynchronous request to set permissions for the queue.
         /// </summary>
         /// <param name="permissions">The permissions to apply to the queue.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -808,7 +808,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Returns a task that performs an asynchronous request to set permissions for the queue.
         /// </summary>
         /// <param name="permissions">The permissions to apply to the queue.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -821,7 +821,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Returns a task that performs an asynchronous request to set permissions for the queue.
         /// </summary>
         /// <param name="permissions">The permissions to apply to the queue.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -836,7 +836,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Gets the permissions settings for the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <returns>The queue's permissions.</returns>
         [DoesServiceRequest]
@@ -867,7 +867,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous request to get the permissions settings for the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -921,7 +921,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous request to get the permissions settings for the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -933,7 +933,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous request to get the permissions settings for the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -948,7 +948,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Checks existence of the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <returns><c>true</c> if the queue exists.</returns>
         [DoesServiceRequest]
@@ -979,7 +979,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous request to check existence of the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1033,7 +1033,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous request to check existence of the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1045,7 +1045,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous request to check existence of the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -1060,7 +1060,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Sets the queue's user-defined metadata.
         /// </summary>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         [DoesServiceRequest]
         public void SetMetadata(QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -1090,7 +1090,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous operation to set user-defined metadata on the queue.
         /// </summary>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1143,7 +1143,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to set user-defined metadata on the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1155,7 +1155,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to set user-defined metadata on the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -1170,7 +1170,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Fetches the queue's attributes.
         /// </summary>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         [DoesServiceRequest]
         public void FetchAttributes(QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -1200,7 +1200,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous operation to fetch the queue's attributes.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1253,7 +1253,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to fetch the queue's attributes.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1265,7 +1265,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to fetch the queue's attributes.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -1284,7 +1284,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="timeToLive">The maximum time to allow the message to be in the queue, or null.</param>
         /// <param name="initialVisibilityDelay">The length of time from now during which the message will be invisible.
         /// If <c>null</c> then the message will be visible immediately.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         [DoesServiceRequest]
         public void AddMessage(CloudQueueMessage message, TimeSpan? timeToLive = null, TimeSpan? initialVisibilityDelay = null, QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -1321,7 +1321,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="timeToLive">The maximum time to allow the message to be in the queue, or null.</param>
         /// <param name="initialVisibilityDelay">The length of time from now during which the message will be invisible.
         /// If <c>null</c> then the message will be visible immediately.</param>        
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1382,7 +1382,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="timeToLive">The maximum time to allow the message to be in the queue, or null.</param>
         /// <param name="initialVisibilityDelay">The length of time from now during which the message will be invisible.
         /// If <c>null</c> then the message will be visible immediately.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1398,7 +1398,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="timeToLive">The maximum time to allow the message to be in the queue, or null.</param>
         /// <param name="initialVisibilityDelay">The length of time from now during which the message will be invisible.
         /// If <c>null</c> then the message will be visible immediately.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -1416,7 +1416,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">The message to update.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
         /// <param name="updateFields">Flags of <see cref="MessageUpdateFields"/> values that specifies which parts of the message are to be updated.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         [DoesServiceRequest]
         public void UpdateMessage(CloudQueueMessage message, TimeSpan visibilityTimeout, MessageUpdateFields updateFields, QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -1452,7 +1452,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">The message to update.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
         /// <param name="updateFields">An EnumSet of <see cref="MessageUpdateFields"/> values that specifies which parts of the message are to be updated.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1516,7 +1516,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">The message to update.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
         /// <param name="updateFields">An EnumSet of <see cref="MessageUpdateFields"/> values that specifies which parts of the message are to be updated.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1531,7 +1531,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">The message to update.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
         /// <param name="updateFields">An EnumSet of <see cref="MessageUpdateFields"/> values that specifies which parts of the message are to be updated.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -1547,7 +1547,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Deletes a message.
         /// </summary>
         /// <param name="message">A message.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         [DoesServiceRequest]
         public void DeleteMessage(CloudQueueMessage message, QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -1562,7 +1562,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageId">The message ID.</param>
         /// <param name="popReceipt">The pop receipt value.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         [DoesServiceRequest]
         public void DeleteMessage(string messageId, string popReceipt, QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -1597,7 +1597,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Begins an asynchronous operation to delete a message.
         /// </summary>
         /// <param name="message">A message.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1629,7 +1629,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageId">The message ID.</param>
         /// <param name="popReceipt">The pop receipt value.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1688,7 +1688,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Returns a task that performs an asynchronous operation to delete a message.
         /// </summary>
         /// <param name="message">A message.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1701,7 +1701,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Returns a task that performs an asynchronous operation to delete a message.
         /// </summary>
         /// <param name="message">A message.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -1741,7 +1741,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageId">The message ID.</param>
         /// <param name="popReceipt">The pop receipt value.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1755,7 +1755,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageId">The message ID.</param>
         /// <param name="popReceipt">The pop receipt value.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -1774,7 +1774,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageCount">The number of messages to retrieve.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <returns>An enumerable collection of messages.</returns>
         [DoesServiceRequest]
@@ -1810,7 +1810,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageCount">The number of messages to retrieve.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1870,7 +1870,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageCount">The number of messages to retrieve.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1886,7 +1886,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageCount">The number of messages to retrieve.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -1902,7 +1902,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Gets a message from the queue using the default request options. This operation marks the retrieved message as invisible in the queue for the default visibility timeout period. 
         /// </summary>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <returns>A message.</returns>
         [DoesServiceRequest]
@@ -1929,7 +1929,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// reserved before it becomes visible, and therefore available for deletion.
         /// </summary>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -1979,7 +1979,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// reserved before it becomes visible, and therefore available for deletion.
         /// </summary>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -1993,7 +1993,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// reserved before it becomes visible, and therefore available for deletion.
         /// </summary>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -2009,7 +2009,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Peeks a message from the queue, using the specified request options and operation context. A peek request retrieves a message from the queue without changing its visibility. 
         /// </summary>
         /// <param name="messageCount">The number of messages to peek.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <returns>An enumerable collection of messages.</returns>
         [DoesServiceRequest]
@@ -2042,7 +2042,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Begins an asynchronous operation to peek messages from the queue.
         /// </summary>
         /// <param name="messageCount">The number of messages to peek.</param>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -2099,7 +2099,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Returns a task that performs an asynchronous operation to peek messages from the queue.
         /// </summary>
         /// <param name="messageCount">The number of messages to peek.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -2112,7 +2112,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Returns a task that performs an asynchronous operation to peek messages from the queue.
         /// </summary>
         /// <param name="messageCount">The number of messages to peek.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -2127,7 +2127,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Peeks a single message from the queue. A peek request retrieves a message from the queue without changing its visibility.
         /// </summary>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <returns>A message.</returns>
         [DoesServiceRequest]
@@ -2152,7 +2152,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous operation to peek a single message from the queue.
         /// </summary>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -2200,7 +2200,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to get a single message from the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -2212,7 +2212,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to get a single message from the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -2227,7 +2227,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Clears all messages from the queue.
         /// </summary>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         [DoesServiceRequest]
         public void Clear(QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -2257,7 +2257,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous operation to clear all messages from the queue.
         /// </summary>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -2310,7 +2310,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to clear all messages from the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -2322,7 +2322,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Returns a task that performs an asynchronous operation to clear all messages from the queue.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
@@ -2347,7 +2347,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Implementation for the ClearMessages method.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that gets the permissions.</returns>
         private RESTCommand<NullType> ClearMessagesImpl(QueueRequestOptions options)
         {
@@ -2364,7 +2364,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Implementation for the Create method.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that creates the queue.</returns>
         private RESTCommand<NullType> CreateQueueImpl(QueueRequestOptions options)
         {
@@ -2389,7 +2389,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Implementation for the Delete method.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that deletes the queue.</returns>
         private RESTCommand<NullType> DeleteQueueImpl(QueueRequestOptions options)
         {
@@ -2406,7 +2406,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Implementation for the FetchAttributes method.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that fetches the attributes.</returns>
         private RESTCommand<NullType> FetchAttributesImpl(QueueRequestOptions options)
         {
@@ -2428,7 +2428,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Implementation for the Exists method.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that checks existence.</returns>
         private RESTCommand<bool> ExistsImpl(QueueRequestOptions options)
         {
@@ -2458,7 +2458,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Implementation for the SetMetadata method.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that sets the metadata.</returns>
         private RESTCommand<NullType> SetMetadataImpl(QueueRequestOptions options)
         {
@@ -2481,7 +2481,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Implementation for the SetPermissions method.
         /// </summary>
         /// <param name="acl">The permissions to set.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that sets the permissions.</returns>
         private RESTCommand<NullType> SetPermissionsImpl(QueuePermissions acl, QueueRequestOptions options)
         {
@@ -2508,7 +2508,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Implementation for the GetPermissions method.
         /// </summary>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that gets the permissions.</returns>
         private RESTCommand<QueuePermissions> GetPermissionsImpl(QueueRequestOptions options)
         {
@@ -2535,7 +2535,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">A queue message.</param>
         /// <param name="timeToLive">A value indicating the message time-to-live.</param>
         /// <param name="initialVisibilityDelay">The visibility delay for the message.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that sets the permissions.</returns>
         private RESTCommand<NullType> AddMessageImpl(CloudQueueMessage message, TimeSpan? timeToLive, TimeSpan? initialVisibilityDelay, QueueRequestOptions options)
         {
@@ -2603,7 +2603,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="message">A queue message.</param>
         /// <param name="visibilityTimeout">The visibility timeout for the message.</param>
         /// <param name="updateFields">Indicates whether to update the visibility delay, message contents, or both.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that sets the permissions.</returns>
         private RESTCommand<NullType> UpdateMessageImpl(CloudQueueMessage message, TimeSpan visibilityTimeout, MessageUpdateFields updateFields, QueueRequestOptions options)
         {
@@ -2649,7 +2649,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageId">The message ID.</param>
         /// <param name="popReceipt">The pop receipt value.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that deletes the queue.</returns>
         private RESTCommand<NullType> DeleteMessageImpl(string messageId, string popReceipt, QueueRequestOptions options)
         {
@@ -2669,7 +2669,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// </summary>
         /// <param name="messageCount">The number of messages to retrieve.</param>
         /// <param name="visibilityTimeout">The visibility timeout interval.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that gets the permissions.</returns>
         private RESTCommand<IEnumerable<CloudQueueMessage>> GetMessagesImpl(int messageCount, TimeSpan? visibilityTimeout, QueueRequestOptions options)
         {
@@ -2697,7 +2697,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Implementation for the PeekMessages method.
         /// </summary>
         /// <param name="messageCount">The number of messages to retrieve.</param>
-        /// <param name="options">An <see cref="QueueRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that gets the permissions.</returns>
         private RESTCommand<IEnumerable<CloudQueueMessage>> PeekMessagesImpl(int messageCount, QueueRequestOptions options)
         {

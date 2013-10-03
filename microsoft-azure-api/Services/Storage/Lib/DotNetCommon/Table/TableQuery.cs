@@ -107,11 +107,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
             if (executionInfo.Resolver != null)
             {
                 // Execute the query. 
-                return this.Execute<TElement>(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.Resolver, executionInfo.RequestOptions, executionInfo.OperationContext);
+                return this.ExecuteInternal<TElement>(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.Resolver, executionInfo.RequestOptions, executionInfo.OperationContext);
             }
             else
             {
-                return this.Execute(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.RequestOptions, executionInfo.OperationContext);
+                return this.ExecuteInternal(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.RequestOptions, executionInfo.OperationContext);
             }
         }
 
@@ -152,7 +152,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             if (executionInfo.Resolver != null)
             {
                 // Execute the query. 
-                return this.BeginExecuteQuerySegmented(
+                return this.BeginExecuteQuerySegmentedInternal(
                                                         currentToken,
                                                         this.queryProvider.Table.ServiceClient,
                                                         this.queryProvider.Table.Name,
@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             }
             else
             {
-                return this.BeginExecuteQuerySegmented(
+                return this.BeginExecuteQuerySegmentedInternal(
                                                         currentToken,
                                                         this.queryProvider.Table.ServiceClient,
                                                         this.queryProvider.Table.Name,
@@ -259,11 +259,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
             if (executionInfo.Resolver != null)
             {
                 // Execute the query. 
-                return this.ExecuteQuerySegmented<TElement>(continuationToken, this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.Resolver, executionInfo.RequestOptions, executionInfo.OperationContext);
+                return this.ExecuteQuerySegmentedInternal<TElement>(continuationToken, this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.Resolver, executionInfo.RequestOptions, executionInfo.OperationContext);
             }
             else
             {
-                return this.ExecuteQuerySegmented(continuationToken, this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.RequestOptions, executionInfo.OperationContext);
+                return this.ExecuteQuerySegmentedInternal(continuationToken, this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.RequestOptions, executionInfo.OperationContext);
             }
         }
 
@@ -283,7 +283,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
                 // TODO should we just throw here? 
                 // Standard Query Mode
-                return this.Execute(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, defaultRequestOptions, null /* OperationContext */).GetEnumerator();
+                return this.ExecuteInternal(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, defaultRequestOptions, null /* OperationContext */).GetEnumerator();
             }
             else
             {
@@ -292,11 +292,11 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 if (executionInfo.Resolver != null)
                 {
                     // Execute the query. 
-                    return this.Execute<TElement>(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.Resolver, executionInfo.RequestOptions, executionInfo.OperationContext).GetEnumerator();
+                    return this.ExecuteInternal<TElement>(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.Resolver, executionInfo.RequestOptions, executionInfo.OperationContext).GetEnumerator();
                 }
                 else
                 {
-                    return this.Execute(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.RequestOptions, executionInfo.OperationContext).GetEnumerator();
+                    return this.ExecuteInternal(this.queryProvider.Table.ServiceClient, this.queryProvider.Table.Name, executionInfo.RequestOptions, executionInfo.OperationContext).GetEnumerator();
                 }
             }
         }
@@ -415,7 +415,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
         #region Internal Impl
         
-        internal IEnumerable<TElement> Execute(CloudTableClient client, string tableName, TableRequestOptions requestOptions, OperationContext operationContext)
+        internal IEnumerable<TElement> ExecuteInternal(CloudTableClient client, string tableName, TableRequestOptions requestOptions, OperationContext operationContext)
         {
             CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
             TableRequestOptions modifiedOptions = TableRequestOptions.ApplyDefaults(requestOptions, client);
@@ -426,9 +426,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 {
                     TableQuerySegment<TElement> seg =
 #if SYNC
-                        this.ExecuteQuerySegmented((TableContinuationToken)continuationToken, client, tableName, modifiedOptions, operationContext);
+                        this.ExecuteQuerySegmentedInternal((TableContinuationToken)continuationToken, client, tableName, modifiedOptions, operationContext);
 #else
-                        this.EndExecuteSegmented(this.BeginExecuteQuerySegmented((TableContinuationToken)continuationToken, client, tableName, modifiedOptions, operationContext, null /* callback */, null /* state */));
+                        this.EndExecuteQuerySegmentedInternal(this.BeginExecuteQuerySegmentedInternal((TableContinuationToken)continuationToken, client, tableName, modifiedOptions, operationContext, null /* callback */, null /* state */));
 #endif
                     return new ResultSegment<TElement>(seg.Results) { ContinuationToken = seg.ContinuationToken };
                 },
@@ -438,7 +438,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
 #if SYNC
-        internal TableQuerySegment<TElement> ExecuteQuerySegmented(TableContinuationToken token, CloudTableClient client, string tableName, TableRequestOptions requestOptions, OperationContext operationContext)
+        internal TableQuerySegment<TElement> ExecuteQuerySegmentedInternal(TableContinuationToken token, CloudTableClient client, string tableName, TableRequestOptions requestOptions, OperationContext operationContext)
         {
             CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
             TableRequestOptions modifiedOptions = TableRequestOptions.ApplyDefaults(requestOptions, client);
@@ -450,7 +450,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         } 
 #endif
 
-        internal ICancellableAsyncResult BeginExecuteQuerySegmented(TableContinuationToken token, CloudTableClient client, string tableName, TableRequestOptions requestOptions, OperationContext operationContext, AsyncCallback callback, object state)
+        internal ICancellableAsyncResult BeginExecuteQuerySegmentedInternal(TableContinuationToken token, CloudTableClient client, string tableName, TableRequestOptions requestOptions, OperationContext operationContext, AsyncCallback callback, object state)
         {
             CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
 
@@ -465,12 +465,12 @@ namespace Microsoft.WindowsAzure.Storage.Table
                                           state);
         }
 
-        internal TableQuerySegment<TElement> EndExecuteQuerySegmented(IAsyncResult asyncResult)
+        internal TableQuerySegment<TElement> EndExecuteQuerySegmentedInternal(IAsyncResult asyncResult)
         {
             return Executor.EndExecuteAsync<TableQuerySegment<TElement>>(asyncResult);
         }
 
-        internal IEnumerable<TResult> Execute<TResult>(CloudTableClient client, string tableName, EntityResolver<TResult> resolver, TableRequestOptions requestOptions, OperationContext operationContext)
+        internal IEnumerable<TResult> ExecuteInternal<TResult>(CloudTableClient client, string tableName, EntityResolver<TResult> resolver, TableRequestOptions requestOptions, OperationContext operationContext)
         {
             CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
             CommonUtility.AssertNotNull("resolver", resolver);
@@ -483,9 +483,9 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 {
                     TableQuerySegment<TResult> seg =
 #if SYNC
-                        this.ExecuteQuerySegmented((TableContinuationToken)continuationToken, client, tableName, resolver, modifiedOptions, operationContext);
+                        this.ExecuteQuerySegmentedInternal((TableContinuationToken)continuationToken, client, tableName, resolver, modifiedOptions, operationContext);
 #else
-                        this.EndExecuteQuerySegmented<TResult>(this.BeginExecuteQuerySegmented((TableContinuationToken)continuationToken, client, tableName, resolver, modifiedOptions, operationContext, null /* callback */, null /* state */));
+                        this.EndExecuteQuerySegmentedInternal<TResult>(this.BeginExecuteQuerySegmentedInternal((TableContinuationToken)continuationToken, client, tableName, resolver, modifiedOptions, operationContext, null /* callback */, null /* state */));
 #endif
                     return new ResultSegment<TResult>(seg.Results) { ContinuationToken = seg.ContinuationToken };
                 },
@@ -495,7 +495,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
 #if SYNC
-        internal TableQuerySegment<TResult> ExecuteQuerySegmented<TResult>(TableContinuationToken token, CloudTableClient client, string tableName, EntityResolver<TResult> resolver, TableRequestOptions requestOptions, OperationContext operationContext)
+        internal TableQuerySegment<TResult> ExecuteQuerySegmentedInternal<TResult>(TableContinuationToken token, CloudTableClient client, string tableName, EntityResolver<TResult> resolver, TableRequestOptions requestOptions, OperationContext operationContext)
         {
             CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
             CommonUtility.AssertNotNull("resolver", resolver);
@@ -508,7 +508,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             return Executor.ExecuteSync(cmdToExecute, modifiedOptions.RetryPolicy, operationContext);
         }
 #endif
-        internal ICancellableAsyncResult BeginExecuteQuerySegmented<TResult>(TableContinuationToken token, CloudTableClient client, string tableName, EntityResolver<TResult> resolver, TableRequestOptions requestOptions, OperationContext operationContext, AsyncCallback callback, object state)
+        internal ICancellableAsyncResult BeginExecuteQuerySegmentedInternal<TResult>(TableContinuationToken token, CloudTableClient client, string tableName, EntityResolver<TResult> resolver, TableRequestOptions requestOptions, OperationContext operationContext, AsyncCallback callback, object state)
         {
             CommonUtility.AssertNotNullOrEmpty("tableName", tableName);
             CommonUtility.AssertNotNull("resolver", resolver);
@@ -524,7 +524,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
                                           state);
         }
 
-        internal TableQuerySegment<TResult> EndExecuteQuerySegmented<TResult>(IAsyncResult asyncResult)
+        internal TableQuerySegment<TResult> EndExecuteQuerySegmentedInternal<TResult>(IAsyncResult asyncResult)
         {
             return Executor.EndExecuteAsync<TableQuerySegment<TResult>>(asyncResult);
         }

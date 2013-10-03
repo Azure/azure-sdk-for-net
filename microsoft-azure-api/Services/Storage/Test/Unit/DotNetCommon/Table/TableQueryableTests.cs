@@ -173,6 +173,76 @@ namespace Microsoft.WindowsAzure.Storage.Table
         [TestCategory(TestTypeCategory.UnitTest)]
         [TestCategory(SmokeTestCategory.NonSmoke)]
         [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryableExecuteQuerySync()
+        {
+            TableQuery<DynamicTableEntity> query = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
+                                                    where ent.PartitionKey == "tables_batch_1"
+                                                    select ent).AsTableQuery();
+
+            IEnumerable<DynamicTableEntity> seg = query.Execute();
+
+            foreach (DynamicTableEntity ent in seg)
+            {
+                Assert.AreEqual(ent.PartitionKey, "tables_batch_1");
+                Assert.AreEqual(ent.Properties.Count, 4);
+            }
+
+            // Try running the query on the Table object.
+            List<DynamicTableEntity> segList = currentTable.ExecuteQuery(query).ToList();
+
+            foreach (DynamicTableEntity ent in segList)
+            {
+                Assert.AreEqual(ent.PartitionKey, "tables_batch_1");
+                Assert.AreEqual(ent.Properties.Count, 4);
+            }
+        }
+
+        [TestMethod]
+        [Description("IQueryable - A test to validate basic table query")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryableExecuteQueryWithResolverSync()
+        {
+            TableQuery<string> query = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
+                                                    where ent.PartitionKey == "tables_batch_1"
+                                                    select ent).Resolve((pk, rk, ts, props, etag) => props["a"].StringValue).AsTableQuery();
+
+            IEnumerable<string> seg = query.Execute();
+
+            int count = 0;
+            foreach (string ent in seg)
+            {
+                Assert.AreEqual("a", ent);
+                count++;
+            }
+
+            Assert.AreEqual(100, count);
+
+            TableQuery<DynamicTableEntity> query2 = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
+                                         where ent.PartitionKey == "tables_batch_1"
+                                         select ent).AsTableQuery();
+
+            // Try running the query on the Table object.
+            List<string> segList = currentTable.ExecuteQuery(query2, (pk, rk, ts, props, etag) => props["a"].StringValue).ToList();
+
+            count = 0;
+            foreach (string ent in segList)
+            {
+                Assert.AreEqual("a", ent);
+                count++;
+            }
+
+            Assert.AreEqual(100, count);
+        }
+
+        [TestMethod]
+        [Description("IQueryable - A test to validate basic table query")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void TableQueryableBasicSync()
         {
             TableQuery<DynamicTableEntity> query = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
@@ -186,6 +256,55 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 Assert.AreEqual(ent.PartitionKey, "tables_batch_1");
                 Assert.AreEqual(ent.Properties.Count, 4);
             }
+            
+            // Try running the query on the Table object.
+            List<DynamicTableEntity> segList = currentTable.ExecuteQuerySegmented(query, null).ToList();
+
+            foreach (DynamicTableEntity ent in segList)
+            {
+                Assert.AreEqual(ent.PartitionKey, "tables_batch_1");
+                Assert.AreEqual(ent.Properties.Count, 4);
+            }
+        }
+
+        [TestMethod]
+        [Description("IQueryable - A test to validate basic table query")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryableBasicWithResolverSync()
+        {
+            TableQuery<string> query = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
+                                                    where ent.PartitionKey == "tables_batch_1"
+                                                    select ent).Resolve((pk, rk, ts, props, etag) => props["a"].StringValue).AsTableQuery();
+
+            TableQuerySegment<string> seg = query.ExecuteSegmented(null);
+
+            int count = 0;
+            foreach (string ent in seg)
+            {
+                Assert.AreEqual("a", ent);
+                count++;
+            }
+
+            Assert.AreEqual(100, count);
+
+            TableQuery<DynamicTableEntity> query2 = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
+                     where ent.PartitionKey == "tables_batch_1"
+                     select ent).AsTableQuery();
+            
+            // Try running the query on the Table object.
+            List<string> segList = currentTable.ExecuteQuerySegmented(query2, (pk, rk, ts, props, etag) => props["a"].StringValue, null).ToList();
+
+            count = 0;
+            foreach (string ent in segList)
+            {
+                Assert.AreEqual("a", ent);
+                count++;
+            }
+
+            Assert.AreEqual(100, count);
         }
 
         [TestMethod]
@@ -774,7 +893,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #endregion
 
         #region APM
-
         [TestMethod]
         [Description("IQueryable - A test to validate basic table query APM")]
         [TestCategory(ComponentCategory.Table)]
@@ -806,6 +924,88 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 Assert.AreEqual(ent.PartitionKey, "tables_batch_1");
                 Assert.AreEqual(ent.Properties.Count, 4);
             }
+
+            List<DynamicTableEntity> segList = null;
+            using (ManualResetEvent evt = new ManualResetEvent(false))
+            {
+                IAsyncResult asyncRes = null;
+                currentTable.BeginExecuteQuerySegmented(query, null, (res) =>
+                {
+                    asyncRes = res;
+                    evt.Set();
+                }, null);
+                evt.WaitOne();
+
+                segList = currentTable.EndExecuteQuerySegmented(asyncRes).ToList();
+            }
+
+            foreach (DynamicTableEntity ent in segList)
+            {
+                Assert.AreEqual(ent.PartitionKey, "tables_batch_1");
+                Assert.AreEqual(ent.Properties.Count, 4);
+            }
+        }
+
+        [TestMethod]
+        [Description("IQueryable - A test to validate basic table query APM")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableGenericQueryableBasicWithResolverAPM()
+        {
+            TableQuery<string> query = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
+                                                    where ent.PartitionKey == "tables_batch_1"
+                                                    select ent).Resolve((pk, rk, ts, props, etag) => props["a"].StringValue).AsTableQuery();
+
+            TableQuerySegment<string> seg = null;
+            using (ManualResetEvent evt = new ManualResetEvent(false))
+            {
+                IAsyncResult asyncRes = null;
+                query.BeginExecuteSegmented(null, (res) =>
+                {
+                    asyncRes = res;
+                    evt.Set();
+                }, null);
+                evt.WaitOne();
+
+                seg = query.EndExecuteSegmented(asyncRes);
+            }
+
+            int count = 0;
+            foreach (string ent in seg)
+            {
+                Assert.AreEqual("a", ent);
+                count++;
+            }
+
+            Assert.AreEqual(100, count);
+
+            TableQuery<DynamicTableEntity> query2 = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
+                                        where ent.PartitionKey == "tables_batch_1"
+                                        select ent).AsTableQuery();
+            List<string> segList = null;
+            using (ManualResetEvent evt = new ManualResetEvent(false))
+            {
+                IAsyncResult asyncRes = null;
+                currentTable.BeginExecuteQuerySegmented(query2, (pk, rk, ts, props, etag) => props["a"].StringValue, null, (res) =>
+                {
+                    asyncRes = res;
+                    evt.Set();
+                }, null);
+                evt.WaitOne();
+
+                segList = currentTable.EndExecuteQuerySegmented<string>(asyncRes).ToList();
+            }
+
+            count = 0;
+            foreach (string ent in segList)
+            {
+                Assert.AreEqual("a", ent);
+                count++;
+            }
+
+            Assert.AreEqual(100, count);
         }
 
         [TestMethod]
@@ -890,6 +1090,55 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 Assert.AreEqual(ent.PartitionKey, "tables_batch_1");
                 Assert.AreEqual(ent.Properties.Count, 4);
             }
+
+            // Try running the query on the Table object.
+            List<DynamicTableEntity> segList = currentTable.ExecuteQuerySegmentedAsync(query, null).Result.ToList();
+
+            foreach (DynamicTableEntity ent in segList)
+            {
+                Assert.AreEqual(ent.PartitionKey, "tables_batch_1");
+                Assert.AreEqual(ent.Properties.Count, 4);
+            }
+        }
+
+        [TestMethod]
+        [Description("IQueryable - A test to validate basic table query")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryableBasicWithResolverTask()
+        {
+            TableQuery<string> query = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
+                                                    where ent.PartitionKey == "tables_batch_1"
+                                                    select ent).Resolve((pk, rk, ts, props, etag) => props["a"].StringValue).AsTableQuery();
+
+            TableQuerySegment<string> seg = query.ExecuteSegmentedAsync(null).Result;
+
+            int count = 0;
+            foreach (string ent in seg)
+            {
+                Assert.AreEqual("a", ent);
+                count++;
+            }
+
+            Assert.AreEqual(100, count);
+
+            TableQuery<DynamicTableEntity> query2 = (from ent in currentTable.CreateQuery<DynamicTableEntity>()
+                                         where ent.PartitionKey == "tables_batch_1"
+                                         select ent).AsTableQuery();
+
+            // Try running the query on the Table object.
+            List<string> segList = currentTable.ExecuteQuerySegmentedAsync(query2, (pk, rk, ts, props, etag) => props["a"].StringValue, null).Result.ToList();
+
+            count = 0;
+            foreach (string ent in segList)
+            {
+                Assert.AreEqual("a", ent);
+                count++;
+            }
+
+            Assert.AreEqual(100, count);
         }
 
         [TestMethod]
