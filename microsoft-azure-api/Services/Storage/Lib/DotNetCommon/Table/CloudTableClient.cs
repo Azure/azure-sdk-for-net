@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Returns an enumerable collection of tables, which are retrieved lazily, that begin with the specified prefix.
         /// </summary>
         /// <param name="prefix">The table name prefix.</param>
-        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
         /// <returns>An enumerable collection of tables that are retrieved lazily.</returns>
         [DoesServiceRequest]
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this);
             operationContext = operationContext ?? new OperationContext();
 
-            return CloudTableClient.GenerateListTablesQuery(prefix, null).Execute(this, TableConstants.TableServiceTablesName, requestOptions, operationContext).Select(
+            return CloudTableClient.GenerateListTablesQuery(prefix, null).ExecuteInternal(this, TableConstants.TableServiceTablesName, requestOptions, operationContext).Select(
                      tbl => new CloudTable(tbl[TableConstants.TableName].StringValue, this));
         }
 
@@ -143,7 +143,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="currentToken">A <see cref="TableContinuationToken"/> returned by a previous listing operation.</param>
-        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
         /// <returns>An enumerable collection of tables that are retrieved lazily.</returns>
         [DoesServiceRequest]
@@ -152,7 +152,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this);
             operationContext = operationContext ?? new OperationContext();
             TableQuerySegment<DynamicTableEntity> res =
-                CloudTableClient.GenerateListTablesQuery(prefix, maxResults).ExecuteQuerySegmented(currentToken, this, TableConstants.TableServiceTablesName, requestOptions, operationContext);
+                CloudTableClient.GenerateListTablesQuery(prefix, maxResults).ExecuteQuerySegmentedInternal(currentToken, this, TableConstants.TableServiceTablesName, requestOptions, operationContext);
 
             List<CloudTable> tables = res.Results.Select(tbl => new CloudTable(
                                                                         tbl.Properties[TableConstants.TableName].StringValue,
@@ -211,7 +211,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             requestOptions = TableRequestOptions.ApplyDefaults(requestOptions, this);
             operationContext = operationContext ?? new OperationContext();
 
-            return CloudTableClient.GenerateListTablesQuery(prefix, maxResults).BeginExecuteQuerySegmented(
+            return CloudTableClient.GenerateListTablesQuery(prefix, maxResults).BeginExecuteQuerySegmentedInternal(
                 currentToken,
                 this,
                 TableConstants.TableServiceTablesName,
@@ -357,7 +357,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Gets the service properties for the Table service.
         /// </summary>
-        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
         /// <returns>The table service properties as a <see cref="ServiceProperties"/> object.</returns>
         [DoesServiceRequest]
@@ -384,7 +384,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Begins an asynchronous operation to get the service properties of the Table service.
         /// </summary>
-        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user defined object to be passed to the callback delegate.</param>
@@ -460,7 +460,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Sets the service properties of the Table service.
         /// </summary>
         /// <param name="properties">The table service properties.</param>
-        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
         [DoesServiceRequest]
         public void SetServiceProperties(ServiceProperties properties, TableRequestOptions requestOptions = null, OperationContext operationContext = null)
@@ -488,7 +488,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// Begins an asynchronous operation to set the service properties of the Table service.
         /// </summary>
         /// <param name="properties">The table service properties.</param>
-        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that provides information on how the operation executed.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user defined object to be passed to the callback delegate.</param>

@@ -50,8 +50,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
         /// Specifies a set of <see cref="TableRequestOptions"/> on the query.
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="options">The options to specify on the request.</param>
+        /// <param name="query">A query that implements <see cref="IQueryable{TElement}"/>.</param>
+        /// <param name="options">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <returns>A <see cref="TableQuery"/> object with the specified request options set.</returns>
         /// <exception cref="System.NotSupportedException"></exception>
         public static TableQuery<TElement> WithOptions<TElement>(this IQueryable<TElement> query, TableRequestOptions options)
@@ -73,8 +73,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
         /// Specifies an <see cref="OperationContext"/> for the query.
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="operationContext">The operation context.</param>
+        /// <param name="query">A query that implements <see cref="IQueryable{TElement}"/>.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>A <see cref="TableQuery"/> object with the specified operation context.</returns>
         /// <exception cref="System.NotSupportedException"></exception>
         public static TableQuery<TElement> WithContext<TElement>(this IQueryable<TElement> query, OperationContext operationContext)
@@ -97,8 +97,8 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
         /// <typeparam name="TResolved">The type of the resolver.</typeparam>
-        /// <param name="query">The query.</param>
-        /// <param name="resolver">The resolver.</param>
+        /// <param name="query">A query that implements <see cref="IQueryable{TElement}"/>.</param>
+        /// <param name="resolver">The entity resolver, of type <see cref="EntityResolver{TResolved}"/>.</param>
         /// <returns>A <see cref="TableQuery"/> with the specified resolver.</returns>
         /// <exception cref="System.NotSupportedException"></exception>
         public static TableQuery<TResolved> Resolve<TElement, TResolved>(this IQueryable<TElement> query, EntityResolver<TResolved> resolver)
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
         /// Specifies that a query be returned as a <see cref="TableQuery"/> object.
         /// </summary>
         /// <typeparam name="TElement">The entity type of the query.</typeparam>
-        /// <param name="query">The query.</param>
+        /// <param name="query">A query that implements <see cref="IQueryable{TElement}"/>.</param>
         /// <returns>An object of type <see cref="TableQuery"/>.</returns>
         /// <exception cref="System.NotSupportedException"></exception>
         public static TableQuery<TElement> AsTableQuery<TElement>(this IQueryable<TElement> query)

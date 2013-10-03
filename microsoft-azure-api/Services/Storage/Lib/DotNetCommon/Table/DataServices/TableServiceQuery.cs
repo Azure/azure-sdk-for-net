@@ -176,7 +176,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         /// Begins an asynchronous operation to execute a query and return the results as a result segment.
         /// </summary>
         /// <param name="currentToken">A continuation token returned by a previous listing operation, can be null.</param>
-        /// <param name="requestOptions">An <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>

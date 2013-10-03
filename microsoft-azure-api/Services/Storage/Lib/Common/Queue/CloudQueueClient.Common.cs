@@ -121,9 +121,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         public StorageCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets the base URI for the queue service client.
+        /// Gets the base URI for the Queue service client.
         /// </summary>
-        /// <value>The base URI used to construct the queue service client.</value>
+        /// <value>The base URI used to construct the Queue service client.</value>
         public Uri BaseUri { get; private set; }
 
         /// <summary>

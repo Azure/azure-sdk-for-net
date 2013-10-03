@@ -297,7 +297,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         
 #if TASK
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// Returns a <see cref="Task{T}"/> object that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
         [DoesServiceRequest]
@@ -307,7 +307,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// Returns a <see cref="Task{T}"/> object that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -318,7 +318,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         }
         
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// Returns a <see cref="Task{T}"/> object that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
         /// <param name="options">Additional options for saving changes.</param>
         /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
@@ -329,7 +329,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         }
 
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// Returns a <see cref="Task{T}"/> object that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
         /// <param name="options">Additional options for saving changes.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
@@ -341,7 +341,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         }
         
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// Returns a <see cref="Task{T}"/> object that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
         /// <param name="options">Additional options for saving changes.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
@@ -354,7 +354,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
         }
         
         /// <summary>
-        /// Returns a task that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
+        /// Returns a <see cref="Task{T}"/> object that performs an asynchronous operation to save changes, using the retry policy specified for the service context.
         /// </summary>
         /// <param name="options">Additional options for saving changes.</param>
         /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>

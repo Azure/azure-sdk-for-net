@@ -22,6 +22,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
+    using Microsoft.WindowsAzure.Storage.Table.Queryable;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -558,7 +559,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public IEnumerable<TElement> ExecuteQuery<TElement>(TableQuery<TElement> query, TableRequestOptions requestOptions = null, OperationContext operationContext = null) where TElement : ITableEntity, new()
         {
             CommonUtility.AssertNotNull("query", query);
-            return query.Execute(this.ServiceClient, this.Name, requestOptions, operationContext);
+            if (query.Provider != null)
+            {
+                return query.Execute(requestOptions, operationContext);
+            }
+            else
+            {
+                return query.ExecuteInternal(this.ServiceClient, this.Name, requestOptions, operationContext);
+            }
         }
 
         /// <summary>
@@ -574,7 +582,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public TableQuerySegment<TElement> ExecuteQuerySegmented<TElement>(TableQuery<TElement> query, TableContinuationToken token, TableRequestOptions requestOptions = null, OperationContext operationContext = null) where TElement : ITableEntity, new()
         {
             CommonUtility.AssertNotNull("query", query);
-            return query.ExecuteQuerySegmented(token, this.ServiceClient, this.Name, requestOptions, operationContext);
+            if (query.Provider != null)
+            {
+                return query.ExecuteSegmented(token, requestOptions, operationContext);
+            }
+            else
+            {
+                return query.ExecuteQuerySegmentedInternal(token, this.ServiceClient, this.Name, requestOptions, operationContext);
+            }
         } 
 #endif
 
@@ -609,7 +624,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public ICancellableAsyncResult BeginExecuteQuerySegmented<TElement>(TableQuery<TElement> query, TableContinuationToken token, TableRequestOptions requestOptions, OperationContext operationContext, AsyncCallback callback, object state) where TElement : ITableEntity, new()
         {
             CommonUtility.AssertNotNull("query", query);
-            return query.BeginExecuteQuerySegmented(token, this.ServiceClient, this.Name, requestOptions, operationContext, callback, state);
+            if (query.Provider != null)
+            {
+                return query.BeginExecuteSegmented(token, requestOptions, operationContext, callback, state);
+            }
+            else
+            {
+                return query.BeginExecuteQuerySegmentedInternal(token, this.ServiceClient, this.Name, requestOptions, operationContext, callback, state);
+            }
         }
 
         /// <summary>
@@ -702,7 +724,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         {
             CommonUtility.AssertNotNull("query", query);
             CommonUtility.AssertNotNull("resolver", resolver);
-            return query.Execute(this.ServiceClient, this.Name, resolver, requestOptions, operationContext);
+            if (query.Provider != null)
+            {
+                return TableQueryableExtensions.Resolve(query, resolver).Execute(requestOptions, operationContext);
+            }
+            else
+            {
+                return query.ExecuteInternal(this.ServiceClient, this.Name, resolver, requestOptions, operationContext);
+            }
         }
 
         /// <summary>
@@ -721,7 +750,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         {
             CommonUtility.AssertNotNull("query", query);
             CommonUtility.AssertNotNull("resolver", resolver);
-            return query.ExecuteQuerySegmented(token, this.ServiceClient, this.Name, resolver, requestOptions, operationContext);
+            if (query.Provider != null)
+            {
+                return TableQueryableExtensions.Resolve(query, resolver).ExecuteSegmented(token, requestOptions, operationContext);
+            }
+            else
+            {
+                return query.ExecuteQuerySegmentedInternal(token, this.ServiceClient, this.Name, resolver, requestOptions, operationContext);
+            }
         }
         
 #endif
@@ -760,7 +796,14 @@ namespace Microsoft.WindowsAzure.Storage.Table
         {
             CommonUtility.AssertNotNull("query", query);
             CommonUtility.AssertNotNull("resolver", resolver);
-            return query.BeginExecuteQuerySegmented(token, this.ServiceClient, this.Name, resolver, requestOptions, operationContext, callback, state);
+            if (query.Provider != null)
+            {
+                return TableQueryableExtensions.Resolve(query, resolver).BeginExecuteSegmented(token, requestOptions, operationContext, callback, state);
+            }
+            else
+            {
+                return query.BeginExecuteQuerySegmentedInternal(token, this.ServiceClient, this.Name, resolver, requestOptions, operationContext, callback, state);
+            }
         }
 
         /// <summary>

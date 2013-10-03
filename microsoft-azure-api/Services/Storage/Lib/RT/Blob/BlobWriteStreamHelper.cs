@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blockBlob">Blob reference to write to.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         internal BlobWriteStreamHelper(CloudBlockBlob blockBlob, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
             this.originalStream = new BlobWriteStream(blockBlob, accessCondition, options, operationContext);
@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="pageBlobSize">Size of the page blob.</param>
         /// <param name="createNew">Use <c>true</c> if the page blob is newly created, <c>false</c> otherwise.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         internal BlobWriteStreamHelper(CloudPageBlob pageBlob, long pageBlobSize, bool createNew, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
             this.originalStream = new BlobWriteStream(pageBlob, pageBlobSize, createNew, accessCondition, options, operationContext);
