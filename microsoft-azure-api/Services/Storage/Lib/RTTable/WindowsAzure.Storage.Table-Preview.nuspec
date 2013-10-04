@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>WindowsAzure.Storage.Table-Preview</id>
-    <version>2.1.0.1-preview</version>
+    <version>2.1.0.2-preview</version>
     <title>Windows Azure Storage Tables Extension for Windows Runtime</title>
     <authors>Microsoft</authors>
     <owners>Microsoft</owners>
@@ -15,7 +15,7 @@ Windows Azure Storage team's blog - http://blogs.msdn.com/b/windowsazurestorage/
     <summary>A table extension library for Windows Runtime for working with Windows Azure Storage tables.</summary>
     <tags>Microsoft, Azure, Storage, Table, Scalable, winrt, windowsazureofficial</tags>
     <dependencies>
-      	<dependency id="WindowsAzure.Storage-Preview" version="2.1.0-preview" />
+      	<dependency id="WindowsAzure.Storage-Preview" version="2.1.0.2-preview" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
