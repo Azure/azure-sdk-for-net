@@ -74,10 +74,6 @@ Issues fixed in 2.0.6 :
   - Tables: EntityProperty updated to set the IsNull value for properties correctly in the case when the user sets an EntityProperty value through its setter.
   - Tables: EdmType for null values in EntityProperty is set correctly and does not default to string any more.
 
-Issues fixed in 2.0.6.1 :
-
-  - Tables: Fix for Table Service layer to drain response stream
-
 Changes in 2.1.0 :
 
   - All: Changed User-Agent header value to include .NET CLR and OS versions
@@ -149,3 +145,8 @@ Changes in 2.1.0 :
   - Tables: Exposed table serialialization logic. Allow users to persist and read back entities that don't derive from TableEntity using static methods(ReadUserObject and WriteUserObject).
   - Tables: Exposed CreateEntityPropertyFromObject in EntityProperty so users can pass in a value and get the corresponding EntityProperty.
   - Tables: Escape single quote in PartitionKey and RowKey correctly while generating URIs.
+
+Issues fixed in 2.1.0.2 :
+
+  - Blobs: Streams opened by OpenRead do not throw NotSupportedException when Flush is called.
+  - Tables: Generic ExecuteQuery methods on CloudTable execute IQueryable queries correctly by generating the filter string.
