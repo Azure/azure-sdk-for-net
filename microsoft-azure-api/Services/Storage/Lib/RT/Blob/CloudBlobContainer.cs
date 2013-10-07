@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Creates the container.
         /// </summary>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Creates the container and specifies the level of access to the container's data.
         /// </summary>
         /// <param name="accessType">An <see cref="BlobContainerPublicAccessType"/> object that specifies whether data in the container may be accessed publicly and what level of access is to be allowed.</param>                                                        
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Creates the container if it does not already exist.
         /// </summary>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns><c>true</c> if the container did not already exist and was created; otherwise <c>false</c>.</returns>
         [DoesServiceRequest]
@@ -105,7 +105,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Creates the container if it does not already exist and specifies the level of access to the container's data.
         /// </summary>
         /// <param name="accessType">An <see cref="BlobContainerPublicAccessType"/> object that specifies whether data in the container may be accessed publicly and what level of access is to be allowed.</param>                                                                        
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns><c>true</c> if the container did not already exist and was created; otherwise <c>false</c>.</returns>
         [DoesServiceRequest]
@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Deletes the container.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -193,7 +193,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Deletes the container if it already exists.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns><c>true</c> if the container already existed and was deleted; otherwise, <c>false</c>.</returns>
         [DoesServiceRequest]
@@ -255,7 +255,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blobName">The name of the blob.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A reference to the blob.</returns>
         [DoesServiceRequest]
@@ -302,7 +302,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> token returned by a previous listing operation.</param> 
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
         [DoesServiceRequest]
@@ -337,7 +337,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="permissions">The permissions to apply to the container.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -365,7 +365,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Gets the permissions settings for the container.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>The container's permissions.</returns>
         [DoesServiceRequest]
@@ -392,7 +392,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Checks existence of the container.
         /// </summary>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns><c>true</c> if the container exists.</returns>
         [DoesServiceRequest]
@@ -420,7 +420,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Retrieves the container's attributes.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -448,7 +448,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Sets the container's user-defined metadata.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -484,7 +484,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// greater than zero.</param>
         /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or null if no lease ID is proposed.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request. If <c>null</c>, default options will be used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request. If <c>null</c>, default options will be used.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>The ID of the acquired lease.</returns>
         [DoesServiceRequest]
@@ -513,7 +513,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Renews a lease on this container.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container, including a required lease ID.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request. If <c>null</c>, default options will be used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request. If <c>null</c>, default options will be used.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -544,7 +544,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease. This cannot be <c>null</c>.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container, including a required lease ID.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request. If <c>null</c>, default options will be used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request. If <c>null</c>, default options will be used.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>The new lease ID.</returns>
         [DoesServiceRequest]
@@ -573,7 +573,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Releases the lease on this container.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container, including a required lease ID.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request. If <c>null</c>, default options will be used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request. If <c>null</c>, default options will be used.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         [DoesServiceRequest]
@@ -607,7 +607,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// which will be rounded down to seconds. If <c>null</c>, the break period is the remainder of the current lease,
         /// or zero for infinite leases.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request. If <c>null</c>, default options will be used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request. If <c>null</c>, default options will be used.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         /// <returns>A <see cref="TimeSpan"/> representing the amount of time before the lease ends, to the second.</returns>
         [DoesServiceRequest]
@@ -629,7 +629,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// greater than zero.</param>
         /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or <c>null</c> if no lease ID is proposed.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request. This parameter must not be <c>null</c>.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request. This parameter must not be <c>null</c>.</param>
         /// <returns>A RESTCommand implementing the acquire lease operation.</returns>
         internal RESTCommand<string> AcquireLeaseImpl(TimeSpan? leaseTime, string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -659,7 +659,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Generates a RESTCommand for renewing a lease.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.
         /// This cannot be <c>null</c>.</param>
         /// <returns>A RESTCommand implementing the renew lease operation.</returns>
         internal RESTCommand<NullType> RenewLeaseImpl(AccessCondition accessCondition, BlobRequestOptions options)
@@ -686,7 +686,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="proposedLeaseId">The proposed new lease ID.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request. This cannot be null.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request. This cannot be null.</param>
         /// <returns>A RESTCommand implementing the change lease ID operation.</returns>
         internal RESTCommand<string> ChangeLeaseImpl(string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -716,7 +716,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Generates a RESTCommand for releasing a lease.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.
         /// This cannot be <c>null</c>.</param>
         /// <returns>A RESTCommand implementing the release lease operation.</returns>
         internal RESTCommand<NullType> ReleaseLeaseImpl(AccessCondition accessCondition, BlobRequestOptions options)
@@ -744,7 +744,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="breakPeriod">The amount of time to allow the lease to remain, rounded down to seconds.
         /// If <c>null</c>, the break period is the remainder of the current lease, or zero for infinite leases.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request. Cannot be null.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request. Cannot be null.</param>
         /// <returns>A RESTCommand implementing the break lease operation.</returns>
         internal RESTCommand<TimeSpan> BreakLeaseImpl(TimeSpan? breakPeriod, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -781,7 +781,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Implementation for the Create method.
         /// </summary>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="accessType">An <see cref="BlobContainerPublicAccessType"/> object that specifies whether data in the container may be accessed publicly and the level of access.</param>                                                                                
         /// <returns>A <see cref="RESTCommand"/> that creates the container.</returns>
         private RESTCommand<NullType> CreateContainerImpl(BlobRequestOptions options, BlobContainerPublicAccessType accessType)
@@ -812,7 +812,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Implementation for the Delete method.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that deletes the container.</returns>
         private RESTCommand<NullType> DeleteContainerImpl(AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -831,7 +831,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Implementation for the FetchAttributes method.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that fetches the attributes.</returns>
         private RESTCommand<NullType> FetchAttributesImpl(AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -855,7 +855,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <summary>
         /// Implementation for the Exists method.
         /// </summary>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that checks existence.</returns>
         private RESTCommand<bool> ExistsImpl(BlobRequestOptions options)
         {
@@ -885,7 +885,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Implementation for the SetMetadata method.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that sets the metadata.</returns>
         private RESTCommand<NullType> SetMetadataImpl(AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -915,7 +915,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="acl">The permissions to set.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that sets the permissions.</returns>
         private RESTCommand<NullType> SetPermissionsImpl(BlobContainerPermissions acl, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -943,7 +943,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Implementation for the GetPermissions method.
         /// </summary>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that gets the permissions.</returns>
         private RESTCommand<BlobContainerPermissions> GetPermissionsImpl(AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -1020,7 +1020,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
-        /// <param name="options">An <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="currentToken">The continuation token.</param>
         /// <returns>A <see cref="RESTCommand"/> that lists the blobs.</returns>
         private RESTCommand<ResultSegment<IListBlobItem>> ListBlobsImpl(string prefix, int? maxResults, bool useFlatBlobListing, BlobListingDetails blobListingDetails, BlobRequestOptions options, BlobContinuationToken currentToken)

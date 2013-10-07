@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blob">Blob reference to read from</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         protected BlobReadStreamBase(ICloudBlob blob, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
@@ -203,11 +203,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// This operation is not supported in BlobReadStreamBase.
+        /// This operation is a no-op in BlobReadStreamBase.
         /// </summary>
         public override void Flush()
         {
-            throw new NotSupportedException();
         }
 
         /// <summary>

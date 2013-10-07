@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="offset">The offset.</param>
         /// <param name="length">The length.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that gets the stream.
         /// </returns>
@@ -160,7 +160,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that fetches the attributes.
         /// </returns>
@@ -186,7 +186,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that checks existence.
         /// </returns>
@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that sets the metadata.
         /// </returns>
@@ -246,7 +246,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that sets the properties.
         /// </returns>
@@ -275,7 +275,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The attributes.</param>
         /// <param name="deleteSnapshotsOption">Whether to only delete the blob, to delete the blob and all snapshots, or to only delete the snapshots.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that deletes the blob.
         /// </returns>
@@ -301,7 +301,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// greater than zero.</param>
         /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or null if no lease ID is proposed.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the acquire lease operation.
         /// </returns>
@@ -334,7 +334,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the renew lease operation.
         /// </returns>
@@ -364,7 +364,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The attributes.</param>
         /// <param name="proposedLeaseId">The proposed new lease ID.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the change lease ID operation.
         /// </returns>
@@ -398,7 +398,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the release lease operation.
         /// </returns>
@@ -429,7 +429,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="breakPeriod">The amount of time to allow the lease to remain, rounded down to seconds.
         /// If null, the break period is the remainder of the current lease, or zero for infinite leases.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the break lease operation.
         /// </returns>
@@ -472,7 +472,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="source">The URI of the source blob.</param>
         /// <param name="sourceAccessCondition">An object that represents the access conditions for the source blob. If null, no condition is used.</param>
         /// <param name="destAccessCondition">An object that represents the access conditions for the destination blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that starts to copy the blob.
         /// </returns>
@@ -510,7 +510,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The attributes.</param>
         /// <param name="copyId">The copy ID of the copy operation to abort.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the operation. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that aborts the copy.
         /// </returns>
