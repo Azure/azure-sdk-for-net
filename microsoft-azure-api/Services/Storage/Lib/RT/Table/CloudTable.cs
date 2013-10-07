@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Creates the Table.
         /// </summary>
-        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="requestOptions">A <see cref="TableRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         /// <returns>An <see cref="IAsyncAction"/> that represents an asynchronous action.</returns>
         public IAsyncAction CreateAsync(TableRequestOptions requestOptions, OperationContext operationContext)
@@ -433,7 +433,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         /// <summary>
         /// Implementation for the GetPermissions method.
         /// </summary>
-        /// <param name="requestOptions">An object that specifies any additional options for the request.</param>
+        /// <param name="requestOptions">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that gets the permissions.</returns>
         private RESTCommand<TablePermissions> GetPermissionsImpl(TableRequestOptions requestOptions)
         {

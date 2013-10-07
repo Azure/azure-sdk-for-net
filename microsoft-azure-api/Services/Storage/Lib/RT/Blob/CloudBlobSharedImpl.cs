@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="offset">The offset at which to begin downloading the blob, in bytes.</param>
         /// <param name="length">The length of the data to download from the blob, in bytes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="SynchronousTask"/> that gets the stream.</returns>
         internal static RESTCommand<NullType> GetBlobImpl(ICloudBlob blob, BlobAttributes attributes, Stream destStream, long? offset, long? length, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob object that is calling this method.</param>
         /// <param name="attributes">The blob's attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that fetches the attributes.</returns>
         internal static RESTCommand<NullType> FetchAttributesImpl(ICloudBlob blob, BlobAttributes attributes, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -161,7 +161,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blob">The blob object that is calling this method.</param>
         /// <param name="attributes">The blob's attributes.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that checks existence.</returns>
         internal static RESTCommand<bool> ExistsImpl(ICloudBlob blob, BlobAttributes attributes, BlobRequestOptions options)
         {
@@ -192,7 +192,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob object that is calling this method.</param>
         /// <param name="attributes">The blob's attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that sets the metadata.</returns>
         internal static RESTCommand<NullType> SetMetadataImpl(ICloudBlob blob, BlobAttributes attributes, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -223,7 +223,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob object that is calling this method.</param>
         /// <param name="attributes">The blob's attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that sets the metadata.</returns>
         internal static RESTCommand<NullType> SetPropertiesImpl(ICloudBlob blob, BlobAttributes attributes, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -255,7 +255,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The blob's attributes.</param>
         /// <param name="deleteSnapshotsOption">Whether to only delete the blob, to delete the blob and all snapshots, or to only delete the snapshots.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that deletes the blob.</returns>
         internal static RESTCommand<NullType> DeleteBlobImpl(ICloudBlob blob, BlobAttributes attributes, DeleteSnapshotsOption deleteSnapshotsOption, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="leaseTime">A <see cref="TimeSpan"/> representing the span of time for which to acquire the lease, which will be rounded down to seconds. If null, an infinite lease will be acquired. If not null, this must be greater than zero.</param>
         /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or null if no lease ID is proposed.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> implementing the acquire lease operation.</returns>
         internal static RESTCommand<string> AcquireLeaseImpl(ICloudBlob blob, BlobAttributes attributes, TimeSpan? leaseTime, string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -310,7 +310,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob object that is calling this method.</param>
         /// <param name="attributes">The blob's attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> implementing the renew lease operation.</returns>
         internal static RESTCommand<NullType> RenewLeaseImpl(ICloudBlob blob, BlobAttributes attributes, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -338,7 +338,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The blob's attributes.</param>
         /// <param name="proposedLeaseId">The proposed new lease ID.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> implementing the change lease ID operation.</returns>
         internal static RESTCommand<string> ChangeLeaseImpl(ICloudBlob blob, BlobAttributes attributes, string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -370,7 +370,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob object that is calling this method.</param>
         /// <param name="attributes">The blob's attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> implementing the release lease operation.</returns>
         internal static RESTCommand<NullType> ReleaseLeaseImpl(ICloudBlob blob, BlobAttributes attributes, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -398,7 +398,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The blob's attributes.</param>
         /// <param name="breakPeriod">The amount of time to allow the lease to remain, rounded down to seconds. If null, the break period is the remainder of the current lease, or zero for infinite leases.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> implementing the break lease operation.</returns>
         internal static RESTCommand<TimeSpan> BreakLeaseImpl(ICloudBlob blob, BlobAttributes attributes, TimeSpan? breakPeriod, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -440,7 +440,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="source">The URI of the source blob.</param>
         /// <param name="sourceAccessCondition">An object that represents the access conditions for the source blob. If null, no condition is used.</param>
         /// <param name="destAccessCondition">An object that represents the access conditions for the destination blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="setResult">A delegate for setting the BlobAttributes result.</param>
         /// <returns>A <see cref="RESTCommand"/> that starts to copy the blob.</returns>
         internal static RESTCommand<string> StartCopyFromBlobImpl(ICloudBlob blob, BlobAttributes attributes, Uri source, AccessCondition sourceAccessCondition, AccessCondition destAccessCondition, BlobRequestOptions options)
@@ -481,7 +481,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The blob's attributes.</param>
         /// <param name="copyId">The copy ID of the copy operation to abort.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the operation. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>A <see cref="TaskSequence"/> that copies the blob.</returns>
         internal static RESTCommand<NullType> AbortCopyImpl(ICloudBlob blob, BlobAttributes attributes, string copyId, AccessCondition accessCondition, BlobRequestOptions options)
         {
