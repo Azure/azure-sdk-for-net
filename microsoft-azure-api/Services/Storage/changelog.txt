@@ -58,7 +58,7 @@ Issues fixed in 2.0.5.1 :
 
   - All: Make sure the response stream is drained to prevent socket exhaustion.
 	
-Issues fixed in 2.0.6 :
+Issues fixed in 2.0.6.0 :
 	
   - All: Default RetryPolicy filters updated to not retry 100-407, 409-499, 501, and 505
   - All: Support for all flavors of SharedKey and SharedKeyLite message signing through AuthenticationScheme property on client classes.
@@ -73,6 +73,10 @@ Issues fixed in 2.0.6 :
   - Tables: Changed default message signing to SharedKey (except for Data Services).
   - Tables: EntityProperty updated to set the IsNull value for properties correctly in the case when the user sets an EntityProperty value through its setter.
   - Tables: EdmType for null values in EntityProperty is set correctly and does not default to string any more.
+
+Issues fixed in 2.0.6.1 :
+
+	- Tables: Fix for Table Service layer to drain response stream
 
 Changes in 2.1.0 :
 
