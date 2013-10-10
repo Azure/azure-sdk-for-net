@@ -37,8 +37,8 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
         /// <typeparam name="T">The type of policy to write.</typeparam>
         internal static void WriteSharedAccessIdentifiers<T>(IDictionary<string, T> sharedAccessPolicies, Stream outputStream, Action<T, XmlWriter> writePolicyXml)
         {
-            CommonUtils.AssertNotNull("sharedAccessPolicies", sharedAccessPolicies);
-            CommonUtils.AssertNotNull("outputStream", outputStream);
+            CommonUtility.AssertNotNull("sharedAccessPolicies", sharedAccessPolicies);
+            CommonUtility.AssertNotNull("outputStream", outputStream);
 
             if (sharedAccessPolicies.Count > Constants.MaxSharedAccessPolicyIdentifiers)
             {

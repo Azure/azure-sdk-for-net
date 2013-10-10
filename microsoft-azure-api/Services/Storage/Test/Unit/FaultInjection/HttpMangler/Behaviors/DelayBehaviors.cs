@@ -18,9 +18,8 @@
 
 namespace Microsoft.WindowsAzure.Test.Network.Behaviors
 {
-    using System;
-    using System.Threading;
     using Fiddler;
+    using System;
 
     /// <summary>
     /// DelayBehaviors control whether the sessions should be delayed before being delivered to user code.

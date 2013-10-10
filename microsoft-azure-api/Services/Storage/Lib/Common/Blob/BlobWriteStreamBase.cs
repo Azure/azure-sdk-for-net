@@ -17,16 +17,23 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using System.Threading;
+    using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.IO;
+    using System.Text;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed.")]
-    internal abstract class BlobWriteStreamBase : Stream
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed.")]
+    internal abstract class BlobWriteStreamBase :
+#if WINDOWS_RT
+        Stream
+#else
+        CloudBlobStream
+#endif
     {
         protected CloudBlockBlob blockBlob;
         protected CloudPageBlob pageBlob;
@@ -34,39 +41,43 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         protected bool newPageBlob;
         protected long currentOffset;
         protected long currentPageOffset;
-        protected MemoryStream buffer;
+        protected int streamWriteSizeInBytes;
+        protected MultiBufferMemoryStream internalBuffer;
         protected List<string> blockList;
         protected string blockIdPrefix;
         protected AccessCondition accessCondition;
         protected BlobRequestOptions options;
         protected OperationContext operationContext;
-        protected int pendingWrites;
-        protected ManualResetEvent noPendingWritesEvent;
+        protected CounterEvent noPendingWritesEvent;
         protected MD5Wrapper blobMD5;
         protected MD5Wrapper blockMD5;
         protected AsyncSemaphore parallelOperationSemaphore;
-        protected Exception lastException;
+        protected volatile Exception lastException;
+        protected volatile bool committed;
+        protected bool disposed;
 
         /// <summary>
         /// Initializes a new instance of the BlobWriteStreamBase class.
         /// </summary>
-        /// <param name="serviceClient">The service client.</param>
+        /// <param name="serviceClient">The service client.</param>        
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext" /> object for tracking the current operation.</param>
         private BlobWriteStreamBase(CloudBlobClient serviceClient, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : base()
         {
+            this.internalBuffer = new MultiBufferMemoryStream(serviceClient.BufferManager);
             this.currentOffset = 0;
             this.accessCondition = accessCondition;
             this.options = options;
             this.operationContext = operationContext;
-            this.pendingWrites = 0;
-            this.noPendingWritesEvent = new ManualResetEvent(true);
-            this.blobMD5 = options.StoreBlobContentMD5.Value ? new MD5Wrapper() : null;
-            this.blockMD5 = options.UseTransactionalMD5.Value ? new MD5Wrapper() : null;
+            this.noPendingWritesEvent = new CounterEvent();
+            this.blobMD5 = this.options.StoreBlobContentMD5.Value ? new MD5Wrapper() : null;
+            this.blockMD5 = this.options.UseTransactionalMD5.Value ? new MD5Wrapper() : null;
             this.parallelOperationSemaphore = new AsyncSemaphore(serviceClient.ParallelOperationThreadCount);
             this.lastException = null;
+            this.committed = false;
+            this.disposed = false;
         }
 
         /// <summary>
@@ -74,7 +85,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blockBlob">Blob reference to write to.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         protected BlobWriteStreamBase(CloudBlockBlob blockBlob, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : this(blockBlob.ServiceClient, accessCondition, options, operationContext)
@@ -82,7 +93,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             this.blockBlob = blockBlob;
             this.blockList = new List<string>();
             this.blockIdPrefix = Guid.NewGuid().ToString("N") + "-";
-            this.buffer = new MemoryStream(this.Blob.StreamWriteSizeInBytes);
+            this.streamWriteSizeInBytes = blockBlob.StreamWriteSizeInBytes;
         }
 
         /// <summary>
@@ -92,7 +103,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="pageBlobSize">Size of the page blob.</param>
         /// <param name="createNew">Use <c>true</c> if the page blob is newly created, <c>false</c> otherwise.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object for tracking the current operation.</param>
         protected BlobWriteStreamBase(CloudPageBlob pageBlob, long pageBlobSize, bool createNew, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : this(pageBlob.ServiceClient, accessCondition, options, operationContext)
@@ -100,15 +111,22 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             this.currentPageOffset = 0;
             this.pageBlob = pageBlob;
             this.pageBlobSize = pageBlobSize;
+            this.streamWriteSizeInBytes = pageBlob.StreamWriteSizeInBytes;
             this.newPageBlob = createNew;
-            this.buffer = new MemoryStream(this.Blob.StreamWriteSizeInBytes);
         }
 
         protected ICloudBlob Blob
         {
             get
             {
-                return (ICloudBlob)this.blockBlob ?? (ICloudBlob)this.pageBlob;
+                if (this.blockBlob != null)
+                {
+                    return this.blockBlob;
+                }
+                else
+                {
+                    return this.pageBlob;
+                }
             }
         }
 
@@ -191,13 +209,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Sets the position within the current stream.
+        /// Calculates the new position within the current stream for a Seek operation.
         /// </summary>
         /// <param name="offset">A byte offset relative to the origin parameter.</param>
         /// <param name="origin">A value of type <c>SeekOrigin</c> indicating the reference
         /// point used to obtain the new position.</param>
         /// <returns>The new position within the current stream.</returns>
-        public override long Seek(long offset, SeekOrigin origin)
+        protected long GetNewOffset(long offset, SeekOrigin origin)
         {
             if (!this.CanSeek)
             {
@@ -225,15 +243,15 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     break;
 
                 default:
-                    CommonUtils.ArgumentOutOfRange("origin", origin);
-                    throw new ArgumentOutOfRangeException();
+                    CommonUtility.ArgumentOutOfRange("origin", origin);
+                    throw new ArgumentOutOfRangeException("origin");
             }
 
-            CommonUtils.AssertInBounds("offset", newOffset, 0, this.Length);
+            CommonUtility.AssertInBounds("offset", newOffset, 0, this.Length);
 
             if ((newOffset % Constants.PageSize) != 0)
             {
-                CommonUtils.ArgumentOutOfRange("offset", offset);
+                CommonUtility.ArgumentOutOfRange("offset", offset);
             }
 
             return newOffset;
@@ -254,9 +272,45 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>Base64 encoded block ID</returns>
         protected string GetCurrentBlockId()
         {
-            string blockIdSuffix = this.blockList.Count.ToString("D6");
+            string blockIdSuffix = this.blockList.Count.ToString("D6", CultureInfo.InvariantCulture);
             byte[] blockIdInBytes = Encoding.UTF8.GetBytes(this.blockIdPrefix + blockIdSuffix);
             return Convert.ToBase64String(blockIdInBytes);
+        }
+
+        /// <summary>
+        /// Releases the blob resources used by the Stream.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.blobMD5 != null)
+                {
+                    this.blobMD5.Dispose();
+                    this.blobMD5 = null;
+                }
+
+                if (this.blockMD5 != null)
+                {
+                    this.blockMD5.Dispose();
+                    this.blockMD5 = null;
+                }
+
+                if (this.internalBuffer != null)
+                {
+                    this.internalBuffer.Dispose();
+                    this.internalBuffer = null;
+                }
+       
+                if (this.noPendingWritesEvent != null)
+                {
+                    this.noPendingWritesEvent.Dispose();
+                    this.noPendingWritesEvent = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

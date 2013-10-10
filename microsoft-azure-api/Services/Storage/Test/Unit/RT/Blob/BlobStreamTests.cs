@@ -15,14 +15,10 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using Windows.Storage.Streams;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
@@ -30,6 +26,27 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     [TestClass]
     public class BlobStreamTests : BlobTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         //[Description("BlobSeek")]
         [TestCategory(ComponentCategory.Blob)]
@@ -47,19 +64,19 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 using (MemoryStream srcStream = new MemoryStream(buffer))
                 {
                     await blob.UploadFromStreamAsync(srcStream.AsInputStream(), null, null, null);
-                    IInputStream iBlobStream = await blob.OpenReadAsync();
-                    using (Stream blobStream = iBlobStream.AsStreamForRead())
+                    using (IInputStream blobStream = await blob.OpenReadAsync())
                     {
-                        blobStream.Seek(2048, 0);
+                        Stream blobStreamForRead = blobStream.AsStreamForRead();
+                        blobStreamForRead.Seek(2048, 0);
                         byte[] buff = new byte[100];
-                        int numRead = await blobStream.ReadAsync(buff, 0, 100);
+                        int numRead = await blobStreamForRead.ReadAsync(buff, 0, 100);
                         Assert.AreEqual(numRead, 0);
                     }
                 }
             }
             finally
             {
-                container.DeleteIfExistsAsync().AsTask().Wait(); ;
+                container.DeleteIfExistsAsync().AsTask().Wait();
             }
         }
 
@@ -76,16 +93,19 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             try
             {
                 await container.CreateAsync();
+                
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
-                MemoryStream memStream = new MemoryStream(buffer);
-                IOutputStream iBlobStream = await blob.OpenWriteAsync(2048);
-                using (Stream blobStream = iBlobStream.AsStreamForWrite())
+                using (ICloudBlobStream blobStream = await blob.OpenWriteAsync(2048))
                 {
-                    await blobStream.WriteAsync(buffer, 0, 2048);
+                    Stream blobStreamForWrite = blobStream.AsStreamForWrite();
+                    await blobStreamForWrite.WriteAsync(buffer, 0, 2048);
+                    await blobStreamForWrite.FlushAsync();
+
                     byte[] testBuffer = new byte[2048];
                     MemoryStream dstStream = new MemoryStream(testBuffer);
                     await blob.DownloadRangeToStreamAsync(dstStream.AsOutputStream(), null, null);
-                    await iBlobStream.FlushAsync();
+                    
+                    MemoryStream memStream = new MemoryStream(buffer);
                     TestHelper.AssertStreamsAreEqual(memStream, dstStream);
                 }
             }
@@ -113,12 +133,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 {
                     await blob.UploadFromStreamAsync(srcStream.AsInputStream());
 
-                    IInputStream iDstStream = await blob.OpenReadAsync();
-                    using (Stream dstStream = iDstStream.AsStreamForRead())
+                    IInputStream dstStream = await blob.OpenReadAsync();
+                    using (Stream dstStreamForRead = dstStream.AsStreamForRead())
                     {
-                        srcStream.Seek(srcStream.Length, 0);
-                        dstStream.Seek(2048, 0);
-                        TestHelper.AssertStreamsAreEqual(srcStream, dstStream);
+                        TestHelper.AssertStreamsAreEqual(srcStream, dstStreamForRead);
                     }
                 }
             }
@@ -142,19 +160,19 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 await container.CreateAsync();
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
-                IOutputStream iBlobStream = await blob.OpenWriteAsync(2048);
-                MemoryStream memoryStream = new MemoryStream(buffer);
-                using (Stream blobStream = iBlobStream.AsStreamForWrite())
+                
+                using (ICloudBlobStream blobStream = await blob.OpenWriteAsync(2048))
                 {
-                    await blobStream.WriteAsync(buffer, 0, 2048);
-                    await blobStream.AsOutputStream().FlushAsync();
+                    Stream blobStreamForWrite = blobStream.AsStreamForWrite();
+                    await blobStreamForWrite.WriteAsync(buffer, 0, 2048);
+                    await blobStreamForWrite.FlushAsync();
                 }
-                IInputStream iDstStream = await blob.OpenReadAsync();
-                using (Stream dstStream = iDstStream.AsStreamForRead())
+
+                using (IInputStream dstStream = await blob.OpenReadAsync())
                 {
-                    dstStream.Seek(dstStream.Length, 0);
-                    memoryStream.Seek(memoryStream.Length, 0);
-                    TestHelper.AssertStreamsAreEqual(memoryStream, dstStream);
+                    Stream dstStreamForRead = dstStream.AsStreamForRead();
+                    MemoryStream memoryStream = new MemoryStream(buffer);
+                    TestHelper.AssertStreamsAreEqual(memoryStream, dstStreamForRead);
                 }
             }
             finally
@@ -177,31 +195,32 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 await container.CreateAsync();
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
+
                 MemoryStream memoryStream = new MemoryStream(buffer);
-                IOutputStream iBlobStream = await blob.OpenWriteAsync(2048);
-                using (Stream blobStream = iBlobStream.AsStreamForWrite())
+                using (ICloudBlobStream blobStream = await blob.OpenWriteAsync(2048))
                 {
-                    await blobStream.WriteAsync(buffer, 0, 2048);
+                    Stream blobStreamForWrite = blobStream.AsStreamForWrite();
+                    await blobStreamForWrite.WriteAsync(buffer, 0, 2048);
 
-                    Assert.AreEqual(blobStream.Position, 2048);
+                    Assert.AreEqual(blobStreamForWrite.Position, 2048);
 
-                    blobStream.Seek(1024, 0);
+                    blobStreamForWrite.Seek(1024, 0);
                     memoryStream.Seek(1024, 0);
-                    Assert.AreEqual(blobStream.Position, 1024);
+                    Assert.AreEqual(blobStreamForWrite.Position, 1024);
 
-                    byte[] testBuffer = GetRandomBuffer(1024); ;
+                    byte[] testBuffer = GetRandomBuffer(1024);
 
                     await memoryStream.WriteAsync(testBuffer, 0, 1024);
-                    await blobStream.WriteAsync(testBuffer, 0, 1024);
-                    Assert.AreEqual(blobStream.Position, memoryStream.Position);
+                    await blobStreamForWrite.WriteAsync(testBuffer, 0, 1024);
+                    Assert.AreEqual(blobStreamForWrite.Position, memoryStream.Position);
 
-                    await blobStream.FlushAsync();
+                    await blobStreamForWrite.FlushAsync();
                 }
-                IInputStream iDstStream = await blob.OpenReadAsync();
-                using (Stream dstStream = iDstStream.AsStreamForRead())
+
+                using (IInputStream dstStream = await blob.OpenReadAsync())
                 {
-                    dstStream.Seek(2048, 0);
-                    TestHelper.AssertStreamsAreEqual(memoryStream, dstStream);
+                    Stream dstStreamForRead = dstStream.AsStreamForRead();
+                    TestHelper.AssertStreamsAreEqual(memoryStream, dstStreamForRead);
                 }
             }
             finally
@@ -226,20 +245,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 await container.CreateAsync();
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
                 MemoryStream memoryStream = new MemoryStream(buffer);
-                IOutputStream iBlobStream = await blob.OpenWriteAsync(2048);
-                using (Stream blobStream = iBlobStream.AsStreamForWrite())
+                using (IOutputStream blobStream = await blob.OpenWriteAsync(2048))
                 {
-                    await blobStream.WriteAsync(buffer, 0, 2048);
+                    Stream blobStreamForWrite = blobStream.AsStreamForWrite();
+                    await blobStreamForWrite.WriteAsync(buffer, 0, 2048);
                     byte[] testBuffer = new byte[2048];
                     try
                     {
-                        await blobStream.ReadAsync(testBuffer, 0, 2048);
+                        await blobStreamForWrite.ReadAsync(testBuffer, 0, 2048);
                     }
-
                     catch (NotSupportedException)
                     {
                         thrown = true;
                     }
+
                     Assert.IsTrue(thrown);
                 }
             }
@@ -267,19 +286,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 using (MemoryStream srcStream = new MemoryStream(buffer))
                 {
                     await blob.UploadFromStreamAsync(srcStream.AsInputStream());
-                    IInputStream iBlobStream = await blob.OpenReadAsync();
                     bool thrown = false;
                     byte[] testBuffer = new byte[2048];
-                    using (Stream blobStream = iBlobStream.AsStreamForRead())
+                    using (IInputStream blobStream = await blob.OpenReadAsync())
                     {
+                        Stream blobStreamForRead = blobStream.AsStreamForRead();
                         try
                         {
-                            await blobStream.WriteAsync(testBuffer, 0, 2048);
+                            await blobStreamForRead.WriteAsync(testBuffer, 0, 2048);
                         }
                         catch (NotSupportedException)
                         {
                             thrown = true;
                         }
+
                         Assert.IsTrue(thrown);
                     }
                 }

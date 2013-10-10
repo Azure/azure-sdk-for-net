@@ -17,13 +17,12 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
     using Windows.Storage.Streams;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     /// <summary>
     /// Provides an input stream to read a given blob resource.
@@ -35,7 +34,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blob">Blob reference to read from.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         internal BlobReadStream(ICloudBlob blob, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : base(blob, accessCondition, options, operationContext)
@@ -52,31 +51,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Gets the length in bytes of the stream.
-        /// </summary>
-        /// <value>The length in bytes of the stream.</value>
-        public override long Length
-        {
-            get
-            {
-                if (!this.isLengthAvailable)
-                {
-                    this.blob.FetchAttributesAsync(this.accessCondition, this.options, this.operationContext).AsTask().Wait();
-                    this.LockToETag();
-
-                    this.isLengthAvailable = true;
-
-                    if (string.IsNullOrEmpty(this.blob.Properties.ContentMD5))
-                    {
-                        this.blobMD5 = null;
-                    }
-                }
-
-                return this.blob.Properties.Length;
-            }
-        }
-
-        /// <summary>
         /// Gets the format of the data.
         /// </summary>
         /// <value>The format of the data.</value>
@@ -84,10 +58,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             get
             {
-                // This will make sure the attributes are populated
-                long length = this.Length;
-
-                return this.blob.Properties.ContentType;
+                return this.blobProperties.ContentType;
             }
         }
 
@@ -123,26 +94,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A task that represents the asynchronous read operation.</returns>
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            CommonUtils.AssertNotNull("buffer", buffer);
-            CommonUtils.AssertInBounds("offset", offset, 0, buffer.Length);
-            CommonUtils.AssertInBounds("count", count, 0, buffer.Length - offset);
+            CommonUtility.AssertNotNull("buffer", buffer);
+            CommonUtility.AssertInBounds("offset", offset, 0, buffer.Length);
+            CommonUtility.AssertInBounds("count", count, 0, buffer.Length - offset);
 
             if (this.lastException != null)
             {
                 throw this.lastException;
-            }
-
-            if (!this.isLengthAvailable)
-            {
-                await this.blob.FetchAttributesAsync(this.accessCondition, this.options, this.operationContext);
-                this.LockToETag();
-
-                this.isLengthAvailable = true;
-
-                if (string.IsNullOrEmpty(this.blob.Properties.ContentMD5))
-                {
-                    this.blobMD5 = null;
-                }
             }
 
             if ((this.currentOffset == this.Length) || (count == 0))
@@ -150,32 +108,45 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 return 0;
             }
 
-            // If the buffer is already consumed, dispatch another read.
-            if (this.buffer.Position == this.buffer.Length)
+            int readCount = this.ConsumeBuffer(buffer, offset, count);
+            if (readCount > 0)
             {
-                int readSize = (int)Math.Min(this.blob.StreamMinimumReadSizeInBytes, this.Length - this.currentOffset);
-                if (this.options.UseTransactionalMD5.Value)
-                {
-                    readSize = Math.Min(readSize, Constants.MaxBlockSize);
-                }
-
-                this.buffer.SetLength(0);
-                await this.blob.DownloadRangeToStreamAsync(this.buffer.AsOutputStream(), this.currentOffset, readSize, this.accessCondition, this.options, this.operationContext);
-                this.buffer.Seek(0, SeekOrigin.Begin);
-                this.LockToETag();
+                return readCount;
             }
 
-            // Read as much as we can from the buffer.
-            int result = await this.buffer.ReadAsync(buffer, offset, count);
-            this.currentOffset += result;
-            this.VerifyBlobMD5(buffer, offset, result);
+            return await this.DispatchReadAsync(buffer, offset, count);
+        }
 
-            if (this.lastException != null)
+        /// <summary>
+        /// Dispatches a sync read operation that either reads from the cache or makes a call to
+        /// the server.
+        /// </summary>
+        /// <param name="buffer">The buffer to read the data into.</param>
+        /// <param name="offset">The byte offset in buffer at which to begin writing
+        /// data read from the stream.</param>
+        /// <param name="count">The maximum number of bytes to read.</param>
+        /// <returns>Number of bytes read from the stream.</returns>
+        private async Task<int> DispatchReadAsync(byte[] buffer, int offset, int count)
+        {
+            try
             {
-                throw this.lastException;
-            }
+                this.internalBuffer.SetLength(0);
+                await this.blob.DownloadRangeToStreamAsync(
+                    this.internalBuffer.AsOutputStream(),
+                    this.currentOffset,
+                    this.GetReadSize(),
+                    this.accessCondition,
+                    this.options,
+                    this.operationContext);
 
-            return result;
+                this.internalBuffer.Seek(0, SeekOrigin.Begin);
+                return this.ConsumeBuffer(buffer, offset, count);
+            }
+            catch (Exception e)
+            {
+                this.lastException = e;
+                throw;
+            }
         }
     }
 }

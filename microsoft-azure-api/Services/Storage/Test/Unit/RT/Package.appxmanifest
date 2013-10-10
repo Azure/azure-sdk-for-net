@@ -5,7 +5,7 @@
     <DisplayName>Microsoft.WindowsAzure.Storage.Test</DisplayName>
     <PublisherDisplayName>WindowsAzure</PublisherDisplayName>
     <Logo>Images\UnitTestStoreLogo.png</Logo>
-    <Description>XSCL_RT_Test</Description>
+    <Description>Microsoft.WindowsAzure.Storage.Test</Description>
   </Properties>
   <Prerequisites>
     <OSMinVersion>6.2</OSMinVersion>

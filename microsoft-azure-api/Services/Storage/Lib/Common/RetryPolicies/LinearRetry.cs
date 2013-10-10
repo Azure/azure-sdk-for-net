@@ -17,8 +17,10 @@
 
 namespace Microsoft.WindowsAzure.Storage.RetryPolicies
 {
-    using System;
     using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents a retry policy that performs a specified number of retries, using a specified fixed time interval between retries.
@@ -28,8 +30,6 @@ namespace Microsoft.WindowsAzure.Storage.RetryPolicies
         private const int DefaultClientRetryCount = 3;
 
         private static readonly TimeSpan DefaultClientBackoff = TimeSpan.FromSeconds(30);
-        private TimeSpan maxBackoff = TimeSpan.FromSeconds(90);
-        private TimeSpan minBackoff = TimeSpan.FromSeconds(3);
         private TimeSpan deltaBackoff;
         private int maximumAttempts;
 
@@ -44,8 +44,9 @@ namespace Microsoft.WindowsAzure.Storage.RetryPolicies
         /// <summary>
         /// Initializes a new instance of the <see cref="LinearRetry"/> class using the specified delta and maximum number of retries.
         /// </summary>
-        /// <param name="deltaBackoff">The backoff interval between retries.</param>
+        /// <param name="deltaBackoff">The back off interval between retries.</param>
         /// <param name="maxAttempts">The maximum number of retry attempts.</param>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Backoff", Justification = "Reviewed: Backoff is allowed.")]
         public LinearRetry(TimeSpan deltaBackoff, int maxAttempts)
         {
             this.deltaBackoff = deltaBackoff;
@@ -63,6 +64,8 @@ namespace Microsoft.WindowsAzure.Storage.RetryPolicies
         /// <returns><c>true</c> if the operation should be retried; otherwise, <c>false</c>.</returns>
         public bool ShouldRetry(int currentRetryCount, int statusCode, Exception lastException, out TimeSpan retryInterval, OperationContext operationContext)
         {
+            CommonUtility.AssertNotNull("lastException", lastException);
+
             retryInterval = TimeSpan.Zero;
 
             // If this method is called after a successful response, it means

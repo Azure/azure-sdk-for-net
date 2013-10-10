@@ -56,8 +56,8 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
             // Add the Content-* HTTP headers. Empty values are allowed.
             if (request.Content != null)
             {
-                canonicalizedString.AppendCanonicalizedElement(HttpUtility.CombineHttpHeaderValues(request.Content.Headers.ContentEncoding));
-                canonicalizedString.AppendCanonicalizedElement(HttpUtility.CombineHttpHeaderValues(request.Content.Headers.ContentLanguage));
+                canonicalizedString.AppendCanonicalizedElement(HttpWebUtility.CombineHttpHeaderValues(request.Content.Headers.ContentEncoding));
+                canonicalizedString.AppendCanonicalizedElement(HttpWebUtility.CombineHttpHeaderValues(request.Content.Headers.ContentLanguage));
                 AuthenticationUtility.AppendCanonicalizedContentLengthHeader(canonicalizedString, request);
                 canonicalizedString.AppendCanonicalizedElement((request.Content.Headers.ContentMD5 == null) ? null :
                     Convert.ToBase64String(request.Content.Headers.ContentMD5));
@@ -86,11 +86,11 @@ namespace Microsoft.WindowsAzure.Storage.Core.Auth
 
             // Add If-* headers and Range header
             canonicalizedString.AppendCanonicalizedElement(AuthenticationUtility.GetCanonicalizedHeaderValue(request.Headers.IfModifiedSince));
-            canonicalizedString.AppendCanonicalizedElement(CommonUtils.GetFirstHeaderValue(request.Headers.IfMatch));
-            canonicalizedString.AppendCanonicalizedElement(CommonUtils.GetFirstHeaderValue(request.Headers.IfNoneMatch));
+            canonicalizedString.AppendCanonicalizedElement(CommonUtility.GetFirstHeaderValue(request.Headers.IfMatch));
+            canonicalizedString.AppendCanonicalizedElement(CommonUtility.GetFirstHeaderValue(request.Headers.IfNoneMatch));
             canonicalizedString.AppendCanonicalizedElement(AuthenticationUtility.GetCanonicalizedHeaderValue(request.Headers.IfUnmodifiedSince));
             canonicalizedString.AppendCanonicalizedElement((request.Headers.Range == null) ? null :
-                CommonUtils.GetFirstHeaderValue(request.Headers.Range.Ranges));
+                CommonUtility.GetFirstHeaderValue(request.Headers.Range.Ranges));
 
             // Add any custom headers
             AuthenticationUtility.AppendCanonicalizedCustomHeaders(canonicalizedString, request);

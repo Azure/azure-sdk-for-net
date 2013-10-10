@@ -26,9 +26,10 @@ namespace Microsoft.WindowsAzure.Storage.Shared.Protocol
     {
         public static HttpClient BuildHttpClient<T>(StorageCommandBase<T> cmd, OperationContext operationContext)
         {
-            HttpClient client = cmd.Handler != null ? new HttpClient(cmd.Handler) : new HttpClient();
+            HttpClient client = cmd.Handler != null ? new HttpClient(cmd.Handler, false) : new HttpClient();
             client.DefaultRequestHeaders.ExpectContinue = false;
             client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(Constants.HeaderConstants.UserAgentProductName, Constants.HeaderConstants.UserAgentProductVersion));
+            client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(Constants.HeaderConstants.UserAgentComment));
 
             client.DefaultRequestHeaders.TryAddWithoutValidation(Constants.HeaderConstants.StorageVersionHeader, Constants.HeaderConstants.TargetStorageVersion);
 

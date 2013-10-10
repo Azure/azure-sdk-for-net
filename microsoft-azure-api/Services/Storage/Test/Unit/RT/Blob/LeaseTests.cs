@@ -15,6 +15,8 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure.Storage.Blob.Protocol;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,8 +25,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.WindowsAzure.Storage.Blob.Protocol;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
@@ -70,6 +70,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
             // Create and log a new prefix for this test.
             this.prefix = Guid.NewGuid().ToString("N");
+
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
         }
 
         [TestCleanup]
@@ -77,6 +82,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             // Retire this test's prefix. No other cleanup is done here.
             this.prefix = null;
+
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
         }
 
         /// <summary>
@@ -148,7 +158,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 await blob.DeleteIfExistsAsync(DeleteSnapshotsOption.None, null, null, operationContext);
             }
-            catch
+            catch (Exception)
             {
                 if (operationContext.LastResult.ExtendedErrorInformation.ErrorCode == BlobErrorCodeStrings.LeaseIdMissing)
                 {
@@ -269,7 +279,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 {
                     await container.BreakLeaseAsync(TimeSpan.Zero, null, null, operationContext);
                 }
-                catch
+                catch (Exception)
                 {
                     if (operationContext.LastResult.ExtendedErrorInformation.ErrorCode == BlobErrorCodeStrings.LeaseAlreadyBroken ||
                         operationContext.LastResult.ExtendedErrorInformation.ErrorCode == BlobErrorCodeStrings.LeaseNotPresentWithLeaseOperation)
@@ -473,7 +483,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     // Since the lease has expired, the test is over.
                     testOver = true;
                 }
-                catch
+                catch (Exception)
                 {
                     if (operationContext.LastResult.ExtendedErrorInformation.ErrorCode == BlobErrorCodeStrings.LeaseIdMissing)
                     {
@@ -1323,11 +1333,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 expectedStatusCode,
                 expectedErrorCode);
 
-            byte[] buffer = new byte[1];
-            IRandomAccessStreamWithContentType readStream = await testBlob.OpenReadAsync(testAccessCondition, null /* options */, operationContext);
-            Stream stream = readStream.AsStreamForRead();
             await TestHelper.ExpectedExceptionAsync(
-                async () => await stream.ReadAsync(buffer, 0, 1),
+                async () => await testBlob.OpenReadAsync(testAccessCondition, null /* options */, operationContext),
                 operationContext,
                 description + " (Read Stream)",
                 expectedStatusCode/*,
@@ -2030,7 +2037,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     // Since the lease has expired (and the container was deleted), the test is over.
                     return;
                 }
-                catch
+                catch (Exception)
                 {
                     if (operationContext.LastResult.ExtendedErrorInformation.ErrorCode == BlobErrorCodeStrings.LeaseIdMissing)
                     {

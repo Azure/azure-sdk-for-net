@@ -1,7 +1,10 @@
-# Windows Azure SDK for Windows 8 and .NET 4 (2.0.6.1)
+# Windows Azure SDK for .NET 4, Windows 8, and Windows Phone 8 (2.1.0.0)
 
 The Windows Azure SDK for .NET allows you to build Windows Azure applications 
 that take advantage of scalable cloud computing resources.
+
+Please note that Windows 8 and Windows Phone 8 libraries are CTP (Community
+Technology Preview) releases.
 
 This repository contains the open source subset of the .NET SDK. For documentation of the 
 complete SDK, please see the [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
@@ -44,7 +47,8 @@ within your project you can also have them installed by the .NET package manager
 ## Target Frameworks
 
 - .NET Framework 3.5: At this time the majority of the Windows Azure SDK for .NET supports primarily the desktop .NET Framework 3.5 and above.
-- Windows 8 for Windows Store and Windows RT app development: Storage Client Libraries are available for Windows Store applications.
+- .NET Framework 4.0: Storage Client Library for .NET supports the desktop .NET Framework 4.0 and above.
+- Windows 8 for Windows Store app development: Storage Client Libraries are available for Windows Store applications.
 
 ## Requirements
 
@@ -56,7 +60,7 @@ within your project you can also have them installed by the .NET package manager
 
 ### OData
 
-This version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.2.0) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.  
+This version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.2.0) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.
 
 The ODataLib libraries can be downloaded directly or referenced by your code project through NuGet.  
 

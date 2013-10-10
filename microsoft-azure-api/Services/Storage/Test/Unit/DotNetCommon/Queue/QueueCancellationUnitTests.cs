@@ -15,20 +15,38 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAzure.Storage.Queue.Protocol;
-using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Test.Network;
 using Microsoft.WindowsAzure.Test.Network.Behaviors;
+using System;
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
     [TestClass]
     public class QueueCancellationUnitTests : QueueTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                TestBase.QueueBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.QueueBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.QueueBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         [Description("Test Set Queue ACL Cancellation")]
         [TestCategory(ComponentCategory.Queue)]
@@ -37,7 +55,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void QueueSetACLCancellation()
         {
-            CloudQueue queue = DefaultQueueClient.GetQueueReference(GenerateNewQueueName());
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
 
             QueuePermissions permissions = new QueuePermissions();
             permissions.SharedAccessPolicies.Add(Guid.NewGuid().ToString(), new SharedAccessQueuePolicy()
@@ -48,7 +67,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             });
 
             TestHelper.ExecuteAPMMethodWithCancellation(4000,
-                new[] { DelayBehaviors.DelayAllRequestsIf(4000 * 3, XStoreSelectors.QueueTraffic().IfHostNameContains(DefaultQueueClient.Credentials.AccountName)) },
+                new[] { DelayBehaviors.DelayAllRequestsIf(4000 * 3, XStoreSelectors.QueueTraffic().IfHostNameContains(client.Credentials.AccountName)) },
                 (options, opContext, callback, state) => queue.BeginSetPermissions(permissions, (QueueRequestOptions)options, opContext, callback, state),
                 queue.EndSetPermissions);
         }
@@ -61,10 +80,11 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         [TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
         public void QueueGetACLCancellation()
         {
-            CloudQueue queue = DefaultQueueClient.GetQueueReference(GenerateNewQueueName());
+            CloudQueueClient client = GenerateCloudQueueClient();
+            CloudQueue queue = client.GetQueueReference(GenerateNewQueueName());
 
             TestHelper.ExecuteAPMMethodWithCancellation(4000,
-                new[] { DelayBehaviors.DelayAllRequestsIf(4000 * 3, XStoreSelectors.QueueTraffic().IfHostNameContains(DefaultQueueClient.Credentials.AccountName)) },
+                new[] { DelayBehaviors.DelayAllRequestsIf(4000 * 3, XStoreSelectors.QueueTraffic().IfHostNameContains(client.Credentials.AccountName)) },
                 (options, opContext, callback, state) => queue.BeginGetPermissions((QueueRequestOptions)options, opContext, callback, state),
                 (res) => queue.EndGetPermissions(res));
         }

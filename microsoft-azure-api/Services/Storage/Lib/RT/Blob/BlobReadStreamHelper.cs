@@ -22,20 +22,27 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using Windows.Foundation;
     using Windows.Storage.Streams;
 
+    /// <summary>
+    /// BlobReadStream class is based on Stream, but all RT APIs need to return
+    /// IRandomAccessStream that cannot be easily converted from a Stream object.
+    /// This class implements IRandomAccessStream and acts like a proxy between
+    /// the caller and the actual Stream implementation.
+    /// </summary>
     internal sealed class BlobReadStreamHelper : IRandomAccessStreamWithContentType
     {
         private BlobReadStream originalStream;
-        private IInputStream currentInputStream;
+        private IInputStream originalStreamAsInputStream;
 
         /// <summary>
         /// Initializes a new instance of the BlobReadStreamHelper class.
         /// </summary>
         /// <param name="blob">Blob reference to read from</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         internal BlobReadStreamHelper(ICloudBlob blob, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
             this.originalStream = new BlobReadStream(blob, accessCondition, options, operationContext);
+            this.originalStreamAsInputStream = this.originalStream.AsInputStream();
         }
 
         /// <summary>
@@ -45,6 +52,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         private BlobReadStreamHelper(BlobReadStream otherStream)
         {
             this.originalStream = otherStream;
+            this.originalStreamAsInputStream = this.originalStream.AsInputStream();
         }
 
         /// <summary>
@@ -65,7 +73,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         {
             get
             {
-                return this.originalStream.CanWrite;
+                return false;
             }
         }
 
@@ -87,8 +95,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public IRandomAccessStream CloneStream()
         {
             BlobReadStream clonedStream = new BlobReadStream(this.originalStream);
-            BlobReadStreamHelper clonedHelper = new BlobReadStreamHelper(clonedStream);
-            return clonedHelper;
+            return new BlobReadStreamHelper(clonedStream);
         }
 
         /// <summary>
@@ -131,7 +138,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public void Seek(ulong position)
         {
             this.originalStream.Seek((long)position, SeekOrigin.Begin);
-            this.currentInputStream = null;
         }
 
         /// <summary>
@@ -167,12 +173,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>The asynchronous operation.</returns>
         public IAsyncOperationWithProgress<IBuffer, uint> ReadAsync(IBuffer buffer, uint count, InputStreamOptions options)
         {
-            if (this.currentInputStream == null)
-            {
-                this.currentInputStream = this.GetInputStreamAt(this.Position);
-            }
-
-            return this.currentInputStream.ReadAsync(buffer, count, options);
+            return this.originalStreamAsInputStream.ReadAsync(buffer, count, options);
         }
 
         /// <summary>

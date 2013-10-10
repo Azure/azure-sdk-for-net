@@ -4,17 +4,16 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Xml;
 
     /// <summary>
     /// Provides methods for parsing the response from a queue listing operation.
     /// </summary>
-#if RTMD
+#if WINDOWS_RT
     internal
 #else
     public
 #endif
-        sealed class ListQueuesResponse : ResponseParsingBase<QueueEntry>
+ sealed class ListQueuesResponse : ResponseParsingBase<QueueEntry>
     {
         /// <summary>
         /// Stores the container prefix.
@@ -149,118 +148,123 @@
         }
 
         /// <summary>
-        /// Parses the response XML for a container listing operation.
+        /// Parses a queue entry in a queue listing response.
+        /// </summary>
+        /// <returns>Queue listing entry</returns>
+        private QueueEntry ParseQueueEntry()
+        {
+            Uri uri = null;
+            string name = null;
+            IDictionary<string, string> metadata = null;
+
+            this.reader.ReadStartElement();
+            while (this.reader.IsStartElement())
+            {
+                if (this.reader.IsEmptyElement)
+                {
+                    this.reader.Skip();
+                }
+                else
+                {
+                    switch (reader.Name)
+                    {
+                        case Constants.UrlElement:
+                            string url = reader.ReadElementContentAsString();
+                            Uri.TryCreate(url, UriKind.Absolute, out uri);
+                            break;
+
+                        case Constants.NameElement:
+                            name = reader.ReadElementContentAsString();
+                            break;
+
+                        case Constants.MetadataElement:
+                            metadata = Response.ParseMetadata(this.reader);
+                            break;
+
+                        default:
+                            this.reader.Skip();
+                            break;
+                    }
+                }
+            }
+
+            this.reader.ReadEndElement();
+            if (metadata == null)
+            {
+                metadata = new Dictionary<string, string>();
+            }
+
+            return new QueueEntry(name, uri, metadata);
+        }
+
+        /// <summary>
+        /// Parses the response XML for a queue listing operation.
         /// </summary>
         /// <returns>An enumerable collection of <see cref="QueueEntry"/> objects.</returns>
         protected override IEnumerable<QueueEntry> ParseXml()
         {
-            bool needToRead = true;
-
-            while (true)
+            if (this.reader.ReadToFollowing(Constants.EnumerationResultsElement))
             {
-                if (needToRead && !reader.Read())
+                if (this.reader.IsEmptyElement)
                 {
-                    break;
+                    this.reader.Skip();
                 }
-
-                needToRead = true;
-
-                // Run through the stream until we find what we are looking for.  Retain what we've found.
-                if (reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
+                else
                 {
-                    switch (reader.Name)
+                    this.reader.ReadStartElement();
+                    while (this.reader.IsStartElement())
                     {
-                        case Constants.MarkerElement:
-                            needToRead = false;
-                            this.marker = reader.ReadElementContentAsString();
-                            this.markerConsumable = true;
-                            yield return null;
-                            break;
-                        case Constants.NextMarkerElement:
-                            needToRead = false;
-                            this.nextMarker = reader.ReadElementContentAsString();
-                            this.nextMarkerConsumable = true;
-                            yield return null;
-                            break;
-                        case Constants.MaxResultsElement:
-                            needToRead = false;
-                            this.maxResults = reader.ReadElementContentAsInt();
-                            this.maxResultsConsumable = true;
-                            yield return null;
-                            break;
-                        case Constants.PrefixElement:
-                            needToRead = false;
-                            this.prefix = reader.ReadElementContentAsString();
-                            this.prefixConsumable = true;
-                            yield return null;
-                            break;
-                        case Constants.QueuesElement:
-                            while (reader.Read())
+                        if (this.reader.IsEmptyElement)
+                        {
+                            this.reader.Skip();
+                        }
+                        else
+                        {
+                            switch (reader.Name)
                             {
-                                // We found a queue.
-                                if (reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement && reader.Name == Constants.QueueElement)
-                                {
-                                    Uri uri = null;
-                                    string name = null;
-                                    IDictionary<string, string> metadata = null;
+                                case Constants.MarkerElement:
+                                    this.marker = reader.ReadElementContentAsString();
+                                    this.markerConsumable = true;
+                                    yield return null;
+                                    break;
 
-                                    // Go until we are out of the queue.
-                                    bool queuesNeedToRead = true;
-                                    while (true)
+                                case Constants.NextMarkerElement:
+                                    this.nextMarker = reader.ReadElementContentAsString();
+                                    this.nextMarkerConsumable = true;
+                                    yield return null;
+                                    break;
+
+                                case Constants.MaxResultsElement:
+                                    this.maxResults = reader.ReadElementContentAsInt();
+                                    this.maxResultsConsumable = true;
+                                    yield return null;
+                                    break;
+
+                                case Constants.PrefixElement:
+                                    this.prefix = reader.ReadElementContentAsString();
+                                    this.prefixConsumable = true;
+                                    yield return null;
+                                    break;
+
+                                case Constants.QueuesElement:
+                                    this.reader.ReadStartElement();
+                                    while (this.reader.IsStartElement())
                                     {
-                                        if (queuesNeedToRead && !reader.Read())
-                                        {
-                                            break;
-                                        }
-
-                                        queuesNeedToRead = true;
-
-                                        if (reader.NodeType == XmlNodeType.Element && !reader.IsEmptyElement)
-                                        {
-                                            switch (reader.Name)
-                                            {
-                                                case Constants.UrlElement:
-                                                    string url = reader.ReadElementContentAsString();
-                                                    queuesNeedToRead = false;
-                                                    Uri.TryCreate(url, UriKind.Absolute, out uri);
-                                                    break;
-                                                case Constants.NameElement:
-                                                    name = reader.ReadElementContentAsString();
-                                                    queuesNeedToRead = false;
-                                                    break;
-                                                case Constants.MetadataElement:
-                                                    metadata = Response.ParseMetadata(this.reader);
-                                                    queuesNeedToRead = false;
-                                                    break;
-                                            }
-                                        }
-                                        else if (reader.NodeType == XmlNodeType.EndElement && reader.Name == Constants.QueueElement)
-                                        {
-                                            if (metadata == null)
-                                            {
-                                                metadata = new Dictionary<string, string>();
-                                            }
-
-                                            break;
-                                        }
+                                        yield return this.ParseQueueEntry();
                                     }
 
-                                    yield return new QueueEntry
-                                    {
-                                        Name = name,
-                                        Uri = uri,
-                                        Metadata = metadata,
-                                    };
-                                }
-                                else if (reader.NodeType == XmlNodeType.EndElement && reader.Name == Constants.QueuesElement)
-                                {
+                                    this.reader.ReadEndElement();
                                     this.allObjectsParsed = true;
                                     break;
-                                }
-                            }
 
-                            break;
+                                default:
+                                    reader.Skip();
+                                    break;
+                            }
+                        }
                     }
+
+                    this.reader.ReadEndElement();
                 }
             }
         }

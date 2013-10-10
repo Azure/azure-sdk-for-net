@@ -48,6 +48,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             {
                 return this.authenticationScheme;
             }
+
             set
             {
                 this.authenticationScheme = value;
@@ -86,7 +87,18 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <returns>A result segment of queues.</returns>
         public IAsyncOperation<QueueResultSegment> ListQueuesSegmentedAsync(QueueContinuationToken currentToken)
         {
-            return this.ListQueuesSegmentedAsync(null, QueueListingDetails.None, 0, currentToken, null);
+            return this.ListQueuesSegmentedAsync(null, QueueListingDetails.None, null, currentToken, null, null);
+        }
+
+        /// <summary>
+        /// Returns a result segment containing a collection of queues.
+        /// </summary>
+        /// <param name="prefix">The queue name prefix.</param>
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> token returned by a previous listing operation.</param>
+        /// <returns>A result segment of queues.</returns>
+        public IAsyncOperation<QueueResultSegment> ListQueuesSegmentedAsync(string prefix, QueueContinuationToken currentToken)
+        {
+            return this.ListQueuesSegmentedAsync(prefix, QueueListingDetails.None, null, currentToken, null, null);
         }
 
         /// <summary>
@@ -98,14 +110,18 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
         /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="QueueContinuationToken"/> token returned by a previous listing operation.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A result segment of queues.</returns>
-        public IAsyncOperation<QueueResultSegment> ListQueuesSegmentedAsync(string prefix, QueueListingDetails detailsIncluded, int? maxResults, QueueContinuationToken currentToken, OperationContext operationContext)
+        public IAsyncOperation<QueueResultSegment> ListQueuesSegmentedAsync(string prefix, QueueListingDetails detailsIncluded, int? maxResults, QueueContinuationToken currentToken, QueueRequestOptions options, OperationContext operationContext)
         {
+            QueueRequestOptions modifiedOptions = QueueRequestOptions.ApplyDefaults(options, this);
+            operationContext = operationContext ?? new OperationContext();
+
             return AsyncInfo.Run(async (token) =>
             {
                 ResultSegment<CloudQueue> resultSegment = await Executor.ExecuteAsync(
-                    this.ListQueuesImpl(prefix, detailsIncluded, currentToken, maxResults),
+                    this.ListQueuesImpl(prefix, maxResults, detailsIncluded, modifiedOptions, currentToken),
                     this.RetryPolicy,
                     operationContext,
                     token);
@@ -123,7 +139,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <returns>A <see cref="TaskSequence"/> that lists the queues.</returns>
-        private RESTCommand<ResultSegment<CloudQueue>> ListQueuesImpl(string prefix, QueueListingDetails detailsIncluded, QueueContinuationToken currentToken, int? maxResults)
+        private RESTCommand<ResultSegment<CloudQueue>> ListQueuesImpl(string prefix, int? maxResults, QueueListingDetails detailsIncluded, QueueRequestOptions options, QueueContinuationToken currentToken)
         {
             ListingContext listingContext = new ListingContext(prefix, maxResults)
             {
@@ -132,12 +148,13 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
             RESTCommand<ResultSegment<CloudQueue>> getCmd = new RESTCommand<ResultSegment<CloudQueue>>(this.Credentials, this.BaseUri);
 
+            getCmd.ApplyRequestOptions(options);
             getCmd.RetrieveResponseStream = true;
             getCmd.Handler = this.AuthenticationHandler;
             getCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             getCmd.BuildRequest = (cmd, cnt, ctx) => QueueHttpRequestMessageFactory.List(cmd.Uri, cmd.ServerTimeoutInSeconds, listingContext, detailsIncluded, cnt, ctx);
-            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            getCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task.Factory.StartNew(() =>
                 {
@@ -180,7 +197,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Gets the properties of the blob service.
         /// </summary>
-        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying <c>null</c> will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying <c>null</c> will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>The blob service properties.</returns>
         [DoesServiceRequest]
@@ -206,8 +223,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            retCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            retCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task.Factory.StartNew(() => QueueHttpResponseParsers.ReadServiceProperties(cmd.ResponseStream));
             };
@@ -231,7 +248,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Gets the properties of the blob service.
         /// </summary>
         /// <param name="properties">The queue service properties.</param>
-        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying <c>null</c> will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying <c>null</c> will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>The blob service properties.</returns>
         [DoesServiceRequest]
@@ -248,7 +265,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
 
         private RESTCommand<NullType> SetServicePropertiesImpl(ServiceProperties properties, QueueRequestOptions requestOptions)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            MultiBufferMemoryStream memoryStream = new MultiBufferMemoryStream(null /* bufferManager */, (int)(1 * Constants.KB));
             try
             {
                 properties.WriteServiceProperties(memoryStream);
@@ -261,12 +278,12 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             RESTCommand<NullType> retCmd = new RESTCommand<NullType>(this.Credentials, this.BaseUri);
             retCmd.ApplyRequestOptions(requestOptions);
             retCmd.BuildRequest = (cmd, cnt, ctx) => QueueHttpRequestMessageFactory.SetServiceProperties(cmd.Uri, cmd.ServerTimeoutInSeconds, cnt, ctx);
-            retCmd.BuildContent = (cmd, ctx) => HttpContentFactory.BuildContentFromStream(memoryStream, 0, memoryStream.Length, null, cmd, ctx);
+            retCmd.BuildContent = (cmd, ctx) => HttpContentFactory.BuildContentFromStream(memoryStream, 0, memoryStream.Length, null /* md5 */, cmd, ctx);
             retCmd.Handler = this.AuthenticationHandler;
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex);
             retCmd.ApplyRequestOptions(requestOptions);
             return retCmd;
         }

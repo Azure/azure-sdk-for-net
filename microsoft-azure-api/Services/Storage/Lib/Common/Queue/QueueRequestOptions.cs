@@ -21,7 +21,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
     using System;
 
     /// <summary>
-    /// Represents a set of timeout and retry policy options that may be specified for a queue operation request.
+    /// Represents a set of timeout and retry policy options that may be specified for a request against the Queue service.
     /// </summary>
     public sealed class QueueRequestOptions : IRequestOptions
     {
@@ -44,19 +44,29 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 this.RetryPolicy = other.RetryPolicy;
                 this.ServerTimeout = other.ServerTimeout;
                 this.MaximumExecutionTime = other.MaximumExecutionTime;
+                this.OperationExpiryTime = other.OperationExpiryTime;
             }
         }
 
         internal static QueueRequestOptions ApplyDefaults(QueueRequestOptions options, CloudQueueClient serviceClient)
         {
             QueueRequestOptions modifiedOptions = new QueueRequestOptions(options);
-
             modifiedOptions.RetryPolicy = modifiedOptions.RetryPolicy ?? serviceClient.RetryPolicy;
             modifiedOptions.ServerTimeout = modifiedOptions.ServerTimeout ?? serviceClient.ServerTimeout;
             modifiedOptions.MaximumExecutionTime = modifiedOptions.MaximumExecutionTime ?? serviceClient.MaximumExecutionTime;
-
+            
+            if (!modifiedOptions.OperationExpiryTime.HasValue && modifiedOptions.MaximumExecutionTime.HasValue)
+            {
+                modifiedOptions.OperationExpiryTime = DateTime.Now + modifiedOptions.MaximumExecutionTime.Value;
+            }
+            
             return modifiedOptions;
         }
+
+        /// <summary>
+        ///  Gets or sets the absolute expiry time across all potential retries for the request. 
+        /// </summary>
+        internal DateTime? OperationExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets the retry policy for the request.
@@ -71,9 +81,9 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         public TimeSpan? ServerTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum execution time accross all potential retries etc. 
+        /// Gets or sets the maximum execution time across all potential retries for the request. 
         /// </summary>
-        /// <value>The maximum execution time.</value>
+        /// <value>A <see cref="TimeSpan"/> representing the maximum execution time for retries for the request.</value>
         public TimeSpan? MaximumExecutionTime { get; set; }
     }
 }

@@ -15,19 +15,36 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
     public class BlobStreamTests : BlobTestBase
     {
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
         [TestMethod]
         [Description("BlobSeek")]
         [TestCategory(ComponentCategory.Blob)]
@@ -71,16 +88,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             try
             {
                 container.Create();
-                CloudPageBlob blob = container.GetPageBlobReference("blob1");
-                MemoryStream memStream = new MemoryStream(buffer);
-                Stream blobStream = blob.OpenWrite(2048);
-                blobStream.Write(buffer, 0, 2048);
 
-                byte[] testBuffer = new byte[2048];
-                MemoryStream dstStream = new MemoryStream(testBuffer);
-                blob.DownloadRangeToStream(dstStream, null, null);
-                blobStream.Close();
-                TestHelper.AssertStreamsAreEqual(memStream, dstStream);
+                CloudPageBlob blob = container.GetPageBlobReference("blob1");
+                using (CloudBlobStream blobStream = blob.OpenWrite(2048))
+                {
+                    blobStream.Write(buffer, 0, 2048);
+                    blobStream.Flush();
+
+                    byte[] testBuffer = new byte[2048];
+                    MemoryStream dstStream = new MemoryStream(testBuffer);
+                    blob.DownloadRangeToStream(dstStream, null, null);
+
+                    MemoryStream memStream = new MemoryStream(buffer);
+                    TestHelper.AssertStreamsAreEqual(memStream, dstStream);
+                }
             }
             finally
             {
@@ -107,8 +128,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     blob.UploadFromStream(srcStream);
 
                     Stream dstStream = blob.OpenRead();
-                    srcStream.Seek(srcStream.Length, 0);
-                    dstStream.Seek(2048, 0);
                     TestHelper.AssertStreamsAreEqual(srcStream, dstStream);
                 }
             }
@@ -132,14 +151,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 container.Create();
                 CloudPageBlob blob = container.GetPageBlobReference("blob1");
+
                 Stream blobStream = blob.OpenWrite(2048);
-                MemoryStream memoryStream = new MemoryStream(buffer);
                 blobStream.Write(buffer, 0, 2048);
                 blobStream.Close();
 
+                MemoryStream memoryStream = new MemoryStream(buffer);
                 Stream dstStream = blob.OpenRead();
-                dstStream.Seek(dstStream.Length, 0);
-                memoryStream.Seek(memoryStream.Length, 0);
                 TestHelper.AssertStreamsAreEqual(memoryStream, dstStream);
             }
             finally
@@ -172,15 +190,15 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 memoryStream.Seek(1024, 0);
                 Assert.AreEqual(blobStream.Position, 1024);
 
-                byte[] testBuffer = GetRandomBuffer(1024); ;
+                byte[] testBuffer = GetRandomBuffer(1024);
 
                 memoryStream.Write(testBuffer, 0, 1024);
                 blobStream.Write(testBuffer, 0, 1024);
                 Assert.AreEqual(blobStream.Position, memoryStream.Position);
 
                 blobStream.Close();
+
                 Stream dstStream = blob.OpenRead();
-                dstStream.Seek(2048, 0);
                 TestHelper.AssertStreamsAreEqual(memoryStream, dstStream);
             }
             finally

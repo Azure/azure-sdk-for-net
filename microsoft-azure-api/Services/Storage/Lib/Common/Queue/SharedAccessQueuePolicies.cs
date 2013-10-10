@@ -17,13 +17,15 @@
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
+    using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents the collection of shared access policies defined for a queue.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Microsoft.Naming",
         "CA1710:IdentifiersShouldHaveCorrectSuffix",
         Justification = "Public APIs should not expose base collection types.")]
@@ -161,6 +163,8 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
         public void CopyTo(KeyValuePair<string, SharedAccessQueuePolicy>[] array, int arrayIndex)
         {
+            CommonUtility.AssertNotNull("array", array);
+
             foreach (KeyValuePair<string, SharedAccessQueuePolicy> item in this.policies)
             {
                 array[arrayIndex++] = item;

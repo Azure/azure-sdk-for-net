@@ -19,7 +19,7 @@
 namespace Microsoft.WindowsAzure.Test.Network
 {
     /// <summary>
-    /// BlobBehaviors are pre-built ProxyBehaviors for use with the XStore Blob FE.
+    /// BlobBehaviors are pre-built ProxyBehaviors for use with the Azure Storage Blob Front End.
     /// </summary>
     public static class BlobBehaviors
     {

@@ -18,10 +18,12 @@
 namespace Microsoft.WindowsAzure.Storage.Table
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// Represents a segment of <see cref="CloudTable"/> results and contains continuation token information.
+    /// Represents a segment of <see cref="CloudTable"/> results, with continuation information for pagination scenarios.
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Back compatibility.")]
     public sealed class TableResultSegment : IEnumerable<CloudTable>
     {
         /// <summary>
@@ -34,7 +36,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         }
 
         /// <summary>
-        /// Stores the continuation token used to retrieve the next segment of <see cref="CloudTable"/> results.
+        /// Stores the continuation token used to retrieve the next segment of <see cref="CloudTable"/> results or null if there are no more results.
         /// </summary>
         private TableContinuationToken continuationToken;
 
@@ -45,7 +47,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
         public IList<CloudTable> Results { get; internal set; }
 
         /// <summary>
-        /// Gets a continuation token to use to retrieve the next set of results with a subsequent call to the operation.
+        /// Gets the continuation token used to retrieve the next segment of <see cref="CloudTable"/> results. Returns null if there are no more results.
         /// </summary>
         /// <value>The continuation token.</value>
         public TableContinuationToken ContinuationToken

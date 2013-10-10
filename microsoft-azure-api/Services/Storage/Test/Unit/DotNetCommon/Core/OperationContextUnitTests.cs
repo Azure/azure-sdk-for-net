@@ -15,15 +15,17 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Test.Network;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.WindowsAzure.Test.Network;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml;
 
 namespace Microsoft.WindowsAzure.Storage.Core
 {
@@ -80,6 +82,29 @@ namespace Microsoft.WindowsAzure.Storage.Core
         #endregion
 
         [TestMethod]
+        [Description("Test last result")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.Cloud)]
+        public void OpContextTestLastResult()
+        {
+            CloudBlobClient blobClient = GenerateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference("test");
+
+            DateTime start = DateTime.Now;
+            OperationContext opContext = new OperationContext();
+            Assert.IsNull(opContext.LastResult);
+            container.Exists(null, opContext);
+            Assert.IsNotNull(opContext.LastResult);
+            Assert.IsNotNull(opContext.LastResult.RequestDate);
+            Assert.IsNotNull(opContext.LastResult.ServiceRequestID);
+            Assert.IsTrue(opContext.LastResult.StartTime >= start);
+            Assert.IsTrue(opContext.LastResult.EndTime <= DateTime.Now);
+            Assert.IsTrue(opContext.LastResult.HttpStatusCode > 0);
+        }
+
+        [TestMethod]
         [Description("Test client request id on blob request")]
         [TestCategory(ComponentCategory.Blob)]
         [TestCategory(TestTypeCategory.UnitTest)]
@@ -99,6 +124,12 @@ namespace Microsoft.WindowsAzure.Storage.Core
             act = () => container.EndExists(container.BeginExists(null, new OperationContext() { ClientRequestID = uniqueID }, null, null));
 
             TestHelper.VerifyHeaderWasSent("x-ms-client-request-id", uniqueID, XStoreSelectors.BlobTraffic().IfHostNameContains(blobClient.Credentials.AccountName), act);
+
+#if TASK
+            act = () => container.ExistsAsync(null, new OperationContext() { ClientRequestID = uniqueID }).Wait();
+
+            TestHelper.VerifyHeaderWasSent("x-ms-client-request-id", uniqueID, XStoreSelectors.BlobTraffic().IfHostNameContains(blobClient.Credentials.AccountName), act);
+#endif
         }
 
         [TestMethod]
@@ -121,9 +152,16 @@ namespace Microsoft.WindowsAzure.Storage.Core
             Action act = () => container.Exists(null, ctx);
 
             TestHelper.VerifyHeaderWasSent(ctx.UserHeaders.Keys.First(), ctx.UserHeaders[ctx.UserHeaders.Keys.First()], XStoreSelectors.BlobTraffic().IfHostNameContains(blobClient.Credentials.AccountName), act);
+            
             act = () => container.EndExists(container.BeginExists(null, ctx, null, null));
 
             TestHelper.VerifyHeaderWasSent(ctx.UserHeaders.Keys.First(), ctx.UserHeaders[ctx.UserHeaders.Keys.First()], XStoreSelectors.BlobTraffic().IfHostNameContains(blobClient.Credentials.AccountName), act);
+            
+#if TASK
+            act = () => container.ExistsAsync(null, ctx).Wait();
+
+            TestHelper.VerifyHeaderWasSent(ctx.UserHeaders.Keys.First(), ctx.UserHeaders[ctx.UserHeaders.Keys.First()], XStoreSelectors.BlobTraffic().IfHostNameContains(blobClient.Credentials.AccountName), act);
+#endif
         }
 
         [TestMethod]
@@ -146,6 +184,12 @@ namespace Microsoft.WindowsAzure.Storage.Core
             act = () => queue.EndExists(queue.BeginExists(null, new OperationContext() { ClientRequestID = uniqueID }, null, null));
 
             TestHelper.VerifyHeaderWasSent("x-ms-client-request-id", uniqueID, XStoreSelectors.QueueTraffic().IfHostNameContains(qClient.Credentials.AccountName), act);
+
+#if TASK
+            act = () => queue.ExistsAsync(null, new OperationContext() { ClientRequestID = uniqueID }).Wait();
+
+            TestHelper.VerifyHeaderWasSent("x-ms-client-request-id", uniqueID, XStoreSelectors.QueueTraffic().IfHostNameContains(qClient.Credentials.AccountName), act);
+#endif
         }
 
         [TestMethod]
@@ -172,6 +216,12 @@ namespace Microsoft.WindowsAzure.Storage.Core
             act = () => queue.EndExists(queue.BeginExists(null, ctx, null, null));
 
             TestHelper.VerifyHeaderWasSent(ctx.UserHeaders.Keys.First(), ctx.UserHeaders[ctx.UserHeaders.Keys.First()], XStoreSelectors.QueueTraffic().IfHostNameContains(qClient.Credentials.AccountName), act);
+
+#if TASK
+            act = () => queue.ExistsAsync(null, ctx).Wait();
+
+            TestHelper.VerifyHeaderWasSent(ctx.UserHeaders.Keys.First(), ctx.UserHeaders[ctx.UserHeaders.Keys.First()], XStoreSelectors.QueueTraffic().IfHostNameContains(qClient.Credentials.AccountName), act);
+#endif
         }
 
 
@@ -195,6 +245,12 @@ namespace Microsoft.WindowsAzure.Storage.Core
             act = () => table.EndExists(table.BeginExists(null, new OperationContext() { ClientRequestID = uniqueID }, null, null));
 
             TestHelper.VerifyHeaderWasSent("x-ms-client-request-id", uniqueID, XStoreSelectors.TableTraffic().IfHostNameContains(tClient.Credentials.AccountName), act);
+
+#if TASK
+            act = () => table.ExistsAsync(null, new OperationContext() { ClientRequestID = uniqueID }).Wait();
+
+            TestHelper.VerifyHeaderWasSent("x-ms-client-request-id", uniqueID, XStoreSelectors.TableTraffic().IfHostNameContains(tClient.Credentials.AccountName), act);
+#endif
         }
 
         [TestMethod]
@@ -221,6 +277,12 @@ namespace Microsoft.WindowsAzure.Storage.Core
             act = () => table.EndExists(table.BeginExists(null, ctx, null, null));
 
             TestHelper.VerifyHeaderWasSent(ctx.UserHeaders.Keys.First(), ctx.UserHeaders[ctx.UserHeaders.Keys.First()], XStoreSelectors.TableTraffic().IfHostNameContains(tClient.Credentials.AccountName), act);
+
+#if TASK
+            act = () => table.ExistsAsync(null, ctx).Wait();
+
+            TestHelper.VerifyHeaderWasSent(ctx.UserHeaders.Keys.First(), ctx.UserHeaders[ctx.UserHeaders.Keys.First()], XStoreSelectors.TableTraffic().IfHostNameContains(tClient.Credentials.AccountName), act);
+#endif
         }
 
         [TestMethod]

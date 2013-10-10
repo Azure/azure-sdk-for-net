@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Test.Network
         /// <returns>A new XElement</returns>
         public static XElement GetEntry(string @base)
         {
-            var element = new XElement(Entry);
+            XElement element = new XElement(Entry);
             element.SetAttributeValue(XNamespace.Xml + "base", @base);
             return element;
         }
@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.Test.Network
         }
 
         /// <summary>
-        /// GetError retuns the error element of an XStore error
+        /// GetError retuns the error element of an Azure Storage error
         /// </summary>
         /// <param name="code">The code to return</param>
         /// <param name="message">The message to return</param>

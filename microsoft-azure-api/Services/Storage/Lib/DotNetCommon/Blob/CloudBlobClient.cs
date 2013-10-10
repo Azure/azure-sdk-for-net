@@ -21,20 +21,23 @@ namespace Microsoft.WindowsAzure.Storage.Blob
     using Microsoft.WindowsAzure.Storage.Auth.Protocol;
     using Microsoft.WindowsAzure.Storage.Blob.Protocol;
     using Microsoft.WindowsAzure.Storage.Core;
-    using Microsoft.WindowsAzure.Storage.Core.Auth;
     using Microsoft.WindowsAzure.Storage.Core.Executor;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
-    /// Provides a client-side logical representation of the Windows Azure Blob Service. This client is used to configure and execute requests against the Blob Service.
+    /// Provides a client-side logical representation of the Windows Azure Blob service. This client is used to configure and execute requests against the Blob service.
     /// </summary>
-    /// <remarks>The service client encapsulates the base URI for the Blob service. If the service client will be used for authenticated access, it also encapsulates the credentials for accessing the storage account.</remarks>
+    /// <remarks>The service client encapsulates the base URI for the Blob service. If the service client will be used for authenticated access, 
+    /// it also encapsulates the credentials for accessing the storage account.</remarks>
     public sealed partial class CloudBlobClient
     {
         private IAuthenticationHandler authenticationHandler;
@@ -48,6 +51,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 return this.authenticationScheme;
             }
+
             set
             {
                 if (value != this.authenticationScheme)
@@ -88,16 +92,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             }
         }
 
-        /// <summary>
-        /// Returns an enumerable collection of containers.
-        /// </summary>
-        /// <returns>An enumerable collection of containers.</returns>
-        [DoesServiceRequest]
-        public IEnumerable<CloudBlobContainer> ListContainers()
-        {
-            return this.ListContainers(null /* prefix */, ContainerListingDetails.None, null /* options */, null /* operationContext */);
-        }
-
+#if SYNC
         /// <summary>
         /// Returns an enumerable collection of containers whose names 
         /// begin with the specified prefix and that are retrieved lazily.
@@ -108,14 +103,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An enumerable collection of containers that are retrieved lazily.</returns>
         [DoesServiceRequest]
-        public IEnumerable<CloudBlobContainer> ListContainers(string prefix, ContainerListingDetails detailsIncluded, BlobRequestOptions options = null, OperationContext operationContext = null)
+        public IEnumerable<CloudBlobContainer> ListContainers(string prefix = null, ContainerListingDetails detailsIncluded = ContainerListingDetails.None, BlobRequestOptions options = null, OperationContext operationContext = null)
         {
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.Unspecified, this);
-            return General.LazyEnumerable(
-                token =>
-                this.ListContainersSegmentedCore(prefix, detailsIncluded, null /* maxResults */, (BlobContinuationToken)token, modifiedOptions, operationContext),
-                long.MaxValue,
-                operationContext);
+            return CommonUtility.LazyEnumerable(
+                token => this.ListContainersSegmentedCore(prefix, detailsIncluded, null /* maxResults */, (BlobContinuationToken)token, modifiedOptions, operationContext),
+                long.MaxValue);
         }
 
         /// <summary>
@@ -130,12 +123,24 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
+        /// Returns a result segment containing a collection of <see cref="CloudBlobContainer"/> objects.
+        /// </summary>
+        /// <param name="prefix">The container name prefix.</param>
+        /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
+        /// <returns>A result segment of containers.</returns>
+        [DoesServiceRequest]
+        public ContainerResultSegment ListContainersSegmented(string prefix, BlobContinuationToken currentToken)
+        {
+            return this.ListContainersSegmented(prefix, ContainerListingDetails.None, null /* maxResults */, currentToken, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
         /// Returns a result segment containing a collection of containers whose names begin with the specified prefix.
         /// </summary>
         /// <param name="prefix">The container name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -155,7 +160,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="prefix">The container name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param>
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -167,6 +172,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 options.RetryPolicy,
                 operationContext);
         }
+#endif
 
         /// <summary>
         /// Begins an asynchronous request to return a result segment containing a collection of containers.
@@ -182,15 +188,29 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
+        /// Begins an asynchronous request to return a result segment containing a collection of containers.
+        /// </summary>
+        /// <param name="prefix">The container name prefix.</param>
+        /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param>
+        /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+        [DoesServiceRequest]
+        public ICancellableAsyncResult BeginListContainersSegmented(string prefix, BlobContinuationToken continuationToken, AsyncCallback callback, object state)
+        {
+            return this.BeginListContainersSegmented(prefix, ContainerListingDetails.None, null /* maxResults */, continuationToken, null /* options */, null /* operationContext */, callback, state);
+        }
+
+        /// <summary>
         /// Begins an asynchronous request to return a result segment containing a collection of containers
         /// whose names begin with the specified prefix.
         /// </summary>
         /// <param name="prefix">The container name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An object that represents the context for the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -218,13 +238,99 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             return new ContainerResultSegment(resultSegment.Results, (BlobContinuationToken)resultSegment.ContinuationToken);
         }
 
+#if TASK
+        /// <summary>
+        /// Returns a task that performs an asynchronous request to return a result segment containing a collection of containers.
+        /// </summary>
+        /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ContainerResultSegment> ListContainersSegmentedAsync(BlobContinuationToken continuationToken)
+        {
+            return this.ListContainersSegmentedAsync(continuationToken, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous request to return a result segment containing a collection of containers.
+        /// </summary>
+        /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ContainerResultSegment> ListContainersSegmentedAsync(BlobContinuationToken continuationToken, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListContainersSegmented, this.EndListContainersSegmented, continuationToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous request to return a result segment containing a collection of containers.
+        /// </summary>
+        /// <param name="prefix">The container name prefix.</param>
+        /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ContainerResultSegment> ListContainersSegmentedAsync(string prefix, BlobContinuationToken continuationToken)
+        {
+            return this.ListContainersSegmentedAsync(prefix, continuationToken, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous request to return a result segment containing a collection of containers.
+        /// </summary>
+        /// <param name="prefix">The container name prefix.</param>
+        /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ContainerResultSegment> ListContainersSegmentedAsync(string prefix, BlobContinuationToken continuationToken, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListContainersSegmented, this.EndListContainersSegmented, prefix, continuationToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous request to return a result segment containing a collection of containers.
+        /// </summary>
+        /// <param name="prefix">The container name prefix.</param>
+        /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
+        /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ContainerResultSegment> ListContainersSegmentedAsync(string prefix, ContainerListingDetails detailsIncluded, int? maxResults, BlobContinuationToken continuationToken, BlobRequestOptions options, OperationContext operationContext)
+        {
+            return this.ListContainersSegmentedAsync(prefix, detailsIncluded, maxResults, continuationToken, options, operationContext, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous request to return a result segment containing a collection of containers.
+        /// </summary>
+        /// <param name="prefix">The container name prefix.</param>
+        /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
+        /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// <param name="continuationToken">A continuation token returned by a previous listing operation.</param> 
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ContainerResultSegment> ListContainersSegmentedAsync(string prefix, ContainerListingDetails detailsIncluded, int? maxResults, BlobContinuationToken continuationToken, BlobRequestOptions options, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListContainersSegmented, this.EndListContainersSegmented, prefix, detailsIncluded, maxResults, continuationToken, options, operationContext, cancellationToken);
+        }
+#endif
+
+#if SYNC
         /// <summary>
         /// Returns an enumerable collection of the blobs in the container that are retrieved lazily.
         /// </summary>
         /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>An enumerable collection of objects that implement <see cref="IListBlobItem"/> and are retrieved lazily.</returns>
         [DoesServiceRequest]
@@ -242,7 +348,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="prefix">The blob name prefix.</param>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
         [DoesServiceRequest]
@@ -255,13 +361,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Returns a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param> 
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
         [DoesServiceRequest]
@@ -275,11 +381,12 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             return container.ListBlobsSegmented(listingPrefix, useFlatBlobListing, blobListingDetails, maxResults, currentToken, options, operationContext);
         }
 
+#endif
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="prefix">The blob name prefix.</param>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -294,17 +401,18 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// Begins an asynchronous operation to return a result segment containing a collection of blob items 
         /// in the container.
         /// </summary>
-        /// <param name="prefix">The blob name prefix.</param>
-        /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param> 
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Needed to ensure exceptions are not thrown on threadpool threads.")]
         [DoesServiceRequest]
         public ICancellableAsyncResult BeginListBlobsSegmented(string prefix, bool useFlatBlobListing, BlobListingDetails blobListingDetails, int? maxResults, BlobContinuationToken currentToken, BlobRequestOptions options, OperationContext operationContext, AsyncCallback callback, object state)
         {
@@ -313,7 +421,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             CloudBlobClient.ParseUserPrefix(prefix, out containerName, out listingPrefix);
 
             CloudBlobContainer container = this.GetContainerReference(containerName);
-            ChainedAsyncResult<BlobResultSegment> result = new ChainedAsyncResult<BlobResultSegment>(callback, state);
+            StorageAsyncResult<BlobResultSegment> result = new StorageAsyncResult<BlobResultSegment>(callback, state);
             ICancellableAsyncResult asyncResult = container.BeginListBlobsSegmented(
                 listingPrefix,
                 useFlatBlobListing,
@@ -350,23 +458,92 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A result segment containing objects that implement <see cref="IListBlobItem"/>.</returns>
         public BlobResultSegment EndListBlobsSegmented(IAsyncResult asyncResult)
         {
-            ChainedAsyncResult<BlobResultSegment> result = (ChainedAsyncResult<BlobResultSegment>)asyncResult;
+            StorageAsyncResult<BlobResultSegment> result = (StorageAsyncResult<BlobResultSegment>)asyncResult;
             result.End();
             return result.Result;
         }
 
+#if TASK
         /// <summary>
-        /// Gets a reference to a blob in this container.
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
+        /// in the container.
+        /// </summary>
+        /// <param name="prefix">The blob name prefix, including the container name.</param>
+        /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<BlobResultSegment> ListBlobsSegmentedAsync(string prefix, BlobContinuationToken currentToken)
+        {
+            return this.ListBlobsSegmentedAsync(prefix, currentToken, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
+        /// in the container.
+        /// </summary>
+        /// <param name="prefix">The blob name prefix.</param>
+        /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<BlobResultSegment> ListBlobsSegmentedAsync(string prefix, BlobContinuationToken currentToken, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListBlobsSegmented, this.EndListBlobsSegmented, prefix, currentToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
+        /// in the container.
+        /// </summary>
+        /// <param name="prefix">The blob name prefix.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
+        /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param> 
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<BlobResultSegment> ListBlobsSegmentedAsync(string prefix, bool useFlatBlobListing, BlobListingDetails blobListingDetails, int? maxResults, BlobContinuationToken currentToken, BlobRequestOptions options, OperationContext operationContext)
+        {
+            return this.ListBlobsSegmentedAsync(prefix, useFlatBlobListing, blobListingDetails, maxResults, currentToken, options, operationContext, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of blob items 
+        /// in the container.
+        /// </summary>
+        /// <param name="prefix">The blob name prefix.</param>
+        /// <param name="useFlatBlobListing">Specifies whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
+        /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
+        /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// <param name="currentToken">A <see cref="BlobContinuationToken"/> returned by a previous listing operation.</param> 
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<BlobResultSegment> ListBlobsSegmentedAsync(string prefix, bool useFlatBlobListing, BlobListingDetails blobListingDetails, int? maxResults, BlobContinuationToken currentToken, BlobRequestOptions options, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListBlobsSegmented, this.EndListBlobsSegmented, prefix, useFlatBlobListing, blobListingDetails, maxResults, currentToken, options, operationContext, cancellationToken);
+        }
+#endif
+
+#if SYNC
+        /// <summary>
+        /// Gets a reference to a blob from the service.
         /// </summary>
         /// <param name="blobUri">The URI of the blob.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A reference to the blob.</returns>
         [DoesServiceRequest]
         public ICloudBlob GetBlobReferenceFromServer(Uri blobUri, AccessCondition accessCondition = null, BlobRequestOptions options = null, OperationContext operationContext = null)
         {
-            CommonUtils.AssertNotNull("blobUri", blobUri);
+            CommonUtility.AssertNotNull("blobUri", blobUri);
 
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.Unspecified, this);
             return Executor.ExecuteSync(
@@ -374,9 +551,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 modifiedOptions.RetryPolicy,
                 operationContext);
         }
+#endif
 
         /// <summary>
-        /// Begins an asynchronous operation to get a reference to a blob in this container.
+        /// Begins an asynchronous operation to get a reference to a blob from the service.
         /// </summary>
         /// <param name="blobUri">The URI of the blob.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
@@ -389,11 +567,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Begins an asynchronous operation to get a reference to a blob in this container.
+        /// Begins an asynchronous operation to get a reference to a blob from the service.
         /// </summary>
         /// <param name="blobUri">The URI of the blob.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
@@ -401,7 +579,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         [DoesServiceRequest]
         public ICancellableAsyncResult BeginGetBlobReferenceFromServer(Uri blobUri, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext, AsyncCallback callback, object state)
         {
-            CommonUtils.AssertNotNull("blobUri", blobUri);
+            CommonUtility.AssertNotNull("blobUri", blobUri);
 
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.Unspecified, this);
             return Executor.BeginExecuteAsync(
@@ -413,7 +591,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Ends an asynchronous operation to get a reference to a blob in this container.
+        /// Ends an asynchronous operation to get a reference to a blob from the service.
         /// </summary>
         /// <param name="asyncResult">An <see cref="IAsyncResult"/> that references the pending asynchronous operation.</param>
         /// <returns>A reference to the blob.</returns>
@@ -422,6 +600,60 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             return Executor.EndExecuteAsync<ICloudBlob>(asyncResult);
         }
 
+#if TASK
+        /// <summary>
+        /// Returns a task that gets a reference to a blob from the service.
+        /// </summary>
+        /// <param name="blobUri">The URI of the blob.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ICloudBlob> GetBlobReferenceFromServerAsync(Uri blobUri)
+        {
+            return this.GetBlobReferenceFromServerAsync(blobUri, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that gets a reference to a blob from the service.
+        /// </summary>
+        /// <param name="blobUri">The URI of the blob.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ICloudBlob> GetBlobReferenceFromServerAsync(Uri blobUri, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginGetBlobReferenceFromServer, this.EndGetBlobReferenceFromServer, blobUri, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="Task{T}"/> object that gets a reference to a blob from the service.
+        /// </summary>
+        /// <param name="blobUri">The URI of the blob.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ICloudBlob> GetBlobReferenceFromServerAsync(Uri blobUri, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
+        {
+            return this.GetBlobReferenceFromServerAsync(blobUri, accessCondition, options, operationContext, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that gets a reference to a blob from the service.
+        /// </summary>
+        /// <param name="blobUri">The URI of the blob.</param>
+        /// <param name="accessCondition">An object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ICloudBlob> GetBlobReferenceFromServerAsync(Uri blobUri, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginGetBlobReferenceFromServer, this.EndGetBlobReferenceFromServer, blobUri, accessCondition, options, operationContext, cancellationToken);
+        }
+#endif
+
         /// <summary>
         /// Core implementation for the ListContainers method.
         /// </summary>
@@ -429,8 +661,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="detailsIncluded">The details included.</param>
         /// <param name="currentToken">The continuation token.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="ResultSegment{T}"/> that lists the containers.</returns>
         private RESTCommand<ResultSegment<CloudBlobContainer>> ListContainersImpl(string prefix, ContainerListingDetails detailsIncluded, BlobContinuationToken currentToken, int? maxResults, BlobRequestOptions options)
         {
@@ -445,8 +677,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             getCmd.RetrieveResponseStream = true;
             getCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => ContainerHttpWebRequestFactory.List(uri, serverTimeout, listingContext, detailsIncluded, ctx);
             getCmd.SignRequest = this.AuthenticationHandler.SignRequest;
-            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            getCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 ListContainersResponse listContainersResponse = new ListContainersResponse(cmd.ResponseStream);
                 List<CloudBlobContainer> containersList = new List<CloudBlobContainer>(
@@ -474,7 +706,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blobUri">The URI of the blob.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that fetches the attributes.</returns>
         private RESTCommand<ICloudBlob> GetBlobReferenceImpl(Uri blobUri, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -492,8 +724,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             getCmd.SignRequest = client.AuthenticationHandler.SignRequest;
             getCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-                
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+
                 BlobAttributes attributes = new BlobAttributes()
                 {
                     Uri = blobUri,
@@ -565,6 +797,55 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             return Executor.EndExecuteAsync<ServiceProperties>(asyncResult);
         }
 
+#if TASK
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to get the properties of the blob service.
+        /// </summary>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ServiceProperties> GetServicePropertiesAsync()
+        {
+            return this.GetServicePropertiesAsync(CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to get the properties of the blob service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ServiceProperties> GetServicePropertiesAsync(CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginGetServiceProperties, this.EndGetServiceProperties, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to get the properties of the blob service.
+        /// </summary>
+        /// <param name="requestOptions">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ServiceProperties> GetServicePropertiesAsync(BlobRequestOptions requestOptions, OperationContext operationContext)
+        {
+            return this.GetServicePropertiesAsync(requestOptions, operationContext, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to get the properties of the blob service.
+        /// </summary>
+        /// <param name="requestOptions">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ServiceProperties> GetServicePropertiesAsync(BlobRequestOptions requestOptions, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginGetServiceProperties, this.EndGetServiceProperties, requestOptions, operationContext, cancellationToken);
+        }
+#endif
+
+#if SYNC
         /// <summary>
         /// Gets the properties of the blob service.
         /// </summary>
@@ -581,6 +862,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 requestOptions.RetryPolicy,
                 operationContext);
         }
+#endif
 
         /// <summary>
         /// Begins an asynchronous operation to set the properties of the blob service.
@@ -627,6 +909,59 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             Executor.EndExecuteAsync<NullType>(asyncResult);
         }
 
+#if TASK
+        /// <summary>
+        /// Returns a task that gets the properties of the blob service.
+        /// </summary>
+        /// <param name="properties">The blob service properties.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task SetServicePropertiesAsync(ServiceProperties properties)
+        {
+            return this.SetServicePropertiesAsync(properties, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that gets the properties of the blob service.
+        /// </summary>
+        /// <param name="properties">The blob service properties.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task SetServicePropertiesAsync(ServiceProperties properties, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromVoidApm(this.BeginSetServiceProperties, this.EndSetServiceProperties, properties, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that gets the properties of the blob service.
+        /// </summary>
+        /// <param name="properties">The blob service properties.</param>
+        /// <param name="requestOptions">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task SetServicePropertiesAsync(ServiceProperties properties, BlobRequestOptions requestOptions, OperationContext operationContext)
+        {
+            return this.SetServicePropertiesAsync(properties, requestOptions, operationContext, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that gets the properties of the blob service.
+        /// </summary>
+        /// <param name="properties">The blob service properties.</param>
+        /// <param name="requestOptions">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task SetServicePropertiesAsync(ServiceProperties properties, BlobRequestOptions requestOptions, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromVoidApm(this.BeginSetServiceProperties, this.EndSetServiceProperties, properties, requestOptions, operationContext, cancellationToken);
+        }
+#endif
+
+#if SYNC
         /// <summary>
         /// Sets the properties of the blob service.
         /// </summary>
@@ -643,6 +978,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 requestOptions.RetryPolicy,
                 operationContext);
         }
+#endif
 
         private RESTCommand<ServiceProperties> GetServicePropertiesImpl(BlobRequestOptions requestOptions)
         {
@@ -652,23 +988,17 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             retCmd.RetrieveResponseStream = true;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(
-                System.Net.HttpStatusCode.OK,
-                resp,
-                null /* retVal */,
-                cmd,
-                ex,
-                ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
 
             retCmd.PostProcessResponse =
-                (cmd, resp, ex, ctx) => BlobHttpResponseParsers.ReadServiceProperties(cmd.ResponseStream);
+                (cmd, resp, ctx) => BlobHttpResponseParsers.ReadServiceProperties(cmd.ResponseStream);
             retCmd.ApplyRequestOptions(requestOptions);
             return retCmd;
         }
 
         private RESTCommand<NullType> SetServicePropertiesImpl(ServiceProperties properties, BlobRequestOptions requestOptions)
         {
-            MemoryStream str = new MemoryStream();
+            MultiBufferMemoryStream str = new MultiBufferMemoryStream(null /* bufferManager */, (int)(1 * Constants.KB));
             try
             {
                 properties.WriteServiceProperties(str);
@@ -687,7 +1017,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             retCmd.SignRequest = this.AuthenticationHandler.SignRequest;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, NullType.Value, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, NullType.Value, cmd, ex);
             retCmd.ApplyRequestOptions(requestOptions);
             return retCmd;
         }

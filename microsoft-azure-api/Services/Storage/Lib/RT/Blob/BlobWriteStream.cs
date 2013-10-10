@@ -17,13 +17,13 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.WindowsAzure.Storage.Core;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
     internal sealed class BlobWriteStream : BlobWriteStreamBase
     {
@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blockBlob">Blob reference to write to.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         internal BlobWriteStream(CloudBlockBlob blockBlob, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : base(blockBlob, accessCondition, options, operationContext)
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="pageBlobSize">Size of the page blob.</param>
         /// <param name="createNew">Use <c>true</c> if the page blob is newly created, <c>false</c> otherwise.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         internal BlobWriteStream(CloudPageBlob pageBlob, long pageBlobSize, bool createNew, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
             : base(pageBlob, pageBlobSize, createNew, accessCondition, options, operationContext)
         {
@@ -61,11 +61,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         public override long Seek(long offset, SeekOrigin origin)
         {
             long oldOffset = this.currentOffset;
-            long newOffset = base.Seek(offset, origin);
+            long newOffset = this.GetNewOffset(offset, origin);
 
             if (oldOffset != newOffset)
             {
-                this.blobMD5 = null;
+                if (this.blobMD5 != null)
+                {
+                    this.blobMD5.Dispose();
+                    this.blobMD5 = null;
+                }
+
                 this.Flush();
             }
 
@@ -101,13 +106,18 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A task that represents the asynchronous write operation.</returns>
         public override async Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            CommonUtils.AssertNotNull("buffer", buffer);
-            CommonUtils.AssertInBounds("offset", offset, 0, buffer.Length);
-            CommonUtils.AssertInBounds("count", count, 0, buffer.Length - offset);
+            CommonUtility.AssertNotNull("buffer", buffer);
+            CommonUtility.AssertInBounds("offset", offset, 0, buffer.Length);
+            CommonUtility.AssertInBounds("count", count, 0, buffer.Length - offset);
 
             if (this.lastException != null)
             {
                 throw this.lastException;
+            }
+
+            if (this.committed)
+            {
+                throw new InvalidOperationException(SR.BlobStreamAlreadyCommitted);
             }
 
             if (this.blobMD5 != null)
@@ -118,10 +128,10 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             this.currentOffset += count;
             while (count > 0)
             {
-                int maxBytesToWrite = this.Blob.StreamWriteSizeInBytes - (int)this.buffer.Length;
+                int maxBytesToWrite = this.streamWriteSizeInBytes - (int)this.internalBuffer.Length;
                 int bytesToWrite = Math.Min(count, maxBytesToWrite);
 
-                this.buffer.Write(buffer, offset, bytesToWrite);
+                this.internalBuffer.Write(buffer, offset, bytesToWrite);
                 if (this.blockMD5 != null)
                 {
                     this.blockMD5.UpdateHash(buffer, offset, bytesToWrite);
@@ -157,8 +167,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                 throw this.lastException;
             }
 
+            if (this.committed)
+            {
+                throw new InvalidOperationException(SR.BlobStreamAlreadyCommitted);
+            }
+
             await this.DispatchWriteAsync();
-            this.noPendingWritesEvent.WaitOne();
+            await Task.Run(() => this.noPendingWritesEvent.Wait(), cancellationToken);
 
             if (this.lastException != null)
             {
@@ -172,45 +187,55 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!this.disposed)
             {
-                this.CommitAsync().Wait();
+                this.disposed = true;
+
+                if (disposing)
+                {
+                    if (!this.committed)
+                    {
+                        this.CommitAsync().Wait();
+                    }
+                }
             }
 
             base.Dispose(disposing);
         }
 
         /// <summary>
-        /// Asynchronously commits the blob. For block blobs, this means uploading the block list. For
-        /// page blobs, however, it only uploads blob properties.
+        /// Asynchronously clears all buffers for this stream, causes any buffered data to be written to the underlying blob, and commits the blob.
         /// </summary>
         /// <returns>A task that represents the asynchronous commit operation.</returns>
-        private async Task CommitAsync()
+        public async Task CommitAsync()
         {
             await this.FlushAsync();
+            this.committed = true;
 
-            if (this.blockBlob != null)
+            try
             {
-                if (this.blobMD5 != null)
+                if (this.blockBlob != null)
                 {
-                    this.blockBlob.Properties.ContentMD5 = this.blobMD5.ComputeHash();
-                    this.blobMD5 = null;
-                }
+                    if (this.blobMD5 != null)
+                    {
+                        this.blockBlob.Properties.ContentMD5 = this.blobMD5.ComputeHash();
+                    }
 
-                if (this.blockList != null)
-                {
                     await this.blockBlob.PutBlockListAsync(this.blockList, this.accessCondition, this.options, this.operationContext);
-                    this.blockList = null;
+                }
+                else
+                {
+                    if (this.blobMD5 != null)
+                    {
+                        this.pageBlob.Properties.ContentMD5 = this.blobMD5.ComputeHash();
+                        await this.pageBlob.SetPropertiesAsync(this.accessCondition, this.options, this.operationContext);
+                    }
                 }
             }
-            else
+            catch (Exception e)
             {
-                if (this.blobMD5 != null)
-                {
-                    this.pageBlob.Properties.ContentMD5 = this.blobMD5.ComputeHash();
-                    this.blobMD5 = null;
-                    await this.pageBlob.SetPropertiesAsync(this.accessCondition, this.options, this.operationContext);
-                }
+                this.lastException = e;
+                throw;
             }
         }
 
@@ -220,19 +245,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A task that represents the asynchronous write operation.</returns>
         private async Task DispatchWriteAsync()
         {
-            if (this.buffer.Length == 0)
+            if (this.internalBuffer.Length == 0)
             {
                 return;
             }
 
-            MemoryStream bufferToUpload = this.buffer;
-            this.buffer = new MemoryStream(this.Blob.StreamWriteSizeInBytes);
+            MultiBufferMemoryStream bufferToUpload = this.internalBuffer;
+            this.internalBuffer = new MultiBufferMemoryStream(this.Blob.ServiceClient.BufferManager);
             bufferToUpload.Seek(0, SeekOrigin.Begin);
 
             string bufferMD5 = null;
             if (this.blockMD5 != null)
             {
                 bufferMD5 = this.blockMD5.ComputeHash();
+                this.blockMD5.Dispose();
                 this.blockMD5 = new MD5Wrapper();
             }
 
@@ -246,7 +272,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 if ((bufferToUpload.Length % Constants.PageSize) != 0)
                 {
-                    throw new IOException(SR.InvalidPageSize);
+                    this.lastException = new IOException(SR.InvalidPageSize);
+                    throw this.lastException;
                 }
 
                 long offset = this.currentPageOffset;
@@ -255,7 +282,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             }
         }
 
-#pragma warning disable 4014
         /// <summary>
         /// Starts an asynchronous PutBlock operation as soon as the parallel
         /// operation semaphore becomes available.
@@ -263,28 +289,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blockData">Data to be uploaded</param>
         /// <param name="blockId">Block ID</param>
         /// <returns>A task that represents the asynchronous write operation.</returns>
-        /// <remarks>Warning CS4014 is disabled here, since we intentionally do not
-        /// await PutBlockAsync call.</remarks>
         private async Task WriteBlockAsync(Stream blockData, string blockId, string blockMD5)
         {
-            Interlocked.Increment(ref this.pendingWrites);
-            this.noPendingWritesEvent.Reset();
-
+            this.noPendingWritesEvent.Increment();
             await this.parallelOperationSemaphore.WaitAsync();
-            this.blockBlob.PutBlockAsync(blockId, blockData.AsInputStream(), blockMD5, this.accessCondition, this.options, this.operationContext).AsTask().ContinueWith(task =>
+            Task putBlockTask = this.blockBlob.PutBlockAsync(blockId, blockData.AsInputStream(), blockMD5, this.accessCondition, this.options, this.operationContext).AsTask().ContinueWith(task =>
+            {
+                if (task.Exception != null)
                 {
-                    if (task.Exception != null)
-                    {
-                        this.lastException = task.Exception;
-                    }
+                    this.lastException = task.Exception;
+                }
 
-                    if (Interlocked.Decrement(ref this.pendingWrites) == 0)
-                    {
-                        this.noPendingWritesEvent.Set();
-                    }
-
-                    this.parallelOperationSemaphore.Release();
-                });
+                this.noPendingWritesEvent.Decrement();
+                this.parallelOperationSemaphore.Release();
+            });
         }
 
         /// <summary>
@@ -294,29 +312,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="pageData">Data to be uploaded</param>
         /// <param name="offset">Offset within the page blob</param>
         /// <returns>A task that represents the asynchronous write operation.</returns>
-        /// <remarks>Warning CS4014 is disabled here, since we intentionally do not
-        /// await WritePagesAsync call.</remarks>
         private async Task WritePagesAsync(Stream pageData, long offset, string contentMD5)
         {
-            Interlocked.Increment(ref this.pendingWrites);
-            this.noPendingWritesEvent.Reset();
-
+            this.noPendingWritesEvent.Increment();
             await this.parallelOperationSemaphore.WaitAsync();
-            this.pageBlob.WritePagesAsync(pageData.AsInputStream(), offset, contentMD5, this.accessCondition, this.options, this.operationContext).AsTask().ContinueWith(task =>
+            Task writePagesTask = this.pageBlob.WritePagesAsync(pageData.AsInputStream(), offset, contentMD5, this.accessCondition, this.options, this.operationContext).AsTask().ContinueWith(task =>
+            {
+                if (task.Exception != null)
                 {
-                    if (task.Exception != null)
-                    {
-                        this.lastException = task.Exception;
-                    }
+                    this.lastException = task.Exception;
+                }
 
-                    if (Interlocked.Decrement(ref this.pendingWrites) == 0)
-                    {
-                        this.noPendingWritesEvent.Set();
-                    }
-
-                    this.parallelOperationSemaphore.Release();
-                });
+                this.noPendingWritesEvent.Decrement();
+                this.parallelOperationSemaphore.Release();
+            });
         }
-#pragma warning restore 4014
     }
 }

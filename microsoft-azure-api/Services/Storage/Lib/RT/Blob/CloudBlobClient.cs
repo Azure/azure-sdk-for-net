@@ -50,6 +50,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             {
                 return this.authenticationScheme;
             }
+
             set
             {
                 this.authenticationScheme = value;
@@ -93,13 +94,24 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
+        /// Returns a result segment containing a collection of containers.
+        /// </summary>
+        /// <param name="currentToken">A continuation token returned by a previous listing operation.</param>
+        /// <returns>A result segment of containers.</returns>
+        [DoesServiceRequest]
+        public IAsyncOperation<ContainerResultSegment> ListContainersSegmentedAsync(string prefix, BlobContinuationToken currentToken)
+        {
+            return this.ListContainersSegmentedAsync(prefix, ContainerListingDetails.None, null /* maxResults */, currentToken, null /* options */, null /* operationContext */);
+        }
+
+        /// <summary>
         /// Returns a result segment containing a collection of containers
         /// whose names begin with the specified prefix.
         /// </summary>
         /// <param name="prefix">The container name prefix.</param>
         /// <param name="detailsIncluded">A value that indicates whether to return container metadata with the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned 
-        /// in the result segment, up to the per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// in the result segment, up to the per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A continuation token returned by a previous listing operation.</param> 
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -141,7 +153,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="useFlatBlobListing">Whether to list blobs in a flat listing, or whether to list blobs hierarchically, by virtual directory.</param>
         /// <param name="blobListingDetails">A <see cref="BlobListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A continuation token returned by a previous listing operation.</param> 
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
@@ -173,13 +185,13 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blobUri">The URI of the blob.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the container. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
         /// <returns>A reference to the blob.</returns>
         [DoesServiceRequest]
         public IAsyncOperation<ICloudBlob> GetBlobReferenceFromServerAsync(Uri blobUri, AccessCondition accessCondition, BlobRequestOptions options, OperationContext operationContext)
         {
-            CommonUtils.AssertNotNull("blobUri", blobUri);
+            CommonUtility.AssertNotNull("blobUri", blobUri);
 
             BlobRequestOptions modifiedOptions = BlobRequestOptions.ApplyDefaults(options, BlobType.Unspecified, this);
             return AsyncInfo.Run(async (token) => await Executor.ExecuteAsync(
@@ -196,7 +208,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="detailsIncluded">The details included.</param>
         /// <param name="currentToken">The continuation token.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies execution options, such as retry policy and timeout settings, for the operation.</param>
         /// <returns>A <see cref="TaskSequence"/> that lists the containers.</returns>
         private RESTCommand<ResultSegment<CloudBlobContainer>> ListContainersImpl(string prefix, ContainerListingDetails detailsIncluded, BlobContinuationToken currentToken, int? maxResults, BlobRequestOptions options)
@@ -213,8 +225,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             getCmd.Handler = this.AuthenticationHandler;
             getCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             getCmd.BuildRequest = (cmd, cnt, ctx) => ContainerHttpRequestMessageFactory.List(cmd.Uri, cmd.ServerTimeoutInSeconds, listingContext, detailsIncluded, cnt, ctx);
-            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            getCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task.Factory.StartNew(() =>
                 {
@@ -245,7 +257,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blobUri">The URI of the blob.</param>
         /// <param name="accessCondition">An <see cref="AccessCondition"/> object that represents the access conditions for the blob. If <c>null</c>, no condition is used.</param>
-        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies any additional options for the request.</param>
+        /// <param name="options">A <see cref="BlobRequestOptions"/> object that specifies additional options for the request.</param>
         /// <returns>A <see cref="RESTCommand"/> that fetches the attributes.</returns>
         private RESTCommand<ICloudBlob> GetBlobReferenceImpl(Uri blobUri, AccessCondition accessCondition, BlobRequestOptions options)
         {
@@ -264,8 +276,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             getCmd.BuildRequest = (cmd, cnt, ctx) => BlobHttpRequestMessageFactory.GetProperties(cmd.Uri, cmd.ServerTimeoutInSeconds, parsedSnapshot, accessCondition, cnt, ctx);
             getCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
                 BlobAttributes attributes = new BlobAttributes()
                 {
                     Uri = blobUri,
@@ -332,9 +343,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
 
-            retCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            retCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 return Task.Factory.StartNew(() => BlobHttpResponseParsers.ReadServiceProperties(cmd.ResponseStream));
             };
@@ -375,7 +386,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
         private RESTCommand<NullType> SetServicePropertiesImpl(ServiceProperties properties, BlobRequestOptions requestOptions)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            MultiBufferMemoryStream memoryStream = new MultiBufferMemoryStream(null /* bufferManager */, (int)(1 * Constants.KB));
             try
             {
                 properties.WriteServiceProperties(memoryStream);
@@ -394,7 +405,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             retCmd.BuildClient = HttpClientFactory.BuildHttpClient;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex);
             retCmd.ApplyRequestOptions(requestOptions);
             return retCmd;
         }

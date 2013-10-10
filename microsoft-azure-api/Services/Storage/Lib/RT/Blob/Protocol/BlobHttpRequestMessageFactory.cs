@@ -26,7 +26,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
-    internal class BlobHttpRequestMessageFactory
+    internal static class BlobHttpRequestMessageFactory
     {
         /// <summary>
         /// Constructs a web request to create a new block blob or page blob, or to update the content 
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             if (blobType == BlobType.PageBlob)
             {
                 request.Headers.Add(Constants.HeaderConstants.BlobType, Constants.HeaderConstants.PageBlob);
-                request.Headers.Add(Constants.HeaderConstants.Size, pageBlobSize.ToString(NumberFormatInfo.InvariantInfo));
+                request.Headers.Add(Constants.HeaderConstants.BlobContentLengthHeader, pageBlobSize.ToString(NumberFormatInfo.InvariantInfo));
                 properties.Length = pageBlobSize;
             }
             else
@@ -119,7 +119,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         {
             if (offset.HasValue)
             {
-                CommonUtils.AssertNotNull("count", count);
+                CommonUtility.AssertNotNull("count", count);
             }
 
             UriQueryBuilder builder = new UriQueryBuilder();
@@ -142,8 +142,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         {
             if (count.HasValue)
             {
-                CommonUtils.AssertNotNull("offset", offset);
-                CommonUtils.AssertInBounds("count", count.Value, 1, long.MaxValue);
+                CommonUtility.AssertNotNull("offset", offset);
+                CommonUtility.AssertInBounds("count", count.Value, 1, long.MaxValue);
             }
 
             if (offset.HasValue)
@@ -195,7 +195,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
             request.AddOptionalHeader(Constants.HeaderConstants.CacheControlHeader, properties.CacheControl);
             request.AddOptionalHeader(Constants.HeaderConstants.ContentEncodingHeader, properties.ContentEncoding);
-            request.AddOptionalHeader(Constants.HeaderConstants.ContentLanguageHeader, properties.ContentLanguage);
+            request.AddOptionalHeader(Constants.HeaderConstants.BlobContentLanguageHeader, properties.ContentLanguage);
             request.AddOptionalHeader(Constants.HeaderConstants.BlobContentMD5Header, properties.ContentMD5);
             request.AddOptionalHeader(Constants.HeaderConstants.ContentTypeHeader, properties.ContentType);
 
@@ -205,7 +205,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         }
 
         /// <summary>
-        /// Constructs a web request to set system properties for a blob.
+        /// Constructs a web request to resize a page blob.
         /// </summary>
         /// <param name="uri">The absolute URI to the blob.</param>
         /// <param name="timeout">The server timeout interval.</param>
@@ -219,7 +219,47 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
             HttpRequestMessage request = HttpRequestMessageFactory.CreateRequestMessage(HttpMethod.Put, uri, timeout, builder, content, operationContext);
 
-            request.Headers.Add(Constants.HeaderConstants.Size, newBlobSize.ToString(NumberFormatInfo.InvariantInfo));
+            request.Headers.Add(Constants.HeaderConstants.BlobContentLengthHeader, newBlobSize.ToString(NumberFormatInfo.InvariantInfo));
+
+            request.ApplyAccessCondition(accessCondition);
+            return request;
+        }
+
+        /// <summary>
+        /// Constructs a web request to set a page blob's sequence number.
+        /// </summary>
+        /// <param name="uri">The absolute URI to the blob.</param>
+        /// <param name="timeout">The server timeout interval.</param>
+        /// <param name="sequenceNumberAction">A value of type <see cref="SequenceNumberAction"/>, indicating the operation to perform on the sequence number.</param>
+        /// <param name="sequenceNumber">The sequence number. Set this parameter to <c>null</c> if this operation is an increment action.</param>
+        /// <param name="accessCondition">The access condition to apply to the request.</param>
+        /// <returns>A web request to use to perform the operation.</returns>
+        public static HttpRequestMessage SetSequenceNumber(Uri uri, int? timeout, SequenceNumberAction sequenceNumberAction, long? sequenceNumber, AccessCondition accessCondition, HttpContent content, OperationContext operationContext)
+        {
+            CommonUtility.AssertInBounds("sequenceNumberAction", sequenceNumberAction, SequenceNumberAction.Max, SequenceNumberAction.Increment);
+            if (sequenceNumberAction == SequenceNumberAction.Increment)
+            {
+                if (sequenceNumber.HasValue)
+                {
+                    throw new ArgumentException(SR.BlobInvalidSequenceNumber, "sequenceNumber");
+                }
+            }
+            else
+            {
+                CommonUtility.AssertNotNull("sequenceNumber", sequenceNumber);
+                CommonUtility.AssertInBounds("sequenceNumber", sequenceNumber.Value, 0);
+            }
+
+            UriQueryBuilder builder = new UriQueryBuilder();
+            builder.Add(Constants.QueryConstants.Component, "properties");
+
+            HttpRequestMessage request = HttpRequestMessageFactory.CreateRequestMessage(HttpMethod.Put, uri, timeout, builder, content, operationContext);
+
+            request.Headers.Add(Constants.HeaderConstants.SequenceNumberAction, sequenceNumberAction.ToString());
+            if (sequenceNumberAction != SequenceNumberAction.Increment)
+            {
+                request.Headers.Add(Constants.HeaderConstants.BlobSequenceNumber, sequenceNumber.Value.ToString());
+            }
 
             request.ApplyAccessCondition(accessCondition);
             return request;
@@ -232,7 +272,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <param name="timeout">The server timeout interval.</param>
         /// <param name="snapshot">The snapshot timestamp, if the blob is a snapshot.</param>
         /// <param name="accessCondition">The access condition to apply to the request.</param>
-        /// <returns>A web request for performing the operiaton.</returns>
+        /// <returns>A web request for performing the operation.</returns>
         public static HttpRequestMessage GetMetadata(Uri uri, int? timeout, DateTimeOffset? snapshot, AccessCondition accessCondition, HttpContent content, OperationContext operationContext)
         {
             UriQueryBuilder builder = new UriQueryBuilder();
@@ -252,7 +292,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>A web request for performing the operation.</returns>
         public static HttpRequestMessage SetMetadata(Uri uri, int? timeout, AccessCondition accessCondition, HttpContent content, OperationContext operationContext)
         {
-            var request = HttpRequestMessageFactory.SetMetadata(uri, timeout, null /* builder */, content, operationContext);
+            HttpRequestMessage request = HttpRequestMessageFactory.SetMetadata(uri, timeout, null /* builder */, content, operationContext);
             request.ApplyAccessCondition(accessCondition);
             return request;
         }
@@ -425,7 +465,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             builder.Add("blockid", blockId);
 
             HttpRequestMessage request = HttpRequestMessageFactory.CreateRequestMessage(HttpMethod.Put, uri, timeout, builder, content, operationContext);
-            request.ApplyAccessCondition(accessCondition);
+            request.ApplyLeaseId(accessCondition);
             return request;
         }
 
@@ -447,7 +487,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
             request.AddOptionalHeader(Constants.HeaderConstants.CacheControlHeader, properties.CacheControl);
             request.AddOptionalHeader(Constants.HeaderConstants.ContentTypeHeader, properties.ContentType);
             request.AddOptionalHeader(Constants.HeaderConstants.BlobContentMD5Header, properties.ContentMD5);
-            request.AddOptionalHeader(Constants.HeaderConstants.ContentLanguageHeader, properties.ContentLanguage);
+            request.AddOptionalHeader(Constants.HeaderConstants.BlobContentLanguageHeader, properties.ContentLanguage);
             request.AddOptionalHeader(Constants.HeaderConstants.ContentEncodingHeader, properties.ContentEncoding);
 
             request.ApplyAccessCondition(accessCondition);
@@ -491,10 +531,11 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
             HttpRequestMessage request = HttpRequestMessageFactory.CreateRequestMessage(HttpMethod.Put, uri, timeout, builder, content, operationContext);
 
-            request.AddOptionalHeader(Constants.HeaderConstants.RangeHeader, pageRange.ToString());
+            request.Headers.Add(Constants.HeaderConstants.RangeHeader, pageRange.ToString());
             request.Headers.Add(Constants.HeaderConstants.PageWrite, pageWrite.ToString());
 
             request.ApplyAccessCondition(accessCondition);
+            request.ApplySequenceNumberCondition(accessCondition);
             return request;
         }
 
@@ -574,10 +615,15 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
         /// <returns>A web request to use to perform the operation.</returns>
         public static HttpRequestMessage Get(Uri uri, int? timeout, DateTimeOffset? snapshot, long? offset, long? count, bool rangeContentMD5, AccessCondition accessCondition, HttpContent content, OperationContext operationContext)
         {
+            if (offset.HasValue && offset.Value < 0)
+            {
+                CommonUtility.ArgumentOutOfRange("offset", offset);
+            }
+            
             if (offset.HasValue && rangeContentMD5)
             {
-                CommonUtils.AssertNotNull("count", count);
-                CommonUtils.AssertInBounds("count", count.Value, 1, Constants.MaxBlockSize);
+                CommonUtility.AssertNotNull("count", count);
+                CommonUtility.AssertInBounds("count", count.Value, 1, Constants.MaxBlockSize);
             }
 
             HttpRequestMessage request = Get(uri, timeout, snapshot, accessCondition, content, operationContext);
@@ -585,7 +631,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob.Protocol
 
             if (offset.HasValue && rangeContentMD5)
             {
-                request.Headers.Add(Constants.HeaderConstants.RangeContentMD5Header, "true");
+                request.Headers.Add(Constants.HeaderConstants.RangeContentMD5Header, Constants.HeaderConstants.TrueHeader);
             }
 
             return request;

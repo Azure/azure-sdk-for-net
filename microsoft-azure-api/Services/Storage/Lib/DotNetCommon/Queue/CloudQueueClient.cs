@@ -17,21 +17,22 @@
 
 namespace Microsoft.WindowsAzure.Storage.Queue
 {
+    using Microsoft.WindowsAzure.Storage.Auth.Protocol;
+    using Microsoft.WindowsAzure.Storage.Core;
+    using Microsoft.WindowsAzure.Storage.Core.Executor;
+    using Microsoft.WindowsAzure.Storage.Core.Util;
+    using Microsoft.WindowsAzure.Storage.Queue.Protocol;
+    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Net;
-    using Microsoft.WindowsAzure.Storage.Auth.Protocol;
-    using Microsoft.WindowsAzure.Storage.Core;
-    using Microsoft.WindowsAzure.Storage.Core.Auth;
-    using Microsoft.WindowsAzure.Storage.Core.Executor;
-    using Microsoft.WindowsAzure.Storage.Core.Util;
-    using Microsoft.WindowsAzure.Storage.Queue.Protocol;
-    using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
-    /// Provides a client-side logical representation of the Windows Azure Queue Service. This client is used to configure and execute requests against the Queue Service.
+    /// Provides a client-side logical representation of the Windows Azure Queue service. This client is used to configure and execute requests against the Queue service.
     /// </summary>
     /// <remarks>The service client encapsulates the base URI for the Queue service. If the service client will be used for authenticated access, it also encapsulates the credentials for accessing the storage account.</remarks>
     public sealed partial class CloudQueueClient
@@ -47,6 +48,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             {
                 return this.authenticationScheme;
             }
+
             set
             {
                 if (value != this.authenticationScheme)
@@ -87,29 +89,23 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             }
         }
 
-        /// <summary>
-        /// Returns an enumerable collection of the queues in the storage account.
-        /// </summary>
-        /// <returns>An enumerable collection of queues <see cref="CloudQueue"/>.</returns>
-        public IEnumerable<CloudQueue> ListQueues()
-        {
-            return this.ListQueues(null, QueueListingDetails.None, null, null);
-        }
-
+#if SYNC
         /// <summary>
         /// Returns an enumerable collection of the queues in the storage account whose names begin with the specified prefix and that are retrieved lazily.
         /// </summary>
         /// <param name="prefix">The queue name prefix.</param>
         /// <param name="queueListingDetails">An enumeration value that indicates which details to include in the listing.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         /// <returns>An enumerable collection of objects that implement <see cref="CloudQueue"/> and are retrieved lazily.</returns>
-        public IEnumerable<CloudQueue> ListQueues(string prefix, QueueListingDetails queueListingDetails = QueueListingDetails.None, QueueRequestOptions options = null, OperationContext operationContext = null)
+        public IEnumerable<CloudQueue> ListQueues(string prefix = null, QueueListingDetails queueListingDetails = QueueListingDetails.None, QueueRequestOptions options = null, OperationContext operationContext = null)
         {
             QueueRequestOptions modifiedOptions = QueueRequestOptions.ApplyDefaults(options, this);
             operationContext = operationContext ?? new OperationContext();
 
-            return General.LazyEnumerable((token) => this.ListQueuesSegmentedCore(prefix, queueListingDetails, 0, token as QueueContinuationToken, modifiedOptions, operationContext), long.MaxValue, operationContext);
+            return CommonUtility.LazyEnumerable(
+                (token) => this.ListQueuesSegmentedCore(prefix, queueListingDetails, null, token as QueueContinuationToken, modifiedOptions, operationContext),
+                long.MaxValue);
         }
 
         /// <summary>
@@ -126,11 +122,22 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Returns a result segment containing a collection of queues in the storage account.
         /// </summary>
         /// <param name="prefix">The queue name prefix.</param>
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> continuation token returned by a previous listing operation.</param>
+        /// <returns>A result segment containing objects that implement <see cref="CloudQueue"/>.</returns>
+        public QueueResultSegment ListQueuesSegmented(string prefix, QueueContinuationToken currentToken)
+        {
+            return this.ListQueuesSegmented(prefix, QueueListingDetails.None, null, currentToken, null, null);
+        }
+
+        /// <summary>
+        /// Returns a result segment containing a collection of queues in the storage account.
+        /// </summary>
+        /// <param name="prefix">The queue name prefix.</param>
         /// <param name="queueListingDetails">A <see cref="QueueListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         /// <returns>A result segment containing objects that implement <see cref="CloudQueue"/>.</returns>
         public QueueResultSegment ListQueuesSegmented(string prefix, QueueListingDetails queueListingDetails, int? maxResults, QueueContinuationToken currentToken, QueueRequestOptions options = null, OperationContext operationContext = null)
@@ -150,7 +157,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         /// <returns>A result segment.</returns>
         private ResultSegment<CloudQueue> ListQueuesSegmentedCore(string prefix, QueueListingDetails queueListingDetails, int? maxResults, QueueContinuationToken currentToken, QueueRequestOptions options, OperationContext operationContext)
@@ -160,6 +167,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 options.RetryPolicy,
                 operationContext);
         }
+#endif
 
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection of queue items.
@@ -170,30 +178,43 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
         public ICancellableAsyncResult BeginListQueuesSegmented(QueueContinuationToken currentToken, AsyncCallback callback, object state)
         {
-            return this.BeginListQueuesSegmented(null, QueueListingDetails.None, 0, currentToken, null, null, callback, state);
+            return this.BeginListQueuesSegmented(null, QueueListingDetails.None, null, currentToken, null, null, callback, state);
         }
 
         /// <summary>
         /// Begins an asynchronous operation to return a result segment containing a collection of queue items.
         /// </summary>
         /// <param name="prefix">The queue name prefix.</param>
-        /// <param name="blobListingDetails">A <see cref="QueueListingDetails"/> enumeration describing which items to include in the listing.</param>
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param>
+        /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
+        /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
+        /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
+        public ICancellableAsyncResult BeginListQueuesSegmented(string prefix, QueueContinuationToken currentToken, AsyncCallback callback, object state)
+        {
+            return this.BeginListQueuesSegmented(prefix, QueueListingDetails.None, null, currentToken, null, null, callback, state);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous operation to return a result segment containing a collection of queue items.
+        /// </summary>
+        /// <param name="prefix">The queue name prefix.</param>
+        /// <param name="queueListingDetails">A <see cref="QueueListingDetails"/> enumeration describing which items to include in the listing.</param>
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
-        /// per-operation limit of 5000. If this value is zero, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
         /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user-defined object that will be passed to the callback delegate.</param>
         /// <returns>An <see cref="ICancellableAsyncResult"/> that references the asynchronous operation.</returns>
-        public ICancellableAsyncResult BeginListQueuesSegmented(string prefix, QueueListingDetails blobListingDetails, int maxResults, QueueContinuationToken currentToken, QueueRequestOptions options, OperationContext operationContext, AsyncCallback callback, object state)
+        public ICancellableAsyncResult BeginListQueuesSegmented(string prefix, QueueListingDetails queueListingDetails, int? maxResults, QueueContinuationToken currentToken, QueueRequestOptions options, OperationContext operationContext, AsyncCallback callback, object state)
         {
             QueueRequestOptions modifiedOptions = QueueRequestOptions.ApplyDefaults(options, this);
 
             operationContext = operationContext ?? new OperationContext();
 
             return Executor.BeginExecuteAsync(
-                this.ListQueuesImpl(prefix, maxResults, blobListingDetails, modifiedOptions, currentToken),
+                this.ListQueuesImpl(prefix, maxResults, queueListingDetails, modifiedOptions, currentToken),
                 modifiedOptions.RetryPolicy,
                 operationContext,
                 callback,
@@ -211,6 +232,91 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             return new QueueResultSegment(resultSegment.Results, (QueueContinuationToken)resultSegment.ContinuationToken);
         }
 
+#if TASK
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of queue items.
+        /// </summary>      
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<QueueResultSegment> ListQueuesSegmentedAsync(QueueContinuationToken currentToken)
+        {
+            return this.ListQueuesSegmentedAsync(currentToken, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of queue items.
+        /// </summary>     
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<QueueResultSegment> ListQueuesSegmentedAsync(QueueContinuationToken currentToken, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListQueuesSegmented, this.EndListQueuesSegmented, currentToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of queue items.
+        /// </summary>
+        /// <param name="prefix">The queue name prefix.</param>  
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<QueueResultSegment> ListQueuesSegmentedAsync(string prefix, QueueContinuationToken currentToken)
+        {
+            return this.ListQueuesSegmentedAsync(prefix, currentToken, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of queue items.
+        /// </summary>
+        /// <param name="prefix">The queue name prefix.</param>    
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<QueueResultSegment> ListQueuesSegmentedAsync(string prefix, QueueContinuationToken currentToken, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListQueuesSegmented, this.EndListQueuesSegmented, prefix, currentToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of queue items.
+        /// </summary>
+        /// <param name="prefix">The queue name prefix.</param>
+        /// <param name="queueListingDetails">A <see cref="QueueListingDetails"/> enumeration describing which items to include in the listing.</param>
+        /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
+        /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<QueueResultSegment> ListQueuesSegmentedAsync(string prefix, QueueListingDetails queueListingDetails, int? maxResults, QueueContinuationToken currentToken, QueueRequestOptions options, OperationContext operationContext)
+        {
+            return this.ListQueuesSegmentedAsync(prefix, queueListingDetails, maxResults, currentToken, options, operationContext, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to return a result segment containing a collection of queue items.
+        /// </summary>
+        /// <param name="prefix">The queue name prefix.</param>
+        /// <param name="queueListingDetails">A <see cref="QueueListingDetails"/> enumeration describing which items to include in the listing.</param>
+        /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
+        /// per-operation limit of 5000. If this value is null, the maximum possible number of results will be returned, up to 5000.</param>         
+        /// <param name="currentToken">A <see cref="QueueContinuationToken"/> returned by a previous listing operation.</param> 
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<QueueResultSegment> ListQueuesSegmentedAsync(string prefix, QueueListingDetails queueListingDetails, int? maxResults, QueueContinuationToken currentToken, QueueRequestOptions options, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginListQueuesSegmented, this.EndListQueuesSegmented, prefix, queueListingDetails, maxResults, currentToken, options, operationContext, cancellationToken);
+        }
+#endif
+
         /// <summary>
         /// Core implementation of the ListQueues method.
         /// </summary>
@@ -218,25 +324,24 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <param name="maxResults">A non-negative integer value that indicates the maximum number of results to be returned at a time, up to the 
         /// per-operation limit of 5000. If this value is <c>null</c>, the maximum possible number of results will be returned, up to 5000.</param>
         /// <param name="queueListingDetails">A <see cref="QueueListingDetails"/> enumeration describing which items to include in the listing.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <param name="currentToken">The continuation token.</param>
         /// <returns>A <see cref="RESTCommand{T}"/> that lists the queues.</returns>
         private RESTCommand<ResultSegment<CloudQueue>> ListQueuesImpl(string prefix, int? maxResults, QueueListingDetails queueListingDetails, QueueRequestOptions options, QueueContinuationToken currentToken)
         {
-            int? nullableMaxResults = (maxResults > 0) ? maxResults : null;
-            QueueListingContext listingContext = new QueueListingContext(prefix, nullableMaxResults, queueListingDetails)
+            QueueListingContext listingContext = new QueueListingContext(prefix, maxResults, queueListingDetails)
             {
                 Marker = currentToken != null ? currentToken.NextMarker : null
             };
 
             RESTCommand<ResultSegment<CloudQueue>> getCmd = new RESTCommand<ResultSegment<CloudQueue>>(this.Credentials, this.BaseUri);
 
-            options.ApplyToStorageCommand(getCmd);
+            getCmd.ApplyRequestOptions(options);
             getCmd.RetrieveResponseStream = true;
             getCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => QueueHttpWebRequestFactory.List(uri, serverTimeout, listingContext, queueListingDetails, ctx);
             getCmd.SignRequest = this.AuthenticationHandler.SignRequest;
-            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
-            getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            getCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
+            getCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
                 ListQueuesResponse listQueuesResponse = new ListQueuesResponse(cmd.ResponseStream);
 
@@ -278,7 +383,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// <summary>
         /// Begins an asynchronous operation to get the properties of the queue service.
         /// </summary>
-        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user defined object to be passed to the callback delegate.</param>
@@ -306,10 +411,59 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             return Executor.EndExecuteAsync<ServiceProperties>(asyncResult);
         }
 
+#if TASK
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to get the properties of the queue service.
+        /// </summary>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ServiceProperties> GetServicePropertiesAsync()
+        {
+            return this.GetServicePropertiesAsync(CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to get the properties of the queue service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ServiceProperties> GetServicePropertiesAsync(CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginGetServiceProperties, this.EndGetServiceProperties, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to get the properties of the queue service.
+        /// </summary>
+        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ServiceProperties> GetServicePropertiesAsync(QueueRequestOptions requestOptions, OperationContext operationContext)
+        {
+            return this.GetServicePropertiesAsync(requestOptions, operationContext, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to get the properties of the queue service.
+        /// </summary>
+        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task{T}"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task<ServiceProperties> GetServicePropertiesAsync(QueueRequestOptions requestOptions, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromApm(this.BeginGetServiceProperties, this.EndGetServiceProperties, requestOptions, operationContext, cancellationToken);
+        }
+#endif
+
+#if SYNC
         /// <summary>
         /// Gets the properties of the queue service.
         /// </summary>
-        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         /// <returns>The queue service properties.</returns>
         [DoesServiceRequest]
@@ -322,6 +476,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
                 requestOptions.RetryPolicy,
                 operationContext);
         }
+#endif
 
         /// <summary>
         /// Begins an asynchronous operation to set the properties of the queue service.
@@ -340,7 +495,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
         /// Begins an asynchronous operation to set the properties of the queue service.
         /// </summary>
         /// <param name="properties">The queue service properties.</param>
-        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         /// <param name="callback">The callback delegate that will receive notification when the asynchronous operation completes.</param>
         /// <param name="state">A user defined object to be passed to the callback delegate.</param>
@@ -367,11 +522,64 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             Executor.EndExecuteAsync<NullType>(asyncResult);
         }
 
+#if TASK
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to set the properties of the queue service.
+        /// </summary>
+        /// <param name="properties">The queue service properties.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task SetServicePropertiesAsync(ServiceProperties properties)
+        {
+            return this.SetServicePropertiesAsync(properties, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to set the properties of the queue service.
+        /// </summary>
+        /// <param name="properties">The queue service properties.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task SetServicePropertiesAsync(ServiceProperties properties, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromVoidApm(this.BeginSetServiceProperties, this.EndSetServiceProperties, properties, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to set the properties of the queue service.
+        /// </summary>
+        /// <param name="properties">The queue service properties.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task SetServicePropertiesAsync(ServiceProperties properties, QueueRequestOptions options, OperationContext operationContext)
+        {
+            return this.SetServicePropertiesAsync(properties, options, operationContext, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Returns a task that performs an asynchronous operation to set the properties of the queue service.
+        /// </summary>
+        /// <param name="properties">The queue service properties.</param>
+        /// <param name="options">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request.</param>
+        /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for a task to complete.</param>
+        /// <returns>A <see cref="Task"/> object that represents the current operation.</returns>
+        [DoesServiceRequest]
+        public Task SetServicePropertiesAsync(ServiceProperties properties, QueueRequestOptions options, OperationContext operationContext, CancellationToken cancellationToken)
+        {
+            return AsyncExtensions.TaskFromVoidApm(this.BeginSetServiceProperties, this.EndSetServiceProperties, properties, options, operationContext, cancellationToken);
+        }
+#endif
+
+#if SYNC
         /// <summary>
         /// Sets the properties of the queue service.
         /// </summary>
         /// <param name="properties">The queue service properties.</param>
-        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
+        /// <param name="requestOptions">A <see cref="QueueRequestOptions"/> object that specifies additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="CloudQueueClient"/>).</param>
         /// <param name="operationContext">An <see cref="OperationContext"/> object that represents the context for the current operation. This object is used to track requests, and to provide additional runtime information about the operation.</param>
         [DoesServiceRequest]
         public void SetServiceProperties(ServiceProperties properties, QueueRequestOptions requestOptions = null, OperationContext operationContext = null)
@@ -380,6 +588,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             operationContext = operationContext ?? new OperationContext();
             Executor.ExecuteSync(this.SetServicePropertiesImpl(properties, requestOptions), requestOptions.RetryPolicy, operationContext);
         }
+#endif
 
         private RESTCommand<ServiceProperties> GetServicePropertiesImpl(QueueRequestOptions requestOptions)
         {
@@ -389,16 +598,16 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             retCmd.RetrieveResponseStream = true;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
             retCmd.PostProcessResponse =
-                (cmd, resp, ex, ctx) => QueueHttpResponseParsers.ReadServiceProperties(cmd.ResponseStream);
+                (cmd, resp, ctx) => QueueHttpResponseParsers.ReadServiceProperties(cmd.ResponseStream);
             retCmd.ApplyRequestOptions(requestOptions);
             return retCmd;
         }
 
         private RESTCommand<NullType> SetServicePropertiesImpl(ServiceProperties properties, QueueRequestOptions requestOptions)
         {
-            MemoryStream str = new MemoryStream();
+            MultiBufferMemoryStream str = new MultiBufferMemoryStream(null /* bufferManager */, (int)(1 * Constants.KB));
             try
             {
                 properties.WriteServiceProperties(str);
@@ -417,7 +626,7 @@ namespace Microsoft.WindowsAzure.Storage.Queue
             retCmd.SignRequest = this.AuthenticationHandler.SignRequest;
             retCmd.PreProcessResponse =
                 (cmd, resp, ex, ctx) =>
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, NullType.Value, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(System.Net.HttpStatusCode.Accepted, resp, NullType.Value, cmd, ex);
             retCmd.ApplyRequestOptions(requestOptions);
             return retCmd;
         }

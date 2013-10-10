@@ -15,25 +15,82 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.Security.Cryptography;
-using Windows.Security.Cryptography.Core;
-using Windows.Storage.Streams;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using System;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
     [TestClass]
     public class CopyBlobTest : BlobTestBase
     {
+
+        //
+        // Use TestInitialize to run code before running each test 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                TestBase.BlobBufferManager.OutstandingBufferCount = 0;
+            }
+        }
+        //
+        // Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+            if (TestBase.BlobBufferManager != null)
+            {
+                Assert.AreEqual(0, TestBase.BlobBufferManager.OutstandingBufferCount);
+            }
+        }
+
+        [TestMethod]
+        // [Description("CopyFromBlob with Unicode source blob")]
+        [TestCategory(ComponentCategory.Blob)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public async Task CopyBlobUsingUnicodeBlobNameAsync()
+        {
+            string _unicodeBlobName = "繁体字14a6c";
+            string _nonUnicodeBlobName = "sample_file";
+
+            CloudBlobContainer container = GetRandomContainerReference();
+            try
+            {
+                await container.CreateAsync();
+                CloudBlockBlob blobUnicodeSource = container.GetBlockBlobReference(_unicodeBlobName);
+                string data = "Test content";
+                await UploadTextAsync(blobUnicodeSource, data, Encoding.UTF8);
+                CloudBlockBlob blobAsciiSource = container.GetBlockBlobReference(_nonUnicodeBlobName);
+                await UploadTextAsync(blobAsciiSource, data, Encoding.UTF8);
+
+                //Copy blobs over
+                CloudBlockBlob blobAsciiDest = container.GetBlockBlobReference(_nonUnicodeBlobName + "_copy");
+                string copyId = await blobAsciiDest.StartCopyFromBlobAsync(TestHelper.Defiddler(blobAsciiSource));
+                await WaitForCopyAsync(blobAsciiDest);
+
+                CloudBlockBlob blobUnicodeDest = container.GetBlockBlobReference(_unicodeBlobName + "_copy");
+                copyId = await blobUnicodeDest.StartCopyFromBlobAsync(TestHelper.Defiddler(blobUnicodeSource));
+                await WaitForCopyAsync(blobUnicodeDest);
+
+                Assert.AreEqual(CopyStatus.Success, blobUnicodeDest.CopyState.Status);
+                Assert.AreEqual(blobUnicodeSource.Uri.AbsolutePath, blobUnicodeDest.CopyState.Source.AbsolutePath);
+                Assert.AreEqual(data.Length, blobUnicodeDest.CopyState.TotalBytes);
+                Assert.AreEqual(data.Length, blobUnicodeDest.CopyState.BytesCopied);
+                Assert.AreEqual(copyId, blobUnicodeDest.CopyState.CopyId);
+                Assert.IsTrue(blobUnicodeDest.CopyState.CompletionTime > DateTimeOffset.UtcNow.Subtract(TimeSpan.FromMinutes(1)));
+            }
+            finally
+            {
+                container.DeleteIfExistsAsync().AsTask().Wait();
+            }
+        }
+        
         [TestMethod]
         /// [Description("Copy a blob and then verify its contents, properties, and metadata")]
         [TestCategory(ComponentCategory.Blob)]

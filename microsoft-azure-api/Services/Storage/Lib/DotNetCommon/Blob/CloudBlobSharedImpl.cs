@@ -17,17 +17,41 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
-    using System;
-    using System.IO;
-    using System.Net;
     using Microsoft.WindowsAzure.Storage.Blob.Protocol;
     using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Executor;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Net;
 
     internal static class CloudBlobSharedImpl
     {
+        /// <summary>
+        /// Called when the asynchronous operation to commit the blob started by UploadFromStream finishes.
+        /// </summary>
+        /// <param name="result">The result of the asynchronous operation.</param>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Needed to ensure exceptions are not thrown on threadpool threads.")]
+        internal static void BlobOutputStreamCommitCallback(IAsyncResult result)
+        {
+            StorageAsyncResult<NullType> storageAsyncResult = (StorageAsyncResult<NullType>)result.AsyncState;
+            CloudBlobStream blobStream = (CloudBlobStream)storageAsyncResult.OperationState;
+            storageAsyncResult.UpdateCompletedSynchronously(result.CompletedSynchronously);
+
+            try
+            {
+                blobStream.EndCommit(result);
+                blobStream.Dispose();
+                storageAsyncResult.OnComplete();
+            }
+            catch (Exception e)
+            {
+                storageAsyncResult.OnComplete(e);
+            }
+        }
+
         /// <summary>
         /// Implements getting the stream without specifying a range.
         /// </summary>
@@ -37,7 +61,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="offset">The offset.</param>
         /// <param name="length">The length.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that gets the stream.
         /// </returns>
@@ -52,6 +76,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
             long startingOffset = offset.HasValue ? offset.Value : 0;
             long? startingLength = length;
+            long? validateLength = null;
 
             RESTCommand<NullType> getCmd = new RESTCommand<NullType>(blob.ServiceClient.Credentials, attributes.Uri);
 
@@ -88,7 +113,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 
             getCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(offset.HasValue ? HttpStatusCode.PartialContent : HttpStatusCode.OK, resp, NullType.Value, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(offset.HasValue ? HttpStatusCode.PartialContent : HttpStatusCode.OK, resp, NullType.Value, cmd, ex);
 
                 if (!arePropertiesPopulated)
                 {
@@ -109,16 +134,20 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     }
 
                     lockedETag = attributes.Properties.ETag;
+                    if (resp.ContentLength >= 0)
+                    {
+                        validateLength = resp.ContentLength;
+                    }
+
                     arePropertiesPopulated = true;
                 }
 
                 return NullType.Value;
             };
 
-            getCmd.PostProcessResponse = (cmd, resp, ex, ctx) =>
+            getCmd.PostProcessResponse = (cmd, resp, ctx) =>
             {
-                long validateLength = startingLength.HasValue ? startingLength.Value : (attributes.Properties.Length - startingOffset);
-                HttpResponseParsers.ValidateResponseStreamMd5AndLength(validateLength, storedMD5, cmd, cmd.StreamCopyState);
+                HttpResponseParsers.ValidateResponseStreamMd5AndLength(validateLength, storedMD5, cmd);
                 return NullType.Value;
             };
 
@@ -131,7 +160,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that fetches the attributes.
         /// </returns>
@@ -144,7 +173,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             getCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
             getCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex);
                 CloudBlobSharedImpl.UpdateAfterFetchAttributes(attributes, resp, false);
                 return NullType.Value;
             };
@@ -157,7 +186,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// </summary>
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that checks existence.
         /// </returns>
@@ -175,12 +204,9 @@ namespace Microsoft.WindowsAzure.Storage.Blob
                     return false;
                 }
 
-                if (resp.StatusCode == HttpStatusCode.PreconditionFailed)
-                {
-                    return true;
-                }
-
-                return HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, true, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, true, cmd, ex);
+                CloudBlobSharedImpl.UpdateAfterFetchAttributes(attributes, resp, false);
+                return true;
             };
 
             return getCmd;
@@ -192,7 +218,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that sets the metadata.
         /// </returns>
@@ -206,8 +232,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex, ctx);
-                CloudBlobSharedImpl.ParseSizeAndLastModified(attributes, resp);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex);
+                CloudBlobSharedImpl.UpdateETagLMTAndSequenceNumber(attributes, resp);
                 return NullType.Value;
             };
 
@@ -220,7 +246,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that sets the properties.
         /// </returns>
@@ -234,8 +260,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex, ctx);
-                CloudBlobSharedImpl.ParseSizeAndLastModified(attributes, resp);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex);
+                CloudBlobSharedImpl.UpdateETagLMTAndSequenceNumber(attributes, resp);
                 return NullType.Value;
             };
 
@@ -249,7 +275,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The attributes.</param>
         /// <param name="deleteSnapshotsOption">Whether to only delete the blob, to delete the blob and all snapshots, or to only delete the snapshots.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that deletes the blob.
         /// </returns>
@@ -260,7 +286,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             deleteCmd.ApplyRequestOptions(options);
             deleteCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => BlobHttpWebRequestFactory.Delete(uri, serverTimeout, attributes.SnapshotTime, deleteSnapshotsOption, accessCondition, ctx);
             deleteCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
-            deleteCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Accepted, resp, NullType.Value, cmd, ex, ctx);
+            deleteCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Accepted, resp, NullType.Value, cmd, ex);
 
             return deleteCmd;
         }
@@ -275,7 +301,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// greater than zero.</param>
         /// <param name="proposedLeaseId">A string representing the proposed lease ID for the new lease, or null if no lease ID is proposed.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the acquire lease operation.
         /// </returns>
@@ -284,7 +310,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             int leaseDuration = -1;
             if (leaseTime.HasValue)
             {
-                CommonUtils.AssertInBounds("leaseTime", leaseTime.Value, TimeSpan.FromSeconds(1), TimeSpan.MaxValue);
+                CommonUtility.AssertInBounds("leaseTime", leaseTime.Value, TimeSpan.FromSeconds(1), TimeSpan.MaxValue);
                 leaseDuration = (int)leaseTime.Value.TotalSeconds;
             }
 
@@ -295,7 +321,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, null, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Created, resp, null, cmd, ex);
                 return BlobHttpResponseParsers.GetLeaseId(resp);
             };
 
@@ -308,14 +334,14 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the renew lease operation.
         /// </returns>
         /// <exception cref="System.ArgumentException">accessCondition</exception>
         internal static RESTCommand<NullType> RenewLeaseImpl(ICloudBlob blob, BlobAttributes attributes, AccessCondition accessCondition, BlobRequestOptions options)
         {
-            CommonUtils.AssertNotNull("accessCondition", accessCondition);
+            CommonUtility.AssertNotNull("accessCondition", accessCondition);
             if (accessCondition.LeaseId == null)
             {
                 throw new ArgumentException(SR.MissingLeaseIDRenewing, "accessCondition");
@@ -326,7 +352,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.ApplyRequestOptions(options);
             putCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => BlobHttpWebRequestFactory.Lease(uri, serverTimeout, LeaseAction.Renew, null /* proposedLeaseId */, null /* leaseDuration */, null /* leaseBreakPeriod */, accessCondition, ctx);
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
-            putCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex, ctx);
+            putCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex);
 
             return putCmd;
         }
@@ -338,15 +364,15 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The attributes.</param>
         /// <param name="proposedLeaseId">The proposed new lease ID.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the change lease ID operation.
         /// </returns>
         /// <exception cref="System.ArgumentException">accessCondition</exception>
         internal static RESTCommand<string> ChangeLeaseImpl(ICloudBlob blob, BlobAttributes attributes, string proposedLeaseId, AccessCondition accessCondition, BlobRequestOptions options)
         {
-            CommonUtils.AssertNotNull("accessCondition", accessCondition);
-            CommonUtils.AssertNotNull("proposedLeaseId", proposedLeaseId);
+            CommonUtility.AssertNotNull("accessCondition", accessCondition);
+            CommonUtility.AssertNotNull("proposedLeaseId", proposedLeaseId);
             if (accessCondition.LeaseId == null)
             {
                 throw new ArgumentException(SR.MissingLeaseIDChanging, "accessCondition");
@@ -359,7 +385,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, null /* retVal */, cmd, ex);
                 return BlobHttpResponseParsers.GetLeaseId(resp);
             };
 
@@ -372,14 +398,14 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="blob">The blob.</param>
         /// <param name="attributes">The attributes.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the release lease operation.
         /// </returns>
         /// <exception cref="System.ArgumentException">accessCondition</exception>
         internal static RESTCommand<NullType> ReleaseLeaseImpl(ICloudBlob blob, BlobAttributes attributes, AccessCondition accessCondition, BlobRequestOptions options)
         {
-            CommonUtils.AssertNotNull("accessCondition", accessCondition);
+            CommonUtility.AssertNotNull("accessCondition", accessCondition);
             if (accessCondition.LeaseId == null)
             {
                 throw new ArgumentException(SR.MissingLeaseIDReleasing, "accessCondition");
@@ -390,7 +416,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.ApplyRequestOptions(options);
             putCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => BlobHttpWebRequestFactory.Lease(uri, serverTimeout, LeaseAction.Release, null /* proposedLeaseId */, null /* leaseDuration */, null /* leaseBreakPeriod */, accessCondition, ctx);
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
-            putCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex, ctx);
+            putCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.OK, resp, NullType.Value, cmd, ex);
 
             return putCmd;
         }
@@ -403,7 +429,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="breakPeriod">The amount of time to allow the lease to remain, rounded down to seconds.
         /// If null, the break period is the remainder of the current lease, or zero for infinite leases.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> implementing the break lease operation.
         /// </returns>
@@ -412,7 +438,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             int? breakSeconds = null;
             if (breakPeriod.HasValue)
             {
-                CommonUtils.AssertInBounds("breakPeriod", breakPeriod.Value, TimeSpan.FromSeconds(0), TimeSpan.MaxValue);
+                CommonUtility.AssertInBounds("breakPeriod", breakPeriod.Value, TimeSpan.Zero, TimeSpan.MaxValue);
                 breakSeconds = (int)breakPeriod.Value.TotalSeconds;
             }
 
@@ -423,7 +449,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Accepted, resp, TimeSpan.Zero, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Accepted, resp, TimeSpan.Zero, cmd, ex);
 
                 int? remainingLeaseTime = BlobHttpResponseParsers.GetRemainingLeaseTime(resp);
                 if (!remainingLeaseTime.HasValue)
@@ -446,7 +472,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="source">The URI of the source blob.</param>
         /// <param name="sourceAccessCondition">An object that represents the access conditions for the source blob. If null, no condition is used.</param>
         /// <param name="destAccessCondition">An object that represents the access conditions for the destination blob. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that starts to copy the blob.
         /// </returns>
@@ -466,7 +492,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
             putCmd.PreProcessResponse = (cmd, resp, ex, ctx) =>
             {
-                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex, ctx);
+                HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.Accepted, resp, null /* retVal */, cmd, ex);
                 CopyState state = BlobHttpResponseParsers.GetCopyAttributes(resp);
                 attributes.Properties = BlobHttpResponseParsers.GetProperties(resp);
                 attributes.Metadata = BlobHttpResponseParsers.GetMetadata(resp);
@@ -484,26 +510,26 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <param name="attributes">The attributes.</param>
         /// <param name="copyId">The copy ID of the copy operation to abort.</param>
         /// <param name="accessCondition">An object that represents the access conditions for the operation. If null, no condition is used.</param>
-        /// <param name="options">An object that specifies any additional options for the request.</param>
+        /// <param name="options">An object that specifies additional options for the request.</param>
         /// <returns>
         /// A <see cref="RESTCommand{T}" /> that aborts the copy.
         /// </returns>
         internal static RESTCommand<NullType> AbortCopyImpl(ICloudBlob blob, BlobAttributes attributes, string copyId, AccessCondition accessCondition, BlobRequestOptions options)
         {
-            CommonUtils.AssertNotNull("copyId", copyId);
+            CommonUtility.AssertNotNull("copyId", copyId);
 
             RESTCommand<NullType> putCmd = new RESTCommand<NullType>(blob.ServiceClient.Credentials, attributes.Uri);
 
             putCmd.ApplyRequestOptions(options);
             putCmd.BuildRequestDelegate = (uri, builder, serverTimeout, ctx) => BlobHttpWebRequestFactory.AbortCopy(uri, serverTimeout, copyId, accessCondition, ctx);
             putCmd.SignRequest = blob.ServiceClient.AuthenticationHandler.SignRequest;
-            putCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp, NullType.Value, cmd, ex, ctx);
-
+            putCmd.PreProcessResponse = (cmd, resp, ex, ctx) => HttpResponseParsers.ProcessExpectedStatusCodeNoException(HttpStatusCode.NoContent, resp, NullType.Value, cmd, ex);
+            
             return putCmd;
         }
 
         /// <summary>
-        /// Updates this blob with the given attributes a the end of a fetch attributes operation.
+        /// Updates this blob with the given attributes at the end of a fetch attributes operation.
         /// </summary>
         /// <param name="attributes">The new attributes.</param>
         /// <param name="response">The response.</param>
@@ -517,7 +543,7 @@ namespace Microsoft.WindowsAzure.Storage.Blob
             // then it's a client error and we need to throw.
             if (attributes.Properties.BlobType != BlobType.Unspecified && attributes.Properties.BlobType != properties.BlobType)
             {
-                throw new InvalidOperationException(SR.BlobTypeMismatchExceptionMessage);
+                throw new InvalidOperationException(SR.BlobTypeMismatch);
             }
 
             if (ignoreMD5)
@@ -531,15 +557,16 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         }
 
         /// <summary>
-        /// Retreive ETag and LastModified date time from response.
+        /// Retrieve ETag, LMT, and Sequence-Number from response.
         /// </summary>
         /// <param name="attributes">The attributes.</param>
         /// <param name="response">The response to parse.</param>
-        internal static void ParseSizeAndLastModified(BlobAttributes attributes, HttpWebResponse response)
+        internal static void UpdateETagLMTAndSequenceNumber(BlobAttributes attributes, HttpWebResponse response)
         {
             BlobProperties parsedProperties = BlobHttpResponseParsers.GetProperties(response);
             attributes.Properties.ETag = parsedProperties.ETag ?? attributes.Properties.ETag;
             attributes.Properties.LastModified = parsedProperties.LastModified ?? attributes.Properties.LastModified;
+            attributes.Properties.PageBlobSequenceNumber = parsedProperties.PageBlobSequenceNumber ?? attributes.Properties.PageBlobSequenceNumber;
             if (parsedProperties.Length > 0)
             {
                 attributes.Properties.Length = parsedProperties.Length;
@@ -553,16 +580,8 @@ namespace Microsoft.WindowsAzure.Storage.Blob
         /// <returns>A URI addressing the source blob, using SAS if appropriate.</returns>
         internal static Uri SourceBlobToUri(ICloudBlob source)
         {
-            Uri sourceUri = source.ServiceClient.Credentials.TransformUri(source.Uri);
-
-            if (source.SnapshotTime.HasValue)
-            {
-                UriQueryBuilder builder = new UriQueryBuilder();
-                builder.Add("snapshot", BlobRequest.ConvertDateTimeToSnapshotString(source.SnapshotTime.Value));
-                sourceUri = builder.AddToUri(sourceUri);
-            }
-
-            return sourceUri;
+            CommonUtility.AssertNotNull("source", source);
+            return source.ServiceClient.Credentials.TransformUri(source.SnapshotQualifiedUri);
         }
     }
 }
