@@ -15,7 +15,7 @@ Windows Azure Storage team's blog - http://blogs.msdn.com/b/windowsazurestorage/
     <summary>A table extension library for Windows Runtime for working with Windows Azure Storage tables.</summary>
     <tags>Microsoft, Azure, Storage, Table, Scalable, winrt, windowsazureofficial</tags>
     <dependencies>
-      	<dependency id="WindowsAzure.Storage-Preview" version="2.1.0.2-preview" />
+      	<dependency id="WindowsAzure.Storage-Preview" version="2.1.0.3-preview" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
