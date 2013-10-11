@@ -27,7 +27,6 @@ namespace Microsoft.WindowsAzure.Storage.Queue
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-    using System.Text.RegularExpressions;
 
     /// <summary>
     /// This class represents a queue in the Windows Azure Queue service.

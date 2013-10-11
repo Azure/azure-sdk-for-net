@@ -23,7 +23,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
     /// <summary>
     /// Helper class to allow an APM Method to be executed with a given timeout in milliseconds
     /// </summary>
-    internal class APMWithTimeout : IDisposable
+    internal sealed class APMWithTimeout : IDisposable
     {
         public static void RunWithTimeout(Func<AsyncCallback, object, IAsyncResult> beginMethod, AsyncCallback callback, TimerCallback timeoutCallback, object state, TimeSpan timeout)
         {
@@ -38,6 +38,7 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
         private TimerCallback timeoutCallback;
         private RegisteredWaitHandle waitHandle;
         private IAsyncResult asyncResult;
+        private bool disposed;
 
 #if WINDOWS_PHONE
         // Windows Phone does not let us use IAsyncResult.AsyncWaitHandle
@@ -63,48 +64,59 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
 #else
             WaitHandle asyncWaitHandle = this.asyncResult.AsyncWaitHandle;
 #endif
-            
-            this.waitHandle = ThreadPool.RegisterWaitForSingleObject(
-                asyncWaitHandle,
-                this.TimeoutCallback,
-                state,
-                timeout,
-                true);
+
+            this.waitHandle = ThreadPool.RegisterWaitForSingleObject(asyncWaitHandle, this.WaitCallback, state, timeout, true);
+            if (this.disposed)
+            {
+                this.UnregisterWaitHandle();
+            }
         }
 
-        private void TimeoutCallback(object state, bool timedOut)
+        private void WaitCallback(object state, bool timedOut)
         {
-            if (timedOut && !this.asyncResult.IsCompleted)
+            try
             {
-                TimerCallback callback = this.timeoutCallback;
-                this.timeoutCallback = null;
-
-                if (callback != null)
+                if (timedOut && !this.asyncResult.IsCompleted)
                 {
-                    callback(state);
+                    TimerCallback callback = this.timeoutCallback;
+                    this.timeoutCallback = null;
+
+                    if (callback != null)
+                    {
+                        callback(state);
+                    }
                 }
             }
+            finally
+            {
+                this.Dispose();
+            }
+        }
 
-            this.Dispose();
+        private void UnregisterWaitHandle()
+        {
+            RegisteredWaitHandle handle = Interlocked.Exchange(ref this.waitHandle, null);
+            if (handle != null)
+            {
+                handle.Unregister(null);
+            }
         }
 
         public void Dispose()
         {
-            if (this.waitHandle != null)
+            if (!this.disposed)
             {
-                this.waitHandle.Unregister(null);
-                this.waitHandle = null;
-            }
-
-            this.timeoutCallback = null;
+                this.disposed = true;
+                this.UnregisterWaitHandle();
 
 #if WINDOWS_PHONE
-            if (this.fakeEvent != null)
-            {
-                this.fakeEvent.Close();
-                this.fakeEvent = null;
-            }
+                if (this.fakeEvent != null)
+                {
+                    this.fakeEvent.Close();
+                    this.fakeEvent = null;
+                }
 #endif
+            }
         }
     }
 }

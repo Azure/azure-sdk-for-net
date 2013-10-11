@@ -17,7 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage.Blob
 {
-    using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
 

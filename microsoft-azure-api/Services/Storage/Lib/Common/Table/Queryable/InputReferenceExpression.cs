@@ -17,7 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Queryable
 {
-    using System;
     using System.Diagnostics;
     using System.Linq.Expressions;
         

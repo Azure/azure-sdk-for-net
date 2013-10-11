@@ -17,7 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core.Executor
 {
-    using Microsoft.WindowsAzure.Storage.Core;
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using Microsoft.WindowsAzure.Storage.RetryPolicies;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;

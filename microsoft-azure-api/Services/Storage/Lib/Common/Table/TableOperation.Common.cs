@@ -75,7 +75,10 @@ namespace Microsoft.WindowsAzure.Storage.Table
                 return this.retrieveResolver;
             }
 
-            set { this.retrieveResolver = value; }
+            set
+            {
+                this.retrieveResolver = value;
+            }
         }
 
         /// <summary>

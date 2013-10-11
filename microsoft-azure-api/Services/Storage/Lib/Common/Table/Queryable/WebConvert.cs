@@ -23,8 +23,6 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
     using System.Xml;
 #if ASTORIA_CLIENT
     using System.Data.Services.Client;
-#else
-    using System.Globalization;
 #endif
 
     internal static class WebConvert
