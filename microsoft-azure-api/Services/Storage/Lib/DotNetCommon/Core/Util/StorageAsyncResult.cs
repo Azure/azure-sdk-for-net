@@ -20,7 +20,6 @@ namespace Microsoft.WindowsAzure.Storage.Core.Util
     using Microsoft.WindowsAzure.Storage;
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents the async result returned by operations that do not directly
