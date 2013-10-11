@@ -41,7 +41,7 @@
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Microsoft.WindowsAzure.Storage.RetryPolicies", Justification = "Reviewed.")]
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Microsoft.WindowsAzure.Storage.Table.Queryable", Justification = "Reviewed")]
 
-//CA1024
+// CA1024
 [assembly: SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.IBufferManager.#GetDefaultBufferSize()", Justification = "Reviewed")]
 
 // CA1026
@@ -286,7 +286,7 @@
 [assembly: SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Table.Queryable.ResourceBinder.#VisitMethodCall(System.Linq.Expressions.MethodCallExpression)", Justification = "Reviewed")]
 [assembly: SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Blob.Protocol.ListBlobsResponse+<ParseXml>d__0.#MoveNext()", Justification = "Reviewed")]
 
-//CA1505
+// CA1505
 [assembly: SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Table.Queryable.ReflectionUtil.#.cctor()", Justification = "Reviewed")]
 
 // CA1506
@@ -305,7 +305,7 @@
 // CA1716
 [assembly: SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", Scope = "namespace", Target = "Microsoft.WindowsAzure.Storage.Shared.Protocol", MessageId = "Shared", Justification = "Back compatibility.")]
 
-//CA1801
+// CA1801
 [assembly: SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "columns", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Table.TableQuery.#Project`1(!!0,System.String[])", Justification = "Reviewed")]
 [assembly: SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "options", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Table.Queryable.ExpressionParser.#VisitCustomQueryOptions(System.Collections.Generic.Dictionary`2<System.Linq.Expressions.ConstantExpression,System.Linq.Expressions.ConstantExpression>)", Justification = "Reviewed")]
 
@@ -362,7 +362,6 @@
 [assembly: SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Queue.CloudQueue.#BeginCreateIfNotExists(Microsoft.WindowsAzure.Storage.Queue.QueueRequestOptions,Microsoft.WindowsAzure.Storage.OperationContext,System.AsyncCallback,System.Object)", Justification = "Reviewed.")]
 [assembly: SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Queue.CloudQueue.#UpdateMessageImpl(Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage,System.TimeSpan,Microsoft.WindowsAzure.Storage.Queue.MessageUpdateFields,Microsoft.WindowsAzure.Storage.Queue.QueueRequestOptions)", Justification = "Reviewed.")]
 [assembly: SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Queue.CloudQueueClient.#SetServicePropertiesImpl(Microsoft.WindowsAzure.Storage.Shared.Protocol.ServiceProperties,Microsoft.WindowsAzure.Storage.Queue.QueueRequestOptions)", Justification = "Reviewed.")]
-[assembly: SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Core.Util.APMWithTimeout.#RunWithTimeout(System.Func`3<System.AsyncCallback,System.Object,System.IAsyncResult>,System.AsyncCallback,System.Threading.TimerCallback,System.Object,System.Nullable`1<System.Int32>)", Justification = "Reviewed.")]
 [assembly: SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Blob.BlobWriteStream.#BeginCommit(System.AsyncCallback,System.Object)", Justification = "Reviewed")]
 [assembly: SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Core.MultiBufferMemoryStream.#BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)", Justification = "Reviewed")]
 [assembly: SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Scope = "member", Target = "Microsoft.WindowsAzure.Storage.Core.MultiBufferMemoryStream.#BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)", Justification = "Reviewed")]
