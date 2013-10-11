@@ -26,7 +26,6 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
     using System.Globalization;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Reflection;
 
     #endregion Namespaces.
 

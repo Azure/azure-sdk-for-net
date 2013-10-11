@@ -26,7 +26,6 @@ namespace Microsoft.WindowsAzure.Storage.Table.DataServices
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
     using System;
     using System.Data.Services.Client;
-    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Net;
     using System.Threading;

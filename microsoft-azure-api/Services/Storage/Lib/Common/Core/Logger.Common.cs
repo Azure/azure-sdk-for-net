@@ -17,9 +17,7 @@
 
 namespace Microsoft.WindowsAzure.Storage.Core
 {
-    using System;
     using System.Globalization;
-    using System.Threading;
 
     internal static partial class Logger
     {

@@ -21,7 +21,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using System.Collections.Generic;
 #if WINDOWS_DESKTOP && !WINDOWS_PHONE
     using System.Collections.Concurrent;
-    using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
     using EntityActivator = System.Func<object[], object>;

@@ -19,7 +19,6 @@ namespace Microsoft.WindowsAzure.Storage.Blob
 {
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
-    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents the system properties for a blob.
