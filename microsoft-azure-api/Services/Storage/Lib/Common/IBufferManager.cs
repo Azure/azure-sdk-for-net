@@ -17,8 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage
 {
-    using System;
-
 #if WINDOWS_RT
     using System.Runtime.InteropServices.WindowsRuntime;
 #endif

@@ -22,6 +22,7 @@
     <DefineConstants>TRACE;DEBUG;WINDOWS_DESKTOP;TASK</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>1685</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <SignAssembly>true</SignAssembly>
@@ -33,6 +34,7 @@
     <DefineConstants>TRACE;WINDOWS_DESKTOP;TASK</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>1685</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FiddlerCore">

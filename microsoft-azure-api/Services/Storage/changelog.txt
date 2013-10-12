@@ -154,3 +154,7 @@ Issues fixed in 2.1.0.2 :
 
   - Blobs: Streams opened by OpenRead do not throw NotSupportedException when Flush is called.
   - Tables: Generic ExecuteQuery methods on CloudTable execute IQueryable queries correctly by generating the filter string.
+
+Issues fixed in 2.1.0.3 :
+
+  - All: Registered wait handles are unregistered sooner for more efficient GC.
