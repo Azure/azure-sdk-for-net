@@ -1,4 +1,4 @@
-# Windows Azure SDK for .NET 4, Windows 8, and Windows Phone 8 (2.1.0.0)
+# Windows Azure SDK for .NET
 
 The Windows Azure SDK for .NET allows you to build Windows Azure applications 
 that take advantage of scalable cloud computing resources.
