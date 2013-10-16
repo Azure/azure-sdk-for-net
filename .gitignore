@@ -7,12 +7,10 @@
 *.sln.docstates
 
 # Build results
-
+binaries/
 [Dd]ebug*/
 [Rr]elease/
-
 build/
-
 
 [Tt]est[Rr]esult
 [Bb]uild[Ll]og.*
@@ -105,5 +103,7 @@ Backup*/
 UpgradeLog*.XML
 
 # NuGet
-packages/
 /microsoft-azure-api/Services/Storage/Test/Unit/RT/AppPackages/
+
+# Mac development
+.DS_Store

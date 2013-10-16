@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="DeveloperBuild" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  
+  Windows Azure Management Libraries SDK Builder Guide
+  - - -
+
+  Available Targets:
+  - - -
+  
+  /t:DeveloperBuild
+    
+    Builds the .NET solution using the development key pair.
+    Does not drop into the binaries folder.
+    
+  /t:OfficialBuild
+  
+    Builds officially delay signed binaries.
+    Drops into the binaries\unsigned folder.
+    
+    To manually prepare an official build,
+    - Get these binaries signed officially
+    - Drop the fully signed bits into the binaries folder
+  
+  /t:BuildPackages
+  
+    Builds NuGet packages using the binaries folder contents.
+    The packages will drop to .\binaries\packages.
+    
+  /t:PublishPackages
+  
+    Publishes the built packages. You will need to include your
+    publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY 
+    
+    
+  Targets for build servers
+  - - -
+  /t:NightlyBuild
+  /t:ContinuousIntegrationBuild
+  
+  
+  
+  Properties of interest:
+  - - -
+  
+  /p:BuildVersionSuffix=BUILD_SUFFIX
+  
+    Inserts a string suffix value at the end of all the NuGet package versions
+    built and published.
+    
+  /p:NuGetKey=NUGET_PUBLISHING_KEY
+  
+    Provides the key used to publish to a NuGet or MyGet server.
+    
+    This key should never be committed to source control.
+    
+  /p:PublishSymbolSourcePackages
+  
+    A true/false value indicating whether to push the symbol + source
+    packages to a symbol server.
+  
+  /p:NuGetPublishingSource=URI
+  
+    The NuGet Server to push packages to.
+    
+  /p:NuGetSymbolPublishingSource=URI
+  
+    The NuGet Server to push symbol + source packages to.
+  
+  
+  -->
+  
+  
+  
+  <!--
+  
+  Windows Azure Management Libraries
+  NuGet Packages
+  
+  Please edit the project list within the .\src\PackageSpecs\ folder to update
+  the list of packages to build, publish, and their versions.
+  
+  -->
+  <Import Project="src\PackageSpecs\NuGetSpecs.proj" />
+  
+  
+  <!--
+  For nightly builds, a generated date is needed.
+  -->
+  <Import Project="..\tools\buildversiontask.msbuild" />
+  
+
+  
+  
+  <!-- General packaging properties -->
+  <PropertyGroup>
+    <NuGetCommand>.nuget\NuGet.exe</NuGetCommand>
+    <PackageOutputDir>binaries\packages</PackageOutputDir>
+    <NuGetVerbosity>normal</NuGetVerbosity>
+    <PublishSymbolSourcePackages>true</PublishSymbolSourcePackages>
+    <BuildVersionSuffix></BuildVersionSuffix>
+    <AdditionalVersionSuffix></AdditionalVersionSuffix>
+  </PropertyGroup>
+
+  <!-- Package and source/symbol publishing configuration -->
+  <PropertyGroup>
+    <NuGetPublishingSource>https://www.myget.org/F/windowsazuresdk/api/v2/package</NuGetPublishingSource>
+    <NuGetSymbolPublishingSource>https://nuget.symbolsource.org/MyGet/windowsazuresdk</NuGetSymbolPublishingSource>
+    <NuGetKey></NuGetKey>
+  </PropertyGroup>
+
+  <Target Name="DeveloperBuild">
+    <MSBuild Projects="WindowsAzureLibraries.sln"
+             Properties="Configuration=Debug;Platform=Any CPU"
+             Targets="Rebuild" />
+  </Target>
+
+  <!--
+  An official build is designed for use while shipping. It generates a release
+  build and places binaries ready for the official Microsoft signing process
+  inside the binaries\unsigned folder.
+  
+  After signing is complete, additional work is required to prepare the NuGet
+  packages for shipping.
+  -->
+  <Target Name="OfficialBuild">
+    <MSBuild Projects="WindowsAzureLibraries.sln"
+             Properties="Configuration=Release;OfficialBuild=true;Platform=Any CPU"
+             Targets="Rebuild" />
+  </Target>
+
+  <!--
+  Nightly builds are not officially signed. Instead, they are signed with the
+  same developer strong name key we ship to customers.
+  -->
+  <Target Name="NightlyBuild"
+          DependsOnTargets="NightlyBuildSetProperties">
+    
+    <Error Condition=" '$(NuGetKey)' == '' " Text="NuGetKey is not set." />
+
+    <MSBuild Projects="WindowsAzureLibraries.sln"
+         Properties="Configuration=Release;Platform=Any CPU;CopyToBinaries=true"
+         Targets="Rebuild" />
+
+    <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
+    <CallTarget Targets="BuildPackages; PublishPackages" />
+
+  </Target>
+
+  <Target Name="NightlyBuildSetProperties"
+          DependsOnTargets="GetGeneratedBuildDate">
+
+    <Message Text="Nightly builds today have the date of $(GeneratedBuildDate)." />
+
+    <CreateProperty Value="-$(GeneratedBuildDate)">
+      <Output PropertyName="BuildVersionSuffix" TaskParameter="Value" />
+    </CreateProperty>
+
+  </Target>
+
+  <Target Name="ContinuousIntegrationBuild"
+          DependsOnTargets="ContinuousIntegrationBuildSetProperties">
+
+    <MSBuild Projects="WindowsAzureLibraries.sln"
+         Properties="Configuration=Release;Platform=Any CPU;CopyToBinaries=true"
+         Targets="Rebuild" />
+
+    <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
+    <CallTarget Targets="BuildPackages" />
+
+  </Target>
+
+  <Target Name="ContinuousIntegrationBuildSetProperties"
+          DependsOnTargets="GetGeneratedBuildDate">
+
+    <CreateProperty Value="-$(GeneratedBuildDate)-CI">
+      <Output PropertyName="BuildVersionSuffix" TaskParameter="Value" />
+    </CreateProperty>
+
+  </Target>
+
+  <Target Name="BuildPackages">
+    <MakeDir Directories="binaries" Condition="!Exists('binaries')" />
+    <MakeDir Directories="binaries\packages" Condition="!Exists('binaries\packages')" />
+
+    <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
+    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' "
+          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;src\PackageSpecs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
+
+    <Message Text="Generating NuGet packages without symbol + source packages" Importance="high" />
+    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' "
+          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;src\PackageSpecs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
+  </Target>
+
+  <Target Name="PublishPackagesOnly">
+    <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
+    
+    <Message Importance="high" Text="Publishing NuGet packages to the cloud at $(NuGetPublishingSource)" />
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).nupkg&quot; $(NuGetKey) -Source $(NuGetPublishingSource)"
+          Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
+          
+    <Message Importance="high" Text="Publishing NuGet symbol &amp; source packages to the cloud at $(NuGetSymbolPublishingSource)" />
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).Symbols.nupkg&quot; $(NuGetKey) -Source $(NuGetSymbolPublishingSource)" 
+          Condition=" '%(SdkNuGetPackage.Publish)' != 'false' And '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' And '$(PublishSymbolSourcePackages)' == 'true' " />
+    
+    <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
+             Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
+
+    <Warning Text="Symbol/source packages are not being pushed. The PublishSymbolSourcePackages property is not set to true." 
+             Condition=" '$(PublishSymbolSourcePackages)' != 'true' " />
+  </Target>
+
+  <Target Name="PublishPackages" DependsOnTargets="BuildPackages">
+    <CallTarget Targets="PublishPackagesOnly" />
+  </Target>
+
+</Project>

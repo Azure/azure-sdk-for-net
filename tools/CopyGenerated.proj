@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="CopyGeneratedSources" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <HydraRootDir>..\..\hydra\</HydraRootDir>
+        <HydraGeneratedDir>$(HydraRootDir)Hydra.Test\Generated\</HydraGeneratedDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <GeneratedFile Include="ComputeManagementClient.cs">
+            <DestDir>ComputeManagement\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="ManagementClient.cs">
+            <DestDir>Management\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="StorageManagementClient.cs">
+            <DestDir>StorageManagement\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="MediaServicesManagementClient.cs">
+            <DestDir>MediaServices\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="VirtualNetworkManagementClient.cs">
+            <DestDir>NetworkManagement\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="SubscriptionClient.cs">
+            <DestDir>Subscriptions\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="WebSiteManagementClient.cs">
+            <DestDir>WebSiteManagement\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="StoreManagementClient.cs">
+            <DestDir>Store\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="SchedulerManagementClient.cs">
+            <DestDir>Scheduler\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="SchedulerClient.cs">
+          <DestDir>Scheduler\</DestDir>
+        </GeneratedFile>
+        <GeneratedFile Include="CloudServiceManagementClient.cs">
+          <DestDir>CloudServiceManagement\</DestDir>
+        </GeneratedFile>
+      <GeneratedFile Include="SqlManagementClient.cs">
+        <DestDir>Sql\</DestDir>
+      </GeneratedFile>
+      <GeneratedFile Include="ServiceBusManagementClient.cs">
+        <DestDir>ServiceBus\</DestDir>
+      </GeneratedFile>
+    </ItemGroup>
+    <Target Name="CopyGeneratedSources">
+        <Copy SourceFiles="@(GeneratedFile->'$(HydraGeneratedDir)%(Identity)')"
+            DestinationFolder="..\libraries\src\%(GeneratedFile.DestDir)" />
+    </Target>
+</Project>

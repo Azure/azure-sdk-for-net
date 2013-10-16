@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.WindowsAzure.Management.Compute</id>
+    <title>Windows Azure Compute Management Library</title>
+
+    <!-- TODO: Update release message before shipping -->
+    <releaseNotes>PREVIEW RELEASE</releaseNotes>
+    
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>
+    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <summary>Provides management functionality to Windows Azure .NET SDK libraries.</summary>
+    <description>
+Provides management functionality to Windows Azure .NET SDK libraries.
+
+Windows Azure is an open and flexible cloud platform that enables you to quickly build, deploy and manage applications across a global network of Microsoft-managed datacenters.
+    </description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft "Windows Azure" Azure cloud management "service management" REST HTTP client core common windowsazureofficial</tags>
+    <references>
+      <group targetFramework="portable-net45+sl50+wp80+win">
+        <reference file="Microsoft.WindowsAzure.Management.Compute.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.WindowsAzure.Common.Dependencies" version="0.0.1-preview" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="0.0.1-preview" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ComputeManagement\**\*.cs" target="src" />
+    
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Compute.dll" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Compute.pdb" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Compute.xml" target="lib\portable-net45+sl50+wp80+win" />
+  </files>
+</package>
