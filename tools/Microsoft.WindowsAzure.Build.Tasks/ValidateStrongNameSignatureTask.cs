@@ -118,16 +118,26 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
                 success = success == ! ExpectedDelaySigned;
 
-                string message = string.Format(CultureInfo.InvariantCulture,
-                    ExpectedDelaySigned ? "The assembly \"{0}\" was delay signed." : "The assembly \"{0}\" has been fully signed.",
-                    path);
+                string message;
+                if (ExpectedDelaySigned && success || !(ExpectedDelaySigned && success))
+                {
+                    message = "The assembly \"{0}\" was delay signed.";
+                } else if (ExpectedDelaySigned && !success)
+                {
+                    message = "The assembly \"{0}\" was not delay signed.";
+                }
+                else
+                {
+                    message = "The assembly \"{0}\" has been fully signed.";
+                }
+
                 if (success)
                 {
-                    Log.LogMessage(MessageImportance.High, message);
+                    Log.LogMessage(MessageImportance.High, message, path);
                 } 
                 else
                 {
-                    Log.LogError(message);    
+                    Log.LogError(message, path);
                 }
 
                 return success;

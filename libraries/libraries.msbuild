@@ -37,6 +37,7 @@
   - - -
   /t:NightlyBuild
   /t:ContinuousIntegrationBuild
+  /t:OfficialSignedBuildNoPublish
   
   
   
@@ -88,11 +89,12 @@
   For nightly builds, a generated date is needed.
   -->
   <Import Project="..\tools\Microsoft.WindowsAzure.Build.msbuild" />
+  <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="..\tools\Microsoft.WindowsAzure.Build.Tasks.dll" />
   
 
   
   
-  <!-- General packaging properties -->
+  <!-- General NuGet packaging properties -->
   <PropertyGroup>
     <NuGetCommand>.nuget\NuGet.exe</NuGetCommand>
     <PackageOutputDir>binaries\packages</PackageOutputDir>
@@ -102,6 +104,18 @@
     <AdditionalVersionSuffix></AdditionalVersionSuffix>
   </PropertyGroup>
 
+  <!-- 
+    Compliance signing properties
+    - - -
+    Developer builds are signed using the c66ce9294aae1300 full key pair that
+    is unofficial and provided to the public via the Development.snk key pair.
+    
+    Official builds should never be shipped with the developer key pair token.
+    -->
+  <PropertyGroup>
+    <MicrosoftLibrariesStrongNameToken>31bf3856ad364e35</MicrosoftLibrariesStrongNameToken>
+  </PropertyGroup>
+
   <!-- Package and source/symbol publishing configuration -->
   <PropertyGroup>
     <NuGetPublishingSource>https://www.myget.org/F/windowsazure/api/v2/package</NuGetPublishingSource>
@@ -109,11 +123,15 @@
     <NuGetKey></NuGetKey>
   </PropertyGroup>
 
+  <!--
+  Regular developer build.
+  -->
   <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies">
     <MSBuild Projects="WindowsAzureLibraries.sln"
              Properties="Configuration=Debug;Platform=Any CPU"
              Targets="Rebuild" />
   </Target>
+  
 
   <!--
   An official build is designed for use while shipping. It generates a release
@@ -128,6 +146,7 @@
              Properties="Configuration=Release;OfficialBuild=true;Platform=Any CPU"
              Targets="Rebuild" />
   </Target>
+
 
   <!--
   Nightly builds are not officially signed. Instead, they are signed with the
@@ -147,6 +166,7 @@
 
   </Target>
 
+  
   <Target Name="NightlyBuildSetProperties"
           DependsOnTargets="GetGeneratedBuildDate">
 
@@ -158,6 +178,7 @@
 
   </Target>
 
+  
   <Target Name="ContinuousIntegrationBuild"
           DependsOnTargets="BuildEngineeringDependencies; ContinuousIntegrationBuildSetProperties">
 
@@ -170,6 +191,7 @@
 
   </Target>
 
+  
   <Target Name="ContinuousIntegrationBuildSetProperties"
           DependsOnTargets="GetGeneratedBuildDate">
 
@@ -179,6 +201,7 @@
 
   </Target>
 
+  
   <Target Name="BuildPackages">
     <MakeDir Directories="binaries" Condition="!Exists('binaries')" />
     <MakeDir Directories="binaries\packages" Condition="!Exists('binaries\packages')" />
@@ -192,6 +215,7 @@
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;src\PackageSpecs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
   </Target>
 
+  
   <Target Name="PublishPackagesOnly">
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
     
@@ -210,10 +234,64 @@
              Condition=" '$(PublishSymbolSourcePackages)' != 'true' " />
   </Target>
 
+
+  <Target Name="OfficialSignedBuildNoPublish"
+          DependsOnTargets="OfficialBuild">
+
+    <Message Text="Validate the unsigned files" />
+    <CallTarget Targets="ValidateOfficialBuildBinariesBeforeSigning" />
+
+    <Message Text="Code signing" Importance="high" />
+    <!-- TODO: Signing -->
+
+    <Error Condition=" !Exists('binaries\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. Code signing likely failed." />
+
+    <Message Text="Validate the signed files" />
+    <CallTarget Targets="ValidateOfficialBuildBinaries" />
+
+    <Message Text="Build the official NuGet packages" />
+    <CallTarget Targets="BuildPackages" />
+    
+  </Target>
+
+
+  <Target Name="ValidateOfficialBuildBinariesBeforeSigning">
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
+    </GetFrameworkSdkPath>
+    <ItemGroup>
+      <DelaySignedAssembliesToValidate Include="binaries\unsigned\*.dll" />
+    </ItemGroup>
+    <ValidateStrongNameSignatureTask
+        WindowsSdkPath="$(WindowsSdkPath)"
+        Assembly="%(DelaySignedAssembliesToValidate.Identity)"
+        ExpectedTokenSignature="$(MicrosoftLibrariesStrongNameToken)"
+        ExpectedDelaySigned="true"        
+        ContinueOnError="ErrorAndContinue" />
+  </Target>
+
+
+  <Target Name="ValidateOfficialBuildBinaries">
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
+    </GetFrameworkSdkPath>
+    <ItemGroup>
+      <AfterSignedAssembliesToValidate Include="binaries\*.dll" />
+    </ItemGroup>
+    <ValidateStrongNameSignatureTask
+        WindowsSdkPath="$(WindowsSdkPath)"
+        Assembly="%(AfterSignedAssembliesToValidate.Identity)"
+        ExpectedTokenSignature="$(MicrosoftLibrariesStrongNameToken)"
+        ExpectedDelaySigned="false"
+        ContinueOnError="ErrorAndContinue" />
+  </Target>
+
+
   <Target Name="PublishPackages" DependsOnTargets="BuildPackages">
     <CallTarget Targets="PublishPackagesOnly" />
   </Target>
 
+  
   <Target Name="BuildEngineeringDependencies">
     <MSBuild Projects="..\tools\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
              Targets="Build"
