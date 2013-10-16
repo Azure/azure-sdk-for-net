@@ -104,8 +104,8 @@
 
   <!-- Package and source/symbol publishing configuration -->
   <PropertyGroup>
-    <NuGetPublishingSource>https://www.myget.org/F/windowsazuresdk/api/v2/package</NuGetPublishingSource>
-    <NuGetSymbolPublishingSource>https://nuget.symbolsource.org/MyGet/windowsazuresdk</NuGetSymbolPublishingSource>
+    <NuGetPublishingSource>https://www.myget.org/F/windowsazure/api/v2/package</NuGetPublishingSource>
+    <NuGetSymbolPublishingSource>https://nuget.symbolsource.org/MyGet/windowsazure</NuGetSymbolPublishingSource>
     <NuGetKey></NuGetKey>
   </PropertyGroup>
 
