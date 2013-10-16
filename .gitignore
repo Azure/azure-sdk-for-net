@@ -96,6 +96,9 @@ ClientBin
 
 Generated_Code #added for RIA/Silverlight projects
 
+# Build tasks
+tools/*.dll
+
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
 _UpgradeReport_Files/

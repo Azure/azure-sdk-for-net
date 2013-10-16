@@ -87,7 +87,7 @@
   <!--
   For nightly builds, a generated date is needed.
   -->
-  <Import Project="..\tools\buildversiontask.msbuild" />
+  <Import Project="..\tools\Microsoft.WindowsAzure.Build.msbuild" />
   
 
   
@@ -109,7 +109,7 @@
     <NuGetKey></NuGetKey>
   </PropertyGroup>
 
-  <Target Name="DeveloperBuild">
+  <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies">
     <MSBuild Projects="WindowsAzureLibraries.sln"
              Properties="Configuration=Debug;Platform=Any CPU"
              Targets="Rebuild" />
@@ -123,7 +123,7 @@
   After signing is complete, additional work is required to prepare the NuGet
   packages for shipping.
   -->
-  <Target Name="OfficialBuild">
+  <Target Name="OfficialBuild" DependsOnTargets="BuildEngineeringDependencies">
     <MSBuild Projects="WindowsAzureLibraries.sln"
              Properties="Configuration=Release;OfficialBuild=true;Platform=Any CPU"
              Targets="Rebuild" />
@@ -134,7 +134,7 @@
   same developer strong name key we ship to customers.
   -->
   <Target Name="NightlyBuild"
-          DependsOnTargets="NightlyBuildSetProperties">
+          DependsOnTargets="BuildEngineeringDependencies; NightlyBuildSetProperties">
     
     <Error Condition=" '$(NuGetKey)' == '' " Text="NuGetKey is not set." />
 
@@ -159,7 +159,7 @@
   </Target>
 
   <Target Name="ContinuousIntegrationBuild"
-          DependsOnTargets="ContinuousIntegrationBuildSetProperties">
+          DependsOnTargets="BuildEngineeringDependencies; ContinuousIntegrationBuildSetProperties">
 
     <MSBuild Projects="WindowsAzureLibraries.sln"
          Properties="Configuration=Release;Platform=Any CPU;CopyToBinaries=true"
@@ -212,6 +212,12 @@
 
   <Target Name="PublishPackages" DependsOnTargets="BuildPackages">
     <CallTarget Targets="PublishPackagesOnly" />
+  </Target>
+
+  <Target Name="BuildEngineeringDependencies">
+    <MSBuild Projects="..\tools\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
+             Targets="Build"
+             Properties="Configuration=Debug" />
   </Target>
 
 </Project>

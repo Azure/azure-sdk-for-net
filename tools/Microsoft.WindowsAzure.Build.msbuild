@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="NoOperation" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="GetBuildVersionTask" AssemblyFile="Microsoft.WindowsAzure.Build.Tasks.dll" />
+  
+  <Target Name="NoOperation">
+    <Message Text="Nothing to do." />
+  </Target>
+
+  <Target Name="GetGeneratedBuildDate">
+    <GetBuildVersionTask>
+      <Output TaskParameter="Date" PropertyName="GeneratedBuildDate" />
+    </GetBuildVersionTask>
+  </Target>
+
+</Project>
