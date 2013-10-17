@@ -90,6 +90,7 @@
   -->
   <Import Project="..\tools\Microsoft.WindowsAzure.Build.msbuild" />
   <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="..\tools\Microsoft.WindowsAzure.Build.Tasks.dll" />
+  <UsingTask Condition=" Exists($(OnPremiseBuildTasks)) " TaskName="CodeSigningTask" AssemblyFile="$(OnPremiseBuildTasks)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
   
 
   
@@ -241,8 +242,21 @@
     <Message Text="Validate the unsigned files" />
     <CallTarget Targets="ValidateOfficialBuildBinariesBeforeSigning" />
 
+    <Error Condition=" !Exists($(OnPremiseBuildTasks)) " Text="No OnPremiseBuildTasks available, the official build will be unable to continue. $(OnPremiseBuildTasks)" />
+
     <Message Text="Code signing" Importance="high" />
-    <!-- TODO: Signing -->
+    <ItemGroup>
+      <AssembliesToBuild Include="binaries\unsigned\Microsoft.WindowsAzure.*.dll" />
+    </ItemGroup>
+
+    <CodeSigningTask
+        Description="Windows Azure SDK"
+        Keywords="Windows Azure SDK, Client Libraries"
+        UnsignedFiles="@(AssembliesToBuild)"
+        DestinationPath="binaries\"
+        SigningLogPath="binaries\signing.log"
+        ToolsPath="$(OnPremiseBuildTasks)"
+        CleanupTemporaryDirectories="false" />
 
     <Error Condition=" !Exists('binaries\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. Code signing likely failed." />
 
