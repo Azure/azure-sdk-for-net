@@ -255,8 +255,7 @@
         UnsignedFiles="@(AssembliesToBuild)"
         DestinationPath="binaries\"
         SigningLogPath="binaries\signing.log"
-        ToolsPath="$(OnPremiseBuildTasks)"
-        CleanupTemporaryDirectories="false" />
+        ToolsPath="$(OnPremiseBuildTasks)" />
 
     <Error Condition=" !Exists('binaries\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. Code signing likely failed." />
 

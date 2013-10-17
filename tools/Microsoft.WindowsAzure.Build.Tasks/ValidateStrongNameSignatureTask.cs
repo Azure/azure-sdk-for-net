@@ -116,13 +116,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 arguments = "-q -vf \"" + path + "\"";
                 success = utility.Execute(arguments, out output);
 
-                success = success == ! ExpectedDelaySigned;
+                success = (success == (!ExpectedDelaySigned));
 
                 string message;
-                if (ExpectedDelaySigned && success || !(ExpectedDelaySigned && success))
+                if (ExpectedDelaySigned && success || !ExpectedDelaySigned && !success)
                 {
                     message = "The assembly \"{0}\" was delay signed.";
-                } else if (ExpectedDelaySigned && !success)
+                }
+                else if (ExpectedDelaySigned && !success)
                 {
                     message = "The assembly \"{0}\" was not delay signed.";
                 }
