@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,6 +44,7 @@
   <ItemGroup>
     <Compile Include="GetBuildVersionTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegexReplacementTask.cs" />
     <Compile Include="StrongNameUtility.cs" />
     <Compile Include="ValidateStrongNameSignatureTask.cs" />
   </ItemGroup>
