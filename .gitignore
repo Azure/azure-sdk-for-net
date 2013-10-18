@@ -49,6 +49,9 @@ ipch/
 *.psess
 *.vsp
 
+# Code analysis
+*.CodeAnalysisLog.xml
+
 # Guidance Automation Toolkit
 *.gpState
 
