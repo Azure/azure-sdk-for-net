@@ -21,7 +21,7 @@
   The release notes can also use token replacement to share common information.
   -->
   <PropertyGroup>
-    <BaselineCommonPackageVersion>0.0.3-preview</BaselineCommonPackageVersion>
+    <BaselineCommonPackageVersion>0.0.4-preview</BaselineCommonPackageVersion>
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
