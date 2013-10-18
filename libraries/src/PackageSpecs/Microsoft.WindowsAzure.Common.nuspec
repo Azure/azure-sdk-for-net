@@ -11,8 +11,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <summary>This package provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation. The package also exposes the CloudContext type, enabling centralized discovery of available Windows Azure libraries.</summary>
-    <description>This package provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation. The package also exposes the CloudContext type, enabling centralized discovery of available Windows Azure libraries.
+    <summary>Provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation. The package also exposes the CloudContext type, which enables centralized discovery of available Windows Azure libraries.</summary>
+    <description>Provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation. The package also exposes the CloudContext type, which enables centralized discovery of available Windows Azure libraries.
 
 Supported Platforms:
 - .NET Framework 4.5, 4.5.1

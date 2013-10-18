@@ -11,8 +11,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>This set of packages opens up a rich surface area of Windows Azure services. Automate, deploy and test cloud infrastructure. These libraries support Windows Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Site and core data center infrastructure management.</summary>
-    <description>This set of packages opens up a rich surface area of Windows Azure services. Automate, deploy and test cloud infrastructure. These libraries support Windows Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Site and core data center infrastructure management.</description>
+    <summary>This set of packages open up a rich surface area of Windows Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Windows Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites and core data center infrastructure management.</summary>
+    <description>This set of packages open up a rich surface area of Windows Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Windows Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites and core data center infrastructure management.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>windowsazureofficial management cloud libraries "windows azure management"</tags>
     <dependencies>

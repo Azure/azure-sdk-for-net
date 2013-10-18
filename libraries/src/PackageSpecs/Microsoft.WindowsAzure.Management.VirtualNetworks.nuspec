@@ -11,8 +11,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>This package provides virtual network management capabilities for Windows Azure.</summary>
-    <description>This package provides virtual network management capabilities for Windows Azure.</description>
+    <summary>Provides virtual network management capabilities for Windows Azure.</summary>
+    <description>Provides virtual network management capabilities for Windows Azure.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Windows Azure" Azure network management "virtual networks" "virtual networks management" REST HTTP client windowsazureofficial</tags>
     <references>
