@@ -20,7 +20,6 @@ namespace Microsoft.WindowsAzure.Storage.Table
     using Microsoft.WindowsAzure.Storage.Core.Util;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// A <see cref="ITableEntity"/> type which allows callers direct access to the property map of the entity. This class eliminates the use of reflection for serialization and deserialization.

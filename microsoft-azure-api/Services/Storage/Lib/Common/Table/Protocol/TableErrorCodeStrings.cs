@@ -17,8 +17,6 @@
 
 namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Provides error code strings that are specific to the Windows Azure Table service.
     /// </summary>    

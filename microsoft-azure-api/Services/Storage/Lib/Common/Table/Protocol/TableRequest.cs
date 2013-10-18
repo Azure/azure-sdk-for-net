@@ -19,7 +19,6 @@ namespace Microsoft.WindowsAzure.Storage.Table.Protocol
 {
     using Microsoft.WindowsAzure.Storage.Core.Auth;
     using Microsoft.WindowsAzure.Storage.Shared.Protocol;
-    using System;
     using System.IO;
 
     /// <summary>
