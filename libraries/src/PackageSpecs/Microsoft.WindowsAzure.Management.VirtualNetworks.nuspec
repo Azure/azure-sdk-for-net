@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.VirtualNetworks</id>
-    <title>Windows Azure Virtual Networks Management Library</title>
+    <title>Windows Azure Virtual Network Management Library</title>
 
     <!-- TODO: Update release message before shipping -->
     <releaseNotes>PREVIEW RELEASE</releaseNotes>
@@ -14,12 +14,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <summary>Provides Windows Azure Virtual Networks management functionality.</summary>
-    <description>
-Provides Windows Azure Virtual Networks management functionality.
-
-Windows Azure is an open and flexible cloud platform that enables you to quickly build, deploy and manage applications across a global network of Microsoft-managed datacenters.
-    </description>
+    <summary>This package provides virtual network management capabilities for Windows Azure.</summary>
+    <description>This package provides virtual network management capabilities for Windows Azure.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Windows Azure" Azure network management "virtual networks" "virtual networks management" REST HTTP client windowsazureofficial</tags>
     <references>

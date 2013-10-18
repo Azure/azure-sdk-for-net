@@ -14,12 +14,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <summary>Provides management functionality to Windows Azure .NET SDK libraries.</summary>
-    <description>
-Provides management functionality to Windows Azure .NET SDK libraries.
-
-Windows Azure is an open and flexible cloud platform that enables you to quickly build, deploy and manage applications across a global network of Microsoft-managed datacenters.
-    </description>
+    <summary>This package provides Virtual Machine and Hosted Service management capabilities to developers. Launch, restart, scale and manage VMs, hosted services, virtual disks, operating system images and more.</summary>
+    <description>This package provides Virtual Machine and Hosted Service management capabilities to developers. Launch, restart, scale and manage VMs, hosted services, virtual disks, operating system images and more.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Windows Azure" Azure cloud management "service management" REST HTTP client core common windowsazureofficial</tags>
     <references>

@@ -10,12 +10,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>
-      Provides common dependencies for REST client libraries designed for the Microsoft.WindowsAzure.Common package.
-    </summary>
-    <description>
-      Provides common dependencies for REST client libraries designed for the Microsoft.WindowsAzure.Common package.
-    </description>
+    <summary>This package is designed for convenience and should not be directly added to your project. Instead, it is included as a dependency to other libraries such as the Windows Azure Management Libraries. This brings in popular portable components for a common HTTP pipeline and JSON parsing.</summary>
+    <description>This package is designed for convenience and should not be directly added to your project. Instead, it is included as a dependency to other libraries such as the Windows Azure Management Libraries. This brings in popular portable components for a common HTTP pipeline and JSON parsing.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <!-- A subset of tags here as this library is less useful on its own. -->
     <tags>windowsazureofficial</tags>

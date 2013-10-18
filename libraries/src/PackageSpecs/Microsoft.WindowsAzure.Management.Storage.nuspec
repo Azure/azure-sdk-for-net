@@ -14,12 +14,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <summary>Provides management functionality to Windows Azure .NET SDK libraries.</summary>
-    <description>
-Provides management functionality to Windows Azure .NET SDK libraries.
-
-Windows Azure is an open and flexible cloud platform that enables you to quickly build, deploy and manage applications across a global network of Microsoft-managed datacenters.
-    </description>
+    <summary>This package provides storage management operations for Windows Azure, including the ability to create, delete, and configure storage service accounts and credentials.</summary>
+    <description>This package provides storage management operations for Windows Azure, including the ability to create, delete, and configure storage service accounts and credentials.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Windows Azure" Azure cloud management "service management" REST HTTP client core common windowsazureofficial</tags>
     <references>
