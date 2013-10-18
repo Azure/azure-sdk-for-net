@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
-  Windows Azure Libraries Versioning
-  - - -
-  We version the baseline Common library in general and assume that early on,
-  there will not be much divergence. As Windows Azure is a service, over time
-  there will be some level of new functionality, breaking changes, and as a
-  result will be using SemVer to version independent components as appropriate.
-  
-  To enable nightly builds with NuGet packages, at runtime this baseline may
-  be altered in specification files to enable the proper update experience in
-  such feeds.
-  
-  The release notes can also use token replacement to share common information.
-  -->
-  <PropertyGroup>
-    <BaselineCommonPackageVersion>0.0.2-preview</BaselineCommonPackageVersion>
-    <BaselineCommonPackageVersionReplacementToken>__BASELINE_COMMON_VERSION__</BaselineCommonPackageVersionReplacementToken>
-    <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
-    <BaselineReleaseNotesReplacementToken>__BASELINE_RELEASE_NOTES__</BaselineReleaseNotesReplacementToken>
-  </PropertyGroup>
-
-  <!--
   Windows Azure .NET SDK NuGet Package List
   -->  
   <ItemGroup>

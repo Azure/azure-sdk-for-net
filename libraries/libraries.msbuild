@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="DeveloperBuild" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Product properties -->
+  <PropertyGroup>
+    <ProductSolution>WindowsAzureLibraries.sln</ProductSolution>
+    <ProductFriendlyName>Windows Azure Management Libraries</ProductFriendlyName>
+    <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
+  </PropertyGroup>
   <!--
-  Define the NuGet packages we want to build
+  Windows Azure Libraries Versioning
+  - - -
+  We version the baseline Common library in general and assume that early on,
+  there will not be much divergence. As Windows Azure is a service, over time
+  there will be some level of new functionality, breaking changes, and as a
+  result will be using SemVer to version independent components as appropriate.
+  
+  To enable nightly builds with NuGet packages, at runtime this baseline may
+  be altered in specification files to enable the proper update experience in
+  such feeds.
+  
+  The release notes can also use token replacement to share common information.
   -->
-  <Import Project="src\PackageSpecs\NuGetSpecs.proj" />
+  <PropertyGroup>
+    <BaselineCommonPackageVersion>0.0.2-preview</BaselineCommonPackageVersion>
+    <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
+  </PropertyGroup>
+  
+  <!--
+  NuGet Package Specifications
+  -->
+  <Import Project="$(ProductSourceFolder)\PackageSpecs\NuGetSpecs.proj" />
 
   <!--
   Windows Azure Management Libraries SDK Builder Guide
@@ -76,13 +101,6 @@
     <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
   </PropertyGroup>
   
-  <!-- Product properties -->
-  <PropertyGroup>
-    <ProductSolution>WindowsAzureLibraries.sln</ProductSolution>
-    <ProductFriendlyName>Windows Azure Management Libraries</ProductFriendlyName>
-    <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
-  </PropertyGroup>
-
   <!-- General NuGet packaging properties -->
   <PropertyGroup>
     <NuGetCommand>.nuget\NuGet.exe</NuGetCommand>
@@ -358,7 +376,14 @@
   This target actively modifies source files and should only be used in build
   server scenarios where the source tree is archived or discarded after use,
   but not used again for additional builds.
+  
+  If you accidentally run this within your enlistment, revert AssemblyInfo.cs
+  changes before commiting to Git.
   -->
+  <PropertyGroup>
+    <BaselineCommonPackageVersionReplacementToken>__BASELINE_COMMON_VERSION__</BaselineCommonPackageVersionReplacementToken>
+    <BaselineReleaseNotesReplacementToken>__BASELINE_RELEASE_NOTES__</BaselineReleaseNotesReplacementToken>
+  </PropertyGroup>
   <Target Name="BurnBuildVersions"
           DependsOnTargets="GetGeneratedBuildDate">
     <Message Text="Destructive burn of assembly file versions to include the build number in the revision component." />
@@ -368,7 +393,26 @@
     <RegexReplacementTask Files="@(AssemblyInfoFilesToUpdate)"
                           Find="AssemblyFileVersion\(&quot;(?&lt;semver&gt;\d{1,3}\.\d{1,3}\.\d{1,3}).(?&lt;revision&gt;)\d{1,3}&quot;\)"
                           Replace="AssemblyFileVersion(&quot;${semver}.$(GeneratedBuildDate)&quot;)"
+                          LogReplacement="true" /><!--
+                          CONSIDER:
+                          A future nice-to-have might be to burn the associated
+                          NuGet semver for each assembly along with the build
+                          information, but this would require refactoring the
+                          build item groups. -->
+
+    <Message Text="Destructive burn of NuGet dependency versions in .nuspec files." />
+    <ItemGroup>
+      <NuspecFilesToUpdate Include="$(ProductSourceFolder)\**\Microsoft.WindowsAzure.*.nuspec">
+        <SetPackageVersion>$(SignalRPackageVersion)</SetPackageVersion>
+      </NuspecFilesToUpdate>
+    </ItemGroup>
+    <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
+                          Find="__BASELINE_COMMON_VERSION__"
+                          Replace="$(BaselineCommonPackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix)"
+                          LogReplacement="true" />
+    <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
+                          Find="__BASELINE_RELEASE_NOTES__"
+                          Replace="$(BaselineReleaseNotes)"
                           LogReplacement="true" />
   </Target>
-
 </Project>

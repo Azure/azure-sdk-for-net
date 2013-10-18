@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Libraries</id>
@@ -17,11 +17,11 @@
     <tags>windowsazureofficial management cloud libraries "windows azure management"</tags>
     <dependencies>
       <group>
-        <dependency id="Microsoft.WindowsAzure.Management" version="0.0.1-preview" />
-        <dependency id="Microsoft.WindowsAzure.Management.Compute" version="0.0.1-preview" />
-        <dependency id="Microsoft.WindowsAzure.Management.Storage" version="0.0.1-preview" />
-        <dependency id="Microsoft.WindowsAzure.Management.VirtualNetworks" version="0.0.1-preview" />
-        <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="0.0.1-preview" />
+        <dependency id="Microsoft.WindowsAzure.Management" version="__BASELINE_COMMON_VERSION__" />
+        <dependency id="Microsoft.WindowsAzure.Management.Compute" version="__BASELINE_COMMON_VERSION__" />
+        <dependency id="Microsoft.WindowsAzure.Management.Storage" version="__BASELINE_COMMON_VERSION__" />
+        <dependency id="Microsoft.WindowsAzure.Management.VirtualNetworks" version="__BASELINE_COMMON_VERSION__" />
+        <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="__BASELINE_COMMON_VERSION__" />
       </group>
     </dependencies>
   </metadata>
