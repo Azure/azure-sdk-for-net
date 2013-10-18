@@ -61,7 +61,11 @@ namespace Microsoft.WindowsAzure
                     {
                         isAvailable = isAvailableProperty != null && (bool)isAvailableProperty.GetValue(null, new object[] { });
                         string message = string.Format(CultureInfo.InvariantCulture, "Loaded \"{0}\"", assembly.FullName);
-                        Trace.WriteLine(message);
+
+                        if (isAvailable)
+                        {
+                            Trace.WriteLine(message);
+                        }
                     }
                     catch (TargetInvocationException e)
                     {
@@ -145,7 +149,16 @@ namespace Microsoft.WindowsAzure
             }
 
             message = string.Format(CultureInfo.InvariantCulture, "Getting \"{0}\" from {1}: {2}.", settingName, providerName, message);
-            Trace.WriteLine(message);
+
+            try
+            {
+                Trace.WriteLine(message);
+            }
+            catch
+            {
+                // Ommit writing the trace message, running outside of dev fabric.
+            }
+
             return value;
         }
 
