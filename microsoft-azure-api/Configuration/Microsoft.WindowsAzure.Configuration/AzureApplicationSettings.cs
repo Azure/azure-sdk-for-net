@@ -16,10 +16,12 @@
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 
+[assembly: CLSCompliant(true)]
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
@@ -182,13 +184,15 @@ namespace Microsoft.WindowsAzure
         /// runtime assembly.
         /// </summary>
         /// <returns>Loaded assembly, if any.</returns>
+        [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom", 
+            Justification= "The ServiceRuntime.dll has to be loaded at runtime so calling Assembly.LoadFrom method is essential to do the loading")]
         private Assembly GetServiceRuntimeAssembly()
         {
             Assembly assembly = null;
 
             foreach (string assemblyName in knownAssemblyNames)
             {
-                string assemblyPath = Utilities.GetAssemblyPath(assemblyName);
+                string assemblyPath = NativeMethods.GetAssemblyPath(assemblyName);
 
                 try
                 {
