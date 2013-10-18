@@ -7,12 +7,10 @@
 *.sln.docstates
 
 # Build results
-
+binaries/
 [Dd]ebug*/
 [Rr]elease/
-
 build/
-
 
 [Tt]est[Rr]esult
 [Bb]uild[Ll]og.*
@@ -50,6 +48,9 @@ ipch/
 # Visual Studio profiler
 *.psess
 *.vsp
+
+# Code analysis
+*.CodeAnalysisLog.xml
 
 # Guidance Automation Toolkit
 *.gpState
@@ -98,6 +99,9 @@ ClientBin
 
 Generated_Code #added for RIA/Silverlight projects
 
+# Build tasks
+tools/*.dll
+
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
 _UpgradeReport_Files/
@@ -105,5 +109,8 @@ Backup*/
 UpgradeLog*.XML
 
 # NuGet
-packages/
 /microsoft-azure-api/Services/Storage/Test/Unit/RT/AppPackages/
+libraries/packages
+
+# Mac development
+.DS_Store

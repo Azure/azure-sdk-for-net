@@ -1,0 +1,40 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.WindowsAzure.Common.Dependencies</id>
+    <title>Windows Azure Common Library Dependencies</title>
+    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>
+    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides popular portable components for a common HTTP pipeline and JSON parsing. This package is included as a dependency to other libraries such as the Windows Azure Management Libraries and should not be directly added to your project.</summary>
+    <description>Provides popular portable components for a common HTTP pipeline and JSON parsing. This package is included as a dependency to other libraries such as the Windows Azure Management Libraries and should not be directly added to your project.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <!-- A subset of tags here as this library is less useful on its own. -->
+    <tags>windowsazureofficial</tags>
+    <dependencies>
+      <group targetFramework="portable-net45+sl50+wp80+win">
+        <dependency id="Microsoft.Bcl" version="1.1.3" />
+        <dependency id="Microsoft.Bcl.Async" version="1.0.16" />
+        <dependency id="Microsoft.Bcl.Build" version="1.0.10" />
+        <dependency id="Microsoft.Net.Http" version="2.2.15" />
+        <dependency id="Newtonsoft.Json" version="5.0.6" />
+      </group>
+      <group targetFramework="net45">
+        <dependency id="Microsoft.Bcl" version="1.1.3" />
+        <dependency id="Microsoft.Bcl.Async" version="1.0.16" />
+        <dependency id="Microsoft.Bcl.Build" version="1.0.10" />
+        <dependency id="Microsoft.Net.Http" version="2.2.15" />
+        <dependency id="Newtonsoft.Json" version="5.0.6" />
+      </group>
+    </dependencies>
+  </metadata>
+  
+  <!-- No packaged assemblies, source or symbols in this NuGet specification -->
+  <files>
+  </files>
+</package>

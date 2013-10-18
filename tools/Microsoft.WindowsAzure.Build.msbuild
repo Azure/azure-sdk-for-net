@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="NoOperation" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="GetBuildVersionTask" AssemblyFile="Microsoft.WindowsAzure.Build.Tasks.dll" />
+  <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="Microsoft.WindowsAzure.Build.Tasks.dll" />
+  
+  
+  <Target Name="NoOperation">
+    <Message Text="Nothing to do." />
+  </Target>
+
+
+  <!--
+  Strong name signature validation target
+  - - -
+  Expected item group inputs:
+    AssembliesToValidate
+  
+  Expected properties:
+    ExpectedDelaySigned
+    ExpectedToken
+    
+  -->
+  <Target Name="StrongNameSignatureValidation">
+
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
+    </GetFrameworkSdkPath>
+
+    <Error Text="No expected strong name token provided." Condition=" '$(ExpectedToken)' == '' " />
+    <Error Text="No assemblies provided to validate. Please fill the AssembliesToValidate ItemGroup before calling this target." Condition=" '@(AssembliesToValidate->Count())' == '0' " />
+
+    <Message Text="Checking for strong name signature $(ExpectedToken) and delay signed status of: $(ExpectedDelaySigned)" />
+
+    <ValidateStrongNameSignatureTask
+        WindowsSdkPath="$(WindowsSdkPath)"
+        Assembly="%(AssembliesToValidate.Identity)"
+        ExpectedTokenSignature="$(ExpectedToken)"
+        ExpectedDelaySigned="$(ExpectedDelaySigned)"
+        
+        ContinueOnError="ErrorAndContinue" />
+
+  </Target>
+  
+  
+  <!--
+  Generate a build number from the current date
+  - - -
+  -->
+  <Target Name="GetGeneratedBuildDate">
+    <GetBuildVersionTask>
+      <Output TaskParameter="Date" PropertyName="GeneratedBuildDate" />
+    </GetBuildVersionTask>
+  </Target>
+
+</Project>
