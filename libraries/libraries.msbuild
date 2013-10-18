@@ -336,8 +336,7 @@
   -->
   <PropertyGroup>
     <CorporateScanPaths>
-      $([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\src'));
-      $([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\tests'))
+      $([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\src'))
     </CorporateScanPaths>
   </PropertyGroup>
   <Target Name="ValidateCorporateCompliance">
