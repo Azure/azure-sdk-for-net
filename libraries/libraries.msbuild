@@ -80,8 +80,7 @@
   <PropertyGroup>
     <ProductSolution>WindowsAzureLibraries.sln</ProductSolution>
     <ProductFriendlyName>Windows Azure Management Libraries</ProductFriendlyName>
-    <ProductSourceFolder>$(MSBuildThisFileDirectory)\src</ProductSourceFolder>
-    <FullProductSourceFolder>$([System.IO.Path]::GetFullPath($(ProductSourceFolder))</FullProductSourceFolder>
+    <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
   </PropertyGroup>
 
   <!-- General NuGet packaging properties -->
@@ -339,18 +338,21 @@
     
     <!-- Useful variables to log -->
     <Message Text="Build Properties and Variables" Importance="high" />
-    <Message Text="Solution                  : $(ProductSolution)" />
-    <Message Text="Product                   : $(ProductFriendlyName)" />
-    <Message Text="Source folder             : $(ProductSourceFolder)" />
-    <Message Text="Source folder (full path) : $(FullProductSourceFolder)" />
+    <Message Text="Solution      : $(ProductSolution)" />
+    <Message Text="Product       : $(ProductFriendlyName)" />
+    <Message Text="Source folder : $(ProductSourceFolder)" />
 
     <!-- Modify local files -->
     <CallTarget Targets="BurnBuildVersions" />
   </Target>
 
   <!--
-  Burn the build information into the assembly information, NuGet specs, and
-  other source files before beginning a build.
+  Burn the build information into the assembly file information, NuGet specs, 
+  and other source files before beginning a build.
+  
+  This updates the AssemblyFileVersion for .NET assemblies. This is not the
+  same thing as an AssemblyVersion; it is only used typically by test teams and
+  developers when reporting bugs and associating a build to report.
   
   WARNING:
   This target actively modifies source files and should only be used in build
@@ -359,13 +361,14 @@
   -->
   <Target Name="BurnBuildVersions"
           DependsOnTargets="GetGeneratedBuildDate">
+    <Message Text="Destructive burn of assembly file versions to include the build number in the revision component." />
     <ItemGroup>
-      <AssemblyInfoFilesToUpdate Include="$(FullProductSourceFolder)\**\Properties\AssemblyInfo.cs" />
+      <AssemblyInfoFilesToUpdate Include="$(ProductSourceFolder)\**\Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <RegexReplacementTask Files="@(AssemblyInfoFilesToUpdate)"
                           Find="AssemblyFileVersion\(&quot;(?&lt;semver&gt;\d{1,3}\.\d{1,3}\.\d{1,3}).(?&lt;revision&gt;)\d{1,3}&quot;\)"
                           Replace="AssemblyFileVersion(&quot;${semver}.$(GeneratedBuildDate)&quot;)"
-                          WarnOnNoMatch="true" />
+                          LogReplacement="true" />
   </Target>
 
 </Project>

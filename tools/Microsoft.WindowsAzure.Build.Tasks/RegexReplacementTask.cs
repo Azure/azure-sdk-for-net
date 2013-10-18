@@ -34,6 +34,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         [Required]
         public string Replace { get; set; }
 
+        public bool LogReplacement { get; set; }
+
         public override bool Execute()
         {
             try
@@ -44,12 +46,17 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     File.SetAttributes(fileName, oldAttributes & ~FileAttributes.ReadOnly);
 
                     string content = Regex.Replace(
-                        File.ReadAllText(fileName), 
+                        File.ReadAllText(fileName),
                         Find, 
                         Replace);
 
                     File.WriteAllText(fileName, content, Encoding.UTF8);
                     File.SetAttributes(fileName, oldAttributes);
+
+                    if (LogReplacement)
+                    {
+                        Log.LogMessage("Processed regular expression replacement in file {0}", fileName);
+                    }
                 }
 
                 return true;
