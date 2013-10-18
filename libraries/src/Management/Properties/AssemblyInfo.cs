@@ -16,7 +16,7 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Windows Azure Service Management Library")]
+[assembly: AssemblyTitle("Windows Azure Infrastructure Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Windows Azure infrastructure.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
