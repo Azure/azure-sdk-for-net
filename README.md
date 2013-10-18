@@ -18,10 +18,10 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
     - Insert/Peek Queue Messages
     - Advanced Queue Operations
 - Management Libraries
-	- Compute
- 	- Infrastructure
-	- Storage 
-	- Virtual Networks
+    - Compute
+    - Infrastructure
+    - Storage 
+    - Virtual Networks
 - Media
 
     > Available in separate [Media Services repository](http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client)
@@ -39,7 +39,7 @@ For the best development experience, developers should use the official Microsof
  
 ## Requirements
 
-- Windows Azure Subscription: To call Windows Azure services, you need to first [create an account](https://account.windowsazure.com/Home/Index). Free trial subscriptions are available.
+- Windows Azure Subscription: To call Windows Azure services, you need to first [create an account](https://account.windowsazure.com/Home/Index). Sign up for a free trial or use your MSDN subscriber benefits.
 - Hosting: To host your .NET code in Windows Azure, you additionally need to download the full Windows Azure SDK for .NET - which includes packaging,
     emulation, and deployment tools, or use Windows Azure Web Sites to deploy ASP.NET web applications.
 
