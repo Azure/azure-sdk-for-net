@@ -96,6 +96,7 @@
   -->
   <UsingTask Condition=" Exists($(OnPremiseBuildTasks)) " TaskName="CodeSigningTask" AssemblyFile="$(OnPremiseBuildTasks)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
   <UsingTask Condition=" Exists($(OnPremiseBuildTasks)) " TaskName="CorporateValidation" AssemblyFile="$(OnPremiseBuildTasks)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
+  <Import Condition=" Exists($(OnPremiseBuildTasks)) " Project="$(OnPremiseBuildTasks)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
   <PropertyGroup>
     <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
     <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
@@ -342,7 +343,7 @@
   <Target Name="ValidateCorporateCompliance">
     <Message Text="$(CorporateScanPaths)" />
     <Error Text="This target must be run in an on-premise build server." Condition=" '$(OnPremiseBuild)'=='false' " />
-    <CallTarget Targets="CorporateCompliance" />
+    <CallTarget Targets="CorporateValidation" />
   </Target>
 
   <!--
