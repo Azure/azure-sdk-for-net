@@ -13,7 +13,7 @@
     <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>This package provides storage management operations for Windows Azure, including the ability to create, delete, and configure storage service accounts and credentials.</summary>
     <description>This package provides storage management operations for Windows Azure, including the ability to create, delete, and configure storage service accounts and credentials.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>

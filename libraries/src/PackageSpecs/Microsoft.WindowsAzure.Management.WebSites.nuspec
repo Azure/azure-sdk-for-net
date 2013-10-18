@@ -13,7 +13,7 @@
     <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>This package provides management capabilities for Windows Azure Web Sites.  Deploy, configure, debug and scale your web sites using familiar APIs.</summary>
     <description>This package provides management capabilities for Windows Azure Web Sites.  Deploy, configure, debug and scale your web sites using familiar APIs.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>

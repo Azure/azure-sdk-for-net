@@ -13,7 +13,7 @@
     <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>This package provides Windows Azure infrastructure &amp; data center management operations, including the ability to create and manage affinity groups.</summary>
     <description>This package provides Windows Azure infrastructure &amp; data center management operations, including the ability to create and manage affinity groups.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
