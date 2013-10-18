@@ -18,10 +18,10 @@ using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Windows Azure Network Management Library")]
-[assembly: AssemblyDescription("Provides core REST functionality for managing Windows Azure Virtual Networks.")]
+[assembly: AssemblyDescription("Provides management functionality for Windows Azure Virtual Network")]
 
-[assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

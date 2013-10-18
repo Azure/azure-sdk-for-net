@@ -16,11 +16,11 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Windows Azure Common REST Library")]
-[assembly: AssemblyDescription("Provides core REST client functionality to Windows Azure .NET SDK packages.")]
+[assembly: AssemblyTitle("Windows Azure Common Library")]
+[assembly: AssemblyDescription("This package provides shared Windows Azure library infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation")]
 
-[assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

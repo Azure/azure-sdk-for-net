@@ -18,10 +18,10 @@ using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Windows Azure Web Sites Management Library")]
-[assembly: AssemblyDescription("Provides management functionality for Windows Azure Web Sites.")]
+[assembly: AssemblyDescription("Provides management functionality for Windows Azure Web Sites")]
 
-[assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

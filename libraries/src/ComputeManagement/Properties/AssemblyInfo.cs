@@ -17,10 +17,10 @@ using System.Reflection;
 using System.Resources;
 
 [assembly: AssemblyTitle("Windows Azure Compute Management Library")]
-[assembly: AssemblyDescription("Provides a Windows Azure management client for compute, including support for deploying and managing virtual machines.")]
+[assembly: AssemblyDescription("Provides management functionality for Windows Azure Virtual Machines and Hosted Services")]
 
-[assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

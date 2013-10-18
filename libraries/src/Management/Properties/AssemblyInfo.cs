@@ -17,10 +17,10 @@ using System.Reflection;
 using System.Resources;
 
 [assembly: AssemblyTitle("Windows Azure Service Management Library")]
-[assembly: AssemblyDescription("Provides infrastructure management client support for affinity groups, locations, and other essential functions.")]
+[assembly: AssemblyDescription("Provides management functionality for Windows Azure infrastructure")]
 
-[assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
