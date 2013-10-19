@@ -4838,7 +4838,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 GatewayOperationResponse originalResponse = await client.Gateways.BeginConnectDisconnectOrTestingAsync(virtualNetworkName, localNetworkSiteName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 100;
+                int delayInSeconds = 30;
                 while (result.Status == GatewayOperationStatus.InProgress)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -5063,7 +5063,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 GatewayOperationResponse originalResponse = await client.Gateways.BeginCreatingAsync(virtualNetworkName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 100;
+                int delayInSeconds = 30;
                 while (result.Status == GatewayOperationStatus.InProgress)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -5261,7 +5261,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 GatewayOperationResponse originalResponse = await client.Gateways.BeginDeletingAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 100;
+                int delayInSeconds = 30;
                 while (result.Status == GatewayOperationStatus.InProgress)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -5467,7 +5467,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 GatewayOperationResponse originalResponse = await client.Gateways.BeginFailoverAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 100;
+                int delayInSeconds = 30;
                 while (result.Status == GatewayOperationStatus.InProgress)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -6828,7 +6828,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 GatewayOperationResponse originalResponse = await client.Gateways.BeginResetSharedKeyAsync(virtualNetworkName, localNetworkName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 100;
+                int delayInSeconds = 30;
                 while (result.Status == GatewayOperationStatus.InProgress)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -7760,7 +7760,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 OperationResponse originalResponse = await client.Networks.BeginSettingConfigurationAsync(parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 VirtualNetworkOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 100;
+                int delayInSeconds = 30;
                 while (result.Status == OperationStatus.InProgress)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
