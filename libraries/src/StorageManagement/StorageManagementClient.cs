@@ -2581,7 +2581,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 OperationResponse originalResponse = await client.StorageAccounts.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 StorageOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 100;
+                int delayInSeconds = 30;
                 while (result.Status == OperationStatus.InProgress)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
