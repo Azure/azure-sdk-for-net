@@ -169,6 +169,117 @@ To get all of the management libraries setup in your project:
 
 > You can also install just the management library for a service of interest. To deploy a virtual machine to the cloud, the `Microsoft.WindowsAzure.Management.Compute` package can be used, for example.
 
+### Code Samples
+
+This code would result with a list of the regions in the Windows Azure fabric. The location object provided in the result provides properties to define which assets are supported by each region. 
+
+```csharp
+using (ManagementClient client = CloudContext.Clients.CreateManagementClient(Credentials))
+{
+    var result = await client.Locations.ListAsync();
+    var locations = result.Locations;
+    foreach (var location in locations)
+    {
+        Console.WriteLine("Location: {0}", location.Name);
+
+        foreach (var feature in location.AvailableServices)
+        {
+            Console.WriteLine(feature);
+        }
+    }
+}
+```
+
+To create a storage account,The code below will create a storage account in the West US region. 
+
+```csharp
+var storageAccountName = "mystorageaccount";
+
+using (StorageManagementClient client =
+    CloudContext.Clients.CreateStorageManagementClient(Credentials))
+{
+    await client.StorageAccounts.CreateAsync(
+        new StorageAccountCreateParameters
+        {
+            ServiceName = storageAccountName,
+            Location = LocationNames.WestUS
+        });
+}
+```
+
+The code below will obtain the storage account keys to construct a connection string on the fly.
+
+```csharp
+var storageAccountName = "mystorageaccount";
+
+using (StorageManagementClient client =
+    CloudContext.Clients.CreateStorageManagementClient(Credentials))
+{
+    var keys = await
+        client.StorageAccounts.GetKeysAsync(storageAccountName);
+
+    string connectionString = string.Format(
+        CultureInfo.InvariantCulture,
+        "AcountName={0};AccountKey={1}",
+        storageAccountName, keys.SecondaryKey);
+
+    return connectionString;
+}
+```
+
+The following code will create a new (empty) Cloud Service in the Windows Azure fabric. 
+
+```csharp
+var cloudServiceName = "MyCloudService";
+
+using (ComputeManagementClient client =
+    CloudContext.Clients.CreateComputeManagementClient(Credentials))
+{
+    await client.HostedServices.CreateAsync(
+        new HostedServiceCreateParameters
+        {
+            ServiceName = cloudServiceName,
+            Location = LocationNames.WestUS
+        });
+}
+```
+
+Once a storage account has been created, the Windows Storage SDK can be used to upload .CSPKG files into the storage account. Then, the cloud service could be deployed. The code below demonstrates this functionality. 
+
+```csharp
+var blobs = CloudStorageAccount.Parse(storageConnectionString).CreateCloudBlobClient();
+
+var container = blobs.GetContainerReference("deployments");
+
+await container.CreateIfNotExistsAsync();
+
+await container.SetPermissionsAsync(
+    new BlobContainerPermissions()
+    {
+        PublicAccess = BlobContainerPublicAccessType.Container
+    });
+
+var blob = container.GetBlockBlobReference("MyCloudService.cspkg");
+
+await blob.UploadFromFileAsync("MyCloudService.cspkg", FileMode.Open);
+
+var cloudServiceName = "MyCloudService";
+
+using (ComputeManagementClient client =
+    CloudContext.Clients.CreateComputeManagementClient(Credentials))
+{
+    await client.Deployments.CreateAsync(cloudServiceName,
+        DeploymentSlot.Production,
+        new DeploymentCreateParameters
+        {
+            Name = cloudServiceName + "Prod",
+            PackageUri = blob.Uri,
+            Configuration = File.ReadAllText("MyCloudService.cscfg"),
+            StartDeployment = true
+        });
+}
+```
+
 # Learn More
 
 - [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/)
