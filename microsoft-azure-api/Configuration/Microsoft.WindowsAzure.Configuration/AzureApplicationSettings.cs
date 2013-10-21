@@ -212,20 +212,5 @@ namespace Microsoft.WindowsAzure
 
             return assembly;
         }
-
-        /// <summary>
-        /// Gets the setting defined in the Windows Azure configuration file.
-        /// </summary>
-        /// <param name="name">Setting name.</param>
-        /// <returns>Setting value.</returns>
-        private string GetServiceSetting(string name)
-        {
-            if (_getServiceSettingMethod != null)
-            {
-                return (string)_getServiceSettingMethod.Invoke(null, new object[] { name });
-            }
-
-            return null;
-        }
     }
 }
