@@ -169,27 +169,6 @@ To get all of the management libraries setup in your project:
 
 > You can also install just the management library for a service of interest. To deploy a virtual machine to the cloud, the `Microsoft.WindowsAzure.Management.Compute` package can be used, for example.
 
-### Code Samples
-
-This code would result with a list of the regions in the Windows Azure fabric. The location object provided in the result provides properties to define which assets are supported by each region. 
-
-```csharp
-using (ManagementClient client = CloudContext.Clients.CreateManagementClient(Credentials))
-{
-    var result = await client.Locations.ListAsync();
-    var locations = result.Locations;
-    foreach (var location in locations)
-    {
-        Console.WriteLine("Location: {0}", location.Name);
-
-        foreach (var feature in location.AvailableServices)
-        {
-            Console.WriteLine(feature);
-        }
-    }
-}
-```
-
 # Learn More
 
 - [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/)
