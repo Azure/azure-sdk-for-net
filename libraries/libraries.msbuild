@@ -126,8 +126,8 @@
 
   <!-- Package and source/symbol publishing configuration -->
   <PropertyGroup>
-    <NuGetPublishingSource>https://www.myget.org/F/windowsazure/api/v2/package</NuGetPublishingSource>
-    <NuGetSymbolPublishingSource>https://nuget.symbolsource.org/MyGet/windowsazure</NuGetSymbolPublishingSource>
+    <NuGetPublishingSource></NuGetPublishingSource>
+    <NuGetSymbolPublishingSource></NuGetSymbolPublishingSource>
     <NuGetKey></NuGetKey>
   </PropertyGroup>
 
@@ -218,14 +218,20 @@
   
   <Target Name="PublishPackagesOnly">
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
+
+    <PropertyGroup>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' "></ActualSource>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
+    </PropertyGroup>
     
     <Message Importance="high" Text="Publishing NuGet packages to the cloud at $(NuGetPublishingSource)" />
-    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).nupkg&quot; $(NuGetKey) -Source $(NuGetPublishingSource)"
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).nupkg&quot; $(NuGetKey)$(ActualSource)"
           Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
           
-    <Message Importance="high" Text="Publishing NuGet symbol &amp; source packages to the cloud at $(NuGetSymbolPublishingSource)" />
+    <Message Importance="high" Text="Publishing NuGet symbol &amp; source packages to the cloud at $(NuGetSymbolPublishingSource)" 
+             Condition=" $(NuGetSymbolPublishingSource) != '' "/>
     <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).Symbols.nupkg&quot; $(NuGetKey) -Source $(NuGetSymbolPublishingSource)" 
-          Condition=" '%(SdkNuGetPackage.Publish)' != 'false' And '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' And '$(PublishSymbolSourcePackages)' == 'true' " 
+          Condition=" $(NuGetSymbolPublishingSource) != '' And '%(SdkNuGetPackage.Publish)' != 'false' And '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' And '$(PublishSymbolSourcePackages)' == 'true' " 
           ContinueOnError="true" />
     
     <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
