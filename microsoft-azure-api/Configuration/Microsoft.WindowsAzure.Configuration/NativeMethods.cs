@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 
 namespace Microsoft.WindowsAzure
 {
-    internal class Utilities
+    static internal class NativeMethods
     {
         const int AssemblyPathMax = 1024;
         

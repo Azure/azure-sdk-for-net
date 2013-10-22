@@ -1,33 +1,29 @@
 ﻿//
-// Copyright Microsoft Corporation
-// 
+// Copyright (c) Microsoft.  All rights reserved.
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//    http://www.apache.org/licenses/LICENSE-2.0
-// 
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 //
 
 using System;
 using System.Configuration;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
-[assembly: CLSCompliant(true)]
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Common.Platform
 {
-    /// <summary>
-    /// Windows Azure settings.
-    /// </summary>
-    internal class AzureApplicationSettings
+    public class ServiceRuntimeReference
     {
         private const string RoleEnvironmentTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment";
         private const string RoleEnvironmentExceptionTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironmentException";
@@ -46,7 +42,7 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// Initializes the settings.
         /// </summary>
-        internal AzureApplicationSettings()
+        internal ServiceRuntimeReference()
         {
             // Find out if the code is running in the cloud service context.
             Assembly assembly = GetServiceRuntimeAssembly();
@@ -63,11 +59,7 @@ namespace Microsoft.WindowsAzure
                     {
                         isAvailable = isAvailableProperty != null && (bool)isAvailableProperty.GetValue(null, new object[] { });
                         string message = string.Format(CultureInfo.InvariantCulture, "Loaded \"{0}\"", assembly.FullName);
-
-                        if (isAvailable)
-                        {
-                            Trace.WriteLine(message);
-                        }
+                        Trace.WriteLine(message);
                     }
                     catch (TargetInvocationException e)
                     {
@@ -151,16 +143,7 @@ namespace Microsoft.WindowsAzure
             }
 
             message = string.Format(CultureInfo.InvariantCulture, "Getting \"{0}\" from {1}: {2}.", settingName, providerName, message);
-
-            try
-            {
-                Trace.WriteLine(message);
-            }
-            catch
-            {
-                // Ommit writing the trace message, running outside of dev fabric.
-            }
-
+            Trace.WriteLine(message);
             return value;
         }
 
@@ -197,15 +180,13 @@ namespace Microsoft.WindowsAzure
         /// runtime assembly.
         /// </summary>
         /// <returns>Loaded assembly, if any.</returns>
-        [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom", 
-            Justification= "The ServiceRuntime.dll has to be loaded at runtime so calling Assembly.LoadFrom method is essential to do the loading")]
         private Assembly GetServiceRuntimeAssembly()
         {
             Assembly assembly = null;
 
             foreach (string assemblyName in knownAssemblyNames)
             {
-                string assemblyPath = NativeMethods.GetAssemblyPath(assemblyName);
+                string assemblyPath = Utilities.GetAssemblyPath(assemblyName);
 
                 try
                 {
@@ -228,6 +209,82 @@ namespace Microsoft.WindowsAzure
             }
 
             return assembly;
+        }
+
+        /// <summary>
+        /// Gets the setting defined in the Windows Azure configuration file.
+        /// </summary>
+        /// <param name="name">Setting name.</param>
+        /// <returns>Setting value.</returns>
+        private string GetServiceSetting(string name)
+        {
+            if (_getServiceSettingMethod != null)
+            {
+                return (string)_getServiceSettingMethod.Invoke(null, new object[] { name });
+            }
+
+            return null;
+        }
+
+        internal class Utilities
+        {
+            const int AssemblyPathMax = 1024;
+
+            [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("e707dcde-d1cd-11d2-bab9-00c04f8eceae")]
+            private interface IAssemblyCache
+            {
+                void Reserved0();
+
+                [PreserveSig]
+                int QueryAssemblyInfo(int flags, [MarshalAs(UnmanagedType.LPWStr)] string assemblyName, ref AssemblyInfo assemblyInfo);
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct AssemblyInfo
+            {
+                public int cbAssemblyInfo;
+
+                public int assemblyFlags;
+
+                public long assemblySizeInKB;
+
+                [MarshalAs(UnmanagedType.LPWStr)]
+                public string currentAssemblyPath;
+
+                public int cchBuffer; // size of path buffer.
+            }
+
+            [DllImport("fusion.dll")]
+            private static extern int CreateAssemblyCache(out IAssemblyCache ppAsmCache, int reserved);
+
+            /// <summary>
+            /// Gets an assembly path from the GAC given a partial name.
+            /// </summary>
+            /// <param name="name">An assembly partial name. May not be null.</param>
+            /// <returns>
+            /// The assembly path if found; otherwise null;
+            /// </returns>
+            public static string GetAssemblyPath(string name)
+            {
+                if (name == null)
+                    throw new ArgumentNullException("name");
+
+                string finalName = name;
+                AssemblyInfo aInfo = new AssemblyInfo();
+                aInfo.cchBuffer = AssemblyPathMax;
+                aInfo.currentAssemblyPath = new String('\0', aInfo.cchBuffer);
+
+                IAssemblyCache ac;
+                int hr = CreateAssemblyCache(out ac, 0);
+                if (hr >= 0)
+                {
+                    hr = ac.QueryAssemblyInfo(0, finalName, ref aInfo);
+                    if (hr < 0)
+                        return null;
+                }
+
+                return aInfo.currentAssemblyPath;
+            }
         }
     }
 }

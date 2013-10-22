@@ -1,0 +1,95 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{856A1D19-C3BF-439A-BEBF-E822A332BC12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.NetFramework", "src\Common.NetFramework\Common.NetFramework.csproj", "{14529261-9F9F-4D2F-80D5-B26677F51E8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement", "src\WebSiteManagement\WebSiteManagement.csproj", "{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkManagement", "src\NetworkManagement\NetworkManagement.csproj", "{7F032828-B8EC-4716-8BC4-AF2FA703B24B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{22AC2894-82C6-46C3-8770-6108D631D114}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageManagement", "src\StorageManagement\StorageManagement.csproj", "{77F0BEC3-FBCD-43A4-AF45-8A55846A6897}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeManagement", "src\ComputeManagement\ComputeManagement.csproj", "{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management", "src\Management\Management.csproj", "{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{D93C94DB-270A-46A0-AF68-C58B99B9A4D2}"
+	ProjectSection(SolutionItems) = preProject
+		libraries.msbuild = libraries.msbuild
+		src\libraries.targets = src\libraries.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget specifications", "nuget specifications", "{459B8C99-5EC0-43A6-9BAD-1A9E6191D948}"
+	ProjectSection(SolutionItems) = preProject
+		src\PackageSpecs\Microsoft.WindowsAzure.Common.Dependencies.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Common.Dependencies.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.Common.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Common.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.Management.Compute.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Compute.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.Management.Libraries.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Libraries.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.Management.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.Management.Storage.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Storage.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.Management.VirtualNetworks.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.VirtualNetworks.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.Management.WebSites.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.WebSites.nuspec
+		src\PackageSpecs\NuGetSpecs.proj = src\PackageSpecs\NuGetSpecs.proj
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14529261-9F9F-4D2F-80D5-B26677F51E8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14529261-9F9F-4D2F-80D5-B26677F51E8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14529261-9F9F-4D2F-80D5-B26677F51E8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14529261-9F9F-4D2F-80D5-B26677F51E8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F032828-B8EC-4716-8BC4-AF2FA703B24B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F032828-B8EC-4716-8BC4-AF2FA703B24B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F032828-B8EC-4716-8BC4-AF2FA703B24B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F032828-B8EC-4716-8BC4-AF2FA703B24B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77F0BEC3-FBCD-43A4-AF45-8A55846A6897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77F0BEC3-FBCD-43A4-AF45-8A55846A6897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77F0BEC3-FBCD-43A4-AF45-8A55846A6897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77F0BEC3-FBCD-43A4-AF45-8A55846A6897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{856A1D19-C3BF-439A-BEBF-E822A332BC12} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{14529261-9F9F-4D2F-80D5-B26677F51E8B} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{7F032828-B8EC-4716-8BC4-AF2FA703B24B} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{77F0BEC3-FBCD-43A4-AF45-8A55846A6897} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F} = {868850B4-1073-41A1-ABA8-A3B465880148}
+	EndGlobalSection
+EndGlobal

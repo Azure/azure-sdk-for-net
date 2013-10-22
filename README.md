@@ -1,10 +1,7 @@
-# Windows Azure SDK for .NET 4, Windows 8, and Windows Phone 8 (2.1.0.0)
+# Windows Azure SDK for .NET
 
 The Windows Azure SDK for .NET allows you to build Windows Azure applications 
 that take advantage of scalable cloud computing resources.
-
-Please note that Windows 8 and Windows Phone 8 libraries are CTP (Community
-Technology Preview) releases.
 
 This repository contains the open source subset of the .NET SDK. For documentation of the 
 complete SDK, please see the [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
@@ -20,11 +17,51 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
     - Create/Delete Queues
     - Insert/Peek Queue Messages
     - Advanced Queue Operations
+- Management Libraries
+    - Compute
+    - Infrastructure
+    - Storage 
+    - Virtual Networks
 - Media
 
     > Available in separate [Media Services repository](http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client)
 
-# Getting Started
+# Getting started
+
+The complete Windows Azure SDK can be downloaded from the [Windows Azure Downloads Page](http://www.windowsazure.com/en-us/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
+
+For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes. 
+
+## Target Frameworks
+
+- .NET Framework 4.0: As of October 2013, the Windows Azure SDK for .NET (v2.2) supports primarily the desktop .NET Framework 4 release and above. For earlier .NET versions, SDK v2.1 is still supported.
+- Windows 8 for Windows Store app development: Storage Client Libraries are available for Windows Store applications.
+ 
+## Requirements
+
+- Windows Azure Subscription: To call Windows Azure services, you need to first [create an account](https://account.windowsazure.com/Home/Index). Sign up for a free trial or use your MSDN subscriber benefits.
+- Hosting: To host your .NET code in Windows Azure, you additionally need to download the full Windows Azure SDK for .NET - which includes packaging,
+    emulation, and deployment tools, or use Windows Azure Web Sites to deploy ASP.NET web applications.
+
+## Need Help?
+Be sure to check out the Windows Azure [Developer Forums on MSDN](http://go.microsoft.com/fwlink/?LinkId=234489) if you have trouble with the provided code or use StackOverflow.
+
+## Collaborate & Contribute
+
+We gladly accept community contributions.
+
+- Issues: Please report bugs using the Issues section of GitHub
+- Forums: Interact with the development teams on StackOverflow or the Windows Azure Forums
+- Source Code Contributions: Please follow the [contribution guidelines for Windows Azure open source](http://windowsazure.github.io/guidelines.html) that details information on onboarding as a contributor 
+
+For general suggestions about Windows Azure please use our [UserVoice forum](http://www.mygreatwindowsazureidea.com/forums/34192-windows-azure-feature-voting).
+
+# Storage Client Library for .NET 4, Windows 8, and Windows Phone 8 (2.1.0.0)
+
+The Storage Client Library ships with the Windows Azure SDK for .NET and also on NuGet. You'll find the latest version and hotfixes on NuGet via the `WindowsAzure.Storage` package. You can [read about the 2.1 release on the storage team blog post](http://blogs.msdn.com/b/windowsazurestorage/archive/2013/09/07/announcing-storage-client-library-2-1-rtm.aspx).
+
+Please note that Windows 8 and Windows Phone 8 libraries are CTP (Community
+Technology Preview) releases.
 
 ## Download & Install
 
@@ -40,21 +77,9 @@ cd azure-sdk-for-net
 ### Via NuGet
 
 To get the binaries of this library as distributed by Microsoft, ready for use
-within your project you can also have them installed by the .NET package manager [http://www.nuget.org/](NuGet).
+within your project you can also have them installed by the .NET package manager [NuGet](http://www.nuget.org/).
 
 `Install-Package WindowsAzure.Storage`
-
-## Target Frameworks
-
-- .NET Framework 3.5: At this time the majority of the Windows Azure SDK for .NET supports primarily the desktop .NET Framework 3.5 and above.
-- .NET Framework 4.0: Storage Client Library for .NET supports the desktop .NET Framework 4.0 and above.
-- Windows 8 for Windows Store app development: Storage Client Libraries are available for Windows Store applications.
-
-## Requirements
-
-- Windows Azure Subscription: To call Windows Azure services, you need to first [create an account](https://account.windowsazure.com/Home/Index). Free trial subscriptions are available.
-- Hosting: To host your .NET code in Windows Azure, you additionally need to download the full Windows Azure SDK for .NET - which includes packaging,
-    emulation, and deployment tools, or use Windows Azure Web Sites to deploy ASP.NET web applications.
 
 ## Dependencies
 
@@ -117,15 +142,143 @@ CloudTable peopleTable = tableClient.GetTableReference("people");
 peopleTable.Create();
 ```
 
-# Need Help?
-Be sure to check out the Windows Azure [Developer Forums on MSDN](http://go.microsoft.com/fwlink/?LinkId=234489) if you have trouble with the provided code or use 
-StackOverflow.
+# Windows Azure Management Libraries
 
-# Feedback
+Automate, configure and command your Windows Azure deployments, infrastructure and accounts with the Windows Azure Management Libraries.
 
-For feedback related specificically to these open source client libraries, please use the Issues section of the repository.
+> *Preview:* At this time the Windows Azure Management Libraries are in the preview state as the teams gather feedback and prepare for the initial release. Please enjoy using the libraries and source in any capacity, but understand that there may be breaking changes with the 1.0 release.
 
-For general suggestions about Windows Azure please use our [UserVoice forum](http://www.mygreatwindowsazureidea.com/forums/34192-windows-azure-feature-voting).
+## Download & Install
+
+### Via Git
+
+To get the source code of the SDK via git just type:
+
+```bash
+git clone git://github.com/WindowsAzure/azure-sdk-for-net.git
+cd azure-sdk-for-net\libraries
+```
+
+### Via NuGet
+
+Official binaries are distributed by Microsoft and available using the .NET package manager [NuGet](http://www.nuget.org/).
+
+To get all of the management libraries setup in your project:
+
+`Install-Package Microsoft.WindowsAzure.Management.Libraries -IncludePrerelease`
+
+> You can also install just the management library for a service of interest. To deploy a virtual machine to the cloud, the `Microsoft.WindowsAzure.Management.Compute` package can be used, for example.
+
+### Code Samples
+
+This code would result with a list of the regions in the Windows Azure fabric. The location object provided in the result provides properties to define which assets are supported by each region. 
+
+```csharp
+using (ManagementClient client = CloudContext.Clients.CreateManagementClient(Credentials))
+{
+    var result = await client.Locations.ListAsync();
+    var locations = result.Locations;
+    foreach (var location in locations)
+    {
+        Console.WriteLine("Location: {0}", location.Name);
+
+        foreach (var feature in location.AvailableServices)
+        {
+            Console.WriteLine(feature);
+        }
+    }
+}
+```
+
+To create a storage account,The code below will create a storage account in the West US region. 
+
+```csharp
+var storageAccountName = "mystorageaccount";
+
+using (StorageManagementClient client =
+    CloudContext.Clients.CreateStorageManagementClient(Credentials))
+{
+    await client.StorageAccounts.CreateAsync(
+        new StorageAccountCreateParameters
+        {
+            ServiceName = storageAccountName,
+            Location = LocationNames.WestUS
+        });
+}
+```
+
+The code below will obtain the storage account keys to construct a connection string on the fly.
+
+```csharp
+var storageAccountName = "mystorageaccount";
+
+using (StorageManagementClient client =
+    CloudContext.Clients.CreateStorageManagementClient(Credentials))
+{
+    var keys = await
+        client.StorageAccounts.GetKeysAsync(storageAccountName);
+
+    string connectionString = string.Format(
+        CultureInfo.InvariantCulture,
+        "AcountName={0};AccountKey={1}",
+        storageAccountName, keys.SecondaryKey);
+
+    return connectionString;
+}
+```
+
+The following code will create a new (empty) Cloud Service in the Windows Azure fabric. 
+
+```csharp
+var cloudServiceName = "MyCloudService";
+
+using (ComputeManagementClient client =
+    CloudContext.Clients.CreateComputeManagementClient(Credentials))
+{
+    await client.HostedServices.CreateAsync(
+        new HostedServiceCreateParameters
+        {
+            ServiceName = cloudServiceName,
+            Location = LocationNames.WestUS
+        });
+}
+```
+
+Once a storage account has been created, the Windows Storage SDK can be used to upload .CSPKG files into the storage account. Then, the cloud service could be deployed. The code below demonstrates this functionality. 
+
+```csharp
+var blobs = CloudStorageAccount.Parse(storageConnectionString).CreateCloudBlobClient();
+
+var container = blobs.GetContainerReference("deployments");
+
+await container.CreateIfNotExistsAsync();
+
+await container.SetPermissionsAsync(
+    new BlobContainerPermissions()
+    {
+        PublicAccess = BlobContainerPublicAccessType.Container
+    });
+
+var blob = container.GetBlockBlobReference("MyCloudService.cspkg");
+
+await blob.UploadFromFileAsync("MyCloudService.cspkg", FileMode.Open);
+
+var cloudServiceName = "MyCloudService";
+
+using (ComputeManagementClient client =
+    CloudContext.Clients.CreateComputeManagementClient(Credentials))
+{
+    await client.Deployments.CreateAsync(cloudServiceName,
+        DeploymentSlot.Production,
+        new DeploymentCreateParameters
+        {
+            Name = cloudServiceName + "Prod",
+            PackageUri = blob.Uri,
+            Configuration = File.ReadAllText("MyCloudService.cscfg"),
+            StartDeployment = true
+        });
+}
+```
 
 # Learn More
 
