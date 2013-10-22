@@ -495,7 +495,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public static partial class ConfigurationSetTypes
     {
-        public const string NetworkConfigurationSet = "NetworkConfigurationSet";
+        public const string NetworkConfiguration = "NetworkConfiguration";
         
         public const string WindowsProvisioningConfiguration = "WindowsProvisioningConfiguration";
         
