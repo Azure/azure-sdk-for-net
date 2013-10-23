@@ -23,7 +23,7 @@
       <PackageVersion>$(BaselineCommonPackageVersion)</PackageVersion>
     </SdkNuGetPackage>
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Compute">
-      <PackageVersion>$(BaselineCommonPackageVersion)</PackageVersion>
+      <PackageVersion>0.9.1-preview</PackageVersion>
     </SdkNuGetPackage>
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Storage">
       <PackageVersion>$(BaselineCommonPackageVersion)</PackageVersion>
