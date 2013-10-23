@@ -16227,11 +16227,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     SshSettingPublicKey publicKeyInstance = new SshSettingPublicKey();
                                                     sSHInstance.PublicKeys.Add(publicKeyInstance);
                                                     
-                                                    XElement fingerPrintElement = publicKeysElement.Element(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                                    if (fingerPrintElement != null)
+                                                    XElement fingerprintElement = publicKeysElement.Element(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                                    if (fingerprintElement != null)
                                                     {
-                                                        string fingerPrintInstance = fingerPrintElement.Value;
-                                                        publicKeyInstance.Fingerprint = fingerPrintInstance;
+                                                        string fingerprintInstance = fingerprintElement.Value;
+                                                        publicKeyInstance.Fingerprint = fingerprintInstance;
                                                     }
                                                     
                                                     XElement pathElement2 = publicKeysElement.Element(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
@@ -16251,11 +16251,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     SshSettingKeyPair keyPairInstance = new SshSettingKeyPair();
                                                     sSHInstance.KeyPairs.Add(keyPairInstance);
                                                     
-                                                    XElement fingerPrintElement2 = keyPairsElement.Element(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                                    if (fingerPrintElement2 != null)
+                                                    XElement fingerprintElement2 = keyPairsElement.Element(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                                    if (fingerprintElement2 != null)
                                                     {
-                                                        string fingerPrintInstance2 = fingerPrintElement2.Value;
-                                                        keyPairInstance.Fingerprint = fingerPrintInstance2;
+                                                        string fingerprintInstance2 = fingerprintElement2.Value;
+                                                        keyPairInstance.Fingerprint = fingerprintInstance2;
                                                     }
                                                     
                                                     XElement pathElement3 = keyPairsElement.Element(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
@@ -17339,11 +17339,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     SshSettingPublicKey publicKeyInstance = new SshSettingPublicKey();
                                                     sSHInstance.PublicKeys.Add(publicKeyInstance);
                                                     
-                                                    XElement fingerPrintElement = publicKeysElement.Element(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                                    if (fingerPrintElement != null)
+                                                    XElement fingerprintElement = publicKeysElement.Element(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                                    if (fingerprintElement != null)
                                                     {
-                                                        string fingerPrintInstance = fingerPrintElement.Value;
-                                                        publicKeyInstance.Fingerprint = fingerPrintInstance;
+                                                        string fingerprintInstance = fingerprintElement.Value;
+                                                        publicKeyInstance.Fingerprint = fingerprintInstance;
                                                     }
                                                     
                                                     XElement pathElement2 = publicKeysElement.Element(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
@@ -17363,11 +17363,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     SshSettingKeyPair keyPairInstance = new SshSettingKeyPair();
                                                     sSHInstance.KeyPairs.Add(keyPairInstance);
                                                     
-                                                    XElement fingerPrintElement2 = keyPairsElement.Element(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                                    if (fingerPrintElement2 != null)
+                                                    XElement fingerprintElement2 = keyPairsElement.Element(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                                    if (fingerprintElement2 != null)
                                                     {
-                                                        string fingerPrintInstance2 = fingerPrintElement2.Value;
-                                                        keyPairInstance.Fingerprint = fingerPrintInstance2;
+                                                        string fingerprintInstance2 = fingerprintElement2.Value;
+                                                        keyPairInstance.Fingerprint = fingerprintInstance2;
                                                     }
                                                     
                                                     XElement pathElement3 = keyPairsElement.Element(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
@@ -24810,11 +24810,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                             SshSettingPublicKey publicKeyInstance = new SshSettingPublicKey();
                                                             sSHInstance.PublicKeys.Add(publicKeyInstance);
                                                             
-                                                            XElement fingerPrintElement = publicKeysElement.Element(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                                            if (fingerPrintElement != null)
+                                                            XElement fingerprintElement = publicKeysElement.Element(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                                            if (fingerprintElement != null)
                                                             {
-                                                                string fingerPrintInstance = fingerPrintElement.Value;
-                                                                publicKeyInstance.Fingerprint = fingerPrintInstance;
+                                                                string fingerprintInstance = fingerprintElement.Value;
+                                                                publicKeyInstance.Fingerprint = fingerprintInstance;
                                                             }
                                                             
                                                             XElement pathElement2 = publicKeysElement.Element(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
@@ -24834,11 +24834,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                             SshSettingKeyPair keyPairInstance = new SshSettingKeyPair();
                                                             sSHInstance.KeyPairs.Add(keyPairInstance);
                                                             
-                                                            XElement fingerPrintElement2 = keyPairsElement.Element(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                                            if (fingerPrintElement2 != null)
+                                                            XElement fingerprintElement2 = keyPairsElement.Element(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                                            if (fingerprintElement2 != null)
                                                             {
-                                                                string fingerPrintInstance2 = fingerPrintElement2.Value;
-                                                                keyPairInstance.Fingerprint = fingerPrintInstance2;
+                                                                string fingerprintInstance2 = fingerprintElement2.Value;
+                                                                keyPairInstance.Fingerprint = fingerprintInstance2;
                                                             }
                                                             
                                                             XElement pathElement3 = keyPairsElement.Element(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
@@ -34970,9 +34970,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
                                 publicKeysSequenceElement.Add(publicKeyElement);
                                 
-                                XElement fingerPrintElement = new XElement(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                fingerPrintElement.Value = publicKeysItem.Fingerprint;
-                                publicKeyElement.Add(fingerPrintElement);
+                                XElement fingerprintElement = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                fingerprintElement.Value = publicKeysItem.Fingerprint;
+                                publicKeyElement.Add(fingerprintElement);
                                 
                                 XElement pathElement2 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
                                 pathElement2.Value = publicKeysItem.Path;
@@ -34989,9 +34989,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
                                 keyPairsSequenceElement.Add(keyPairElement);
                                 
-                                XElement fingerPrintElement2 = new XElement(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                fingerPrintElement2.Value = keyPairsItem.Fingerprint;
-                                keyPairElement.Add(fingerPrintElement2);
+                                XElement fingerprintElement2 = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                fingerprintElement2.Value = keyPairsItem.Fingerprint;
+                                keyPairElement.Add(fingerprintElement2);
                                 
                                 XElement pathElement3 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
                                 pathElement3.Value = keyPairsItem.Path;
@@ -35602,9 +35602,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
                                     publicKeysSequenceElement.Add(publicKeyElement);
                                     
-                                    XElement fingerPrintElement = new XElement(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                    fingerPrintElement.Value = publicKeysItem.Fingerprint;
-                                    publicKeyElement.Add(fingerPrintElement);
+                                    XElement fingerprintElement = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                    fingerprintElement.Value = publicKeysItem.Fingerprint;
+                                    publicKeyElement.Add(fingerprintElement);
                                     
                                     XElement pathElement2 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
                                     pathElement2.Value = publicKeysItem.Path;
@@ -35621,9 +35621,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
                                     keyPairsSequenceElement.Add(keyPairElement);
                                     
-                                    XElement fingerPrintElement2 = new XElement(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                    fingerPrintElement2.Value = keyPairsItem.Fingerprint;
-                                    keyPairElement.Add(fingerPrintElement2);
+                                    XElement fingerprintElement2 = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                    fingerprintElement2.Value = keyPairsItem.Fingerprint;
+                                    keyPairElement.Add(fingerprintElement2);
                                     
                                     XElement pathElement3 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
                                     pathElement3.Value = keyPairsItem.Path;
@@ -36465,9 +36465,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
                                         publicKeysSequenceElement.Add(publicKeyElement);
                                         
-                                        XElement fingerPrintElement = new XElement(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                        fingerPrintElement.Value = publicKeysItem.Fingerprint;
-                                        publicKeyElement.Add(fingerPrintElement);
+                                        XElement fingerprintElement = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                        fingerprintElement.Value = publicKeysItem.Fingerprint;
+                                        publicKeyElement.Add(fingerprintElement);
                                         
                                         XElement pathElement2 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
                                         pathElement2.Value = publicKeysItem.Path;
@@ -36484,9 +36484,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
                                         keyPairsSequenceElement.Add(keyPairElement);
                                         
-                                        XElement fingerPrintElement2 = new XElement(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                        fingerPrintElement2.Value = keyPairsItem.Fingerprint;
-                                        keyPairElement.Add(fingerPrintElement2);
+                                        XElement fingerprintElement2 = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                        fingerprintElement2.Value = keyPairsItem.Fingerprint;
+                                        keyPairElement.Add(fingerprintElement2);
                                         
                                         XElement pathElement3 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
                                         pathElement3.Value = keyPairsItem.Path;
@@ -37675,11 +37675,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             SshSettingPublicKey publicKeyInstance = new SshSettingPublicKey();
                                             sSHInstance.PublicKeys.Add(publicKeyInstance);
                                             
-                                            XElement fingerPrintElement = publicKeysElement.Element(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                            if (fingerPrintElement != null)
+                                            XElement fingerprintElement = publicKeysElement.Element(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                            if (fingerprintElement != null)
                                             {
-                                                string fingerPrintInstance = fingerPrintElement.Value;
-                                                publicKeyInstance.Fingerprint = fingerPrintInstance;
+                                                string fingerprintInstance = fingerprintElement.Value;
+                                                publicKeyInstance.Fingerprint = fingerprintInstance;
                                             }
                                             
                                             XElement pathElement2 = publicKeysElement.Element(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
@@ -37699,11 +37699,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             SshSettingKeyPair keyPairInstance = new SshSettingKeyPair();
                                             sSHInstance.KeyPairs.Add(keyPairInstance);
                                             
-                                            XElement fingerPrintElement2 = keyPairsElement.Element(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                            if (fingerPrintElement2 != null)
+                                            XElement fingerprintElement2 = keyPairsElement.Element(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                            if (fingerprintElement2 != null)
                                             {
-                                                string fingerPrintInstance2 = fingerPrintElement2.Value;
-                                                keyPairInstance.Fingerprint = fingerPrintInstance2;
+                                                string fingerprintInstance2 = fingerprintElement2.Value;
+                                                keyPairInstance.Fingerprint = fingerprintInstance2;
                                             }
                                             
                                             XElement pathElement3 = keyPairsElement.Element(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
@@ -39501,9 +39501,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
                                     publicKeysSequenceElement.Add(publicKeyElement);
                                     
-                                    XElement fingerPrintElement = new XElement(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                    fingerPrintElement.Value = publicKeysItem.Fingerprint;
-                                    publicKeyElement.Add(fingerPrintElement);
+                                    XElement fingerprintElement = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                    fingerprintElement.Value = publicKeysItem.Fingerprint;
+                                    publicKeyElement.Add(fingerprintElement);
                                     
                                     XElement pathElement2 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
                                     pathElement2.Value = publicKeysItem.Path;
@@ -39520,9 +39520,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
                                     keyPairsSequenceElement.Add(keyPairElement);
                                     
-                                    XElement fingerPrintElement2 = new XElement(XName.Get("FingerPrint", "http://schemas.microsoft.com/windowsazure"));
-                                    fingerPrintElement2.Value = keyPairsItem.Fingerprint;
-                                    keyPairElement.Add(fingerPrintElement2);
+                                    XElement fingerprintElement2 = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                    fingerprintElement2.Value = keyPairsItem.Fingerprint;
+                                    keyPairElement.Add(fingerprintElement2);
                                     
                                     XElement pathElement3 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
                                     pathElement3.Value = keyPairsItem.Path;
