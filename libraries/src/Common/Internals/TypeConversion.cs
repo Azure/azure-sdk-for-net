@@ -94,5 +94,15 @@ namespace Microsoft.WindowsAzure.Common.Internals
         {
             return XmlConvert.ToString(timespan);
         }
+
+        /// <summary>
+        /// Convert a string from ISO 8601 format to a TimeSpan instance.
+        /// </summary>
+        /// <param name="value">Value to parse</param>
+        /// <returns>The resulting timespan</returns>
+        public static TimeSpan From8601TimeSpan(string value)
+        {
+            return XmlConvert.ToTimeSpan(value);
+        }
     }
 }
