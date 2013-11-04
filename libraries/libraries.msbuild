@@ -334,7 +334,7 @@
   <Target Name="BuildEngineeringDependencies">
     <MSBuild Projects="..\tools\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
              Targets="Build"
-             Properties="Configuration=Debug" />
+             Properties="Configuration=Debug;Platform=AnyCPU" />
   </Target>
 
   <!--
