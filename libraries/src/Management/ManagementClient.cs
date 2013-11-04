@@ -57,16 +57,16 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// </summary>
     public partial class AffinityGroupCreateParameters
     {
-        private string _name;
+        private string _description;
         
         /// <summary>
-        /// Required. A name for the affinity group that is unique to the
-        /// subscription.
+        /// Optional. A description for the affinity group. The description can
+        /// be up to 1024 characters in length.
         /// </summary>
-        public string Name
+        public string Description
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._description; }
+            set { this._description = value; }
         }
         
         private string _label;
@@ -92,18 +92,6 @@ namespace Microsoft.WindowsAzure.Management.Models
             set { this._label = value; }
         }
         
-        private string _description;
-        
-        /// <summary>
-        /// Optional. A description for the affinity group. The description can
-        /// be up to 1024 characters in length.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
         private string _location;
         
         /// <summary>
@@ -115,6 +103,18 @@ namespace Microsoft.WindowsAzure.Management.Models
         {
             get { return this._location; }
             set { this._location = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Required. A name for the affinity group that is unique to the
+        /// subscription.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>
@@ -131,74 +131,6 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// </summary>
     public partial class AffinityGroupGetResponse : OperationResponse
     {
-        private string _name;
-        
-        /// <summary>
-        /// The user supplied name of the affinity group.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _label;
-        
-        /// <summary>
-        /// The user supplied label of the affinity group returned as a base-64
-        /// encoded string.
-        /// </summary>
-        public string Label
-        {
-            get { return this._label; }
-            set { this._label = value; }
-        }
-        
-        private string _description;
-        
-        /// <summary>
-        /// The user supplied description of this affinity group.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private string _location;
-        
-        /// <summary>
-        /// The location of the data center that the affinity group is
-        /// associated with.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private IList<AffinityGroupGetResponse.HostedServiceReference> _hostedServices;
-        
-        /// <summary>
-        /// The hosted services associated with this affinity group.
-        /// </summary>
-        public IList<AffinityGroupGetResponse.HostedServiceReference> HostedServices
-        {
-            get { return this._hostedServices; }
-            set { this._hostedServices = value; }
-        }
-        
-        private IList<AffinityGroupGetResponse.StorageServiceReference> _storageServices;
-        
-        /// <summary>
-        /// The storage services associated with this affinity group.
-        /// </summary>
-        public IList<AffinityGroupGetResponse.StorageServiceReference> StorageServices
-        {
-            get { return this._storageServices; }
-            set { this._storageServices = value; }
-        }
-        
         private IList<string> _capabilities;
         
         /// <summary>
@@ -213,14 +145,82 @@ namespace Microsoft.WindowsAzure.Management.Models
             set { this._capabilities = value; }
         }
         
+        private string _description;
+        
+        /// <summary>
+        /// The user supplied description of this affinity group.
+        /// </summary>
+        public string Description
+        {
+            get { return this._description; }
+            set { this._description = value; }
+        }
+        
+        private IList<AffinityGroupGetResponse.HostedServiceReference> _hostedServices;
+        
+        /// <summary>
+        /// The hosted services associated with this affinity group.
+        /// </summary>
+        public IList<AffinityGroupGetResponse.HostedServiceReference> HostedServices
+        {
+            get { return this._hostedServices; }
+            set { this._hostedServices = value; }
+        }
+        
+        private string _label;
+        
+        /// <summary>
+        /// The user supplied label of the affinity group returned as a base-64
+        /// encoded string.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
+        }
+        
+        private string _location;
+        
+        /// <summary>
+        /// The location of the data center that the affinity group is
+        /// associated with.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// The user supplied name of the affinity group.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private IList<AffinityGroupGetResponse.StorageServiceReference> _storageServices;
+        
+        /// <summary>
+        /// The storage services associated with this affinity group.
+        /// </summary>
+        public IList<AffinityGroupGetResponse.StorageServiceReference> StorageServices
+        {
+            get { return this._storageServices; }
+            set { this._storageServices = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the AffinityGroupGetResponse class.
         /// </summary>
         public AffinityGroupGetResponse()
         {
+            this._capabilities = new List<string>();
             this._hostedServices = new List<AffinityGroupGetResponse.HostedServiceReference>();
             this._storageServices = new List<AffinityGroupGetResponse.StorageServiceReference>();
-            this._capabilities = new List<string>();
         }
         
         /// <summary>
@@ -228,6 +228,17 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public partial class HostedServiceReference
         {
+            private string _serviceName;
+            
+            /// <summary>
+            /// The name of the hosted service.
+            /// </summary>
+            public string ServiceName
+            {
+                get { return this._serviceName; }
+                set { this._serviceName = value; }
+            }
+            
             private Uri _uri;
             
             /// <summary>
@@ -238,17 +249,6 @@ namespace Microsoft.WindowsAzure.Management.Models
             {
                 get { return this._uri; }
                 set { this._uri = value; }
-            }
-            
-            private string _serviceName;
-            
-            /// <summary>
-            /// The name of the hosted service.
-            /// </summary>
-            public string ServiceName
-            {
-                get { return this._serviceName; }
-                set { this._serviceName = value; }
             }
             
             /// <summary>
@@ -264,6 +264,17 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public partial class StorageServiceReference
         {
+            private string _serviceName;
+            
+            /// <summary>
+            /// The user supplied name of the storage account.
+            /// </summary>
+            public string ServiceName
+            {
+                get { return this._serviceName; }
+                set { this._serviceName = value; }
+            }
+            
             private Uri _uri;
             
             /// <summary>
@@ -275,17 +286,6 @@ namespace Microsoft.WindowsAzure.Management.Models
             {
                 get { return this._uri; }
                 set { this._uri = value; }
-            }
-            
-            private string _serviceName;
-            
-            /// <summary>
-            /// The user supplied name of the storage account.
-            /// </summary>
-            public string ServiceName
-            {
-                get { return this._serviceName; }
-                set { this._serviceName = value; }
             }
             
             /// <summary>
@@ -342,15 +342,29 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public partial class AffinityGroup
         {
-            private string _name;
+            private IList<string> _capabilities;
             
             /// <summary>
-            /// The user supplied name of the affinity group.
+            /// Indicates if the affinity group is able to perform virtual
+            /// machine related operations. If so, the string PersistentVMRole
+            /// will be returned by this element. Otherwise, this element will
+            /// not be present.
             /// </summary>
-            public string Name
+            public IList<string> Capabilities
             {
-                get { return this._name; }
-                set { this._name = value; }
+                get { return this._capabilities; }
+                set { this._capabilities = value; }
+            }
+            
+            private string _description;
+            
+            /// <summary>
+            /// The user supplied description of this affinity group.
+            /// </summary>
+            public string Description
+            {
+                get { return this._description; }
+                set { this._description = value; }
             }
             
             private string _label;
@@ -365,17 +379,6 @@ namespace Microsoft.WindowsAzure.Management.Models
                 set { this._label = value; }
             }
             
-            private string _description;
-            
-            /// <summary>
-            /// The user supplied description of this affinity group.
-            /// </summary>
-            public string Description
-            {
-                get { return this._description; }
-                set { this._description = value; }
-            }
-            
             private string _location;
             
             /// <summary>
@@ -388,18 +391,15 @@ namespace Microsoft.WindowsAzure.Management.Models
                 set { this._location = value; }
             }
             
-            private IList<string> _capabilities;
+            private string _name;
             
             /// <summary>
-            /// Indicates if the affinity group is able to perform virtual
-            /// machine related operations. If so, the string PersistentVMRole
-            /// will be returned by this element. Otherwise, this element will
-            /// not be present.
+            /// The user supplied name of the affinity group.
             /// </summary>
-            public IList<string> Capabilities
+            public string Name
             {
-                get { return this._capabilities; }
-                set { this._capabilities = value; }
+                get { return this._name; }
+                set { this._name = value; }
             }
             
             /// <summary>
@@ -417,18 +417,6 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// </summary>
     public partial class AffinityGroupUpdateParameters
     {
-        private string _label;
-        
-        /// <summary>
-        /// Required. A name for the affinity specified as a base-64 encoded
-        /// string. The label can be up to 100 characters in length.
-        /// </summary>
-        public string Label
-        {
-            get { return this._label; }
-            set { this._label = value; }
-        }
-        
         private string _description;
         
         /// <summary>
@@ -439,6 +427,18 @@ namespace Microsoft.WindowsAzure.Management.Models
         {
             get { return this._description; }
             set { this._description = value; }
+        }
+        
+        private string _label;
+        
+        /// <summary>
+        /// Required. A name for the affinity specified as a base-64 encoded
+        /// string. The label can be up to 100 characters in length.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
         }
         
         /// <summary>
@@ -533,16 +533,15 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public partial class Location
         {
-            private string _name;
+            private IList<string> _availableServices;
             
             /// <summary>
-            /// The name of a data center location that is valid for your
-            /// subscription.
+            /// Indicates the services available at a location.
             /// </summary>
-            public string Name
+            public IList<string> AvailableServices
             {
-                get { return this._name; }
-                set { this._name = value; }
+                get { return this._availableServices; }
+                set { this._availableServices = value; }
             }
             
             private string _displayName;
@@ -556,15 +555,16 @@ namespace Microsoft.WindowsAzure.Management.Models
                 set { this._displayName = value; }
             }
             
-            private IList<string> _availableServices;
+            private string _name;
             
             /// <summary>
-            /// Indicates the services available at a location.
+            /// The name of a data center location that is valid for your
+            /// subscription.
             /// </summary>
-            public IList<string> AvailableServices
+            public string Name
             {
-                get { return this._availableServices; }
-                set { this._availableServices = value; }
+                get { return this._name; }
+                set { this._name = value; }
             }
             
             /// <summary>
@@ -582,6 +582,17 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// </summary>
     public partial class ManagementCertificateCreateParameters
     {
+        private byte[] _data;
+        
+        /// <summary>
+        /// The certificate’s raw data in base-64 encoded .cer format.
+        /// </summary>
+        public byte[] Data
+        {
+            get { return this._data; }
+            set { this._data = value; }
+        }
+        
         private byte[] _publicKey;
         
         /// <summary>
@@ -604,17 +615,6 @@ namespace Microsoft.WindowsAzure.Management.Models
             set { this._thumbprint = value; }
         }
         
-        private byte[] _data;
-        
-        /// <summary>
-        /// The certificate’s raw data in base-64 encoded .cer format.
-        /// </summary>
-        public byte[] Data
-        {
-            get { return this._data; }
-            set { this._data = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the
         /// ManagementCertificateCreateParameters class.
@@ -629,6 +629,29 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// </summary>
     public partial class ManagementCertificateGetResponse : OperationResponse
     {
+        private DateTime _created;
+        
+        /// <summary>
+        /// The time that the management certificate was created, in UTC.
+        /// </summary>
+        public DateTime Created
+        {
+            get { return this._created; }
+            set { this._created = value; }
+        }
+        
+        private byte[] _data;
+        
+        /// <summary>
+        /// A base64 representation of the raw data contained in the management
+        /// certificate in .cer format.
+        /// </summary>
+        public byte[] Data
+        {
+            get { return this._data; }
+            set { this._data = value; }
+        }
+        
         private byte[] _publicKey;
         
         /// <summary>
@@ -651,29 +674,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         {
             get { return this._thumbprint; }
             set { this._thumbprint = value; }
-        }
-        
-        private byte[] _data;
-        
-        /// <summary>
-        /// A base64 representation of the raw data contained in the management
-        /// certificate in .cer format.
-        /// </summary>
-        public byte[] Data
-        {
-            get { return this._data; }
-            set { this._data = value; }
-        }
-        
-        private DateTime _created;
-        
-        /// <summary>
-        /// The time that the management certificate was created, in UTC.
-        /// </summary>
-        public DateTime Created
-        {
-            get { return this._created; }
-            set { this._created = value; }
         }
         
         /// <summary>
@@ -731,6 +731,29 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public partial class SubscriptionCertificate
         {
+            private DateTime _created;
+            
+            /// <summary>
+            /// The time that the management certificate was created, in UTC.
+            /// </summary>
+            public DateTime Created
+            {
+                get { return this._created; }
+                set { this._created = value; }
+            }
+            
+            private byte[] _data;
+            
+            /// <summary>
+            /// A base64 representation of the data contained in the management
+            /// certificate, in .cer format.
+            /// </summary>
+            public byte[] Data
+            {
+                get { return this._data; }
+                set { this._data = value; }
+            }
+            
             private byte[] _publicKey;
             
             /// <summary>
@@ -754,29 +777,6 @@ namespace Microsoft.WindowsAzure.Management.Models
             {
                 get { return this._thumbprint; }
                 set { this._thumbprint = value; }
-            }
-            
-            private byte[] _data;
-            
-            /// <summary>
-            /// A base64 representation of the data contained in the management
-            /// certificate, in .cer format.
-            /// </summary>
-            public byte[] Data
-            {
-                get { return this._data; }
-                set { this._data = value; }
-            }
-            
-            private DateTime _created;
-            
-            /// <summary>
-            /// The time that the management certificate was created, in UTC.
-            /// </summary>
-            public DateTime Created
-            {
-                get { return this._created; }
-                set { this._created = value; }
             }
             
             /// <summary>
@@ -821,6 +821,30 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// </summary>
     public partial class OperationStatusResponse : OperationResponse
     {
+        private OperationStatusResponse.ErrorDetails _error;
+        
+        /// <summary>
+        /// If the asynchronous operation failed, the response body includes
+        /// the HTTP status code for the failed request, and also includes
+        /// error information regarding the failure.
+        /// </summary>
+        public OperationStatusResponse.ErrorDetails Error
+        {
+            get { return this._error; }
+            set { this._error = value; }
+        }
+        
+        private HttpStatusCode _httpStatusCode;
+        
+        /// <summary>
+        /// The HTTP status code for the asynchronous request.
+        /// </summary>
+        public HttpStatusCode HttpStatusCode
+        {
+            get { return this._httpStatusCode; }
+            set { this._httpStatusCode = value; }
+        }
+        
         private string _id;
         
         /// <summary>
@@ -842,30 +866,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         {
             get { return this._status; }
             set { this._status = value; }
-        }
-        
-        private HttpStatusCode _httpStatusCode;
-        
-        /// <summary>
-        /// The HTTP status code for the asynchronous request.
-        /// </summary>
-        public HttpStatusCode HttpStatusCode
-        {
-            get { return this._httpStatusCode; }
-            set { this._httpStatusCode = value; }
-        }
-        
-        private OperationStatusResponse.ErrorDetails _error;
-        
-        /// <summary>
-        /// If the asynchronous operation failed, the response body includes
-        /// the HTTP status code for the failed request, and also includes
-        /// error information regarding the failure.
-        /// </summary>
-        public OperationStatusResponse.ErrorDetails Error
-        {
-            get { return this._error; }
-            set { this._error = value; }
         }
         
         /// <summary>
@@ -920,6 +920,167 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// </summary>
     public partial class SubscriptionGetResponse : OperationResponse
     {
+        private string _accountAdminLiveEmailId;
+        
+        /// <summary>
+        /// The live ID of the account administrator.
+        /// </summary>
+        public string AccountAdminLiveEmailId
+        {
+            get { return this._accountAdminLiveEmailId; }
+            set { this._accountAdminLiveEmailId = value; }
+        }
+        
+        private int _currentCoreCount;
+        
+        /// <summary>
+        /// The number of currently allocated cores.
+        /// </summary>
+        public int CurrentCoreCount
+        {
+            get { return this._currentCoreCount; }
+            set { this._currentCoreCount = value; }
+        }
+        
+        private int _currentDnsServers;
+        
+        /// <summary>
+        /// The current number of DNS servers allocated on this subscription.
+        /// </summary>
+        public int CurrentDnsServers
+        {
+            get { return this._currentDnsServers; }
+            set { this._currentDnsServers = value; }
+        }
+        
+        private int _currentHostedServices;
+        
+        /// <summary>
+        /// The number of currently allocated cloud services.
+        /// </summary>
+        public int CurrentHostedServices
+        {
+            get { return this._currentHostedServices; }
+            set { this._currentHostedServices = value; }
+        }
+        
+        private int _currentLocalNetworkSites;
+        
+        /// <summary>
+        /// The current number of local virtual network sites that are
+        /// allocated on this subscription.
+        /// </summary>
+        public int CurrentLocalNetworkSites
+        {
+            get { return this._currentLocalNetworkSites; }
+            set { this._currentLocalNetworkSites = value; }
+        }
+        
+        private int _currentStorageAccounts;
+        
+        /// <summary>
+        /// The number of currently allocated storage accounts.
+        /// </summary>
+        public int CurrentStorageAccounts
+        {
+            get { return this._currentStorageAccounts; }
+            set { this._currentStorageAccounts = value; }
+        }
+        
+        private int _currentVirtualNetworkSites;
+        
+        /// <summary>
+        /// The number of currently allocated virtual network sites.
+        /// </summary>
+        public int CurrentVirtualNetworkSites
+        {
+            get { return this._currentVirtualNetworkSites; }
+            set { this._currentVirtualNetworkSites = value; }
+        }
+        
+        private int _maximumCoreCount;
+        
+        /// <summary>
+        /// The maximum number of cores that can be allocated on this
+        /// subscription.
+        /// </summary>
+        public int MaximumCoreCount
+        {
+            get { return this._maximumCoreCount; }
+            set { this._maximumCoreCount = value; }
+        }
+        
+        private int _maximumDnsServers;
+        
+        /// <summary>
+        /// The maximum number of DNS servers that can be allocated on this
+        /// subscription.
+        /// </summary>
+        public int MaximumDnsServers
+        {
+            get { return this._maximumDnsServers; }
+            set { this._maximumDnsServers = value; }
+        }
+        
+        private int _maximumHostedServices;
+        
+        /// <summary>
+        /// The maximum number of cloud services that can be allocated on this
+        /// subscription.
+        /// </summary>
+        public int MaximumHostedServices
+        {
+            get { return this._maximumHostedServices; }
+            set { this._maximumHostedServices = value; }
+        }
+        
+        private int _maximumLocalNetworkSites;
+        
+        /// <summary>
+        /// The maximum number of local virtual network sites that can be
+        /// allocated on this subscription.
+        /// </summary>
+        public int MaximumLocalNetworkSites
+        {
+            get { return this._maximumLocalNetworkSites; }
+            set { this._maximumLocalNetworkSites = value; }
+        }
+        
+        private int _maximumStorageAccounts;
+        
+        /// <summary>
+        /// The maximum number of storage accounts that can be allocated on
+        /// this subscription.
+        /// </summary>
+        public int MaximumStorageAccounts
+        {
+            get { return this._maximumStorageAccounts; }
+            set { this._maximumStorageAccounts = value; }
+        }
+        
+        private int _maximumVirtualNetworkSites;
+        
+        /// <summary>
+        /// The maximum number of virtual network sites that can be allocated
+        /// on this subscription.
+        /// </summary>
+        public int MaximumVirtualNetworkSites
+        {
+            get { return this._maximumVirtualNetworkSites; }
+            set { this._maximumVirtualNetworkSites = value; }
+        }
+        
+        private string _serviceAdminLiveEmailId;
+        
+        /// <summary>
+        /// The live ID of the subscription administrator.
+        /// </summary>
+        public string ServiceAdminLiveEmailId
+        {
+            get { return this._serviceAdminLiveEmailId; }
+            set { this._serviceAdminLiveEmailId = value; }
+        }
+        
         private string _subscriptionID;
         
         /// <summary>
@@ -953,167 +1114,6 @@ namespace Microsoft.WindowsAzure.Management.Models
             set { this._subscriptionStatus = value; }
         }
         
-        private string _accountAdminLiveEmailId;
-        
-        /// <summary>
-        /// The live ID of the account administrator.
-        /// </summary>
-        public string AccountAdminLiveEmailId
-        {
-            get { return this._accountAdminLiveEmailId; }
-            set { this._accountAdminLiveEmailId = value; }
-        }
-        
-        private string _serviceAdminLiveEmailId;
-        
-        /// <summary>
-        /// The live ID of the subscription administrator.
-        /// </summary>
-        public string ServiceAdminLiveEmailId
-        {
-            get { return this._serviceAdminLiveEmailId; }
-            set { this._serviceAdminLiveEmailId = value; }
-        }
-        
-        private int _maximumCoreCount;
-        
-        /// <summary>
-        /// The maximum number of cores that can be allocated on this
-        /// subscription.
-        /// </summary>
-        public int MaximumCoreCount
-        {
-            get { return this._maximumCoreCount; }
-            set { this._maximumCoreCount = value; }
-        }
-        
-        private int _maximumStorageAccounts;
-        
-        /// <summary>
-        /// The maximum number of storage accounts that can be allocated on
-        /// this subscription.
-        /// </summary>
-        public int MaximumStorageAccounts
-        {
-            get { return this._maximumStorageAccounts; }
-            set { this._maximumStorageAccounts = value; }
-        }
-        
-        private int _maximumHostedServices;
-        
-        /// <summary>
-        /// The maximum number of cloud services that can be allocated on this
-        /// subscription.
-        /// </summary>
-        public int MaximumHostedServices
-        {
-            get { return this._maximumHostedServices; }
-            set { this._maximumHostedServices = value; }
-        }
-        
-        private int _currentCoreCount;
-        
-        /// <summary>
-        /// The number of currently allocated cores.
-        /// </summary>
-        public int CurrentCoreCount
-        {
-            get { return this._currentCoreCount; }
-            set { this._currentCoreCount = value; }
-        }
-        
-        private int _currentStorageAccounts;
-        
-        /// <summary>
-        /// The number of currently allocated storage accounts.
-        /// </summary>
-        public int CurrentStorageAccounts
-        {
-            get { return this._currentStorageAccounts; }
-            set { this._currentStorageAccounts = value; }
-        }
-        
-        private int _currentHostedServices;
-        
-        /// <summary>
-        /// The number of currently allocated cloud services.
-        /// </summary>
-        public int CurrentHostedServices
-        {
-            get { return this._currentHostedServices; }
-            set { this._currentHostedServices = value; }
-        }
-        
-        private int _maximumVirtualNetworkSites;
-        
-        /// <summary>
-        /// The maximum number of virtual network sites that can be allocated
-        /// on this subscription.
-        /// </summary>
-        public int MaximumVirtualNetworkSites
-        {
-            get { return this._maximumVirtualNetworkSites; }
-            set { this._maximumVirtualNetworkSites = value; }
-        }
-        
-        private int _currentVirtualNetworkSites;
-        
-        /// <summary>
-        /// The number of currently allocated virtual network sites.
-        /// </summary>
-        public int CurrentVirtualNetworkSites
-        {
-            get { return this._currentVirtualNetworkSites; }
-            set { this._currentVirtualNetworkSites = value; }
-        }
-        
-        private int _maximumLocalNetworkSites;
-        
-        /// <summary>
-        /// The maximum number of local virtual network sites that can be
-        /// allocated on this subscription.
-        /// </summary>
-        public int MaximumLocalNetworkSites
-        {
-            get { return this._maximumLocalNetworkSites; }
-            set { this._maximumLocalNetworkSites = value; }
-        }
-        
-        private int _maximumDnsServers;
-        
-        /// <summary>
-        /// The maximum number of DNS servers that can be allocated on this
-        /// subscription.
-        /// </summary>
-        public int MaximumDnsServers
-        {
-            get { return this._maximumDnsServers; }
-            set { this._maximumDnsServers = value; }
-        }
-        
-        private int _currentLocalNetworkSites;
-        
-        /// <summary>
-        /// The current number of local virtual network sites that are
-        /// allocated on this subscription.
-        /// </summary>
-        public int CurrentLocalNetworkSites
-        {
-            get { return this._currentLocalNetworkSites; }
-            set { this._currentLocalNetworkSites = value; }
-        }
-        
-        private int _currentDnsServers;
-        
-        /// <summary>
-        /// The current number of DNS servers allocated on this subscription.
-        /// </summary>
-        public int CurrentDnsServers
-        {
-            get { return this._currentDnsServers; }
-            set { this._currentDnsServers = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the SubscriptionGetResponse class.
         /// </summary>
@@ -1127,19 +1127,21 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// </summary>
     public partial class SubscriptionListOperationsParameters
     {
-        private DateTime _startTime;
+        private string _continuationToken;
         
         /// <summary>
-        /// Required. The start of the timeframe to begin listingsubscription
-        /// operations in UTC format. This parameter and theEndTime parameter
-        /// indicate the timeframe to retrieve subscription operations. This
-        /// parameter cannot indicate a start date of more than 90 days in the
-        /// past.
+        /// Optional. When there are too many operations to list, such as when
+        /// the requested timeframe is very large, the response includes an
+        /// incomplete list and a token that can be used to return the rest of
+        /// the list. Subsequent requests must include this parameter to
+        /// continue listing operations from where the last response left off.
+        /// If no token is specified, a filter is not applied and the response
+        /// will begin at the specified StartTime.
         /// </summary>
-        public DateTime StartTime
+        public string ContinuationToken
         {
-            get { return this._startTime; }
-            set { this._startTime = value; }
+            get { return this._continuationToken; }
+            set { this._continuationToken = value; }
         }
         
         private DateTime _endTime;
@@ -1185,21 +1187,19 @@ namespace Microsoft.WindowsAzure.Management.Models
             set { this._operationStatus = value; }
         }
         
-        private string _continuationToken;
+        private DateTime _startTime;
         
         /// <summary>
-        /// Optional. When there are too many operations to list, such as when
-        /// the requested timeframe is very large, the response includes an
-        /// incomplete list and a token that can be used to return the rest of
-        /// the list. Subsequent requests must include this parameter to
-        /// continue listing operations from where the last response left off.
-        /// If no token is specified, a filter is not applied and the response
-        /// will begin at the specified StartTime.
+        /// Required. The start of the timeframe to begin listingsubscription
+        /// operations in UTC format. This parameter and theEndTime parameter
+        /// indicate the timeframe to retrieve subscription operations. This
+        /// parameter cannot indicate a start date of more than 90 days in the
+        /// past.
         /// </summary>
-        public string ContinuationToken
+        public DateTime StartTime
         {
-            get { return this._continuationToken; }
-            set { this._continuationToken = value; }
+            get { return this._startTime; }
+            set { this._startTime = value; }
         }
         
         /// <summary>
@@ -1253,124 +1253,36 @@ namespace Microsoft.WindowsAzure.Management.Models
         }
         
         /// <summary>
-        /// An operation that has been performed on the subscription during the
-        /// specified timeframe.
-        /// </summary>
-        public partial class SubscriptionOperation
-        {
-            private string _operationId;
-            
-            /// <summary>
-            /// The globally unique identifier (GUID) of the operation.
-            /// </summary>
-            public string OperationId
-            {
-                get { return this._operationId; }
-                set { this._operationId = value; }
-            }
-            
-            private string _operationObjectId;
-            
-            /// <summary>
-            /// The target object for the operation. This value is equal to the
-            /// URL for performing an HTTP GET on the object, and corresponds
-            /// to the same values for the ObjectIdFilter in the request.
-            /// </summary>
-            public string OperationObjectId
-            {
-                get { return this._operationObjectId; }
-                set { this._operationObjectId = value; }
-            }
-            
-            private string _operationName;
-            
-            /// <summary>
-            /// The name of the performed operation.
-            /// </summary>
-            public string OperationName
-            {
-                get { return this._operationName; }
-                set { this._operationName = value; }
-            }
-            
-            private IDictionary<string, string> _operationParameters;
-            
-            /// <summary>
-            /// The collection of parameters for the performed operation.
-            /// </summary>
-            public IDictionary<string, string> OperationParameters
-            {
-                get { return this._operationParameters; }
-                set { this._operationParameters = value; }
-            }
-            
-            private SubscriptionListOperationsResponse.OperationCallerDetails _operationCaller;
-            
-            /// <summary>
-            /// A collection of attributes that identifies the source of the
-            /// operation.
-            /// </summary>
-            public SubscriptionListOperationsResponse.OperationCallerDetails OperationCaller
-            {
-                get { return this._operationCaller; }
-                set { this._operationCaller = value; }
-            }
-            
-            private string _operationStatus;
-            
-            /// <summary>
-            /// An object that contains information on the current status of
-            /// the operation. The object returned has the following XML
-            /// format: <OperationStatus>
-            /// <ID>339c6c13-1f81-412f-9bc6-00e9c5876695</ID>
-            /// <Status>Succeeded</Status>
-            /// <HttpStatusCode>200</HttpStatusCode> </OperationStatus>
-            /// Possible values of the Status element, whichholds the
-            /// operation status, are: Succeeded, Failed, InProgress.
-            /// </summary>
-            public string OperationStatus
-            {
-                get { return this._operationStatus; }
-                set { this._operationStatus = value; }
-            }
-            
-            private DateTime _operationStartedTime;
-            
-            /// <summary>
-            /// The time that the operation started to execute.
-            /// </summary>
-            public DateTime OperationStartedTime
-            {
-                get { return this._operationStartedTime; }
-                set { this._operationStartedTime = value; }
-            }
-            
-            private DateTime _operationCompletedTime;
-            
-            /// <summary>
-            /// The time that the operation finished executing.
-            /// </summary>
-            public DateTime OperationCompletedTime
-            {
-                get { return this._operationCompletedTime; }
-                set { this._operationCompletedTime = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the SubscriptionOperation class.
-            /// </summary>
-            public SubscriptionOperation()
-            {
-                this._operationParameters = new Dictionary<string, string>();
-            }
-        }
-        
-        /// <summary>
         /// A collection of attributes that identifies the source of the
         /// operation.
         /// </summary>
         public partial class OperationCallerDetails
         {
+            private string _clientIPAddress;
+            
+            /// <summary>
+            /// The IP address of the client computer that initiated the
+            /// operation. This element is returned only if
+            /// UsedServiceManagementApi is true.
+            /// </summary>
+            public string ClientIPAddress
+            {
+                get { return this._clientIPAddress; }
+                set { this._clientIPAddress = value; }
+            }
+            
+            private string _subscriptionCertificateThumbprint;
+            
+            /// <summary>
+            /// The thumbprint of the subscription certificate used to initiate
+            /// the operation.
+            /// </summary>
+            public string SubscriptionCertificateThumbprint
+            {
+                get { return this._subscriptionCertificateThumbprint; }
+                set { this._subscriptionCertificateThumbprint = value; }
+            }
+            
             private bool _usedServiceManagementApi;
             
             /// <summary>
@@ -1397,36 +1309,124 @@ namespace Microsoft.WindowsAzure.Management.Models
                 set { this._userEmailAddress = value; }
             }
             
-            private string _subscriptionCertificateThumbprint;
-            
-            /// <summary>
-            /// The thumbprint of the subscription certificate used to initiate
-            /// the operation.
-            /// </summary>
-            public string SubscriptionCertificateThumbprint
-            {
-                get { return this._subscriptionCertificateThumbprint; }
-                set { this._subscriptionCertificateThumbprint = value; }
-            }
-            
-            private string _clientIPAddress;
-            
-            /// <summary>
-            /// The IP address of the client computer that initiated the
-            /// operation. This element is returned only if
-            /// UsedServiceManagementApi is true.
-            /// </summary>
-            public string ClientIPAddress
-            {
-                get { return this._clientIPAddress; }
-                set { this._clientIPAddress = value; }
-            }
-            
             /// <summary>
             /// Initializes a new instance of the OperationCallerDetails class.
             /// </summary>
             public OperationCallerDetails()
             {
+            }
+        }
+        
+        /// <summary>
+        /// An operation that has been performed on the subscription during the
+        /// specified timeframe.
+        /// </summary>
+        public partial class SubscriptionOperation
+        {
+            private SubscriptionListOperationsResponse.OperationCallerDetails _operationCaller;
+            
+            /// <summary>
+            /// A collection of attributes that identifies the source of the
+            /// operation.
+            /// </summary>
+            public SubscriptionListOperationsResponse.OperationCallerDetails OperationCaller
+            {
+                get { return this._operationCaller; }
+                set { this._operationCaller = value; }
+            }
+            
+            private DateTime _operationCompletedTime;
+            
+            /// <summary>
+            /// The time that the operation finished executing.
+            /// </summary>
+            public DateTime OperationCompletedTime
+            {
+                get { return this._operationCompletedTime; }
+                set { this._operationCompletedTime = value; }
+            }
+            
+            private string _operationId;
+            
+            /// <summary>
+            /// The globally unique identifier (GUID) of the operation.
+            /// </summary>
+            public string OperationId
+            {
+                get { return this._operationId; }
+                set { this._operationId = value; }
+            }
+            
+            private string _operationName;
+            
+            /// <summary>
+            /// The name of the performed operation.
+            /// </summary>
+            public string OperationName
+            {
+                get { return this._operationName; }
+                set { this._operationName = value; }
+            }
+            
+            private string _operationObjectId;
+            
+            /// <summary>
+            /// The target object for the operation. This value is equal to the
+            /// URL for performing an HTTP GET on the object, and corresponds
+            /// to the same values for the ObjectIdFilter in the request.
+            /// </summary>
+            public string OperationObjectId
+            {
+                get { return this._operationObjectId; }
+                set { this._operationObjectId = value; }
+            }
+            
+            private IDictionary<string, string> _operationParameters;
+            
+            /// <summary>
+            /// The collection of parameters for the performed operation.
+            /// </summary>
+            public IDictionary<string, string> OperationParameters
+            {
+                get { return this._operationParameters; }
+                set { this._operationParameters = value; }
+            }
+            
+            private DateTime _operationStartedTime;
+            
+            /// <summary>
+            /// The time that the operation started to execute.
+            /// </summary>
+            public DateTime OperationStartedTime
+            {
+                get { return this._operationStartedTime; }
+                set { this._operationStartedTime = value; }
+            }
+            
+            private string _operationStatus;
+            
+            /// <summary>
+            /// An object that contains information on the current status of
+            /// the operation. The object returned has the following XML
+            /// format: <OperationStatus>
+            /// <ID>339c6c13-1f81-412f-9bc6-00e9c5876695</ID>
+            /// <Status>Succeeded</Status>
+            /// <HttpStatusCode>200</HttpStatusCode> </OperationStatus>
+            /// Possible values of the Status element, whichholds the
+            /// operation status, are: Succeeded, Failed, InProgress.
+            /// </summary>
+            public string OperationStatus
+            {
+                get { return this._operationStatus; }
+                set { this._operationStatus = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the SubscriptionOperation class.
+            /// </summary>
+            public SubscriptionOperation()
+            {
+                this._operationParameters = new Dictionary<string, string>();
             }
         }
     }
@@ -1539,6 +1539,14 @@ namespace Microsoft.WindowsAzure.Management
     public partial interface IManagementClient
     {
         /// <summary>
+        /// The URI used as the base for all Service Management requests.
+        /// </summary>
+        Uri BaseUri
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// When you create a Windows Azure subscription, it is uniquely
         /// identified by a subscription ID. The subscription ID forms part of
         /// the URI for every call that you make to the Service Management
@@ -1548,14 +1556,6 @@ namespace Microsoft.WindowsAzure.Management
         /// are allowed.
         /// </summary>
         SubscriptionCloudCredentials Credentials
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// The URI used as the base for all Service Management requests.
-        /// </summary>
-        Uri BaseUri
         {
             get; 
         }
@@ -1734,6 +1734,16 @@ namespace Microsoft.WindowsAzure.Management
     /// </summary>
     public partial class ManagementClient : ServiceClient<ManagementClient>, IManagementClient
     {
+        private Uri _baseUri;
+        
+        /// <summary>
+        /// The URI used as the base for all Service Management requests.
+        /// </summary>
+        public Uri BaseUri
+        {
+            get { return this._baseUri; }
+        }
+        
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
@@ -1748,16 +1758,6 @@ namespace Microsoft.WindowsAzure.Management
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
-        }
-        
-        private Uri _baseUri;
-        
-        /// <summary>
-        /// The URI used as the base for all Service Management requests.
-        /// </summary>
-        public Uri BaseUri
-        {
-            get { return this._baseUri; }
         }
         
         private IAffinityGroupOperations _affinityGroups;
@@ -2082,20 +2082,6 @@ namespace Microsoft.WindowsAzure.Management
         Task<OperationResponse> CreateAsync(AffinityGroupCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The List Affinity Groups operation lists the affinity groups
-        /// associated with the specified subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460797.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Affinity Groups operation response.
-        /// </returns>
-        Task<AffinityGroupListResponse> ListAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
         /// The Delete Affinity Group operation deletes an affinity group in
         /// the specified subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715314.aspx
@@ -2112,6 +2098,38 @@ namespace Microsoft.WindowsAzure.Management
         /// request ID.
         /// </returns>
         Task<OperationResponse> DeleteAsync(string affinityGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Affinity Group Properties operation returns the system
+        /// properties associated with the specified affinity group.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460789.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='affinityGroupName'>
+        /// The name of the desired affinity group as returned by the name
+        /// element of the List Affinity Groups operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Affinity Group operation response.
+        /// </returns>
+        Task<AffinityGroupGetResponse> GetAsync(string affinityGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Affinity Groups operation lists the affinity groups
+        /// associated with the specified subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460797.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Affinity Groups operation response.
+        /// </returns>
+        Task<AffinityGroupListResponse> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
         /// The Update Affinity Group operation updates the label and/or the
@@ -2134,24 +2152,6 @@ namespace Microsoft.WindowsAzure.Management
         /// request ID.
         /// </returns>
         Task<OperationResponse> UpdateAsync(string affinityGroupName, AffinityGroupUpdateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The Get Affinity Group Properties operation returns the system
-        /// properties associated with the specified affinity group.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460789.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='affinityGroupName'>
-        /// The name of the desired affinity group as returned by the name
-        /// element of the List Affinity Groups operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Affinity Group operation response.
-        /// </returns>
-        Task<AffinityGroupGetResponse> GetAsync(string affinityGroupName, CancellationToken cancellationToken);
     }
     
     /// <summary>
@@ -2220,56 +2220,6 @@ namespace Microsoft.WindowsAzure.Management
         }
         
         /// <summary>
-        /// The List Affinity Groups operation lists the affinity groups
-        /// associated with the specified subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460797.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
-        /// </param>
-        /// <returns>
-        /// The List Affinity Groups operation response.
-        /// </returns>
-        public static AffinityGroupListResponse List(this IAffinityGroupOperations operations)
-        {
-            try
-            {
-                return operations.ListAsync().Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Affinity Groups operation lists the affinity groups
-        /// associated with the specified subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460797.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
-        /// </param>
-        /// <returns>
-        /// The List Affinity Groups operation response.
-        /// </returns>
-        public static Task<AffinityGroupListResponse> ListAsync(this IAffinityGroupOperations operations)
-        {
-            return operations.ListAsync(CancellationToken.None);
-        }
-        
-        /// <summary>
         /// The Delete Affinity Group operation deletes an affinity group in
         /// the specified subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715314.aspx
@@ -2325,6 +2275,114 @@ namespace Microsoft.WindowsAzure.Management
         public static Task<OperationResponse> DeleteAsync(this IAffinityGroupOperations operations, string affinityGroupName)
         {
             return operations.DeleteAsync(affinityGroupName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Affinity Group Properties operation returns the system
+        /// properties associated with the specified affinity group.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460789.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
+        /// </param>
+        /// <param name='affinityGroupName'>
+        /// The name of the desired affinity group as returned by the name
+        /// element of the List Affinity Groups operation.
+        /// </param>
+        /// <returns>
+        /// The Get Affinity Group operation response.
+        /// </returns>
+        public static AffinityGroupGetResponse Get(this IAffinityGroupOperations operations, string affinityGroupName)
+        {
+            try
+            {
+                return operations.GetAsync(affinityGroupName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Get Affinity Group Properties operation returns the system
+        /// properties associated with the specified affinity group.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460789.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
+        /// </param>
+        /// <param name='affinityGroupName'>
+        /// The name of the desired affinity group as returned by the name
+        /// element of the List Affinity Groups operation.
+        /// </param>
+        /// <returns>
+        /// The Get Affinity Group operation response.
+        /// </returns>
+        public static Task<AffinityGroupGetResponse> GetAsync(this IAffinityGroupOperations operations, string affinityGroupName)
+        {
+            return operations.GetAsync(affinityGroupName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Affinity Groups operation lists the affinity groups
+        /// associated with the specified subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460797.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
+        /// </param>
+        /// <returns>
+        /// The List Affinity Groups operation response.
+        /// </returns>
+        public static AffinityGroupListResponse List(this IAffinityGroupOperations operations)
+        {
+            try
+            {
+                return operations.ListAsync().Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Affinity Groups operation lists the affinity groups
+        /// associated with the specified subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460797.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
+        /// </param>
+        /// <returns>
+        /// The List Affinity Groups operation response.
+        /// </returns>
+        public static Task<AffinityGroupListResponse> ListAsync(this IAffinityGroupOperations operations)
+        {
+            return operations.ListAsync(CancellationToken.None);
         }
         
         /// <summary>
@@ -2392,64 +2450,6 @@ namespace Microsoft.WindowsAzure.Management
         {
             return operations.UpdateAsync(affinityGroupName, parameters, CancellationToken.None);
         }
-        
-        /// <summary>
-        /// The Get Affinity Group Properties operation returns the system
-        /// properties associated with the specified affinity group.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460789.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
-        /// </param>
-        /// <param name='affinityGroupName'>
-        /// The name of the desired affinity group as returned by the name
-        /// element of the List Affinity Groups operation.
-        /// </param>
-        /// <returns>
-        /// The Get Affinity Group operation response.
-        /// </returns>
-        public static AffinityGroupGetResponse Get(this IAffinityGroupOperations operations, string affinityGroupName)
-        {
-            try
-            {
-                return operations.GetAsync(affinityGroupName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Get Affinity Group Properties operation returns the system
-        /// properties associated with the specified affinity group.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460789.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
-        /// </param>
-        /// <param name='affinityGroupName'>
-        /// The name of the desired affinity group as returned by the name
-        /// element of the List Affinity Groups operation.
-        /// </param>
-        /// <returns>
-        /// The Get Affinity Group operation response.
-        /// </returns>
-        public static Task<AffinityGroupGetResponse> GetAsync(this IAffinityGroupOperations operations, string affinityGroupName)
-        {
-            return operations.GetAsync(affinityGroupName, CancellationToken.None);
-        }
     }
     
     /// <summary>
@@ -2504,9 +2504,9 @@ namespace Microsoft.WindowsAzure.Management
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Name == null)
+            if (parameters.Description != null && parameters.Description.Length > 1024)
             {
-                throw new ArgumentNullException("parameters.Name");
+                throw new ArgumentOutOfRangeException("parameters.Description");
             }
             if (parameters.Label == null)
             {
@@ -2516,13 +2516,13 @@ namespace Microsoft.WindowsAzure.Management
             {
                 throw new ArgumentOutOfRangeException("parameters.Label");
             }
-            if (parameters.Description != null && parameters.Description.Length > 1024)
-            {
-                throw new ArgumentOutOfRangeException("parameters.Description");
-            }
             if (parameters.Location == null)
             {
                 throw new ArgumentNullException("parameters.Location");
+            }
+            if (parameters.Name == null)
+            {
+                throw new ArgumentNullException("parameters.Name");
             }
             
             // Tracing
@@ -2642,159 +2642,6 @@ namespace Microsoft.WindowsAzure.Management
         }
         
         /// <summary>
-        /// The List Affinity Groups operation lists the affinity groups
-        /// associated with the specified subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460797.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Affinity Groups operation response.
-        /// </returns>
-        public async Task<AffinityGroupListResponse> ListAsync(CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/affinitygroups";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    AffinityGroupListResponse result = new AffinityGroupListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement affinityGroupsSequenceElement = responseDoc.Element(XName.Get("AffinityGroups", "http://schemas.microsoft.com/windowsazure"));
-                    if (affinityGroupsSequenceElement != null)
-                    {
-                        foreach (XElement affinityGroupsElement in affinityGroupsSequenceElement.Elements(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure")))
-                        {
-                            AffinityGroupListResponse.AffinityGroup affinityGroupInstance = new AffinityGroupListResponse.AffinityGroup();
-                            result.AffinityGroups.Add(affinityGroupInstance);
-                            
-                            XElement nameElement = affinityGroupsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                affinityGroupInstance.Name = nameInstance;
-                            }
-                            
-                            XElement labelElement = affinityGroupsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
-                                affinityGroupInstance.Label = labelInstance;
-                            }
-                            
-                            XElement descriptionElement = affinityGroupsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null)
-                            {
-                                string descriptionInstance = descriptionElement.Value;
-                                affinityGroupInstance.Description = descriptionInstance;
-                            }
-                            
-                            XElement locationElement = affinityGroupsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null)
-                            {
-                                string locationInstance = locationElement.Value;
-                                affinityGroupInstance.Location = locationInstance;
-                            }
-                            
-                            XElement capabilitiesSequenceElement = affinityGroupsElement.Element(XName.Get("Capabilities", "http://schemas.microsoft.com/windowsazure"));
-                            if (capabilitiesSequenceElement != null)
-                            {
-                                foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    affinityGroupInstance.Capabilities.Add(capabilitiesElement.Value);
-                                }
-                            }
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
         /// The Delete Affinity Group operation deletes an affinity group in
         /// the specified subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715314.aspx
@@ -2866,159 +2713,6 @@ namespace Microsoft.WindowsAzure.Management
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Update Affinity Group operation updates the label and/or the
-        /// description for an affinity group for the specified subscription.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715316.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='affinityGroupName'>
-        /// The name of your affinity group.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Affinity Group operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string affinityGroupName, AffinityGroupUpdateParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (affinityGroupName == null)
-            {
-                throw new ArgumentNullException("affinityGroupName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Label == null)
-            {
-                throw new ArgumentNullException("parameters.Label");
-            }
-            if (parameters.Label.Length > 100)
-            {
-                throw new ArgumentOutOfRangeException("parameters.Label");
-            }
-            if (parameters.Description != null && parameters.Description.Length > 1024)
-            {
-                throw new ArgumentOutOfRangeException("parameters.Description");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("affinityGroupName", affinityGroupName);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                XDocument requestDoc = new XDocument();
-                
-                XElement updateAffinityGroupElement = new XElement(XName.Get("UpdateAffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(updateAffinityGroupElement);
-                
-                XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
-                updateAffinityGroupElement.Add(labelElement);
-                
-                if (parameters.Description != null)
-                {
-                    XElement descriptionElement = new XElement(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                    descriptionElement.Value = parameters.Description;
-                    updateAffinityGroupElement.Add(descriptionElement);
-                }
-                
-                requestContent = requestDoc.ToString();
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -3236,6 +2930,312 @@ namespace Microsoft.WindowsAzure.Management
                                 result.Capabilities.Add(capabilitiesElement.Value);
                             }
                         }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Affinity Groups operation lists the affinity groups
+        /// associated with the specified subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460797.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Affinity Groups operation response.
+        /// </returns>
+        public async Task<AffinityGroupListResponse> ListAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/affinitygroups";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AffinityGroupListResponse result = new AffinityGroupListResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement affinityGroupsSequenceElement = responseDoc.Element(XName.Get("AffinityGroups", "http://schemas.microsoft.com/windowsazure"));
+                    if (affinityGroupsSequenceElement != null)
+                    {
+                        foreach (XElement affinityGroupsElement in affinityGroupsSequenceElement.Elements(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure")))
+                        {
+                            AffinityGroupListResponse.AffinityGroup affinityGroupInstance = new AffinityGroupListResponse.AffinityGroup();
+                            result.AffinityGroups.Add(affinityGroupInstance);
+                            
+                            XElement nameElement = affinityGroupsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                affinityGroupInstance.Name = nameInstance;
+                            }
+                            
+                            XElement labelElement = affinityGroupsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
+                            {
+                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                affinityGroupInstance.Label = labelInstance;
+                            }
+                            
+                            XElement descriptionElement = affinityGroupsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement != null)
+                            {
+                                string descriptionInstance = descriptionElement.Value;
+                                affinityGroupInstance.Description = descriptionInstance;
+                            }
+                            
+                            XElement locationElement = affinityGroupsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                affinityGroupInstance.Location = locationInstance;
+                            }
+                            
+                            XElement capabilitiesSequenceElement = affinityGroupsElement.Element(XName.Get("Capabilities", "http://schemas.microsoft.com/windowsazure"));
+                            if (capabilitiesSequenceElement != null)
+                            {
+                                foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    affinityGroupInstance.Capabilities.Add(capabilitiesElement.Value);
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Update Affinity Group operation updates the label and/or the
+        /// description for an affinity group for the specified subscription.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715316.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='affinityGroupName'>
+        /// The name of your affinity group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Affinity Group operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> UpdateAsync(string affinityGroupName, AffinityGroupUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (affinityGroupName == null)
+            {
+                throw new ArgumentNullException("affinityGroupName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Description != null && parameters.Description.Length > 1024)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Description");
+            }
+            if (parameters.Label == null)
+            {
+                throw new ArgumentNullException("parameters.Label");
+            }
+            if (parameters.Label.Length > 100)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Label");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("affinityGroupName", affinityGroupName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement updateAffinityGroupElement = new XElement(XName.Get("UpdateAffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(updateAffinityGroupElement);
+                
+                XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                updateAffinityGroupElement.Add(labelElement);
+                
+                if (parameters.Description != null)
+                {
+                    XElement descriptionElement = new XElement(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                    descriptionElement.Value = parameters.Description;
+                    updateAffinityGroupElement.Add(descriptionElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -4503,7 +4503,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Register a resource with your subscription.
         /// </summary>
         /// <param name='resourceName'>
-        /// Name of the reource to register.
+        /// Name of the resource to register.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -4518,7 +4518,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Unregister a resource with your subscription.
         /// </summary>
         /// <param name='resourceName'>
-        /// Name of the reource to unregister.
+        /// Name of the resource to unregister.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -4653,7 +4653,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
-        /// Name of the reource to register.
+        /// Name of the resource to register.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -4686,7 +4686,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
-        /// Name of the reource to register.
+        /// Name of the resource to register.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -4705,7 +4705,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
-        /// Name of the reource to unregister.
+        /// Name of the resource to unregister.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -4738,7 +4738,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
-        /// Name of the reource to unregister.
+        /// Name of the resource to unregister.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -5250,7 +5250,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Register a resource with your subscription.
         /// </summary>
         /// <param name='resourceName'>
-        /// Name of the reource to register.
+        /// Name of the resource to register.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -5311,7 +5311,7 @@ namespace Microsoft.WindowsAzure.Management
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -5357,7 +5357,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Unregister a resource with your subscription.
         /// </summary>
         /// <param name='resourceName'>
-        /// Name of the reource to unregister.
+        /// Name of the resource to unregister.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
