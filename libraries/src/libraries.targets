@@ -50,7 +50,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- Turn off XML documentation warnings. This is only for Oct. 2013 -->
+    <!-- Turn off XML documentation warnings. This is only for preview -->
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
 

@@ -32,7 +32,7 @@ Supported Platforms:
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common.Dependencies" version="__BASELINE_COMMON_VERSION__" />
+      <dependency id="Microsoft.WindowsAzure.Common.Dependencies" version="__VERSION_Microsoft.WindowsAzure.Common.Dependencies__" />
     </dependencies>
   </metadata>
   <files>
