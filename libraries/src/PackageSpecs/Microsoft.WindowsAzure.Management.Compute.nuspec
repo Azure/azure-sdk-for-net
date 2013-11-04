@@ -21,7 +21,7 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="__BASELINE_COMMON_VERSION__" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
     </dependencies>
   </metadata>
   <files>
