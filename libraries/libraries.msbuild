@@ -21,7 +21,6 @@
   The release notes can also use token replacement to share common information.
   -->
   <PropertyGroup>
-    <BaselineCommonPackageVersion>0.9.0-preview</BaselineCommonPackageVersion>
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
@@ -388,7 +387,6 @@
   changes before commiting to Git.
   -->
   <PropertyGroup>
-    <BaselineCommonPackageVersionReplacementToken>__BASELINE_COMMON_VERSION__</BaselineCommonPackageVersionReplacementToken>
     <BaselineReleaseNotesReplacementToken>__BASELINE_RELEASE_NOTES__</BaselineReleaseNotesReplacementToken>
   </PropertyGroup>
   <Target Name="BurnBuildVersions"
@@ -409,13 +407,11 @@
 
     <Message Text="Destructive burn of NuGet dependency versions in .nuspec files." />
     <ItemGroup>
-      <NuspecFilesToUpdate Include="$(ProductSourceFolder)\**\Microsoft.WindowsAzure.*.nuspec">
-        <SetPackageVersion>$(SignalRPackageVersion)</SetPackageVersion>
-      </NuspecFilesToUpdate>
+      <NuspecFilesToUpdate Include="$(ProductSourceFolder)\**\Microsoft.WindowsAzure.*.nuspec" />
     </ItemGroup>
     <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
-                          Find="__BASELINE_COMMON_VERSION__"
-                          Replace="$(BaselineCommonPackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix)"
+                          Find="__VERSION_%(SdkNuGetPackage.Identity)__"
+                          Replace="%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix)"
                           LogReplacement="true" />
     <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
                           Find="__BASELINE_RELEASE_NOTES__"

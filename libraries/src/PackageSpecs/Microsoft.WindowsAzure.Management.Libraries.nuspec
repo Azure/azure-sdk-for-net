@@ -17,11 +17,11 @@
     <tags>windowsazureofficial management cloud libraries "windows azure management"</tags>
     <dependencies>
       <group>
-        <dependency id="Microsoft.WindowsAzure.Management" version="__BASELINE_COMMON_VERSION__" />
-        <dependency id="Microsoft.WindowsAzure.Management.Compute" version="__BASELINE_COMMON_VERSION__" />
-        <dependency id="Microsoft.WindowsAzure.Management.Storage" version="__BASELINE_COMMON_VERSION__" />
-        <dependency id="Microsoft.WindowsAzure.Management.VirtualNetworks" version="__BASELINE_COMMON_VERSION__" />
-        <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="__BASELINE_COMMON_VERSION__" />
+        <dependency id="Microsoft.WindowsAzure.Management" version="__VERSION_Microsoft.WindowsAzure.Management__" />
+        <dependency id="Microsoft.WindowsAzure.Management.Compute" version="__VERSION_Microsoft.WindowsAzure.Management.Compute__" />
+        <dependency id="Microsoft.WindowsAzure.Management.Storage" version="__VERSION_Microsoft.WindowsAzure.Management.Storage__" />
+        <dependency id="Microsoft.WindowsAzure.Management.VirtualNetworks" version="__VERSION_Microsoft.WindowsAzure.Management.VirtualNetworks__" />
+        <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="__VERSION_Microsoft.WindowsAzure.Management.WebSites__" />
       </group>
     </dependencies>
   </metadata>
