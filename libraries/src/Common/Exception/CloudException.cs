@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure
         /// <remarks>
         /// This is included by default in the Message property.
         /// </remarks>
-        public string ErrorMessage { get; protected set; }
+        public string ErrorMessage { get; set; }
 
         /// <summary>
         /// Gets the error code returned from the server.
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure
         /// <remarks>
         /// This is included by default in the Message property.
         /// </remarks>
-        public string ErrorCode { get; protected set; }
+        public string ErrorCode { get; set; }
 
         /// <summary>
         /// Gets information about the associated HTTP request.
