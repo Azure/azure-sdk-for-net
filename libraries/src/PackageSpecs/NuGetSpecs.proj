@@ -17,7 +17,7 @@
 
     <!-- Infrastructure, Storage, Compute, Virtual Network Management and Virtual Network Libraries -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management">
-      <PackageVersion>0.9.0-preview</PackageVersion>
+      <PackageVersion>0.9.1-preview</PackageVersion>
     </SdkNuGetPackage>
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.VirtualNetworks">
       <PackageVersion>0.9.0-preview</PackageVersion>
@@ -36,7 +36,7 @@
 
     <!-- Management Libraries is a group of all our management packages -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Libraries">
-      <PackageVersion>0.9.0-preview</PackageVersion>
+      <PackageVersion>0.9.1-preview</PackageVersion>
       <SkipSymbolSourcePackage>true</SkipSymbolSourcePackage>
     </SdkNuGetPackage>
 

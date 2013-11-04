@@ -12,7 +12,11 @@
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>This set of packages open up a rich surface area of Windows Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Windows Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites and core data center infrastructure management.</summary>
-    <description>This set of packages open up a rich surface area of Windows Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Windows Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites and core data center infrastructure management.</description>
+    <description>This set of packages open up a rich surface area of Windows Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Windows Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites and core data center infrastructure management.
+
+.NET Framework Recommended during Preview:
+At this time, applications looking to use the Windows Azure Management Libraries should use the .NET Framework. Management operations require the X509Certificate2 type that is not present in the Portable Class Library API surface area. The Common.NetFramework library exposes this functionality. Looking to the future, we are enabling PCL early: Windows Azure Active Directory integration enables token-based authentication. Coupled with appropriate platform-specific libraries, in the future more platforms will light up with support for managing Windows Azure services.
+</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>windowsazureofficial management cloud libraries "windows azure management"</tags>
     <dependencies>
