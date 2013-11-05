@@ -31,7 +31,7 @@
 
     <!-- Windows Azure Scheduler -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Scheduler">
-      <PackageVersion>0.9.0-preview</PackageVersion>
+      <PackageVersion>0.9.1-preview</PackageVersion>
     </SdkNuGetPackage>
 
     <!-- Management Libraries is a group of all our management packages -->
