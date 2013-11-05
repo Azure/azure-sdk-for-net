@@ -1761,7 +1761,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 requestDoc.Add(cloudServiceElement);
                 
                 XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                labelElement.Value = parameters.Label;
                 cloudServiceElement.Add(labelElement);
                 
                 XElement descriptionElement = new XElement(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
@@ -2122,7 +2122,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2262,7 +2262,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                 XElement labelElement = resourcesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
                                 if (labelElement != null)
                                 {
-                                    string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                    string labelInstance = labelElement.Value;
                                     resourceInstance.Label = labelInstance;
                                 }
                             }
@@ -2317,7 +2317,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices/";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2391,7 +2391,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             XElement labelElement = cloudServicesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
                             if (labelElement != null)
                             {
-                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                string labelInstance = labelElement.Value;
                                 cloudServiceInstance.Label = labelInstance;
                             }
                             
