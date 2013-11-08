@@ -1090,10 +1090,33 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             set { this._executionCount = value; }
         }
         
+        private int _failureCount;
+        
+        /// <summary>
+        /// Number of times this job has failed.
+        /// </summary>
+        public int FailureCount
+        {
+            get { return this._failureCount; }
+            set { this._failureCount = value; }
+        }
+        
+        private int _faultedCount;
+        
+        /// <summary>
+        /// Number of faulted occurrences (occurrences that were retried and
+        /// failed as many times as the retry policy states).
+        /// </summary>
+        public int FaultedCount
+        {
+            get { return this._faultedCount; }
+            set { this._faultedCount = value; }
+        }
+        
         private System.DateTime? _lastExecutionTime;
         
         /// <summary>
-        /// Time the last occurrence executed in ISO-8601 format.  Could be
+        /// Time the last occurrence executed in ISO-8601 format. Could be
         /// empty if job has not run yet.
         /// </summary>
         public System.DateTime? LastExecutionTime
@@ -1105,7 +1128,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private System.DateTime? _nextExecutionTime;
         
         /// <summary>
-        /// Time of the next occurrence in ISO-8601 format.  Could be empty if
+        /// Time of the next occurrence in ISO-8601 format. Could be empty if
         /// the job is completed.
         /// </summary>
         public System.DateTime? NextExecutionTime
@@ -3046,6 +3069,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 int executionCountInstance = (int)executionCountValue;
                                 statusInstance.ExecutionCount = executionCountInstance;
                             }
+                            
+                            JToken failureCountValue = statusValue["failureCount"];
+                            if (failureCountValue != null)
+                            {
+                                int failureCountInstance = (int)failureCountValue;
+                                statusInstance.FailureCount = failureCountInstance;
+                            }
+                            
+                            JToken faultedCountValue = statusValue["faultedCount"];
+                            if (faultedCountValue != null)
+                            {
+                                int faultedCountInstance = (int)faultedCountValue;
+                                statusInstance.FaultedCount = faultedCountInstance;
+                            }
                         }
                         
                         JToken stateValue = responseDoc["state"];
@@ -3858,6 +3895,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 int executionCountInstance = (int)executionCountValue;
                                 statusInstance.ExecutionCount = executionCountInstance;
                             }
+                            
+                            JToken failureCountValue = statusValue["failureCount"];
+                            if (failureCountValue != null)
+                            {
+                                int failureCountInstance = (int)failureCountValue;
+                                statusInstance.FailureCount = failureCountInstance;
+                            }
+                            
+                            JToken faultedCountValue = statusValue["faultedCount"];
+                            if (faultedCountValue != null)
+                            {
+                                int faultedCountInstance = (int)faultedCountValue;
+                                statusInstance.FaultedCount = faultedCountInstance;
+                            }
                         }
                         
                         JToken stateValue = responseDoc["state"];
@@ -4446,6 +4497,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                             {
                                 int executionCountInstance = (int)executionCountValue;
                                 statusInstance.ExecutionCount = executionCountInstance;
+                            }
+                            
+                            JToken failureCountValue = statusValue["failureCount"];
+                            if (failureCountValue != null)
+                            {
+                                int failureCountInstance = (int)failureCountValue;
+                                statusInstance.FailureCount = failureCountInstance;
+                            }
+                            
+                            JToken faultedCountValue = statusValue["faultedCount"];
+                            if (faultedCountValue != null)
+                            {
+                                int faultedCountInstance = (int)faultedCountValue;
+                                statusInstance.FaultedCount = faultedCountInstance;
                             }
                         }
                         
@@ -5133,6 +5198,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     int executionCountInstance = (int)executionCountValue;
                                     statusInstance.ExecutionCount = executionCountInstance;
                                 }
+                                
+                                JToken failureCountValue = statusValue["failureCount"];
+                                if (failureCountValue != null)
+                                {
+                                    int failureCountInstance = (int)failureCountValue;
+                                    statusInstance.FailureCount = failureCountInstance;
+                                }
+                                
+                                JToken faultedCountValue = statusValue["faultedCount"];
+                                if (faultedCountValue != null)
+                                {
+                                    int faultedCountInstance = (int)faultedCountValue;
+                                    statusInstance.FaultedCount = faultedCountInstance;
+                                }
                             }
                             
                             JToken stateValue = jobsValue["state"];
@@ -5634,6 +5713,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     int executionCountInstance = (int)executionCountValue;
                                     statusInstance.ExecutionCount = executionCountInstance;
+                                }
+                                
+                                JToken failureCountValue = statusValue["failureCount"];
+                                if (failureCountValue != null)
+                                {
+                                    int failureCountInstance = (int)failureCountValue;
+                                    statusInstance.FailureCount = failureCountInstance;
+                                }
+                                
+                                JToken faultedCountValue = statusValue["faultedCount"];
+                                if (faultedCountValue != null)
+                                {
+                                    int faultedCountInstance = (int)faultedCountValue;
+                                    statusInstance.FaultedCount = faultedCountInstance;
                                 }
                             }
                             
@@ -6147,6 +6240,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                             {
                                 int executionCountInstance = (int)executionCountValue;
                                 statusInstance.ExecutionCount = executionCountInstance;
+                            }
+                            
+                            JToken failureCountValue = statusValue["failureCount"];
+                            if (failureCountValue != null)
+                            {
+                                int failureCountInstance = (int)failureCountValue;
+                                statusInstance.FailureCount = failureCountInstance;
+                            }
+                            
+                            JToken faultedCountValue = statusValue["faultedCount"];
+                            if (faultedCountValue != null)
+                            {
+                                int faultedCountInstance = (int)faultedCountValue;
+                                statusInstance.FaultedCount = faultedCountInstance;
                             }
                         }
                         
