@@ -138,6 +138,10 @@
              Properties="Configuration=Debug;Platform=Any CPU"
              Targets="Rebuild" />
   </Target>
+
+  <PropertyGroup>
+    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU</OfficialMSBuildProperties>
+  </PropertyGroup>
   
   <!--
   An official build is designed for use while shipping. It generates a release
@@ -155,23 +159,19 @@
           DependsOnTargets="BuildEngineeringDependencies">
     <CallTarget Targets="BuildServerPreparation" />
     <MSBuild Projects="$(ProductSolution)"
-             Properties="Configuration=Release;OfficialBuild=true;Platform=Any CPU"
+             Properties="$(OfficialMSBuildProperties)"
              Targets="Rebuild" />
   </Target>
 
   <!--
-  Nightly builds are not officially signed. Instead, they are signed with the
-  same developer strong name key we ship to customers.
+  Nightly and continuous builds. Nightly builds can push to a NuGet server.
   -->
   <Target Name="NightlyBuild"
           DependsOnTargets="BuildEngineeringDependencies; NightlyBuildSetProperties">
     <Error Condition=" '$(NuGetKey)' == '' " Text="NuGetKey is not set." />
     <CallTarget Targets="BuildServerPreparation" />
-    <MSBuild Projects="$(ProductSolution)"
-         Properties="Configuration=Release;Platform=Any CPU;CopyToBinaries=true"
-         Targets="Rebuild" />
     <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
-    <CallTarget Targets="BuildPackages; PublishPackages" />
+    <CallTarget Targets="OfficialSignedBuild; PublishPackages" />
   </Target>
   
   <Target Name="NightlyBuildSetProperties"
@@ -185,11 +185,8 @@
   <Target Name="ContinuousIntegrationBuild"
           DependsOnTargets="BuildEngineeringDependencies; ContinuousIntegrationBuildSetProperties">
     <CallTarget Targets="BuildServerPreparation" />
-    <MSBuild Projects="$(ProductSolution)"
-         Properties="Configuration=Release;Platform=Any CPU;CopyToBinaries=true"
-         Targets="Rebuild" />
     <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
-    <CallTarget Targets="BuildPackages" />
+    <CallTarget Targets="OfficialSignedBuild" />
   </Target>
 
   <Target Name="ContinuousIntegrationBuildSetProperties"
@@ -245,6 +242,7 @@
   generated binaries, build officially-versioned packages, perform compliance
   validation tasks. Only build servers will be able to execute this target.
   -->
+  <Target Name="OfficialSignedBuild" DependsOnTargets="OfficialSignedBuildNoPublish" />
   <Target Name="OfficialSignedBuildNoPublish"
           DependsOnTargets="OfficialBuild">
 
@@ -357,7 +355,7 @@
   <Target Name="BuildServerPreparation">
     <!-- Log server information -->
     <Message Text="Build Server Information" Importance="high" />
-    <Message Text="Hostname      : $(HOSTNAME)" />
+    <Message Text="Hostname      : $(COMPUTERNAME)" />
     <Message Text="Build Account : $(USERDOMAIN)\$(USERNAME)" />
     
     <!-- Useful variables to log -->
