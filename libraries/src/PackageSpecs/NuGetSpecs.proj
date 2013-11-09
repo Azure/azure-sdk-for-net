@@ -20,13 +20,13 @@
       <PackageVersion>0.9.1-preview</PackageVersion>
     </SdkNuGetPackage>
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.VirtualNetworks">
-      <PackageVersion>0.9.0-preview</PackageVersion>
+      <PackageVersion>0.9.1-preview</PackageVersion>
     </SdkNuGetPackage>
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Compute">
       <PackageVersion>0.9.3-preview</PackageVersion>
     </SdkNuGetPackage>
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Storage">
-      <PackageVersion>0.9.0-preview</PackageVersion>
+      <PackageVersion>0.9.1-preview</PackageVersion>
     </SdkNuGetPackage>
 
     <!-- Windows Azure Scheduler -->
