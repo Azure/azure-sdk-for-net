@@ -177,6 +177,19 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
     /// </summary>
     public partial class GatewayConnectDisconnectOrTestParameters
     {
+        private string _iPAddress;
+        
+        /// <summary>
+        /// Required if operation is set to Test; otherwise not used. Specifies
+        /// the IP address of the target local network site with which the
+        /// gateway will test connectivity.
+        /// </summary>
+        public string IPAddress
+        {
+            get { return this._iPAddress; }
+            set { this._iPAddress = value; }
+        }
+        
         private GatewayConnectionUpdateOperation _operation;
         
         /// <summary>
@@ -189,19 +202,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         {
             get { return this._operation; }
             set { this._operation = value; }
-        }
-        
-        private string _iPAddress;
-        
-        /// <summary>
-        /// Required if operation is set to Test; otherwise not used. Specifies
-        /// the IP address of the target local network site with which the
-        /// gateway will test connectivity.
-        /// </summary>
-        public string IPAddress
-        {
-            get { return this._iPAddress; }
-            set { this._iPAddress = value; }
         }
         
         /// <summary>
@@ -266,15 +266,15 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
     /// </summary>
     public partial class GatewayEvent
     {
-        private DateTime _timestamp;
+        private string _data;
         
         /// <summary>
-        /// The date and time when the event occurred
+        /// Additional data associated with this event
         /// </summary>
-        public DateTime Timestamp
+        public string Data
         {
-            get { return this._timestamp; }
-            set { this._timestamp = value; }
+            get { return this._data; }
+            set { this._data = value; }
         }
         
         private string _id;
@@ -299,15 +299,15 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             set { this._message = value; }
         }
         
-        private string _data;
+        private DateTime _timestamp;
         
         /// <summary>
-        /// Additional data associated with this event
+        /// The date and time when the event occurred
         /// </summary>
-        public string Data
+        public DateTime Timestamp
         {
-            get { return this._data; }
-            set { this._data = value; }
+            get { return this._timestamp; }
+            set { this._timestamp = value; }
         }
         
         /// <summary>
@@ -349,15 +349,15 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
     /// </summary>
     public partial class GatewayGetDeviceConfigurationScriptParameters
     {
-        private string _vendor;
+        private string _oSFamily;
         
         /// <summary>
-        /// The name of the device vendor
+        /// The device OS Family
         /// </summary>
-        public string Vendor
+        public string OSFamily
         {
-            get { return this._vendor; }
-            set { this._vendor = value; }
+            get { return this._oSFamily; }
+            set { this._oSFamily = value; }
         }
         
         private string _platform;
@@ -371,15 +371,15 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             set { this._platform = value; }
         }
         
-        private string _oSFamily;
+        private string _vendor;
         
         /// <summary>
-        /// The device OS Family
+        /// The name of the device vendor
         /// </summary>
-        public string OSFamily
+        public string Vendor
         {
-            get { return this._oSFamily; }
-            set { this._oSFamily = value; }
+            get { return this._vendor; }
+            set { this._vendor = value; }
         }
         
         /// <summary>
@@ -429,6 +429,30 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
     /// </summary>
     public partial class GatewayGetOperationStatusResponse : OperationResponse
     {
+        private GatewayGetOperationStatusResponse.ErrorDetails _error;
+        
+        /// <summary>
+        /// If the asynchronous operation failed, the response body includes
+        /// the HTTP status code for the failed request, and also includes
+        /// error information regarding the failure.
+        /// </summary>
+        public GatewayGetOperationStatusResponse.ErrorDetails Error
+        {
+            get { return this._error; }
+            set { this._error = value; }
+        }
+        
+        private HttpStatusCode _httpStatusCode;
+        
+        /// <summary>
+        /// The HTTP status code for the asynchronous request.
+        /// </summary>
+        public HttpStatusCode HttpStatusCode
+        {
+            get { return this._httpStatusCode; }
+            set { this._httpStatusCode = value; }
+        }
+        
         private string _id;
         
         /// <summary>
@@ -450,30 +474,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         {
             get { return this._status; }
             set { this._status = value; }
-        }
-        
-        private HttpStatusCode _httpStatusCode;
-        
-        /// <summary>
-        /// The HTTP status code for the asynchronous request.
-        /// </summary>
-        public HttpStatusCode HttpStatusCode
-        {
-            get { return this._httpStatusCode; }
-            set { this._httpStatusCode = value; }
-        }
-        
-        private GatewayGetOperationStatusResponse.ErrorDetails _error;
-        
-        /// <summary>
-        /// If the asynchronous operation failed, the response body includes
-        /// the HTTP status code for the failed request, and also includes
-        /// error information regarding the failure.
-        /// </summary>
-        public GatewayGetOperationStatusResponse.ErrorDetails Error
-        {
-            get { return this._error; }
-            set { this._error = value; }
         }
         
         /// <summary>
@@ -530,6 +530,28 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
     /// </summary>
     public partial class GatewayGetResponse : OperationResponse
     {
+        private GatewayType _gatewayType;
+        
+        /// <summary>
+        /// The type of gateway routing used for this virtual network
+        /// </summary>
+        public GatewayType GatewayType
+        {
+            get { return this._gatewayType; }
+            set { this._gatewayType = value; }
+        }
+        
+        private GatewayEvent _lastEvent;
+        
+        /// <summary>
+        /// The last recorded event for this virtual network gateway
+        /// </summary>
+        public GatewayEvent LastEvent
+        {
+            get { return this._lastEvent; }
+            set { this._lastEvent = value; }
+        }
+        
         private string _state;
         
         /// <summary>
@@ -550,28 +572,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         {
             get { return this._vipAddress; }
             set { this._vipAddress = value; }
-        }
-        
-        private GatewayEvent _lastEvent;
-        
-        /// <summary>
-        /// The last recorded event for this virtual network gateway
-        /// </summary>
-        public GatewayEvent LastEvent
-        {
-            get { return this._lastEvent; }
-            set { this._lastEvent = value; }
-        }
-        
-        private GatewayType _gatewayType;
-        
-        /// <summary>
-        /// The type of gateway routing used for this virtual network
-        /// </summary>
-        public GatewayType GatewayType
-        {
-            get { return this._gatewayType; }
-            set { this._gatewayType = value; }
         }
         
         /// <summary>
@@ -650,15 +650,17 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         
         public partial class GatewayConnection
         {
-            private string _localNetworkSiteName;
+            private IList<string> _allocatedIPAddresses;
             
             /// <summary>
-            /// The name of the local network site represented by the connection
+            /// If LocalNetworkSiteName is defined as VPNClientConnection, this
+            /// element contains a list of IP addresses (represented as
+            /// strings) that are assigned to currently connected VPN clients.
             /// </summary>
-            public string LocalNetworkSiteName
+            public IList<string> AllocatedIPAddresses
             {
-                get { return this._localNetworkSiteName; }
-                set { this._localNetworkSiteName = value; }
+                get { return this._allocatedIPAddresses; }
+                set { this._allocatedIPAddresses = value; }
             }
             
             private GatewayConnectivityState _connectivityState;
@@ -673,15 +675,16 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
                 set { this._connectivityState = value; }
             }
             
-            private GatewayEvent _lastEvent;
+            private long _egressBytesTransferred;
             
             /// <summary>
-            /// A record of the last provisioning event for this connection.
+            /// The number of bytes of data transferred out through this
+            /// connection since it was started
             /// </summary>
-            public GatewayEvent LastEvent
+            public long EgressBytesTransferred
             {
-                get { return this._lastEvent; }
-                set { this._lastEvent = value; }
+                get { return this._egressBytesTransferred; }
+                set { this._egressBytesTransferred = value; }
             }
             
             private long _ingressBytesTransferred;
@@ -696,18 +699,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
                 set { this._ingressBytesTransferred = value; }
             }
             
-            private long _egressBytesTransferred;
-            
-            /// <summary>
-            /// The number of bytes of data transferred out through this
-            /// connection since it was started
-            /// </summary>
-            public long EgressBytesTransferred
-            {
-                get { return this._egressBytesTransferred; }
-                set { this._egressBytesTransferred = value; }
-            }
-            
             private DateTime _lastConnectionEstablished;
             
             public DateTime LastConnectionEstablished
@@ -716,17 +707,26 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
                 set { this._lastConnectionEstablished = value; }
             }
             
-            private IList<string> _allocatedIPAddresses;
+            private GatewayEvent _lastEvent;
             
             /// <summary>
-            /// If LocalNetworkSiteName is defined as VPNClientConnection, this
-            /// element contains a list of IP addresses (represented as
-            /// strings) that are assigned to currently connected VPN clients.
+            /// A record of the last provisioning event for this connection.
             /// </summary>
-            public IList<string> AllocatedIPAddresses
+            public GatewayEvent LastEvent
             {
-                get { return this._allocatedIPAddresses; }
-                set { this._allocatedIPAddresses = value; }
+                get { return this._lastEvent; }
+                set { this._lastEvent = value; }
+            }
+            
+            private string _localNetworkSiteName;
+            
+            /// <summary>
+            /// The name of the local network site represented by the connection
+            /// </summary>
+            public string LocalNetworkSiteName
+            {
+                get { return this._localNetworkSiteName; }
+                set { this._localNetworkSiteName = value; }
             }
             
             /// <summary>
@@ -744,17 +744,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
     /// </summary>
     public partial class GatewayListSupportedDevicesResponse : OperationResponse
     {
-        private string _version;
-        
-        /// <summary>
-        /// The version for this device configuration list.
-        /// </summary>
-        public string Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
-        }
-        
         private IList<GatewayListSupportedDevicesResponse.Vendor> _vendors;
         
         /// <summary>
@@ -766,6 +755,17 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             set { this._vendors = value; }
         }
         
+        private string _version;
+        
+        /// <summary>
+        /// The version for this device configuration list.
+        /// </summary>
+        public string Version
+        {
+            get { return this._version; }
+            set { this._version = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// GatewayListSupportedDevicesResponse class.
@@ -775,15 +775,12 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             this._vendors = new List<GatewayListSupportedDevicesResponse.Vendor>();
         }
         
-        /// <summary>
-        /// The name and supported platforms for the vendor.
-        /// </summary>
-        public partial class Vendor
+        public partial class OSFamily
         {
             private string _name;
             
             /// <summary>
-            /// The vendor name
+            /// The name of the os family
             /// </summary>
             public string Name
             {
@@ -791,23 +788,11 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
                 set { this._name = value; }
             }
             
-            private IList<GatewayListSupportedDevicesResponse.Platform> _platforms;
-            
             /// <summary>
-            /// The supported platforms for the vendor.
+            /// Initializes a new instance of the OSFamily class.
             /// </summary>
-            public IList<GatewayListSupportedDevicesResponse.Platform> Platforms
+            public OSFamily()
             {
-                get { return this._platforms; }
-                set { this._platforms = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the Vendor class.
-            /// </summary>
-            public Vendor()
-            {
-                this._platforms = new List<GatewayListSupportedDevicesResponse.Platform>();
             }
         }
         
@@ -847,12 +832,15 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             }
         }
         
-        public partial class OSFamily
+        /// <summary>
+        /// The name and supported platforms for the vendor.
+        /// </summary>
+        public partial class Vendor
         {
             private string _name;
             
             /// <summary>
-            /// The name of the os family
+            /// The vendor name
             /// </summary>
             public string Name
             {
@@ -860,11 +848,23 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
                 set { this._name = value; }
             }
             
+            private IList<GatewayListSupportedDevicesResponse.Platform> _platforms;
+            
             /// <summary>
-            /// Initializes a new instance of the OSFamily class.
+            /// The supported platforms for the vendor.
             /// </summary>
-            public OSFamily()
+            public IList<GatewayListSupportedDevicesResponse.Platform> Platforms
             {
+                get { return this._platforms; }
+                set { this._platforms = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the Vendor class.
+            /// </summary>
+            public Vendor()
+            {
+                this._platforms = new List<GatewayListSupportedDevicesResponse.Platform>();
             }
         }
     }
@@ -1052,132 +1052,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             return this.GetEnumerator();
         }
         
-        /// <summary>
-        /// Contains the collections of parameters used to configure a virtual
-        /// network space that is dedicated to your subscription without
-        /// overlapping with other networks
-        /// </summary>
-        public partial class VirtualNetworkSite
-        {
-            private string _name;
-            
-            /// <summary>
-            /// Name of the virtual network site.
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private string _label;
-            
-            /// <summary>
-            /// The friendly identifier of the site.
-            /// </summary>
-            public string Label
-            {
-                get { return this._label; }
-                set { this._label = value; }
-            }
-            
-            private string _id;
-            
-            /// <summary>
-            /// A unique string identifier that represents the virtual network
-            /// site.
-            /// </summary>
-            public string Id
-            {
-                get { return this._id; }
-                set { this._id = value; }
-            }
-            
-            private string _affinityGroup;
-            
-            /// <summary>
-            /// An affinity group, which indirectly refers to the location
-            /// where the virtual network exists.
-            /// </summary>
-            public string AffinityGroup
-            {
-                get { return this._affinityGroup; }
-                set { this._affinityGroup = value; }
-            }
-            
-            private string _state;
-            
-            /// <summary>
-            /// Current status of the virtual network. (Created, Creating,
-            /// Updating, Deleting, Unavailable)
-            /// </summary>
-            public string State
-            {
-                get { return this._state; }
-                set { this._state = value; }
-            }
-            
-            private NetworkListResponse.AddressSpace _addressSpace;
-            
-            /// <summary>
-            /// The list of network address spaces for a virtual network site.
-            /// This represents the overall network space contained within the
-            /// virtual network site.
-            /// </summary>
-            public NetworkListResponse.AddressSpace AddressSpace
-            {
-                get { return this._addressSpace; }
-                set { this._addressSpace = value; }
-            }
-            
-            private IList<NetworkListResponse.Subnet> _subnets;
-            
-            /// <summary>
-            /// The list of network subnets for a virtual network site. All
-            /// network subnets must be contained within the overall virtual
-            /// network address spaces.
-            /// </summary>
-            public IList<NetworkListResponse.Subnet> Subnets
-            {
-                get { return this._subnets; }
-                set { this._subnets = value; }
-            }
-            
-            private IList<NetworkListResponse.DnsServer> _dnsServers;
-            
-            /// <summary>
-            /// The list of on DNS Servers associated with the virtual network
-            /// site.
-            /// </summary>
-            public IList<NetworkListResponse.DnsServer> DnsServers
-            {
-                get { return this._dnsServers; }
-                set { this._dnsServers = value; }
-            }
-            
-            private NetworkListResponse.Gateway _gateway;
-            
-            /// <summary>
-            /// Gateway that contains a list of Local Network Sites which
-            /// enables the Virtual network site to communicate with a
-            /// customer’s on premise networks.
-            /// </summary>
-            public NetworkListResponse.Gateway Gateway
-            {
-                get { return this._gateway; }
-                set { this._gateway = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the VirtualNetworkSite class.
-            /// </summary>
-            public VirtualNetworkSite()
-            {
-                this._subnets = new List<NetworkListResponse.Subnet>();
-                this._dnsServers = new List<NetworkListResponse.DnsServer>();
-            }
-        }
-        
         public partial class AddressSpace
         {
             private IList<string> _addressPrefixes;
@@ -1200,52 +1074,31 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             }
         }
         
-        public partial class Subnet
+        /// <summary>
+        /// Specifies the type of connection of the local network site. The
+        /// value of this element can be either IPsec or Dedicated. The
+        /// default value is IPsec.
+        /// </summary>
+        public partial class Connection
         {
-            private string _name;
+            private LocalNetworkConnectionType _type;
             
-            /// <summary>
-            /// Name for the subnet
-            /// </summary>
-            public string Name
+            public LocalNetworkConnectionType Type
             {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private string _addressPrefix;
-            
-            /// <summary>
-            /// Represents an address space, in CIDR format that defines the
-            /// subnet
-            /// </summary>
-            public string AddressPrefix
-            {
-                get { return this._addressPrefix; }
-                set { this._addressPrefix = value; }
+                get { return this._type; }
+                set { this._type = value; }
             }
             
             /// <summary>
-            /// Initializes a new instance of the Subnet class.
+            /// Initializes a new instance of the Connection class.
             /// </summary>
-            public Subnet()
+            public Connection()
             {
             }
         }
         
         public partial class DnsServer
         {
-            private string _name;
-            
-            /// <summary>
-            /// The name of the DNS server
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
             private string _address;
             
             /// <summary>
@@ -1255,6 +1108,17 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             {
                 get { return this._address; }
                 set { this._address = value; }
+            }
+            
+            private string _name;
+            
+            /// <summary>
+            /// The name of the DNS server
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
             }
             
             /// <summary>
@@ -1321,28 +1185,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         /// </summary>
         public partial class LocalNetworkSite
         {
-            private string _name;
-            
-            /// <summary>
-            /// The name of the local network site
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private string _vpnGatewayAddress;
-            
-            /// <summary>
-            /// The IPv4 address of the local network site
-            /// </summary>
-            public string VpnGatewayAddress
-            {
-                get { return this._vpnGatewayAddress; }
-                set { this._vpnGatewayAddress = value; }
-            }
-            
             private NetworkListResponse.AddressSpace _addressSpace;
             
             /// <summary>
@@ -1365,6 +1207,28 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
                 set { this._connections = value; }
             }
             
+            private string _name;
+            
+            /// <summary>
+            /// The name of the local network site
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
+            private string _vpnGatewayAddress;
+            
+            /// <summary>
+            /// The IPv4 address of the local network site
+            /// </summary>
+            public string VpnGatewayAddress
+            {
+                get { return this._vpnGatewayAddress; }
+                set { this._vpnGatewayAddress = value; }
+            }
+            
             /// <summary>
             /// Initializes a new instance of the LocalNetworkSite class.
             /// </summary>
@@ -1374,26 +1238,162 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             }
         }
         
-        /// <summary>
-        /// Specifies the type of connection of the local network site. The
-        /// value of this element can be either IPsec or Dedicated. The
-        /// default value is IPsec.
-        /// </summary>
-        public partial class Connection
+        public partial class Subnet
         {
-            private LocalNetworkConnectionType _type;
+            private string _addressPrefix;
             
-            public LocalNetworkConnectionType Type
+            /// <summary>
+            /// Represents an address space, in CIDR format that defines the
+            /// subnet
+            /// </summary>
+            public string AddressPrefix
             {
-                get { return this._type; }
-                set { this._type = value; }
+                get { return this._addressPrefix; }
+                set { this._addressPrefix = value; }
+            }
+            
+            private string _name;
+            
+            /// <summary>
+            /// Name for the subnet
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
             }
             
             /// <summary>
-            /// Initializes a new instance of the Connection class.
+            /// Initializes a new instance of the Subnet class.
             /// </summary>
-            public Connection()
+            public Subnet()
             {
+            }
+        }
+        
+        /// <summary>
+        /// Contains the collections of parameters used to configure a virtual
+        /// network space that is dedicated to your subscription without
+        /// overlapping with other networks
+        /// </summary>
+        public partial class VirtualNetworkSite
+        {
+            private NetworkListResponse.AddressSpace _addressSpace;
+            
+            /// <summary>
+            /// The list of network address spaces for a virtual network site.
+            /// This represents the overall network space contained within the
+            /// virtual network site.
+            /// </summary>
+            public NetworkListResponse.AddressSpace AddressSpace
+            {
+                get { return this._addressSpace; }
+                set { this._addressSpace = value; }
+            }
+            
+            private string _affinityGroup;
+            
+            /// <summary>
+            /// An affinity group, which indirectly refers to the location
+            /// where the virtual network exists.
+            /// </summary>
+            public string AffinityGroup
+            {
+                get { return this._affinityGroup; }
+                set { this._affinityGroup = value; }
+            }
+            
+            private IList<NetworkListResponse.DnsServer> _dnsServers;
+            
+            /// <summary>
+            /// The list of on DNS Servers associated with the virtual network
+            /// site.
+            /// </summary>
+            public IList<NetworkListResponse.DnsServer> DnsServers
+            {
+                get { return this._dnsServers; }
+                set { this._dnsServers = value; }
+            }
+            
+            private NetworkListResponse.Gateway _gateway;
+            
+            /// <summary>
+            /// Gateway that contains a list of Local Network Sites which
+            /// enables the Virtual network site to communicate with a
+            /// customer’s on premise networks.
+            /// </summary>
+            public NetworkListResponse.Gateway Gateway
+            {
+                get { return this._gateway; }
+                set { this._gateway = value; }
+            }
+            
+            private string _id;
+            
+            /// <summary>
+            /// A unique string identifier that represents the virtual network
+            /// site.
+            /// </summary>
+            public string Id
+            {
+                get { return this._id; }
+                set { this._id = value; }
+            }
+            
+            private string _label;
+            
+            /// <summary>
+            /// The friendly identifier of the site.
+            /// </summary>
+            public string Label
+            {
+                get { return this._label; }
+                set { this._label = value; }
+            }
+            
+            private string _name;
+            
+            /// <summary>
+            /// Name of the virtual network site.
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
+            private string _state;
+            
+            /// <summary>
+            /// Current status of the virtual network. (Created, Creating,
+            /// Updating, Deleting, Unavailable)
+            /// </summary>
+            public string State
+            {
+                get { return this._state; }
+                set { this._state = value; }
+            }
+            
+            private IList<NetworkListResponse.Subnet> _subnets;
+            
+            /// <summary>
+            /// The list of network subnets for a virtual network site. All
+            /// network subnets must be contained within the overall virtual
+            /// network address spaces.
+            /// </summary>
+            public IList<NetworkListResponse.Subnet> Subnets
+            {
+                get { return this._subnets; }
+                set { this._subnets = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the VirtualNetworkSite class.
+            /// </summary>
+            public VirtualNetworkSite()
+            {
+                this._dnsServers = new List<NetworkListResponse.DnsServer>();
+                this._subnets = new List<NetworkListResponse.Subnet>();
             }
         }
         
@@ -1482,6 +1482,30 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
     /// </summary>
     public partial class VirtualNetworkOperationStatusResponse : OperationResponse
     {
+        private VirtualNetworkOperationStatusResponse.ErrorDetails _error;
+        
+        /// <summary>
+        /// If the asynchronous operation failed, the response body includes
+        /// the HTTP status code for the failed request, and also includes
+        /// error information regarding the failure.
+        /// </summary>
+        public VirtualNetworkOperationStatusResponse.ErrorDetails Error
+        {
+            get { return this._error; }
+            set { this._error = value; }
+        }
+        
+        private HttpStatusCode _httpStatusCode;
+        
+        /// <summary>
+        /// The HTTP status code for the asynchronous request.
+        /// </summary>
+        public HttpStatusCode HttpStatusCode
+        {
+            get { return this._httpStatusCode; }
+            set { this._httpStatusCode = value; }
+        }
+        
         private string _id;
         
         /// <summary>
@@ -1503,30 +1527,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         {
             get { return this._status; }
             set { this._status = value; }
-        }
-        
-        private HttpStatusCode _httpStatusCode;
-        
-        /// <summary>
-        /// The HTTP status code for the asynchronous request.
-        /// </summary>
-        public HttpStatusCode HttpStatusCode
-        {
-            get { return this._httpStatusCode; }
-            set { this._httpStatusCode = value; }
-        }
-        
-        private VirtualNetworkOperationStatusResponse.ErrorDetails _error;
-        
-        /// <summary>
-        /// If the asynchronous operation failed, the response body includes
-        /// the HTTP status code for the failed request, and also includes
-        /// error information regarding the failure.
-        /// </summary>
-        public VirtualNetworkOperationStatusResponse.ErrorDetails Error
-        {
-            get { return this._error; }
-            set { this._error = value; }
         }
         
         /// <summary>
@@ -1602,6 +1602,14 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
     public partial interface IVirtualNetworkManagementClient
     {
         /// <summary>
+        /// The URI used as the base for all SQL requests.
+        /// </summary>
+        Uri BaseUri
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// When you create a Windows Azure subscription, it is uniquely
         /// identified by a subscription ID. The subscription ID forms part of
         /// the URI for every call that you make to the Service Management
@@ -1611,14 +1619,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// are allowed.
         /// </summary>
         SubscriptionCloudCredentials Credentials
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// The URI used as the base for all SQL requests.
-        /// </summary>
-        Uri BaseUri
         {
             get; 
         }
@@ -1762,6 +1762,16 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
     /// </summary>
     public partial class VirtualNetworkManagementClient : ServiceClient<VirtualNetworkManagementClient>, IVirtualNetworkManagementClient
     {
+        private Uri _baseUri;
+        
+        /// <summary>
+        /// The URI used as the base for all SQL requests.
+        /// </summary>
+        public Uri BaseUri
+        {
+            get { return this._baseUri; }
+        }
+        
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
@@ -1776,16 +1786,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
-        }
-        
-        private Uri _baseUri;
-        
-        /// <summary>
-        /// The URI used as the base for all SQL requests.
-        /// </summary>
-        public Uri BaseUri
-        {
-            get { return this._baseUri; }
         }
         
         private IClientRootCertificateOperations _clientRootCertificates;
@@ -2100,6 +2100,28 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
     public partial interface IClientRootCertificateOperations
     {
         /// <summary>
+        /// The Upload Client Root Certificate operation is used to upload a
+        /// new client root certificate to Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Upload client certificate Virtual
+        /// Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> CreateAsync(string virtualNetworkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Delete Client Root Certificate operation deletes a previously
         /// uploaded client root certificate. from Windows Azure  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205128.aspx
@@ -2159,13 +2181,20 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// The response to the list client root certificates request
         /// </returns>
         Task<ClientRootCertificateListResponse> ListAsync(string virtualNetworkName, CancellationToken cancellationToken);
-        
+    }
+    
+    public static partial class ClientRootCertificateOperationsExtensions
+    {
         /// <summary>
         /// The Upload Client Root Certificate operation is used to upload a
         /// new client root certificate to Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
         /// for more information)
         /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IClientRootCertificateOperations.
+        /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway
         /// </param>
@@ -2173,18 +2202,55 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Parameters supplied to the Upload client certificate Virtual
         /// Network Gateway operation.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse Create(this IClientRootCertificateOperations operations, string virtualNetworkName, ClientRootCertificateCreateParameters parameters)
+        {
+            try
+            {
+                return operations.CreateAsync(virtualNetworkName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Upload Client Root Certificate operation is used to upload a
+        /// new client root certificate to Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IClientRootCertificateOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Upload client certificate Virtual
+        /// Network Gateway operation.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayOperationResponse> CreateAsync(string virtualNetworkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken);
-    }
-    
-    public static partial class ClientRootCertificateOperationsExtensions
-    {
+        public static Task<GatewayOperationResponse> CreateAsync(this IClientRootCertificateOperations operations, string virtualNetworkName, ClientRootCertificateCreateParameters parameters)
+        {
+            return operations.CreateAsync(virtualNetworkName, parameters, CancellationToken.None);
+        }
+        
         /// <summary>
         /// The Delete Client Root Certificate operation deletes a previously
         /// uploaded client root certificate. from Windows Azure  (see
@@ -2372,72 +2438,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         {
             return operations.ListAsync(virtualNetworkName, CancellationToken.None);
         }
-        
-        /// <summary>
-        /// The Upload Client Root Certificate operation is used to upload a
-        /// new client root certificate to Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IClientRootCertificateOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Upload client certificate Virtual
-        /// Network Gateway operation.
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static GatewayOperationResponse Create(this IClientRootCertificateOperations operations, string virtualNetworkName, ClientRootCertificateCreateParameters parameters)
-        {
-            try
-            {
-                return operations.CreateAsync(virtualNetworkName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Upload Client Root Certificate operation is used to upload a
-        /// new client root certificate to Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IClientRootCertificateOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Upload client certificate Virtual
-        /// Network Gateway operation.
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<GatewayOperationResponse> CreateAsync(this IClientRootCertificateOperations operations, string virtualNetworkName, ClientRootCertificateCreateParameters parameters)
-        {
-            return operations.CreateAsync(virtualNetworkName, parameters, CancellationToken.None);
-        }
     }
     
     internal partial class ClientRootCertificateOperations : IServiceOperations<VirtualNetworkManagementClient>, IClientRootCertificateOperations
@@ -2463,6 +2463,151 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         public VirtualNetworkManagementClient Client
         {
             get { return this._client; }
+        }
+        
+        /// <summary>
+        /// The Upload Client Root Certificate operation is used to upload a
+        /// new client root certificate to Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Upload client certificate Virtual
+        /// Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> CreateAsync(string virtualNetworkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException("virtualNetworkName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Certificate == null)
+            {
+                throw new ArgumentNullException("parameters.Certificate");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                requestContent = parameters.Certificate;
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = new GatewayOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                    if (gatewayOperationAsyncResponseElement != null)
+                    {
+                        XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                        if (idElement != null)
+                        {
+                            string idInstance = idElement.Value;
+                            result.OperationId = idInstance;
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
         }
         
         /// <summary>
@@ -2868,151 +3013,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 }
             }
         }
-        
-        /// <summary>
-        /// The Upload Client Root Certificate operation is used to upload a
-        /// new client root certificate to Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Upload client certificate Virtual
-        /// Network Gateway operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<GatewayOperationResponse> CreateAsync(string virtualNetworkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException("virtualNetworkName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Certificate == null)
-            {
-                throw new ArgumentNullException("parameters.Certificate");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                requestContent = parameters.Certificate;
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    GatewayOperationResponse result = new GatewayOperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
-                    {
-                        XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
-                        {
-                            string idInstance = idElement.Value;
-                            result.OperationId = idInstance;
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
     }
     
     public partial interface IGatewayOperations
@@ -3042,6 +3042,91 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// request ID.
         /// </returns>
         Task<GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Create Virtual network Gateway operation creates a new network
+        /// gateways account in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginCreatingAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Delete Virtual network Gateway operation deletes a network
+        /// gateway for the specified virtual network in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginDeletingAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Failover Virtual network Gateway operation causes a network
+        /// gateway failover for the specified virtual network in Windows
+        /// Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network in Azure.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginFailoverAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Reset Virtual network Gateway shared key operation resets the
+        /// shared key on the virtual network gateway for the specified
+        /// vitrual network connection to the specified local network in
+        /// Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// The name of the local network
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to the Virtual Network Gateway Reset Shared Key
+        /// request
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// To connect to, disconnect from, or test your connection to a local
@@ -3092,27 +3177,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<GatewayOperationResponse> BeginCreatingAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The Create Virtual network Gateway operation creates a new network
-        /// gateways account in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -3138,24 +3202,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<GatewayOperationResponse> BeginDeletingAsync(string virtualNetworkName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The Delete Virtual network Gateway operation deletes a network
-        /// gateway for the specified virtual network in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -3167,25 +3213,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// information regarding the failure.
         /// </returns>
         Task<GatewayGetOperationStatusResponse> DeleteAsync(string virtualNetworkName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The Failover Virtual network Gateway operation causes a network
-        /// gateway failover for the specified virtual network in Windows
-        /// Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network in Azure.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<GatewayOperationResponse> BeginFailoverAsync(string virtualNetworkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Failover Virtual network Gateway operation causes a network
@@ -3377,33 +3404,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The Reset Virtual network Gateway shared key operation resets the
-        /// shared key on the virtual network gateway for the specified
-        /// vitrual network connection to the specified local network in
-        /// Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='localNetworkName'>
-        /// The name of the local network
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters to the Virtual Network Gateway Reset Shared Key
-        /// request
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -3491,6 +3491,264 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         public static Task<GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(this IGatewayOperations operations, string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters)
         {
             return operations.BeginConnectDisconnectOrTestingAsync(virtualNetworkName, localNetworkSiteName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Create Virtual network Gateway operation creates a new network
+        /// gateways account in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginCreating(this IGatewayOperations operations, string virtualNetworkName, GatewayCreateParameters parameters)
+        {
+            try
+            {
+                return operations.BeginCreatingAsync(virtualNetworkName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Create Virtual network Gateway operation creates a new network
+        /// gateways account in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginCreatingAsync(this IGatewayOperations operations, string virtualNetworkName, GatewayCreateParameters parameters)
+        {
+            return operations.BeginCreatingAsync(virtualNetworkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Delete Virtual network Gateway operation deletes a network
+        /// gateway for the specified virtual network in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginDeleting(this IGatewayOperations operations, string virtualNetworkName)
+        {
+            try
+            {
+                return operations.BeginDeletingAsync(virtualNetworkName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Delete Virtual network Gateway operation deletes a network
+        /// gateway for the specified virtual network in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginDeletingAsync(this IGatewayOperations operations, string virtualNetworkName)
+        {
+            return operations.BeginDeletingAsync(virtualNetworkName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Failover Virtual network Gateway operation causes a network
+        /// gateway failover for the specified virtual network in Windows
+        /// Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network in Azure.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginFailover(this IGatewayOperations operations, string virtualNetworkName)
+        {
+            try
+            {
+                return operations.BeginFailoverAsync(virtualNetworkName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Failover Virtual network Gateway operation causes a network
+        /// gateway failover for the specified virtual network in Windows
+        /// Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network in Azure.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginFailoverAsync(this IGatewayOperations operations, string virtualNetworkName)
+        {
+            return operations.BeginFailoverAsync(virtualNetworkName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Reset Virtual network Gateway shared key operation resets the
+        /// shared key on the virtual network gateway for the specified
+        /// vitrual network connection to the specified local network in
+        /// Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// The name of the local network
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to the Virtual Network Gateway Reset Shared Key
+        /// request
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginResetSharedKey(this IGatewayOperations operations, string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
+        {
+            try
+            {
+                return operations.BeginResetSharedKeyAsync(virtualNetworkName, localNetworkName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Reset Virtual network Gateway shared key operation resets the
+        /// shared key on the virtual network gateway for the specified
+        /// vitrual network connection to the specified local network in
+        /// Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// The name of the local network
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to the Virtual Network Gateway Reset Shared Key
+        /// request
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginResetSharedKeyAsync(this IGatewayOperations operations, string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
+        {
+            return operations.BeginResetSharedKeyAsync(virtualNetworkName, localNetworkName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -3598,70 +3856,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Parameters supplied to the Create Virtual Network Gateway operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static GatewayOperationResponse BeginCreating(this IGatewayOperations operations, string virtualNetworkName, GatewayCreateParameters parameters)
-        {
-            try
-            {
-                return operations.BeginCreatingAsync(virtualNetworkName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Create Virtual network Gateway operation creates a new network
-        /// gateways account in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<GatewayOperationResponse> BeginCreatingAsync(this IGatewayOperations operations, string virtualNetworkName, GatewayCreateParameters parameters)
-        {
-            return operations.BeginCreatingAsync(virtualNetworkName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The Create Virtual network Gateway operation creates a new network
-        /// gateways account in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -3737,64 +3931,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// The name of the virtual network.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static GatewayOperationResponse BeginDeleting(this IGatewayOperations operations, string virtualNetworkName)
-        {
-            try
-            {
-                return operations.BeginDeletingAsync(virtualNetworkName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Delete Virtual network Gateway operation deletes a network
-        /// gateway for the specified virtual network in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network.
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<GatewayOperationResponse> BeginDeletingAsync(this IGatewayOperations operations, string virtualNetworkName)
-        {
-            return operations.BeginDeletingAsync(virtualNetworkName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The Delete Virtual network Gateway operation deletes a network
-        /// gateway for the specified virtual network in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network.
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -3851,66 +3987,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         public static Task<GatewayGetOperationStatusResponse> DeleteAsync(this IGatewayOperations operations, string virtualNetworkName)
         {
             return operations.DeleteAsync(virtualNetworkName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The Failover Virtual network Gateway operation causes a network
-        /// gateway failover for the specified virtual network in Windows
-        /// Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network in Azure.
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static GatewayOperationResponse BeginFailover(this IGatewayOperations operations, string virtualNetworkName)
-        {
-            try
-            {
-                return operations.BeginFailoverAsync(virtualNetworkName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Failover Virtual network Gateway operation causes a network
-        /// gateway failover for the specified virtual network in Windows
-        /// Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network in Azure.
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<GatewayOperationResponse> BeginFailoverAsync(this IGatewayOperations operations, string virtualNetworkName)
-        {
-            return operations.BeginFailoverAsync(virtualNetworkName, CancellationToken.None);
         }
         
         /// <summary>
@@ -4448,82 +4524,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// request
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static GatewayOperationResponse BeginResetSharedKey(this IGatewayOperations operations, string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
-        {
-            try
-            {
-                return operations.BeginResetSharedKeyAsync(virtualNetworkName, localNetworkName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Reset Virtual network Gateway shared key operation resets the
-        /// shared key on the virtual network gateway for the specified
-        /// vitrual network connection to the specified local network in
-        /// Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='localNetworkName'>
-        /// The name of the local network
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters to the Virtual Network Gateway Reset Shared Key
-        /// request
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<GatewayOperationResponse> BeginResetSharedKeyAsync(this IGatewayOperations operations, string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
-        {
-            return operations.BeginResetSharedKeyAsync(virtualNetworkName, localNetworkName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The Reset Virtual network Gateway shared key operation resets the
-        /// shared key on the virtual network gateway for the specified
-        /// vitrual network connection to the specified local network in
-        /// Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
-        /// </param>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='localNetworkName'>
-        /// The name of the local network
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters to the Virtual Network Gateway Reset Shared Key
-        /// request
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -4783,88 +4783,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         }
         
         /// <summary>
-        /// To connect to, disconnect from, or test your connection to a local
-        /// network site, access the connection resource representing the
-        /// local network and specify Connect, Disconnect or Test to perform
-        /// the desired operation.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154107.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='localNetworkSiteName'>
-        /// The name of the site to connect to
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        public async Task<GatewayGetOperationStatusResponse> ConnectDisconnectOrTestAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
-        {
-            VirtualNetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
-                tracingParameters.Add("localNetworkSiteName", localNetworkSiteName);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ConnectDisconnectOrTestAsync", tracingParameters);
-            }
-            try
-            {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse originalResponse = await client.Gateways.BeginConnectDisconnectOrTestingAsync(virtualNetworkName, localNetworkSiteName, parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                while (result.Status == GatewayOperationStatus.InProgress)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
-            }
-            finally
-            {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
         /// The Create Virtual network Gateway operation creates a new network
         /// gateways account in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
@@ -5014,82 +4932,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         }
         
         /// <summary>
-        /// The Create Virtual network Gateway operation creates a new network
-        /// gateways account in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        public async Task<GatewayGetOperationStatusResponse> CreateAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
-        {
-            VirtualNetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
-            }
-            try
-            {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse originalResponse = await client.Gateways.BeginCreatingAsync(virtualNetworkName, parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                while (result.Status == GatewayOperationStatus.InProgress)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
-            }
-            finally
-            {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
         /// The Delete Virtual network Gateway operation deletes a network
         /// gateway for the specified virtual network in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
@@ -5211,78 +5053,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 if (httpRequest != null)
                 {
                     httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Delete Virtual network Gateway operation deletes a network
-        /// gateway for the specified virtual network in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        public async Task<GatewayGetOperationStatusResponse> DeleteAsync(string virtualNetworkName, CancellationToken cancellationToken)
-        {
-            VirtualNetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
-            }
-            try
-            {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse originalResponse = await client.Gateways.BeginDeletingAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                while (result.Status == GatewayOperationStatus.InProgress)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
-            }
-            finally
-            {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
                 }
             }
         }
@@ -5421,6 +5191,432 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         }
         
         /// <summary>
+        /// The Reset Virtual network Gateway shared key operation resets the
+        /// shared key on the virtual network gateway for the specified
+        /// vitrual network connection to the specified local network in
+        /// Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// The name of the local network
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to the Virtual Network Gateway Reset Shared Key
+        /// request
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (virtualNetworkName == null)
+            {
+                throw new ArgumentNullException("virtualNetworkName");
+            }
+            if (localNetworkName == null)
+            {
+                throw new ArgumentNullException("localNetworkName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("localNetworkName", localNetworkName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "BeginResetSharedKeyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement resetSharedKeyElement = new XElement(XName.Get("ResetSharedKey", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(resetSharedKeyElement);
+                
+                XElement keyLengthElement = new XElement(XName.Get("KeyLength", "http://schemas.microsoft.com/windowsazure"));
+                keyLengthElement.Value = parameters.KeyLength.ToString();
+                resetSharedKeyElement.Add(keyLengthElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayOperationResponse result = new GatewayOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
+                    if (gatewayOperationAsyncResponseElement != null)
+                    {
+                        XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                        if (idElement != null)
+                        {
+                            string idInstance = idElement.Value;
+                            result.OperationId = idInstance;
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// To connect to, disconnect from, or test your connection to a local
+        /// network site, access the connection resource representing the
+        /// local network and specify Connect, Disconnect or Test to perform
+        /// the desired operation.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154107.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='localNetworkSiteName'>
+        /// The name of the site to connect to
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> ConnectDisconnectOrTestAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
+        {
+            VirtualNetworkManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("localNetworkSiteName", localNetworkSiteName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "ConnectDisconnectOrTestAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                GatewayOperationResponse response = await client.Gateways.BeginConnectDisconnectOrTestingAsync(virtualNetworkName, localNetworkSiteName, parameters, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                while ((result.Status != GatewayOperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != GatewayOperationStatus.Successful)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Create Virtual network Gateway operation creates a new network
+        /// gateways account in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network for this gateway
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> CreateAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            VirtualNetworkManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                GatewayOperationResponse response = await client.Gateways.BeginCreatingAsync(virtualNetworkName, parameters, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                while ((result.Status != GatewayOperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != GatewayOperationStatus.Successful)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Delete Virtual network Gateway operation deletes a network
+        /// gateway for the specified virtual network in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<GatewayGetOperationStatusResponse> DeleteAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        {
+            VirtualNetworkManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                GatewayOperationResponse response = await client.Gateways.BeginDeletingAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                while ((result.Status != GatewayOperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != GatewayOperationStatus.Successful)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Failover Virtual network Gateway operation causes a network
         /// gateway failover for the specified virtual network in Windows
         /// Azure.  (see
@@ -5464,22 +5660,34 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse originalResponse = await client.Gateways.BeginFailoverAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+                GatewayOperationResponse response = await client.Gateways.BeginFailoverAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
+                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while (result.Status == GatewayOperationStatus.InProgress)
+                while ((result.Status != GatewayOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                     cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
+                    result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
                 }
                 
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != GatewayOperationStatus.Successful)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -6633,166 +6841,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException("virtualNetworkName");
-            }
-            if (localNetworkName == null)
-            {
-                throw new ArgumentNullException("localNetworkName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
-                tracingParameters.Add("localNetworkName", localNetworkName);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginResetSharedKeyAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                XDocument requestDoc = new XDocument();
-                
-                XElement resetSharedKeyElement = new XElement(XName.Get("ResetSharedKey", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(resetSharedKeyElement);
-                
-                XElement keyLengthElement = new XElement(XName.Get("KeyLength", "http://schemas.microsoft.com/windowsazure"));
-                keyLengthElement.Value = parameters.KeyLength.ToString();
-                resetSharedKeyElement.Add(keyLengthElement);
-                
-                requestContent = requestDoc.ToString();
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    GatewayOperationResponse result = new GatewayOperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
-                    {
-                        XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
-                        {
-                            string idInstance = idElement.Value;
-                            result.OperationId = idInstance;
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Reset Virtual network Gateway shared key operation resets the
-        /// shared key on the virtual network gateway for the specified
-        /// vitrual network connection to the specified local network in
-        /// Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
-        /// </param>
-        /// <param name='localNetworkName'>
-        /// The name of the local network
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters to the Virtual Network Gateway Reset Shared Key
-        /// request
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -6825,22 +6873,34 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse originalResponse = await client.Gateways.BeginResetSharedKeyAsync(virtualNetworkName, localNetworkName, parameters, cancellationToken).ConfigureAwait(false);
+                GatewayOperationResponse response = await client.Gateways.BeginResetSharedKeyAsync(virtualNetworkName, localNetworkName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
+                GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while (result.Status == GatewayOperationStatus.InProgress)
+                while ((result.Status != GatewayOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                     cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.Gateways.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
+                    result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
                 }
                 
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != GatewayOperationStatus.Successful)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -6857,6 +6917,24 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
     
     public partial interface INetworkOperations
     {
+        /// <summary>
+        /// The Set Network Configuration operation asynchronously configures
+        /// the virtual network  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='parameters'>
+        /// The updated network configuration
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken);
+        
         /// <summary>
         /// The Get Network Configuration operation retrieves the network
         /// configuration file for the given subscription.  (see
@@ -6898,24 +6976,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='parameters'>
-        /// The updated network configuration
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -6931,6 +6991,64 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
     
     public static partial class NetworkOperationsExtensions
     {
+        /// <summary>
+        /// The Set Network Configuration operation asynchronously configures
+        /// the virtual network  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// The updated network configuration
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginSettingConfiguration(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
+        {
+            try
+            {
+                return operations.BeginSettingConfigurationAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Set Network Configuration operation asynchronously configures
+        /// the virtual network  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// The updated network configuration
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginSettingConfigurationAsync(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
+        {
+            return operations.BeginSettingConfigurationAsync(parameters, CancellationToken.None);
+        }
+        
         /// <summary>
         /// The Get Network Configuration operation retrieves the network
         /// configuration file for the given subscription.  (see
@@ -7045,64 +7163,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// The updated network configuration
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse BeginSettingConfiguration(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
-        {
-            try
-            {
-                return operations.BeginSettingConfigurationAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// The updated network configuration
-        /// </param>
-        /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> BeginSettingConfigurationAsync(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
-        {
-            return operations.BeginSettingConfigurationAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// The updated network configuration
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -7184,6 +7244,126 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         public VirtualNetworkManagementClient Client
         {
             get { return this._client; }
+        }
+        
+        /// <summary>
+        /// The Set Network Configuration operation asynchronously configures
+        /// the virtual network  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='parameters'>
+        /// The updated network configuration
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Configuration == null)
+            {
+                throw new ArgumentNullException("parameters.Configuration");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "BeginSettingConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/media";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                requestContent = parameters.Configuration;
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
         }
         
         /// <summary>
@@ -7607,126 +7787,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Configuration == null)
-            {
-                throw new ArgumentNullException("parameters.Configuration");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginSettingConfigurationAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/media";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                requestContent = parameters.Configuration;
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='parameters'>
-        /// The updated network configuration
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
@@ -7757,22 +7817,34 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse originalResponse = await client.Networks.BeginSettingConfigurationAsync(parameters, cancellationToken).ConfigureAwait(false);
+                OperationResponse response = await client.Networks.BeginSettingConfigurationAsync(parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                VirtualNetworkOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.RequestId, cancellationToken).ConfigureAwait(false);
+                VirtualNetworkOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while (result.Status == OperationStatus.InProgress)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                     cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(originalResponse.RequestId, cancellationToken).ConfigureAwait(false);
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
                 }
                 
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
