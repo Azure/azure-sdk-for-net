@@ -26,6 +26,7 @@ At this time, applications looking to use the Windows Azure Management Libraries
         <dependency id="Microsoft.WindowsAzure.Management.Storage" version="__VERSION_Microsoft.WindowsAzure.Management.Storage__" />
         <dependency id="Microsoft.WindowsAzure.Management.VirtualNetworks" version="__VERSION_Microsoft.WindowsAzure.Management.VirtualNetworks__" />
         <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="__VERSION_Microsoft.WindowsAzure.Management.WebSites__" />
+        <dependency id="Microsoft.WindowsAzure.Management.Scheduler" version="__VERSION_Microsoft.WindowsAzure.Management.Scheduler__" />
       </group>
     </dependencies>
   </metadata>
