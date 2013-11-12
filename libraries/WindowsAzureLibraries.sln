@@ -45,6 +45,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget specifications", "nug
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerManagement", "src\SchedulerManagement\SchedulerManagement.csproj", "{A3FD3224-3058-48CC-961F-E89D5DCB028D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tracing.Log4Net", "src\Common.Tracing.Log4Net\Common.Tracing.Log4Net.csproj", "{342C3DD0-AC8C-4E42-B459-EBAA3F7F519C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{342C3DD0-AC8C-4E42-B459-EBAA3F7F519C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{342C3DD0-AC8C-4E42-B459-EBAA3F7F519C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{342C3DD0-AC8C-4E42-B459-EBAA3F7F519C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{342C3DD0-AC8C-4E42-B459-EBAA3F7F519C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +102,6 @@ Global
 		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{342C3DD0-AC8C-4E42-B459-EBAA3F7F519C} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 EndGlobal
