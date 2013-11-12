@@ -36,6 +36,407 @@ using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
+namespace Microsoft.WindowsAzure.Management.WebSites
+{
+    /// <summary>
+    /// In addition to standard HTTP status codes, the Windows Azure Web Sites
+    /// Management REST API returns extended error codes and error messages.
+    /// The extended codes do not replace the standard HTTP status codes, but
+    /// provide additional, actionable information that can be used in
+    /// conjunction with the standard HTTP status codes. For example, an HTTP
+    /// 404 error can occur for numerous reasons, so having the additional
+    /// information in the extended message can assist with problem
+    /// resolution. (For more information on the standard HTTP codes returned
+    /// by the REST API, see Service Management Status and Error Codes.)  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166968.aspx for
+    /// more information)
+    /// </summary>
+    public static partial class WebSiteExtendedErrorCodes
+    {
+        /// <summary>
+        /// Access is denied.
+        /// </summary>
+        public const string AccessDenied = "01001";
+        
+        /// <summary>
+        /// Command resource object is not present in the request body.
+        /// </summary>
+        public const string CommandResourceNotPresent = "01002";
+        
+        /// <summary>
+        /// Invalid name {0}.
+        /// </summary>
+        public const string InvalidName = "01003";
+        
+        /// <summary>
+        /// Cannot understand command verb {0}.
+        /// </summary>
+        public const string UnknownCommandVerb = "01004";
+        
+        /// <summary>
+        /// The service is currently in read only mode.
+        /// </summary>
+        public const string IsInReadOnlyMode = "01005";
+        
+        /// <summary>
+        /// The {0} parameter is not specified.
+        /// </summary>
+        public const string ParameterIsNotSpecified = "01006";
+        
+        /// <summary>
+        /// Parameter {0} has invalid value.
+        /// </summary>
+        public const string InvalidParameterValue = "01007";
+        
+        /// <summary>
+        /// {0} object is not present in the request body.
+        /// </summary>
+        public const string InvalidRequest = "01008";
+        
+        /// <summary>
+        /// The from value in the query string is bigger than or equal to the
+        /// to value.
+        /// </summary>
+        public const string IncorrectDateTimeRange = "01009";
+        
+        /// <summary>
+        /// Required parameter {0} is missing.
+        /// </summary>
+        public const string RequiredParameterMissing = "01010";
+        
+        /// <summary>
+        /// Name of the web quota cannot change.
+        /// </summary>
+        public const string ResourceNameCannotChange = "01011";
+        
+        /// <summary>
+        /// The value of the query string parameter cannot be converted to
+        /// Boolean.
+        /// </summary>
+        public const string FailedToConvertParameterValue = "01012";
+        
+        /// <summary>
+        /// Parameter with name {0} already exists in the request.
+        /// </summary>
+        public const string ParameterNameAlreadyExists = "01013";
+        
+        /// <summary>
+        /// Parameter name cannot be empty.
+        /// </summary>
+        public const string ParameterNameIsEmpty = "01014";
+        
+        /// <summary>
+        /// Not ready
+        /// </summary>
+        public const string NotReady = "01015";
+        
+        /// <summary>
+        /// Ready
+        /// </summary>
+        public const string Ready = "01016";
+        
+        /// <summary>
+        /// Update is not allowed for the {0} field.
+        /// </summary>
+        public const string UpdateForFieldNotAllowed = "01017";
+        
+        /// <summary>
+        /// Web Service does not support Command {0}. Only supported command(s)
+        /// is {1}.
+        /// </summary>
+        public const string NotSupportedCommand = "01018";
+        
+        /// <summary>
+        /// Invalid data ({0}).
+        /// </summary>
+        public const string InvalidData = "01019";
+        
+        /// <summary>
+        /// There was a conflict. {0}
+        /// </summary>
+        public const string GenericConflict = "01020";
+        
+        /// <summary>
+        /// Internal server error occurred. {0}
+        /// </summary>
+        public const string InternalServerError = "01021";
+        
+        /// <summary>
+        /// Number of sites exceeds the maximum allowed.
+        /// </summary>
+        public const string NumberOfSitesLimit = "03001";
+        
+        /// <summary>
+        /// NumberOfWorkers exceeds the maximum allowed.
+        /// </summary>
+        public const string NumberOfWorkersLimit = "03002";
+        
+        /// <summary>
+        /// There is not enough space on the disk.
+        /// </summary>
+        public const string NoStorageVolumeAvailable = "03003";
+        
+        /// <summary>
+        /// WebSpace with name {0} already exists for subscription {1}.
+        /// </summary>
+        public const string WebSpaceAlreadyExists = "03004";
+        
+        /// <summary>
+        /// Cannot find webspace {0} for subscription {1}
+        /// </summary>
+        public const string WebSpaceNotFound = "03005";
+        
+        /// <summary>
+        /// Web space contains resources.
+        /// </summary>
+        public const string WebSpaceContainsResources = "03006";
+        
+        /// <summary>
+        /// The file storage capacity exceeds the limit.
+        /// </summary>
+        public const string FileStorageLimit = "03007";
+        
+        /// <summary>
+        /// Failed to delete web space {0}: {1}
+        /// </summary>
+        public const string WebSpaceDeleteError = "03008";
+        
+        /// <summary>
+        /// Not enough available Standard Instance servers to satisfy this
+        /// request.
+        /// </summary>
+        public const string NoWorkersAvailable = "03009";
+        
+        /// <summary>
+        /// Failed to create web space {0} on storage volume {1}: {2}
+        /// </summary>
+        public const string WebSpaceCreateError = "03010";
+        
+        /// <summary>
+        /// Directory already exists for site {0}.
+        /// </summary>
+        public const string DirectoryAlreadyExists = "04001";
+        
+        /// <summary>
+        /// Failed to delete directory {0}.
+        /// </summary>
+        public const string DirectoryDeleteError = "04002";
+        
+        /// <summary>
+        /// Invalid host name {0}.
+        /// </summary>
+        public const string InvalidHostName = "04003";
+        
+        /// <summary>
+        /// NumberOfWorkers value must be more than zero.
+        /// </summary>
+        public const string InvalidNumberOfWorkers = "04004";
+        
+        /// <summary>
+        /// Hostname '{0}' already exists.
+        /// </summary>
+        public const string HostNameAlreadyExists = "04005";
+        
+        /// <summary>
+        /// No CNAME pointing from {0} to a site in a default DNS zone (or too
+        /// many).
+        /// </summary>
+        public const string InvalidCustomHostNameValidation = "04006";
+        
+        /// <summary>
+        /// There are no hostnames which could be used for validation.
+        /// </summary>
+        public const string InvalidCustomHostNameValidationNoBaseHostName = "04007";
+        
+        /// <summary>
+        /// Site with name {0} already exists.
+        /// </summary>
+        public const string SiteAlreadyExists = "04008";
+        
+        /// <summary>
+        /// Cannot find site {0}.
+        /// </summary>
+        public const string SiteNotFound = "04009";
+        
+        /// <summary>
+        /// The external URL "{0}" specified on request header "{1}" is invalid.
+        /// </summary>
+        public const string InvalidExternalUriHeader = "04010";
+        
+        /// <summary>
+        /// Failed to delete file {0}.
+        /// </summary>
+        public const string FileDeleteError = "04011";
+        
+        /// <summary>
+        /// Number of workers for this site exceeds the maximum allowed.
+        /// </summary>
+        public const string NumberOfWorkersPerSiteLimit = "04012";
+        
+        /// <summary>
+        /// WebSiteManager.CreateWebSite: Creating Site using storageVolume {0}.
+        /// </summary>
+        public const string TraceWebSiteStorageVolume = "04013";
+        
+        /// <summary>
+        /// Cannot delete repository with name {0}.
+        /// </summary>
+        public const string RepositoryDeleteError = "05001";
+        
+        /// <summary>
+        /// Development site already exists in the repository for site {0}.
+        /// </summary>
+        public const string RepositoryDevSiteAlreadyExists = "05002";
+        
+        /// <summary>
+        /// Development site does not exist in the repository for site {0}.
+        /// </summary>
+        public const string RepositoryDevSiteNotExist = "05003";
+        
+        /// <summary>
+        /// Site {0} already has repository created for it.
+        /// </summary>
+        public const string RepositorySiteAlreadyExists = "05004";
+        
+        /// <summary>
+        /// Repository does not exist for site {0}.
+        /// </summary>
+        public const string RepositorySiteNotExist = "05005";
+        
+        /// <summary>
+        /// Failed to create a development site.
+        /// </summary>
+        public const string TraceFailedToCreateDevSite = "05006";
+        
+        /// <summary>
+        /// User {0} has been rejected.
+        /// </summary>
+        public const string AuthenticatedFailed = "06001";
+        
+        /// <summary>
+        /// User {0} has been successfully authenticated.
+        /// </summary>
+        public const string AuthenticatedPassed = "06002";
+        
+        /// <summary>
+        /// User {0} has been rejected.
+        /// </summary>
+        public const string AuthorizationFailed = "06003";
+        
+        /// <summary>
+        /// User {0} has been authorized.
+        /// </summary>
+        public const string AuthorizationPassed = "06004";
+        
+        /// <summary>
+        /// Publishing credentials have to be trimmed from white characters.
+        /// </summary>
+        public const string PublishingCredentialsNotTrimmed = "06005";
+        
+        /// <summary>
+        /// Publishing password cannot be empty.
+        /// </summary>
+        public const string PublishingPasswordIsEmpty = "06006";
+        
+        /// <summary>
+        /// Publishing password must be specified.
+        /// </summary>
+        public const string PublishingPasswordNotSpecified = "06007";
+        
+        /// <summary>
+        /// Publishing username {0} is already used. Specify a different
+        /// publishing username.
+        /// </summary>
+        public const string PublishingUserNameAlreadyExists = "06008";
+        
+        /// <summary>
+        /// Publishing user name cannot be empty.
+        /// </summary>
+        public const string PublishingUserNameIsEmpty = "06009";
+        
+        /// <summary>
+        /// An error occurred when adding the {0} entry: {1}
+        /// </summary>
+        public const string ErrorAdding = "51001";
+        
+        /// <summary>
+        /// An error occurred when deleting the {0} entry: {1}
+        /// </summary>
+        public const string ErrorDeleting = "51002";
+        
+        /// <summary>
+        /// An error occurred when updating the {0} entry: {1}
+        /// </summary>
+        public const string ErrorUpdating = "51003";
+        
+        /// <summary>
+        /// Cannot find {0} with name {1}.
+        /// </summary>
+        public const string CannotFindEntity = "51004";
+        
+        /// <summary>
+        /// Subscription with specified name already exists.
+        /// </summary>
+        public const string SubscriptionConflict = "52001";
+        
+        /// <summary>
+        /// Subscripton Name cannot be null or empty.
+        /// </summary>
+        public const string SubscriptionNonEmpty = "52002";
+        
+        /// <summary>
+        /// Subscription {0} not found.
+        /// </summary>
+        public const string SubscriptionNotFound = "52003";
+        
+        /// <summary>
+        /// Subscription {0} is Suspended.
+        /// </summary>
+        public const string SubscriptionSuspended = "52004";
+        
+        /// <summary>
+        /// Subscription contains WebSpaces.
+        /// </summary>
+        public const string NonEmptySubscription = "52005";
+        
+        /// <summary>
+        /// WebSpace with specified name already exists.
+        /// </summary>
+        public const string WebSpaceConflict = "53001";
+        
+        /// <summary>
+        /// WebSpace Name cannot be null or empty.
+        /// </summary>
+        public const string WebSpaceNonEmpty = "53002";
+        
+        /// <summary>
+        /// WebSpace contains web sites.
+        /// </summary>
+        public const string NonEmptyWebSpace = "53003";
+        
+        /// <summary>
+        /// An Error occurred when picking Stamp for WebSpace {0}.
+        /// </summary>
+        public const string ErrorPickingStamp = "53004";
+        
+        /// <summary>
+        /// Web site with given name {0} already exists in the specified
+        /// Subscription and Webspace.
+        /// </summary>
+        public const string WebSiteConflict = "54001";
+        
+        /// <summary>
+        /// WebSiteName cannot be null or empty.
+        /// </summary>
+        public const string WebSiteNonEmpty = "54002";
+        
+        /// <summary>
+        /// Specified Host Name {0} is already taken by another site.
+        /// </summary>
+        public const string HostNameConflict = "54003";
+    }
+}
+
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     public static partial class GeoRegionNames
@@ -100,6 +501,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     }
     
     /// <summary>
+    /// The managed pipeline mode of a website.
+    /// </summary>
+    public enum ManagedPipelineMode
+    {
+        /// <summary>
+        /// Integrated Managed Pipeline Mode.
+        /// </summary>
+        Integrated = 0,
+        
+        /// <summary>
+        /// Classic Managed Pipeline Mode.
+        /// </summary>
+        Classic = 1,
+    }
+    
+    /// <summary>
     /// Parameters supplied to the Create Server Farm operation.
     /// </summary>
     public partial class ServerFarmCreateParameters
@@ -138,17 +555,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._numberOfWorkers = value; }
         }
         
-        private ServerFarmWorkerSize _workerSize;
-        
-        /// <summary>
-        /// The instance size. Possible values are Small, Medium, or Large.
-        /// </summary>
-        public ServerFarmWorkerSize WorkerSize
-        {
-            get { return this._workerSize; }
-            set { this._workerSize = value; }
-        }
-        
         private Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmStatus? _status;
         
         /// <summary>
@@ -158,6 +564,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._status; }
             set { this._status = value; }
+        }
+        
+        private ServerFarmWorkerSize _workerSize;
+        
+        /// <summary>
+        /// The instance size. Possible values are Small, Medium, or Large.
+        /// </summary>
+        public ServerFarmWorkerSize WorkerSize
+        {
+            get { return this._workerSize; }
+            set { this._workerSize = value; }
         }
         
         /// <summary>
@@ -218,17 +635,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._numberOfWorkers = value; }
         }
         
-        private ServerFarmWorkerSize _workerSize;
-        
-        /// <summary>
-        /// The instance size. Possible values are Small, Medium, or Large.
-        /// </summary>
-        public ServerFarmWorkerSize WorkerSize
-        {
-            get { return this._workerSize; }
-            set { this._workerSize = value; }
-        }
-        
         private ServerFarmStatus _status;
         
         /// <summary>
@@ -238,6 +644,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._status; }
             set { this._status = value; }
+        }
+        
+        private ServerFarmWorkerSize _workerSize;
+        
+        /// <summary>
+        /// The instance size. Possible values are Small, Medium, or Large.
+        /// </summary>
+        public ServerFarmWorkerSize WorkerSize
+        {
+            get { return this._workerSize; }
+            set { this._workerSize = value; }
         }
         
         /// <summary>
@@ -298,17 +715,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._numberOfWorkers = value; }
         }
         
-        private ServerFarmWorkerSize _workerSize;
-        
-        /// <summary>
-        /// The instance size. Possible values are Small, Medium, or Large.
-        /// </summary>
-        public ServerFarmWorkerSize WorkerSize
-        {
-            get { return this._workerSize; }
-            set { this._workerSize = value; }
-        }
-        
         private ServerFarmStatus _status;
         
         /// <summary>
@@ -318,6 +724,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._status; }
             set { this._status = value; }
+        }
+        
+        private ServerFarmWorkerSize _workerSize;
+        
+        /// <summary>
+        /// The instance size. Possible values are Small, Medium, or Large.
+        /// </summary>
+        public ServerFarmWorkerSize WorkerSize
+        {
+            get { return this._workerSize; }
+            set { this._workerSize = value; }
         }
         
         /// <summary>
@@ -419,17 +836,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._numberOfWorkers = value; }
             }
             
-            private ServerFarmWorkerSize _workerSize;
-            
-            /// <summary>
-            /// The instance size. Possible values are Small, Medium, or Large.
-            /// </summary>
-            public ServerFarmWorkerSize WorkerSize
-            {
-                get { return this._workerSize; }
-                set { this._workerSize = value; }
-            }
-            
             private ServerFarmStatus _status;
             
             /// <summary>
@@ -439,6 +845,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             {
                 get { return this._status; }
                 set { this._status = value; }
+            }
+            
+            private ServerFarmWorkerSize _workerSize;
+            
+            /// <summary>
+            /// The instance size. Possible values are Small, Medium, or Large.
+            /// </summary>
+            public ServerFarmWorkerSize WorkerSize
+            {
+                get { return this._workerSize; }
+                set { this._workerSize = value; }
             }
             
             /// <summary>
@@ -496,17 +913,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._numberOfWorkers = value; }
         }
         
-        private ServerFarmWorkerSize _workerSize;
-        
-        /// <summary>
-        /// The instance size. Possible values are Small, Medium, or Large.
-        /// </summary>
-        public ServerFarmWorkerSize WorkerSize
-        {
-            get { return this._workerSize; }
-            set { this._workerSize = value; }
-        }
-        
         private Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmStatus? _status;
         
         /// <summary>
@@ -516,6 +922,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._status; }
             set { this._status = value; }
+        }
+        
+        private ServerFarmWorkerSize _workerSize;
+        
+        /// <summary>
+        /// The instance size. Possible values are Small, Medium, or Large.
+        /// </summary>
+        public ServerFarmWorkerSize WorkerSize
+        {
+            get { return this._workerSize; }
+            set { this._workerSize = value; }
         }
         
         /// <summary>
@@ -576,17 +993,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._numberOfWorkers = value; }
         }
         
-        private ServerFarmWorkerSize _workerSize;
-        
-        /// <summary>
-        /// The instance size. Possible values are Small, Medium, or Large.
-        /// </summary>
-        public ServerFarmWorkerSize WorkerSize
-        {
-            get { return this._workerSize; }
-            set { this._workerSize = value; }
-        }
-        
         private ServerFarmStatus _status;
         
         /// <summary>
@@ -596,6 +1002,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._status; }
             set { this._status = value; }
+        }
+        
+        private ServerFarmWorkerSize _workerSize;
+        
+        /// <summary>
+        /// The instance size. Possible values are Small, Medium, or Large.
+        /// </summary>
+        public ServerFarmWorkerSize WorkerSize
+        {
+            get { return this._workerSize; }
+            set { this._workerSize = value; }
         }
         
         /// <summary>
@@ -684,17 +1101,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._enabledHostNames = value; }
         }
         
-        private IList<WebSite.WebSiteHostNameSslState> _hostNameSslStates;
-        
-        /// <summary>
-        /// SSL states bound to the website.
-        /// </summary>
-        public IList<WebSite.WebSiteHostNameSslState> HostNameSslStates
-        {
-            get { return this._hostNameSslStates; }
-            set { this._hostNameSslStates = value; }
-        }
-        
         private IList<string> _hostNames;
         
         /// <summary>
@@ -709,6 +1115,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._hostNames; }
             set { this._hostNames = value; }
+        }
+        
+        private IList<WebSite.WebSiteHostNameSslState> _hostNameSslStates;
+        
+        /// <summary>
+        /// SSL states bound to the website.
+        /// </summary>
+        public IList<WebSite.WebSiteHostNameSslState> HostNameSslStates
+        {
+            get { return this._hostNameSslStates; }
+            set { this._hostNameSslStates = value; }
         }
         
         private DateTime _lastModifiedTimeUtc;
@@ -772,29 +1189,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._runtimeAvailabilityState = value; }
         }
         
-        private IList<WebSite.WebSiteSslCertificate> _sslCertificates;
-        
-        /// <summary>
-        /// SSL certificates bound to the web site.
-        /// </summary>
-        public IList<WebSite.WebSiteSslCertificate> SslCertificates
-        {
-            get { return this._sslCertificates; }
-            set { this._sslCertificates = value; }
-        }
-        
-        private Uri _uri;
-        
-        /// <summary>
-        /// Direct URL to the web site endpoint on Windows Azure Web Sites,
-        /// including the subscription ID, webspace name, and site name.
-        /// </summary>
-        public Uri Uri
-        {
-            get { return this._uri; }
-            set { this._uri = value; }
-        }
-        
         private string _serverFarm;
         
         /// <summary>
@@ -831,6 +1225,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._siteProperties = value; }
         }
         
+        private IList<WebSite.WebSiteSslCertificate> _sslCertificates;
+        
+        /// <summary>
+        /// SSL certificates bound to the web site.
+        /// </summary>
+        public IList<WebSite.WebSiteSslCertificate> SslCertificates
+        {
+            get { return this._sslCertificates; }
+            set { this._sslCertificates = value; }
+        }
+        
         private WebSiteState _state;
         
         /// <summary>
@@ -841,6 +1246,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._state; }
             set { this._state = value; }
+        }
+        
+        private Uri _uri;
+        
+        /// <summary>
+        /// Direct URL to the web site endpoint on Windows Azure Web Sites,
+        /// including the subscription ID, webspace name, and site name.
+        /// </summary>
+        public Uri Uri
+        {
+            get { return this._uri; }
+            set { this._uri = value; }
         }
         
         private WebSiteUsageState _usageState;
@@ -874,8 +1291,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         public WebSite()
         {
             this._enabledHostNames = new List<string>();
-            this._hostNameSslStates = new List<WebSite.WebSiteHostNameSslState>();
             this._hostNames = new List<string>();
+            this._hostNameSslStates = new List<WebSite.WebSiteHostNameSslState>();
             this._sslCertificates = new List<WebSite.WebSiteSslCertificate>();
         }
         
@@ -935,6 +1352,54 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public WebSiteHostNameSslState()
             {
+            }
+        }
+        
+        public partial class WebSiteProperties
+        {
+            private IDictionary<string, string> _appSettings;
+            
+            /// <summary>
+            /// A set of name/value pairs that contain application settings for
+            /// a site.
+            /// </summary>
+            public IDictionary<string, string> AppSettings
+            {
+                get { return this._appSettings; }
+                set { this._appSettings = value; }
+            }
+            
+            private IDictionary<string, string> _metadata;
+            
+            /// <summary>
+            /// A set of name/value pairs that contain metadata information for
+            /// a site.
+            /// </summary>
+            public IDictionary<string, string> Metadata
+            {
+                get { return this._metadata; }
+                set { this._metadata = value; }
+            }
+            
+            private IDictionary<string, string> _properties;
+            
+            /// <summary>
+            /// A set of name/value pairs that contain properties for a site.
+            /// </summary>
+            public IDictionary<string, string> Properties
+            {
+                get { return this._properties; }
+                set { this._properties = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the WebSiteProperties class.
+            /// </summary>
+            public WebSiteProperties()
+            {
+                this._appSettings = new Dictionary<string, string>();
+                this._metadata = new Dictionary<string, string>();
+                this._properties = new Dictionary<string, string>();
             }
         }
         
@@ -999,6 +1464,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             {
                 get { return this._issuer; }
                 set { this._issuer = value; }
+            }
+            
+            private bool _isToBeDeleted;
+            
+            /// <summary>
+            /// Boolean. true if the certificate is to be deleted.
+            /// </summary>
+            public bool IsToBeDeleted
+            {
+                get { return this._isToBeDeleted; }
+                set { this._isToBeDeleted = value; }
+            }
+            
+            private bool _isValid;
+            
+            /// <summary>
+            /// Boolean. true if the certificate is valid; otherwise, false.
+            /// </summary>
+            public bool IsValid
+            {
+                get { return this._isValid; }
+                set { this._isValid = value; }
             }
             
             private string _password;
@@ -1071,82 +1558,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._thumbprint = value; }
             }
             
-            private bool _isToBeDeleted;
-            
-            /// <summary>
-            /// Boolean. true if the certificate is to be deleted.
-            /// </summary>
-            public bool IsToBeDeleted
-            {
-                get { return this._isToBeDeleted; }
-                set { this._isToBeDeleted = value; }
-            }
-            
-            private bool _isValid;
-            
-            /// <summary>
-            /// Boolean. true if the certificate is valid; otherwise, false.
-            /// </summary>
-            public bool IsValid
-            {
-                get { return this._isValid; }
-                set { this._isValid = value; }
-            }
-            
             /// <summary>
             /// Initializes a new instance of the WebSiteSslCertificate class.
             /// </summary>
             public WebSiteSslCertificate()
             {
                 this._hostNames = new List<string>();
-            }
-        }
-        
-        public partial class WebSiteProperties
-        {
-            private IDictionary<string, string> _appSettings;
-            
-            /// <summary>
-            /// A set of name/value pairs that contain application settings for
-            /// a site.
-            /// </summary>
-            public IDictionary<string, string> AppSettings
-            {
-                get { return this._appSettings; }
-                set { this._appSettings = value; }
-            }
-            
-            private IDictionary<string, string> _metadata;
-            
-            /// <summary>
-            /// A set of name/value pairs that contain metadata information for
-            /// a site.
-            /// </summary>
-            public IDictionary<string, string> Metadata
-            {
-                get { return this._metadata; }
-                set { this._metadata = value; }
-            }
-            
-            private IDictionary<string, string> _properties;
-            
-            /// <summary>
-            /// A set of name/value pairs that contain properties for a site.
-            /// </summary>
-            public IDictionary<string, string> Properties
-            {
-                get { return this._properties; }
-                set { this._properties = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the WebSiteProperties class.
-            /// </summary>
-            public WebSiteProperties()
-            {
-                this._appSettings = new Dictionary<string, string>();
-                this._metadata = new Dictionary<string, string>();
-                this._properties = new Dictionary<string, string>();
             }
         }
     }
@@ -1166,6 +1583,20 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteCreateParameters
     {
+        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? _computeMode;
+        
+        /// <summary>
+        /// This value should be Shared for the Free or Paid Shared offerings,
+        /// or Dedicated for the Standard offering. The default value is
+        /// Shared. If you set ComputeMode to Dedicated, you must specify a
+        /// value for the ServerFarm element.
+        /// </summary>
+        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? ComputeMode
+        {
+            get { return this._computeMode; }
+            set { this._computeMode = value; }
+        }
+        
         private IList<string> _hostNames;
         
         /// <summary>
@@ -1190,20 +1621,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._name; }
             set { this._name = value; }
-        }
-        
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? _computeMode;
-        
-        /// <summary>
-        /// This value should be Shared for the Free or Paid Shared offerings,
-        /// or Dedicated for the Standard offering. The default value is
-        /// Shared. If you set ComputeMode to Dedicated, you must specify a
-        /// value for the ServerFarm element.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? ComputeMode
-        {
-            get { return this._computeMode; }
-            set { this._computeMode = value; }
         }
         
         private string _serverFarm;
@@ -1232,17 +1649,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._siteMode = value; }
         }
         
-        private string _webSpaceName;
-        
-        /// <summary>
-        /// The name of the webspace
-        /// </summary>
-        public string WebSpaceName
-        {
-            get { return this._webSpaceName; }
-            set { this._webSpaceName = value; }
-        }
-        
         private WebSiteCreateParameters.WebSpaceDetails _webSpace;
         
         /// <summary>
@@ -1252,6 +1658,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._webSpace; }
             set { this._webSpace = value; }
+        }
+        
+        private string _webSpaceName;
+        
+        /// <summary>
+        /// The name of the webspace
+        /// </summary>
+        public string WebSpaceName
+        {
+            get { return this._webSpaceName; }
+            set { this._webSpaceName = value; }
         }
         
         /// <summary>
@@ -1438,6 +1855,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._httpLoggingEnabled = value; }
         }
         
+        private ManagedPipelineMode _managedPipelineMode;
+        
+        /// <summary>
+        /// Managed pipeline modes.
+        /// </summary>
+        public ManagedPipelineMode ManagedPipelineMode
+        {
+            get { return this._managedPipelineMode; }
+            set { this._managedPipelineMode = value; }
+        }
+        
         private IDictionary<string, string> _metadata;
         
         /// <summary>
@@ -1510,6 +1938,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._publishingUserName = value; }
         }
         
+        private bool _remoteDebuggingEnabled;
+        
+        /// <summary>
+        /// True remote debugging is enabled; otherwise, false.
+        /// </summary>
+        public bool RemoteDebuggingEnabled
+        {
+            get { return this._remoteDebuggingEnabled; }
+            set { this._remoteDebuggingEnabled = value; }
+        }
+        
+        private string _remoteDebuggingVersion;
+        
+        /// <summary>
+        /// True remote debugging version.
+        /// </summary>
+        public string RemoteDebuggingVersion
+        {
+            get { return this._remoteDebuggingVersion; }
+            set { this._remoteDebuggingVersion = value; }
+        }
+        
         private bool _requestTracingEnabled;
         
         /// <summary>
@@ -1554,6 +2004,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._use32BitWorkerProcess; }
             set { this._use32BitWorkerProcess = value; }
+        }
+        
+        private bool _webSocketsEnabled;
+        
+        /// <summary>
+        /// True if Web Sockets are enabled; otherwise, false.
+        /// </summary>
+        public bool WebSocketsEnabled
+        {
+            get { return this._webSocketsEnabled; }
+            set { this._webSocketsEnabled = value; }
         }
         
         /// <summary>
@@ -1674,6 +2135,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteGetHistoricalUsageMetricsParameters
     {
+        private System.DateTime? _endTime;
+        
+        /// <summary>
+        /// The ending time of the metrics to return. If this parameter is not
+        /// specified, the current time is used.
+        /// </summary>
+        public System.DateTime? EndTime
+        {
+            get { return this._endTime; }
+            set { this._endTime = value; }
+        }
+        
         private IList<string> _metricNames;
         
         /// <summary>
@@ -1697,18 +2170,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._startTime; }
             set { this._startTime = value; }
-        }
-        
-        private System.DateTime? _endTime;
-        
-        /// <summary>
-        /// The ending time of the metrics to return. If this parameter is not
-        /// specified, the current time is used.
-        /// </summary>
-        public System.DateTime? EndTime
-        {
-            get { return this._endTime; }
-            set { this._endTime = value; }
         }
         
         /// <summary>
@@ -2050,10 +2511,148 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         }
         
         /// <summary>
+        /// Contains attributes that contain information for a single database
+        /// connection.
+        /// </summary>
+        public partial class Database
+        {
+            private string _connectionString;
+            
+            /// <summary>
+            /// Contains a database connection string.
+            /// </summary>
+            public string ConnectionString
+            {
+                get { return this._connectionString; }
+                set { this._connectionString = value; }
+            }
+            
+            private string _name;
+            
+            /// <summary>
+            /// Contains the friendly name of the connection string.
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
+            private string _providerName;
+            
+            /// <summary>
+            /// Contains the type of database provider (for example, "SQL" or
+            /// "MySQL").
+            /// </summary>
+            public string ProviderName
+            {
+                get { return this._providerName; }
+                set { this._providerName = value; }
+            }
+            
+            private string _type;
+            
+            public string Type
+            {
+                get { return this._type; }
+                set { this._type = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the Database class.
+            /// </summary>
+            public Database()
+            {
+            }
+        }
+        
+        /// <summary>
         /// Contains attributes that hold publish profile values.
         /// </summary>
         public partial class PublishProfile
         {
+            private Uri _controlPanelUri;
+            
+            /// <summary>
+            /// The URL of the control panel for the web site.
+            /// </summary>
+            public Uri ControlPanelUri
+            {
+                get { return this._controlPanelUri; }
+                set { this._controlPanelUri = value; }
+            }
+            
+            private IList<WebSiteGetPublishProfileResponse.Database> _databases;
+            
+            /// <summary>
+            /// Contains connection information for the databases used by the
+            /// web site application.
+            /// </summary>
+            public IList<WebSiteGetPublishProfileResponse.Database> Databases
+            {
+                get { return this._databases; }
+                set { this._databases = value; }
+            }
+            
+            private Uri _destinationAppUri;
+            
+            /// <summary>
+            /// The URL of the website that will be published to.
+            /// </summary>
+            public Uri DestinationAppUri
+            {
+                get { return this._destinationAppUri; }
+                set { this._destinationAppUri = value; }
+            }
+            
+            private bool _ftpPassiveMode;
+            
+            /// <summary>
+            /// True or False depending on whether FTP passive mode is being
+            /// used. This attribute applies only if publishMethod is set to
+            /// FTP.
+            /// </summary>
+            public bool FtpPassiveMode
+            {
+                get { return this._ftpPassiveMode; }
+                set { this._ftpPassiveMode = value; }
+            }
+            
+            private Uri _hostingProviderForumUri;
+            
+            /// <summary>
+            /// The URL of the forum of the hosting provider.
+            /// </summary>
+            public Uri HostingProviderForumUri
+            {
+                get { return this._hostingProviderForumUri; }
+                set { this._hostingProviderForumUri = value; }
+            }
+            
+            private string _mSDeploySite;
+            
+            /// <summary>
+            /// The name of the site that will be published to. This attribute
+            /// applies only if publishMethod is set to MSDeploy.
+            /// </summary>
+            public string MSDeploySite
+            {
+                get { return this._mSDeploySite; }
+                set { this._mSDeploySite = value; }
+            }
+            
+            private string _mySqlConnectionString;
+            
+            /// <summary>
+            /// The MySQL database connection string for the web site
+            /// application, if the web site connects to a MySQL database.
+            /// </summary>
+            public string MySqlConnectionString
+            {
+                get { return this._mySqlConnectionString; }
+                set { this._mySqlConnectionString = value; }
+            }
+            
             private string _profileName;
             
             /// <summary>
@@ -2087,29 +2686,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._publishUrl = value; }
             }
             
-            private string _mSDeploySite;
+            private string _sqlServerConnectionString;
             
             /// <summary>
-            /// The name of the site that will be published to. This attribute
-            /// applies only if publishMethod is set to MSDeploy.
+            /// The SQL Server database connection string for the web site
+            /// application, if the web site connects to a SQL Server database.
             /// </summary>
-            public string MSDeploySite
+            public string SqlServerConnectionString
             {
-                get { return this._mSDeploySite; }
-                set { this._mSDeploySite = value; }
-            }
-            
-            private bool _ftpPassiveMode;
-            
-            /// <summary>
-            /// True or False depending on whether FTP passive mode is being
-            /// used. This attribute applies only if publishMethod is set to
-            /// FTP.
-            /// </summary>
-            public bool FtpPassiveMode
-            {
-                get { return this._ftpPassiveMode; }
-                set { this._ftpPassiveMode = value; }
+                get { return this._sqlServerConnectionString; }
+                set { this._sqlServerConnectionString = value; }
             }
             
             private string _userName;
@@ -2134,137 +2720,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._userPassword = value; }
             }
             
-            private Uri _destinationAppUri;
-            
-            /// <summary>
-            /// The URL of the website that will be published to.
-            /// </summary>
-            public Uri DestinationAppUri
-            {
-                get { return this._destinationAppUri; }
-                set { this._destinationAppUri = value; }
-            }
-            
-            private string _sqlServerConnectionString;
-            
-            /// <summary>
-            /// The SQL Server database connection string for the web site
-            /// application, if the web site connects to a SQL Server database.
-            /// </summary>
-            public string SqlServerConnectionString
-            {
-                get { return this._sqlServerConnectionString; }
-                set { this._sqlServerConnectionString = value; }
-            }
-            
-            private string _mySqlConnectionString;
-            
-            /// <summary>
-            /// The MySQL database connection string for the web site
-            /// application, if the web site connects to a MySQL database.
-            /// </summary>
-            public string MySqlConnectionString
-            {
-                get { return this._mySqlConnectionString; }
-                set { this._mySqlConnectionString = value; }
-            }
-            
-            private Uri _hostingProviderForumUri;
-            
-            /// <summary>
-            /// The URL of the forum of the hosting provider.
-            /// </summary>
-            public Uri HostingProviderForumUri
-            {
-                get { return this._hostingProviderForumUri; }
-                set { this._hostingProviderForumUri = value; }
-            }
-            
-            private Uri _controlPanelUri;
-            
-            /// <summary>
-            /// The URL of the control panel for the web site.
-            /// </summary>
-            public Uri ControlPanelUri
-            {
-                get { return this._controlPanelUri; }
-                set { this._controlPanelUri = value; }
-            }
-            
-            private IList<WebSiteGetPublishProfileResponse.Database> _databases;
-            
-            /// <summary>
-            /// Contains connection information for the databases used by the
-            /// web site application.
-            /// </summary>
-            public IList<WebSiteGetPublishProfileResponse.Database> Databases
-            {
-                get { return this._databases; }
-                set { this._databases = value; }
-            }
-            
             /// <summary>
             /// Initializes a new instance of the PublishProfile class.
             /// </summary>
             public PublishProfile()
             {
                 this._databases = new List<WebSiteGetPublishProfileResponse.Database>();
-            }
-        }
-        
-        /// <summary>
-        /// Contains attributes that contain information for a single database
-        /// connection.
-        /// </summary>
-        public partial class Database
-        {
-            private string _name;
-            
-            /// <summary>
-            /// Contains the friendly name of the connection string.
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private string _connectionString;
-            
-            /// <summary>
-            /// Contains a database connection string.
-            /// </summary>
-            public string ConnectionString
-            {
-                get { return this._connectionString; }
-                set { this._connectionString = value; }
-            }
-            
-            private string _providerName;
-            
-            /// <summary>
-            /// Contains the type of database provider (for example, "SQL" or
-            /// "MySQL").
-            /// </summary>
-            public string ProviderName
-            {
-                get { return this._providerName; }
-                set { this._providerName = value; }
-            }
-            
-            private string _type;
-            
-            public string Type
-            {
-                get { return this._type; }
-                set { this._type = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the Database class.
-            /// </summary>
-            public Database()
-            {
             }
         }
     }
@@ -2651,6 +3112,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._httpLoggingEnabled = value; }
         }
         
+        private Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? _managedPipelineMode;
+        
+        /// <summary>
+        /// Managed pipeline modes.
+        /// </summary>
+        public Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? ManagedPipelineMode
+        {
+            get { return this._managedPipelineMode; }
+            set { this._managedPipelineMode = value; }
+        }
+        
         private IDictionary<string, string> _metadata;
         
         /// <summary>
@@ -2723,6 +3195,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._publishingUserName = value; }
         }
         
+        private bool? _remoteDebuggingEnabled;
+        
+        /// <summary>
+        /// True remote debugging is enabled; otherwise, false.
+        /// </summary>
+        public bool? RemoteDebuggingEnabled
+        {
+            get { return this._remoteDebuggingEnabled; }
+            set { this._remoteDebuggingEnabled = value; }
+        }
+        
+        private string _remoteDebuggingVersion;
+        
+        /// <summary>
+        /// True remote debugging version.
+        /// </summary>
+        public string RemoteDebuggingVersion
+        {
+            get { return this._remoteDebuggingVersion; }
+            set { this._remoteDebuggingVersion = value; }
+        }
+        
         private bool? _requestTracingEnabled;
         
         /// <summary>
@@ -2767,6 +3261,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._use32BitWorkerProcess; }
             set { this._use32BitWorkerProcess = value; }
+        }
+        
+        private bool? _webSocketsEnabled;
+        
+        /// <summary>
+        /// True if Web Sockets are enabled; otherwise, false.
+        /// </summary>
+        public bool? WebSocketsEnabled
+        {
+            get { return this._webSocketsEnabled; }
+            set { this._webSocketsEnabled = value; }
         }
         
         /// <summary>
@@ -2927,17 +3432,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._enabled = value; }
         }
         
-        private IList<WebSiteUpdateParameters.WebSiteHostNameSslState> _hostNameSslStates;
-        
-        /// <summary>
-        /// SSL states bound to the website.
-        /// </summary>
-        public IList<WebSiteUpdateParameters.WebSiteHostNameSslState> HostNameSslStates
-        {
-            get { return this._hostNameSslStates; }
-            set { this._hostNameSslStates = value; }
-        }
-        
         private IList<string> _hostNames;
         
         /// <summary>
@@ -2954,6 +3448,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._hostNames = value; }
         }
         
+        private IList<WebSiteUpdateParameters.WebSiteHostNameSslState> _hostNameSslStates;
+        
+        /// <summary>
+        /// SSL states bound to the website.
+        /// </summary>
+        public IList<WebSiteUpdateParameters.WebSiteHostNameSslState> HostNameSslStates
+        {
+            get { return this._hostNameSslStates; }
+            set { this._hostNameSslStates = value; }
+        }
+        
         private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteRuntimeAvailabilityState? _runtimeAvailabilityState;
         
         /// <summary>
@@ -2968,17 +3473,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._runtimeAvailabilityState; }
             set { this._runtimeAvailabilityState = value; }
-        }
-        
-        private IList<WebSiteUpdateParameters.WebSiteSslCertificate> _sslCertificates;
-        
-        /// <summary>
-        /// SSL certificates bound to the web site.
-        /// </summary>
-        public IList<WebSiteUpdateParameters.WebSiteSslCertificate> SslCertificates
-        {
-            get { return this._sslCertificates; }
-            set { this._sslCertificates = value; }
         }
         
         private string _serverFarm;
@@ -3006,6 +3500,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._siteMode = value; }
         }
         
+        private IList<WebSiteUpdateParameters.WebSiteSslCertificate> _sslCertificates;
+        
+        /// <summary>
+        /// SSL certificates bound to the web site.
+        /// </summary>
+        public IList<WebSiteUpdateParameters.WebSiteSslCertificate> SslCertificates
+        {
+            get { return this._sslCertificates; }
+            set { this._sslCertificates = value; }
+        }
+        
         private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteState? _state;
         
         /// <summary>
@@ -3023,8 +3528,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteUpdateParameters()
         {
-            this._hostNameSslStates = new List<WebSiteUpdateParameters.WebSiteHostNameSslState>();
             this._hostNames = new List<string>();
+            this._hostNameSslStates = new List<WebSiteUpdateParameters.WebSiteHostNameSslState>();
             this._sslCertificates = new List<WebSiteUpdateParameters.WebSiteSslCertificate>();
         }
         
@@ -3077,6 +3582,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public partial class WebSiteSslCertificate
         {
+            private bool? _isToBeDeleted;
+            
+            /// <summary>
+            /// Boolean. true if the certificate is to be deleted.
+            /// </summary>
+            public bool? IsToBeDeleted
+            {
+                get { return this._isToBeDeleted; }
+                set { this._isToBeDeleted = value; }
+            }
+            
             private string _password;
             
             /// <summary>
@@ -3109,17 +3625,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             {
                 get { return this._thumbprint; }
                 set { this._thumbprint = value; }
-            }
-            
-            private bool? _isToBeDeleted;
-            
-            /// <summary>
-            /// Boolean. true if the certificate is to be deleted.
-            /// </summary>
-            public bool? IsToBeDeleted
-            {
-                get { return this._isToBeDeleted; }
-                set { this._isToBeDeleted = value; }
             }
             
             /// <summary>
@@ -3834,407 +4339,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
 namespace Microsoft.WindowsAzure.Management.WebSites
 {
     /// <summary>
-    /// In addition to standard HTTP status codes, the Windows Azure Web Sites
-    /// Management REST API returns extended error codes and error messages.
-    /// The extended codes do not replace the standard HTTP status codes, but
-    /// provide additional, actionable information that can be used in
-    /// conjunction with the standard HTTP status codes. For example, an HTTP
-    /// 404 error can occur for numerous reasons, so having the additional
-    /// information in the extended message can assist with problem
-    /// resolution. (For more information on the standard HTTP codes returned
-    /// by the REST API, see Service Management Status and Error Codes.)  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166968.aspx for
-    /// more information)
-    /// </summary>
-    public static partial class WebSiteExtendedErrorCodes
-    {
-        /// <summary>
-        /// Access is denied.
-        /// </summary>
-        public const string AccessDenied = "01001";
-        
-        /// <summary>
-        /// Command resource object is not present in the request body.
-        /// </summary>
-        public const string CommandResourceNotPresent = "01002";
-        
-        /// <summary>
-        /// Invalid name {0}.
-        /// </summary>
-        public const string InvalidName = "01003";
-        
-        /// <summary>
-        /// Cannot understand command verb {0}.
-        /// </summary>
-        public const string UnknownCommandVerb = "01004";
-        
-        /// <summary>
-        /// The service is currently in read only mode.
-        /// </summary>
-        public const string IsInReadOnlyMode = "01005";
-        
-        /// <summary>
-        /// The {0} parameter is not specified.
-        /// </summary>
-        public const string ParameterIsNotSpecified = "01006";
-        
-        /// <summary>
-        /// Parameter {0} has invalid value.
-        /// </summary>
-        public const string InvalidParameterValue = "01007";
-        
-        /// <summary>
-        /// {0} object is not present in the request body.
-        /// </summary>
-        public const string InvalidRequest = "01008";
-        
-        /// <summary>
-        /// The from value in the query string is bigger than or equal to the
-        /// to value.
-        /// </summary>
-        public const string IncorrectDateTimeRange = "01009";
-        
-        /// <summary>
-        /// Required parameter {0} is missing.
-        /// </summary>
-        public const string RequiredParameterMissing = "01010";
-        
-        /// <summary>
-        /// Name of the web quota cannot change.
-        /// </summary>
-        public const string ResourceNameCannotChange = "01011";
-        
-        /// <summary>
-        /// The value of the query string parameter cannot be converted to
-        /// Boolean.
-        /// </summary>
-        public const string FailedToConvertParameterValue = "01012";
-        
-        /// <summary>
-        /// Parameter with name {0} already exists in the request.
-        /// </summary>
-        public const string ParameterNameAlreadyExists = "01013";
-        
-        /// <summary>
-        /// Parameter name cannot be empty.
-        /// </summary>
-        public const string ParameterNameIsEmpty = "01014";
-        
-        /// <summary>
-        /// Not ready
-        /// </summary>
-        public const string NotReady = "01015";
-        
-        /// <summary>
-        /// Ready
-        /// </summary>
-        public const string Ready = "01016";
-        
-        /// <summary>
-        /// Update is not allowed for the {0} field.
-        /// </summary>
-        public const string UpdateForFieldNotAllowed = "01017";
-        
-        /// <summary>
-        /// Web Service does not support Command {0}. Only supported command(s)
-        /// is {1}.
-        /// </summary>
-        public const string NotSupportedCommand = "01018";
-        
-        /// <summary>
-        /// Invalid data ({0}).
-        /// </summary>
-        public const string InvalidData = "01019";
-        
-        /// <summary>
-        /// There was a conflict. {0}
-        /// </summary>
-        public const string GenericConflict = "01020";
-        
-        /// <summary>
-        /// Internal server error occurred. {0}
-        /// </summary>
-        public const string InternalServerError = "01021";
-        
-        /// <summary>
-        /// Number of sites exceeds the maximum allowed.
-        /// </summary>
-        public const string NumberOfSitesLimit = "03001";
-        
-        /// <summary>
-        /// NumberOfWorkers exceeds the maximum allowed.
-        /// </summary>
-        public const string NumberOfWorkersLimit = "03002";
-        
-        /// <summary>
-        /// There is not enough space on the disk.
-        /// </summary>
-        public const string NoStorageVolumeAvailable = "03003";
-        
-        /// <summary>
-        /// WebSpace with name {0} already exists for subscription {1}.
-        /// </summary>
-        public const string WebSpaceAlreadyExists = "03004";
-        
-        /// <summary>
-        /// Cannot find webspace {0} for subscription {1}
-        /// </summary>
-        public const string WebSpaceNotFound = "03005";
-        
-        /// <summary>
-        /// Web space contains resources.
-        /// </summary>
-        public const string WebSpaceContainsResources = "03006";
-        
-        /// <summary>
-        /// The file storage capacity exceeds the limit.
-        /// </summary>
-        public const string FileStorageLimit = "03007";
-        
-        /// <summary>
-        /// Failed to delete web space {0}: {1}
-        /// </summary>
-        public const string WebSpaceDeleteError = "03008";
-        
-        /// <summary>
-        /// Not enough available Standard Instance servers to satisfy this
-        /// request.
-        /// </summary>
-        public const string NoWorkersAvailable = "03009";
-        
-        /// <summary>
-        /// Failed to create web space {0} on storage volume {1}: {2}
-        /// </summary>
-        public const string WebSpaceCreateError = "03010";
-        
-        /// <summary>
-        /// Directory already exists for site {0}.
-        /// </summary>
-        public const string DirectoryAlreadyExists = "04001";
-        
-        /// <summary>
-        /// Failed to delete directory {0}.
-        /// </summary>
-        public const string DirectoryDeleteError = "04002";
-        
-        /// <summary>
-        /// Invalid host name {0}.
-        /// </summary>
-        public const string InvalidHostName = "04003";
-        
-        /// <summary>
-        /// NumberOfWorkers value must be more than zero.
-        /// </summary>
-        public const string InvalidNumberOfWorkers = "04004";
-        
-        /// <summary>
-        /// Hostname '{0}' already exists.
-        /// </summary>
-        public const string HostNameAlreadyExists = "04005";
-        
-        /// <summary>
-        /// No CNAME pointing from {0} to a site in a default DNS zone (or too
-        /// many).
-        /// </summary>
-        public const string InvalidCustomHostNameValidation = "04006";
-        
-        /// <summary>
-        /// There are no hostnames which could be used for validation.
-        /// </summary>
-        public const string InvalidCustomHostNameValidationNoBaseHostName = "04007";
-        
-        /// <summary>
-        /// Site with name {0} already exists.
-        /// </summary>
-        public const string SiteAlreadyExists = "04008";
-        
-        /// <summary>
-        /// Cannot find site {0}.
-        /// </summary>
-        public const string SiteNotFound = "04009";
-        
-        /// <summary>
-        /// The external URL "{0}" specified on request header "{1}" is invalid.
-        /// </summary>
-        public const string InvalidExternalUriHeader = "04010";
-        
-        /// <summary>
-        /// Failed to delete file {0}.
-        /// </summary>
-        public const string FileDeleteError = "04011";
-        
-        /// <summary>
-        /// Number of workers for this site exceeds the maximum allowed.
-        /// </summary>
-        public const string NumberOfWorkersPerSiteLimit = "04012";
-        
-        /// <summary>
-        /// WebSiteManager.CreateWebSite: Creating Site using storageVolume {0}.
-        /// </summary>
-        public const string TraceWebSiteStorageVolume = "04013";
-        
-        /// <summary>
-        /// Cannot delete repository with name {0}.
-        /// </summary>
-        public const string RepositoryDeleteError = "05001";
-        
-        /// <summary>
-        /// Development site already exists in the repository for site {0}.
-        /// </summary>
-        public const string RepositoryDevSiteAlreadyExists = "05002";
-        
-        /// <summary>
-        /// Development site does not exist in the repository for site {0}.
-        /// </summary>
-        public const string RepositoryDevSiteNotExist = "05003";
-        
-        /// <summary>
-        /// Site {0} already has repository created for it.
-        /// </summary>
-        public const string RepositorySiteAlreadyExists = "05004";
-        
-        /// <summary>
-        /// Repository does not exist for site {0}.
-        /// </summary>
-        public const string RepositorySiteNotExist = "05005";
-        
-        /// <summary>
-        /// Failed to create a development site.
-        /// </summary>
-        public const string TraceFailedToCreateDevSite = "05006";
-        
-        /// <summary>
-        /// User {0} has been rejected.
-        /// </summary>
-        public const string AuthenticatedFailed = "06001";
-        
-        /// <summary>
-        /// User {0} has been successfully authenticated.
-        /// </summary>
-        public const string AuthenticatedPassed = "06002";
-        
-        /// <summary>
-        /// User {0} has been rejected.
-        /// </summary>
-        public const string AuthorizationFailed = "06003";
-        
-        /// <summary>
-        /// User {0} has been authorized.
-        /// </summary>
-        public const string AuthorizationPassed = "06004";
-        
-        /// <summary>
-        /// Publishing credentials have to be trimmed from white characters.
-        /// </summary>
-        public const string PublishingCredentialsNotTrimmed = "06005";
-        
-        /// <summary>
-        /// Publishing password cannot be empty.
-        /// </summary>
-        public const string PublishingPasswordIsEmpty = "06006";
-        
-        /// <summary>
-        /// Publishing password must be specified.
-        /// </summary>
-        public const string PublishingPasswordNotSpecified = "06007";
-        
-        /// <summary>
-        /// Publishing username {0} is already used. Specify a different
-        /// publishing username.
-        /// </summary>
-        public const string PublishingUserNameAlreadyExists = "06008";
-        
-        /// <summary>
-        /// Publishing user name cannot be empty.
-        /// </summary>
-        public const string PublishingUserNameIsEmpty = "06009";
-        
-        /// <summary>
-        /// An error occurred when adding the {0} entry: {1}
-        /// </summary>
-        public const string ErrorAdding = "51001";
-        
-        /// <summary>
-        /// An error occurred when deleting the {0} entry: {1}
-        /// </summary>
-        public const string ErrorDeleting = "51002";
-        
-        /// <summary>
-        /// An error occurred when updating the {0} entry: {1}
-        /// </summary>
-        public const string ErrorUpdating = "51003";
-        
-        /// <summary>
-        /// Cannot find {0} with name {1}.
-        /// </summary>
-        public const string CannotFindEntity = "51004";
-        
-        /// <summary>
-        /// Subscription with specified name already exists.
-        /// </summary>
-        public const string SubscriptionConflict = "52001";
-        
-        /// <summary>
-        /// Subscripton Name cannot be null or empty.
-        /// </summary>
-        public const string SubscriptionNonEmpty = "52002";
-        
-        /// <summary>
-        /// Subscription {0} not found.
-        /// </summary>
-        public const string SubscriptionNotFound = "52003";
-        
-        /// <summary>
-        /// Subscription {0} is Suspended.
-        /// </summary>
-        public const string SubscriptionSuspended = "52004";
-        
-        /// <summary>
-        /// Subscription contains WebSpaces.
-        /// </summary>
-        public const string NonEmptySubscription = "52005";
-        
-        /// <summary>
-        /// WebSpace with specified name already exists.
-        /// </summary>
-        public const string WebSpaceConflict = "53001";
-        
-        /// <summary>
-        /// WebSpace Name cannot be null or empty.
-        /// </summary>
-        public const string WebSpaceNonEmpty = "53002";
-        
-        /// <summary>
-        /// WebSpace contains web sites.
-        /// </summary>
-        public const string NonEmptyWebSpace = "53003";
-        
-        /// <summary>
-        /// An Error occurred when picking Stamp for WebSpace {0}.
-        /// </summary>
-        public const string ErrorPickingStamp = "53004";
-        
-        /// <summary>
-        /// Web site with given name {0} already exists in the specified
-        /// Subscription and Webspace.
-        /// </summary>
-        public const string WebSiteConflict = "54001";
-        
-        /// <summary>
-        /// WebSiteName cannot be null or empty.
-        /// </summary>
-        public const string WebSiteNonEmpty = "54002";
-        
-        /// <summary>
-        /// Specified Host Name {0} is already taken by another site.
-        /// </summary>
-        public const string HostNameConflict = "54003";
-    }
-}
-
-namespace Microsoft.WindowsAzure.Management.WebSites
-{
-    /// <summary>
     /// The Windows Azure Web Sites management API provides a RESTful set of
     /// web services that interact with Windows Azure Web Sites service to
     /// manage your web sites. The API has entities that capture the
@@ -4245,6 +4349,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// </summary>
     public partial interface IWebSiteManagementClient
     {
+        /// <summary>
+        /// The URI used as the base for all Service Management requests.
+        /// </summary>
+        Uri BaseUri
+        {
+            get; 
+        }
+        
         /// <summary>
         /// When you create a Windows Azure subscription, it is uniquely
         /// identified by a subscription ID. The subscription ID forms part of
@@ -4260,17 +4372,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// The URI used as the base for all Service Management requests.
+        /// Operations for managing the server farm in a web space.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
         /// </summary>
-        Uri BaseUri
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing web spaces beneath your subscription.
-        /// </summary>
-        IWebSpaceOperations WebSpaces
+        IServerFarmOperations ServerFarms
         {
             get; 
         }
@@ -4284,11 +4390,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Operations for managing the server farm in a web space.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
+        /// Operations for managing web spaces beneath your subscription.
         /// </summary>
-        IServerFarmOperations ServerFarms
+        IWebSpaceOperations WebSpaces
         {
             get; 
         }
@@ -4433,6 +4537,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// </summary>
     public partial class WebSiteManagementClient : ServiceClient<WebSiteManagementClient>, IWebSiteManagementClient
     {
+        private Uri _baseUri;
+        
+        /// <summary>
+        /// The URI used as the base for all Service Management requests.
+        /// </summary>
+        public Uri BaseUri
+        {
+            get { return this._baseUri; }
+        }
+        
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
@@ -4449,36 +4563,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             get { return this._credentials; }
         }
         
-        private Uri _baseUri;
-        
-        /// <summary>
-        /// The URI used as the base for all Service Management requests.
-        /// </summary>
-        public Uri BaseUri
-        {
-            get { return this._baseUri; }
-        }
-        
-        private IWebSpaceOperations _webSpaces;
-        
-        /// <summary>
-        /// Operations for managing web spaces beneath your subscription.
-        /// </summary>
-        public virtual IWebSpaceOperations WebSpaces
-        {
-            get { return this._webSpaces; }
-        }
-        
-        private IWebSiteOperations _webSites;
-        
-        /// <summary>
-        /// Operations for managing the web sites in a web space.
-        /// </summary>
-        public virtual IWebSiteOperations WebSites
-        {
-            get { return this._webSites; }
-        }
-        
         private IServerFarmOperations _serverFarms;
         
         /// <summary>
@@ -4491,15 +4575,35 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             get { return this._serverFarms; }
         }
         
+        private IWebSiteOperations _webSites;
+        
+        /// <summary>
+        /// Operations for managing the web sites in a web space.
+        /// </summary>
+        public virtual IWebSiteOperations WebSites
+        {
+            get { return this._webSites; }
+        }
+        
+        private IWebSpaceOperations _webSpaces;
+        
+        /// <summary>
+        /// Operations for managing web spaces beneath your subscription.
+        /// </summary>
+        public virtual IWebSpaceOperations WebSpaces
+        {
+            get { return this._webSpaces; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         private WebSiteManagementClient()
             : base()
         {
-            this._webSpaces = new WebSpaceOperations(this);
-            this._webSites = new WebSiteOperations(this);
             this._serverFarms = new ServerFarmOperations(this);
+            this._webSites = new WebSiteOperations(this);
+            this._webSpaces = new WebSpaceOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -4596,7 +4700,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4695,7 +4799,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4760,39 +4864,50 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     }
     
     /// <summary>
-    /// Operations for managing web spaces beneath your subscription.
+    /// Operations for managing the server farm in a web space.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx for
+    /// more information)
     /// </summary>
-    public partial interface IWebSpaceOperations
+    public partial interface IServerFarmOperations
     {
         /// <summary>
-        /// Get the dns suffix for this subscription.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get DNS Suffix operation response.
-        /// </returns>
-        Task<WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// You can list the webspaces under the current subscription by
-        /// issuing a GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
         /// for more information)
         /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Server Farm operation.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List Web Spaces operation response.
+        /// The Create Server Farm operation response.
         /// </returns>
-        Task<WebSpacesListResponse> ListAsync(CancellationToken cancellationToken);
+        Task<ServerFarmCreateResponse> CreateAsync(string webSpaceName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// You can retrieve details for a specified webspace name by issuing
-        /// an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
@@ -4802,296 +4917,128 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Space Details operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<WebSpacesGetResponse> GetAsync(string webSpaceName, CancellationToken cancellationToken);
+        Task<OperationResponse> DeleteAsync(string webSpaceName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the source control users allowed to publish to this web space.
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
         /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='serverFarmName'>
+        /// The name of the server farm.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List Publishing Users operation response.
+        /// The Get Server Farm operation response.
         /// </returns>
-        Task<WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(CancellationToken cancellationToken);
+        Task<ServerFarmGetResponse> GetAsync(string webSpaceName, string serverFarmName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// You can retrieve a list of all web sites in a web space by issuing
-        /// an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236429.aspx
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Server Farm operation response.
+        /// </returns>
+        Task<ServerFarmListResponse> ListAsync(string webSpaceName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
         /// The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters
+        /// Parameters supplied to the Update Server Farm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List Web Sites operation response.
+        /// The Update Server Farm operation response.
         /// </returns>
-        Task<WebSpacesListWebSitesResponse> ListWebSitesAsync(string webSpaceName, WebSiteListParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Creates a source control user allowed to publish to this web space.
-        /// </summary>
-        /// <param name='username'>
-        /// The user name.
-        /// </param>
-        /// <param name='password'>
-        /// The user password.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Publishing User operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Create Publishing User operation response.
-        /// </returns>
-        Task<WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(string username, string password, WebSpacesCreatePublishingUserParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get the available geo regions for this webspace.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get DNS Suffix operation response.
-        /// </returns>
-        Task<WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken);
+        Task<ServerFarmUpdateResponse> UpdateAsync(string webSpaceName, ServerFarmUpdateParameters parameters, CancellationToken cancellationToken);
     }
     
     /// <summary>
-    /// Operations for managing web spaces beneath your subscription.
+    /// Operations for managing the server farm in a web space.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx for
+    /// more information)
     /// </summary>
-    public static partial class WebSpaceOperationsExtensions
+    public static partial class ServerFarmOperationsExtensions
     {
         /// <summary>
-        /// Get the dns suffix for this subscription.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
-        /// </param>
-        /// <returns>
-        /// The Get DNS Suffix operation response.
-        /// </returns>
-        public static WebSpacesGetDnsSuffixResponse GetDnsSuffix(this IWebSpaceOperations operations)
-        {
-            try
-            {
-                return operations.GetDnsSuffixAsync().Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Get the dns suffix for this subscription.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
-        /// </param>
-        /// <returns>
-        /// The Get DNS Suffix operation response.
-        /// </returns>
-        public static Task<WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(this IWebSpaceOperations operations)
-        {
-            return operations.GetDnsSuffixAsync(CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can list the webspaces under the current subscription by
-        /// issuing a GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
-        /// </param>
-        /// <returns>
-        /// The List Web Spaces operation response.
-        /// </returns>
-        public static WebSpacesListResponse List(this IWebSpaceOperations operations)
-        {
-            try
-            {
-                return operations.ListAsync().Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can list the webspaces under the current subscription by
-        /// issuing a GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
-        /// </param>
-        /// <returns>
-        /// The List Web Spaces operation response.
-        /// </returns>
-        public static Task<WebSpacesListResponse> ListAsync(this IWebSpaceOperations operations)
-        {
-            return operations.ListAsync(CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can retrieve details for a specified webspace name by issuing
-        /// an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <returns>
-        /// The Get Web Space Details operation response.
-        /// </returns>
-        public static WebSpacesGetResponse Get(this IWebSpaceOperations operations, string webSpaceName)
-        {
-            try
-            {
-                return operations.GetAsync(webSpaceName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can retrieve details for a specified webspace name by issuing
-        /// an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <returns>
-        /// The Get Web Space Details operation response.
-        /// </returns>
-        public static Task<WebSpacesGetResponse> GetAsync(this IWebSpaceOperations operations, string webSpaceName)
-        {
-            return operations.GetAsync(webSpaceName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Get the source control users allowed to publish to this web space.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
-        /// </param>
-        /// <returns>
-        /// The List Publishing Users operation response.
-        /// </returns>
-        public static WebSpacesListPublishingUsersResponse ListPublishingUsers(this IWebSpaceOperations operations)
-        {
-            try
-            {
-                return operations.ListPublishingUsersAsync().Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Get the source control users allowed to publish to this web space.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
-        /// </param>
-        /// <returns>
-        /// The List Publishing Users operation response.
-        /// </returns>
-        public static Task<WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(this IWebSpaceOperations operations)
-        {
-            return operations.ListPublishingUsersAsync(CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can retrieve a list of all web sites in a web space by issuing
-        /// an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236429.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
         /// The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters
+        /// Parameters supplied to the Create Server Farm operation.
         /// </param>
         /// <returns>
-        /// The List Web Sites operation response.
+        /// The Create Server Farm operation response.
         /// </returns>
-        public static WebSpacesListWebSitesResponse ListWebSites(this IWebSpaceOperations operations, string webSpaceName, WebSiteListParameters parameters)
+        public static ServerFarmCreateResponse Create(this IServerFarmOperations operations, string webSpaceName, ServerFarmCreateParameters parameters)
         {
             try
             {
-                return operations.ListWebSitesAsync(webSpaceName, parameters).Result;
+                return operations.CreateAsync(webSpaceName, parameters).Result;
             }
             catch (AggregateException ex)
             {
@@ -5107,53 +5054,65 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can retrieve a list of all web sites in a web space by issuing
-        /// an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236429.aspx
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
         /// The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters
+        /// Parameters supplied to the Create Server Farm operation.
         /// </param>
         /// <returns>
-        /// The List Web Sites operation response.
+        /// The Create Server Farm operation response.
         /// </returns>
-        public static Task<WebSpacesListWebSitesResponse> ListWebSitesAsync(this IWebSpaceOperations operations, string webSpaceName, WebSiteListParameters parameters)
+        public static Task<ServerFarmCreateResponse> CreateAsync(this IServerFarmOperations operations, string webSpaceName, ServerFarmCreateParameters parameters)
         {
-            return operations.ListWebSitesAsync(webSpaceName, parameters, CancellationToken.None);
+            return operations.CreateAsync(webSpaceName, parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Creates a source control user allowed to publish to this web space.
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
-        /// <param name='username'>
-        /// The user name.
-        /// </param>
-        /// <param name='password'>
-        /// The user password.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Publishing User operation.
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
         /// </param>
         /// <returns>
-        /// The Create Publishing User operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static WebSpacesCreatePublishingUserResponse CreatePublishingUser(this IWebSpaceOperations operations, string username, string password, WebSpacesCreatePublishingUserParameters parameters)
+        public static OperationResponse Delete(this IServerFarmOperations operations, string webSpaceName)
         {
             try
             {
-                return operations.CreatePublishingUserAsync(username, password, parameters).Result;
+                return operations.DeleteAsync(webSpaceName).Result;
             }
             catch (AggregateException ex)
             {
@@ -5169,44 +5128,65 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Creates a source control user allowed to publish to this web space.
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
-        /// <param name='username'>
-        /// The user name.
-        /// </param>
-        /// <param name='password'>
-        /// The user password.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Publishing User operation.
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
         /// </param>
         /// <returns>
-        /// The Create Publishing User operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(this IWebSpaceOperations operations, string username, string password, WebSpacesCreatePublishingUserParameters parameters)
+        public static Task<OperationResponse> DeleteAsync(this IServerFarmOperations operations, string webSpaceName)
         {
-            return operations.CreatePublishingUserAsync(username, password, parameters, CancellationToken.None);
+            return operations.DeleteAsync(webSpaceName, CancellationToken.None);
         }
         
         /// <summary>
-        /// Get the available geo regions for this webspace.
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='serverFarmName'>
+        /// The name of the server farm.
         /// </param>
         /// <returns>
-        /// The Get DNS Suffix operation response.
+        /// The Get Server Farm operation response.
         /// </returns>
-        public static WebSpacesListGeoRegionsResponse ListGeoRegions(this IWebSpaceOperations operations)
+        public static ServerFarmGetResponse Get(this IServerFarmOperations operations, string webSpaceName, string serverFarmName)
         {
             try
             {
-                return operations.ListGeoRegionsAsync().Result;
+                return operations.GetAsync(webSpaceName, serverFarmName).Result;
             }
             catch (AggregateException ex)
             {
@@ -5222,33 +5202,197 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Get the available geo regions for this webspace.
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='serverFarmName'>
+        /// The name of the server farm.
         /// </param>
         /// <returns>
-        /// The Get DNS Suffix operation response.
+        /// The Get Server Farm operation response.
         /// </returns>
-        public static Task<WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(this IWebSpaceOperations operations)
+        public static Task<ServerFarmGetResponse> GetAsync(this IServerFarmOperations operations, string webSpaceName, string serverFarmName)
         {
-            return operations.ListGeoRegionsAsync(CancellationToken.None);
+            return operations.GetAsync(webSpaceName, serverFarmName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <returns>
+        /// The List Server Farm operation response.
+        /// </returns>
+        public static ServerFarmListResponse List(this IServerFarmOperations operations, string webSpaceName)
+        {
+            try
+            {
+                return operations.ListAsync(webSpaceName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <returns>
+        /// The List Server Farm operation response.
+        /// </returns>
+        public static Task<ServerFarmListResponse> ListAsync(this IServerFarmOperations operations, string webSpaceName)
+        {
+            return operations.ListAsync(webSpaceName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Server Farm operation.
+        /// </param>
+        /// <returns>
+        /// The Update Server Farm operation response.
+        /// </returns>
+        public static ServerFarmUpdateResponse Update(this IServerFarmOperations operations, string webSpaceName, ServerFarmUpdateParameters parameters)
+        {
+            try
+            {
+                return operations.UpdateAsync(webSpaceName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Server Farm operation.
+        /// </param>
+        /// <returns>
+        /// The Update Server Farm operation response.
+        /// </returns>
+        public static Task<ServerFarmUpdateResponse> UpdateAsync(this IServerFarmOperations operations, string webSpaceName, ServerFarmUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(webSpaceName, parameters, CancellationToken.None);
         }
     }
     
     /// <summary>
-    /// Operations for managing web spaces beneath your subscription.
+    /// Operations for managing the server farm in a web space.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx for
+    /// more information)
     /// </summary>
-    internal partial class WebSpaceOperations : IServiceOperations<WebSiteManagementClient>, IWebSpaceOperations
+    internal partial class ServerFarmOperations : IServiceOperations<WebSiteManagementClient>, IServerFarmOperations
     {
         /// <summary>
-        /// Initializes a new instance of the WebSpaceOperations class.
+        /// Initializes a new instance of the ServerFarmOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal WebSpaceOperations(WebSiteManagementClient client)
+        internal ServerFarmOperations(WebSiteManagementClient client)
         {
             this._client = client;
         }
@@ -5265,664 +5409,40 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Get the dns suffix for this subscription.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get DNS Suffix operation response.
-        /// </returns>
-        public async Task<WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "GetDnsSuffixAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=dnssuffix";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSpacesGetDnsSuffixResponse result = new WebSpacesGetDnsSuffixResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (stringElement != null)
-                    {
-                        result.DnsSuffix = stringElement.Value;
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can list the webspaces under the current subscription by
-        /// issuing a GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Web Spaces operation response.
-        /// </returns>
-        public async Task<WebSpacesListResponse> ListAsync(CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSpacesListResponse result = new WebSpacesListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement webSpacesSequenceElement = responseDoc.Element(XName.Get("WebSpaces", "http://schemas.microsoft.com/windowsazure"));
-                    if (webSpacesSequenceElement != null)
-                    {
-                        foreach (XElement webSpacesElement in webSpacesSequenceElement.Elements(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure")))
-                        {
-                            WebSpacesListResponse.WebSpace webSpaceInstance = new WebSpacesListResponse.WebSpace();
-                            result.WebSpaces.Add(webSpaceInstance);
-                            
-                            XElement availabilityStateElement = webSpacesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                            if (availabilityStateElement != null)
-                            {
-                                WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, false);
-                                webSpaceInstance.AvailabilityState = availabilityStateInstance;
-                            }
-                            
-                            XElement currentNumberOfWorkersElement = webSpacesElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentNumberOfWorkersElement != null && string.IsNullOrEmpty(currentNumberOfWorkersElement.Value) == false)
-                            {
-                                bool isNil = false;
-                                XAttribute nilAttribute = currentNumberOfWorkersElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                if (nilAttribute != null)
-                                {
-                                    isNil = nilAttribute.Value == "true";
-                                }
-                                if (isNil == false)
-                                {
-                                    int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                                    webSpaceInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
-                                }
-                            }
-                            
-                            XElement currentWorkerSizeElement = webSpacesElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentWorkerSizeElement != null && string.IsNullOrEmpty(currentWorkerSizeElement.Value) == false)
-                            {
-                                bool isNil2 = false;
-                                XAttribute nilAttribute2 = currentWorkerSizeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                if (nilAttribute2 != null)
-                                {
-                                    isNil2 = nilAttribute2.Value == "true";
-                                }
-                                if (isNil2 == false)
-                                {
-                                    WebSpaceWorkerSize currentWorkerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, false);
-                                    webSpaceInstance.CurrentWorkerSize = currentWorkerSizeInstance;
-                                }
-                            }
-                            
-                            XElement geoLocationElement = webSpacesElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoLocationElement != null)
-                            {
-                                string geoLocationInstance = geoLocationElement.Value;
-                                webSpaceInstance.GeoLocation = geoLocationInstance;
-                            }
-                            
-                            XElement geoRegionElement = webSpacesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoRegionElement != null)
-                            {
-                                string geoRegionInstance = geoRegionElement.Value;
-                                webSpaceInstance.GeoRegion = geoRegionInstance;
-                            }
-                            
-                            XElement nameElement = webSpacesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                webSpaceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement planElement = webSpacesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                            if (planElement != null)
-                            {
-                                string planInstance = planElement.Value;
-                                webSpaceInstance.Plan = planInstance;
-                            }
-                            
-                            XElement statusElement = webSpacesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusElement != null)
-                            {
-                                WebSpaceStatus statusInstance = (WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, false);
-                                webSpaceInstance.Status = statusInstance;
-                            }
-                            
-                            XElement subscriptionElement = webSpacesElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
-                            if (subscriptionElement != null)
-                            {
-                                string subscriptionInstance = subscriptionElement.Value;
-                                webSpaceInstance.Subscription = subscriptionInstance;
-                            }
-                            
-                            XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (workerSizeElement != null && string.IsNullOrEmpty(workerSizeElement.Value) == false)
-                            {
-                                WebSpaceWorkerSize workerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, false);
-                                webSpaceInstance.WorkerSize = workerSizeInstance;
-                            }
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can retrieve details for a specified webspace name by issuing
-        /// an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Web Space Details operation response.
-        /// </returns>
-        public async Task<WebSpacesGetResponse> GetAsync(string webSpaceName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName;
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSpacesGetResponse result = new WebSpacesGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement webSpacesElement = responseDoc.Element(XName.Get("WebSpaces", "http://schemas.microsoft.com/windowsazure"));
-                    if (webSpacesElement != null)
-                    {
-                        XElement availabilityStateElement = webSpacesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                        if (availabilityStateElement != null)
-                        {
-                            WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, false);
-                            result.AvailabilityState = availabilityStateInstance;
-                        }
-                        
-                        XElement currentNumberOfWorkersElement = webSpacesElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentNumberOfWorkersElement != null && string.IsNullOrEmpty(currentNumberOfWorkersElement.Value) == false)
-                        {
-                            bool isNil = false;
-                            XAttribute nilAttribute = currentNumberOfWorkersElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute != null)
-                            {
-                                isNil = nilAttribute.Value == "true";
-                            }
-                            if (isNil == false)
-                            {
-                                int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                                result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
-                            }
-                        }
-                        
-                        XElement currentWorkerSizeElement = webSpacesElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentWorkerSizeElement != null && string.IsNullOrEmpty(currentWorkerSizeElement.Value) == false)
-                        {
-                            bool isNil2 = false;
-                            XAttribute nilAttribute2 = currentWorkerSizeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute2 != null)
-                            {
-                                isNil2 = nilAttribute2.Value == "true";
-                            }
-                            if (isNil2 == false)
-                            {
-                                WebSpaceWorkerSize currentWorkerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, false);
-                                result.CurrentWorkerSize = currentWorkerSizeInstance;
-                            }
-                        }
-                        
-                        XElement geoLocationElement = webSpacesElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
-                        if (geoLocationElement != null)
-                        {
-                            string geoLocationInstance = geoLocationElement.Value;
-                            result.GeoLocation = geoLocationInstance;
-                        }
-                        
-                        XElement geoRegionElement = webSpacesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
-                        if (geoRegionElement != null)
-                        {
-                            string geoRegionInstance = geoRegionElement.Value;
-                            result.GeoRegion = geoRegionInstance;
-                        }
-                        
-                        XElement nameElement = webSpacesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement planElement = webSpacesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                        if (planElement != null)
-                        {
-                            string planInstance = planElement.Value;
-                            result.Plan = planInstance;
-                        }
-                        
-                        XElement statusElement = webSpacesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
-                        {
-                            WebSpaceStatus statusInstance = (WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, false);
-                            result.Status = statusInstance;
-                        }
-                        
-                        XElement subscriptionElement = webSpacesElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionElement != null)
-                        {
-                            string subscriptionInstance = subscriptionElement.Value;
-                            result.Subscription = subscriptionInstance;
-                        }
-                        
-                        XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (workerSizeElement != null && string.IsNullOrEmpty(workerSizeElement.Value) == false)
-                        {
-                            WebSpaceWorkerSize workerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, false);
-                            result.WorkerSize = workerSizeInstance;
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Get the source control users allowed to publish to this web space.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Publishing Users operation response.
-        /// </returns>
-        public async Task<WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListPublishingUsersAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=publishingUsers";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSpacesListPublishingUsersResponse result = new WebSpacesListPublishingUsersResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement arrayOfstringSequenceElement = responseDoc.Element(XName.Get("ArrayOfstring", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
-                    if (arrayOfstringSequenceElement != null)
-                    {
-                        foreach (XElement arrayOfstringElement in arrayOfstringSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                        {
-                            WebSpacesListPublishingUsersResponse.User stringInstance = new WebSpacesListPublishingUsersResponse.User();
-                            result.Users.Add(stringInstance);
-                            
-                            string stringInstance2 = arrayOfstringElement.Value;
-                            stringInstance.Name = stringInstance2;
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can retrieve a list of all web sites in a web space by issuing
-        /// an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236429.aspx
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
         /// The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters
+        /// Parameters supplied to the Create Server Farm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List Web Sites operation response.
+        /// The Create Server Farm operation response.
         /// </returns>
-        public async Task<WebSpacesListWebSitesResponse> ListWebSitesAsync(string webSpaceName, WebSiteListParameters parameters, CancellationToken cancellationToken)
+        public async Task<ServerFarmCreateResponse> CreateAsync(string webSpaceName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
             {
                 throw new ArgumentNullException("webSpaceName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
             }
             
             // Tracing
@@ -5934,501 +5454,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("webSpaceName", webSpaceName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListWebSitesAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites?";
-            if (parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
-            {
-                url = url + "&propertiesToInclude=" + Uri.EscapeUriString(string.Join(",", parameters.PropertiesToInclude));
-            }
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = HttpMethod.Post;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSpacesListWebSitesResponse result = new WebSpacesListWebSitesResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement sitesSequenceElement = responseDoc.Element(XName.Get("Sites", "http://schemas.microsoft.com/windowsazure"));
-                    if (sitesSequenceElement != null)
-                    {
-                        foreach (XElement sitesElement in sitesSequenceElement.Elements(XName.Get("Site", "http://schemas.microsoft.com/windowsazure")))
-                        {
-                            WebSite siteInstance = new WebSite();
-                            result.WebSites.Add(siteInstance);
-                            
-                            XElement adminEnabledElement = sitesElement.Element(XName.Get("AdminEnabled", "http://schemas.microsoft.com/windowsazure"));
-                            if (adminEnabledElement != null)
-                            {
-                                bool adminEnabledInstance = bool.Parse(adminEnabledElement.Value);
-                                siteInstance.AdminEnabled = adminEnabledInstance;
-                            }
-                            
-                            XElement availabilityStateElement = sitesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                            if (availabilityStateElement != null)
-                            {
-                                WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, false);
-                                siteInstance.AvailabilityState = availabilityStateInstance;
-                            }
-                            
-                            XElement computeModeElement = sitesElement.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
-                            if (computeModeElement != null)
-                            {
-                                WebSiteComputeMode computeModeInstance = (WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, false);
-                                siteInstance.ComputeMode = computeModeInstance;
-                            }
-                            
-                            XElement enabledElement = sitesElement.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
-                            if (enabledElement != null)
-                            {
-                                bool enabledInstance = bool.Parse(enabledElement.Value);
-                                siteInstance.Enabled = enabledInstance;
-                            }
-                            
-                            XElement enabledHostNamesSequenceElement = sitesElement.Element(XName.Get("EnabledHostNames", "http://schemas.microsoft.com/windowsazure"));
-                            if (enabledHostNamesSequenceElement != null)
-                            {
-                                foreach (XElement enabledHostNamesElement in enabledHostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                                {
-                                    siteInstance.EnabledHostNames.Add(enabledHostNamesElement.Value);
-                                }
-                            }
-                            
-                            XElement hostNameSslStatesSequenceElement = sitesElement.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
-                            if (hostNameSslStatesSequenceElement != null)
-                            {
-                                foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    WebSite.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
-                                    siteInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
-                                    
-                                    XElement nameElement = hostNameSslStatesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement != null)
-                                    {
-                                        string nameInstance = nameElement.Value;
-                                        webSiteHostNameSslStateInstance.Name = nameInstance;
-                                    }
-                                    
-                                    XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
-                                    if (sslStateElement != null)
-                                    {
-                                        WebSiteSslState sslStateInstance = (WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, false);
-                                        webSiteHostNameSslStateInstance.SslState = sslStateInstance;
-                                    }
-                                    
-                                    XElement thumbprintElement = hostNameSslStatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                    if (thumbprintElement != null)
-                                    {
-                                        bool isNil = false;
-                                        XAttribute nilAttribute = thumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute != null)
-                                        {
-                                            isNil = nilAttribute.Value == "true";
-                                        }
-                                        if (isNil == false)
-                                        {
-                                            string thumbprintInstance = thumbprintElement.Value;
-                                            webSiteHostNameSslStateInstance.Thumbprint = thumbprintInstance;
-                                        }
-                                    }
-                                    
-                                    XElement virtualIPElement = hostNameSslStatesElement.Element(XName.Get("VirtualIP", "http://schemas.microsoft.com/windowsazure"));
-                                    if (virtualIPElement != null)
-                                    {
-                                        bool isNil2 = false;
-                                        XAttribute nilAttribute2 = virtualIPElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute2 != null)
-                                        {
-                                            isNil2 = nilAttribute2.Value == "true";
-                                        }
-                                        if (isNil2 == false)
-                                        {
-                                            string virtualIPInstance = virtualIPElement.Value;
-                                            webSiteHostNameSslStateInstance.VirtualIP = virtualIPInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            XElement hostNamesSequenceElement = sitesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                            if (hostNamesSequenceElement != null)
-                            {
-                                foreach (XElement hostNamesElement in hostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                                {
-                                    siteInstance.HostNames.Add(hostNamesElement.Value);
-                                }
-                            }
-                            
-                            XElement lastModifiedTimeUtcElement = sitesElement.Element(XName.Get("LastModifiedTimeUtc", "http://schemas.microsoft.com/windowsazure"));
-                            if (lastModifiedTimeUtcElement != null)
-                            {
-                                DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture);
-                                siteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
-                            }
-                            
-                            XElement nameElement2 = sitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement2 != null)
-                            {
-                                string nameInstance2 = nameElement2.Value;
-                                siteInstance.Name = nameInstance2;
-                            }
-                            
-                            XElement ownerElement = sitesElement.Element(XName.Get("Owner", "http://schemas.microsoft.com/windowsazure"));
-                            if (ownerElement != null)
-                            {
-                                bool isNil3 = false;
-                                XAttribute nilAttribute3 = ownerElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                if (nilAttribute3 != null)
-                                {
-                                    isNil3 = nilAttribute3.Value == "true";
-                                }
-                                if (isNil3 == false)
-                                {
-                                    string ownerInstance = ownerElement.Value;
-                                    siteInstance.Owner = ownerInstance;
-                                }
-                            }
-                            
-                            XElement repositorySiteNameElement = sitesElement.Element(XName.Get("RepositorySiteName", "http://schemas.microsoft.com/windowsazure"));
-                            if (repositorySiteNameElement != null)
-                            {
-                                string repositorySiteNameInstance = repositorySiteNameElement.Value;
-                                siteInstance.RepositorySiteName = repositorySiteNameInstance;
-                            }
-                            
-                            XElement runtimeAvailabilityStateElement = sitesElement.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                            if (runtimeAvailabilityStateElement != null)
-                            {
-                                WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = (WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, false);
-                                siteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
-                            }
-                            
-                            XElement sSLCertificatesSequenceElement = sitesElement.Element(XName.Get("SSLCertificates", "http://schemas.microsoft.com/windowsazure"));
-                            if (sSLCertificatesSequenceElement != null)
-                            {
-                                foreach (XElement sSLCertificatesElement in sSLCertificatesSequenceElement.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    WebSite.WebSiteSslCertificate certificateInstance = new WebSite.WebSiteSslCertificate();
-                                    siteInstance.SslCertificates.Add(certificateInstance);
-                                    
-                                    XElement expirationDateElement = sSLCertificatesElement.Element(XName.Get("ExpirationDate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (expirationDateElement != null)
-                                    {
-                                        DateTime expirationDateInstance = DateTime.Parse(expirationDateElement.Value, CultureInfo.InvariantCulture);
-                                        certificateInstance.ExpirationDate = expirationDateInstance;
-                                    }
-                                    
-                                    XElement friendlyNameElement = sSLCertificatesElement.Element(XName.Get("FriendlyName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (friendlyNameElement != null)
-                                    {
-                                        string friendlyNameInstance = friendlyNameElement.Value;
-                                        certificateInstance.FriendlyName = friendlyNameInstance;
-                                    }
-                                    
-                                    XElement hostNamesSequenceElement2 = sSLCertificatesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                                    if (hostNamesSequenceElement2 != null)
-                                    {
-                                        foreach (XElement hostNamesElement2 in hostNamesSequenceElement2.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                                        {
-                                            certificateInstance.HostNames.Add(hostNamesElement2.Value);
-                                        }
-                                    }
-                                    
-                                    XElement issueDateElement = sSLCertificatesElement.Element(XName.Get("IssueDate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (issueDateElement != null)
-                                    {
-                                        DateTime issueDateInstance = DateTime.Parse(issueDateElement.Value, CultureInfo.InvariantCulture);
-                                        certificateInstance.IssueDate = issueDateInstance;
-                                    }
-                                    
-                                    XElement issuerElement = sSLCertificatesElement.Element(XName.Get("Issuer", "http://schemas.microsoft.com/windowsazure"));
-                                    if (issuerElement != null)
-                                    {
-                                        string issuerInstance = issuerElement.Value;
-                                        certificateInstance.Issuer = issuerInstance;
-                                    }
-                                    
-                                    XElement passwordElement = sSLCertificatesElement.Element(XName.Get("Password", "http://schemas.microsoft.com/windowsazure"));
-                                    if (passwordElement != null)
-                                    {
-                                        string passwordInstance = passwordElement.Value;
-                                        certificateInstance.Password = passwordInstance;
-                                    }
-                                    
-                                    XElement pfxBlobElement = sSLCertificatesElement.Element(XName.Get("PfxBlob", "http://schemas.microsoft.com/windowsazure"));
-                                    if (pfxBlobElement != null)
-                                    {
-                                        byte[] pfxBlobInstance = Convert.FromBase64String(pfxBlobElement.Value);
-                                        certificateInstance.PfxBlob = pfxBlobInstance;
-                                    }
-                                    
-                                    XElement selfLinkElement = sSLCertificatesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                                    if (selfLinkElement != null)
-                                    {
-                                        Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
-                                        certificateInstance.SelfLinkUri = selfLinkInstance;
-                                    }
-                                    
-                                    XElement siteNameElement = sSLCertificatesElement.Element(XName.Get("SiteName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (siteNameElement != null)
-                                    {
-                                        string siteNameInstance = siteNameElement.Value;
-                                        certificateInstance.SiteName = siteNameInstance;
-                                    }
-                                    
-                                    XElement subjectNameElement = sSLCertificatesElement.Element(XName.Get("SubjectName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (subjectNameElement != null)
-                                    {
-                                        string subjectNameInstance = subjectNameElement.Value;
-                                        certificateInstance.SubjectName = subjectNameInstance;
-                                    }
-                                    
-                                    XElement thumbprintElement2 = sSLCertificatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                    if (thumbprintElement2 != null)
-                                    {
-                                        string thumbprintInstance2 = thumbprintElement2.Value;
-                                        certificateInstance.Thumbprint = thumbprintInstance2;
-                                    }
-                                    
-                                    XElement toDeleteElement = sSLCertificatesElement.Element(XName.Get("ToDelete", "http://schemas.microsoft.com/windowsazure"));
-                                    if (toDeleteElement != null)
-                                    {
-                                        bool toDeleteInstance = bool.Parse(toDeleteElement.Value);
-                                        certificateInstance.IsToBeDeleted = toDeleteInstance;
-                                    }
-                                    
-                                    XElement validElement = sSLCertificatesElement.Element(XName.Get("Valid", "http://schemas.microsoft.com/windowsazure"));
-                                    if (validElement != null)
-                                    {
-                                        bool validInstance = bool.Parse(validElement.Value);
-                                        certificateInstance.IsValid = validInstance;
-                                    }
-                                }
-                            }
-                            
-                            XElement selfLinkElement2 = sitesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement2 != null)
-                            {
-                                Uri selfLinkInstance2 = TypeConversion.TryParseUri(selfLinkElement2.Value);
-                                siteInstance.Uri = selfLinkInstance2;
-                            }
-                            
-                            XElement serverFarmElement = sitesElement.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                            if (serverFarmElement != null)
-                            {
-                                string serverFarmInstance = serverFarmElement.Value;
-                                siteInstance.ServerFarm = serverFarmInstance;
-                            }
-                            
-                            XElement siteModeElement = sitesElement.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
-                            if (siteModeElement != null)
-                            {
-                                WebSiteMode siteModeInstance = (WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, false);
-                                siteInstance.SiteMode = siteModeInstance;
-                            }
-                            
-                            XElement sitePropertiesElement = sitesElement.Element(XName.Get("SiteProperties", "http://schemas.microsoft.com/windowsazure"));
-                            if (sitePropertiesElement != null)
-                            {
-                                WebSite.WebSiteProperties sitePropertiesInstance = new WebSite.WebSiteProperties();
-                                siteInstance.SiteProperties = sitePropertiesInstance;
-                                
-                                XElement appSettingsSequenceElement = sitePropertiesElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
-                                if (appSettingsSequenceElement != null)
-                                {
-                                    foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
-                                    {
-                                        string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        string appSettingsValue = appSettingsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        sitePropertiesInstance.AppSettings.Add(appSettingsKey, appSettingsValue);
-                                    }
-                                }
-                                
-                                XElement metadataSequenceElement = sitePropertiesElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
-                                if (metadataSequenceElement != null)
-                                {
-                                    foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
-                                    {
-                                        string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        string metadataValue = metadataElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        sitePropertiesInstance.Metadata.Add(metadataKey, metadataValue);
-                                    }
-                                }
-                                
-                                XElement propertiesSequenceElement = sitePropertiesElement.Element(XName.Get("Properties", "http://schemas.microsoft.com/windowsazure"));
-                                if (propertiesSequenceElement != null)
-                                {
-                                    foreach (XElement propertiesElement in propertiesSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
-                                    {
-                                        string propertiesKey = propertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        string propertiesValue = propertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                        sitePropertiesInstance.Properties.Add(propertiesKey, propertiesValue);
-                                    }
-                                }
-                            }
-                            
-                            XElement stateElement = sitesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
-                            {
-                                WebSiteState stateInstance = (WebSiteState)Enum.Parse(typeof(WebSiteState), stateElement.Value, false);
-                                siteInstance.State = stateInstance;
-                            }
-                            
-                            XElement usageStateElement = sitesElement.Element(XName.Get("UsageState", "http://schemas.microsoft.com/windowsazure"));
-                            if (usageStateElement != null)
-                            {
-                                WebSiteUsageState usageStateInstance = (WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, false);
-                                siteInstance.UsageState = usageStateInstance;
-                            }
-                            
-                            XElement webSpaceElement = sitesElement.Element(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
-                            if (webSpaceElement != null)
-                            {
-                                string webSpaceInstance = webSpaceElement.Value;
-                                siteInstance.WebSpace = webSpaceInstance;
-                            }
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Creates a source control user allowed to publish to this web space.
-        /// </summary>
-        /// <param name='username'>
-        /// The user name.
-        /// </param>
-        /// <param name='password'>
-        /// The user password.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Publishing User operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Create Publishing User operation response.
-        /// </returns>
-        public async Task<WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(string username, string password, WebSpacesCreatePublishingUserParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (username == null)
-            {
-                throw new ArgumentNullException("username");
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException("password");
-            }
-            if (parameters != null)
-            {
-                if (parameters.PublishingPassword == null)
-                {
-                    throw new ArgumentNullException("parameters.PublishingPassword");
-                }
-                if (parameters.PublishingUserName == null)
-                {
-                    throw new ArgumentNullException("parameters.PublishingUserName");
-                }
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("username", username);
-                tracingParameters.Add("password", password);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreatePublishingUserAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=publishingCredentials";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6438,25 +5479,40 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                if (parameters != null)
+                XElement serverFarmElement = new XElement(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(serverFarmElement);
+                
+                if (parameters.CurrentNumberOfWorkers != null)
                 {
-                    XElement userElement = new XElement(XName.Get("User", "http://schemas.microsoft.com/windowsazure"));
-                    requestDoc.Add(userElement);
-                    
-                    if (parameters.Name != null)
-                    {
-                        XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        nameElement.Value = parameters.Name;
-                        userElement.Add(nameElement);
-                    }
-                    
-                    XElement publishingPasswordElement = new XElement(XName.Get("PublishingPassword", "http://schemas.microsoft.com/windowsazure"));
-                    publishingPasswordElement.Value = parameters.PublishingPassword;
-                    userElement.Add(publishingPasswordElement);
-                    
-                    XElement publishingUserNameElement = new XElement(XName.Get("PublishingUserName", "http://schemas.microsoft.com/windowsazure"));
-                    publishingUserNameElement.Value = parameters.PublishingUserName;
-                    userElement.Add(publishingUserNameElement);
+                    XElement currentNumberOfWorkersElement = new XElement(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                    currentNumberOfWorkersElement.Value = parameters.CurrentNumberOfWorkers.ToString();
+                    serverFarmElement.Add(currentNumberOfWorkersElement);
+                }
+                
+                if (parameters.CurrentWorkerSize != null)
+                {
+                    XElement currentWorkerSizeElement = new XElement(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                    currentWorkerSizeElement.Value = parameters.CurrentWorkerSize.ToString();
+                    serverFarmElement.Add(currentWorkerSizeElement);
+                }
+                
+                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                nameElement.Value = "DefaultServerFarm";
+                serverFarmElement.Add(nameElement);
+                
+                XElement numberOfWorkersElement = new XElement(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                numberOfWorkersElement.Value = parameters.NumberOfWorkers.ToString();
+                serverFarmElement.Add(numberOfWorkersElement);
+                
+                XElement workerSizeElement = new XElement(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                workerSizeElement.Value = parameters.WorkerSize.ToString();
+                serverFarmElement.Add(workerSizeElement);
+                
+                if (parameters.Status != null)
+                {
+                    XElement statusElement = new XElement(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                    statusElement.Value = parameters.Status.ToString();
+                    serverFarmElement.Add(statusElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -6478,7 +5534,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -6490,7 +5546,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     }
                     
                     // Create Result
-                    WebSpacesCreatePublishingUserResponse result = new WebSpacesCreatePublishingUserResponse();
+                    ServerFarmCreateResponse result = new ServerFarmCreateResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -6502,28 +5558,49 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement userElement2 = responseDoc.Element(XName.Get("User", "http://schemas.microsoft.com/windowsazure"));
-                    if (userElement2 != null)
+                    XElement serverFarmElement2 = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                    if (serverFarmElement2 != null)
                     {
-                        XElement nameElement2 = userElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        XElement currentNumberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (currentNumberOfWorkersElement2 != null)
+                        {
+                            int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
+                            result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                        }
+                        
+                        XElement currentWorkerSizeElement2 = serverFarmElement2.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (currentWorkerSizeElement2 != null)
+                        {
+                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, false);
+                            result.CurrentWorkerSize = currentWorkerSizeInstance;
+                        }
+                        
+                        XElement nameElement2 = serverFarmElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement2 != null)
                         {
                             string nameInstance = nameElement2.Value;
                             result.Name = nameInstance;
                         }
                         
-                        XElement publishingPasswordElement2 = userElement2.Element(XName.Get("PublishingPassword", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishingPasswordElement2 != null)
+                        XElement numberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (numberOfWorkersElement2 != null)
                         {
-                            string publishingPasswordInstance = publishingPasswordElement2.Value;
-                            result.PublishingPassword = publishingPasswordInstance;
+                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
+                            result.NumberOfWorkers = numberOfWorkersInstance;
                         }
                         
-                        XElement publishingUserNameElement2 = userElement2.Element(XName.Get("PublishingUserName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishingUserNameElement2 != null)
+                        XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (workerSizeElement2 != null)
                         {
-                            string publishingUserNameInstance = publishingUserNameElement2.Value;
-                            result.PublishingUserName = publishingUserNameInstance;
+                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, false);
+                            result.WorkerSize = workerSizeInstance;
+                        }
+                        
+                        XElement statusElement2 = serverFarmElement2.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                        if (statusElement2 != null)
+                        {
+                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, false);
+                            result.Status = statusInstance;
                         }
                     }
                     
@@ -6551,17 +5628,35 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Get the available geo regions for this webspace.
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
         /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get DNS Suffix operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken)
+        public async Task<OperationResponse> DeleteAsync(string webSpaceName, CancellationToken cancellationToken)
         {
             // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6570,22 +5665,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListGeoRegionsAsync", tracingParameters);
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=georegions";
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
+                httpRequest.Method = HttpMethod.Delete;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6618,7 +5714,131 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     }
                     
                     // Create Result
-                    WebSpacesListGeoRegionsResponse result = new WebSpacesListGeoRegionsResponse();
+                    OperationResponse result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='serverFarmName'>
+        /// The name of the server farm.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Server Farm operation response.
+        /// </returns>
+        public async Task<ServerFarmGetResponse> GetAsync(string webSpaceName, string serverFarmName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (serverFarmName == null)
+            {
+                throw new ArgumentNullException("serverFarmName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("serverFarmName", serverFarmName);
+                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/" + serverFarmName;
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ServerFarmGetResponse result = new ServerFarmGetResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -6630,43 +5850,441 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement geoRegionsSequenceElement = responseDoc.Element(XName.Get("GeoRegions", "http://schemas.microsoft.com/windowsazure"));
-                    if (geoRegionsSequenceElement != null)
+                    XElement serverFarmElement = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                    if (serverFarmElement != null)
                     {
-                        foreach (XElement geoRegionsElement in geoRegionsSequenceElement.Elements(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure")))
+                        XElement currentNumberOfWorkersElement = serverFarmElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (currentNumberOfWorkersElement != null)
                         {
-                            WebSpacesListGeoRegionsResponse.GeoRegion geoRegionInstance = new WebSpacesListGeoRegionsResponse.GeoRegion();
-                            result.GeoRegions.Add(geoRegionInstance);
+                            int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                            result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                        }
+                        
+                        XElement currentWorkerSizeElement = serverFarmElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (currentWorkerSizeElement != null)
+                        {
+                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, false);
+                            result.CurrentWorkerSize = currentWorkerSizeInstance;
+                        }
+                        
+                        XElement nameElement = serverFarmElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            result.Name = nameInstance;
+                        }
+                        
+                        XElement numberOfWorkersElement = serverFarmElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (numberOfWorkersElement != null)
+                        {
+                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                            result.NumberOfWorkers = numberOfWorkersInstance;
+                        }
+                        
+                        XElement workerSizeElement = serverFarmElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (workerSizeElement != null)
+                        {
+                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, false);
+                            result.WorkerSize = workerSizeInstance;
+                        }
+                        
+                        XElement statusElement = serverFarmElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                        if (statusElement != null)
+                        {
+                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, false);
+                            result.Status = statusInstance;
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Server Farm operation response.
+        /// </returns>
+        public async Task<ServerFarmListResponse> ListAsync(string webSpaceName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ServerFarmListResponse result = new ServerFarmListResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement serverFarmsSequenceElement = responseDoc.Element(XName.Get("ServerFarms", "http://schemas.microsoft.com/windowsazure"));
+                    if (serverFarmsSequenceElement != null)
+                    {
+                        foreach (XElement serverFarmsElement in serverFarmsSequenceElement.Elements(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure")))
+                        {
+                            ServerFarmListResponse.ServerFarm serverFarmInstance = new ServerFarmListResponse.ServerFarm();
+                            result.ServerFarms.Add(serverFarmInstance);
                             
-                            XElement descriptionElement = geoRegionsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null)
+                            XElement currentNumberOfWorkersElement = serverFarmsElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentNumberOfWorkersElement != null)
                             {
-                                string descriptionInstance = descriptionElement.Value;
-                                geoRegionInstance.Description = descriptionInstance;
+                                int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                                serverFarmInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
                             }
                             
-                            XElement nameElement = geoRegionsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            XElement currentWorkerSizeElement = serverFarmsElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentWorkerSizeElement != null)
+                            {
+                                ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, false);
+                                serverFarmInstance.CurrentWorkerSize = currentWorkerSizeInstance;
+                            }
+                            
+                            XElement nameElement = serverFarmsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
-                                geoRegionInstance.Name = nameInstance;
+                                serverFarmInstance.Name = nameInstance;
                             }
                             
-                            XElement sortOrderElement = geoRegionsElement.Element(XName.Get("SortOrder", "http://schemas.microsoft.com/windowsazure"));
-                            if (sortOrderElement != null)
+                            XElement numberOfWorkersElement = serverFarmsElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                            if (numberOfWorkersElement != null)
                             {
-                                bool isNil = false;
-                                XAttribute nilAttribute = sortOrderElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                if (nilAttribute != null)
-                                {
-                                    isNil = nilAttribute.Value == "true";
-                                }
-                                if (isNil == false)
-                                {
-                                    int sortOrderInstance = int.Parse(sortOrderElement.Value, CultureInfo.InvariantCulture);
-                                    geoRegionInstance.SortOrder = sortOrderInstance;
-                                }
+                                int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                                serverFarmInstance.NumberOfWorkers = numberOfWorkersInstance;
                             }
+                            
+                            XElement workerSizeElement = serverFarmsElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (workerSizeElement != null)
+                            {
+                                ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, false);
+                                serverFarmInstance.WorkerSize = workerSizeInstance;
+                            }
+                            
+                            XElement statusElement = serverFarmsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                            if (statusElement != null)
+                            {
+                                ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, false);
+                                serverFarmInstance.Status = statusInstance;
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can create a server farm by issuing an HTTP POST request. Only
+        /// one server farm per webspace is permitted. You can retrieve server
+        /// farm details by using HTTP GET, change server farm properties by
+        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
+        /// request body is required for server farm creation (HTTP POST) and
+        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
+        /// will be charged from the moment the server farm is created, even
+        /// if all your sites are still running in Free mode.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Server Farm operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Update Server Farm operation response.
+        /// </returns>
+        public async Task<ServerFarmUpdateResponse> UpdateAsync(string webSpaceName, ServerFarmUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement serverFarmElement = new XElement(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(serverFarmElement);
+                
+                if (parameters.CurrentNumberOfWorkers != null)
+                {
+                    XElement currentNumberOfWorkersElement = new XElement(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                    currentNumberOfWorkersElement.Value = parameters.CurrentNumberOfWorkers.ToString();
+                    serverFarmElement.Add(currentNumberOfWorkersElement);
+                }
+                
+                if (parameters.CurrentWorkerSize != null)
+                {
+                    XElement currentWorkerSizeElement = new XElement(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                    currentWorkerSizeElement.Value = parameters.CurrentWorkerSize.ToString();
+                    serverFarmElement.Add(currentWorkerSizeElement);
+                }
+                
+                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                nameElement.Value = "DefaultServerFarm";
+                serverFarmElement.Add(nameElement);
+                
+                XElement numberOfWorkersElement = new XElement(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                numberOfWorkersElement.Value = parameters.NumberOfWorkers.ToString();
+                serverFarmElement.Add(numberOfWorkersElement);
+                
+                XElement workerSizeElement = new XElement(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                workerSizeElement.Value = parameters.WorkerSize.ToString();
+                serverFarmElement.Add(workerSizeElement);
+                
+                if (parameters.Status != null)
+                {
+                    XElement statusElement = new XElement(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                    statusElement.Value = parameters.Status.ToString();
+                    serverFarmElement.Add(statusElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ServerFarmUpdateResponse result = new ServerFarmUpdateResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement serverFarmElement2 = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                    if (serverFarmElement2 != null)
+                    {
+                        XElement currentNumberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (currentNumberOfWorkersElement2 != null)
+                        {
+                            int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
+                            result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                        }
+                        
+                        XElement currentWorkerSizeElement2 = serverFarmElement2.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (currentWorkerSizeElement2 != null)
+                        {
+                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, false);
+                            result.CurrentWorkerSize = currentWorkerSizeInstance;
+                        }
+                        
+                        XElement nameElement2 = serverFarmElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement2 != null)
+                        {
+                            string nameInstance = nameElement2.Value;
+                            result.Name = nameInstance;
+                        }
+                        
+                        XElement numberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (numberOfWorkersElement2 != null)
+                        {
+                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
+                            result.NumberOfWorkers = numberOfWorkersInstance;
+                        }
+                        
+                        XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (workerSizeElement2 != null)
+                        {
+                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, false);
+                            result.WorkerSize = workerSizeInstance;
+                        }
+                        
+                        XElement statusElement2 = serverFarmElement2.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                        if (statusElement2 != null)
+                        {
+                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, false);
+                            result.Status = statusInstance;
                         }
                     }
                     
@@ -6721,54 +6339,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteCreateResponse> CreateAsync(string webSpaceName, WebSiteCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// You can retrieve details for a web site by issuing an HTTP GET
-        /// request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Details operation response.
-        /// </returns>
-        Task<WebSiteGetResponse> GetAsync(string webSpaceName, string webSiteName, WebSiteGetParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// You can update the settings for a web site by using the HTTP PUT
-        /// method and by specifying the settings in the request body.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167005.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Web Site operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Update Web Site operation response.
-        /// </returns>
-        Task<WebSiteUpdateResponse> UpdateAsync(string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// You can restart a web site by issuing an HTTP POST request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. You can create a repository for your web site by issuing an
+        /// HTTP POST request, or retrieve information about the repository by
+        /// using HTTP GET.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
@@ -6784,7 +6361,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        Task<OperationResponse> CreateRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can delete a web site by issuing an HTTP DELETE request. If the
@@ -6836,34 +6413,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The Delete Web Site Repository operation response.
         /// </returns>
-        Task<OperationResponse> CreateRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Repository operation response.
-        /// </returns>
-        Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can generate a new random password for publishing a site by
@@ -6892,9 +6444,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<OperationResponse> GeneratePasswordAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// You can retrieve the publish settings information for a web site by
-        /// issuing an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
+        /// You can retrieve details for a web site by issuing an HTTP GET
+        /// request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
@@ -6903,13 +6455,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='parameters'>
+        /// Additional parameters
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Publish Profile operation response.
+        /// The Get Web Site Details operation response.
         /// </returns>
-        Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        Task<WebSiteGetResponse> GetAsync(string webSpaceName, string webSiteName, WebSiteGetParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve the config settings for a web site by issuing an
@@ -6931,54 +6486,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The Get Web Site Configuration operation response.
         /// </returns>
         Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// You can retrieve the config settings for a web site by issuing an
-        /// HTTP GET request, or update them by using HTTP PUT with a request
-        /// body that contains the settings to be updated.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='parameters'>
-        /// The Update Web Site Configuration parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> UpdateConfigurationAsync(string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// You can retrieve a site's current usage metrics by issuing an HTTP
-        /// GET request. The metrics returned include CPU Time, Data In, Data
-        /// Out, Local bytes read, Local bytes written, Network bytes read,
-        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
-        /// Minute Limit, and File System Storage.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Usage Metrics operation response.
-        /// </returns>
-        Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve historical usage metrics for a site by issuing an
@@ -7004,6 +6511,26 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// You can retrieve the publish settings information for a web site by
+        /// issuing an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Publish Profile operation response.
+        /// </returns>
+        Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// A web site repository is essentially a GIT repository that you can
         /// use to manage your web site content. By using GIT source control
         /// tools, you can push or pull version controlled changes to your
@@ -7023,9 +6550,100 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Delete Web Site Repository operation response.
+        /// The Get Web Site Repository operation response.
         /// </returns>
-        Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can retrieve a site's current usage metrics by issuing an HTTP
+        /// GET request. The metrics returned include CPU Time, Data In, Data
+        /// Out, Local bytes read, Local bytes written, Network bytes read,
+        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
+        /// Minute Limit, and File System Storage.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Usage Metrics operation response.
+        /// </returns>
+        Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can restart a web site by issuing an HTTP POST request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can update the settings for a web site by using the HTTP PUT
+        /// method and by specifying the settings in the request body.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167005.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Web Site operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Update Web Site operation response.
+        /// </returns>
+        Task<WebSiteUpdateResponse> UpdateAsync(string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can retrieve the config settings for a web site by issuing an
+        /// HTTP GET request, or update them by using HTTP PUT with a request
+        /// body that contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// The Update Web Site Configuration parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateConfigurationAsync(string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken);
     }
     
     /// <summary>
@@ -7098,144 +6716,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can retrieve details for a web site by issuing an HTTP GET
-        /// request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Details operation response.
-        /// </returns>
-        public static WebSiteGetResponse Get(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetParameters parameters)
-        {
-            try
-            {
-                return operations.GetAsync(webSpaceName, webSiteName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can retrieve details for a web site by issuing an HTTP GET
-        /// request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Details operation response.
-        /// </returns>
-        public static Task<WebSiteGetResponse> GetAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetParameters parameters)
-        {
-            return operations.GetAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can update the settings for a web site by using the HTTP PUT
-        /// method and by specifying the settings in the request body.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167005.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Web Site operation.
-        /// </param>
-        /// <returns>
-        /// The Update Web Site operation response.
-        /// </returns>
-        public static WebSiteUpdateResponse Update(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters)
-        {
-            try
-            {
-                return operations.UpdateAsync(webSpaceName, webSiteName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can update the settings for a web site by using the HTTP PUT
-        /// method and by specifying the settings in the request body.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167005.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Web Site operation.
-        /// </param>
-        /// <returns>
-        /// The Update Web Site operation response.
-        /// </returns>
-        public static Task<WebSiteUpdateResponse> UpdateAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters)
-        {
-            return operations.UpdateAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can restart a web site by issuing an HTTP POST request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. You can create a repository for your web site by issuing an
+        /// HTTP POST request, or retrieve information about the repository by
+        /// using HTTP GET.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -7252,11 +6739,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Restart(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static OperationResponse CreateRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             try
             {
-                return operations.RestartAsync(webSpaceName, webSiteName).Result;
+                return operations.CreateRepositoryAsync(webSpaceName, webSiteName).Result;
             }
             catch (AggregateException ex)
             {
@@ -7272,8 +6759,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can restart a web site by issuing an HTTP POST request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. You can create a repository for your web site by issuing an
+        /// HTTP POST request, or retrieve information about the repository by
+        /// using HTTP GET.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -7290,9 +6782,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RestartAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static Task<OperationResponse> CreateRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            return operations.RestartAsync(webSpaceName, webSiteName, CancellationToken.None);
+            return operations.CreateRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
         
         /// <summary>
@@ -7398,14 +6890,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The Delete Web Site Repository operation response.
         /// </returns>
-        public static OperationResponse CreateRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static WebSiteDeleteRepositoryResponse DeleteRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             try
             {
-                return operations.CreateRepositoryAsync(webSpaceName, webSiteName).Result;
+                return operations.DeleteRepositoryAsync(webSpaceName, webSiteName).Result;
             }
             catch (AggregateException ex)
             {
@@ -7441,82 +6932,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The Delete Web Site Repository operation response.
         /// </returns>
-        public static Task<OperationResponse> CreateRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            return operations.CreateRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Repository operation response.
-        /// </returns>
-        public static WebSiteGetRepositoryResponse GetRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
-        {
-            try
-            {
-                return operations.GetRepositoryAsync(webSpaceName, webSiteName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Repository operation response.
-        /// </returns>
-        public static Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
-        {
-            return operations.GetRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
+            return operations.DeleteRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
         
         /// <summary>
@@ -7594,9 +7014,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can retrieve the publish settings information for a web site by
-        /// issuing an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
+        /// You can retrieve details for a web site by issuing an HTTP GET
+        /// request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -7609,14 +7029,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='parameters'>
+        /// Additional parameters
+        /// </param>
         /// <returns>
-        /// The Get Web Site Publish Profile operation response.
+        /// The Get Web Site Details operation response.
         /// </returns>
-        public static WebSiteGetPublishProfileResponse GetPublishProfile(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static WebSiteGetResponse Get(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetParameters parameters)
         {
             try
             {
-                return operations.GetPublishProfileAsync(webSpaceName, webSiteName).Result;
+                return operations.GetAsync(webSpaceName, webSiteName, parameters).Result;
             }
             catch (AggregateException ex)
             {
@@ -7632,9 +7055,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can retrieve the publish settings information for a web site by
-        /// issuing an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
+        /// You can retrieve details for a web site by issuing an HTTP GET
+        /// request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -7647,12 +7070,15 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='parameters'>
+        /// Additional parameters
+        /// </param>
         /// <returns>
-        /// The Get Web Site Publish Profile operation response.
+        /// The Get Web Site Details operation response.
         /// </returns>
-        public static Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static Task<WebSiteGetResponse> GetAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetParameters parameters)
         {
-            return operations.GetPublishProfileAsync(webSpaceName, webSiteName, CancellationToken.None);
+            return operations.GetAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -7717,6 +7143,404 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public static Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return operations.GetConfigurationAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can retrieve historical usage metrics for a site by issuing an
+        /// HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166964.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// The Get Web Site Historical Usage Metrics parameters.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Historical Usage Metrics operation response.
+        /// </returns>
+        public static WebSiteGetHistoricalUsageMetricsResponse GetHistoricalUsageMetrics(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters)
+        {
+            try
+            {
+                return operations.GetHistoricalUsageMetricsAsync(webSpaceName, webSiteName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve historical usage metrics for a site by issuing an
+        /// HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166964.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// The Get Web Site Historical Usage Metrics parameters.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Historical Usage Metrics operation response.
+        /// </returns>
+        public static Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters)
+        {
+            return operations.GetHistoricalUsageMetricsAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can retrieve the publish settings information for a web site by
+        /// issuing an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Publish Profile operation response.
+        /// </returns>
+        public static WebSiteGetPublishProfileResponse GetPublishProfile(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            try
+            {
+                return operations.GetPublishProfileAsync(webSpaceName, webSiteName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve the publish settings information for a web site by
+        /// issuing an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Publish Profile operation response.
+        /// </returns>
+        public static Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.GetPublishProfileAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. You can create a repository for your web site by issuing an
+        /// HTTP POST request, or retrieve information about the repository by
+        /// using HTTP GET.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Repository operation response.
+        /// </returns>
+        public static WebSiteGetRepositoryResponse GetRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            try
+            {
+                return operations.GetRepositoryAsync(webSpaceName, webSiteName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. You can create a repository for your web site by issuing an
+        /// HTTP POST request, or retrieve information about the repository by
+        /// using HTTP GET.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Repository operation response.
+        /// </returns>
+        public static Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.GetRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can retrieve a site's current usage metrics by issuing an HTTP
+        /// GET request. The metrics returned include CPU Time, Data In, Data
+        /// Out, Local bytes read, Local bytes written, Network bytes read,
+        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
+        /// Minute Limit, and File System Storage.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Usage Metrics operation response.
+        /// </returns>
+        public static WebSiteGetUsageMetricsResponse GetUsageMetrics(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            try
+            {
+                return operations.GetUsageMetricsAsync(webSpaceName, webSiteName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve a site's current usage metrics by issuing an HTTP
+        /// GET request. The metrics returned include CPU Time, Data In, Data
+        /// Out, Local bytes read, Local bytes written, Network bytes read,
+        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
+        /// Minute Limit, and File System Storage.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Usage Metrics operation response.
+        /// </returns>
+        public static Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.GetUsageMetricsAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can restart a web site by issuing an HTTP POST request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Restart(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            try
+            {
+                return operations.RestartAsync(webSpaceName, webSiteName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can restart a web site by issuing an HTTP POST request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> RestartAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.RestartAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can update the settings for a web site by using the HTTP PUT
+        /// method and by specifying the settings in the request body.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167005.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Web Site operation.
+        /// </param>
+        /// <returns>
+        /// The Update Web Site operation response.
+        /// </returns>
+        public static WebSiteUpdateResponse Update(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters)
+        {
+            try
+            {
+                return operations.UpdateAsync(webSpaceName, webSiteName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can update the settings for a web site by using the HTTP PUT
+        /// method and by specifying the settings in the request body.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167005.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Web Site operation.
+        /// </param>
+        /// <returns>
+        /// The Update Web Site operation response.
+        /// </returns>
+        public static Task<WebSiteUpdateResponse> UpdateAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -7790,212 +7614,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         {
             return operations.UpdateConfigurationAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
         }
-        
-        /// <summary>
-        /// You can retrieve a site's current usage metrics by issuing an HTTP
-        /// GET request. The metrics returned include CPU Time, Data In, Data
-        /// Out, Local bytes read, Local bytes written, Network bytes read,
-        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
-        /// Minute Limit, and File System Storage.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Usage Metrics operation response.
-        /// </returns>
-        public static WebSiteGetUsageMetricsResponse GetUsageMetrics(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
-        {
-            try
-            {
-                return operations.GetUsageMetricsAsync(webSpaceName, webSiteName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can retrieve a site's current usage metrics by issuing an HTTP
-        /// GET request. The metrics returned include CPU Time, Data In, Data
-        /// Out, Local bytes read, Local bytes written, Network bytes read,
-        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
-        /// Minute Limit, and File System Storage.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Usage Metrics operation response.
-        /// </returns>
-        public static Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
-        {
-            return operations.GetUsageMetricsAsync(webSpaceName, webSiteName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can retrieve historical usage metrics for a site by issuing an
-        /// HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166964.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='parameters'>
-        /// The Get Web Site Historical Usage Metrics parameters.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Historical Usage Metrics operation response.
-        /// </returns>
-        public static WebSiteGetHistoricalUsageMetricsResponse GetHistoricalUsageMetrics(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters)
-        {
-            try
-            {
-                return operations.GetHistoricalUsageMetricsAsync(webSpaceName, webSiteName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can retrieve historical usage metrics for a site by issuing an
-        /// HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166964.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='parameters'>
-        /// The Get Web Site Historical Usage Metrics parameters.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Historical Usage Metrics operation response.
-        /// </returns>
-        public static Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters)
-        {
-            return operations.GetHistoricalUsageMetricsAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <returns>
-        /// The Delete Web Site Repository operation response.
-        /// </returns>
-        public static WebSiteDeleteRepositoryResponse DeleteRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
-        {
-            try
-            {
-                return operations.DeleteRepositoryAsync(webSpaceName, webSiteName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <returns>
-        /// The Delete Web Site Repository operation response.
-        /// </returns>
-        public static Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
-        {
-            return operations.DeleteRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
-        }
     }
     
     /// <summary>
@@ -8063,10 +7681,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 throw new ArgumentNullException("parameters.Name");
             }
-            if (parameters.WebSpaceName == null)
-            {
-                throw new ArgumentNullException("parameters.WebSpaceName");
-            }
             if (parameters.WebSpace != null)
             {
                 if (parameters.WebSpace.GeoRegion == null)
@@ -8081,6 +7695,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     throw new ArgumentNullException("parameters.WebSpace.Plan");
                 }
+            }
+            if (parameters.WebSpaceName == null)
+            {
+                throw new ArgumentNullException("parameters.WebSpaceName");
             }
             
             // Tracing
@@ -8107,7 +7725,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -8195,7 +7813,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -8581,6 +8199,514 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. You can create a repository for your web site by issuing an
+        /// HTTP POST request, or retrieve information about the repository by
+        /// using HTTP GET.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> CreateRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "CreateRepositoryAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can delete a web site by issuing an HTTP DELETE request. If the
+        /// web site being deleted is the only site remaining in a server
+        /// farm, you can optionally delete the server farm as well by using
+        /// the deleteEmptyServerFarm parameter.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236430.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='deleteEmptyServerFarm'>
+        /// If the site being deleted is the last web site in a server farm,
+        /// you can delete the server farm.
+        /// </param>
+        /// <param name='deleteMetrics'>
+        /// Delete the metrics for the site that you are deleting
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> DeleteAsync(string webSpaceName, string webSiteName, bool deleteEmptyServerFarm, bool deleteMetrics, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("deleteEmptyServerFarm", deleteEmptyServerFarm);
+                tracingParameters.Add("deleteMetrics", deleteMetrics);
+                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
+            url = url + "&deleteEmptyServerFarm=" + Uri.EscapeUriString(deleteEmptyServerFarm.ToString().ToLower());
+            url = url + "&deleteMetrics=" + Uri.EscapeUriString(deleteMetrics.ToString().ToLower());
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. You can create a repository for your web site by issuing an
+        /// HTTP POST request, or retrieve information about the repository by
+        /// using HTTP GET.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Delete Web Site Repository operation response.
+        /// </returns>
+        public async Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "DeleteRepositoryAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteDeleteRepositoryResponse result = new WebSiteDeleteRepositoryResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement anyURIElement = responseDoc.Element(XName.Get("anyURI", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                    if (anyURIElement != null)
+                    {
+                        result.Uri = TypeConversion.TryParseUri(anyURIElement.Value);
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can generate a new random password for publishing a site by
+        /// issuing an HTTP POST request.  Tip: If you want to verify that the
+        /// publish password has changed, call HTTP GET on /publishxml before
+        /// calling /newpassword. In the publish XML, note the hash value in
+        /// the userPWD attribute. After calling /newpassword, call
+        /// /publishxml again. You can then compare the new value of userPWD
+        /// in the Publish XML with the one you noted earlier.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236428.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> GeneratePasswordAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "GeneratePasswordAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/newpassword";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// You can retrieve details for a web site by issuing an HTTP GET
         /// request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
@@ -8642,7 +8768,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -9049,6 +9175,1310 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
+        /// You can retrieve the config settings for a web site by issuing an
+        /// HTTP GET request, or update them by using HTTP PUT with a request
+        /// body that contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Configuration operation response.
+        /// </returns>
+        public async Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "GetConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteGetConfigurationResponse result = new WebSiteGetConfigurationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement siteConfigElement = responseDoc.Element(XName.Get("SiteConfig", "http://schemas.microsoft.com/windowsazure"));
+                    if (siteConfigElement != null)
+                    {
+                        XElement appSettingsSequenceElement = siteConfigElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
+                        if (appSettingsSequenceElement != null)
+                        {
+                            foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                string appSettingsValue = appSettingsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                result.AppSettings.Add(appSettingsKey, appSettingsValue);
+                            }
+                        }
+                        
+                        XElement connectionStringsSequenceElement = siteConfigElement.Element(XName.Get("ConnectionStrings", "http://schemas.microsoft.com/windowsazure"));
+                        if (connectionStringsSequenceElement != null)
+                        {
+                            foreach (XElement connectionStringsElement in connectionStringsSequenceElement.Elements(XName.Get("ConnStringInfo", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                WebSiteGetConfigurationResponse.ConnectionStringInfo connStringInfoInstance = new WebSiteGetConfigurationResponse.ConnectionStringInfo();
+                                result.ConnectionStrings.Add(connStringInfoInstance);
+                                
+                                XElement connectionStringElement = connectionStringsElement.Element(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                                if (connectionStringElement != null)
+                                {
+                                    string connectionStringInstance = connectionStringElement.Value;
+                                    connStringInfoInstance.ConnectionString = connectionStringInstance;
+                                }
+                                
+                                XElement nameElement = connectionStringsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    connStringInfoInstance.Name = nameInstance;
+                                }
+                                
+                                XElement typeElement = connectionStringsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                if (typeElement != null)
+                                {
+                                    string typeInstance = typeElement.Value;
+                                    connStringInfoInstance.Type = typeInstance;
+                                }
+                            }
+                        }
+                        
+                        XElement defaultDocumentsSequenceElement = siteConfigElement.Element(XName.Get("DefaultDocuments", "http://schemas.microsoft.com/windowsazure"));
+                        if (defaultDocumentsSequenceElement != null)
+                        {
+                            foreach (XElement defaultDocumentsElement in defaultDocumentsSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                            {
+                                result.DefaultDocuments.Add(defaultDocumentsElement.Value);
+                            }
+                        }
+                        
+                        XElement detailedErrorLoggingEnabledElement = siteConfigElement.Element(XName.Get("DetailedErrorLoggingEnabled", "http://schemas.microsoft.com/windowsazure"));
+                        if (detailedErrorLoggingEnabledElement != null)
+                        {
+                            bool detailedErrorLoggingEnabledInstance = bool.Parse(detailedErrorLoggingEnabledElement.Value);
+                            result.DetailedErrorLoggingEnabled = detailedErrorLoggingEnabledInstance;
+                        }
+                        
+                        XElement handlerMappingsSequenceElement = siteConfigElement.Element(XName.Get("HandlerMappings", "http://schemas.microsoft.com/windowsazure"));
+                        if (handlerMappingsSequenceElement != null)
+                        {
+                            foreach (XElement handlerMappingsElement in handlerMappingsSequenceElement.Elements(XName.Get("HandlerMapping", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                WebSiteGetConfigurationResponse.HandlerMapping handlerMappingInstance = new WebSiteGetConfigurationResponse.HandlerMapping();
+                                result.HandlerMappings.Add(handlerMappingInstance);
+                                
+                                XElement argumentsElement = handlerMappingsElement.Element(XName.Get("Arguments", "http://schemas.microsoft.com/windowsazure"));
+                                if (argumentsElement != null)
+                                {
+                                    string argumentsInstance = argumentsElement.Value;
+                                    handlerMappingInstance.Arguments = argumentsInstance;
+                                }
+                                
+                                XElement extensionElement = handlerMappingsElement.Element(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
+                                if (extensionElement != null)
+                                {
+                                    string extensionInstance = extensionElement.Value;
+                                    handlerMappingInstance.Extension = extensionInstance;
+                                }
+                                
+                                XElement scriptProcessorElement = handlerMappingsElement.Element(XName.Get("ScriptProcessor", "http://schemas.microsoft.com/windowsazure"));
+                                if (scriptProcessorElement != null)
+                                {
+                                    string scriptProcessorInstance = scriptProcessorElement.Value;
+                                    handlerMappingInstance.ScriptProcessor = scriptProcessorInstance;
+                                }
+                            }
+                        }
+                        
+                        XElement httpLoggingEnabledElement = siteConfigElement.Element(XName.Get("HttpLoggingEnabled", "http://schemas.microsoft.com/windowsazure"));
+                        if (httpLoggingEnabledElement != null)
+                        {
+                            bool httpLoggingEnabledInstance = bool.Parse(httpLoggingEnabledElement.Value);
+                            result.HttpLoggingEnabled = httpLoggingEnabledInstance;
+                        }
+                        
+                        XElement metadataSequenceElement = siteConfigElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
+                        if (metadataSequenceElement != null)
+                        {
+                            foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                string metadataValue = metadataElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                result.Metadata.Add(metadataKey, metadataValue);
+                            }
+                        }
+                        
+                        XElement netFrameworkVersionElement = siteConfigElement.Element(XName.Get("NetFrameworkVersion", "http://schemas.microsoft.com/windowsazure"));
+                        if (netFrameworkVersionElement != null)
+                        {
+                            string netFrameworkVersionInstance = netFrameworkVersionElement.Value;
+                            result.NetFrameworkVersion = netFrameworkVersionInstance;
+                        }
+                        
+                        XElement numberOfWorkersElement = siteConfigElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (numberOfWorkersElement != null)
+                        {
+                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                            result.NumberOfWorkers = numberOfWorkersInstance;
+                        }
+                        
+                        XElement phpVersionElement = siteConfigElement.Element(XName.Get("PhpVersion", "http://schemas.microsoft.com/windowsazure"));
+                        if (phpVersionElement != null)
+                        {
+                            string phpVersionInstance = phpVersionElement.Value;
+                            result.PhpVersion = phpVersionInstance;
+                        }
+                        
+                        XElement publishingPasswordElement = siteConfigElement.Element(XName.Get("PublishingPassword", "http://schemas.microsoft.com/windowsazure"));
+                        if (publishingPasswordElement != null)
+                        {
+                            string publishingPasswordInstance = publishingPasswordElement.Value;
+                            result.PublishingPassword = publishingPasswordInstance;
+                        }
+                        
+                        XElement publishingUserNameElement = siteConfigElement.Element(XName.Get("PublishingUserName", "http://schemas.microsoft.com/windowsazure"));
+                        if (publishingUserNameElement != null)
+                        {
+                            string publishingUserNameInstance = publishingUserNameElement.Value;
+                            result.PublishingUserName = publishingUserNameInstance;
+                        }
+                        
+                        XElement requestTracingEnabledElement = siteConfigElement.Element(XName.Get("RequestTracingEnabled", "http://schemas.microsoft.com/windowsazure"));
+                        if (requestTracingEnabledElement != null)
+                        {
+                            bool requestTracingEnabledInstance = bool.Parse(requestTracingEnabledElement.Value);
+                            result.RequestTracingEnabled = requestTracingEnabledInstance;
+                        }
+                        
+                        XElement requestTracingExpirationTimeElement = siteConfigElement.Element(XName.Get("RequestTracingExpirationTime", "http://schemas.microsoft.com/windowsazure"));
+                        if (requestTracingExpirationTimeElement != null && string.IsNullOrEmpty(requestTracingExpirationTimeElement.Value) == false)
+                        {
+                            DateTime requestTracingExpirationTimeInstance = DateTime.Parse(requestTracingExpirationTimeElement.Value, CultureInfo.InvariantCulture);
+                            result.RequestTracingExpirationTime = requestTracingExpirationTimeInstance;
+                        }
+                        
+                        XElement scmTypeElement = siteConfigElement.Element(XName.Get("ScmType", "http://schemas.microsoft.com/windowsazure"));
+                        if (scmTypeElement != null)
+                        {
+                            string scmTypeInstance = scmTypeElement.Value;
+                            result.ScmType = scmTypeInstance;
+                        }
+                        
+                        XElement use32BitWorkerProcessElement = siteConfigElement.Element(XName.Get("Use32BitWorkerProcess", "http://schemas.microsoft.com/windowsazure"));
+                        if (use32BitWorkerProcessElement != null)
+                        {
+                            bool use32BitWorkerProcessInstance = bool.Parse(use32BitWorkerProcessElement.Value);
+                            result.Use32BitWorkerProcess = use32BitWorkerProcessInstance;
+                        }
+                        
+                        XElement webSocketsEnabledElement = siteConfigElement.Element(XName.Get("WebSocketsEnabled", "http://schemas.microsoft.com/windowsazure"));
+                        if (webSocketsEnabledElement != null)
+                        {
+                            bool webSocketsEnabledInstance = bool.Parse(webSocketsEnabledElement.Value);
+                            result.WebSocketsEnabled = webSocketsEnabledInstance;
+                        }
+                        
+                        XElement remoteDebuggingEnabledElement = siteConfigElement.Element(XName.Get("RemoteDebuggingEnabled", "http://schemas.microsoft.com/windowsazure"));
+                        if (remoteDebuggingEnabledElement != null)
+                        {
+                            bool remoteDebuggingEnabledInstance = bool.Parse(remoteDebuggingEnabledElement.Value);
+                            result.RemoteDebuggingEnabled = remoteDebuggingEnabledInstance;
+                        }
+                        
+                        XElement remoteDebuggingVersionElement = siteConfigElement.Element(XName.Get("RemoteDebuggingVersion", "http://schemas.microsoft.com/windowsazure"));
+                        if (remoteDebuggingVersionElement != null)
+                        {
+                            string remoteDebuggingVersionInstance = remoteDebuggingVersionElement.Value;
+                            result.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
+                        }
+                        
+                        XElement managedPipelineModeElement = siteConfigElement.Element(XName.Get("ManagedPipelineMode", "http://schemas.microsoft.com/windowsazure"));
+                        if (managedPipelineModeElement != null)
+                        {
+                            ManagedPipelineMode managedPipelineModeInstance = (ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), managedPipelineModeElement.Value, false);
+                            result.ManagedPipelineMode = managedPipelineModeInstance;
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve historical usage metrics for a site by issuing an
+        /// HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166964.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// The Get Web Site Historical Usage Metrics parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Historical Usage Metrics operation response.
+        /// </returns>
+        public async Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "GetHistoricalUsageMetricsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/metrics?";
+            if (parameters.MetricNames != null && parameters.MetricNames.Count > 0)
+            {
+                url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
+            }
+            if (parameters.StartTime != null)
+            {
+                url = url + "&StartTime=" + Uri.EscapeUriString(parameters.StartTime.Value.ToString());
+            }
+            if (parameters.EndTime != null)
+            {
+                url = url + "&EndTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+            }
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteGetHistoricalUsageMetricsResponse result = new WebSiteGetHistoricalUsageMetricsResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement metricResponsesElement = responseDoc.Element(XName.Get("MetricResponses", "http://schemas.microsoft.com/windowsazure"));
+                    if (metricResponsesElement != null)
+                    {
+                        if (metricResponsesElement != null)
+                        {
+                            foreach (XElement usageMetricsElement in metricResponsesElement.Elements(XName.Get("MetricResponse", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric metricResponseInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric();
+                                result.UsageMetrics.Add(metricResponseInstance);
+                                
+                                XElement codeElement = usageMetricsElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
+                                if (codeElement != null)
+                                {
+                                    string codeInstance = codeElement.Value;
+                                    metricResponseInstance.Code = codeInstance;
+                                }
+                                
+                                XElement dataElement = usageMetricsElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
+                                if (dataElement != null)
+                                {
+                                    WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData dataInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData();
+                                    metricResponseInstance.Data = dataInstance;
+                                    
+                                    XElement displayNameElement = dataElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (displayNameElement != null)
+                                    {
+                                        string displayNameInstance = displayNameElement.Value;
+                                        dataInstance.DisplayName = displayNameInstance;
+                                    }
+                                    
+                                    XElement endTimeElement = dataElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (endTimeElement != null)
+                                    {
+                                        DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                        dataInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    XElement nameElement = dataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement != null)
+                                    {
+                                        string nameInstance = nameElement.Value;
+                                        dataInstance.Name = nameInstance;
+                                    }
+                                    
+                                    XElement primaryAggregationTypeElement = dataElement.Element(XName.Get("PrimaryAggregationType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (primaryAggregationTypeElement != null)
+                                    {
+                                        string primaryAggregationTypeInstance = primaryAggregationTypeElement.Value;
+                                        dataInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
+                                    }
+                                    
+                                    XElement startTimeElement = dataElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (startTimeElement != null)
+                                    {
+                                        DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                        dataInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    XElement timeGrainElement = dataElement.Element(XName.Get("TimeGrain", "http://schemas.microsoft.com/windowsazure"));
+                                    if (timeGrainElement != null)
+                                    {
+                                        string timeGrainInstance = timeGrainElement.Value;
+                                        dataInstance.TimeGrain = timeGrainInstance;
+                                    }
+                                    
+                                    XElement unitElement = dataElement.Element(XName.Get("Unit", "http://schemas.microsoft.com/windowsazure"));
+                                    if (unitElement != null)
+                                    {
+                                        string unitInstance = unitElement.Value;
+                                        dataInstance.Unit = unitInstance;
+                                    }
+                                    
+                                    XElement valuesSequenceElement = dataElement.Element(XName.Get("Values", "http://schemas.microsoft.com/windowsazure"));
+                                    if (valuesSequenceElement != null)
+                                    {
+                                        foreach (XElement valuesElement in valuesSequenceElement.Elements(XName.Get("MetricSample", "http://schemas.microsoft.com/windowsazure")))
+                                        {
+                                            WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample metricSampleInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample();
+                                            dataInstance.Values.Add(metricSampleInstance);
+                                            
+                                            XElement countElement = valuesElement.Element(XName.Get("Count", "http://schemas.microsoft.com/windowsazure"));
+                                            if (countElement != null)
+                                            {
+                                                int countInstance = int.Parse(countElement.Value, CultureInfo.InvariantCulture);
+                                                metricSampleInstance.Count = countInstance;
+                                            }
+                                            
+                                            XElement maximumElement = valuesElement.Element(XName.Get("Maximum", "http://schemas.microsoft.com/windowsazure"));
+                                            if (maximumElement != null)
+                                            {
+                                                bool isNil = false;
+                                                XAttribute nilAttribute = maximumElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                                if (nilAttribute != null)
+                                                {
+                                                    isNil = nilAttribute.Value == "true";
+                                                }
+                                                if (isNil == false)
+                                                {
+                                                    string maximumInstance = maximumElement.Value;
+                                                    metricSampleInstance.Maximum = maximumInstance;
+                                                }
+                                            }
+                                            
+                                            XElement minimumElement = valuesElement.Element(XName.Get("Minimum", "http://schemas.microsoft.com/windowsazure"));
+                                            if (minimumElement != null)
+                                            {
+                                                bool isNil2 = false;
+                                                XAttribute nilAttribute2 = minimumElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                                if (nilAttribute2 != null)
+                                                {
+                                                    isNil2 = nilAttribute2.Value == "true";
+                                                }
+                                                if (isNil2 == false)
+                                                {
+                                                    string minimumInstance = minimumElement.Value;
+                                                    metricSampleInstance.Minimum = minimumInstance;
+                                                }
+                                            }
+                                            
+                                            XElement timeCreatedElement = valuesElement.Element(XName.Get("TimeCreated", "http://schemas.microsoft.com/windowsazure"));
+                                            if (timeCreatedElement != null)
+                                            {
+                                                DateTime timeCreatedInstance = DateTime.Parse(timeCreatedElement.Value, CultureInfo.InvariantCulture);
+                                                metricSampleInstance.TimeCreated = timeCreatedInstance;
+                                            }
+                                            
+                                            XElement totalElement = valuesElement.Element(XName.Get("Total", "http://schemas.microsoft.com/windowsazure"));
+                                            if (totalElement != null)
+                                            {
+                                                string totalInstance = totalElement.Value;
+                                                metricSampleInstance.Total = totalInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                XElement messageElement = usageMetricsElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    metricResponseInstance.Message = messageInstance;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve the publish settings information for a web site by
+        /// issuing an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Publish Profile operation response.
+        /// </returns>
+        public async Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "GetPublishProfileAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/publishxml";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteGetPublishProfileResponse result = new WebSiteGetPublishProfileResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement publishDataElement = responseDoc.Element(XName.Get("publishData", ""));
+                    if (publishDataElement != null)
+                    {
+                        if (publishDataElement != null)
+                        {
+                            foreach (XElement publishProfilesElement in publishDataElement.Elements(XName.Get("publishProfile", "")))
+                            {
+                                WebSiteGetPublishProfileResponse.PublishProfile publishProfileInstance = new WebSiteGetPublishProfileResponse.PublishProfile();
+                                result.PublishProfiles.Add(publishProfileInstance);
+                                
+                                XAttribute profileNameAttribute = publishProfilesElement.Attribute(XName.Get("profileName", ""));
+                                if (profileNameAttribute != null)
+                                {
+                                    publishProfileInstance.ProfileName = profileNameAttribute.Value;
+                                }
+                                
+                                XAttribute publishMethodAttribute = publishProfilesElement.Attribute(XName.Get("publishMethod", ""));
+                                if (publishMethodAttribute != null)
+                                {
+                                    publishProfileInstance.PublishMethod = publishMethodAttribute.Value;
+                                }
+                                
+                                XAttribute publishUrlAttribute = publishProfilesElement.Attribute(XName.Get("publishUrl", ""));
+                                if (publishUrlAttribute != null)
+                                {
+                                    publishProfileInstance.PublishUrl = publishUrlAttribute.Value;
+                                }
+                                
+                                XAttribute msdeploySiteAttribute = publishProfilesElement.Attribute(XName.Get("msdeploySite", ""));
+                                if (msdeploySiteAttribute != null)
+                                {
+                                    publishProfileInstance.MSDeploySite = msdeploySiteAttribute.Value;
+                                }
+                                
+                                XAttribute ftpPassiveModeAttribute = publishProfilesElement.Attribute(XName.Get("ftpPassiveMode", ""));
+                                if (ftpPassiveModeAttribute != null)
+                                {
+                                    publishProfileInstance.FtpPassiveMode = bool.Parse(ftpPassiveModeAttribute.Value);
+                                }
+                                
+                                XAttribute userNameAttribute = publishProfilesElement.Attribute(XName.Get("userName", ""));
+                                if (userNameAttribute != null)
+                                {
+                                    publishProfileInstance.UserName = userNameAttribute.Value;
+                                }
+                                
+                                XAttribute userPWDAttribute = publishProfilesElement.Attribute(XName.Get("userPWD", ""));
+                                if (userPWDAttribute != null)
+                                {
+                                    publishProfileInstance.UserPassword = userPWDAttribute.Value;
+                                }
+                                
+                                XAttribute destinationAppUrlAttribute = publishProfilesElement.Attribute(XName.Get("destinationAppUrl", ""));
+                                if (destinationAppUrlAttribute != null)
+                                {
+                                    publishProfileInstance.DestinationAppUri = TypeConversion.TryParseUri(destinationAppUrlAttribute.Value);
+                                }
+                                
+                                XAttribute sQLServerDBConnectionStringAttribute = publishProfilesElement.Attribute(XName.Get("SQLServerDBConnectionString", ""));
+                                if (sQLServerDBConnectionStringAttribute != null)
+                                {
+                                    publishProfileInstance.SqlServerConnectionString = sQLServerDBConnectionStringAttribute.Value;
+                                }
+                                
+                                XAttribute mySQLDBConnectionStringAttribute = publishProfilesElement.Attribute(XName.Get("mySQLDBConnectionString", ""));
+                                if (mySQLDBConnectionStringAttribute != null)
+                                {
+                                    publishProfileInstance.MySqlConnectionString = mySQLDBConnectionStringAttribute.Value;
+                                }
+                                
+                                XAttribute hostingProviderForumLinkAttribute = publishProfilesElement.Attribute(XName.Get("hostingProviderForumLink", ""));
+                                if (hostingProviderForumLinkAttribute != null)
+                                {
+                                    publishProfileInstance.HostingProviderForumUri = TypeConversion.TryParseUri(hostingProviderForumLinkAttribute.Value);
+                                }
+                                
+                                XAttribute controlPanelLinkAttribute = publishProfilesElement.Attribute(XName.Get("controlPanelLink", ""));
+                                if (controlPanelLinkAttribute != null)
+                                {
+                                    publishProfileInstance.ControlPanelUri = TypeConversion.TryParseUri(controlPanelLinkAttribute.Value);
+                                }
+                                
+                                XElement databasesSequenceElement = publishProfilesElement.Element(XName.Get("databases", ""));
+                                if (databasesSequenceElement != null)
+                                {
+                                    foreach (XElement databasesElement in databasesSequenceElement.Elements(XName.Get("add", "")))
+                                    {
+                                        WebSiteGetPublishProfileResponse.Database addInstance = new WebSiteGetPublishProfileResponse.Database();
+                                        publishProfileInstance.Databases.Add(addInstance);
+                                        
+                                        XAttribute nameAttribute = databasesElement.Attribute(XName.Get("name", ""));
+                                        if (nameAttribute != null)
+                                        {
+                                            addInstance.Name = nameAttribute.Value;
+                                        }
+                                        
+                                        XAttribute connectionStringAttribute = databasesElement.Attribute(XName.Get("connectionString", ""));
+                                        if (connectionStringAttribute != null)
+                                        {
+                                            addInstance.ConnectionString = connectionStringAttribute.Value;
+                                        }
+                                        
+                                        XAttribute providerNameAttribute = databasesElement.Attribute(XName.Get("providerName", ""));
+                                        if (providerNameAttribute != null)
+                                        {
+                                            addInstance.ProviderName = providerNameAttribute.Value;
+                                        }
+                                        
+                                        XAttribute typeAttribute = databasesElement.Attribute(XName.Get("type", ""));
+                                        if (typeAttribute != null)
+                                        {
+                                            addInstance.Type = typeAttribute.Value;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. You can create a repository for your web site by issuing an
+        /// HTTP POST request, or retrieve information about the repository by
+        /// using HTTP GET.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Repository operation response.
+        /// </returns>
+        public async Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "GetRepositoryAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteGetRepositoryResponse result = new WebSiteGetRepositoryResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement anyURIElement = responseDoc.Element(XName.Get("anyURI", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                    if (anyURIElement != null)
+                    {
+                        result.Uri = TypeConversion.TryParseUri(anyURIElement.Value);
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve a site's current usage metrics by issuing an HTTP
+        /// GET request. The metrics returned include CPU Time, Data In, Data
+        /// Out, Local bytes read, Local bytes written, Network bytes read,
+        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
+        /// Minute Limit, and File System Storage.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Site Usage Metrics operation response.
+        /// </returns>
+        public async Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "GetUsageMetricsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/usages";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteGetUsageMetricsResponse result = new WebSiteGetUsageMetricsResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement usagesElement = responseDoc.Element(XName.Get("Usages", "http://schemas.microsoft.com/windowsazure"));
+                    if (usagesElement != null)
+                    {
+                        if (usagesElement != null)
+                        {
+                            foreach (XElement usageMetricsElement in usagesElement.Elements(XName.Get("Usage", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                WebSiteGetUsageMetricsResponse.UsageMetric usageInstance = new WebSiteGetUsageMetricsResponse.UsageMetric();
+                                result.UsageMetrics.Add(usageInstance);
+                                
+                                XElement computeModeElement = usageMetricsElement.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
+                                if (computeModeElement != null)
+                                {
+                                    WebSiteComputeMode computeModeInstance = (WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, false);
+                                    usageInstance.ComputeMode = computeModeInstance;
+                                }
+                                
+                                XElement currentValueElement = usageMetricsElement.Element(XName.Get("CurrentValue", "http://schemas.microsoft.com/windowsazure"));
+                                if (currentValueElement != null)
+                                {
+                                    string currentValueInstance = currentValueElement.Value;
+                                    usageInstance.CurrentValue = currentValueInstance;
+                                }
+                                
+                                XElement displayNameElement = usageMetricsElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
+                                if (displayNameElement != null)
+                                {
+                                    string displayNameInstance = displayNameElement.Value;
+                                    usageInstance.DisplayName = displayNameInstance;
+                                }
+                                
+                                XElement limitElement = usageMetricsElement.Element(XName.Get("Limit", "http://schemas.microsoft.com/windowsazure"));
+                                if (limitElement != null)
+                                {
+                                    string limitInstance = limitElement.Value;
+                                    usageInstance.Limit = limitInstance;
+                                }
+                                
+                                XElement nameElement = usageMetricsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    usageInstance.Name = nameInstance;
+                                }
+                                
+                                XElement nextResetTimeElement = usageMetricsElement.Element(XName.Get("NextResetTime", "http://schemas.microsoft.com/windowsazure"));
+                                if (nextResetTimeElement != null)
+                                {
+                                    DateTime nextResetTimeInstance = DateTime.Parse(nextResetTimeElement.Value, CultureInfo.InvariantCulture);
+                                    usageInstance.NextResetTime = nextResetTimeInstance;
+                                }
+                                
+                                XElement resourceNameElement = usageMetricsElement.Element(XName.Get("ResourceName", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceNameElement != null)
+                                {
+                                    string resourceNameInstance = resourceNameElement.Value;
+                                    usageInstance.ResourceName = resourceNameInstance;
+                                }
+                                
+                                XElement siteModeElement = usageMetricsElement.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
+                                if (siteModeElement != null)
+                                {
+                                    WebSiteMode siteModeInstance = (WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, false);
+                                    usageInstance.SiteMode = siteModeInstance;
+                                }
+                                
+                                XElement unitElement = usageMetricsElement.Element(XName.Get("Unit", "http://schemas.microsoft.com/windowsazure"));
+                                if (unitElement != null)
+                                {
+                                    string unitInstance = unitElement.Value;
+                                    usageInstance.Unit = unitInstance;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can restart a web site by issuing an HTTP POST request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "RestartAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/restart";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// You can update the settings for a web site by using the HTTP PUT
         /// method and by specifying the settings in the request body.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167005.aspx
@@ -9110,7 +10540,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -9668,1169 +11098,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can restart a web site by issuing an HTTP POST request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                Tracing.Enter(invocationId, this, "RestartAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/restart";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can delete a web site by issuing an HTTP DELETE request. If the
-        /// web site being deleted is the only site remaining in a server
-        /// farm, you can optionally delete the server farm as well by using
-        /// the deleteEmptyServerFarm parameter.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236430.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='deleteEmptyServerFarm'>
-        /// If the site being deleted is the last web site in a server farm,
-        /// you can delete the server farm.
-        /// </param>
-        /// <param name='deleteMetrics'>
-        /// Delete the metrics for the site that you are deleting
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string webSpaceName, string webSiteName, bool deleteEmptyServerFarm, bool deleteMetrics, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                tracingParameters.Add("deleteEmptyServerFarm", deleteEmptyServerFarm);
-                tracingParameters.Add("deleteMetrics", deleteMetrics);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
-            url = url + "&deleteEmptyServerFarm=" + Uri.EscapeUriString(deleteEmptyServerFarm.ToString().ToLower());
-            url = url + "&deleteMetrics=" + Uri.EscapeUriString(deleteMetrics.ToString().ToLower());
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<OperationResponse> CreateRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                Tracing.Enter(invocationId, this, "CreateRepositoryAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Repository operation response.
-        /// </returns>
-        public async Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                Tracing.Enter(invocationId, this, "GetRepositoryAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSiteGetRepositoryResponse result = new WebSiteGetRepositoryResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement anyURIElement = responseDoc.Element(XName.Get("anyURI", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (anyURIElement != null)
-                    {
-                        result.Uri = TypeConversion.TryParseUri(anyURIElement.Value);
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can generate a new random password for publishing a site by
-        /// issuing an HTTP POST request.  Tip: If you want to verify that the
-        /// publish password has changed, call HTTP GET on /publishxml before
-        /// calling /newpassword. In the publish XML, note the hash value in
-        /// the userPWD attribute. After calling /newpassword, call
-        /// /publishxml again. You can then compare the new value of userPWD
-        /// in the Publish XML with the one you noted earlier.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236428.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<OperationResponse> GeneratePasswordAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                Tracing.Enter(invocationId, this, "GeneratePasswordAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/newpassword";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can retrieve the publish settings information for a web site by
-        /// issuing an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Publish Profile operation response.
-        /// </returns>
-        public async Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                Tracing.Enter(invocationId, this, "GetPublishProfileAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/publishxml";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSiteGetPublishProfileResponse result = new WebSiteGetPublishProfileResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement publishDataElement = responseDoc.Element(XName.Get("publishData", ""));
-                    if (publishDataElement != null)
-                    {
-                        if (publishDataElement != null)
-                        {
-                            foreach (XElement publishProfilesElement in publishDataElement.Elements(XName.Get("publishProfile", "")))
-                            {
-                                WebSiteGetPublishProfileResponse.PublishProfile publishProfileInstance = new WebSiteGetPublishProfileResponse.PublishProfile();
-                                result.PublishProfiles.Add(publishProfileInstance);
-                                
-                                XAttribute profileNameAttribute = publishProfilesElement.Attribute(XName.Get("profileName", ""));
-                                if (profileNameAttribute != null)
-                                {
-                                    publishProfileInstance.ProfileName = profileNameAttribute.Value;
-                                }
-                                
-                                XAttribute publishMethodAttribute = publishProfilesElement.Attribute(XName.Get("publishMethod", ""));
-                                if (publishMethodAttribute != null)
-                                {
-                                    publishProfileInstance.PublishMethod = publishMethodAttribute.Value;
-                                }
-                                
-                                XAttribute publishUrlAttribute = publishProfilesElement.Attribute(XName.Get("publishUrl", ""));
-                                if (publishUrlAttribute != null)
-                                {
-                                    publishProfileInstance.PublishUrl = publishUrlAttribute.Value;
-                                }
-                                
-                                XAttribute msdeploySiteAttribute = publishProfilesElement.Attribute(XName.Get("msdeploySite", ""));
-                                if (msdeploySiteAttribute != null)
-                                {
-                                    publishProfileInstance.MSDeploySite = msdeploySiteAttribute.Value;
-                                }
-                                
-                                XAttribute ftpPassiveModeAttribute = publishProfilesElement.Attribute(XName.Get("ftpPassiveMode", ""));
-                                if (ftpPassiveModeAttribute != null)
-                                {
-                                    publishProfileInstance.FtpPassiveMode = bool.Parse(ftpPassiveModeAttribute.Value);
-                                }
-                                
-                                XAttribute userNameAttribute = publishProfilesElement.Attribute(XName.Get("userName", ""));
-                                if (userNameAttribute != null)
-                                {
-                                    publishProfileInstance.UserName = userNameAttribute.Value;
-                                }
-                                
-                                XAttribute userPWDAttribute = publishProfilesElement.Attribute(XName.Get("userPWD", ""));
-                                if (userPWDAttribute != null)
-                                {
-                                    publishProfileInstance.UserPassword = userPWDAttribute.Value;
-                                }
-                                
-                                XAttribute destinationAppUrlAttribute = publishProfilesElement.Attribute(XName.Get("destinationAppUrl", ""));
-                                if (destinationAppUrlAttribute != null)
-                                {
-                                    publishProfileInstance.DestinationAppUri = TypeConversion.TryParseUri(destinationAppUrlAttribute.Value);
-                                }
-                                
-                                XAttribute sQLServerDBConnectionStringAttribute = publishProfilesElement.Attribute(XName.Get("SQLServerDBConnectionString", ""));
-                                if (sQLServerDBConnectionStringAttribute != null)
-                                {
-                                    publishProfileInstance.SqlServerConnectionString = sQLServerDBConnectionStringAttribute.Value;
-                                }
-                                
-                                XAttribute mySQLDBConnectionStringAttribute = publishProfilesElement.Attribute(XName.Get("mySQLDBConnectionString", ""));
-                                if (mySQLDBConnectionStringAttribute != null)
-                                {
-                                    publishProfileInstance.MySqlConnectionString = mySQLDBConnectionStringAttribute.Value;
-                                }
-                                
-                                XAttribute hostingProviderForumLinkAttribute = publishProfilesElement.Attribute(XName.Get("hostingProviderForumLink", ""));
-                                if (hostingProviderForumLinkAttribute != null)
-                                {
-                                    publishProfileInstance.HostingProviderForumUri = TypeConversion.TryParseUri(hostingProviderForumLinkAttribute.Value);
-                                }
-                                
-                                XAttribute controlPanelLinkAttribute = publishProfilesElement.Attribute(XName.Get("controlPanelLink", ""));
-                                if (controlPanelLinkAttribute != null)
-                                {
-                                    publishProfileInstance.ControlPanelUri = TypeConversion.TryParseUri(controlPanelLinkAttribute.Value);
-                                }
-                                
-                                XElement databasesSequenceElement = publishProfilesElement.Element(XName.Get("databases", ""));
-                                if (databasesSequenceElement != null)
-                                {
-                                    foreach (XElement databasesElement in databasesSequenceElement.Elements(XName.Get("add", "")))
-                                    {
-                                        WebSiteGetPublishProfileResponse.Database addInstance = new WebSiteGetPublishProfileResponse.Database();
-                                        publishProfileInstance.Databases.Add(addInstance);
-                                        
-                                        XAttribute nameAttribute = databasesElement.Attribute(XName.Get("name", ""));
-                                        if (nameAttribute != null)
-                                        {
-                                            addInstance.Name = nameAttribute.Value;
-                                        }
-                                        
-                                        XAttribute connectionStringAttribute = databasesElement.Attribute(XName.Get("connectionString", ""));
-                                        if (connectionStringAttribute != null)
-                                        {
-                                            addInstance.ConnectionString = connectionStringAttribute.Value;
-                                        }
-                                        
-                                        XAttribute providerNameAttribute = databasesElement.Attribute(XName.Get("providerName", ""));
-                                        if (providerNameAttribute != null)
-                                        {
-                                            addInstance.ProviderName = providerNameAttribute.Value;
-                                        }
-                                        
-                                        XAttribute typeAttribute = databasesElement.Attribute(XName.Get("type", ""));
-                                        if (typeAttribute != null)
-                                        {
-                                            addInstance.Type = typeAttribute.Value;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can retrieve the config settings for a web site by issuing an
-        /// HTTP GET request, or update them by using HTTP PUT with a request
-        /// body that contains the settings to be updated.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Configuration operation response.
-        /// </returns>
-        public async Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                Tracing.Enter(invocationId, this, "GetConfigurationAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSiteGetConfigurationResponse result = new WebSiteGetConfigurationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement siteConfigElement = responseDoc.Element(XName.Get("SiteConfig", "http://schemas.microsoft.com/windowsazure"));
-                    if (siteConfigElement != null)
-                    {
-                        XElement appSettingsSequenceElement = siteConfigElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
-                        if (appSettingsSequenceElement != null)
-                        {
-                            foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
-                                string appSettingsValue = appSettingsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                result.AppSettings.Add(appSettingsKey, appSettingsValue);
-                            }
-                        }
-                        
-                        XElement connectionStringsSequenceElement = siteConfigElement.Element(XName.Get("ConnectionStrings", "http://schemas.microsoft.com/windowsazure"));
-                        if (connectionStringsSequenceElement != null)
-                        {
-                            foreach (XElement connectionStringsElement in connectionStringsSequenceElement.Elements(XName.Get("ConnStringInfo", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                WebSiteGetConfigurationResponse.ConnectionStringInfo connStringInfoInstance = new WebSiteGetConfigurationResponse.ConnectionStringInfo();
-                                result.ConnectionStrings.Add(connStringInfoInstance);
-                                
-                                XElement connectionStringElement = connectionStringsElement.Element(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
-                                if (connectionStringElement != null)
-                                {
-                                    string connectionStringInstance = connectionStringElement.Value;
-                                    connStringInfoInstance.ConnectionString = connectionStringInstance;
-                                }
-                                
-                                XElement nameElement = connectionStringsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                if (nameElement != null)
-                                {
-                                    string nameInstance = nameElement.Value;
-                                    connStringInfoInstance.Name = nameInstance;
-                                }
-                                
-                                XElement typeElement = connectionStringsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                if (typeElement != null)
-                                {
-                                    string typeInstance = typeElement.Value;
-                                    connStringInfoInstance.Type = typeInstance;
-                                }
-                            }
-                        }
-                        
-                        XElement defaultDocumentsSequenceElement = siteConfigElement.Element(XName.Get("DefaultDocuments", "http://schemas.microsoft.com/windowsazure"));
-                        if (defaultDocumentsSequenceElement != null)
-                        {
-                            foreach (XElement defaultDocumentsElement in defaultDocumentsSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                            {
-                                result.DefaultDocuments.Add(defaultDocumentsElement.Value);
-                            }
-                        }
-                        
-                        XElement detailedErrorLoggingEnabledElement = siteConfigElement.Element(XName.Get("DetailedErrorLoggingEnabled", "http://schemas.microsoft.com/windowsazure"));
-                        if (detailedErrorLoggingEnabledElement != null)
-                        {
-                            bool detailedErrorLoggingEnabledInstance = bool.Parse(detailedErrorLoggingEnabledElement.Value);
-                            result.DetailedErrorLoggingEnabled = detailedErrorLoggingEnabledInstance;
-                        }
-                        
-                        XElement handlerMappingsSequenceElement = siteConfigElement.Element(XName.Get("HandlerMappings", "http://schemas.microsoft.com/windowsazure"));
-                        if (handlerMappingsSequenceElement != null)
-                        {
-                            foreach (XElement handlerMappingsElement in handlerMappingsSequenceElement.Elements(XName.Get("HandlerMapping", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                WebSiteGetConfigurationResponse.HandlerMapping handlerMappingInstance = new WebSiteGetConfigurationResponse.HandlerMapping();
-                                result.HandlerMappings.Add(handlerMappingInstance);
-                                
-                                XElement argumentsElement = handlerMappingsElement.Element(XName.Get("Arguments", "http://schemas.microsoft.com/windowsazure"));
-                                if (argumentsElement != null)
-                                {
-                                    string argumentsInstance = argumentsElement.Value;
-                                    handlerMappingInstance.Arguments = argumentsInstance;
-                                }
-                                
-                                XElement extensionElement = handlerMappingsElement.Element(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
-                                if (extensionElement != null)
-                                {
-                                    string extensionInstance = extensionElement.Value;
-                                    handlerMappingInstance.Extension = extensionInstance;
-                                }
-                                
-                                XElement scriptProcessorElement = handlerMappingsElement.Element(XName.Get("ScriptProcessor", "http://schemas.microsoft.com/windowsazure"));
-                                if (scriptProcessorElement != null)
-                                {
-                                    string scriptProcessorInstance = scriptProcessorElement.Value;
-                                    handlerMappingInstance.ScriptProcessor = scriptProcessorInstance;
-                                }
-                            }
-                        }
-                        
-                        XElement httpLoggingEnabledElement = siteConfigElement.Element(XName.Get("HttpLoggingEnabled", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpLoggingEnabledElement != null)
-                        {
-                            bool httpLoggingEnabledInstance = bool.Parse(httpLoggingEnabledElement.Value);
-                            result.HttpLoggingEnabled = httpLoggingEnabledInstance;
-                        }
-                        
-                        XElement metadataSequenceElement = siteConfigElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
-                        if (metadataSequenceElement != null)
-                        {
-                            foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
-                                string metadataValue = metadataElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                result.Metadata.Add(metadataKey, metadataValue);
-                            }
-                        }
-                        
-                        XElement netFrameworkVersionElement = siteConfigElement.Element(XName.Get("NetFrameworkVersion", "http://schemas.microsoft.com/windowsazure"));
-                        if (netFrameworkVersionElement != null)
-                        {
-                            string netFrameworkVersionInstance = netFrameworkVersionElement.Value;
-                            result.NetFrameworkVersion = netFrameworkVersionInstance;
-                        }
-                        
-                        XElement numberOfWorkersElement = siteConfigElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (numberOfWorkersElement != null)
-                        {
-                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                            result.NumberOfWorkers = numberOfWorkersInstance;
-                        }
-                        
-                        XElement phpVersionElement = siteConfigElement.Element(XName.Get("PhpVersion", "http://schemas.microsoft.com/windowsazure"));
-                        if (phpVersionElement != null)
-                        {
-                            string phpVersionInstance = phpVersionElement.Value;
-                            result.PhpVersion = phpVersionInstance;
-                        }
-                        
-                        XElement publishingPasswordElement = siteConfigElement.Element(XName.Get("PublishingPassword", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishingPasswordElement != null)
-                        {
-                            string publishingPasswordInstance = publishingPasswordElement.Value;
-                            result.PublishingPassword = publishingPasswordInstance;
-                        }
-                        
-                        XElement publishingUserNameElement = siteConfigElement.Element(XName.Get("PublishingUserName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishingUserNameElement != null)
-                        {
-                            string publishingUserNameInstance = publishingUserNameElement.Value;
-                            result.PublishingUserName = publishingUserNameInstance;
-                        }
-                        
-                        XElement requestTracingEnabledElement = siteConfigElement.Element(XName.Get("RequestTracingEnabled", "http://schemas.microsoft.com/windowsazure"));
-                        if (requestTracingEnabledElement != null)
-                        {
-                            bool requestTracingEnabledInstance = bool.Parse(requestTracingEnabledElement.Value);
-                            result.RequestTracingEnabled = requestTracingEnabledInstance;
-                        }
-                        
-                        XElement requestTracingExpirationTimeElement = siteConfigElement.Element(XName.Get("RequestTracingExpirationTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (requestTracingExpirationTimeElement != null && string.IsNullOrEmpty(requestTracingExpirationTimeElement.Value) == false)
-                        {
-                            DateTime requestTracingExpirationTimeInstance = DateTime.Parse(requestTracingExpirationTimeElement.Value, CultureInfo.InvariantCulture);
-                            result.RequestTracingExpirationTime = requestTracingExpirationTimeInstance;
-                        }
-                        
-                        XElement scmTypeElement = siteConfigElement.Element(XName.Get("ScmType", "http://schemas.microsoft.com/windowsazure"));
-                        if (scmTypeElement != null)
-                        {
-                            string scmTypeInstance = scmTypeElement.Value;
-                            result.ScmType = scmTypeInstance;
-                        }
-                        
-                        XElement use32BitWorkerProcessElement = siteConfigElement.Element(XName.Get("Use32BitWorkerProcess", "http://schemas.microsoft.com/windowsazure"));
-                        if (use32BitWorkerProcessElement != null)
-                        {
-                            bool use32BitWorkerProcessInstance = bool.Parse(use32BitWorkerProcessElement.Value);
-                            result.Use32BitWorkerProcess = use32BitWorkerProcessInstance;
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
         /// You can retrieve the config settings for a web site by issuing an
         /// HTTP GET request, or update them by using HTTP PUT with a request
         /// body that contains the settings to be updated.  (see
@@ -10894,7 +11161,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -11102,6 +11369,34 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     siteConfigElement.Add(use32BitWorkerProcessElement);
                 }
                 
+                if (parameters.WebSocketsEnabled != null)
+                {
+                    XElement webSocketsEnabledElement = new XElement(XName.Get("WebSocketsEnabled", "http://schemas.microsoft.com/windowsazure"));
+                    webSocketsEnabledElement.Value = parameters.WebSocketsEnabled.ToString().ToLower();
+                    siteConfigElement.Add(webSocketsEnabledElement);
+                }
+                
+                if (parameters.RemoteDebuggingEnabled != null)
+                {
+                    XElement remoteDebuggingEnabledElement = new XElement(XName.Get("RemoteDebuggingEnabled", "http://schemas.microsoft.com/windowsazure"));
+                    remoteDebuggingEnabledElement.Value = parameters.RemoteDebuggingEnabled.ToString().ToLower();
+                    siteConfigElement.Add(remoteDebuggingEnabledElement);
+                }
+                
+                if (parameters.RemoteDebuggingVersion != null)
+                {
+                    XElement remoteDebuggingVersionElement = new XElement(XName.Get("RemoteDebuggingVersion", "http://schemas.microsoft.com/windowsazure"));
+                    remoteDebuggingVersionElement.Value = parameters.RemoteDebuggingVersion;
+                    siteConfigElement.Add(remoteDebuggingVersionElement);
+                }
+                
+                if (parameters.ManagedPipelineMode != null)
+                {
+                    XElement managedPipelineModeElement = new XElement(XName.Get("ManagedPipelineMode", "http://schemas.microsoft.com/windowsazure"));
+                    managedPipelineModeElement.Value = parameters.ManagedPipelineMode.ToString();
+                    siteConfigElement.Add(managedPipelineModeElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
@@ -11162,1159 +11457,498 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 }
             }
         }
-        
+    }
+    
+    /// <summary>
+    /// Operations for managing web spaces beneath your subscription.
+    /// </summary>
+    public partial interface IWebSpaceOperations
+    {
         /// <summary>
-        /// You can retrieve a site's current usage metrics by issuing an HTTP
-        /// GET request. The metrics returned include CPU Time, Data In, Data
-        /// Out, Local bytes read, Local bytes written, Network bytes read,
-        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
-        /// Minute Limit, and File System Storage.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
-        /// for more information)
+        /// Creates a source control user allowed to publish to this web space.
         /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// <param name='username'>
+        /// The user name.
         /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Web Site Usage Metrics operation response.
-        /// </returns>
-        public async Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                Tracing.Enter(invocationId, this, "GetUsageMetricsAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/usages";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSiteGetUsageMetricsResponse result = new WebSiteGetUsageMetricsResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement usagesElement = responseDoc.Element(XName.Get("Usages", "http://schemas.microsoft.com/windowsazure"));
-                    if (usagesElement != null)
-                    {
-                        if (usagesElement != null)
-                        {
-                            foreach (XElement usageMetricsElement in usagesElement.Elements(XName.Get("Usage", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                WebSiteGetUsageMetricsResponse.UsageMetric usageInstance = new WebSiteGetUsageMetricsResponse.UsageMetric();
-                                result.UsageMetrics.Add(usageInstance);
-                                
-                                XElement computeModeElement = usageMetricsElement.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
-                                if (computeModeElement != null)
-                                {
-                                    WebSiteComputeMode computeModeInstance = (WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, false);
-                                    usageInstance.ComputeMode = computeModeInstance;
-                                }
-                                
-                                XElement currentValueElement = usageMetricsElement.Element(XName.Get("CurrentValue", "http://schemas.microsoft.com/windowsazure"));
-                                if (currentValueElement != null)
-                                {
-                                    string currentValueInstance = currentValueElement.Value;
-                                    usageInstance.CurrentValue = currentValueInstance;
-                                }
-                                
-                                XElement displayNameElement = usageMetricsElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
-                                if (displayNameElement != null)
-                                {
-                                    string displayNameInstance = displayNameElement.Value;
-                                    usageInstance.DisplayName = displayNameInstance;
-                                }
-                                
-                                XElement limitElement = usageMetricsElement.Element(XName.Get("Limit", "http://schemas.microsoft.com/windowsazure"));
-                                if (limitElement != null)
-                                {
-                                    string limitInstance = limitElement.Value;
-                                    usageInstance.Limit = limitInstance;
-                                }
-                                
-                                XElement nameElement = usageMetricsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                if (nameElement != null)
-                                {
-                                    string nameInstance = nameElement.Value;
-                                    usageInstance.Name = nameInstance;
-                                }
-                                
-                                XElement nextResetTimeElement = usageMetricsElement.Element(XName.Get("NextResetTime", "http://schemas.microsoft.com/windowsazure"));
-                                if (nextResetTimeElement != null)
-                                {
-                                    DateTime nextResetTimeInstance = DateTime.Parse(nextResetTimeElement.Value, CultureInfo.InvariantCulture);
-                                    usageInstance.NextResetTime = nextResetTimeInstance;
-                                }
-                                
-                                XElement resourceNameElement = usageMetricsElement.Element(XName.Get("ResourceName", "http://schemas.microsoft.com/windowsazure"));
-                                if (resourceNameElement != null)
-                                {
-                                    string resourceNameInstance = resourceNameElement.Value;
-                                    usageInstance.ResourceName = resourceNameInstance;
-                                }
-                                
-                                XElement siteModeElement = usageMetricsElement.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
-                                if (siteModeElement != null)
-                                {
-                                    WebSiteMode siteModeInstance = (WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, false);
-                                    usageInstance.SiteMode = siteModeInstance;
-                                }
-                                
-                                XElement unitElement = usageMetricsElement.Element(XName.Get("Unit", "http://schemas.microsoft.com/windowsazure"));
-                                if (unitElement != null)
-                                {
-                                    string unitInstance = unitElement.Value;
-                                    usageInstance.Unit = unitInstance;
-                                }
-                            }
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can retrieve historical usage metrics for a site by issuing an
-        /// HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166964.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// <param name='password'>
+        /// The user password.
         /// </param>
         /// <param name='parameters'>
-        /// The Get Web Site Historical Usage Metrics parameters.
+        /// Parameters supplied to the Create Publishing User operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Historical Usage Metrics operation response.
+        /// The Create Publishing User operation response.
         /// </returns>
-        public async Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "GetHistoricalUsageMetricsAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/metrics?";
-            if (parameters.MetricNames != null && parameters.MetricNames.Count > 0)
-            {
-                url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
-            }
-            if (parameters.StartTime != null)
-            {
-                url = url + "&StartTime=" + Uri.EscapeUriString(parameters.StartTime.Value.ToString());
-            }
-            if (parameters.EndTime != null)
-            {
-                url = url + "&EndTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSiteGetHistoricalUsageMetricsResponse result = new WebSiteGetHistoricalUsageMetricsResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement metricResponsesElement = responseDoc.Element(XName.Get("MetricResponses", "http://schemas.microsoft.com/windowsazure"));
-                    if (metricResponsesElement != null)
-                    {
-                        if (metricResponsesElement != null)
-                        {
-                            foreach (XElement usageMetricsElement in metricResponsesElement.Elements(XName.Get("MetricResponse", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric metricResponseInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric();
-                                result.UsageMetrics.Add(metricResponseInstance);
-                                
-                                XElement codeElement = usageMetricsElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                                if (codeElement != null)
-                                {
-                                    string codeInstance = codeElement.Value;
-                                    metricResponseInstance.Code = codeInstance;
-                                }
-                                
-                                XElement dataElement = usageMetricsElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
-                                if (dataElement != null)
-                                {
-                                    WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData dataInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData();
-                                    metricResponseInstance.Data = dataInstance;
-                                    
-                                    XElement displayNameElement = dataElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (displayNameElement != null)
-                                    {
-                                        string displayNameInstance = displayNameElement.Value;
-                                        dataInstance.DisplayName = displayNameInstance;
-                                    }
-                                    
-                                    XElement endTimeElement = dataElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                                    if (endTimeElement != null)
-                                    {
-                                        DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
-                                        dataInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    XElement nameElement = dataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement != null)
-                                    {
-                                        string nameInstance = nameElement.Value;
-                                        dataInstance.Name = nameInstance;
-                                    }
-                                    
-                                    XElement primaryAggregationTypeElement = dataElement.Element(XName.Get("PrimaryAggregationType", "http://schemas.microsoft.com/windowsazure"));
-                                    if (primaryAggregationTypeElement != null)
-                                    {
-                                        string primaryAggregationTypeInstance = primaryAggregationTypeElement.Value;
-                                        dataInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
-                                    }
-                                    
-                                    XElement startTimeElement = dataElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                                    if (startTimeElement != null)
-                                    {
-                                        DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
-                                        dataInstance.StartTime = startTimeInstance;
-                                    }
-                                    
-                                    XElement timeGrainElement = dataElement.Element(XName.Get("TimeGrain", "http://schemas.microsoft.com/windowsazure"));
-                                    if (timeGrainElement != null)
-                                    {
-                                        string timeGrainInstance = timeGrainElement.Value;
-                                        dataInstance.TimeGrain = timeGrainInstance;
-                                    }
-                                    
-                                    XElement unitElement = dataElement.Element(XName.Get("Unit", "http://schemas.microsoft.com/windowsazure"));
-                                    if (unitElement != null)
-                                    {
-                                        string unitInstance = unitElement.Value;
-                                        dataInstance.Unit = unitInstance;
-                                    }
-                                    
-                                    XElement valuesSequenceElement = dataElement.Element(XName.Get("Values", "http://schemas.microsoft.com/windowsazure"));
-                                    if (valuesSequenceElement != null)
-                                    {
-                                        foreach (XElement valuesElement in valuesSequenceElement.Elements(XName.Get("MetricSample", "http://schemas.microsoft.com/windowsazure")))
-                                        {
-                                            WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample metricSampleInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample();
-                                            dataInstance.Values.Add(metricSampleInstance);
-                                            
-                                            XElement countElement = valuesElement.Element(XName.Get("Count", "http://schemas.microsoft.com/windowsazure"));
-                                            if (countElement != null)
-                                            {
-                                                int countInstance = int.Parse(countElement.Value, CultureInfo.InvariantCulture);
-                                                metricSampleInstance.Count = countInstance;
-                                            }
-                                            
-                                            XElement maximumElement = valuesElement.Element(XName.Get("Maximum", "http://schemas.microsoft.com/windowsazure"));
-                                            if (maximumElement != null)
-                                            {
-                                                bool isNil = false;
-                                                XAttribute nilAttribute = maximumElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                                if (nilAttribute != null)
-                                                {
-                                                    isNil = nilAttribute.Value == "true";
-                                                }
-                                                if (isNil == false)
-                                                {
-                                                    string maximumInstance = maximumElement.Value;
-                                                    metricSampleInstance.Maximum = maximumInstance;
-                                                }
-                                            }
-                                            
-                                            XElement minimumElement = valuesElement.Element(XName.Get("Minimum", "http://schemas.microsoft.com/windowsazure"));
-                                            if (minimumElement != null)
-                                            {
-                                                bool isNil2 = false;
-                                                XAttribute nilAttribute2 = minimumElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                                if (nilAttribute2 != null)
-                                                {
-                                                    isNil2 = nilAttribute2.Value == "true";
-                                                }
-                                                if (isNil2 == false)
-                                                {
-                                                    string minimumInstance = minimumElement.Value;
-                                                    metricSampleInstance.Minimum = minimumInstance;
-                                                }
-                                            }
-                                            
-                                            XElement timeCreatedElement = valuesElement.Element(XName.Get("TimeCreated", "http://schemas.microsoft.com/windowsazure"));
-                                            if (timeCreatedElement != null)
-                                            {
-                                                DateTime timeCreatedInstance = DateTime.Parse(timeCreatedElement.Value, CultureInfo.InvariantCulture);
-                                                metricSampleInstance.TimeCreated = timeCreatedInstance;
-                                            }
-                                            
-                                            XElement totalElement = valuesElement.Element(XName.Get("Total", "http://schemas.microsoft.com/windowsazure"));
-                                            if (totalElement != null)
-                                            {
-                                                string totalInstance = totalElement.Value;
-                                                metricSampleInstance.Total = totalInstance;
-                                            }
-                                        }
-                                    }
-                                }
-                                
-                                XElement messageElement = usageMetricsElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                                if (messageElement != null)
-                                {
-                                    string messageInstance = messageElement.Value;
-                                    metricResponseInstance.Message = messageInstance;
-                                }
-                            }
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
+        Task<WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(string username, string password, WebSpacesCreatePublishingUserParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
+        /// You can retrieve details for a specified webspace name by issuing
+        /// an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
         /// The name of the web space.
         /// </param>
-        /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Space Details operation response.
+        /// </returns>
+        Task<WebSpacesGetResponse> GetAsync(string webSpaceName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the dns suffix for this subscription.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get DNS Suffix operation response.
+        /// </returns>
+        Task<WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can list the webspaces under the current subscription by
+        /// issuing a GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Web Spaces operation response.
+        /// </returns>
+        Task<WebSpacesListResponse> ListAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the available geo regions for this webspace.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get DNS Suffix operation response.
+        /// </returns>
+        Task<WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the source control users allowed to publish to this web space.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Publishing Users operation response.
+        /// </returns>
+        Task<WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can retrieve a list of all web sites in a web space by issuing
+        /// an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236429.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Additional parameters
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Delete Web Site Repository operation response.
+        /// The List Web Sites operation response.
         /// </returns>
-        public async Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        Task<WebSpacesListWebSitesResponse> ListWebSitesAsync(string webSpaceName, WebSiteListParameters parameters, CancellationToken cancellationToken);
+    }
+    
+    /// <summary>
+    /// Operations for managing web spaces beneath your subscription.
+    /// </summary>
+    public static partial class WebSpaceOperationsExtensions
+    {
+        /// <summary>
+        /// Creates a source control user allowed to publish to this web space.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <param name='username'>
+        /// The user name.
+        /// </param>
+        /// <param name='password'>
+        /// The user password.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Publishing User operation.
+        /// </param>
+        /// <returns>
+        /// The Create Publishing User operation response.
+        /// </returns>
+        public static WebSpacesCreatePublishingUserResponse CreatePublishingUser(this IWebSpaceOperations operations, string username, string password, WebSpacesCreatePublishingUserParameters parameters)
         {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (webSiteName == null)
-            {
-                throw new ArgumentNullException("webSiteName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("webSiteName", webSiteName);
-                Tracing.Enter(invocationId, this, "DeleteRepositoryAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
             try
             {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebSiteDeleteRepositoryResponse result = new WebSiteDeleteRepositoryResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement anyURIElement = responseDoc.Element(XName.Get("anyURI", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (anyURIElement != null)
-                    {
-                        result.Uri = TypeConversion.TryParseUri(anyURIElement.Value);
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
+                return operations.CreatePublishingUserAsync(username, password, parameters).Result;
             }
-            finally
+            catch (AggregateException ex)
             {
-                if (httpRequest != null)
+                if (ex.InnerExceptions.Count > 1)
                 {
-                    httpRequest.Dispose();
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
                 }
             }
+        }
+        
+        /// <summary>
+        /// Creates a source control user allowed to publish to this web space.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <param name='username'>
+        /// The user name.
+        /// </param>
+        /// <param name='password'>
+        /// The user password.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Publishing User operation.
+        /// </param>
+        /// <returns>
+        /// The Create Publishing User operation response.
+        /// </returns>
+        public static Task<WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(this IWebSpaceOperations operations, string username, string password, WebSpacesCreatePublishingUserParameters parameters)
+        {
+            return operations.CreatePublishingUserAsync(username, password, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can retrieve details for a specified webspace name by issuing
+        /// an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <returns>
+        /// The Get Web Space Details operation response.
+        /// </returns>
+        public static WebSpacesGetResponse Get(this IWebSpaceOperations operations, string webSpaceName)
+        {
+            try
+            {
+                return operations.GetAsync(webSpaceName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve details for a specified webspace name by issuing
+        /// an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <returns>
+        /// The Get Web Space Details operation response.
+        /// </returns>
+        public static Task<WebSpacesGetResponse> GetAsync(this IWebSpaceOperations operations, string webSpaceName)
+        {
+            return operations.GetAsync(webSpaceName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the dns suffix for this subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <returns>
+        /// The Get DNS Suffix operation response.
+        /// </returns>
+        public static WebSpacesGetDnsSuffixResponse GetDnsSuffix(this IWebSpaceOperations operations)
+        {
+            try
+            {
+                return operations.GetDnsSuffixAsync().Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the dns suffix for this subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <returns>
+        /// The Get DNS Suffix operation response.
+        /// </returns>
+        public static Task<WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(this IWebSpaceOperations operations)
+        {
+            return operations.GetDnsSuffixAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can list the webspaces under the current subscription by
+        /// issuing a GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <returns>
+        /// The List Web Spaces operation response.
+        /// </returns>
+        public static WebSpacesListResponse List(this IWebSpaceOperations operations)
+        {
+            try
+            {
+                return operations.ListAsync().Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can list the webspaces under the current subscription by
+        /// issuing a GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <returns>
+        /// The List Web Spaces operation response.
+        /// </returns>
+        public static Task<WebSpacesListResponse> ListAsync(this IWebSpaceOperations operations)
+        {
+            return operations.ListAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the available geo regions for this webspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <returns>
+        /// The Get DNS Suffix operation response.
+        /// </returns>
+        public static WebSpacesListGeoRegionsResponse ListGeoRegions(this IWebSpaceOperations operations)
+        {
+            try
+            {
+                return operations.ListGeoRegionsAsync().Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the available geo regions for this webspace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <returns>
+        /// The Get DNS Suffix operation response.
+        /// </returns>
+        public static Task<WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(this IWebSpaceOperations operations)
+        {
+            return operations.ListGeoRegionsAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the source control users allowed to publish to this web space.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <returns>
+        /// The List Publishing Users operation response.
+        /// </returns>
+        public static WebSpacesListPublishingUsersResponse ListPublishingUsers(this IWebSpaceOperations operations)
+        {
+            try
+            {
+                return operations.ListPublishingUsersAsync().Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the source control users allowed to publish to this web space.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <returns>
+        /// The List Publishing Users operation response.
+        /// </returns>
+        public static Task<WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(this IWebSpaceOperations operations)
+        {
+            return operations.ListPublishingUsersAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can retrieve a list of all web sites in a web space by issuing
+        /// an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236429.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Additional parameters
+        /// </param>
+        /// <returns>
+        /// The List Web Sites operation response.
+        /// </returns>
+        public static WebSpacesListWebSitesResponse ListWebSites(this IWebSpaceOperations operations, string webSpaceName, WebSiteListParameters parameters)
+        {
+            try
+            {
+                return operations.ListWebSitesAsync(webSpaceName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve a list of all web sites in a web space by issuing
+        /// an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236429.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Additional parameters
+        /// </param>
+        /// <returns>
+        /// The List Web Sites operation response.
+        /// </returns>
+        public static Task<WebSpacesListWebSitesResponse> ListWebSitesAsync(this IWebSpaceOperations operations, string webSpaceName, WebSiteListParameters parameters)
+        {
+            return operations.ListWebSitesAsync(webSpaceName, parameters, CancellationToken.None);
         }
     }
     
     /// <summary>
-    /// Operations for managing the server farm in a web space.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx for
-    /// more information)
+    /// Operations for managing web spaces beneath your subscription.
     /// </summary>
-    public partial interface IServerFarmOperations
+    internal partial class WebSpaceOperations : IServiceOperations<WebSiteManagementClient>, IWebSpaceOperations
     {
         /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Server Farm operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Create Server Farm operation response.
-        /// </returns>
-        Task<ServerFarmCreateResponse> CreateAsync(string webSpaceName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Server Farm operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Update Server Farm operation response.
-        /// </returns>
-        Task<ServerFarmUpdateResponse> UpdateAsync(string webSpaceName, ServerFarmUpdateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='serverFarmName'>
-        /// The name of the server farm.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Server Farm operation response.
-        /// </returns>
-        Task<ServerFarmGetResponse> GetAsync(string webSpaceName, string serverFarmName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> DeleteAsync(string webSpaceName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Server Farm operation response.
-        /// </returns>
-        Task<ServerFarmListResponse> ListAsync(string webSpaceName, CancellationToken cancellationToken);
-    }
-    
-    /// <summary>
-    /// Operations for managing the server farm in a web space.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx for
-    /// more information)
-    /// </summary>
-    public static partial class ServerFarmOperationsExtensions
-    {
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Server Farm operation.
-        /// </param>
-        /// <returns>
-        /// The Create Server Farm operation response.
-        /// </returns>
-        public static ServerFarmCreateResponse Create(this IServerFarmOperations operations, string webSpaceName, ServerFarmCreateParameters parameters)
-        {
-            try
-            {
-                return operations.CreateAsync(webSpaceName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create Server Farm operation.
-        /// </param>
-        /// <returns>
-        /// The Create Server Farm operation response.
-        /// </returns>
-        public static Task<ServerFarmCreateResponse> CreateAsync(this IServerFarmOperations operations, string webSpaceName, ServerFarmCreateParameters parameters)
-        {
-            return operations.CreateAsync(webSpaceName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Server Farm operation.
-        /// </param>
-        /// <returns>
-        /// The Update Server Farm operation response.
-        /// </returns>
-        public static ServerFarmUpdateResponse Update(this IServerFarmOperations operations, string webSpaceName, ServerFarmUpdateParameters parameters)
-        {
-            try
-            {
-                return operations.UpdateAsync(webSpaceName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Server Farm operation.
-        /// </param>
-        /// <returns>
-        /// The Update Server Farm operation response.
-        /// </returns>
-        public static Task<ServerFarmUpdateResponse> UpdateAsync(this IServerFarmOperations operations, string webSpaceName, ServerFarmUpdateParameters parameters)
-        {
-            return operations.UpdateAsync(webSpaceName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='serverFarmName'>
-        /// The name of the server farm.
-        /// </param>
-        /// <returns>
-        /// The Get Server Farm operation response.
-        /// </returns>
-        public static ServerFarmGetResponse Get(this IServerFarmOperations operations, string webSpaceName, string serverFarmName)
-        {
-            try
-            {
-                return operations.GetAsync(webSpaceName, serverFarmName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='serverFarmName'>
-        /// The name of the server farm.
-        /// </param>
-        /// <returns>
-        /// The Get Server Farm operation response.
-        /// </returns>
-        public static Task<ServerFarmGetResponse> GetAsync(this IServerFarmOperations operations, string webSpaceName, string serverFarmName)
-        {
-            return operations.GetAsync(webSpaceName, serverFarmName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse Delete(this IServerFarmOperations operations, string webSpaceName)
-        {
-            try
-            {
-                return operations.DeleteAsync(webSpaceName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IServerFarmOperations operations, string webSpaceName)
-        {
-            return operations.DeleteAsync(webSpaceName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <returns>
-        /// The List Server Farm operation response.
-        /// </returns>
-        public static ServerFarmListResponse List(this IServerFarmOperations operations, string webSpaceName)
-        {
-            try
-            {
-                return operations.ListAsync(webSpaceName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
-        /// </param>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <returns>
-        /// The List Server Farm operation response.
-        /// </returns>
-        public static Task<ServerFarmListResponse> ListAsync(this IServerFarmOperations operations, string webSpaceName)
-        {
-            return operations.ListAsync(webSpaceName, CancellationToken.None);
-        }
-    }
-    
-    /// <summary>
-    /// Operations for managing the server farm in a web space.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx for
-    /// more information)
-    /// </summary>
-    internal partial class ServerFarmOperations : IServiceOperations<WebSiteManagementClient>, IServerFarmOperations
-    {
-        /// <summary>
-        /// Initializes a new instance of the ServerFarmOperations class.
+        /// Initializes a new instance of the WebSpaceOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ServerFarmOperations(WebSiteManagementClient client)
+        internal WebSpaceOperations(WebSiteManagementClient client)
         {
             this._client = client;
         }
@@ -12331,40 +11965,44 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
+        /// Creates a source control user allowed to publish to this web space.
         /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// <param name='username'>
+        /// The user name.
+        /// </param>
+        /// <param name='password'>
+        /// The user password.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Server Farm operation.
+        /// Parameters supplied to the Create Publishing User operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Create Server Farm operation response.
+        /// The Create Publishing User operation response.
         /// </returns>
-        public async Task<ServerFarmCreateResponse> CreateAsync(string webSpaceName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(string username, string password, WebSpacesCreatePublishingUserParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (webSpaceName == null)
+            if (username == null)
             {
-                throw new ArgumentNullException("webSpaceName");
+                throw new ArgumentNullException("username");
             }
-            if (parameters == null)
+            if (password == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException("password");
+            }
+            if (parameters != null)
+            {
+                if (parameters.PublishingPassword == null)
+                {
+                    throw new ArgumentNullException("parameters.PublishingPassword");
+                }
+                if (parameters.PublishingUserName == null)
+                {
+                    throw new ArgumentNullException("parameters.PublishingUserName");
+                }
             }
             
             // Tracing
@@ -12374,232 +12012,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("username", username);
+                tracingParameters.Add("password", password);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "CreatePublishingUserAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                XDocument requestDoc = new XDocument();
-                
-                XElement serverFarmElement = new XElement(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(serverFarmElement);
-                
-                if (parameters.CurrentNumberOfWorkers != null)
-                {
-                    XElement currentNumberOfWorkersElement = new XElement(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                    currentNumberOfWorkersElement.Value = parameters.CurrentNumberOfWorkers.ToString();
-                    serverFarmElement.Add(currentNumberOfWorkersElement);
-                }
-                
-                if (parameters.CurrentWorkerSize != null)
-                {
-                    XElement currentWorkerSizeElement = new XElement(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                    currentWorkerSizeElement.Value = parameters.CurrentWorkerSize.ToString();
-                    serverFarmElement.Add(currentWorkerSizeElement);
-                }
-                
-                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                nameElement.Value = "DefaultServerFarm";
-                serverFarmElement.Add(nameElement);
-                
-                XElement numberOfWorkersElement = new XElement(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                numberOfWorkersElement.Value = parameters.NumberOfWorkers.ToString();
-                serverFarmElement.Add(numberOfWorkersElement);
-                
-                XElement workerSizeElement = new XElement(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                workerSizeElement.Value = parameters.WorkerSize.ToString();
-                serverFarmElement.Add(workerSizeElement);
-                
-                if (parameters.Status != null)
-                {
-                    XElement statusElement = new XElement(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                    statusElement.Value = parameters.Status.ToString();
-                    serverFarmElement.Add(statusElement);
-                }
-                
-                requestContent = requestDoc.ToString();
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ServerFarmCreateResponse result = new ServerFarmCreateResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serverFarmElement2 = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                    if (serverFarmElement2 != null)
-                    {
-                        XElement currentNumberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentNumberOfWorkersElement2 != null)
-                        {
-                            int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
-                            result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
-                        }
-                        
-                        XElement currentWorkerSizeElement2 = serverFarmElement2.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentWorkerSizeElement2 != null)
-                        {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, false);
-                            result.CurrentWorkerSize = currentWorkerSizeInstance;
-                        }
-                        
-                        XElement nameElement2 = serverFarmElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
-                        {
-                            string nameInstance = nameElement2.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement numberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (numberOfWorkersElement2 != null)
-                        {
-                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
-                            result.NumberOfWorkers = numberOfWorkersInstance;
-                        }
-                        
-                        XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (workerSizeElement2 != null)
-                        {
-                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, false);
-                            result.WorkerSize = workerSizeInstance;
-                        }
-                        
-                        XElement statusElement2 = serverFarmElement2.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement2 != null)
-                        {
-                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, false);
-                            result.Status = statusInstance;
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Server Farm operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Update Server Farm operation response.
-        /// </returns>
-        public async Task<ServerFarmUpdateResponse> UpdateAsync(string webSpaceName, ServerFarmUpdateParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=publishingCredentials";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -12610,7 +12030,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -12620,40 +12040,25 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement serverFarmElement = new XElement(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(serverFarmElement);
-                
-                if (parameters.CurrentNumberOfWorkers != null)
+                if (parameters != null)
                 {
-                    XElement currentNumberOfWorkersElement = new XElement(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                    currentNumberOfWorkersElement.Value = parameters.CurrentNumberOfWorkers.ToString();
-                    serverFarmElement.Add(currentNumberOfWorkersElement);
-                }
-                
-                if (parameters.CurrentWorkerSize != null)
-                {
-                    XElement currentWorkerSizeElement = new XElement(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                    currentWorkerSizeElement.Value = parameters.CurrentWorkerSize.ToString();
-                    serverFarmElement.Add(currentWorkerSizeElement);
-                }
-                
-                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                nameElement.Value = "DefaultServerFarm";
-                serverFarmElement.Add(nameElement);
-                
-                XElement numberOfWorkersElement = new XElement(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                numberOfWorkersElement.Value = parameters.NumberOfWorkers.ToString();
-                serverFarmElement.Add(numberOfWorkersElement);
-                
-                XElement workerSizeElement = new XElement(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                workerSizeElement.Value = parameters.WorkerSize.ToString();
-                serverFarmElement.Add(workerSizeElement);
-                
-                if (parameters.Status != null)
-                {
-                    XElement statusElement = new XElement(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                    statusElement.Value = parameters.Status.ToString();
-                    serverFarmElement.Add(statusElement);
+                    XElement userElement = new XElement(XName.Get("User", "http://schemas.microsoft.com/windowsazure"));
+                    requestDoc.Add(userElement);
+                    
+                    if (parameters.Name != null)
+                    {
+                        XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        nameElement.Value = parameters.Name;
+                        userElement.Add(nameElement);
+                    }
+                    
+                    XElement publishingPasswordElement = new XElement(XName.Get("PublishingPassword", "http://schemas.microsoft.com/windowsazure"));
+                    publishingPasswordElement.Value = parameters.PublishingPassword;
+                    userElement.Add(publishingPasswordElement);
+                    
+                    XElement publishingUserNameElement = new XElement(XName.Get("PublishingUserName", "http://schemas.microsoft.com/windowsazure"));
+                    publishingUserNameElement.Value = parameters.PublishingUserName;
+                    userElement.Add(publishingUserNameElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -12675,7 +12080,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -12687,7 +12092,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     }
                     
                     // Create Result
-                    ServerFarmUpdateResponse result = new ServerFarmUpdateResponse();
+                    WebSpacesCreatePublishingUserResponse result = new WebSpacesCreatePublishingUserResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -12699,49 +12104,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement serverFarmElement2 = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                    if (serverFarmElement2 != null)
+                    XElement userElement2 = responseDoc.Element(XName.Get("User", "http://schemas.microsoft.com/windowsazure"));
+                    if (userElement2 != null)
                     {
-                        XElement currentNumberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentNumberOfWorkersElement2 != null)
-                        {
-                            int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
-                            result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
-                        }
-                        
-                        XElement currentWorkerSizeElement2 = serverFarmElement2.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentWorkerSizeElement2 != null)
-                        {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, false);
-                            result.CurrentWorkerSize = currentWorkerSizeInstance;
-                        }
-                        
-                        XElement nameElement2 = serverFarmElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        XElement nameElement2 = userElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement2 != null)
                         {
                             string nameInstance = nameElement2.Value;
                             result.Name = nameInstance;
                         }
                         
-                        XElement numberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (numberOfWorkersElement2 != null)
+                        XElement publishingPasswordElement2 = userElement2.Element(XName.Get("PublishingPassword", "http://schemas.microsoft.com/windowsazure"));
+                        if (publishingPasswordElement2 != null)
                         {
-                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
-                            result.NumberOfWorkers = numberOfWorkersInstance;
+                            string publishingPasswordInstance = publishingPasswordElement2.Value;
+                            result.PublishingPassword = publishingPasswordInstance;
                         }
                         
-                        XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (workerSizeElement2 != null)
+                        XElement publishingUserNameElement2 = userElement2.Element(XName.Get("PublishingUserName", "http://schemas.microsoft.com/windowsazure"));
+                        if (publishingUserNameElement2 != null)
                         {
-                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, false);
-                            result.WorkerSize = workerSizeInstance;
-                        }
-                        
-                        XElement statusElement2 = serverFarmElement2.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement2 != null)
-                        {
-                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, false);
-                            result.Status = statusInstance;
+                            string publishingUserNameInstance = publishingUserNameElement2.Value;
+                            result.PublishingUserName = publishingUserNameInstance;
                         }
                     }
                     
@@ -12769,40 +12153,26 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// You can retrieve details for a specified webspace name by issuing
+        /// an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
         /// The name of the web space.
         /// </param>
-        /// <param name='serverFarmName'>
-        /// The name of the server farm.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Server Farm operation response.
+        /// The Get Web Space Details operation response.
         /// </returns>
-        public async Task<ServerFarmGetResponse> GetAsync(string webSpaceName, string serverFarmName, CancellationToken cancellationToken)
+        public async Task<WebSpacesGetResponse> GetAsync(string webSpaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
             {
                 throw new ArgumentNullException("webSpaceName");
-            }
-            if (serverFarmName == null)
-            {
-                throw new ArgumentNullException("serverFarmName");
             }
             
             // Tracing
@@ -12813,12 +12183,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("webSpaceName", webSpaceName);
-                tracingParameters.Add("serverFarmName", serverFarmName);
                 Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/" + serverFarmName;
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -12829,7 +12198,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -12862,7 +12231,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     }
                     
                     // Create Result
-                    ServerFarmGetResponse result = new ServerFarmGetResponse();
+                    WebSpacesGetResponse result = new WebSpacesGetResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -12874,167 +12243,96 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement serverFarmElement = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                    if (serverFarmElement != null)
+                    XElement webSpacesElement = responseDoc.Element(XName.Get("WebSpaces", "http://schemas.microsoft.com/windowsazure"));
+                    if (webSpacesElement != null)
                     {
-                        XElement currentNumberOfWorkersElement = serverFarmElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentNumberOfWorkersElement != null)
+                        XElement availabilityStateElement = webSpacesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                        if (availabilityStateElement != null)
                         {
-                            int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                            result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                            WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, false);
+                            result.AvailabilityState = availabilityStateInstance;
                         }
                         
-                        XElement currentWorkerSizeElement = serverFarmElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentWorkerSizeElement != null)
+                        XElement currentNumberOfWorkersElement = webSpacesElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (currentNumberOfWorkersElement != null && string.IsNullOrEmpty(currentNumberOfWorkersElement.Value) == false)
                         {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, false);
-                            result.CurrentWorkerSize = currentWorkerSizeInstance;
+                            bool isNil = false;
+                            XAttribute nilAttribute = currentNumberOfWorkersElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                            if (nilAttribute != null)
+                            {
+                                isNil = nilAttribute.Value == "true";
+                            }
+                            if (isNil == false)
+                            {
+                                int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                                result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                            }
                         }
                         
-                        XElement nameElement = serverFarmElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        XElement currentWorkerSizeElement = webSpacesElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (currentWorkerSizeElement != null && string.IsNullOrEmpty(currentWorkerSizeElement.Value) == false)
+                        {
+                            bool isNil2 = false;
+                            XAttribute nilAttribute2 = currentWorkerSizeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                            if (nilAttribute2 != null)
+                            {
+                                isNil2 = nilAttribute2.Value == "true";
+                            }
+                            if (isNil2 == false)
+                            {
+                                WebSpaceWorkerSize currentWorkerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, false);
+                                result.CurrentWorkerSize = currentWorkerSizeInstance;
+                            }
+                        }
+                        
+                        XElement geoLocationElement = webSpacesElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
+                        if (geoLocationElement != null)
+                        {
+                            string geoLocationInstance = geoLocationElement.Value;
+                            result.GeoLocation = geoLocationInstance;
+                        }
+                        
+                        XElement geoRegionElement = webSpacesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
+                        if (geoRegionElement != null)
+                        {
+                            string geoRegionInstance = geoRegionElement.Value;
+                            result.GeoRegion = geoRegionInstance;
+                        }
+                        
+                        XElement nameElement = webSpacesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement != null)
                         {
                             string nameInstance = nameElement.Value;
                             result.Name = nameInstance;
                         }
                         
-                        XElement numberOfWorkersElement = serverFarmElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (numberOfWorkersElement != null)
+                        XElement planElement = webSpacesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                        if (planElement != null)
                         {
-                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                            result.NumberOfWorkers = numberOfWorkersInstance;
+                            string planInstance = planElement.Value;
+                            result.Plan = planInstance;
                         }
                         
-                        XElement workerSizeElement = serverFarmElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (workerSizeElement != null)
-                        {
-                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, false);
-                            result.WorkerSize = workerSizeInstance;
-                        }
-                        
-                        XElement statusElement = serverFarmElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                        XElement statusElement = webSpacesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null)
                         {
-                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, false);
+                            WebSpaceStatus statusInstance = (WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, false);
                             result.Status = statusInstance;
                         }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string webSpaceName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
+                        
+                        XElement subscriptionElement = webSpacesElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
+                        if (subscriptionElement != null)
                         {
-                            Tracing.Error(invocationId, ex);
+                            string subscriptionInstance = subscriptionElement.Value;
+                            result.Subscription = subscriptionInstance;
                         }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                        
+                        XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (workerSizeElement != null && string.IsNullOrEmpty(workerSizeElement.Value) == false)
+                        {
+                            WebSpaceWorkerSize workerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, false);
+                            result.WorkerSize = workerSizeInstance;
+                        }
                     }
                     
                     if (shouldTrace)
@@ -13061,34 +12359,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can create a server farm by issuing an HTTP POST request. Only
-        /// one server farm per webspace is permitted. You can retrieve server
-        /// farm details by using HTTP GET, change server farm properties by
-        /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
-        /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
-        /// changes your webspace’s Compute Mode from Shared to Dedicated. You
-        /// will be charged from the moment the server farm is created, even
-        /// if all your sites are still running in Free mode.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
+        /// Get the dns suffix for this subscription.
         /// </summary>
-        /// <param name='webSpaceName'>
-        /// The name of the web space.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List Server Farm operation response.
+        /// The Get DNS Suffix operation response.
         /// </returns>
-        public async Task<ServerFarmListResponse> ListAsync(string webSpaceName, CancellationToken cancellationToken)
+        public async Task<WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(CancellationToken cancellationToken)
         {
             // Validate
-            if (webSpaceName == null)
-            {
-                throw new ArgumentNullException("webSpaceName");
-            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -13097,12 +12378,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("webSpaceName", webSpaceName);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "GetDnsSuffixAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=dnssuffix";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -13113,7 +12393,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -13146,7 +12426,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     }
                     
                     // Create Result
-                    ServerFarmListResponse result = new ServerFarmListResponse();
+                    WebSpacesGetDnsSuffixResponse result = new WebSpacesGetDnsSuffixResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -13158,54 +12438,934 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement serverFarmsSequenceElement = responseDoc.Element(XName.Get("ServerFarms", "http://schemas.microsoft.com/windowsazure"));
-                    if (serverFarmsSequenceElement != null)
+                    XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                    if (stringElement != null)
                     {
-                        foreach (XElement serverFarmsElement in serverFarmsSequenceElement.Elements(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure")))
+                        result.DnsSuffix = stringElement.Value;
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can list the webspaces under the current subscription by
+        /// issuing a GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Web Spaces operation response.
+        /// </returns>
+        public async Task<WebSpacesListResponse> ListAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
                         {
-                            ServerFarmListResponse.ServerFarm serverFarmInstance = new ServerFarmListResponse.ServerFarm();
-                            result.ServerFarms.Add(serverFarmInstance);
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSpacesListResponse result = new WebSpacesListResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement webSpacesSequenceElement = responseDoc.Element(XName.Get("WebSpaces", "http://schemas.microsoft.com/windowsazure"));
+                    if (webSpacesSequenceElement != null)
+                    {
+                        foreach (XElement webSpacesElement in webSpacesSequenceElement.Elements(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure")))
+                        {
+                            WebSpacesListResponse.WebSpace webSpaceInstance = new WebSpacesListResponse.WebSpace();
+                            result.WebSpaces.Add(webSpaceInstance);
                             
-                            XElement currentNumberOfWorkersElement = serverFarmsElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentNumberOfWorkersElement != null)
+                            XElement availabilityStateElement = webSpacesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                            if (availabilityStateElement != null)
                             {
-                                int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                                serverFarmInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                                WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, false);
+                                webSpaceInstance.AvailabilityState = availabilityStateInstance;
                             }
                             
-                            XElement currentWorkerSizeElement = serverFarmsElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentWorkerSizeElement != null)
+                            XElement currentNumberOfWorkersElement = webSpacesElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentNumberOfWorkersElement != null && string.IsNullOrEmpty(currentNumberOfWorkersElement.Value) == false)
                             {
-                                ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, false);
-                                serverFarmInstance.CurrentWorkerSize = currentWorkerSizeInstance;
+                                bool isNil = false;
+                                XAttribute nilAttribute = currentNumberOfWorkersElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute != null)
+                                {
+                                    isNil = nilAttribute.Value == "true";
+                                }
+                                if (isNil == false)
+                                {
+                                    int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                                    webSpaceInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                                }
                             }
                             
-                            XElement nameElement = serverFarmsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            XElement currentWorkerSizeElement = webSpacesElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (currentWorkerSizeElement != null && string.IsNullOrEmpty(currentWorkerSizeElement.Value) == false)
+                            {
+                                bool isNil2 = false;
+                                XAttribute nilAttribute2 = currentWorkerSizeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute2 != null)
+                                {
+                                    isNil2 = nilAttribute2.Value == "true";
+                                }
+                                if (isNil2 == false)
+                                {
+                                    WebSpaceWorkerSize currentWorkerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, false);
+                                    webSpaceInstance.CurrentWorkerSize = currentWorkerSizeInstance;
+                                }
+                            }
+                            
+                            XElement geoLocationElement = webSpacesElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
+                            if (geoLocationElement != null)
+                            {
+                                string geoLocationInstance = geoLocationElement.Value;
+                                webSpaceInstance.GeoLocation = geoLocationInstance;
+                            }
+                            
+                            XElement geoRegionElement = webSpacesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
+                            if (geoRegionElement != null)
+                            {
+                                string geoRegionInstance = geoRegionElement.Value;
+                                webSpaceInstance.GeoRegion = geoRegionInstance;
+                            }
+                            
+                            XElement nameElement = webSpacesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
-                                serverFarmInstance.Name = nameInstance;
+                                webSpaceInstance.Name = nameInstance;
                             }
                             
-                            XElement numberOfWorkersElement = serverFarmsElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                            if (numberOfWorkersElement != null)
+                            XElement planElement = webSpacesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                            if (planElement != null)
                             {
-                                int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                                serverFarmInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                string planInstance = planElement.Value;
+                                webSpaceInstance.Plan = planInstance;
                             }
                             
-                            XElement workerSizeElement = serverFarmsElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (workerSizeElement != null)
-                            {
-                                ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, false);
-                                serverFarmInstance.WorkerSize = workerSizeInstance;
-                            }
-                            
-                            XElement statusElement = serverFarmsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                            XElement statusElement = webSpacesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                             if (statusElement != null)
                             {
-                                ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, false);
-                                serverFarmInstance.Status = statusInstance;
+                                WebSpaceStatus statusInstance = (WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, false);
+                                webSpaceInstance.Status = statusInstance;
+                            }
+                            
+                            XElement subscriptionElement = webSpacesElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
+                            if (subscriptionElement != null)
+                            {
+                                string subscriptionInstance = subscriptionElement.Value;
+                                webSpaceInstance.Subscription = subscriptionInstance;
+                            }
+                            
+                            XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (workerSizeElement != null && string.IsNullOrEmpty(workerSizeElement.Value) == false)
+                            {
+                                WebSpaceWorkerSize workerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, false);
+                                webSpaceInstance.WorkerSize = workerSizeInstance;
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the available geo regions for this webspace.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get DNS Suffix operation response.
+        /// </returns>
+        public async Task<WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                Tracing.Enter(invocationId, this, "ListGeoRegionsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=georegions";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSpacesListGeoRegionsResponse result = new WebSpacesListGeoRegionsResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement geoRegionsSequenceElement = responseDoc.Element(XName.Get("GeoRegions", "http://schemas.microsoft.com/windowsazure"));
+                    if (geoRegionsSequenceElement != null)
+                    {
+                        foreach (XElement geoRegionsElement in geoRegionsSequenceElement.Elements(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure")))
+                        {
+                            WebSpacesListGeoRegionsResponse.GeoRegion geoRegionInstance = new WebSpacesListGeoRegionsResponse.GeoRegion();
+                            result.GeoRegions.Add(geoRegionInstance);
+                            
+                            XElement descriptionElement = geoRegionsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement != null)
+                            {
+                                string descriptionInstance = descriptionElement.Value;
+                                geoRegionInstance.Description = descriptionInstance;
+                            }
+                            
+                            XElement nameElement = geoRegionsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                geoRegionInstance.Name = nameInstance;
+                            }
+                            
+                            XElement sortOrderElement = geoRegionsElement.Element(XName.Get("SortOrder", "http://schemas.microsoft.com/windowsazure"));
+                            if (sortOrderElement != null)
+                            {
+                                bool isNil = false;
+                                XAttribute nilAttribute = sortOrderElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute != null)
+                                {
+                                    isNil = nilAttribute.Value == "true";
+                                }
+                                if (isNil == false)
+                                {
+                                    int sortOrderInstance = int.Parse(sortOrderElement.Value, CultureInfo.InvariantCulture);
+                                    geoRegionInstance.SortOrder = sortOrderInstance;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the source control users allowed to publish to this web space.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Publishing Users operation response.
+        /// </returns>
+        public async Task<WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                Tracing.Enter(invocationId, this, "ListPublishingUsersAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=publishingUsers";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSpacesListPublishingUsersResponse result = new WebSpacesListPublishingUsersResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement arrayOfstringSequenceElement = responseDoc.Element(XName.Get("ArrayOfstring", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+                    if (arrayOfstringSequenceElement != null)
+                    {
+                        foreach (XElement arrayOfstringElement in arrayOfstringSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                        {
+                            WebSpacesListPublishingUsersResponse.User stringInstance = new WebSpacesListPublishingUsersResponse.User();
+                            result.Users.Add(stringInstance);
+                            
+                            string stringInstance2 = arrayOfstringElement.Value;
+                            stringInstance.Name = stringInstance2;
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve a list of all web sites in a web space by issuing
+        /// an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236429.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Additional parameters
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Web Sites operation response.
+        /// </returns>
+        public async Task<WebSpacesListWebSitesResponse> ListWebSitesAsync(string webSpaceName, WebSiteListParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "ListWebSitesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites?";
+            if (parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
+            {
+                url = url + "&propertiesToInclude=" + Uri.EscapeUriString(string.Join(",", parameters.PropertiesToInclude));
+            }
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = WebSiteCloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSpacesListWebSitesResponse result = new WebSpacesListWebSitesResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement sitesSequenceElement = responseDoc.Element(XName.Get("Sites", "http://schemas.microsoft.com/windowsazure"));
+                    if (sitesSequenceElement != null)
+                    {
+                        foreach (XElement sitesElement in sitesSequenceElement.Elements(XName.Get("Site", "http://schemas.microsoft.com/windowsazure")))
+                        {
+                            WebSite siteInstance = new WebSite();
+                            result.WebSites.Add(siteInstance);
+                            
+                            XElement adminEnabledElement = sitesElement.Element(XName.Get("AdminEnabled", "http://schemas.microsoft.com/windowsazure"));
+                            if (adminEnabledElement != null)
+                            {
+                                bool adminEnabledInstance = bool.Parse(adminEnabledElement.Value);
+                                siteInstance.AdminEnabled = adminEnabledInstance;
+                            }
+                            
+                            XElement availabilityStateElement = sitesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                            if (availabilityStateElement != null)
+                            {
+                                WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, false);
+                                siteInstance.AvailabilityState = availabilityStateInstance;
+                            }
+                            
+                            XElement computeModeElement = sitesElement.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
+                            if (computeModeElement != null)
+                            {
+                                WebSiteComputeMode computeModeInstance = (WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, false);
+                                siteInstance.ComputeMode = computeModeInstance;
+                            }
+                            
+                            XElement enabledElement = sitesElement.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
+                            if (enabledElement != null)
+                            {
+                                bool enabledInstance = bool.Parse(enabledElement.Value);
+                                siteInstance.Enabled = enabledInstance;
+                            }
+                            
+                            XElement enabledHostNamesSequenceElement = sitesElement.Element(XName.Get("EnabledHostNames", "http://schemas.microsoft.com/windowsazure"));
+                            if (enabledHostNamesSequenceElement != null)
+                            {
+                                foreach (XElement enabledHostNamesElement in enabledHostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                                {
+                                    siteInstance.EnabledHostNames.Add(enabledHostNamesElement.Value);
+                                }
+                            }
+                            
+                            XElement hostNameSslStatesSequenceElement = sitesElement.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
+                            if (hostNameSslStatesSequenceElement != null)
+                            {
+                                foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    WebSite.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
+                                    siteInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
+                                    
+                                    XElement nameElement = hostNameSslStatesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement != null)
+                                    {
+                                        string nameInstance = nameElement.Value;
+                                        webSiteHostNameSslStateInstance.Name = nameInstance;
+                                    }
+                                    
+                                    XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
+                                    if (sslStateElement != null)
+                                    {
+                                        WebSiteSslState sslStateInstance = (WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, false);
+                                        webSiteHostNameSslStateInstance.SslState = sslStateInstance;
+                                    }
+                                    
+                                    XElement thumbprintElement = hostNameSslStatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
+                                    if (thumbprintElement != null)
+                                    {
+                                        bool isNil = false;
+                                        XAttribute nilAttribute = thumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                        if (nilAttribute != null)
+                                        {
+                                            isNil = nilAttribute.Value == "true";
+                                        }
+                                        if (isNil == false)
+                                        {
+                                            string thumbprintInstance = thumbprintElement.Value;
+                                            webSiteHostNameSslStateInstance.Thumbprint = thumbprintInstance;
+                                        }
+                                    }
+                                    
+                                    XElement virtualIPElement = hostNameSslStatesElement.Element(XName.Get("VirtualIP", "http://schemas.microsoft.com/windowsazure"));
+                                    if (virtualIPElement != null)
+                                    {
+                                        bool isNil2 = false;
+                                        XAttribute nilAttribute2 = virtualIPElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                        if (nilAttribute2 != null)
+                                        {
+                                            isNil2 = nilAttribute2.Value == "true";
+                                        }
+                                        if (isNil2 == false)
+                                        {
+                                            string virtualIPInstance = virtualIPElement.Value;
+                                            webSiteHostNameSslStateInstance.VirtualIP = virtualIPInstance;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            XElement hostNamesSequenceElement = sitesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
+                            if (hostNamesSequenceElement != null)
+                            {
+                                foreach (XElement hostNamesElement in hostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                                {
+                                    siteInstance.HostNames.Add(hostNamesElement.Value);
+                                }
+                            }
+                            
+                            XElement lastModifiedTimeUtcElement = sitesElement.Element(XName.Get("LastModifiedTimeUtc", "http://schemas.microsoft.com/windowsazure"));
+                            if (lastModifiedTimeUtcElement != null)
+                            {
+                                DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture);
+                                siteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
+                            }
+                            
+                            XElement nameElement2 = sitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement2 != null)
+                            {
+                                string nameInstance2 = nameElement2.Value;
+                                siteInstance.Name = nameInstance2;
+                            }
+                            
+                            XElement ownerElement = sitesElement.Element(XName.Get("Owner", "http://schemas.microsoft.com/windowsazure"));
+                            if (ownerElement != null)
+                            {
+                                bool isNil3 = false;
+                                XAttribute nilAttribute3 = ownerElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute3 != null)
+                                {
+                                    isNil3 = nilAttribute3.Value == "true";
+                                }
+                                if (isNil3 == false)
+                                {
+                                    string ownerInstance = ownerElement.Value;
+                                    siteInstance.Owner = ownerInstance;
+                                }
+                            }
+                            
+                            XElement repositorySiteNameElement = sitesElement.Element(XName.Get("RepositorySiteName", "http://schemas.microsoft.com/windowsazure"));
+                            if (repositorySiteNameElement != null)
+                            {
+                                string repositorySiteNameInstance = repositorySiteNameElement.Value;
+                                siteInstance.RepositorySiteName = repositorySiteNameInstance;
+                            }
+                            
+                            XElement runtimeAvailabilityStateElement = sitesElement.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                            if (runtimeAvailabilityStateElement != null)
+                            {
+                                WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = (WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, false);
+                                siteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
+                            }
+                            
+                            XElement sSLCertificatesSequenceElement = sitesElement.Element(XName.Get("SSLCertificates", "http://schemas.microsoft.com/windowsazure"));
+                            if (sSLCertificatesSequenceElement != null)
+                            {
+                                foreach (XElement sSLCertificatesElement in sSLCertificatesSequenceElement.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    WebSite.WebSiteSslCertificate certificateInstance = new WebSite.WebSiteSslCertificate();
+                                    siteInstance.SslCertificates.Add(certificateInstance);
+                                    
+                                    XElement expirationDateElement = sSLCertificatesElement.Element(XName.Get("ExpirationDate", "http://schemas.microsoft.com/windowsazure"));
+                                    if (expirationDateElement != null)
+                                    {
+                                        DateTime expirationDateInstance = DateTime.Parse(expirationDateElement.Value, CultureInfo.InvariantCulture);
+                                        certificateInstance.ExpirationDate = expirationDateInstance;
+                                    }
+                                    
+                                    XElement friendlyNameElement = sSLCertificatesElement.Element(XName.Get("FriendlyName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (friendlyNameElement != null)
+                                    {
+                                        string friendlyNameInstance = friendlyNameElement.Value;
+                                        certificateInstance.FriendlyName = friendlyNameInstance;
+                                    }
+                                    
+                                    XElement hostNamesSequenceElement2 = sSLCertificatesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
+                                    if (hostNamesSequenceElement2 != null)
+                                    {
+                                        foreach (XElement hostNamesElement2 in hostNamesSequenceElement2.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                                        {
+                                            certificateInstance.HostNames.Add(hostNamesElement2.Value);
+                                        }
+                                    }
+                                    
+                                    XElement issueDateElement = sSLCertificatesElement.Element(XName.Get("IssueDate", "http://schemas.microsoft.com/windowsazure"));
+                                    if (issueDateElement != null)
+                                    {
+                                        DateTime issueDateInstance = DateTime.Parse(issueDateElement.Value, CultureInfo.InvariantCulture);
+                                        certificateInstance.IssueDate = issueDateInstance;
+                                    }
+                                    
+                                    XElement issuerElement = sSLCertificatesElement.Element(XName.Get("Issuer", "http://schemas.microsoft.com/windowsazure"));
+                                    if (issuerElement != null)
+                                    {
+                                        string issuerInstance = issuerElement.Value;
+                                        certificateInstance.Issuer = issuerInstance;
+                                    }
+                                    
+                                    XElement passwordElement = sSLCertificatesElement.Element(XName.Get("Password", "http://schemas.microsoft.com/windowsazure"));
+                                    if (passwordElement != null)
+                                    {
+                                        string passwordInstance = passwordElement.Value;
+                                        certificateInstance.Password = passwordInstance;
+                                    }
+                                    
+                                    XElement pfxBlobElement = sSLCertificatesElement.Element(XName.Get("PfxBlob", "http://schemas.microsoft.com/windowsazure"));
+                                    if (pfxBlobElement != null)
+                                    {
+                                        byte[] pfxBlobInstance = Convert.FromBase64String(pfxBlobElement.Value);
+                                        certificateInstance.PfxBlob = pfxBlobInstance;
+                                    }
+                                    
+                                    XElement selfLinkElement = sSLCertificatesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
+                                    if (selfLinkElement != null)
+                                    {
+                                        Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
+                                        certificateInstance.SelfLinkUri = selfLinkInstance;
+                                    }
+                                    
+                                    XElement siteNameElement = sSLCertificatesElement.Element(XName.Get("SiteName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (siteNameElement != null)
+                                    {
+                                        string siteNameInstance = siteNameElement.Value;
+                                        certificateInstance.SiteName = siteNameInstance;
+                                    }
+                                    
+                                    XElement subjectNameElement = sSLCertificatesElement.Element(XName.Get("SubjectName", "http://schemas.microsoft.com/windowsazure"));
+                                    if (subjectNameElement != null)
+                                    {
+                                        string subjectNameInstance = subjectNameElement.Value;
+                                        certificateInstance.SubjectName = subjectNameInstance;
+                                    }
+                                    
+                                    XElement thumbprintElement2 = sSLCertificatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
+                                    if (thumbprintElement2 != null)
+                                    {
+                                        string thumbprintInstance2 = thumbprintElement2.Value;
+                                        certificateInstance.Thumbprint = thumbprintInstance2;
+                                    }
+                                    
+                                    XElement toDeleteElement = sSLCertificatesElement.Element(XName.Get("ToDelete", "http://schemas.microsoft.com/windowsazure"));
+                                    if (toDeleteElement != null)
+                                    {
+                                        bool toDeleteInstance = bool.Parse(toDeleteElement.Value);
+                                        certificateInstance.IsToBeDeleted = toDeleteInstance;
+                                    }
+                                    
+                                    XElement validElement = sSLCertificatesElement.Element(XName.Get("Valid", "http://schemas.microsoft.com/windowsazure"));
+                                    if (validElement != null)
+                                    {
+                                        bool validInstance = bool.Parse(validElement.Value);
+                                        certificateInstance.IsValid = validInstance;
+                                    }
+                                }
+                            }
+                            
+                            XElement selfLinkElement2 = sitesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (selfLinkElement2 != null)
+                            {
+                                Uri selfLinkInstance2 = TypeConversion.TryParseUri(selfLinkElement2.Value);
+                                siteInstance.Uri = selfLinkInstance2;
+                            }
+                            
+                            XElement serverFarmElement = sitesElement.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                            if (serverFarmElement != null)
+                            {
+                                string serverFarmInstance = serverFarmElement.Value;
+                                siteInstance.ServerFarm = serverFarmInstance;
+                            }
+                            
+                            XElement siteModeElement = sitesElement.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
+                            if (siteModeElement != null)
+                            {
+                                WebSiteMode siteModeInstance = (WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, false);
+                                siteInstance.SiteMode = siteModeInstance;
+                            }
+                            
+                            XElement sitePropertiesElement = sitesElement.Element(XName.Get("SiteProperties", "http://schemas.microsoft.com/windowsazure"));
+                            if (sitePropertiesElement != null)
+                            {
+                                WebSite.WebSiteProperties sitePropertiesInstance = new WebSite.WebSiteProperties();
+                                siteInstance.SiteProperties = sitePropertiesInstance;
+                                
+                                XElement appSettingsSequenceElement = sitePropertiesElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
+                                if (appSettingsSequenceElement != null)
+                                {
+                                    foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        string appSettingsValue = appSettingsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        sitePropertiesInstance.AppSettings.Add(appSettingsKey, appSettingsValue);
+                                    }
+                                }
+                                
+                                XElement metadataSequenceElement = sitePropertiesElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
+                                if (metadataSequenceElement != null)
+                                {
+                                    foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        string metadataValue = metadataElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        sitePropertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                    }
+                                }
+                                
+                                XElement propertiesSequenceElement = sitePropertiesElement.Element(XName.Get("Properties", "http://schemas.microsoft.com/windowsazure"));
+                                if (propertiesSequenceElement != null)
+                                {
+                                    foreach (XElement propertiesElement in propertiesSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        string propertiesKey = propertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        string propertiesValue = propertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        sitePropertiesInstance.Properties.Add(propertiesKey, propertiesValue);
+                                    }
+                                }
+                            }
+                            
+                            XElement stateElement = sitesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                WebSiteState stateInstance = (WebSiteState)Enum.Parse(typeof(WebSiteState), stateElement.Value, false);
+                                siteInstance.State = stateInstance;
+                            }
+                            
+                            XElement usageStateElement = sitesElement.Element(XName.Get("UsageState", "http://schemas.microsoft.com/windowsazure"));
+                            if (usageStateElement != null)
+                            {
+                                WebSiteUsageState usageStateInstance = (WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, false);
+                                siteInstance.UsageState = usageStateInstance;
+                            }
+                            
+                            XElement webSpaceElement = sitesElement.Element(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
+                            if (webSpaceElement != null)
+                            {
+                                string webSpaceInstance = webSpaceElement.Value;
+                                siteInstance.WebSpace = webSpaceInstance;
                             }
                         }
                     }
