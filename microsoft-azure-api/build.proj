@@ -9,7 +9,6 @@
     <StorageSln Include=".\Services\Storage\Lib\RT\RT.csproj" />
     <StorageSln Include=".\Services\Storage\Lib\RTTable\RTTable.csproj" />
     <StorageSln Include=".\Services\Storage\Lib\WP\WP.csproj" />
-    <ConfigSln Include=".\Configuration\microsoft-windowsazure-configuration.sln" />
   </ItemGroup>
   
   <!-- Clean the build in all configurations -->
@@ -26,16 +25,6 @@
       Targets="Clean"
       Properties="Configuration=Release"
       ContinueOnError="true" />
-    <MSBuild
-      Projects="@(ConfigSln)"
-      Targets="Clean"
-      Properties="Configuration=Debug"
-      ContinueOnError="true" />
-    <MSBuild
-      Projects="@(ConfigSln)"
-      Targets="Clean"
-      Properties="Configuration=ReleaseSigned"
-      ContinueOnError="true" />
   </Target>
   
   <!-- Build the Cmdlets in ReleaseSigned configuration -->
@@ -46,11 +35,6 @@
       Targets="Build"
       Properties="Configuration=Release"
       ContinueOnError="true" />
-	<MSBuild
-      Projects="@(ConfigSln)"
-      Targets="Build"
-      Properties="Configuration=ReleaseSigned"
-      ContinueOnError="true" />
   </Target>
 
   <!-- Build the Cmdlets in Debug configuration -->
@@ -58,11 +42,6 @@
     <Message Importance="high" Text="Building debug version the projects..." />
     <MSBuild
       Projects="@(StorageSln)"
-      Targets="Build"
-      Properties="Configuration=Debug"
-      ContinueOnError="true" />
-	<MSBuild
-      Projects="@(ConfigSln)"
       Targets="Build"
       Properties="Configuration=Debug"
       ContinueOnError="true" />
