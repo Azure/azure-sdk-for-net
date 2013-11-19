@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -160,6 +161,28 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         {
             get { return this._eTag; }
             set { this._eTag = value; }
+        }
+        
+        private JobCollectionIntrinsicSettings _intrinsicSettings;
+        
+        /// <summary>
+        /// Intrinsic settings for the scheduler job collections.
+        /// </summary>
+        public JobCollectionIntrinsicSettings IntrinsicSettings
+        {
+            get { return this._intrinsicSettings; }
+            set { this._intrinsicSettings = value; }
+        }
+        
+        private string _label;
+        
+        /// <summary>
+        /// Label for the resource.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
         }
         
         private JobCollectionGetResponse.OperationStatus _lastOperationStatus;
@@ -3317,6 +3340,69 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         {
                             string promotionCodeInstance = promotionCodeElement.Value;
                             result.PromotionCode = promotionCodeInstance;
+                        }
+                        
+                        XElement intrinsicSettingsElement = resourceElement.Element(XName.Get("IntrinsicSettings", "http://schemas.microsoft.com/windowsazure"));
+                        if (intrinsicSettingsElement != null)
+                        {
+                            JobCollectionIntrinsicSettings intrinsicSettingsInstance = new JobCollectionIntrinsicSettings();
+                            result.IntrinsicSettings = intrinsicSettingsInstance;
+                            
+                            XElement planElement2 = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                            if (planElement2 != null)
+                            {
+                                JobCollectionPlan planInstance2 = (JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement2.Value, false);
+                                intrinsicSettingsInstance.Plan = planInstance2;
+                            }
+                            
+                            XElement quotaElement = intrinsicSettingsElement.Element(XName.Get("Quota", "http://schemas.microsoft.com/windowsazure"));
+                            if (quotaElement != null)
+                            {
+                                JobCollectionQuota quotaInstance = new JobCollectionQuota();
+                                intrinsicSettingsInstance.Quota = quotaInstance;
+                                
+                                XElement maxJobCountElement = quotaElement.Element(XName.Get("MaxJobCount", "http://schemas.microsoft.com/windowsazure"));
+                                if (maxJobCountElement != null && string.IsNullOrEmpty(maxJobCountElement.Value) == false)
+                                {
+                                    int maxJobCountInstance = int.Parse(maxJobCountElement.Value, CultureInfo.InvariantCulture);
+                                    quotaInstance.MaxJobCount = maxJobCountInstance;
+                                }
+                                
+                                XElement maxJobOccurrenceElement = quotaElement.Element(XName.Get("MaxJobOccurrence", "http://schemas.microsoft.com/windowsazure"));
+                                if (maxJobOccurrenceElement != null && string.IsNullOrEmpty(maxJobOccurrenceElement.Value) == false)
+                                {
+                                    int maxJobOccurrenceInstance = int.Parse(maxJobOccurrenceElement.Value, CultureInfo.InvariantCulture);
+                                    quotaInstance.MaxJobOccurrence = maxJobOccurrenceInstance;
+                                }
+                                
+                                XElement maxRecurrenceElement = quotaElement.Element(XName.Get("MaxRecurrence", "http://schemas.microsoft.com/windowsazure"));
+                                if (maxRecurrenceElement != null)
+                                {
+                                    JobCollectionMaxRecurrence maxRecurrenceInstance = new JobCollectionMaxRecurrence();
+                                    quotaInstance.MaxRecurrence = maxRecurrenceInstance;
+                                    
+                                    XElement frequencyElement = maxRecurrenceElement.Element(XName.Get("Frequency", "http://schemas.microsoft.com/windowsazure"));
+                                    if (frequencyElement != null)
+                                    {
+                                        JobCollectionRecurrenceFrequency frequencyInstance = (JobCollectionRecurrenceFrequency)Enum.Parse(typeof(JobCollectionRecurrenceFrequency), frequencyElement.Value, false);
+                                        maxRecurrenceInstance.Frequency = frequencyInstance;
+                                    }
+                                    
+                                    XElement intervalElement = maxRecurrenceElement.Element(XName.Get("Interval", "http://schemas.microsoft.com/windowsazure"));
+                                    if (intervalElement != null)
+                                    {
+                                        int intervalInstance = int.Parse(intervalElement.Value, CultureInfo.InvariantCulture);
+                                        maxRecurrenceInstance.Interval = intervalInstance;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        XElement labelElement = resourceElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                        if (labelElement != null)
+                        {
+                            string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                            result.Label = labelInstance;
                         }
                         
                         XElement cloudServiceSettingsElement = resourceElement.Element(XName.Get("CloudServiceSettings", "http://schemas.microsoft.com/windowsazure"));
