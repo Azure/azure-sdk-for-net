@@ -45,8 +45,13 @@
       <PackageVersion>0.9.1-preview</PackageVersion>
     </SdkNuGetPackage>
 
+    <!-- ConfigurationManager -->
+    <SdkNuGetPackage Include="Microsoft.WindowsAzure.ConfigurationManager">
+      <PackageVersion>2.0.2.0</PackageVersion>
+    </SdkNuGetPackage>
+
   </ItemGroup>
-  
+
   <!--
 
 	NuGet Package Guide

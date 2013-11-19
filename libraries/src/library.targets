@@ -39,14 +39,14 @@
   <PropertyGroup Condition="$(OfficialBuild) == 'true'">
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\Keys\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <CopyToBinaries>true</CopyToBinaries>
     <CopyToBinariesDestination>$(SolutionDir)\binaries\unsigned\</CopyToBinariesDestination>
   </PropertyGroup>
   <PropertyGroup Condition="$(OfficialBuild) == 'false'">
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\Keys\Development.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\Development.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup>
