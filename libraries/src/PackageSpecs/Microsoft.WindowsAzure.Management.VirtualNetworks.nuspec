@@ -19,6 +19,9 @@
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.VirtualNetworks.dll" />
       </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.WindowsAzure.Management.VirtualNetworks.dll" />
+      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
@@ -26,9 +29,13 @@
   </metadata>
   <files>
     <file src="NetworkManagement\**\*.cs" target="src" />
-    
+
     <file src="..\binaries\Microsoft.WindowsAzure.Management.VirtualNetworks.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.VirtualNetworks.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.VirtualNetworks.xml" target="lib\portable-net45+sl50+wp80+win" />
+
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.VirtualNetworks.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.VirtualNetworks.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.VirtualNetworks.xml" target="lib\net40" />
   </files>
 </package>
