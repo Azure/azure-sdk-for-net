@@ -8,19 +8,21 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
 
 # Features
 
-- Tables
+- Storage
+  - Tables
     - Create/Delete Tables
     - Query/Create/Read/Update/Delete Entities
-- Blobs
+  - Blobs
     - Create/Read/Update/Delete Blobs
-- Queues
+  - Queues
     - Create/Delete Queues
     - Insert/Peek Queue Messages
     - Advanced Queue Operations
-- Management Libraries
+- Management Libraries (Preview)
     - Compute
     - Infrastructure
-    - Storage 
+    - Scheduler
+    - Storage
     - Virtual Networks
 - Media
 
