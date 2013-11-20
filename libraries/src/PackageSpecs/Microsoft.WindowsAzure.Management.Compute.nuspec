@@ -19,6 +19,9 @@
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Compute.dll" />
       </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.WindowsAzure.Management.Compute.dll" />
+      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
@@ -30,5 +33,9 @@
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Compute.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Compute.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Compute.xml" target="lib\portable-net45+sl50+wp80+win" />
+
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Compute.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Compute.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Compute.xml" target="lib\net40" />
   </files>
 </package>
