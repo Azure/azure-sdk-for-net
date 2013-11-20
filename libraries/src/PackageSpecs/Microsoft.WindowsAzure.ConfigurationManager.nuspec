@@ -6,7 +6,7 @@
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
-    <licenseUrl>http://go.microsoft.com/fwlink/?LinkID=235167</licenseUrl>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
     <projectUrl>http://go.microsoft.com/fwlink/?linkid=252450</projectUrl>
     <iconUrl>http://www.gravatar.com/avatar/c24270713c524575b0308e05c7e9ff61?s=128</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
