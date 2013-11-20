@@ -9,7 +9,16 @@
   -->
   <PropertyGroup>
     <LibraryPropertiesProjectIncluded>true</LibraryPropertiesProjectIncluded>
-    <OutputPath>$(BuildOutputFolder)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(BuildSecondConfiguration)' != 'true' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <AdditionalBinariesFolder></AdditionalBinariesFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(BuildSecondConfiguration)' == 'true' ">
+    <OutputPath>bin\$(Configuration)\net40\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\net40\$(AssemblyName).xml</DocumentationFile>
+    <AdditionalBinariesFolder>net40\</AdditionalBinariesFolder>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
