@@ -42,49 +42,45 @@
   /t:OfficialBuild  
     Builds officially delay signed binaries.
     Drops into the binaries\unsigned folder.
-    
-    To manually prepare an official build,
-    - Get these binaries signed officially
-    - Drop the fully signed bits into the binaries folder
-  
+
   /t:BuildPackages
     Builds NuGet packages using the binaries folder contents.
     The packages will drop to .\binaries\packages.
-    
+
   /t:PublishPackages
     Publishes the built packages. You will need to include your
     publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY 
-    
+
   Targets for build servers:
   /t:NightlyBuild
   /t:ContinuousIntegrationBuild
-  /t:OfficialSignedBuildNoPublish
-  
+  /t:OfficialSignedBuild
+
   Properties of interest:
-  
+
   /p:BuildVersionSuffix=BUILD_SUFFIX  
     Inserts a string suffix value at the end of all the NuGet package versions
     built and published.
-    
+
   /p:NuGetKey=NUGET_PUBLISHING_KEY
     Provides the key used to publish to a NuGet or MyGet server.
-    
+
     This key should never be committed to source control.
-    
+
   /p:PublishSymbolSourcePackages
     A true/false value indicating whether to push the symbol + source
     packages to a symbol server.
-  
+
   /p:NuGetPublishingSource=Uri
     The NuGet Server to push packages to.
-    
+
   /p:NuGetSymbolPublishingSource=Uri
     The NuGet Server to push symbol + source packages to.
-  
+
   -->
 
   <!--
-  Helpful build tasks in this tree, useful to anyone
+  Helpful build tasks in this tree
   -->
   <Import Project="..\tools\Microsoft.WindowsAzure.Build.msbuild" />
   <UsingTask AssemblyFile="..\tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
@@ -100,8 +96,10 @@
     <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
     <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
   </PropertyGroup>
-  
-  <!-- General NuGet packaging properties -->
+
+  <!--
+  General NuGet packaging properties
+  -->
   <PropertyGroup>
     <NuGetCommand>.nuget\NuGet.exe</NuGetCommand>
     <PackageOutputDir>binaries\packages</PackageOutputDir>
@@ -131,18 +129,39 @@
   </PropertyGroup>
 
   <!--
-  Regular developer build.
+  Build profiles
+  -->
+  <PropertyGroup>
+    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU</DeveloperBuildProperties>
+    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU</OfficialMSBuildProperties>
+    <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
+  </PropertyGroup>
+
+  <!--
+  Regular developer build
   -->
   <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies">
     <MSBuild Projects="$(ProductSolution)"
-             Properties="Configuration=Debug;Platform=Any CPU"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Rebuild" />
+    <MSBuild Projects="$(ProductSolution)"
+             Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
   </Target>
 
-  <PropertyGroup>
-    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU</OfficialMSBuildProperties>
-  </PropertyGroup>
-  
+  <!--
+  Clean produced binaries and object files
+  -->
+  <Target Name="Clean">
+    <MSBuild Projects="$(ProductSolution)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Clean" />
+    <MSBuild Projects="$(ProductSolution)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Clean" />
+    <RemoveDir Directories="binaries" Condition="Exists('binaries\')" ContinueOnError="true" />
+  </Target>
+
   <!--
   An official build is designed for use while shipping. It generates a release
   build and places binaries ready for the official Microsoft signing process
@@ -156,7 +175,7 @@
   the story.
   -->
   <Target Name="OfficialBuild"
-          DependsOnTargets="BuildEngineeringDependencies">
+          DependsOnTargets="BuildEngineeringDependencies;Clean">
     <CallTarget Targets="BuildServerPreparation" />
     <MSBuild Projects="$(ProductSolution)"
              Properties="$(OfficialMSBuildProperties)"
@@ -167,7 +186,7 @@
   Nightly and continuous builds. Nightly builds can push to a NuGet server.
   -->
   <Target Name="NightlyBuild"
-          DependsOnTargets="BuildEngineeringDependencies; NightlyBuildSetProperties">
+          DependsOnTargets="BuildEngineeringDependencies; Clean; NightlyBuildSetProperties">
     <Error Condition=" '$(NuGetKey)' == '' " Text="NuGetKey is not set." />
     <CallTarget Targets="BuildServerPreparation" />
     <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
@@ -183,7 +202,7 @@
   </Target>
 
   <Target Name="ContinuousIntegrationBuild"
-          DependsOnTargets="BuildEngineeringDependencies; ContinuousIntegrationBuildSetProperties">
+          DependsOnTargets="BuildEngineeringDependencies; Clean; ContinuousIntegrationBuildSetProperties">
     <CallTarget Targets="BuildServerPreparation" />
     <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
     <CallTarget Targets="OfficialSignedBuild" />
