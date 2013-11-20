@@ -28,7 +28,7 @@
     Location for documentation files and symbols.
     -->
     <CopyToBinariesDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)</CopyToBinariesDestination>
-    <CopyToArtifactsDestination>$(SolutionDir)\binaries\</CopyToArtifactsDestination>
+    <CopyToArtifactsDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)</CopyToArtifactsDestination>
   </PropertyGroup>
   <!--
   Standard project properties
@@ -150,7 +150,7 @@
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(SolutionDir)\src\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <CopyToBinaries>true</CopyToBinaries>
-    <CopyToBinariesDestination>$(SolutionDir)\binaries\unsigned\</CopyToBinariesDestination>
+    <CopyToBinariesDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)unsigned\</CopyToBinariesDestination>
   </PropertyGroup>
   <PropertyGroup Condition="$(OfficialBuild) == 'false'">
     <SignAssembly>true</SignAssembly>
