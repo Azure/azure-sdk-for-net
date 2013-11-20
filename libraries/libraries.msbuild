@@ -180,6 +180,9 @@
     <MSBuild Projects="$(ProductSolution)"
              Properties="$(OfficialMSBuildProperties)"
              Targets="Rebuild" />
+    <MSBuild Projects="$(ProductSolution)"
+             Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
   </Target>
 
   <!--
