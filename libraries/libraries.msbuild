@@ -309,6 +309,7 @@
     <CallTarget Targets="BuildPackages" />
 
     <RemoveDir Directories="binaries\unsigned" Condition="Exists('binaries\unsigned')" ContinueOnError="true" />
+    <RemoveDir Directories="binaries\net40\unsigned" Condition="Exists('binaries\net40\unsigned')" ContinueOnError="true" />
     <Message Text="Have a nice day." />
   </Target>
 
