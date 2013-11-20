@@ -177,7 +177,7 @@
   <Target Name="NightlyBuildSetProperties"
           DependsOnTargets="GetGeneratedBuildDate">
     <Message Text="Nightly builds today have the date of $(GeneratedBuildDate)." />
-    <CreateProperty Value="-$(GeneratedBuildDate)">
+    <CreateProperty Value="-pre-$(GeneratedBuildDate)">
       <Output PropertyName="BuildVersionSuffix" TaskParameter="Value" />
     </CreateProperty>
   </Target>
@@ -191,7 +191,7 @@
 
   <Target Name="ContinuousIntegrationBuildSetProperties"
           DependsOnTargets="GetGeneratedBuildDate">
-    <CreateProperty Value="-$(GeneratedBuildDate)-CI">
+    <CreateProperty Value="-ci-$(GeneratedBuildDate)">
       <Output PropertyName="BuildVersionSuffix" TaskParameter="Value" />
     </CreateProperty>
   </Target>
@@ -201,6 +201,7 @@
   -->
   <Target Name="BuildPackages">
     <MakeDir Directories="binaries" Condition="!Exists('binaries')" />
+    <RemoveDir Directories="binaries\packages" Condition="Exists('binaries\packages')" ContinueOnError="true" />
     <MakeDir Directories="binaries\packages" Condition="!Exists('binaries\packages')" />
 
     <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
@@ -275,6 +276,7 @@
     <Message Text="Build the official NuGet packages" />
     <CallTarget Targets="BuildPackages" />
 
+    <RemoveDir Directories="binaries\unsigned" Condition="Exists('binaries\unsigned')" ContinueOnError="true" />
     <Message Text="Have a nice day." />
   </Target>
 

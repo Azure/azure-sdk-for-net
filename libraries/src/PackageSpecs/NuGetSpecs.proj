@@ -47,7 +47,7 @@
 
     <!-- ConfigurationManager -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.ConfigurationManager">
-      <PackageVersion>2.0.2.0</PackageVersion>
+      <PackageVersion>2.0.2</PackageVersion>
     </SdkNuGetPackage>
 
   </ItemGroup>
