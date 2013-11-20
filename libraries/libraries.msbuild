@@ -277,17 +277,27 @@
     <Message Text="Code signing" Importance="high" />
     <ItemGroup>
       <AssembliesToBuild Include="binaries\unsigned\Microsoft.WindowsAzure.*.dll" />
+      <Net40AssembliesToBuild Include="binaries\net40\unsigned\Microsoft.WindowsAzure.*.dll" />
     </ItemGroup>
 
     <CodeSigningTask
         Description="Windows Azure SDK"
-        Keywords="Windows Azure SDK, Client Libraries"
+        Keywords="Windows Azure .NET SDK"
         UnsignedFiles="@(AssembliesToBuild)"
         DestinationPath="binaries\"
         SigningLogPath="binaries\signing.log"
         ToolsPath="$(OnPremiseBuildTasks)" />
-
     <Error Condition=" !Exists('binaries\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. Code signing likely failed." />
+
+    <Message Text="Signing .NET Framework 4.0 assemblies..." />
+    <CodeSigningTask
+      Description="Windows Azure SDK"
+      Keywords="Windows Azure .NET SDK"
+      UnsignedFiles="@(Net40AssembliesToBuild)"
+      DestinationPath="binaries\net40\"
+      SigningLogPath="binaries\net40\signing.log"
+      ToolsPath="$(OnPremiseBuildTasks)" />
+    <Error Condition=" !Exists('binaries\net40\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. .NET 4.0 code signing likely failed." />
 
     <Message Text="Validate the signed files" />
     <CallTarget Targets="ValidateOfficialBuildBinaries" />
@@ -313,12 +323,13 @@
     </GetFrameworkSdkPath>
     <ItemGroup>
       <DelaySignedAssembliesToValidate Include="binaries\unsigned\*.dll" />
+      <DelaySignedAssembliesToValidate Include="binaries\net40\unsigned\*.dll" />
     </ItemGroup>
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
         Assembly="%(DelaySignedAssembliesToValidate.Identity)"
         ExpectedTokenSignature="$(MicrosoftLibrariesStrongNameToken)"
-        ExpectedDelaySigned="true"        
+        ExpectedDelaySigned="true"
         ContinueOnError="ErrorAndContinue" />
   </Target>
 
@@ -332,6 +343,7 @@
     </GetFrameworkSdkPath>
     <ItemGroup>
       <AfterSignedAssembliesToValidate Include="binaries\*.dll" />
+      <AfterSignedAssembliesToValidate Include="binaries\net40\*.dll" />
     </ItemGroup>
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
