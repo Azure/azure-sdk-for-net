@@ -50,6 +50,12 @@
       <PackageVersion>2.0.2</PackageVersion>
     </SdkNuGetPackage>
 
+    <!-- Windows Azure Monitoring -->
+    <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Monitoring">
+      <PackageVersion>0.9.0-preview</PackageVersion>
+      <Publish>false</Publish>
+    </SdkNuGetPackage>
+
   </ItemGroup>
 
   <!--
