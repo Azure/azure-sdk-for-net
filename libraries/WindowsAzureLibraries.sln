@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.20905.1
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
@@ -50,6 +50,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget specifications", "nug
 		src\PackageSpecs\Microsoft.WindowsAzure.ConfigurationManager.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.ConfigurationManager.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.Compute.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Compute.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.Libraries.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Libraries.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.Management.Monitoring.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Monitoring.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.Scheduler.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Scheduler.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.Storage.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Storage.nuspec

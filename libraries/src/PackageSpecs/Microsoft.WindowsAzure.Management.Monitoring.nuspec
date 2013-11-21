@@ -19,6 +19,9 @@
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Monitoring.dll" />
       </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.WindowsAzure.Management.Monitoring.dll" />
+      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common" version="0.9.0-preview" />
@@ -30,5 +33,9 @@
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.xml" target="lib\portable-net45+sl50+wp80+win" />
+
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.dll" target="lib\net40" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.pdb" target="lib\net40" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.xml" target="lib\net40" />
   </files>
 </package>
