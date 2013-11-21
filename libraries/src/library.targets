@@ -31,11 +31,18 @@
     <CopyToArtifactsDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)</CopyToArtifactsDestination>
   </PropertyGroup>
   <!--
-  Standard project properties
+  Common project properties
   - - -
-  Important: these are redefined here. If you create a new project, or
-  use the standard Visual Studio tooling, you likely will change these
-  properties. Watch diffs carefully.
+  Important: these should only be defined here. New projects
+  must be hand-edited if they use the current configuration
+  build system defined here.
+  
+  Any changes in Visual Studio such as NuGet package update,
+  UI-based reference changes, or project property changes
+  may cause incorrect authoring to happen.
+  
+  Carefully observe all diffs before commiting changes to
+  Git. Thank you.
   -->
   <ItemGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' ">
     <Reference Include="Microsoft.Threading.Tasks">
