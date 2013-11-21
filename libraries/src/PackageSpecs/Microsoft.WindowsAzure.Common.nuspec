@@ -33,6 +33,10 @@ Supported Portable Library Platforms:
         <reference file="Microsoft.WindowsAzure.Common.dll" />
         <reference file="Microsoft.WindowsAzure.Common.NetFramework.dll" />
       </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.WindowsAzure.Common.dll" />
+        <reference file="Microsoft.WindowsAzure.Common.NetFramework.dll" />
+      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common.Dependencies" version="__VERSION_Microsoft.WindowsAzure.Common.Dependencies__" />
@@ -53,5 +57,12 @@ Supported Portable Library Platforms:
     <file src="..\binaries\Microsoft.WindowsAzure.Common.NetFramework.dll" target="lib\net45" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.NetFramework.xml" target="lib\net45" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.NetFramework.pdb" target="lib\net45" />
+
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.xml" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.NetFramework.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.NetFramework.xml" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.NetFramework.pdb" target="lib\net40" />
   </files>
 </package>
