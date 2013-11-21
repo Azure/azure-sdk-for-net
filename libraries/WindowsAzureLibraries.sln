@@ -62,6 +62,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerManagement", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration", "src\Configuration\Configuration.csproj", "{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring", "src\Monitoring\Monitoring.csproj", "{184C2947-DF1E-4991-9465-CF323DA57710}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{184C2947-DF1E-4991-9465-CF323DA57710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{184C2947-DF1E-4991-9465-CF323DA57710}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{184C2947-DF1E-4991-9465-CF323DA57710}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{184C2947-DF1E-4991-9465-CF323DA57710}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +124,7 @@ Global
 		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{184C2947-DF1E-4991-9465-CF323DA57710} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
