@@ -42,7 +42,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
                 throw new ArgumentException("serverFarmName");
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "/webspaces/{0}/serverFarm/{1}", webspaceName, serverFarmName);
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "/webspaces/{0}/serverFarm/{1}",
+                webspaceName,
+                serverFarmName);
         }
 
         /// <summary>
@@ -57,7 +61,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
                 throw new ArgumentException("mobileServiceName");
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "/mobileservices/{0}", mobileServiceName);
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "/mobileservices/{0}",
+                mobileServiceName);
         }
 
         /// <summary>
@@ -78,15 +85,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
                 throw new ArgumentException("availabilitySetName");
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "/virtualmachines/{0}/availabilitySet/{1}", virtualMachineName, availabilitySetName);
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "/virtualmachines/{0}/availabilitySet/{1}",
+                virtualMachineName,
+                availabilitySetName);
         }
 
         /// <summary>
-        /// Build the resource id of the cloud service resource to use in Autoscale API.
+        /// Build the resource id of the cloud service resource to
+        /// use in the Autoscale API.
         /// </summary>
         /// <param name="cloudServiceName">The cloud service name.</param>
-        /// <param name="deploymentSlot">The deployment slot</param>
         /// <param name="roleName">The role name.</param>
+        /// <param name="isProductionSlot">A value indicating whether
+        /// the resource is a production slot.</param>
         /// <returns>The resource id.</returns>
         public static string BuildCloudServiceResourceId(string cloudServiceName, string roleName, bool isProductionSlot)
         {
