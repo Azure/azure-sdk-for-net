@@ -42,6 +42,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     {
         private string _description;
         
+        /// <summary>
+        /// Description for the cloud service.
+        /// </summary>
         public string Description
         {
             get { return this._description; }
@@ -50,6 +53,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         
         private string _email;
         
+        /// <summary>
+        /// Optional e-mail address to associate with the service.
+        /// </summary>
         public string Email
         {
             get { return this._email; }
@@ -58,6 +64,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         
         private string _geoRegion;
         
+        /// <summary>
+        /// The region for the cloud service. This field cannot be updated
+        /// after the cloud service is created.
+        /// </summary>
         public string GeoRegion
         {
             get { return this._geoRegion; }
@@ -66,6 +76,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         
         private string _label;
         
+        /// <summary>
+        /// Label for the cloud service.
+        /// </summary>
         public string Label
         {
             get { return this._label; }
@@ -82,12 +95,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     }
     
     /// <summary>
-    /// Information about a retrieved Cloud Service
+    /// Information about a retrieved Cloud Service.
     /// </summary>
     public partial class CloudServiceGetResponse : OperationResponse
     {
         private string _geoLocation;
         
+        /// <summary>
+        /// The location associated with the cloud service.
+        /// </summary>
         public string GeoLocation
         {
             get { return this._geoLocation; }
@@ -96,6 +112,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         
         private IList<CloudServiceGetResponse.Resource> _resources;
         
+        /// <summary>
+        /// A collection of resources.
+        /// </summary>
         public IList<CloudServiceGetResponse.Resource> Resources
         {
             get { return this._resources; }
@@ -110,10 +129,16 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             this._resources = new List<CloudServiceGetResponse.Resource>();
         }
         
+        /// <summary>
+        /// A resource.
+        /// </summary>
         public partial class Resource
         {
             private string _eTag;
             
+            /// <summary>
+            /// ETag identifying the current entity revision on the server.
+            /// </summary>
             public string ETag
             {
                 get { return this._eTag; }
@@ -122,6 +147,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             
             private string _label;
             
+            /// <summary>
+            /// Label of the resource.
+            /// </summary>
             public string Label
             {
                 get { return this._label; }
@@ -130,6 +158,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             
             private string _name;
             
+            /// <summary>
+            /// A name for the resource. The name must be unique within the
+            /// subscription ID and cloud service.
+            /// </summary>
             public string Name
             {
                 get { return this._name; }
@@ -146,6 +178,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             
             private string _plan;
             
+            /// <summary>
+            /// The plan of the resource.
+            /// </summary>
             public string Plan
             {
                 get { return this._plan; }
@@ -154,6 +189,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             
             private string _resourceProviderNamespace;
             
+            /// <summary>
+            /// Namespace identifier for the resource provider.
+            /// </summary>
             public string ResourceProviderNamespace
             {
                 get { return this._resourceProviderNamespace; }
@@ -162,6 +200,11 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             
             private string _schemaVersion;
             
+            /// <summary>
+            /// Optional version of the intrinsic properties for the resource.
+            /// If not specified, you must conform to the default contract
+            /// resource.
+            /// </summary>
             public string SchemaVersion
             {
                 get { return this._schemaVersion; }
@@ -170,6 +213,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             
             private string _state;
             
+            /// <summary>
+            /// The current resource status.
+            /// </summary>
             public string State
             {
                 get { return this._state; }
@@ -178,6 +224,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             
             private string _subState;
             
+            /// <summary>
+            /// An optional, more detailed resource status.
+            /// </summary>
             public string SubState
             {
                 get { return this._subState; }
@@ -186,6 +235,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             
             private string _type;
             
+            /// <summary>
+            /// The Type for the resource.
+            /// </summary>
             public string Type
             {
                 get { return this._type; }
@@ -666,6 +718,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     {
         private DateTime _registrationDate;
         
+        /// <summary>
+        /// The required data when the entitlement is performed.
+        /// </summary>
         public DateTime RegistrationDate
         {
             get { return this._registrationDate; }
@@ -674,6 +729,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         
         private string _resourceNamespace;
         
+        /// <summary>
+        /// Required NameSpace identifier for the resource provider.
+        /// </summary>
         public string ResourceNamespace
         {
             get { return this._resourceNamespace; }
@@ -682,6 +740,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         
         private string _resourceType;
         
+        /// <summary>
+        /// Required type for the resource.
+        /// </summary>
         public string ResourceType
         {
             get { return this._resourceType; }
@@ -697,14 +758,36 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     }
     
     /// <summary>
-    /// Specifies the state for a cloud service resource
+    /// Specifies the state for a cloud service resource.
     /// </summary>
     public static partial class GetCloudServiceResourceState
     {
+        /// <summary>
+        /// The resource state is unknown, there may have been a communicaiton
+        /// failure, or the resource has not yet been processed.
+        /// </summary>
+        public const string Unknown = "Unknown";
+        
+        /// <summary>
+        /// The resource provider did not respond with information for the
+        /// resource.
+        /// </summary>
+        public const string NotFound = "NotFound";
+        
+        /// <summary>
+        /// The resource has started and is running fine.
+        /// </summary>
         public const string Started = "Started";
         
+        /// <summary>
+        /// The resource was stopped due to an issue.
+        /// </summary>
         public const string Stopped = "Stopped";
         
+        /// <summary>
+        /// The resource was temporarily put on hold. This may be due to a
+        /// monetary event.
+        /// </summary>
         public const string Paused = "Paused";
     }
 }
@@ -740,6 +823,14 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             get; 
         }
         
+        /// <summary>
+        /// EntitleResource is used only for 3rd party Store providers. Each
+        /// subscription must be entitled for the resource before creating
+        /// that particular type of resource.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters provided to the EntitleResource method.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -780,9 +871,17 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
     
     public static partial class CloudServiceManagementClientExtensions
     {
+        /// <summary>
+        /// EntitleResource is used only for 3rd party Store providers. Each
+        /// subscription must be entitled for the resource before creating
+        /// that particular type of resource.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceManagementClient.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters provided to the EntitleResource method.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -807,9 +906,17 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// EntitleResource is used only for 3rd party Store providers. Each
+        /// subscription must be entitled for the resource before creating
+        /// that particular type of resource.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceManagementClient.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters provided to the EntitleResource method.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1004,6 +1111,14 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             this.Credentials.InitializeServiceClient(this);
         }
         
+        /// <summary>
+        /// EntitleResource is used only for 3rd party Store providers. Each
+        /// subscription must be entitled for the resource before creating
+        /// that particular type of resource.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters provided to the EntitleResource method.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1310,6 +1425,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
     
     public partial interface ICloudServiceOperations
     {
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud service operation.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1319,6 +1443,12 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// </returns>
         Task<OperationResponse> BeginCreatingAsync(string cloudServiceName, CloudServiceCreateParameters parameters, CancellationToken cancellationToken);
         
+        /// <summary>
+        /// Delete a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1328,6 +1458,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// </returns>
         Task<OperationResponse> BeginDeletingAsync(string cloudServiceName, CancellationToken cancellationToken);
         
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud service operation.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1344,6 +1483,12 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// </returns>
         Task<CloudServiceOperationStatusResponse> CreateAsync(string cloudServiceName, CloudServiceCreateParameters parameters, CancellationToken cancellationToken);
         
+        /// <summary>
+        /// Delete a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1360,11 +1505,17 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// </returns>
         Task<CloudServiceOperationStatusResponse> DeleteAsync(string cloudServiceName, CancellationToken cancellationToken);
         
+        /// <summary>
+        /// Retreive a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Information about a retrieved Cloud Service
+        /// Information about a retrieved Cloud Service.
         /// </returns>
         Task<CloudServiceGetResponse> GetAsync(string cloudServiceName, CancellationToken cancellationToken);
         
@@ -1383,9 +1534,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
     
     public static partial class CloudServiceOperationsExtensions
     {
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1410,9 +1570,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1423,9 +1592,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             return operations.BeginCreatingAsync(cloudServiceName, parameters, CancellationToken.None);
         }
         
+        /// <summary>
+        /// Delete a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1450,9 +1625,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// Delete a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1463,9 +1644,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             return operations.BeginDeletingAsync(cloudServiceName, CancellationToken.None);
         }
         
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1497,9 +1687,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1517,9 +1716,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             return operations.CreateAsync(cloudServiceName, parameters, CancellationToken.None);
         }
         
+        /// <summary>
+        /// Delete a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1551,9 +1756,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// Delete a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1571,12 +1782,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             return operations.DeleteAsync(cloudServiceName, CancellationToken.None);
         }
         
+        /// <summary>
+        /// Retreive a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
         /// <returns>
-        /// Information about a retrieved Cloud Service
+        /// Information about a retrieved Cloud Service.
         /// </returns>
         public static CloudServiceGetResponse Get(this ICloudServiceOperations operations, string cloudServiceName)
         {
@@ -1597,12 +1814,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// Retreive a cloud service.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
         /// <returns>
-        /// Information about a retrieved Cloud Service
+        /// Information about a retrieved Cloud Service.
         /// </returns>
         public static Task<CloudServiceGetResponse> GetAsync(this ICloudServiceOperations operations, string cloudServiceName)
         {
@@ -1680,6 +1903,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             get { return this._client; }
         }
         
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud service operation.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1761,7 +1993,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 requestDoc.Add(cloudServiceElement);
                 
                 XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                labelElement.Value = parameters.Label;
                 cloudServiceElement.Add(labelElement);
                 
                 XElement descriptionElement = new XElement(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
@@ -1840,6 +2072,12 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// Delete a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1941,6 +2179,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud service operation.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -2017,6 +2264,12 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// Delete a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -2092,11 +2345,17 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
         
+        /// <summary>
+        /// Retreive a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Information about a retrieved Cloud Service
+        /// Information about a retrieved Cloud Service.
         /// </returns>
         public async Task<CloudServiceGetResponse> GetAsync(string cloudServiceName, CancellationToken cancellationToken)
         {
@@ -2122,7 +2381,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2262,7 +2521,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                 XElement labelElement = resourcesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
                                 if (labelElement != null)
                                 {
-                                    string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                    string labelInstance = labelElement.Value;
                                     resourceInstance.Label = labelInstance;
                                 }
                             }
@@ -2317,7 +2576,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices/";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2391,7 +2650,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             XElement labelElement = cloudServicesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
                             if (labelElement != null)
                             {
-                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                string labelInstance = labelElement.Value;
                                 cloudServiceInstance.Label = labelInstance;
                             }
                             

@@ -39,31 +39,6 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The set of access control rules for the endpoint
-    /// </summary>
-    public partial class AccessControlList
-    {
-        private IList<AccessControlListRule> _rules;
-        
-        /// <summary>
-        /// The set of access control rules for the endpoint
-        /// </summary>
-        public IList<AccessControlListRule> Rules
-        {
-            get { return this._rules; }
-            set { this._rules = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the AccessControlList class.
-        /// </summary>
-        public AccessControlList()
-        {
-            this._rules = new List<AccessControlListRule>();
-        }
-    }
-    
-    /// <summary>
     /// An access control rule for a public endpoint
     /// </summary>
     public partial class AccessControlListRule
@@ -1661,6 +1636,31 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     }
     
     /// <summary>
+    /// The set of access control rules for the endpoint
+    /// </summary>
+    public partial class EndpointAcl
+    {
+        private IList<AccessControlListRule> _rules;
+        
+        /// <summary>
+        /// The set of access control rules for the endpoint
+        /// </summary>
+        public IList<AccessControlListRule> Rules
+        {
+            get { return this._rules; }
+            set { this._rules = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the EndpointAcl class.
+        /// </summary>
+        public EndpointAcl()
+        {
+            this._rules = new List<AccessControlListRule>();
+        }
+    }
+    
+    /// <summary>
     /// Represents an extension that is added to the cloud service
     /// </summary>
     public partial class ExtensionConfiguration
@@ -3064,17 +3064,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class InputEndpoint
     {
-        private AccessControlList _accessControlList;
-        
-        /// <summary>
-        /// Specifies the list of access control rules for the endpoint
-        /// </summary>
-        public AccessControlList AccessControlList
-        {
-            get { return this._accessControlList; }
-            set { this._accessControlList = value; }
-        }
-        
         private bool? _enableDirectServerReturn;
         
         /// <summary>
@@ -3084,6 +3073,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._enableDirectServerReturn; }
             set { this._enableDirectServerReturn = value; }
+        }
+        
+        private EndpointAcl _endpointAcl;
+        
+        /// <summary>
+        /// Specifies the list of access control rules for the endpoint
+        /// </summary>
+        public EndpointAcl EndpointAcl
+        {
+            get { return this._endpointAcl; }
+            set { this._endpointAcl = value; }
         }
         
         private string _loadBalancedEndpointSetName;
@@ -17076,6 +17076,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -17160,6 +17172,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -17247,6 +17271,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -17327,6 +17363,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -17405,6 +17453,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -17886,19 +17946,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     inputEndpointInstance.EnableDirectServerReturn = enableDirectServerReturnInstance;
                                                 }
                                                 
-                                                XElement accessControlListElement = inputEndpointsElement.Element(XName.Get("AccessControlList", "http://schemas.microsoft.com/windowsazure"));
-                                                if (accessControlListElement != null)
+                                                XElement endpointAclElement = inputEndpointsElement.Element(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
+                                                if (endpointAclElement != null)
                                                 {
-                                                    AccessControlList accessControlListInstance = new AccessControlList();
-                                                    inputEndpointInstance.AccessControlList = accessControlListInstance;
+                                                    EndpointAcl endpointAclInstance = new EndpointAcl();
+                                                    inputEndpointInstance.EndpointAcl = endpointAclInstance;
                                                     
-                                                    XElement rulesSequenceElement = accessControlListElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
+                                                    XElement rulesSequenceElement = endpointAclElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
                                                     if (rulesSequenceElement != null)
                                                     {
                                                         foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
                                                         {
                                                             AccessControlListRule ruleInstance = new AccessControlListRule();
-                                                            accessControlListInstance.Rules.Add(ruleInstance);
+                                                            endpointAclInstance.Rules.Add(ruleInstance);
                                                             
                                                             XElement orderElement = rulesElement.Element(XName.Get("Order", "http://schemas.microsoft.com/windowsazure"));
                                                             if (orderElement != null && string.IsNullOrEmpty(orderElement.Value) == false)
@@ -18998,19 +19058,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     inputEndpointInstance.EnableDirectServerReturn = enableDirectServerReturnInstance;
                                                 }
                                                 
-                                                XElement accessControlListElement = inputEndpointsElement.Element(XName.Get("AccessControlList", "http://schemas.microsoft.com/windowsazure"));
-                                                if (accessControlListElement != null)
+                                                XElement endpointAclElement = inputEndpointsElement.Element(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
+                                                if (endpointAclElement != null)
                                                 {
-                                                    AccessControlList accessControlListInstance = new AccessControlList();
-                                                    inputEndpointInstance.AccessControlList = accessControlListInstance;
+                                                    EndpointAcl endpointAclInstance = new EndpointAcl();
+                                                    inputEndpointInstance.EndpointAcl = endpointAclInstance;
                                                     
-                                                    XElement rulesSequenceElement = accessControlListElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
+                                                    XElement rulesSequenceElement = endpointAclElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
                                                     if (rulesSequenceElement != null)
                                                     {
                                                         foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
                                                         {
                                                             AccessControlListRule ruleInstance = new AccessControlListRule();
-                                                            accessControlListInstance.Rules.Add(ruleInstance);
+                                                            endpointAclInstance.Rules.Add(ruleInstance);
                                                             
                                                             XElement orderElement = rulesElement.Element(XName.Get("Order", "http://schemas.microsoft.com/windowsazure"));
                                                             if (orderElement != null && string.IsNullOrEmpty(orderElement.Value) == false)
@@ -19996,6 +20056,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -20079,6 +20151,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -20166,6 +20250,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -20249,6 +20345,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -20632,6 +20740,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -20717,6 +20837,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -20800,6 +20932,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -20909,6 +21053,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -21014,6 +21170,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -21123,6 +21291,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -21228,6 +21408,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -22543,6 +22735,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -23357,6 +23561,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -24042,19 +24258,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                             inputEndpointInstance.EnableDirectServerReturn = enableDirectServerReturnInstance;
                                                         }
                                                         
-                                                        XElement accessControlListElement = inputEndpointsElement.Element(XName.Get("AccessControlList", "http://schemas.microsoft.com/windowsazure"));
-                                                        if (accessControlListElement != null)
+                                                        XElement endpointAclElement = inputEndpointsElement.Element(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (endpointAclElement != null)
                                                         {
-                                                            AccessControlList accessControlListInstance = new AccessControlList();
-                                                            inputEndpointInstance.AccessControlList = accessControlListInstance;
+                                                            EndpointAcl endpointAclInstance = new EndpointAcl();
+                                                            inputEndpointInstance.EndpointAcl = endpointAclInstance;
                                                             
-                                                            XElement rulesSequenceElement = accessControlListElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
+                                                            XElement rulesSequenceElement = endpointAclElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
                                                             if (rulesSequenceElement != null)
                                                             {
                                                                 foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
                                                                 {
                                                                     AccessControlListRule ruleInstance = new AccessControlListRule();
-                                                                    accessControlListInstance.Rules.Add(ruleInstance);
+                                                                    endpointAclInstance.Rules.Add(ruleInstance);
                                                                     
                                                                     XElement orderElement = rulesElement.Element(XName.Get("Order", "http://schemas.microsoft.com/windowsazure"));
                                                                     if (orderElement != null && string.IsNullOrEmpty(orderElement.Value) == false)
@@ -27115,6 +27331,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -27188,6 +27416,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -34744,15 +34984,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     inputEndpointElement.Add(enableDirectServerReturnElement);
                                 }
                                 
-                                if (inputEndpointsItem.AccessControlList != null)
+                                if (inputEndpointsItem.EndpointAcl != null)
                                 {
-                                    XElement accessControlListElement = new XElement(XName.Get("AccessControlList", "http://schemas.microsoft.com/windowsazure"));
-                                    inputEndpointElement.Add(accessControlListElement);
+                                    XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
+                                    inputEndpointElement.Add(endpointAclElement);
                                     
-                                    if (inputEndpointsItem.AccessControlList.Rules != null)
+                                    if (inputEndpointsItem.EndpointAcl.Rules != null)
                                     {
                                         XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                                        foreach (AccessControlListRule rulesItem in inputEndpointsItem.AccessControlList.Rules)
+                                        foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
                                         {
                                             XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
                                             rulesSequenceElement.Add(ruleElement);
@@ -34785,7 +35025,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 ruleElement.Add(descriptionElement);
                                             }
                                         }
-                                        accessControlListElement.Add(rulesSequenceElement);
+                                        endpointAclElement.Add(rulesSequenceElement);
                                     }
                                 }
                             }
@@ -35516,15 +35756,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         inputEndpointElement.Add(enableDirectServerReturnElement);
                                     }
                                     
-                                    if (inputEndpointsItem.AccessControlList != null)
+                                    if (inputEndpointsItem.EndpointAcl != null)
                                     {
-                                        XElement accessControlListElement = new XElement(XName.Get("AccessControlList", "http://schemas.microsoft.com/windowsazure"));
-                                        inputEndpointElement.Add(accessControlListElement);
+                                        XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
+                                        inputEndpointElement.Add(endpointAclElement);
                                         
-                                        if (inputEndpointsItem.AccessControlList.Rules != null)
+                                        if (inputEndpointsItem.EndpointAcl.Rules != null)
                                         {
                                             XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                                            foreach (AccessControlListRule rulesItem in inputEndpointsItem.AccessControlList.Rules)
+                                            foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
                                             {
                                                 XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
                                                 rulesSequenceElement.Add(ruleElement);
@@ -35557,7 +35797,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     ruleElement.Add(descriptionElement);
                                                 }
                                             }
-                                            accessControlListElement.Add(rulesSequenceElement);
+                                            endpointAclElement.Add(rulesSequenceElement);
                                         }
                                     }
                                 }
@@ -37161,15 +37401,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     inputEndpointElement.Add(enableDirectServerReturnElement);
                                 }
                                 
-                                if (inputEndpointsItem.AccessControlList != null)
+                                if (inputEndpointsItem.EndpointAcl != null)
                                 {
-                                    XElement accessControlListElement = new XElement(XName.Get("AccessControlList", "http://schemas.microsoft.com/windowsazure"));
-                                    inputEndpointElement.Add(accessControlListElement);
+                                    XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
+                                    inputEndpointElement.Add(endpointAclElement);
                                     
-                                    if (inputEndpointsItem.AccessControlList.Rules != null)
+                                    if (inputEndpointsItem.EndpointAcl.Rules != null)
                                     {
                                         XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                                        foreach (AccessControlListRule rulesItem in inputEndpointsItem.AccessControlList.Rules)
+                                        foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
                                         {
                                             XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
                                             rulesSequenceElement.Add(ruleElement);
@@ -37202,7 +37442,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 ruleElement.Add(descriptionElement);
                                             }
                                         }
-                                        accessControlListElement.Add(rulesSequenceElement);
+                                        endpointAclElement.Add(rulesSequenceElement);
                                     }
                                 }
                             }
@@ -38179,15 +38419,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 inputEndpointElement.Add(enableDirectServerReturnElement);
                             }
                             
-                            if (inputEndpointsItem.AccessControlList != null)
+                            if (inputEndpointsItem.EndpointAcl != null)
                             {
-                                XElement accessControlListElement = new XElement(XName.Get("AccessControlList", "http://schemas.microsoft.com/windowsazure"));
-                                inputEndpointElement.Add(accessControlListElement);
+                                XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
+                                inputEndpointElement.Add(endpointAclElement);
                                 
-                                if (inputEndpointsItem.AccessControlList.Rules != null)
+                                if (inputEndpointsItem.EndpointAcl.Rules != null)
                                 {
                                     XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                                    foreach (AccessControlListRule rulesItem in inputEndpointsItem.AccessControlList.Rules)
+                                    foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
                                     {
                                         XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
                                         rulesSequenceElement.Add(ruleElement);
@@ -38220,7 +38460,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             ruleElement.Add(descriptionElement);
                                         }
                                     }
-                                    accessControlListElement.Add(rulesSequenceElement);
+                                    endpointAclElement.Add(rulesSequenceElement);
                                 }
                             }
                         }
@@ -38608,6 +38848,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -38691,6 +38943,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -38769,6 +39033,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -39048,19 +39324,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             inputEndpointInstance.EnableDirectServerReturn = enableDirectServerReturnInstance;
                                         }
                                         
-                                        XElement accessControlListElement = inputEndpointsElement.Element(XName.Get("AccessControlList", "http://schemas.microsoft.com/windowsazure"));
-                                        if (accessControlListElement != null)
+                                        XElement endpointAclElement = inputEndpointsElement.Element(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
+                                        if (endpointAclElement != null)
                                         {
-                                            AccessControlList accessControlListInstance = new AccessControlList();
-                                            inputEndpointInstance.AccessControlList = accessControlListInstance;
+                                            EndpointAcl endpointAclInstance = new EndpointAcl();
+                                            inputEndpointInstance.EndpointAcl = endpointAclInstance;
                                             
-                                            XElement rulesSequenceElement = accessControlListElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
+                                            XElement rulesSequenceElement = endpointAclElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
                                             if (rulesSequenceElement != null)
                                             {
                                                 foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     AccessControlListRule ruleInstance = new AccessControlListRule();
-                                                    accessControlListInstance.Rules.Add(ruleInstance);
+                                                    endpointAclInstance.Rules.Add(ruleInstance);
                                                     
                                                     XElement orderElement = rulesElement.Element(XName.Get("Order", "http://schemas.microsoft.com/windowsazure"));
                                                     if (orderElement != null && string.IsNullOrEmpty(orderElement.Value) == false)
@@ -39679,6 +39955,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -39763,6 +40051,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -39840,6 +40140,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -39921,6 +40233,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -39997,6 +40321,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;
@@ -40083,6 +40419,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
                 return result;
             }
             finally
@@ -40162,6 +40510,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;

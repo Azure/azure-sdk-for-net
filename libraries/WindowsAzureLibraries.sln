@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{856A1D19-C3BF-439A-BEBF-E822A332BC12}"
@@ -26,15 +29,28 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{D93C94DB-270A-46A0-AF68-C58B99B9A4D2}"
 	ProjectSection(SolutionItems) = preProject
 		libraries.msbuild = libraries.msbuild
-		src\libraries.targets = src\libraries.targets
+		src\library.props = src\library.props
+		src\library.targets = src\library.targets
+		src\references.net40.props = src\references.net40.props
+		src\references.net45.props = src\references.net45.props
+		src\references.portable.props = src\references.portable.props
+		src\references.props = src\references.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries.testsettings = Libraries.testsettings
+		WindowsAzureLibraries.vsmdi = WindowsAzureLibraries.vsmdi
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget specifications", "nuget specifications", "{459B8C99-5EC0-43A6-9BAD-1A9E6191D948}"
 	ProjectSection(SolutionItems) = preProject
 		src\PackageSpecs\Microsoft.WindowsAzure.Common.Dependencies.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Common.Dependencies.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Common.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Common.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.ConfigurationManager.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.ConfigurationManager.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.Compute.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Compute.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.Libraries.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Libraries.nuspec
+		src\PackageSpecs\Microsoft.WindowsAzure.Management.Monitoring.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Monitoring.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.Scheduler.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Scheduler.nuspec
 		src\PackageSpecs\Microsoft.WindowsAzure.Management.Storage.nuspec = src\PackageSpecs\Microsoft.WindowsAzure.Management.Storage.nuspec
@@ -44,6 +60,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget specifications", "nug
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerManagement", "src\SchedulerManagement\SchedulerManagement.csproj", "{A3FD3224-3058-48CC-961F-E89D5DCB028D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration", "src\Configuration\Configuration.csproj", "{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring", "src\Monitoring\Monitoring.csproj", "{184C2947-DF1E-4991-9465-CF323DA57710}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +103,14 @@ Global
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{184C2947-DF1E-4991-9465-CF323DA57710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{184C2947-DF1E-4991-9465-CF323DA57710}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{184C2947-DF1E-4991-9465-CF323DA57710}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{184C2947-DF1E-4991-9465-CF323DA57710}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +124,10 @@ Global
 		{7E8328EC-E439-4CF2-B375-16EB2EDAF34D} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{2B6D304F-5DC0-4052-A8AB-80E53C291E5F} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{184C2947-DF1E-4991-9465-CF323DA57710} = {868850B4-1073-41A1-ABA8-A3B465880148}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = WindowsAzureLibraries.vsmdi
 	EndGlobalSection
 EndGlobal

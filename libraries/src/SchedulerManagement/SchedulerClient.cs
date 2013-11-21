@@ -1002,12 +1002,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobRecurrenceSchedule()
         {
-            this._days = new List<JobScheduleDay>();
-            this._hours = new List<int>();
-            this._minutes = new List<int>();
-            this._monthDays = new List<int>();
-            this._monthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
-            this._months = new List<int>();
         }
     }
     
@@ -1096,10 +1090,33 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             set { this._executionCount = value; }
         }
         
+        private int _failureCount;
+        
+        /// <summary>
+        /// Number of times this job has failed.
+        /// </summary>
+        public int FailureCount
+        {
+            get { return this._failureCount; }
+            set { this._failureCount = value; }
+        }
+        
+        private int _faultedCount;
+        
+        /// <summary>
+        /// Number of faulted occurrences (occurrences that were retried and
+        /// failed as many times as the retry policy states).
+        /// </summary>
+        public int FaultedCount
+        {
+            get { return this._faultedCount; }
+            set { this._faultedCount = value; }
+        }
+        
         private System.DateTime? _lastExecutionTime;
         
         /// <summary>
-        /// Time the last occurrence executed in ISO-8601 format.  Could be
+        /// Time the last occurrence executed in ISO-8601 format. Could be
         /// empty if job has not run yet.
         /// </summary>
         public System.DateTime? LastExecutionTime
@@ -1111,7 +1128,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private System.DateTime? _nextExecutionTime;
         
         /// <summary>
-        /// Time of the next occurrence in ISO-8601 format.  Could be empty if
+        /// Time of the next occurrence in ISO-8601 format. Could be empty if
         /// the job is completed.
         /// </summary>
         public System.DateTime? NextExecutionTime
@@ -2577,59 +2594,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JObject scheduleValue = new JObject();
                         recurrenceValue["schedule"] = scheduleValue;
                         
-                        JArray minutesArray = new JArray();
                         if (parameters.Recurrence.Schedule.Minutes != null)
                         {
+                            JArray minutesArray = new JArray();
                             foreach (int minutesItem in parameters.Recurrence.Schedule.Minutes)
                             {
                                 minutesArray.Add(minutesItem);
                             }
+                            scheduleValue["minutes"] = minutesArray;
                         }
-                        scheduleValue["minutes"] = minutesArray;
                         
-                        JArray hoursArray = new JArray();
                         if (parameters.Recurrence.Schedule.Hours != null)
                         {
+                            JArray hoursArray = new JArray();
                             foreach (int hoursItem in parameters.Recurrence.Schedule.Hours)
                             {
                                 hoursArray.Add(hoursItem);
                             }
+                            scheduleValue["hours"] = hoursArray;
                         }
-                        scheduleValue["hours"] = hoursArray;
                         
-                        JArray daysArray = new JArray();
                         if (parameters.Recurrence.Schedule.Days != null)
                         {
+                            JArray daysArray = new JArray();
                             foreach (JobScheduleDay daysItem in parameters.Recurrence.Schedule.Days)
                             {
                                 daysArray.Add(SchedulerClient.JobScheduleDayToString(daysItem));
                             }
+                            scheduleValue["days"] = daysArray;
                         }
-                        scheduleValue["days"] = daysArray;
                         
-                        JArray monthsArray = new JArray();
                         if (parameters.Recurrence.Schedule.Months != null)
                         {
+                            JArray monthsArray = new JArray();
                             foreach (int monthsItem in parameters.Recurrence.Schedule.Months)
                             {
                                 monthsArray.Add(monthsItem);
                             }
+                            scheduleValue["months"] = monthsArray;
                         }
-                        scheduleValue["months"] = monthsArray;
                         
-                        JArray monthDaysArray = new JArray();
                         if (parameters.Recurrence.Schedule.MonthDays != null)
                         {
+                            JArray monthDaysArray = new JArray();
                             foreach (int monthDaysItem in parameters.Recurrence.Schedule.MonthDays)
                             {
                                 monthDaysArray.Add(monthDaysItem);
                             }
+                            scheduleValue["monthDays"] = monthDaysArray;
                         }
-                        scheduleValue["monthDays"] = monthDaysArray;
                         
-                        JArray monthlyOccurrencesArray = new JArray();
                         if (parameters.Recurrence.Schedule.MonthlyOccurrences != null)
                         {
+                            JArray monthlyOccurrencesArray = new JArray();
                             foreach (JobScheduleMonthlyOccurrence monthlyOccurrencesItem in parameters.Recurrence.Schedule.MonthlyOccurrences)
                             {
                                 JObject jobScheduleMonthlyOccurrenceValue = new JObject();
@@ -2644,8 +2661,8 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     jobScheduleMonthlyOccurrenceValue["occurrence"] = occurrenceValue;
                                 }
                             }
+                            scheduleValue["monthlyOccurrences"] = monthlyOccurrencesArray;
                         }
-                        scheduleValue["monthlyOccurrences"] = monthlyOccurrencesArray;
                     }
                 }
                 
@@ -3052,6 +3069,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 int executionCountInstance = (int)executionCountValue;
                                 statusInstance.ExecutionCount = executionCountInstance;
                             }
+                            
+                            JToken failureCountValue = statusValue["failureCount"];
+                            if (failureCountValue != null)
+                            {
+                                int failureCountInstance = (int)failureCountValue;
+                                statusInstance.FailureCount = failureCountInstance;
+                            }
+                            
+                            JToken faultedCountValue = statusValue["faultedCount"];
+                            if (faultedCountValue != null)
+                            {
+                                int faultedCountInstance = (int)faultedCountValue;
+                                statusInstance.FaultedCount = faultedCountInstance;
+                            }
                         }
                         
                         JToken stateValue = responseDoc["state"];
@@ -3389,59 +3420,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JObject scheduleValue = new JObject();
                         recurrenceValue["schedule"] = scheduleValue;
                         
-                        JArray minutesArray = new JArray();
                         if (parameters.Recurrence.Schedule.Minutes != null)
                         {
+                            JArray minutesArray = new JArray();
                             foreach (int minutesItem in parameters.Recurrence.Schedule.Minutes)
                             {
                                 minutesArray.Add(minutesItem);
                             }
+                            scheduleValue["minutes"] = minutesArray;
                         }
-                        scheduleValue["minutes"] = minutesArray;
                         
-                        JArray hoursArray = new JArray();
                         if (parameters.Recurrence.Schedule.Hours != null)
                         {
+                            JArray hoursArray = new JArray();
                             foreach (int hoursItem in parameters.Recurrence.Schedule.Hours)
                             {
                                 hoursArray.Add(hoursItem);
                             }
+                            scheduleValue["hours"] = hoursArray;
                         }
-                        scheduleValue["hours"] = hoursArray;
                         
-                        JArray daysArray = new JArray();
                         if (parameters.Recurrence.Schedule.Days != null)
                         {
+                            JArray daysArray = new JArray();
                             foreach (JobScheduleDay daysItem in parameters.Recurrence.Schedule.Days)
                             {
                                 daysArray.Add(SchedulerClient.JobScheduleDayToString(daysItem));
                             }
+                            scheduleValue["days"] = daysArray;
                         }
-                        scheduleValue["days"] = daysArray;
                         
-                        JArray monthsArray = new JArray();
                         if (parameters.Recurrence.Schedule.Months != null)
                         {
+                            JArray monthsArray = new JArray();
                             foreach (int monthsItem in parameters.Recurrence.Schedule.Months)
                             {
                                 monthsArray.Add(monthsItem);
                             }
+                            scheduleValue["months"] = monthsArray;
                         }
-                        scheduleValue["months"] = monthsArray;
                         
-                        JArray monthDaysArray = new JArray();
                         if (parameters.Recurrence.Schedule.MonthDays != null)
                         {
+                            JArray monthDaysArray = new JArray();
                             foreach (int monthDaysItem in parameters.Recurrence.Schedule.MonthDays)
                             {
                                 monthDaysArray.Add(monthDaysItem);
                             }
+                            scheduleValue["monthDays"] = monthDaysArray;
                         }
-                        scheduleValue["monthDays"] = monthDaysArray;
                         
-                        JArray monthlyOccurrencesArray = new JArray();
                         if (parameters.Recurrence.Schedule.MonthlyOccurrences != null)
                         {
+                            JArray monthlyOccurrencesArray = new JArray();
                             foreach (JobScheduleMonthlyOccurrence monthlyOccurrencesItem in parameters.Recurrence.Schedule.MonthlyOccurrences)
                             {
                                 JObject jobScheduleMonthlyOccurrenceValue = new JObject();
@@ -3456,8 +3487,8 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     jobScheduleMonthlyOccurrenceValue["occurrence"] = occurrenceValue;
                                 }
                             }
+                            scheduleValue["monthlyOccurrences"] = monthlyOccurrencesArray;
                         }
-                        scheduleValue["monthlyOccurrences"] = monthlyOccurrencesArray;
                     }
                 }
                 
@@ -3863,6 +3894,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                             {
                                 int executionCountInstance = (int)executionCountValue;
                                 statusInstance.ExecutionCount = executionCountInstance;
+                            }
+                            
+                            JToken failureCountValue = statusValue["failureCount"];
+                            if (failureCountValue != null)
+                            {
+                                int failureCountInstance = (int)failureCountValue;
+                                statusInstance.FailureCount = failureCountInstance;
+                            }
+                            
+                            JToken faultedCountValue = statusValue["faultedCount"];
+                            if (faultedCountValue != null)
+                            {
+                                int faultedCountInstance = (int)faultedCountValue;
+                                statusInstance.FaultedCount = faultedCountInstance;
                             }
                         }
                         
@@ -4452,6 +4497,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                             {
                                 int executionCountInstance = (int)executionCountValue;
                                 statusInstance.ExecutionCount = executionCountInstance;
+                            }
+                            
+                            JToken failureCountValue = statusValue["failureCount"];
+                            if (failureCountValue != null)
+                            {
+                                int failureCountInstance = (int)failureCountValue;
+                                statusInstance.FailureCount = failureCountInstance;
+                            }
+                            
+                            JToken faultedCountValue = statusValue["faultedCount"];
+                            if (faultedCountValue != null)
+                            {
+                                int faultedCountInstance = (int)faultedCountValue;
+                                statusInstance.FaultedCount = faultedCountInstance;
                             }
                         }
                         
@@ -5139,6 +5198,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     int executionCountInstance = (int)executionCountValue;
                                     statusInstance.ExecutionCount = executionCountInstance;
                                 }
+                                
+                                JToken failureCountValue = statusValue["failureCount"];
+                                if (failureCountValue != null)
+                                {
+                                    int failureCountInstance = (int)failureCountValue;
+                                    statusInstance.FailureCount = failureCountInstance;
+                                }
+                                
+                                JToken faultedCountValue = statusValue["faultedCount"];
+                                if (faultedCountValue != null)
+                                {
+                                    int faultedCountInstance = (int)faultedCountValue;
+                                    statusInstance.FaultedCount = faultedCountInstance;
+                                }
                             }
                             
                             JToken stateValue = jobsValue["state"];
@@ -5640,6 +5713,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     int executionCountInstance = (int)executionCountValue;
                                     statusInstance.ExecutionCount = executionCountInstance;
+                                }
+                                
+                                JToken failureCountValue = statusValue["failureCount"];
+                                if (failureCountValue != null)
+                                {
+                                    int failureCountInstance = (int)failureCountValue;
+                                    statusInstance.FailureCount = failureCountInstance;
+                                }
+                                
+                                JToken faultedCountValue = statusValue["faultedCount"];
+                                if (faultedCountValue != null)
+                                {
+                                    int faultedCountInstance = (int)faultedCountValue;
+                                    statusInstance.FaultedCount = faultedCountInstance;
                                 }
                             }
                             
@@ -6153,6 +6240,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                             {
                                 int executionCountInstance = (int)executionCountValue;
                                 statusInstance.ExecutionCount = executionCountInstance;
+                            }
+                            
+                            JToken failureCountValue = statusValue["failureCount"];
+                            if (failureCountValue != null)
+                            {
+                                int failureCountInstance = (int)failureCountValue;
+                                statusInstance.FailureCount = failureCountInstance;
+                            }
+                            
+                            JToken faultedCountValue = statusValue["faultedCount"];
+                            if (faultedCountValue != null)
+                            {
+                                int faultedCountInstance = (int)faultedCountValue;
+                                statusInstance.FaultedCount = faultedCountInstance;
                             }
                         }
                         

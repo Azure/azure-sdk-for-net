@@ -5,19 +5,25 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
-    <ProjectGuid>{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}</ProjectGuid>
+    <ProjectGuid>{184C2947-DF1E-4991-9465-CF323DA57710}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.Management.Compute</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.Management.Compute</AssemblyName>
+    <RootNamespace>Microsoft.WindowsAzure.Management.Monitoring</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Management.Monitoring</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <Compile Include="ComputeManagementClient.cs" />
-    <Compile Include="ComputeManagementClient.Customization.cs" />
+    <Compile Include="AutoscaleClient.cs" />
+    <Compile Include="MetricsClient.cs" />
+    <Compile Include="MetricClient.Customization.cs" />
+    <Compile Include="AlertsClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\AutoscaleMetricSourceBuilder.cs" />
+    <Compile Include="Utilities\AutoscaleResourceIdBuilder.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Utilities\ResourceIdBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -28,7 +34,7 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" 
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets"
           Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"
           Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />

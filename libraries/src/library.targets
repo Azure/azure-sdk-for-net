@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- 
-  Windows Azure SDK Custom Targets  
-  -->  
+  Windows Azure SDK Targets  
+  -->
   <PropertyGroup>
     <!--
     OfficialBuild:
@@ -27,26 +27,32 @@
     CopyToArtifacts:
     Location for documentation files and symbols.
     -->
-    <CopyToBinariesDestination>$(SolutionDir)\binaries\</CopyToBinariesDestination>
-    <CopyToArtifactsDestination>$(SolutionDir)\binaries\</CopyToArtifactsDestination>
-    </PropertyGroup>
+    <CopyToBinariesDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)</CopyToBinariesDestination>
+    <CopyToArtifactsDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)</CopyToArtifactsDestination>
+  </PropertyGroup>
+
+  <!--
+  References for standardized builds
+  Portable: Visual Studio view
+  Dynamic: Build time
+  -->
+  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' != '' And '$(BuildingInsideVisualStudio)' != 'true' " Project="references.props" />
+  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' != '' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.portable.props" />
+
   <!--
   Defining defaults depending on development or official build:
   -->
-  <PropertyGroup>
-    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
   <PropertyGroup Condition="$(OfficialBuild) == 'true'">
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\Keys\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <CopyToBinaries>true</CopyToBinaries>
-    <CopyToBinariesDestination>$(SolutionDir)\binaries\unsigned\</CopyToBinariesDestination>
+    <CopyToBinariesDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)unsigned\</CopyToBinariesDestination>
   </PropertyGroup>
   <PropertyGroup Condition="$(OfficialBuild) == 'false'">
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\Keys\Development.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\Development.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -54,10 +60,22 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
+  <Target Name="InformationAboutWindowsAzureBuild"
+          BeforeTargets="BeforeBuild"
+          Condition=" '$(LibraryPropertiesProjectIncluded)' == 'true' ">
+    <Message Text="This is Windows Azure .NET library supports multiple build types." Importance="high" />
+    <Message Text="Library build set:             $(WindowsAzureLibraryProfileSet)" />
+    <Message Text="Current build type:            $(WindowsAzureCurrentConfiguration)" />
+
+    <Error Text="The current build type has not been defined." Condition=" '$(WindowsAzureCurrentConfiguration)' == '' " />
+
+    <Message Text=".NET framework target version, profile: $(TargetFrameworkVersion) $(TargetFrameworkProfile)" />
+  </Target>
+
   <Target Name="OfficialBuildsMustBeReleaseBuilds" BeforeTargets="BeforeBuild" Condition="'$(OfficialBuild)' == 'true' And '$(Configuration)' == 'Debug'">
     <Error Text="Official Builds must be Release builds." />
   </Target>
-  
+
   <Target Name="CopySdkBinaries" AfterTargets="AfterBuild" Condition="'$(CopyToBinaries)' == 'true'">
     <Message Text="Copying built SDK assembly, symbols and documentation files to $(CopyToBinariesDestination)." />
     <MakeDir Directories="$(CopyToBinariesDestination)" Condition="!Exists($(CopyToBinariesDestination))" />

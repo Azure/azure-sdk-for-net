@@ -7,7 +7,7 @@
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
-    <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -26,6 +26,7 @@ At this time, applications looking to use the Windows Azure Management Libraries
         <dependency id="Microsoft.WindowsAzure.Management.Storage" version="__VERSION_Microsoft.WindowsAzure.Management.Storage__" />
         <dependency id="Microsoft.WindowsAzure.Management.VirtualNetworks" version="__VERSION_Microsoft.WindowsAzure.Management.VirtualNetworks__" />
         <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="__VERSION_Microsoft.WindowsAzure.Management.WebSites__" />
+        <dependency id="Microsoft.WindowsAzure.Management.Scheduler" version="__VERSION_Microsoft.WindowsAzure.Management.Scheduler__" />
       </group>
     </dependencies>
   </metadata>

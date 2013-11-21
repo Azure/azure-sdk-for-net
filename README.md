@@ -8,21 +8,24 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
 
 # Features
 
-- Tables
+- Storage
+  - Tables
     - Create/Delete Tables
     - Query/Create/Read/Update/Delete Entities
-- Blobs
+  - Blobs
     - Create/Read/Update/Delete Blobs
-- Queues
+  - Queues
     - Create/Delete Queues
     - Insert/Peek Queue Messages
     - Advanced Queue Operations
-- Management Libraries
+- Management Libraries (Preview)
     - Compute
     - Infrastructure
-    - Storage 
+    - Monitoring Services
+    - Scheduler
+    - Storage
     - Virtual Networks
-- Media
+- Media Services
 
     > Available in separate [Media Services repository](http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client)
 
@@ -34,8 +37,13 @@ For the best development experience, developers should use the official Microsof
 
 ## Target Frameworks
 
-- .NET Framework 4.0: As of October 2013, the Windows Azure SDK for .NET (v2.2) supports primarily the desktop .NET Framework 4 release and above. For earlier .NET versions, SDK v2.1 is still supported.
-- Windows 8 for Windows Store app development: Storage Client Libraries are available for Windows Store applications.
+- .NET Framework 4.5 and newer
+- .NET Framework 4.0
+- Storage Libraries are available for Windows 8 for Windows Store development as well as Windows Phone 8
+
+As of 10/2013, SDK 2.2 supports targeting only .NET Framework 4.0 and newer.
+
+> Need support for previous versions of .NET such as 3.5? Version 2.1 of the Windows Azure SDK for .NET supports this version and can still be used today.
  
 ## Requirements
 
@@ -113,7 +121,7 @@ Once installed:
 ## Code Samples
 
 > Note:
-> How-Tos focused around accomplishing specific tasks are available on the [http://www.windowsazure.com/en-us/develop/net/](Windows Azure .NET Developer Center).
+> How-Tos focused around accomplishing specific tasks are available on the [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
 
 ### Creating a Table
 

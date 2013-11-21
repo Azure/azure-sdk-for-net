@@ -129,20 +129,68 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageAccountCreateParameters
     {
-        private string _serviceName;
+        private string _affinityGroup;
         
         /// <summary>
-        /// Required. A name for the storage account that is unique within
-        /// Windows Azure. Storage account names must be between 3 and 24
-        /// characters in length and use numbers and lower-case letters only.
-        /// This name is the DNS prefix name and can be used to access blobs,
-        /// queues, and tables in the storage account.  For example:
-        /// http://ServiceName.blob.core.windows.net/mycontainer/
+        /// Required if Location is not specified. The name of an existing
+        /// affinity group in the specified subscription.  You can include
+        /// either a Location or AffinityGroup element in the request body,
+        /// but not both. To list available affinity groups, use the List
+        /// Affinity Groups operation.
         /// </summary>
-        public string ServiceName
+        public string AffinityGroup
         {
-            get { return this._serviceName; }
-            set { this._serviceName = value; }
+            get { return this._affinityGroup; }
+            set { this._affinityGroup = value; }
+        }
+        
+        private string _description;
+        
+        /// <summary>
+        /// Optional. A description for the storage account. The description
+        /// may be up to 1024 characters in length.
+        /// </summary>
+        public string Description
+        {
+            get { return this._description; }
+            set { this._description = value; }
+        }
+        
+        private IDictionary<string, string> _extendedProperties;
+        
+        /// <summary>
+        /// Optional. Represents the name of an extended storage account
+        /// property. Each extended property must have both a defined name and
+        /// value. You can have a maximum of 50 extended property name/value
+        /// pairs.  The maximum length of the Name element is 64 characters,
+        /// only alphanumeric characters and underscores are valid in the
+        /// Name, and the name must start with a letter. Attempting to use
+        /// other characters, starting the Name with a non-letter character,
+        /// or entering a name that is identical to that of another extended
+        /// property owned by the same storage account, will result in a
+        /// status code 400 (Bad Request) error.  Each extended property value
+        /// has a maximum length of 255 characters.
+        /// </summary>
+        public IDictionary<string, string> ExtendedProperties
+        {
+            get { return this._extendedProperties; }
+            set { this._extendedProperties = value; }
+        }
+        
+        private bool _geoReplicationEnabled;
+        
+        /// <summary>
+        /// Optional. Specifies whether the storage account is created with the
+        /// geo-replication enabled. If the element is not included in the
+        /// request body, the default value is true. If set to true, the data
+        /// in the storage account is replicated across more than one
+        /// geographic location so as to enable resilience in the face of
+        /// catastrophic service loss.
+        /// </summary>
+        public bool GeoReplicationEnabled
+        {
+            get { return this._geoReplicationEnabled; }
+            set { this._geoReplicationEnabled = value; }
         }
         
         private string _label;
@@ -169,18 +217,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._label = value; }
         }
         
-        private string _description;
-        
-        /// <summary>
-        /// Optional. A description for the storage account. The description
-        /// may be up to 1024 characters in length.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
         private string _location;
         
         /// <summary>
@@ -195,56 +231,20 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._location = value; }
         }
         
-        private string _affinityGroup;
+        private string _serviceName;
         
         /// <summary>
-        /// Required if Location is not specified. The name of an existing
-        /// affinity group in the specified subscription.  You can include
-        /// either a Location or AffinityGroup element in the request body,
-        /// but not both. To list available affinity groups, use the List
-        /// Affinity Groups operation.
+        /// Required. A name for the storage account that is unique within
+        /// Windows Azure. Storage account names must be between 3 and 24
+        /// characters in length and use numbers and lower-case letters only.
+        /// This name is the DNS prefix name and can be used to access blobs,
+        /// queues, and tables in the storage account.  For example:
+        /// http://ServiceName.blob.core.windows.net/mycontainer/
         /// </summary>
-        public string AffinityGroup
+        public string ServiceName
         {
-            get { return this._affinityGroup; }
-            set { this._affinityGroup = value; }
-        }
-        
-        private bool _geoReplicationEnabled;
-        
-        /// <summary>
-        /// Optional. Specifies whether the storage account is created with the
-        /// geo-replication enabled. If the element is not included in the
-        /// request body, the default value is true. If set to true, the data
-        /// in the storage account is replicated across more than one
-        /// geographic location so as to enable resilience in the face of
-        /// catastrophic service loss.
-        /// </summary>
-        public bool GeoReplicationEnabled
-        {
-            get { return this._geoReplicationEnabled; }
-            set { this._geoReplicationEnabled = value; }
-        }
-        
-        private IDictionary<string, string> _extendedProperties;
-        
-        /// <summary>
-        /// Optional. Represents the name of an extended storage account
-        /// property. Each extended property must have both a defined name and
-        /// value. You can have a maximum of 50 extended property name/value
-        /// pairs.  The maximum length of the Name element is 64 characters,
-        /// only alphanumeric characters and underscores are valid in the
-        /// Name, and the name must start with a letter. Attempting to use
-        /// other characters, starting the Name with a non-letter character,
-        /// or entering a name that is identical to that of another extended
-        /// property owned by the same storage account, will result in a
-        /// status code 400 (Bad Request) error.  Each extended property value
-        /// has a maximum length of 255 characters.
-        /// </summary>
-        public IDictionary<string, string> ExtendedProperties
-        {
-            get { return this._extendedProperties; }
-            set { this._extendedProperties = value; }
+            get { return this._serviceName; }
+            set { this._serviceName = value; }
         }
         
         /// <summary>
@@ -262,18 +262,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageAccountGetKeysResponse : OperationResponse
     {
-        private Uri _uri;
-        
-        /// <summary>
-        /// The Service Management API request URI used to perform Get Storage
-        /// Account Properties requests against the storage account.
-        /// </summary>
-        public Uri Uri
-        {
-            get { return this._uri; }
-            set { this._uri = value; }
-        }
-        
         private string _primaryKey;
         
         /// <summary>
@@ -294,6 +282,18 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         {
             get { return this._secondaryKey; }
             set { this._secondaryKey = value; }
+        }
+        
+        private Uri _uri;
+        
+        /// <summary>
+        /// The Service Management API request URI used to perform Get Storage
+        /// Account Properties requests against the storage account.
+        /// </summary>
+        public Uri Uri
+        {
+            get { return this._uri; }
+            set { this._uri = value; }
         }
         
         /// <summary>
@@ -310,17 +310,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageAccountRegenerateKeysParameters
     {
-        private string _serviceName;
-        
-        /// <summary>
-        /// The name of the desired storage account.
-        /// </summary>
-        public string ServiceName
-        {
-            get { return this._serviceName; }
-            set { this._serviceName = value; }
-        }
-        
         private StorageKeyType _keyType;
         
         /// <summary>
@@ -330,6 +319,17 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         {
             get { return this._keyType; }
             set { this._keyType = value; }
+        }
+        
+        private string _serviceName;
+        
+        /// <summary>
+        /// The name of the desired storage account.
+        /// </summary>
+        public string ServiceName
+        {
+            get { return this._serviceName; }
+            set { this._serviceName = value; }
         }
         
         /// <summary>
@@ -346,18 +346,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageAccountRegenerateKeysResponse : OperationResponse
     {
-        private Uri _uri;
-        
-        /// <summary>
-        /// The Service Management API request URI used to perform Get Storage
-        /// Account Properties requests against the storage account.
-        /// </summary>
-        public Uri Uri
-        {
-            get { return this._uri; }
-            set { this._uri = value; }
-        }
-        
         private string _primaryKey;
         
         /// <summary>
@@ -378,6 +366,18 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         {
             get { return this._secondaryKey; }
             set { this._secondaryKey = value; }
+        }
+        
+        private Uri _uri;
+        
+        /// <summary>
+        /// The Service Management API request URI used to perform Get Storage
+        /// Account Properties requests against the storage account.
+        /// </summary>
+        public Uri Uri
+        {
+            get { return this._uri; }
+            set { this._uri = value; }
         }
         
         /// <summary>
@@ -402,17 +402,26 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._description = value; }
         }
         
-        private string _label;
+        private IDictionary<string, string> _extendedProperties;
         
         /// <summary>
-        /// Optional. A name for the storage account that is base64-encoded.
-        /// The label may be up to 100 characters in length. The name can be
-        /// used identify the storage account for your tracking purposes.
+        /// Optional. Represents the name of an extended storage account
+        /// property. Each extended property must have both a defined name and
+        /// value. You can have a maximum of 50 extended property name/value
+        /// pairs.  The maximum length of the Name element is 64 characters,
+        /// only alphanumeric characters and underscores are valid in the
+        /// Name, and the name must start with a letter. Attempting to use
+        /// other characters, starting the Name with a non-letter character,
+        /// or entering a name that is identical to that of another extended
+        /// property owned by the same storage account, will result in a
+        /// status code 400 (Bad Request) error.  Each extended property value
+        /// has a maximum length of 255 characters.  You can delete an
+        /// extended property by setting the value to NULL.
         /// </summary>
-        public string Label
+        public IDictionary<string, string> ExtendedProperties
         {
-            get { return this._label; }
-            set { this._label = value; }
+            get { return this._extendedProperties; }
+            set { this._extendedProperties = value; }
         }
         
         private bool? _geoReplicationEnabled;
@@ -440,26 +449,17 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._geoReplicationEnabled = value; }
         }
         
-        private IDictionary<string, string> _extendedProperties;
+        private string _label;
         
         /// <summary>
-        /// Optional. Represents the name of an extended storage account
-        /// property. Each extended property must have both a defined name and
-        /// value. You can have a maximum of 50 extended property name/value
-        /// pairs.  The maximum length of the Name element is 64 characters,
-        /// only alphanumeric characters and underscores are valid in the
-        /// Name, and the name must start with a letter. Attempting to use
-        /// other characters, starting the Name with a non-letter character,
-        /// or entering a name that is identical to that of another extended
-        /// property owned by the same storage account, will result in a
-        /// status code 400 (Bad Request) error.  Each extended property value
-        /// has a maximum length of 255 characters.  You can delete an
-        /// extended property by setting the value to NULL.
+        /// Optional. A name for the storage account that is base64-encoded.
+        /// The label may be up to 100 characters in length. The name can be
+        /// used identify the storage account for your tracking purposes.
         /// </summary>
-        public IDictionary<string, string> ExtendedProperties
+        public string Label
         {
-            get { return this._extendedProperties; }
-            set { this._extendedProperties = value; }
+            get { return this._label; }
+            set { this._label = value; }
         }
         
         /// <summary>
@@ -494,6 +494,30 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageOperationStatusResponse : OperationResponse
     {
+        private StorageOperationStatusResponse.ErrorDetails _error;
+        
+        /// <summary>
+        /// If the asynchronous operation failed, the response body includes
+        /// the HTTP status code for the failed request, and also includes
+        /// error information regarding the failure.
+        /// </summary>
+        public StorageOperationStatusResponse.ErrorDetails Error
+        {
+            get { return this._error; }
+            set { this._error = value; }
+        }
+        
+        private HttpStatusCode _httpStatusCode;
+        
+        /// <summary>
+        /// The HTTP status code for the asynchronous request.
+        /// </summary>
+        public HttpStatusCode HttpStatusCode
+        {
+            get { return this._httpStatusCode; }
+            set { this._httpStatusCode = value; }
+        }
+        
         private string _id;
         
         /// <summary>
@@ -515,30 +539,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         {
             get { return this._status; }
             set { this._status = value; }
-        }
-        
-        private HttpStatusCode _httpStatusCode;
-        
-        /// <summary>
-        /// The HTTP status code for the asynchronous request.
-        /// </summary>
-        public HttpStatusCode HttpStatusCode
-        {
-            get { return this._httpStatusCode; }
-            set { this._httpStatusCode = value; }
-        }
-        
-        private StorageOperationStatusResponse.ErrorDetails _error;
-        
-        /// <summary>
-        /// If the asynchronous operation failed, the response body includes
-        /// the HTTP status code for the failed request, and also includes
-        /// error information regarding the failure.
-        /// </summary>
-        public StorageOperationStatusResponse.ErrorDetails Error
-        {
-            get { return this._error; }
-            set { this._error = value; }
         }
         
         /// <summary>
@@ -594,42 +594,18 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageServiceGetResponse : OperationResponse
     {
-        private Uri _uri;
+        private IList<string> _capabilities;
         
         /// <summary>
-        /// The Service Management API request URI used to perform Get Storage
-        /// Account Properties requests against the storage account.
+        /// Indicates if the storage account is able to perform virtual machine
+        /// related operations. If so, this element returns a string
+        /// containing PersistentVMRole. Otherwise, this element will not be
+        /// present.
         /// </summary>
-        public Uri Uri
+        public IList<string> Capabilities
         {
-            get { return this._uri; }
-            set { this._uri = value; }
-        }
-        
-        private string _serviceName;
-        
-        /// <summary>
-        /// The name of the storage account. This name is the DNS prefix name
-        /// and can be used to access blobs, queues, and tables in the storage
-        /// account.  For example, if the service name is MyStorageAccount you
-        /// could access the blob containers by calling:
-        /// http://MyStorageAccount.blob.core.windows.net/mycontainer/
-        /// </summary>
-        public string ServiceName
-        {
-            get { return this._serviceName; }
-            set { this._serviceName = value; }
-        }
-        
-        private StorageServiceProperties _properties;
-        
-        /// <summary>
-        /// Details about the storage account.
-        /// </summary>
-        public StorageServiceProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._capabilities; }
+            set { this._capabilities = value; }
         }
         
         private IDictionary<string, string> _extendedProperties;
@@ -653,18 +629,42 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._extendedProperties = value; }
         }
         
-        private IList<string> _capabilities;
+        private StorageServiceProperties _properties;
         
         /// <summary>
-        /// Indicates if the storage account is able to perform virtual machine
-        /// related operations. If so, this element returns a string
-        /// containing PersistentVMRole. Otherwise, this element will not be
-        /// present.
+        /// Details about the storage account.
         /// </summary>
-        public IList<string> Capabilities
+        public StorageServiceProperties Properties
         {
-            get { return this._capabilities; }
-            set { this._capabilities = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private string _serviceName;
+        
+        /// <summary>
+        /// The name of the storage account. This name is the DNS prefix name
+        /// and can be used to access blobs, queues, and tables in the storage
+        /// account.  For example, if the service name is MyStorageAccount you
+        /// could access the blob containers by calling:
+        /// http://MyStorageAccount.blob.core.windows.net/mycontainer/
+        /// </summary>
+        public string ServiceName
+        {
+            get { return this._serviceName; }
+            set { this._serviceName = value; }
+        }
+        
+        private Uri _uri;
+        
+        /// <summary>
+        /// The Service Management API request URI used to perform Get Storage
+        /// Account Properties requests against the storage account.
+        /// </summary>
+        public Uri Uri
+        {
+            get { return this._uri; }
+            set { this._uri = value; }
         }
         
         /// <summary>
@@ -672,8 +672,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageServiceGetResponse()
         {
-            this._extendedProperties = new Dictionary<string, string>();
             this._capabilities = new List<string>();
+            this._extendedProperties = new Dictionary<string, string>();
         }
     }
     
@@ -719,46 +719,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public partial class StorageService
         {
-            private Uri _uri;
-            
-            /// <summary>
-            /// The Service Management API request URI used to perform Get
-            /// Storage Account Properties requests against the storage
-            /// account.
-            /// </summary>
-            public Uri Uri
-            {
-                get { return this._uri; }
-                set { this._uri = value; }
-            }
-            
-            private string _serviceName;
-            
-            /// <summary>
-            /// The name of the storage account. This name is the DNS prefix
-            /// name and can be used to access blobs, queues, and tables in
-            /// the storage account.  For example, if the service name is
-            /// MyStorageAccount you could access the blob containers by
-            /// calling:
-            /// http://MyStorageAccount.blob.core.windows.net/mycontainer/
-            /// </summary>
-            public string ServiceName
-            {
-                get { return this._serviceName; }
-                set { this._serviceName = value; }
-            }
-            
-            private StorageServiceProperties _properties;
-            
-            /// <summary>
-            /// Details about the storage account.
-            /// </summary>
-            public StorageServiceProperties Properties
-            {
-                get { return this._properties; }
-                set { this._properties = value; }
-            }
-            
             private IDictionary<string, string> _extendedProperties;
             
             /// <summary>
@@ -781,6 +741,46 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
                 set { this._extendedProperties = value; }
             }
             
+            private StorageServiceProperties _properties;
+            
+            /// <summary>
+            /// Details about the storage account.
+            /// </summary>
+            public StorageServiceProperties Properties
+            {
+                get { return this._properties; }
+                set { this._properties = value; }
+            }
+            
+            private string _serviceName;
+            
+            /// <summary>
+            /// The name of the storage account. This name is the DNS prefix
+            /// name and can be used to access blobs, queues, and tables in
+            /// the storage account.  For example, if the service name is
+            /// MyStorageAccount you could access the blob containers by
+            /// calling:
+            /// http://MyStorageAccount.blob.core.windows.net/mycontainer/
+            /// </summary>
+            public string ServiceName
+            {
+                get { return this._serviceName; }
+                set { this._serviceName = value; }
+            }
+            
+            private Uri _uri;
+            
+            /// <summary>
+            /// The Service Management API request URI used to perform Get
+            /// Storage Account Properties requests against the storage
+            /// account.
+            /// </summary>
+            public Uri Uri
+            {
+                get { return this._uri; }
+                set { this._uri = value; }
+            }
+            
             /// <summary>
             /// Initializes a new instance of the StorageService class.
             /// </summary>
@@ -796,17 +796,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageServiceProperties
     {
-        private string _description;
-        
-        /// <summary>
-        /// The user supplied description of the storage account.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
         private string _affinityGroup;
         
         /// <summary>
@@ -818,42 +807,15 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._affinityGroup = value; }
         }
         
-        private string _location;
+        private string _description;
         
         /// <summary>
-        /// The geo-location specified when the storage account was created.
-        /// This property is only returned if the storage account is not
-        /// associated with an affinity group.
+        /// The user supplied description of the storage account.
         /// </summary>
-        public string Location
+        public string Description
         {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private string _label;
-        
-        /// <summary>
-        /// The user supplied name of the storage account returned as a base-64
-        /// encoded string. This name can be used identify the storage account
-        /// for your tracking purposes.
-        /// </summary>
-        public string Label
-        {
-            get { return this._label; }
-            set { this._label = value; }
-        }
-        
-        private StorageServiceStatus _status;
-        
-        /// <summary>
-        /// The status of the storage account at the time the operation was
-        /// called.
-        /// </summary>
-        public StorageServiceStatus Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._description; }
+            set { this._description = value; }
         }
         
         private IList<Uri> _endpoints;
@@ -866,6 +828,18 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         {
             get { return this._endpoints; }
             set { this._endpoints = value; }
+        }
+        
+        private string _geoPrimaryRegion;
+        
+        /// <summary>
+        /// Indicates the primary geographical region in which the storage
+        /// account exists at this time.
+        /// </summary>
+        public string GeoPrimaryRegion
+        {
+            get { return this._geoPrimaryRegion; }
+            set { this._geoPrimaryRegion = value; }
         }
         
         private bool _geoReplicationEnabled;
@@ -882,27 +856,30 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._geoReplicationEnabled = value; }
         }
         
-        private string _geoPrimaryRegion;
+        private string _geoSecondaryRegion;
         
         /// <summary>
-        /// Indicates the primary geographical region in which the storage
-        /// account exists at this time.
+        /// Indicates the geographical region in which the storage account is
+        /// being replicated.  The GeoSecondaryRegion element is not returned
+        /// if geo-replication is “off” for this account.
         /// </summary>
-        public string GeoPrimaryRegion
+        public string GeoSecondaryRegion
         {
-            get { return this._geoPrimaryRegion; }
-            set { this._geoPrimaryRegion = value; }
+            get { return this._geoSecondaryRegion; }
+            set { this._geoSecondaryRegion = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.Storage.Models.GeoRegionStatus? _statusOfGeoPrimaryRegion;
+        private string _label;
         
         /// <summary>
-        /// Indicates whether the primary storage region is available.
+        /// The user supplied name of the storage account returned as a base-64
+        /// encoded string. This name can be used identify the storage account
+        /// for your tracking purposes.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.Storage.Models.GeoRegionStatus? StatusOfGeoPrimaryRegion
+        public string Label
         {
-            get { return this._statusOfGeoPrimaryRegion; }
-            set { this._statusOfGeoPrimaryRegion = value; }
+            get { return this._label; }
+            set { this._label = value; }
         }
         
         private System.DateTime? _lastGeoFailoverTime;
@@ -922,17 +899,40 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._lastGeoFailoverTime = value; }
         }
         
-        private string _geoSecondaryRegion;
+        private string _location;
         
         /// <summary>
-        /// Indicates the geographical region in which the storage account is
-        /// being replicated.  The GeoSecondaryRegion element is not returned
-        /// if geo-replication is “off” for this account.
+        /// The geo-location specified when the storage account was created.
+        /// This property is only returned if the storage account is not
+        /// associated with an affinity group.
         /// </summary>
-        public string GeoSecondaryRegion
+        public string Location
         {
-            get { return this._geoSecondaryRegion; }
-            set { this._geoSecondaryRegion = value; }
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private StorageServiceStatus _status;
+        
+        /// <summary>
+        /// The status of the storage account at the time the operation was
+        /// called.
+        /// </summary>
+        public StorageServiceStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
+        private Microsoft.WindowsAzure.Management.Storage.Models.GeoRegionStatus? _statusOfGeoPrimaryRegion;
+        
+        /// <summary>
+        /// Indicates whether the primary storage region is available.
+        /// </summary>
+        public Microsoft.WindowsAzure.Management.Storage.Models.GeoRegionStatus? StatusOfGeoPrimaryRegion
+        {
+            get { return this._statusOfGeoPrimaryRegion; }
+            set { this._statusOfGeoPrimaryRegion = value; }
         }
         
         private Microsoft.WindowsAzure.Management.Storage.Models.GeoRegionStatus? _statusOfGeoSecondaryRegion;
@@ -995,6 +995,14 @@ namespace Microsoft.WindowsAzure.Management.Storage
     public partial interface IStorageManagementClient
     {
         /// <summary>
+        /// The URI used as the base for all Service Management requests.
+        /// </summary>
+        Uri BaseUri
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// When you create a Windows Azure subscription, it is uniquely
         /// identified by a subscription ID. The subscription ID forms part of
         /// the URI for every call that you make to the Service Management
@@ -1004,14 +1012,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// are allowed.
         /// </summary>
         SubscriptionCloudCredentials Credentials
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// The URI used as the base for all Service Management requests.
-        /// </summary>
-        Uri BaseUri
         {
             get; 
         }
@@ -1155,6 +1155,16 @@ namespace Microsoft.WindowsAzure.Management.Storage
     /// </summary>
     public partial class StorageManagementClient : ServiceClient<StorageManagementClient>, IStorageManagementClient
     {
+        private Uri _baseUri;
+        
+        /// <summary>
+        /// The URI used as the base for all Service Management requests.
+        /// </summary>
+        public Uri BaseUri
+        {
+            get { return this._baseUri; }
+        }
+        
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
@@ -1169,16 +1179,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
-        }
-        
-        private Uri _baseUri;
-        
-        /// <summary>
-        /// The URI used as the base for all Service Management requests.
-        /// </summary>
-        public Uri BaseUri
-        {
-            get { return this._baseUri; }
         }
         
         private IStorageAccountOperations _storageAccounts;
@@ -1442,23 +1442,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
     public partial interface IStorageAccountOperations
     {
         /// <summary>
-        /// The Check Name Availability operation checks if a storage account
-        /// name is available for use in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='serviceName'>
-        /// The desired storage account name to check for availability.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response to a storage account check name availability request
-        /// </returns>
-        Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// The Create Storage Account operation creates a new storage account
         /// in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
@@ -1475,6 +1458,23 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// request ID.
         /// </returns>
         Task<OperationResponse> BeginCreatingAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Check Name Availability operation checks if a storage account
+        /// name is available for use in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The desired storage account name to check for availability.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a storage account check name availability request
+        /// </returns>
+        Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Storage Account operation creates a new storage account
@@ -1616,62 +1616,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
     public static partial class StorageAccountOperationsExtensions
     {
         /// <summary>
-        /// The Check Name Availability operation checks if a storage account
-        /// name is available for use in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The desired storage account name to check for availability.
-        /// </param>
-        /// <returns>
-        /// The response to a storage account check name availability request
-        /// </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailability(this IStorageAccountOperations operations, string serviceName)
-        {
-            try
-            {
-                return operations.CheckNameAvailabilityAsync(serviceName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The Check Name Availability operation checks if a storage account
-        /// name is available for use in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The desired storage account name to check for availability.
-        /// </param>
-        /// <returns>
-        /// The response to a storage account check name availability request
-        /// </returns>
-        public static Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IStorageAccountOperations operations, string serviceName)
-        {
-            return operations.CheckNameAvailabilityAsync(serviceName, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// The Create Storage Account operation creates a new storage account
         /// in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
@@ -1727,6 +1671,62 @@ namespace Microsoft.WindowsAzure.Management.Storage
         public static Task<OperationResponse> BeginCreatingAsync(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Check Name Availability operation checks if a storage account
+        /// name is available for use in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The desired storage account name to check for availability.
+        /// </param>
+        /// <returns>
+        /// The response to a storage account check name availability request
+        /// </returns>
+        public static CheckNameAvailabilityResponse CheckNameAvailability(this IStorageAccountOperations operations, string serviceName)
+        {
+            try
+            {
+                return operations.CheckNameAvailabilityAsync(serviceName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Check Name Availability operation checks if a storage account
+        /// name is available for use in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The desired storage account name to check for availability.
+        /// </param>
+        /// <returns>
+        /// The response to a storage account check name availability request
+        /// </returns>
+        public static Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IStorageAccountOperations operations, string serviceName)
+        {
+            return operations.CheckNameAvailabilityAsync(serviceName, CancellationToken.None);
         }
         
         /// <summary>
@@ -2175,147 +2175,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
         }
         
         /// <summary>
-        /// The Check Name Availability operation checks if a storage account
-        /// name is available for use in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='serviceName'>
-        /// The desired storage account name to check for availability.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response to a storage account check name availability request
-        /// </returns>
-        public async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException("serviceName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("serviceName", serviceName);
-                Tracing.Enter(invocationId, this, "CheckNameAvailabilityAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices/operations/isavailable/" + serviceName;
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    CheckNameAvailabilityResponse result = new CheckNameAvailabilityResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement availabilityResponseElement = responseDoc.Element(XName.Get("AvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (availabilityResponseElement != null)
-                    {
-                        XElement resultElement = availabilityResponseElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
-                        if (resultElement != null)
-                        {
-                            bool resultInstance = bool.Parse(resultElement.Value);
-                            result.IsAvailable = resultInstance;
-                        }
-                        
-                        XElement reasonElement = availabilityResponseElement.Element(XName.Get("Reason", "http://schemas.microsoft.com/windowsazure"));
-                        if (reasonElement != null)
-                        {
-                            bool isNil = false;
-                            XAttribute nilAttribute = reasonElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute != null)
-                            {
-                                isNil = nilAttribute.Value == "true";
-                            }
-                            if (isNil == false)
-                            {
-                                string reasonInstance = reasonElement.Value;
-                                result.Reason = reasonInstance;
-                            }
-                        }
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
         /// The Create Storage Account operation creates a new storage account
         /// in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
@@ -2338,6 +2197,18 @@ namespace Microsoft.WindowsAzure.Management.Storage
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.Description != null && parameters.Description.Length > 1024)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Description");
+            }
+            if (parameters.Label == null)
+            {
+                throw new ArgumentNullException("parameters.Label");
+            }
+            if (parameters.Label.Length > 100)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Label");
+            }
             if (parameters.ServiceName == null)
             {
                 throw new ArgumentNullException("parameters.ServiceName");
@@ -2358,22 +2229,10 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 }
             }
             // TODO: Validate parameters.ServiceName is a valid DNS name.
-            if (parameters.Label == null)
-            {
-                throw new ArgumentNullException("parameters.Label");
-            }
-            if (parameters.Label.Length > 100)
-            {
-                throw new ArgumentOutOfRangeException("parameters.Label");
-            }
-            if (parameters.Description != null && parameters.Description.Length > 1024)
-            {
-                throw new ArgumentOutOfRangeException("parameters.Description");
-            }
-            int locationCount = (parameters.Location != null ? 1 : 0) + (parameters.AffinityGroup != null ? 1 : 0);
+            int locationCount = (parameters.AffinityGroup != null ? 1 : 0) + (parameters.Location != null ? 1 : 0);
             if (locationCount != 1)
             {
-                throw new ArgumentException("Only one of parameters.Location, parameters.AffinityGroup may be provided.");
+                throw new ArgumentException("Only one of parameters.AffinityGroup, parameters.Location may be provided.");
             }
             
             // Tracing
@@ -2536,6 +2395,147 @@ namespace Microsoft.WindowsAzure.Management.Storage
         }
         
         /// <summary>
+        /// The Check Name Availability operation checks if a storage account
+        /// name is available for use in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The desired storage account name to check for availability.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a storage account check name availability request
+        /// </returns>
+        public async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                Tracing.Enter(invocationId, this, "CheckNameAvailabilityAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices/operations/isavailable/" + serviceName;
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CheckNameAvailabilityResponse result = new CheckNameAvailabilityResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement availabilityResponseElement = responseDoc.Element(XName.Get("AvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
+                    if (availabilityResponseElement != null)
+                    {
+                        XElement resultElement = availabilityResponseElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
+                        if (resultElement != null)
+                        {
+                            bool resultInstance = bool.Parse(resultElement.Value);
+                            result.IsAvailable = resultInstance;
+                        }
+                        
+                        XElement reasonElement = availabilityResponseElement.Element(XName.Get("Reason", "http://schemas.microsoft.com/windowsazure"));
+                        if (reasonElement != null)
+                        {
+                            bool isNil = false;
+                            XAttribute nilAttribute = reasonElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                            if (nilAttribute != null)
+                            {
+                                isNil = nilAttribute.Value == "true";
+                            }
+                            if (isNil == false)
+                            {
+                                string reasonInstance = reasonElement.Value;
+                                result.Reason = reasonInstance;
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Create Storage Account operation creates a new storage account
         /// in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
@@ -2578,22 +2578,34 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse originalResponse = await client.StorageAccounts.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
+                OperationResponse response = await client.StorageAccounts.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                StorageOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.RequestId, cancellationToken).ConfigureAwait(false);
+                StorageOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while (result.Status == OperationStatus.InProgress)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                     cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(originalResponse.RequestId, cancellationToken).ConfigureAwait(false);
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
                 }
                 
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
                 
                 return result;

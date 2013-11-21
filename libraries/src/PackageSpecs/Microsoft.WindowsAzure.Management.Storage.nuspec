@@ -7,7 +7,7 @@
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
-    <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -19,6 +19,9 @@
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Storage.dll" />
       </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.WindowsAzure.Management.Storage.dll" />
+      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
@@ -26,9 +29,13 @@
   </metadata>
   <files>
     <file src="StorageManagement\**\*.cs" target="src" />
-    
+
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Storage.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Storage.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Storage.xml" target="lib\portable-net45+sl50+wp80+win" />
+
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Storage.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Storage.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Storage.xml" target="lib\net40" />
   </files>
 </package>
