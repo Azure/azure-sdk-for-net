@@ -81,13 +81,9 @@
   </PropertyGroup>
 
   <!--
-  General NuGet packaging properties
+  Build version parameters
   -->
   <PropertyGroup>
-    <NuGetCommand>.nuget\NuGet.exe</NuGetCommand>
-    <PackageOutputDir>binaries\packages</PackageOutputDir>
-    <NuGetVerbosity>normal</NuGetVerbosity>
-    <PublishSymbolSourcePackages>true</PublishSymbolSourcePackages>
     <BuildVersionSuffix></BuildVersionSuffix>
     <AdditionalVersionSuffix></AdditionalVersionSuffix>
   </PropertyGroup>
@@ -377,18 +373,5 @@
                           NuGet semver for each assembly along with the build
                           information, but this would require refactoring the
                           build item groups. -->
-
-    <Message Text="Destructive burn of NuGet dependency versions in .nuspec files." />
-    <ItemGroup>
-      <NuspecFilesToUpdate Include="$(ProductSourceFolder)\**\Microsoft.WindowsAzure.*.nuspec" />
-    </ItemGroup>
-    <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
-                          Find="__VERSION_%(SdkNuGetPackage.Identity)__"
-                          Replace="%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix)"
-                          LogReplacement="true" />
-    <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
-                          Find="__BASELINE_RELEASE_NOTES__"
-                          Replace="$(BaselineReleaseNotes)"
-                          LogReplacement="true" />
   </Target>
 </Project>

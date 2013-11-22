@@ -77,14 +77,21 @@
     the cloud for debugging use.
   -->
 
+  <!--
+  General NuGet packaging properties
+  -->
+  <PropertyGroup>
+    <NuGetCommand>.nuget\NuGet.exe</NuGetCommand>
+    <PackageOutputDir>binaries\packages</PackageOutputDir>
+    <NuGetVerbosity>normal</NuGetVerbosity>
+    <PublishSymbolSourcePackages>true</PublishSymbolSourcePackages>
+  </PropertyGroup>
+
   <ItemGroup>
     <NuSpecReplacementTokens Include="BASELINE_RELEASE_NOTES">
       <Value>$(BaselineReleaseNotes)</Value>
     </NuSpecReplacementTokens>
   </ItemGroup>
-  <PropertyGroup>
-    <BaselineReleaseNotesReplacementToken>__BASELINE_RELEASE_NOTES__</BaselineReleaseNotesReplacementToken>
-  </PropertyGroup>
 
   <UsingTask AssemblyFile="..\tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
   <Import Project="..\tools\Microsoft.WindowsAzure.Build.msbuild" />
@@ -132,15 +139,15 @@
   Build NuGet packages
   -->
   <Target Name="BuildPackages"
-          DependsOnTargets="EnsureBinariesFolderExists">
+          DependsOnTargets="EnsureBinariesFolderExists; BuildDynamicNuSpecs">
 
     <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' "
-          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;src\PackageSpecs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
+          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
 
     <Message Text="Generating NuGet packages without symbol + source packages" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' "
-          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;src\PackageSpecs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
+          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
   </Target>
 
   <Target Name="PublishPackagesOnly">
