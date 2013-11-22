@@ -90,20 +90,32 @@
   <Import Project="..\tools\Microsoft.WindowsAzure.Build.msbuild" />
 
   <Target Name="BuildDynamicNuSpecs"
-          DependsOnTargets="GetGeneratedBuildDate">
+          DependsOnTargets="GetGeneratedBuildDate; EnsureBinariesFolderExists">
 
     <ItemGroup>
       <NuspecFilesToUpdate Include="%(SdkNuGetPackage.Folder)%(SdkNuGetPackage.Identity).nuspec" />
     </ItemGroup>
-
     <Error Text="NuGet specification %(NuspecFilesToUpdate.Identity) not found."
            Condition="!Exists(%(NuspecFilesToUpdate.Identity))" />
 
+    <!-- First replace any string tokens, storing the output in the binaries 
+         folder instead of doing a destructive replacement. -->
     <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
-                          OutputDir="bin\$(Configuration)\"
+                          OutputDir="binaries\packages\specs\"
                           Find="__%(NuSpecReplacementTokens.Identity)__"
                           Replace="%(NuSpecReplacementTokens.Value)"
-                          LogReplacement="true" />
+                          LogReplacement="false" />
+
+    <!-- Second, use the new files as destructive replacement targets. -->
+    <ItemGroup>
+      <NuspecFilesToUpdate2 Include="binaries\packages\specs\*.nuspec" />
+    </ItemGroup>
+    <RegexReplacementTask Files="@(NuspecFilesToUpdate2)"
+                          Find="__VERSION_%(SdkNuGetPackage.Identity)__"
+                          Replace="%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix)"
+                          LogReplacement="false" />
+
+    <Message Text="Created dynamic nuspec %(NuspecFilesToUpdate2.Identity)" />
   </Target>
 
   <Target Name="ListPackages">
@@ -112,8 +124,8 @@
 
   <Target Name="EnsureBinariesFolderExists">
     <MakeDir Directories="binaries" Condition="!Exists('binaries')" />
-    <RemoveDir Directories="binaries\packages" Condition="Exists('binaries\packages')" ContinueOnError="true" />
     <MakeDir Directories="binaries\packages" Condition="!Exists('binaries\packages')" />
+    <MakeDir Directories="binaries\packages\specs" Condition="!Exists('binaries\packages\specs')" />
   </Target>
 
   <!--

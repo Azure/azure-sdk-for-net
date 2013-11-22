@@ -60,8 +60,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     string message = null;
                     if (!string.IsNullOrEmpty(OutputDir))
                     {
-                        string path = Path.GetDirectoryName(fileName);
-                        path = Path.Combine(path, OutputDir);
+                        string path = Path.GetFullPath(OutputDir);
                         outputFileName = Path.Combine(path, Path.GetFileName(fileName));
                         message = " saved as " + outputFileName;
                     }
