@@ -1425,6 +1425,344 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
     }
     
     /// <summary>
+    /// Preview Only. Parameters supplied to the Create Reserved IP operation.
+    /// </summary>
+    public partial class NetworkReservedIPCreateParameters
+    {
+        private string _affinityGroup;
+        
+        /// <summary>
+        /// An affinity group, which indirectly refers to the location where
+        /// the virtual network exists.
+        /// </summary>
+        public string AffinityGroup
+        {
+            get { return this._affinityGroup; }
+            set { this._affinityGroup = value; }
+        }
+        
+        private string _deploymentName;
+        
+        /// <summary>
+        /// The name of the deployment the IP belongs to, if being used.
+        /// </summary>
+        public string DeploymentName
+        {
+            get { return this._deploymentName; }
+            set { this._deploymentName = value; }
+        }
+        
+        private string _label;
+        
+        /// <summary>
+        /// The friendly identifier of the site.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Name of the reserved IP.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _serviceName;
+        
+        /// <summary>
+        /// The name of the service the IP belongs to, if being used.
+        /// </summary>
+        public string ServiceName
+        {
+            get { return this._serviceName; }
+            set { this._serviceName = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the NetworkReservedIPCreateParameters
+        /// class.
+        /// </summary>
+        public NetworkReservedIPCreateParameters()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Preview Only. A reserved IP associated with your subscription.
+    /// </summary>
+    public partial class NetworkReservedIPGetResponse : OperationResponse
+    {
+        private string _address;
+        
+        /// <summary>
+        /// The IP address of the reserved IP.
+        /// </summary>
+        public string Address
+        {
+            get { return this._address; }
+            set { this._address = value; }
+        }
+        
+        private string _affinityGroup;
+        
+        /// <summary>
+        /// An affinity group, which indirectly refers to the location where
+        /// the virtual network exists.
+        /// </summary>
+        public string AffinityGroup
+        {
+            get { return this._affinityGroup; }
+            set { this._affinityGroup = value; }
+        }
+        
+        private string _deploymentName;
+        
+        /// <summary>
+        /// The name of the deployment the IP belongs to, if being used.
+        /// </summary>
+        public string DeploymentName
+        {
+            get { return this._deploymentName; }
+            set { this._deploymentName = value; }
+        }
+        
+        private string _id;
+        
+        /// <summary>
+        /// A unique string identifier that represents the reserved IP.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private bool _inUse;
+        
+        /// <summary>
+        /// The indicator of whether the reserved IP is being used.
+        /// </summary>
+        public bool InUse
+        {
+            get { return this._inUse; }
+            set { this._inUse = value; }
+        }
+        
+        private string _label;
+        
+        /// <summary>
+        /// The friendly identifier of the site.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Name of the reserved IP.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _serviceName;
+        
+        /// <summary>
+        /// The name of the service the IP belongs to, if being used.
+        /// </summary>
+        public string ServiceName
+        {
+            get { return this._serviceName; }
+            set { this._serviceName = value; }
+        }
+        
+        private string _state;
+        
+        /// <summary>
+        /// Current status of the reserved IP. (Created, Creating, Updating,
+        /// Deleting, Unavailable)
+        /// </summary>
+        public string State
+        {
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the NetworkReservedIPGetResponse
+        /// class.
+        /// </summary>
+        public NetworkReservedIPGetResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Preview Only. The response structure for the Server List operation
+    /// </summary>
+    public partial class NetworkReservedIPListResponse : OperationResponse, IEnumerable<NetworkReservedIPListResponse.ReservedIP>
+    {
+        private IList<NetworkReservedIPListResponse.ReservedIP> _reservedIPs;
+        
+        public IList<NetworkReservedIPListResponse.ReservedIP> ReservedIPs
+        {
+            get { return this._reservedIPs; }
+            set { this._reservedIPs = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the NetworkReservedIPListResponse
+        /// class.
+        /// </summary>
+        public NetworkReservedIPListResponse()
+        {
+            this._reservedIPs = new List<NetworkReservedIPListResponse.ReservedIP>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of ReservedIPs.
+        /// </summary>
+        public IEnumerator<NetworkReservedIPListResponse.ReservedIP> GetEnumerator()
+        {
+            return this.ReservedIPs.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of ReservedIPs.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// A reserved IP associated with your subscription.
+        /// </summary>
+        public partial class ReservedIP
+        {
+            private string _address;
+            
+            /// <summary>
+            /// The IP address of the reserved IP.
+            /// </summary>
+            public string Address
+            {
+                get { return this._address; }
+                set { this._address = value; }
+            }
+            
+            private string _affinityGroup;
+            
+            /// <summary>
+            /// An affinity group, which indirectly refers to the location
+            /// where the virtual network exists.
+            /// </summary>
+            public string AffinityGroup
+            {
+                get { return this._affinityGroup; }
+                set { this._affinityGroup = value; }
+            }
+            
+            private string _deploymentName;
+            
+            /// <summary>
+            /// The name of the deployment the IP belongs to, if being used.
+            /// </summary>
+            public string DeploymentName
+            {
+                get { return this._deploymentName; }
+                set { this._deploymentName = value; }
+            }
+            
+            private string _id;
+            
+            /// <summary>
+            /// A unique string identifier that represents the reserved IP.
+            /// </summary>
+            public string Id
+            {
+                get { return this._id; }
+                set { this._id = value; }
+            }
+            
+            private bool _inUse;
+            
+            /// <summary>
+            /// The indicator of whether the reserved IP is being used.
+            /// </summary>
+            public bool InUse
+            {
+                get { return this._inUse; }
+                set { this._inUse = value; }
+            }
+            
+            private string _label;
+            
+            /// <summary>
+            /// The friendly identifier of the site.
+            /// </summary>
+            public string Label
+            {
+                get { return this._label; }
+                set { this._label = value; }
+            }
+            
+            private string _name;
+            
+            /// <summary>
+            /// Name of the reserved IP.
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
+            private string _serviceName;
+            
+            /// <summary>
+            /// The name of the service the IP belongs to, if being used.
+            /// </summary>
+            public string ServiceName
+            {
+                get { return this._serviceName; }
+                set { this._serviceName = value; }
+            }
+            
+            private string _state;
+            
+            /// <summary>
+            /// Current status of the reserved IP. (Created, Creating,
+            /// Updating, Deleting, Unavailable)
+            /// </summary>
+            public string State
+            {
+                get { return this._state; }
+                set { this._state = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the ReservedIP class.
+            /// </summary>
+            public ReservedIP()
+            {
+            }
+        }
+    }
+    
+    /// <summary>
     /// Parameters supplied to the Set Network Configuration operation.
     /// </summary>
     public partial class NetworkSetConfigurationParameters
@@ -1468,6 +1806,19 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         /// The asynchronous request failed.
         /// </summary>
         Failed = 2,
+    }
+    
+    public static partial class ReservedIPState
+    {
+        public const string Created = "Created";
+        
+        public const string Creating = "Creating";
+        
+        public const string Updating = "Updating";
+        
+        public const string Deleting = "Deleting";
+        
+        public const string Unavailable = "Unavailable";
     }
     
     /// <summary>
@@ -1634,6 +1985,11 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         }
         
         INetworkOperations Networks
+        {
+            get; 
+        }
+        
+        IReservedIPOperations ReservedIPs
         {
             get; 
         }
@@ -1809,6 +2165,13 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             get { return this._networks; }
         }
         
+        private IReservedIPOperations _reservedIPs;
+        
+        public virtual IReservedIPOperations ReservedIPs
+        {
+            get { return this._reservedIPs; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkManagementClient
         /// class.
@@ -1819,6 +2182,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             this._clientRootCertificates = new ClientRootCertificateOperations(this);
             this._gateways = new GatewayOperations(this);
             this._networks = new NetworkOperations(this);
+            this._reservedIPs = new ReservedIPOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -1938,7 +2302,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2525,7 +2889,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2665,7 +3029,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2800,7 +3164,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2915,7 +3279,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4681,7 +5045,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4837,7 +5201,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4978,7 +5342,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5105,7 +5469,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5256,7 +5620,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5756,7 +6120,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5898,7 +6262,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6082,7 +6446,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6204,7 +6568,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6374,7 +6738,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6500,7 +6864,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6696,7 +7060,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7297,7 +7661,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7404,7 +7768,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7510,7 +7874,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -7854,6 +8218,1294 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 if (client != null && shouldTrace)
                 {
                     client.Dispose();
+                }
+            }
+        }
+    }
+    
+    public partial interface IReservedIPOperations
+    {
+        /// <summary>
+        /// Preview Only. The Create Reserved IP operation creates a reserved
+        /// IP from your the subscription.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<VirtualNetworkOperationStatusResponse> BeginCreatingAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Preview Only. The Delete Reserved IP operation removes a reserved
+        /// IP from your the subscription.
+        /// </summary>
+        /// <param name='ipName'>
+        /// The name of the reserved IP.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> BeginDeletingAsync(string ipName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Create Reserved IP operation creates a reserved IP from your
+        /// the subscription.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<VirtualNetworkOperationStatusResponse> CreateAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Delete Reserved IP operation removes a reserved IP from your
+        /// the subscription.
+        /// </summary>
+        /// <param name='ipName'>
+        /// The name of the reserved IP.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<VirtualNetworkOperationStatusResponse> DeleteAsync(string ipName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Preview Only. The Get Reserved IP operation retrieves the details
+        /// for virtual IP reserved for the subscription.
+        /// </summary>
+        /// <param name='ipName'>
+        /// The name of the reserved IP to retrieve
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Preview Only. A reserved IP associated with your subscription.
+        /// </returns>
+        Task<NetworkReservedIPGetResponse> GetAsync(string ipName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Preview Only. The List Reserved IP operation retrieves the virtual
+        /// IPs reserved for the subscription.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Preview Only. The response structure for the Server List operation
+        /// </returns>
+        Task<NetworkReservedIPListResponse> ListAsync(CancellationToken cancellationToken);
+    }
+    
+    public static partial class ReservedIPOperationsExtensions
+    {
+        /// <summary>
+        /// Preview Only. The Create Reserved IP operation creates a reserved
+        /// IP from your the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static VirtualNetworkOperationStatusResponse BeginCreating(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        {
+            try
+            {
+                return operations.BeginCreatingAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Preview Only. The Create Reserved IP operation creates a reserved
+        /// IP from your the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<VirtualNetworkOperationStatusResponse> BeginCreatingAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        {
+            return operations.BeginCreatingAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Preview Only. The Delete Reserved IP operation removes a reserved
+        /// IP from your the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// The name of the reserved IP.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginDeleting(this IReservedIPOperations operations, string ipName)
+        {
+            try
+            {
+                return operations.BeginDeletingAsync(ipName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Preview Only. The Delete Reserved IP operation removes a reserved
+        /// IP from your the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// The name of the reserved IP.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginDeletingAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.BeginDeletingAsync(ipName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Create Reserved IP operation creates a reserved IP from your
+        /// the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static VirtualNetworkOperationStatusResponse Create(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        {
+            try
+            {
+                return operations.CreateAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Create Reserved IP operation creates a reserved IP from your
+        /// the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<VirtualNetworkOperationStatusResponse> CreateAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        {
+            return operations.CreateAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Delete Reserved IP operation removes a reserved IP from your
+        /// the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// The name of the reserved IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static VirtualNetworkOperationStatusResponse Delete(this IReservedIPOperations operations, string ipName)
+        {
+            try
+            {
+                return operations.DeleteAsync(ipName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Delete Reserved IP operation removes a reserved IP from your
+        /// the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// The name of the reserved IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<VirtualNetworkOperationStatusResponse> DeleteAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.DeleteAsync(ipName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Preview Only. The Get Reserved IP operation retrieves the details
+        /// for virtual IP reserved for the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// The name of the reserved IP to retrieve
+        /// </param>
+        /// <returns>
+        /// Preview Only. A reserved IP associated with your subscription.
+        /// </returns>
+        public static NetworkReservedIPGetResponse Get(this IReservedIPOperations operations, string ipName)
+        {
+            try
+            {
+                return operations.GetAsync(ipName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Preview Only. The Get Reserved IP operation retrieves the details
+        /// for virtual IP reserved for the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <param name='ipName'>
+        /// The name of the reserved IP to retrieve
+        /// </param>
+        /// <returns>
+        /// Preview Only. A reserved IP associated with your subscription.
+        /// </returns>
+        public static Task<NetworkReservedIPGetResponse> GetAsync(this IReservedIPOperations operations, string ipName)
+        {
+            return operations.GetAsync(ipName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Preview Only. The List Reserved IP operation retrieves the virtual
+        /// IPs reserved for the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <returns>
+        /// Preview Only. The response structure for the Server List operation
+        /// </returns>
+        public static NetworkReservedIPListResponse List(this IReservedIPOperations operations)
+        {
+            try
+            {
+                return operations.ListAsync().Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Preview Only. The List Reserved IP operation retrieves the virtual
+        /// IPs reserved for the subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// </param>
+        /// <returns>
+        /// Preview Only. The response structure for the Server List operation
+        /// </returns>
+        public static Task<NetworkReservedIPListResponse> ListAsync(this IReservedIPOperations operations)
+        {
+            return operations.ListAsync(CancellationToken.None);
+        }
+    }
+    
+    internal partial class ReservedIPOperations : IServiceOperations<VirtualNetworkManagementClient>, IReservedIPOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the ReservedIPOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal ReservedIPOperations(VirtualNetworkManagementClient client)
+        {
+            this._client = client;
+        }
+        
+        private VirtualNetworkManagementClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the
+        /// Microsoft.WindowsAzure.Management.VirtualNetworks.VirtualNetworkManagementClient.
+        /// </summary>
+        public VirtualNetworkManagementClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <summary>
+        /// Preview Only. The Create Reserved IP operation creates a reserved
+        /// IP from your the subscription.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<VirtualNetworkOperationStatusResponse> BeginCreatingAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement reservedIPElement = new XElement(XName.Get("ReservedIP", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(reservedIPElement);
+                
+                if (parameters.Name != null)
+                {
+                    XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                    nameElement.Value = parameters.Name;
+                    reservedIPElement.Add(nameElement);
+                }
+                
+                if (parameters.Label != null)
+                {
+                    XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                    labelElement.Value = parameters.Label;
+                    reservedIPElement.Add(labelElement);
+                }
+                
+                if (parameters.AffinityGroup != null)
+                {
+                    XElement affinityGroupElement = new XElement(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                    affinityGroupElement.Value = parameters.AffinityGroup;
+                    reservedIPElement.Add(affinityGroupElement);
+                }
+                
+                if (parameters.ServiceName != null)
+                {
+                    XElement serviceNameElement = new XElement(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                    serviceNameElement.Value = parameters.ServiceName;
+                    reservedIPElement.Add(serviceNameElement);
+                }
+                
+                if (parameters.DeploymentName != null)
+                {
+                    XElement deploymentNameElement = new XElement(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                    deploymentNameElement.Value = parameters.DeploymentName;
+                    reservedIPElement.Add(deploymentNameElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    VirtualNetworkOperationStatusResponse result = new VirtualNetworkOperationStatusResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Preview Only. The Delete Reserved IP operation removes a reserved
+        /// IP from your the subscription.
+        /// </summary>
+        /// <param name='ipName'>
+        /// The name of the reserved IP.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> BeginDeletingAsync(string ipName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (ipName == null)
+            {
+                throw new ArgumentNullException("ipName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("ipName", ipName);
+                Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Create Reserved IP operation creates a reserved IP from your
+        /// the subscription.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<VirtualNetworkOperationStatusResponse> CreateAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            VirtualNetworkManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                VirtualNetworkOperationStatusResponse response = await client.ReservedIPs.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                VirtualNetworkOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                while ((result.Status != OperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Delete Reserved IP operation removes a reserved IP from your
+        /// the subscription.
+        /// </summary>
+        /// <param name='ipName'>
+        /// The name of the reserved IP.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<VirtualNetworkOperationStatusResponse> DeleteAsync(string ipName, CancellationToken cancellationToken)
+        {
+            VirtualNetworkManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("ipName", ipName);
+                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationResponse response = await client.ReservedIPs.BeginDeletingAsync(ipName, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                VirtualNetworkOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                while ((result.Status != OperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Preview Only. The Get Reserved IP operation retrieves the details
+        /// for virtual IP reserved for the subscription.
+        /// </summary>
+        /// <param name='ipName'>
+        /// The name of the reserved IP to retrieve
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Preview Only. A reserved IP associated with your subscription.
+        /// </returns>
+        public async Task<NetworkReservedIPGetResponse> GetAsync(string ipName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (ipName == null)
+            {
+                throw new ArgumentNullException("ipName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("ipName", ipName);
+                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    NetworkReservedIPGetResponse result = new NetworkReservedIPGetResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement reservedIPElement = responseDoc.Element(XName.Get("ReservedIP", "http://schemas.microsoft.com/windowsazure"));
+                    if (reservedIPElement != null)
+                    {
+                        XElement nameElement = reservedIPElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            result.Name = nameInstance;
+                        }
+                        
+                        XElement addressElement = reservedIPElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
+                        if (addressElement != null)
+                        {
+                            string addressInstance = addressElement.Value;
+                            result.Address = addressInstance;
+                        }
+                        
+                        XElement idElement = reservedIPElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
+                        if (idElement != null)
+                        {
+                            string idInstance = idElement.Value;
+                            result.Id = idInstance;
+                        }
+                        
+                        XElement labelElement = reservedIPElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                        if (labelElement != null)
+                        {
+                            string labelInstance = labelElement.Value;
+                            result.Label = labelInstance;
+                        }
+                        
+                        XElement affinityGroupElement = reservedIPElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                        if (affinityGroupElement != null)
+                        {
+                            string affinityGroupInstance = affinityGroupElement.Value;
+                            result.AffinityGroup = affinityGroupInstance;
+                        }
+                        
+                        XElement stateElement = reservedIPElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
+                        {
+                            string stateInstance = stateElement.Value;
+                            result.State = stateInstance;
+                        }
+                        
+                        XElement inUseElement = reservedIPElement.Element(XName.Get("InUse", "http://schemas.microsoft.com/windowsazure"));
+                        if (inUseElement != null)
+                        {
+                            bool inUseInstance = bool.Parse(inUseElement.Value);
+                            result.InUse = inUseInstance;
+                        }
+                        
+                        XElement serviceNameElement = reservedIPElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                        if (serviceNameElement != null)
+                        {
+                            string serviceNameInstance = serviceNameElement.Value;
+                            result.ServiceName = serviceNameInstance;
+                        }
+                        
+                        XElement deploymentNameElement = reservedIPElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                        if (deploymentNameElement != null)
+                        {
+                            string deploymentNameInstance = deploymentNameElement.Value;
+                            result.DeploymentName = deploymentNameInstance;
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Preview Only. The List Reserved IP operation retrieves the virtual
+        /// IPs reserved for the subscription.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Preview Only. The response structure for the Server List operation
+        /// </returns>
+        public async Task<NetworkReservedIPListResponse> ListAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    NetworkReservedIPListResponse result = new NetworkReservedIPListResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement reservedIPsSequenceElement = responseDoc.Element(XName.Get("ReservedIPs", "http://schemas.microsoft.com/windowsazure"));
+                    if (reservedIPsSequenceElement != null)
+                    {
+                        foreach (XElement reservedIPsElement in reservedIPsSequenceElement.Elements(XName.Get("ReservedIP", "http://schemas.microsoft.com/windowsazure")))
+                        {
+                            NetworkReservedIPListResponse.ReservedIP reservedIPInstance = new NetworkReservedIPListResponse.ReservedIP();
+                            result.ReservedIPs.Add(reservedIPInstance);
+                            
+                            XElement nameElement = reservedIPsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                reservedIPInstance.Name = nameInstance;
+                            }
+                            
+                            XElement addressElement = reservedIPsElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
+                            if (addressElement != null)
+                            {
+                                string addressInstance = addressElement.Value;
+                                reservedIPInstance.Address = addressInstance;
+                            }
+                            
+                            XElement idElement = reservedIPsElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                reservedIPInstance.Id = idInstance;
+                            }
+                            
+                            XElement labelElement = reservedIPsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
+                            {
+                                string labelInstance = labelElement.Value;
+                                reservedIPInstance.Label = labelInstance;
+                            }
+                            
+                            XElement affinityGroupElement = reservedIPsElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                            if (affinityGroupElement != null)
+                            {
+                                string affinityGroupInstance = affinityGroupElement.Value;
+                                reservedIPInstance.AffinityGroup = affinityGroupInstance;
+                            }
+                            
+                            XElement stateElement = reservedIPsElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                reservedIPInstance.State = stateInstance;
+                            }
+                            
+                            XElement inUseElement = reservedIPsElement.Element(XName.Get("InUse", "http://schemas.microsoft.com/windowsazure"));
+                            if (inUseElement != null)
+                            {
+                                bool inUseInstance = bool.Parse(inUseElement.Value);
+                                reservedIPInstance.InUse = inUseInstance;
+                            }
+                            
+                            XElement serviceNameElement = reservedIPsElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                            if (serviceNameElement != null)
+                            {
+                                string serviceNameInstance = serviceNameElement.Value;
+                                reservedIPInstance.ServiceName = serviceNameInstance;
+                            }
+                            
+                            XElement deploymentNameElement = reservedIPsElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                            if (deploymentNameElement != null)
+                            {
+                                string deploymentNameInstance = deploymentNameElement.Value;
+                                reservedIPInstance.DeploymentName = deploymentNameInstance;
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
                 }
             }
         }
