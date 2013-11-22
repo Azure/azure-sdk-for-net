@@ -19,15 +19,19 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
     - Insert/Peek Queue Messages
     - Advanced Queue Operations
 - Management Libraries (Preview)
-    - Compute
-    - Infrastructure
-    - Monitoring Services
-    - Scheduler
-    - Storage
-    - Virtual Networks
+  - Compute
+  - Infrastructure
+  - Monitoring Services
+  - Scheduler
+  - Storage
+  - Virtual Networks
 - Media Services
 
-    > Available in separate [Media Services repository](http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client)
+    > Available in the separate [Media Services repository](http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client)
+
+- Mobile Services
+
+    > Available in the separate [Mobile Services repository](https://github.com/WindowsAzure/azure-mobile-services)
 
 # Getting started
 
