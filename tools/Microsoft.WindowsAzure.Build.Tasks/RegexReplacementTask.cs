@@ -36,6 +36,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         public bool LogReplacement { get; set; }
 
+        /// <summary>
+        /// Gets or sets the optional output directory. If a OutputDir value is
+        /// specified, the original file contents will not be overwritten.
+        /// </summary>
+        public string OutputDir { get; set; }
+
         public override bool Execute()
         {
             try
@@ -50,12 +56,22 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         Find, 
                         Replace);
 
-                    File.WriteAllText(fileName, content, Encoding.UTF8);
-                    File.SetAttributes(fileName, oldAttributes);
+                    string outputFileName = fileName;
+                    string message = null;
+                    if (!string.IsNullOrEmpty(OutputDir))
+                    {
+                        string path = Path.GetDirectoryName(fileName);
+                        path = Path.Combine(path, OutputDir);
+                        outputFileName = Path.Combine(path, Path.GetFileName(fileName));
+                        message = " saved as " + outputFileName;
+                    }
+
+                    File.WriteAllText(outputFileName, content, Encoding.UTF8);
+                    File.SetAttributes(outputFileName, oldAttributes);
 
                     if (LogReplacement)
                     {
-                        Log.LogMessage("Processed regular expression replacement in file {0}", fileName);
+                        Log.LogMessage("Processed regular expression replacement in file {0}{1}", fileName, message);
                     }
                 }
 

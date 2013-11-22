@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  NuGet Targets - Windows Azure SDK for .NET
+  -->
+
+  <!--
+  Import all nested NuGet property projects, named as *.nuget.proj to
+  differentiate from the .nuproj system (which we may want to move to in the
+  future)
+  -->
+  <Import Project="*\**\*.nuget.proj"/>
+
+  <PropertyGroup>
+    <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
+  </PropertyGroup>
+
+  <!--
+
+  Windows Azure SDK for .NET - NuGet Package Guide
+  - - -
+
+  The NuGet Package ID is the Include="..." portion of the package
+  authoring work.
+
+  Required elements:
+  - - -
+
+  PackageVersion
+
+    A NuGet version. We follow SemVer. Learn more by checking
+    this page out:
+    
+        http://docs.nuget.org/docs/reference/versioning
+
+    This is the version that will be used for the package.
+
+    Anything after a number indicates a PRE-RELEASE package 
+    that is treated differently by NuGet.
+
+    Common suffixes then include -preview for Windows Azure.
+
+    Nightly and one-off builds that may be published to an
+    alternative NuGet server such as MyGet may override the
+    BuildVersionSuffix property to append an additional 
+    string value to the version.
+
+  Optional elements:
+  - - -
+
+  Publish
+
+    true/false
+
+    A value indicating whether to include the package in the
+    publishing process to a NuGet server.
+
+    True by default, this optional element can be used to
+    keep built packages off of NuGet. This can be used for
+    management libraries that are only used as internal 
+    dependencies today for projects like PowerShell.
+
+    As components reach maturity for a public Preview for
+    developers, this should then be flipped to share the 
+    goods with our customers.
+
+  SkipSymbolSourcePackage
+
+    true/false
+
+    Designed for packages that are for grouping only and do
+    not contain libraries, when true this property will make
+    sure that the -Symbols property is not passed to NuGet
+    while packing the project.
+
+    Also, we won't attempt to push a symbol/source package to
+    the cloud for debugging use.
+  -->
+
+  <ItemGroup>
+    <NuSpecReplacementTokens Include="BASELINE_RELEASE_NOTES">
+      <Value>$(BaselineReleaseNotes)</Value>
+    </NuSpecReplacementTokens>
+  </ItemGroup>
+  <PropertyGroup>
+    <BaselineReleaseNotesReplacementToken>__BASELINE_RELEASE_NOTES__</BaselineReleaseNotesReplacementToken>
+  </PropertyGroup>
+
+  <UsingTask AssemblyFile="..\tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
+  <Import Project="..\tools\Microsoft.WindowsAzure.Build.msbuild" />
+
+  <Target Name="BuildDynamicNuSpecs"
+          DependsOnTargets="GetGeneratedBuildDate">
+
+    <ItemGroup>
+      <NuspecFilesToUpdate Include="%(SdkNuGetPackage.Folder)%(SdkNuGetPackage.Identity).nuspec" />
+    </ItemGroup>
+
+    <Error Text="NuGet specification %(NuspecFilesToUpdate.Identity) not found."
+           Condition="!Exists(%(NuspecFilesToUpdate.Identity))" />
+
+    <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
+                          OutputDir="bin\$(Configuration)\"
+                          Find="__%(NuSpecReplacementTokens.Identity)__"
+                          Replace="%(NuSpecReplacementTokens.Value)"
+                          LogReplacement="true" />
+  </Target>
+
+  <Target Name="ListPackages">
+    <Message Text="%(SdkNuGetPackage.Identity) %(SdkNuGetPackage.PackageVersion) %(SdkNuGetPackage.Folder)" />
+  </Target>
+
+  <Target Name="EnsureBinariesFolderExists">
+    <MakeDir Directories="binaries" Condition="!Exists('binaries')" />
+    <RemoveDir Directories="binaries\packages" Condition="Exists('binaries\packages')" ContinueOnError="true" />
+    <MakeDir Directories="binaries\packages" Condition="!Exists('binaries\packages')" />
+  </Target>
+
+  <!--
+  Build NuGet packages
+  -->
+  <Target Name="BuildPackages"
+          DependsOnTargets="EnsureBinariesFolderExists">
+
+    <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
+    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' "
+          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;src\PackageSpecs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
+
+    <Message Text="Generating NuGet packages without symbol + source packages" Importance="high" />
+    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' "
+          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;src\PackageSpecs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
+  </Target>
+
+  <Target Name="PublishPackagesOnly">
+    <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
+
+    <PropertyGroup>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' "></ActualSource>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
+    </PropertyGroup>
+
+    <Message Importance="high" Text="Publishing NuGet packages to the cloud at $(NuGetPublishingSource)" />
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).nupkg&quot; $(NuGetKey)$(ActualSource)"
+          Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
+
+    <Message Importance="high" Text="Publishing NuGet symbol &amp; source packages to the cloud at $(NuGetSymbolPublishingSource)"
+             Condition=" $(NuGetSymbolPublishingSource) != '' "/>
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).Symbols.nupkg&quot; $(NuGetKey) -Source $(NuGetSymbolPublishingSource)"
+          Condition=" $(NuGetSymbolPublishingSource) != '' And '%(SdkNuGetPackage.Publish)' != 'false' And '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' And '$(PublishSymbolSourcePackages)' == 'true' "
+          ContinueOnError="true" />
+
+    <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
+             Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
+
+    <Warning Text="Symbol/source packages are not being pushed. The PublishSymbolSourcePackages property is not set to true."
+             Condition=" '$(PublishSymbolSourcePackages)' != 'true' " />
+  </Target>
+
+</Project>
