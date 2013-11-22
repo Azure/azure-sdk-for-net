@@ -281,7 +281,7 @@ using (ComputeManagementClient client =
         new DeploymentCreateParameters
         {
             Name = cloudServiceName + "Prod",
-			Label = cloudServiceName + "Prod",
+            Label = cloudServiceName + "Prod",
             PackageUri = blob.Uri,
             Configuration = File.ReadAllText("MyCloudService.cscfg"),
             StartDeployment = true
