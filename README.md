@@ -228,7 +228,7 @@ using (StorageManagementClient client =
 
     string connectionString = string.Format(
         CultureInfo.InvariantCulture,
-        "AcountName={0};AccountKey={1}",
+        "DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}",
         storageAccountName, keys.SecondaryKey);
 
     return connectionString;
@@ -281,6 +281,7 @@ using (ComputeManagementClient client =
         new DeploymentCreateParameters
         {
             Name = cloudServiceName + "Prod",
+			Label = cloudServiceName + "Prod",
             PackageUri = blob.Uri,
             Configuration = File.ReadAllText("MyCloudService.cscfg"),
             StartDeployment = true
