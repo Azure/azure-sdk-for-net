@@ -21,8 +21,8 @@
     <Compile Include="WebSiteManagementClient.Customization.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.WindowsAzure.Management.WebSites.nuspec" />
     <None Include="packages.config" />
+    <None Include="Microsoft.WindowsAzure.Management.WebSites.nuspec" />
     <None Include="Microsoft.WindowsAzure.Management.WebSites.nuget.proj" />
   </ItemGroup>
   <ItemGroup>

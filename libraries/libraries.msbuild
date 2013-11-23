@@ -10,7 +10,7 @@
   <!--
   NuGet Packages
   -->
-  <Import Project="$(ProductSourceFolder)\nuget.targets" />
+  <Import Project="nuget.targets" />
 
   <!--
   Windows Azure Management Libraries SDK Builder Guide

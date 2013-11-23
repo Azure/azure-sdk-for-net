@@ -24,8 +24,8 @@
     <Compile Include="SchedulerManagementClient.Customization.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Microsoft.WindowsAzure.Management.Scheduler.nuspec" />
     <None Include="packages.config" />
+    <None Include="Microsoft.WindowsAzure.Management.Scheduler.nuspec" />
     <None Include="Microsoft.WindowsAzure.Management.Scheduler.nuget.proj" />
   </ItemGroup>
   <ItemGroup>

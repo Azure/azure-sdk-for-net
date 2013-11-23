@@ -29,13 +29,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{D93C94DB-270A-46A0-AF68-C58B99B9A4D2}"
 	ProjectSection(SolutionItems) = preProject
 		libraries.msbuild = libraries.msbuild
-		src\library.props = src\library.props
 		src\library.targets = src\library.targets
-		nuget.targets = nuget.targets
-		src\references.net40.props = src\references.net40.props
-		src\references.net45.props = src\references.net45.props
-		src\references.portable.props = src\references.portable.props
-		src\references.props = src\references.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}"
@@ -54,6 +48,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{EAC2DE24-42C
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
 		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "product", "product", "{CECF3E21-0555-4C3C-B736-547D95A6E434}"
+	ProjectSection(SolutionItems) = preProject
+		src\Microsoft.WindowsAzure.Management.Libraries.nuget.proj = src\Microsoft.WindowsAzure.Management.Libraries.nuget.proj
+		src\Microsoft.WindowsAzure.Management.Libraries.nuspec = src\Microsoft.WindowsAzure.Management.Libraries.nuspec
 	EndProjectSection
 EndProject
 Global
