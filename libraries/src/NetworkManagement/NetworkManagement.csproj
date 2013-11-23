@@ -21,7 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.WindowsAzure.Management.VirtualNetworks.nuspec" />
-    <None Include="NetworkManagement.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.NetworkManagement.nuget.proj" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Compute.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.Compute.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Management.Compute.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>

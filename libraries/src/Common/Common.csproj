@@ -15,8 +15,9 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <None Include="Common.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Common.Dependencies.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Common.Dependencies.nuspec" />
+    <None Include="Microsoft.WindowsAzure.Common.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Common.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -69,9 +70,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Common.Dependencies.nuget.proj" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />

@@ -23,7 +23,7 @@
   <ItemGroup>
     <None Include="Microsoft.WindowsAzure.Management.WebSites.nuspec" />
     <None Include="packages.config" />
-    <None Include="WebSiteManagement.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.WebSites.nuget.proj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

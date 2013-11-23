@@ -26,7 +26,7 @@
   <ItemGroup>
     <None Include="Microsoft.WindowsAzure.Management.Scheduler.nuspec" />
     <None Include="packages.config" />
-    <None Include="Scheduler.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.Scheduler.nuget.proj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

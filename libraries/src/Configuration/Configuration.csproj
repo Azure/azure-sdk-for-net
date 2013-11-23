@@ -65,7 +65,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Configuration.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.ConfigurationManager.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.ConfigurationManager.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

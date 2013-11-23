@@ -27,7 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.WindowsAzure.Management.Monitoring.nuspec" />
-    <None Include="Monitoring.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.Monitoring.nuget.proj" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
