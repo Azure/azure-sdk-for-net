@@ -32,12 +32,12 @@
   </PropertyGroup>
 
   <!--
-  References for standardized builds
-  Portable: Visual Studio view
-  Dynamic: Build time
+  References for standardized builds during both msbuild & Visual Studio builds
   -->
   <Import Condition=" '$(WindowsAzureCurrentConfiguration)' != '' And '$(BuildingInsideVisualStudio)' != 'true' " Project="references.props" />
-  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' != '' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.portable.props" />
+
+  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.portable.props" />
+  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'net45' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.net45.props" />
 
   <!--
   Defining defaults depending on development or official build:
