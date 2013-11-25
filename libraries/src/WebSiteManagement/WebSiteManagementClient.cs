@@ -517,6 +517,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     }
     
     /// <summary>
+    /// The remote debugging version.
+    /// </summary>
+    public enum RemoteDebuggingVersion
+    {
+        /// <summary>
+        /// Visual Studio 2012.
+        /// </summary>
+        VS2012 = 0,
+        
+        /// <summary>
+        /// Visual Studio 2013.
+        /// </summary>
+        VS2013 = 1,
+    }
+    
+    /// <summary>
     /// Parameters supplied to the Create Server Farm operation.
     /// </summary>
     public partial class ServerFarmCreateParameters
@@ -1821,15 +1837,26 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._defaultDocuments = value; }
         }
         
-        private bool _detailedErrorLoggingEnabled;
+        private bool? _detailedErrorLoggingEnabled;
         
         /// <summary>
         /// True if detailed error logging is enabled; otherwise, false.
         /// </summary>
-        public bool DetailedErrorLoggingEnabled
+        public bool? DetailedErrorLoggingEnabled
         {
             get { return this._detailedErrorLoggingEnabled; }
             set { this._detailedErrorLoggingEnabled = value; }
+        }
+        
+        private string _documentRoot;
+        
+        /// <summary>
+        /// The document root
+        /// </summary>
+        public string DocumentRoot
+        {
+            get { return this._documentRoot; }
+            set { this._documentRoot = value; }
         }
         
         private IList<WebSiteGetConfigurationResponse.HandlerMapping> _handlerMappings;
@@ -1844,23 +1871,34 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._handlerMappings = value; }
         }
         
-        private bool _httpLoggingEnabled;
+        private bool? _httpLoggingEnabled;
         
         /// <summary>
         /// True if HTTP error logging is enabled; otherwise, false.
         /// </summary>
-        public bool HttpLoggingEnabled
+        public bool? HttpLoggingEnabled
         {
             get { return this._httpLoggingEnabled; }
             set { this._httpLoggingEnabled = value; }
         }
         
-        private ManagedPipelineMode _managedPipelineMode;
+        private int? _logsDirectorySizeLimit;
+        
+        /// <summary>
+        /// The limit of the logs directory
+        /// </summary>
+        public int? LogsDirectorySizeLimit
+        {
+            get { return this._logsDirectorySizeLimit; }
+            set { this._logsDirectorySizeLimit = value; }
+        }
+        
+        private Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? _managedPipelineMode;
         
         /// <summary>
         /// Managed pipeline modes.
         /// </summary>
-        public ManagedPipelineMode ManagedPipelineMode
+        public Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? ManagedPipelineMode
         {
             get { return this._managedPipelineMode; }
             set { this._managedPipelineMode = value; }
@@ -1888,7 +1926,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._netFrameworkVersion = value; }
         }
         
-        private int _numberOfWorkers;
+        private int? _numberOfWorkers;
         
         /// <summary>
         /// The number of web workers allotted to the web site. If the site
@@ -1896,7 +1934,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// value can range from 1 through 6. If the site mode is Standard,
         /// this value can range from 1 through 10.
         /// </summary>
-        public int NumberOfWorkers
+        public int? NumberOfWorkers
         {
             get { return this._numberOfWorkers; }
             set { this._numberOfWorkers = value; }
@@ -1938,34 +1976,34 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._publishingUserName = value; }
         }
         
-        private bool _remoteDebuggingEnabled;
+        private bool? _remoteDebuggingEnabled;
         
         /// <summary>
         /// True remote debugging is enabled; otherwise, false.
         /// </summary>
-        public bool RemoteDebuggingEnabled
+        public bool? RemoteDebuggingEnabled
         {
             get { return this._remoteDebuggingEnabled; }
             set { this._remoteDebuggingEnabled = value; }
         }
         
-        private string _remoteDebuggingVersion;
+        private RemoteDebuggingVersion _remoteDebuggingVersion;
         
         /// <summary>
         /// True remote debugging version.
         /// </summary>
-        public string RemoteDebuggingVersion
+        public RemoteDebuggingVersion RemoteDebuggingVersion
         {
             get { return this._remoteDebuggingVersion; }
             set { this._remoteDebuggingVersion = value; }
         }
         
-        private bool _requestTracingEnabled;
+        private bool? _requestTracingEnabled;
         
         /// <summary>
         /// True if request tracing is enabled; otherwise, false.
         /// </summary>
-        public bool RequestTracingEnabled
+        public bool? RequestTracingEnabled
         {
             get { return this._requestTracingEnabled; }
             set { this._requestTracingEnabled = value; }
@@ -1995,23 +2033,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._scmType = value; }
         }
         
-        private bool _use32BitWorkerProcess;
+        private bool? _use32BitWorkerProcess;
         
         /// <summary>
         /// True if 32-bit mode is enabled; otherwise, false.
         /// </summary>
-        public bool Use32BitWorkerProcess
+        public bool? Use32BitWorkerProcess
         {
             get { return this._use32BitWorkerProcess; }
             set { this._use32BitWorkerProcess = value; }
         }
         
-        private bool _webSocketsEnabled;
+        private bool? _webSocketsEnabled;
         
         /// <summary>
         /// True if Web Sockets are enabled; otherwise, false.
         /// </summary>
-        public bool WebSocketsEnabled
+        public bool? WebSocketsEnabled
         {
             get { return this._webSocketsEnabled; }
             set { this._webSocketsEnabled = value; }
@@ -3089,6 +3127,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._detailedErrorLoggingEnabled = value; }
         }
         
+        private string _documentRoot;
+        
+        /// <summary>
+        /// The document root
+        /// </summary>
+        public string DocumentRoot
+        {
+            get { return this._documentRoot; }
+            set { this._documentRoot = value; }
+        }
+        
         private IList<WebSiteUpdateConfigurationParameters.HandlerMapping> _handlerMappings;
         
         /// <summary>
@@ -3110,6 +3159,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._httpLoggingEnabled; }
             set { this._httpLoggingEnabled = value; }
+        }
+        
+        private int? _logsDirectorySizeLimit;
+        
+        /// <summary>
+        /// The limit of the logs directory
+        /// </summary>
+        public int? LogsDirectorySizeLimit
+        {
+            get { return this._logsDirectorySizeLimit; }
+            set { this._logsDirectorySizeLimit = value; }
         }
         
         private Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? _managedPipelineMode;
@@ -3206,12 +3266,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._remoteDebuggingEnabled = value; }
         }
         
-        private string _remoteDebuggingVersion;
+        private RemoteDebuggingVersion _remoteDebuggingVersion;
         
         /// <summary>
         /// True remote debugging version.
         /// </summary>
-        public string RemoteDebuggingVersion
+        public RemoteDebuggingVersion RemoteDebuggingVersion
         {
             get { return this._remoteDebuggingVersion; }
             set { this._remoteDebuggingVersion = value; }
@@ -9329,10 +9389,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement detailedErrorLoggingEnabledElement = siteConfigElement.Element(XName.Get("DetailedErrorLoggingEnabled", "http://schemas.microsoft.com/windowsazure"));
-                        if (detailedErrorLoggingEnabledElement != null)
+                        if (detailedErrorLoggingEnabledElement != null && string.IsNullOrEmpty(detailedErrorLoggingEnabledElement.Value) == false)
                         {
                             bool detailedErrorLoggingEnabledInstance = bool.Parse(detailedErrorLoggingEnabledElement.Value);
                             result.DetailedErrorLoggingEnabled = detailedErrorLoggingEnabledInstance;
+                        }
+                        
+                        XElement documentRootElement = siteConfigElement.Element(XName.Get("DocumentRoot", "http://schemas.microsoft.com/windowsazure"));
+                        if (documentRootElement != null)
+                        {
+                            string documentRootInstance = documentRootElement.Value;
+                            result.DocumentRoot = documentRootInstance;
                         }
                         
                         XElement handlerMappingsSequenceElement = siteConfigElement.Element(XName.Get("HandlerMappings", "http://schemas.microsoft.com/windowsazure"));
@@ -9367,10 +9434,24 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement httpLoggingEnabledElement = siteConfigElement.Element(XName.Get("HttpLoggingEnabled", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpLoggingEnabledElement != null)
+                        if (httpLoggingEnabledElement != null && string.IsNullOrEmpty(httpLoggingEnabledElement.Value) == false)
                         {
                             bool httpLoggingEnabledInstance = bool.Parse(httpLoggingEnabledElement.Value);
                             result.HttpLoggingEnabled = httpLoggingEnabledInstance;
+                        }
+                        
+                        XElement logsDirectorySizeLimitElement = siteConfigElement.Element(XName.Get("LogsDirectorySizeLimit", "http://schemas.microsoft.com/windowsazure"));
+                        if (logsDirectorySizeLimitElement != null && string.IsNullOrEmpty(logsDirectorySizeLimitElement.Value) == false)
+                        {
+                            int logsDirectorySizeLimitInstance = int.Parse(logsDirectorySizeLimitElement.Value, CultureInfo.InvariantCulture);
+                            result.LogsDirectorySizeLimit = logsDirectorySizeLimitInstance;
+                        }
+                        
+                        XElement managedPipelineModeElement = siteConfigElement.Element(XName.Get("ManagedPipelineMode", "http://schemas.microsoft.com/windowsazure"));
+                        if (managedPipelineModeElement != null && string.IsNullOrEmpty(managedPipelineModeElement.Value) == false)
+                        {
+                            ManagedPipelineMode managedPipelineModeInstance = (ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), managedPipelineModeElement.Value, false);
+                            result.ManagedPipelineMode = managedPipelineModeInstance;
                         }
                         
                         XElement metadataSequenceElement = siteConfigElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
@@ -9392,7 +9473,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement numberOfWorkersElement = siteConfigElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (numberOfWorkersElement != null)
+                        if (numberOfWorkersElement != null && string.IsNullOrEmpty(numberOfWorkersElement.Value) == false)
                         {
                             int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
                             result.NumberOfWorkers = numberOfWorkersInstance;
@@ -9412,15 +9493,29 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             result.PublishingPassword = publishingPasswordInstance;
                         }
                         
-                        XElement publishingUserNameElement = siteConfigElement.Element(XName.Get("PublishingUserName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishingUserNameElement != null)
+                        XElement publishingUsernameElement = siteConfigElement.Element(XName.Get("PublishingUsername", "http://schemas.microsoft.com/windowsazure"));
+                        if (publishingUsernameElement != null)
                         {
-                            string publishingUserNameInstance = publishingUserNameElement.Value;
-                            result.PublishingUserName = publishingUserNameInstance;
+                            string publishingUsernameInstance = publishingUsernameElement.Value;
+                            result.PublishingUserName = publishingUsernameInstance;
+                        }
+                        
+                        XElement remoteDebuggingEnabledElement = siteConfigElement.Element(XName.Get("RemoteDebuggingEnabled", "http://schemas.microsoft.com/windowsazure"));
+                        if (remoteDebuggingEnabledElement != null && string.IsNullOrEmpty(remoteDebuggingEnabledElement.Value) == false)
+                        {
+                            bool remoteDebuggingEnabledInstance = bool.Parse(remoteDebuggingEnabledElement.Value);
+                            result.RemoteDebuggingEnabled = remoteDebuggingEnabledInstance;
+                        }
+                        
+                        XElement remoteDebuggingVersionElement = siteConfigElement.Element(XName.Get("RemoteDebuggingVersion", "http://schemas.microsoft.com/windowsazure"));
+                        if (remoteDebuggingVersionElement != null)
+                        {
+                            RemoteDebuggingVersion remoteDebuggingVersionInstance = (RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), remoteDebuggingVersionElement.Value, false);
+                            result.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
                         }
                         
                         XElement requestTracingEnabledElement = siteConfigElement.Element(XName.Get("RequestTracingEnabled", "http://schemas.microsoft.com/windowsazure"));
-                        if (requestTracingEnabledElement != null)
+                        if (requestTracingEnabledElement != null && string.IsNullOrEmpty(requestTracingEnabledElement.Value) == false)
                         {
                             bool requestTracingEnabledInstance = bool.Parse(requestTracingEnabledElement.Value);
                             result.RequestTracingEnabled = requestTracingEnabledInstance;
@@ -9441,38 +9536,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement use32BitWorkerProcessElement = siteConfigElement.Element(XName.Get("Use32BitWorkerProcess", "http://schemas.microsoft.com/windowsazure"));
-                        if (use32BitWorkerProcessElement != null)
+                        if (use32BitWorkerProcessElement != null && string.IsNullOrEmpty(use32BitWorkerProcessElement.Value) == false)
                         {
                             bool use32BitWorkerProcessInstance = bool.Parse(use32BitWorkerProcessElement.Value);
                             result.Use32BitWorkerProcess = use32BitWorkerProcessInstance;
                         }
                         
                         XElement webSocketsEnabledElement = siteConfigElement.Element(XName.Get("WebSocketsEnabled", "http://schemas.microsoft.com/windowsazure"));
-                        if (webSocketsEnabledElement != null)
+                        if (webSocketsEnabledElement != null && string.IsNullOrEmpty(webSocketsEnabledElement.Value) == false)
                         {
                             bool webSocketsEnabledInstance = bool.Parse(webSocketsEnabledElement.Value);
                             result.WebSocketsEnabled = webSocketsEnabledInstance;
-                        }
-                        
-                        XElement remoteDebuggingEnabledElement = siteConfigElement.Element(XName.Get("RemoteDebuggingEnabled", "http://schemas.microsoft.com/windowsazure"));
-                        if (remoteDebuggingEnabledElement != null)
-                        {
-                            bool remoteDebuggingEnabledInstance = bool.Parse(remoteDebuggingEnabledElement.Value);
-                            result.RemoteDebuggingEnabled = remoteDebuggingEnabledInstance;
-                        }
-                        
-                        XElement remoteDebuggingVersionElement = siteConfigElement.Element(XName.Get("RemoteDebuggingVersion", "http://schemas.microsoft.com/windowsazure"));
-                        if (remoteDebuggingVersionElement != null)
-                        {
-                            string remoteDebuggingVersionInstance = remoteDebuggingVersionElement.Value;
-                            result.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
-                        }
-                        
-                        XElement managedPipelineModeElement = siteConfigElement.Element(XName.Get("ManagedPipelineMode", "http://schemas.microsoft.com/windowsazure"));
-                        if (managedPipelineModeElement != null)
-                        {
-                            ManagedPipelineMode managedPipelineModeInstance = (ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), managedPipelineModeElement.Value, false);
-                            result.ManagedPipelineMode = managedPipelineModeInstance;
                         }
                     }
                     
@@ -11246,6 +11320,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     siteConfigElement.Add(detailedErrorLoggingEnabledElement);
                 }
                 
+                if (parameters.DocumentRoot != null)
+                {
+                    XElement documentRootElement = new XElement(XName.Get("DocumentRoot", "http://schemas.microsoft.com/windowsazure"));
+                    documentRootElement.Value = parameters.DocumentRoot;
+                    siteConfigElement.Add(documentRootElement);
+                }
+                
                 if (parameters.HandlerMappings != null)
                 {
                     XElement handlerMappingsSequenceElement = new XElement(XName.Get("HandlerMappings", "http://schemas.microsoft.com/windowsazure"));
@@ -11283,6 +11364,20 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement httpLoggingEnabledElement = new XElement(XName.Get("HttpLoggingEnabled", "http://schemas.microsoft.com/windowsazure"));
                     httpLoggingEnabledElement.Value = parameters.HttpLoggingEnabled.ToString().ToLower();
                     siteConfigElement.Add(httpLoggingEnabledElement);
+                }
+                
+                if (parameters.LogsDirectorySizeLimit != null)
+                {
+                    XElement logsDirectorySizeLimitElement = new XElement(XName.Get("LogsDirectorySizeLimit", "http://schemas.microsoft.com/windowsazure"));
+                    logsDirectorySizeLimitElement.Value = parameters.LogsDirectorySizeLimit.ToString();
+                    siteConfigElement.Add(logsDirectorySizeLimitElement);
+                }
+                
+                if (parameters.ManagedPipelineMode != null)
+                {
+                    XElement managedPipelineModeElement = new XElement(XName.Get("ManagedPipelineMode", "http://schemas.microsoft.com/windowsazure"));
+                    managedPipelineModeElement.Value = parameters.ManagedPipelineMode.ToString();
+                    siteConfigElement.Add(managedPipelineModeElement);
                 }
                 
                 if (parameters.Metadata != null)
@@ -11341,6 +11436,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     siteConfigElement.Add(publishingUsernameElement);
                 }
                 
+                if (parameters.RemoteDebuggingEnabled != null)
+                {
+                    XElement remoteDebuggingEnabledElement = new XElement(XName.Get("RemoteDebuggingEnabled", "http://schemas.microsoft.com/windowsazure"));
+                    remoteDebuggingEnabledElement.Value = parameters.RemoteDebuggingEnabled.ToString().ToLower();
+                    siteConfigElement.Add(remoteDebuggingEnabledElement);
+                }
+                
+                XElement remoteDebuggingVersionElement = new XElement(XName.Get("RemoteDebuggingVersion", "http://schemas.microsoft.com/windowsazure"));
+                remoteDebuggingVersionElement.Value = parameters.RemoteDebuggingVersion.ToString();
+                siteConfigElement.Add(remoteDebuggingVersionElement);
+                
                 if (parameters.RequestTracingEnabled != null)
                 {
                     XElement requestTracingEnabledElement = new XElement(XName.Get("RequestTracingEnabled", "http://schemas.microsoft.com/windowsazure"));
@@ -11374,27 +11480,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement webSocketsEnabledElement = new XElement(XName.Get("WebSocketsEnabled", "http://schemas.microsoft.com/windowsazure"));
                     webSocketsEnabledElement.Value = parameters.WebSocketsEnabled.ToString().ToLower();
                     siteConfigElement.Add(webSocketsEnabledElement);
-                }
-                
-                if (parameters.RemoteDebuggingEnabled != null)
-                {
-                    XElement remoteDebuggingEnabledElement = new XElement(XName.Get("RemoteDebuggingEnabled", "http://schemas.microsoft.com/windowsazure"));
-                    remoteDebuggingEnabledElement.Value = parameters.RemoteDebuggingEnabled.ToString().ToLower();
-                    siteConfigElement.Add(remoteDebuggingEnabledElement);
-                }
-                
-                if (parameters.RemoteDebuggingVersion != null)
-                {
-                    XElement remoteDebuggingVersionElement = new XElement(XName.Get("RemoteDebuggingVersion", "http://schemas.microsoft.com/windowsazure"));
-                    remoteDebuggingVersionElement.Value = parameters.RemoteDebuggingVersion;
-                    siteConfigElement.Add(remoteDebuggingVersionElement);
-                }
-                
-                if (parameters.ManagedPipelineMode != null)
-                {
-                    XElement managedPipelineModeElement = new XElement(XName.Get("ManagedPipelineMode", "http://schemas.microsoft.com/windowsazure"));
-                    managedPipelineModeElement.Value = parameters.ManagedPipelineMode.ToString();
-                    siteConfigElement.Add(managedPipelineModeElement);
                 }
                 
                 requestContent = requestDoc.ToString();
