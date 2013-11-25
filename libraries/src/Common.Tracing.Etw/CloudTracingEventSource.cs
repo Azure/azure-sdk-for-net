@@ -20,6 +20,9 @@ using System.Net.Http;
 
 namespace Microsoft.WindowsAzure.Common.Tracing.Etw
 {
+    /// <summary>
+    /// Class that inherits from EventSource and is used as a data model for ETW events.
+    /// </summary>
     [EventSource(Name = "Microsoft-WindowsAzure")]
     internal sealed class CloudTracingEventSource : EventSource
     {
@@ -39,29 +42,34 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
             WriteEvent(2, Source, Name, Value);
         }
 
-        public void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters)
+        [Event(3, Level = EventLevel.Informational)]
+        public void Enter(string InvocationId, string Instance, string Method, string Parameters)
         {
-
+            WriteEvent(3, InvocationId, Instance, Method, Parameters);
         }
 
-        public void SendRequest(string invocationId, HttpRequestMessage request)
+        [Event(4, Level = EventLevel.Informational)]
+        public void SendRequest(string InvocationId, string Request)
         {
-
+            WriteEvent(4, InvocationId, Request);
         }
 
-        public void ReceiveResponse(string invocationId, HttpResponseMessage response)
+        [Event(5, Level = EventLevel.Informational)]
+        public void ReceiveResponse(string InvocationId, string Response)
         {
-
+            WriteEvent(5, InvocationId, Response);
         }
 
-        public void Error(string invocationId, Exception ex)
+        [Event(6, Level = EventLevel.Error)]
+        public void Error(string InvocationId, string Exception)
         {
-
+            WriteEvent(6, InvocationId, Exception);
         }
 
-        public void Exit(string invocationId, object returnValue)
+        [Event(7, Level = EventLevel.Informational)]
+        public void Exit(string InvocationId, string ReturnValue)
         {
-
+            WriteEvent(7, InvocationId, ReturnValue);
         }
     }
 }

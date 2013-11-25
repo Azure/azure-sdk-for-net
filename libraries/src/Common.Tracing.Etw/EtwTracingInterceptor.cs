@@ -14,46 +14,97 @@
 //
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 
 namespace Microsoft.WindowsAzure.Common.Tracing.Etw
 {
+    /// <summary>
+    /// Implementation for ICloudTracingInterceptor that raises ETW events.
+    /// </summary>
     public class EtwTracingInterceptor : ICloudTracingInterceptor
     {
         public void Information(string message)
         {
-            throw new NotImplementedException();
+            CloudTracingEventSource.Log.Information(message);
         }
 
         public void Configuration(string source, string name, string value)
         {
-            throw new NotImplementedException();
+            CloudTracingEventSource.Log.Configuration(source, name, value);
         }
 
         public void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters)
         {
-            throw new NotImplementedException();
+            instance = instance ?? string.Empty;
+            string parametersLog = ToLogString<string, object>(parameters);
+
+            CloudTracingEventSource.Log.Enter(invocationId, instance.ToString(), method, parametersLog);
         }
 
         public void SendRequest(string invocationId, HttpRequestMessage request)
         {
-            throw new NotImplementedException();
+            string requestBody = request == null ? string.Empty : request.ToString();
+            if (request != null && request.Content != null)
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine("Body:");
+                stringBuilder.AppendLine("{");
+                stringBuilder.AppendLine(request.Content.ReadAsStringAsync().Result);
+                stringBuilder.AppendLine("}");
+                requestBody += stringBuilder.ToString();
+            }
+
+            CloudTracingEventSource.Log.SendRequest(invocationId, requestBody);
         }
 
         public void ReceiveResponse(string invocationId, HttpResponseMessage response)
         {
-            throw new NotImplementedException();
+            string responseBody = response == null ? string.Empty : response.ToString();
+            if (response != null && response.Content != null)
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine();
+                stringBuilder.AppendLine("Body:");
+                stringBuilder.AppendLine("{");
+                stringBuilder.AppendLine(response.Content.ReadAsStringAsync().Result);
+                stringBuilder.AppendLine("}");
+                responseBody += stringBuilder.ToString();
+            }
+
+            CloudTracingEventSource.Log.ReceiveResponse(invocationId, responseBody);
         }
 
-        public void Error(string invocationId, Exception ex)
+        public void Error(string invocationId, Exception exception)
         {
-            throw new NotImplementedException();
+            string exceptionBody = exception == null ? string.Empty : exception.ToString();
+
+            CloudTracingEventSource.Log.Error(invocationId, exceptionBody);
         }
 
         public void Exit(string invocationId, object returnValue)
         {
-            throw new NotImplementedException();
+            string returnValueAsString = returnValue == null ? string.Empty : returnValue.ToString();
+
+            CloudTracingEventSource.Log.Exit(invocationId, returnValueAsString);
+        }
+
+        /// <summary>
+        /// Converts given dictionary into a log string.
+        /// </summary>
+        /// <typeparam name="TKey">The dictionary key type</typeparam>
+        /// <typeparam name="TValue">The dictionary value type</typeparam>
+        /// <param name="dictionary">The dictionary collection object</param>
+        /// <returns>The log string</returns>
+        private string ToLogString<TKey, TValue>(IDictionary<TKey, TValue> dictionary)
+        {
+            if (dictionary == null)
+                return "{}";
+            else
+                return "{" + string.Join(",", dictionary.Select(kv => kv.Key.ToString() + "=" + (kv.Value == null ? string.Empty : kv.Value.ToString())).ToArray()) + "}";
         }
     }
 }
