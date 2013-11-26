@@ -15,9 +15,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 
 [assembly: CLSCompliant(true)]
 namespace Microsoft.WindowsAzure.Common.Tracing.Etw
@@ -39,51 +37,31 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
 
         public void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters)
         {
-            instance = instance ?? string.Empty;
-            string parametersLog = ToLogString<string, object>(parameters);
+            string instanceAsString = instance == null ? string.Empty : instance.ToString();
+            string parametersAsString = parameters == null ? string.Empty : parameters.AsFormattedString();
 
-            CloudTracingEventSource.Log.Enter(invocationId, instance.ToString(), method, parametersLog);
+            CloudTracingEventSource.Log.Enter(invocationId, instanceAsString, method, parametersAsString);
         }
 
         public virtual void SendRequest(string invocationId, HttpRequestMessage request)
         {
-            string requestBody = request == null ? string.Empty : request.ToString();
-            if (request != null && request.Content != null)
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine();
-                stringBuilder.AppendLine("Body:");
-                stringBuilder.AppendLine("{");
-                stringBuilder.AppendLine(request.Content.ReadAsStringAsync().Result);
-                stringBuilder.AppendLine("}");
-                requestBody += stringBuilder.ToString();
-            }
+            string requestAsString = request == null ? string.Empty : request.AsFormattedString();
 
-            CloudTracingEventSource.Log.SendRequest(invocationId, requestBody);
+            CloudTracingEventSource.Log.SendRequest(invocationId, requestAsString);
         }
 
         public virtual void ReceiveResponse(string invocationId, HttpResponseMessage response)
         {
-            string responseBody = response == null ? string.Empty : response.ToString();
-            if (response != null && response.Content != null)
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine();
-                stringBuilder.AppendLine("Body:");
-                stringBuilder.AppendLine("{");
-                stringBuilder.AppendLine(response.Content.ReadAsStringAsync().Result);
-                stringBuilder.AppendLine("}");
-                responseBody += stringBuilder.ToString();
-            }
+            string responseAsString = response == null ? string.Empty : response.AsFormattedString();
 
-            CloudTracingEventSource.Log.ReceiveResponse(invocationId, responseBody);
+            CloudTracingEventSource.Log.ReceiveResponse(invocationId, responseAsString);
         }
 
         public void Error(string invocationId, Exception exception)
         {
-            string exceptionBody = exception == null ? string.Empty : exception.ToString();
+            string exceptionAsString = exception == null ? string.Empty : exception.ToString();
 
-            CloudTracingEventSource.Log.Error(invocationId, exceptionBody);
+            CloudTracingEventSource.Log.Error(invocationId, exceptionAsString);
         }
 
         public void Exit(string invocationId, object returnValue)
@@ -91,21 +69,6 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
             string returnValueAsString = returnValue == null ? string.Empty : returnValue.ToString();
 
             CloudTracingEventSource.Log.Exit(invocationId, returnValueAsString);
-        }
-
-        /// <summary>
-        /// Converts given dictionary into a log string.
-        /// </summary>
-        /// <typeparam name="TKey">The dictionary key type</typeparam>
-        /// <typeparam name="TValue">The dictionary value type</typeparam>
-        /// <param name="dictionary">The dictionary collection object</param>
-        /// <returns>The log string</returns>
-        private static string ToLogString<TKey, TValue>(IDictionary<TKey, TValue> dictionary)
-        {
-            if (dictionary == null)
-                return "{}";
-            else
-                return "{" + string.Join(",", dictionary.Select(kv => kv.Key.ToString() + "=" + (kv.Value == null ? string.Empty : kv.Value.ToString())).ToArray()) + "}";
         }
     }
 }

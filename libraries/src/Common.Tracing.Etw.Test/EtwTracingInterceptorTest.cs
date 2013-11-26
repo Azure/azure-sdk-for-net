@@ -18,7 +18,6 @@ using Microsoft.Diagnostics.Tracing.Session;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Extensions;
@@ -54,7 +53,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
                     message = message ?? string.Empty;
 
                     Assert.Equal(message, dict["Message"]);
-                });            
+                });
         }
 
         [Theory]
@@ -73,18 +72,18 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
                 {
                     source = source ?? string.Empty;
                     name = name ?? string.Empty;
-                    value = value ?? string.Empty; 
+                    value = value ?? string.Empty;
 
                     Assert.Equal(source, dict["Source"]);
                     Assert.Equal(name, dict["Name"]);
                     Assert.Equal(value, dict["Value"]);
-                });            
+                });
         }
 
         [Fact]
         public void EnterLogsEventWithNonNullParams()
         {
-            Dictionary<string, object> parameters = new Dictionary<string,object>();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters["a"] = 1;
             parameters["b"] = "str";
             parameters["c"] = true;
@@ -102,7 +101,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
                     Assert.Equal("23", dict["Instance"]);
                     Assert.Equal("main", dict["Method"]);
                     Assert.Equal("{a=1,b=str,c=True}", dict["Parameters"]);
-                });            
+                });
         }
 
         [Fact]
@@ -232,7 +231,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
                 });
         }
 
-        private void EtwTracingHelper(string eventName, string[] attributes, Action doAction, Action<Dictionary<string, string>> assertAction) 
+        private void EtwTracingHelper(string eventName, string[] attributes, Action doAction, Action<Dictionary<string, string>> assertAction)
         {
             Dictionary<string, string> valuesFromEvent = new Dictionary<string, string>();
             Action<TraceEvent> eventDelegate = delegate(TraceEvent data)
