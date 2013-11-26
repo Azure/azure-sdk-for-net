@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
-[assembly: CLSCompliant(true)]
 namespace Microsoft.WindowsAzure.Common.Tracing.Etw
 {
     /// <summary>
@@ -43,6 +42,11 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
             CloudTracingEventSource.Log.Enter(invocationId, instanceAsString, method, parametersAsString);
         }
 
+        /// <summary>
+        /// Send an HTTP request.
+        /// </summary>
+        /// <param name="invocationId">Method invocation identifier.</param>
+        /// <param name="request">The request about to be sent.</param>
         public virtual void SendRequest(string invocationId, HttpRequestMessage request)
         {
             string requestAsString = request == null ? string.Empty : request.AsFormattedString();
@@ -50,6 +54,11 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
             CloudTracingEventSource.Log.SendRequest(invocationId, requestAsString);
         }
 
+        /// <summary>
+        /// Receive an HTTP reponse.
+        /// </summary>
+        /// <param name="invocationId">Method invocation identifier.</param>
+        /// <param name="response">The response instance.</param>
         public virtual void ReceiveResponse(string invocationId, HttpResponseMessage response)
         {
             string responseAsString = response == null ? string.Empty : response.AsFormattedString();

@@ -29,8 +29,8 @@
 	
 	<file src="readme.txt" target="" />
 
-    <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.Tracing.Etw.dll" target="lib\net45" />
-    <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.Tracing.Etw.pdb" target="lib\net45" />
-    <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.Tracing.Etw.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Etw.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Etw.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Etw.xml" target="lib\net45" />
   </files>
 </package>

@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Common.Tracing.Etw
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Common.Tracing.Etw">
-      <PackageVersion>0.9.1-preview</PackageVersion>
+      <PackageVersion>0.9.0-preview</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
