@@ -14,7 +14,7 @@
     <summary>This package provides a logging implementation for the Windows Azure Libraries exposing events via ETW (Event Tracing for Windows).</summary>
     <description>Exposes Windows Azure Libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to Microsoft-WindowsAzure event source.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" REST HTTP client ETW "Event Tracing" windowsazureofficial</tags>
+    <tags>Microsoft "Windows Azure" SDK ETW "Event Tracing" windowsazureofficial</tags>
     <references>
       <group targetFramework="net45">
         <reference file="Microsoft.WindowsAzure.Common.Tracing.Etw.dll" />
@@ -26,6 +26,8 @@
   </metadata>
   <files>
     <file src="Common.Tracing.Etw\**\*.cs" target="src" />
+	
+	<file src="readme.txt" target="" />
 
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.Tracing.Etw.dll" target="lib\net45" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.Tracing.Etw.pdb" target="lib\net45" />
