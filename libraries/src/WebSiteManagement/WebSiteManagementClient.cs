@@ -9510,8 +9510,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement remoteDebuggingVersionElement = siteConfigElement.Element(XName.Get("RemoteDebuggingVersion", "http://schemas.microsoft.com/windowsazure"));
                         if (remoteDebuggingVersionElement != null)
                         {
-                            RemoteDebuggingVersion remoteDebuggingVersionInstance = (RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), remoteDebuggingVersionElement.Value, false);
-                            result.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
+                            bool isNil = false;
+                            XAttribute nilAttribute = remoteDebuggingVersionElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                            if (nilAttribute != null)
+                            {
+                                isNil = nilAttribute.Value == "true";
+                            }
+                            if (isNil == false)
+                            {
+                                RemoteDebuggingVersion remoteDebuggingVersionInstance = (RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), remoteDebuggingVersionElement.Value, false);
+                                result.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
+                            }
                         }
                         
                         XElement requestTracingEnabledElement = siteConfigElement.Element(XName.Get("RequestTracingEnabled", "http://schemas.microsoft.com/windowsazure"));
@@ -9524,8 +9533,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement requestTracingExpirationTimeElement = siteConfigElement.Element(XName.Get("RequestTracingExpirationTime", "http://schemas.microsoft.com/windowsazure"));
                         if (requestTracingExpirationTimeElement != null && string.IsNullOrEmpty(requestTracingExpirationTimeElement.Value) == false)
                         {
-                            DateTime requestTracingExpirationTimeInstance = DateTime.Parse(requestTracingExpirationTimeElement.Value, CultureInfo.InvariantCulture);
-                            result.RequestTracingExpirationTime = requestTracingExpirationTimeInstance;
+                            bool isNil2 = false;
+                            XAttribute nilAttribute2 = requestTracingExpirationTimeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                            if (nilAttribute2 != null)
+                            {
+                                isNil2 = nilAttribute2.Value == "true";
+                            }
+                            if (isNil2 == false)
+                            {
+                                DateTime requestTracingExpirationTimeInstance = DateTime.Parse(requestTracingExpirationTimeElement.Value, CultureInfo.InvariantCulture);
+                                result.RequestTracingExpirationTime = requestTracingExpirationTimeInstance;
+                            }
                         }
                         
                         XElement scmTypeElement = siteConfigElement.Element(XName.Get("ScmType", "http://schemas.microsoft.com/windowsazure"));
