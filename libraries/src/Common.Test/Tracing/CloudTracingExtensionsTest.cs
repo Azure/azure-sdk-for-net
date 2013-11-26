@@ -32,34 +32,40 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         [Fact]
         public void HttpRequestMessageAsFormattedStringHandlesEmptyRequests()
         {
-            var httpRequest = new HttpRequestMessage();
-            var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+            using (var httpRequest = new HttpRequestMessage())
+            {
+                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
 
-            Assert.Contains("Method: GET", formattedString);
+                Assert.Contains("Method: GET", formattedString);
+            }
         }
 
         [Fact]
         public void HttpRequestMessageAsFormattedStringHandlesRequestsWithHeaders()
         {
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://www.windowsazure.com/test");
-            httpRequest.Headers.Add("x-ms-version", "2013-11-01");
-            var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://www.windowsazure.com/test"))
+            {
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
 
-            Assert.Contains("Method: GET", formattedString);
-            Assert.Contains("RequestUri: 'http://www.windowsazure.com/test'", formattedString);
-            Assert.Contains("x-ms-version: 2013-11-01", formattedString);
+                Assert.Contains("Method: GET", formattedString);
+                Assert.Contains("RequestUri: 'http://www.windowsazure.com/test'", formattedString);
+                Assert.Contains("x-ms-version: 2013-11-01", formattedString);
+            }
         }
 
         [Fact]
         public void HttpRequestMessageAsFormattedStringHandlesRequestsWithContent()
         {
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://www.windowsazure.com/test");
-            httpRequest.Content = new StringContent("<body/>");
-            var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://www.windowsazure.com/test"))
+            {
+                httpRequest.Content = new StringContent("<body/>");
+                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
 
-            Assert.Contains("Method: GET", formattedString);
-            Assert.Contains("RequestUri: 'http://www.windowsazure.com/test'", formattedString);
-            Assert.Contains("<body/>", formattedString);
+                Assert.Contains("Method: GET", formattedString);
+                Assert.Contains("RequestUri: 'http://www.windowsazure.com/test'", formattedString);
+                Assert.Contains("<body/>", formattedString);
+            }
         }
 
         [Fact]
@@ -71,32 +77,38 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         [Fact]
         public void HttpResponseMessageAsFormattedStringHandlesEmptyRequests()
         {
-            var httpRequest = new HttpResponseMessage();
-            var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+            using (var httpRequest = new HttpResponseMessage())
+            {
+                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
 
-            Assert.Contains("StatusCode: 200", formattedString);
+                Assert.Contains("StatusCode: 200", formattedString);
+            }
         }
 
         [Fact]
         public void HttpResponseMessageAsFormattedStringHandlesRequestsWithHeaders()
         {
-            var httpRequest = new HttpResponseMessage(HttpStatusCode.OK);
-            httpRequest.Headers.Add("x-ms-version", "2013-11-01");
-            var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+            using (var httpRequest = new HttpResponseMessage(HttpStatusCode.OK))
+            {
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
 
-            Assert.Contains("StatusCode: 200", formattedString);
-            Assert.Contains("x-ms-version: 2013-11-01", formattedString);
+                Assert.Contains("StatusCode: 200", formattedString);
+                Assert.Contains("x-ms-version: 2013-11-01", formattedString);
+            }
         }
 
         [Fact]
         public void HttpResponseMessageAsFormattedStringHandlesRequestsWithContent()
         {
-            var httpRequest = new HttpResponseMessage(HttpStatusCode.OK);
-            httpRequest.Content = new StringContent("<body/>");
-            var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+            using (var httpRequest = new HttpResponseMessage(HttpStatusCode.OK))
+            {
+                httpRequest.Content = new StringContent("<body/>");
+                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
 
-            Assert.Contains("StatusCode: 200", formattedString);
-            Assert.Contains("<body/>", formattedString);
+                Assert.Contains("StatusCode: 200", formattedString);
+                Assert.Contains("<body/>", formattedString);
+            }
         }
 
         [Fact]

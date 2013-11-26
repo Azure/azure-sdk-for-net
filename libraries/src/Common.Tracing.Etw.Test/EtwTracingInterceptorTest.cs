@@ -167,20 +167,22 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         [Fact]
         public void ReceiveResponseLogsEventWithNonNullRequest()
         {
-            var httpRequest = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-            httpRequest.Content = new StringContent("<body/>");
+            using (var httpRequest = new HttpResponseMessage(System.Net.HttpStatusCode.OK))
+            {
+                httpRequest.Content = new StringContent("<body/>");
 
-            EtwTracingHelper("ReceiveResponse", new[] { "InvocationId", "Response" },
-                () =>
-                {
-                    EtwTracingInterceptor etwTracer = new EtwTracingInterceptor();
-                    etwTracer.ReceiveResponse("1", httpRequest);
-                },
-                (dict) =>
-                {
-                    Assert.Equal("1", dict["InvocationId"]);
-                    Assert.Contains("<body/>", dict["Response"]);
-                });
+                EtwTracingHelper("ReceiveResponse", new[] { "InvocationId", "Response" },
+                    () =>
+                    {
+                        EtwTracingInterceptor etwTracer = new EtwTracingInterceptor();
+                        etwTracer.ReceiveResponse("1", httpRequest);
+                    },
+                    (dict) =>
+                    {
+                        Assert.Equal("1", dict["InvocationId"]);
+                        Assert.Contains("<body/>", dict["Response"]);
+                    });
+            }
         }
 
         [Fact]

@@ -84,9 +84,13 @@ namespace Microsoft.WindowsAzure.Common
         public static string AsFormattedString<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
         {
             if (dictionary == null)
+            {
                 return "{}";
+            }
             else
+            {
                 return "{" + string.Join(",", dictionary.Select(kv => kv.Key.ToString() + "=" + (kv.Value == null ? string.Empty : kv.Value.ToString())).ToArray()) + "}";
+            }
         }
     }
 }
