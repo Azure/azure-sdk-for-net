@@ -67,8 +67,8 @@ namespace Microsoft.WindowsAzure
         /// Raise an error.
         /// </summary>
         /// <param name="invocationId">Method invocation identifier.</param>
-        /// <param name="ex">The error.</param>
-        void Error(string invocationId, Exception ex);
+        /// <param name="exception">The error.</param>
+        void Error(string invocationId, Exception exception);
 
         /// <summary>
         /// Exit a method.  Note: Exit will not be called in the event of an

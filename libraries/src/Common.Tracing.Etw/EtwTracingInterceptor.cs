@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 
+[assembly: CLSCompliant(true)]
 namespace Microsoft.WindowsAzure.Common.Tracing.Etw
 {
     /// <summary>
@@ -99,7 +100,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
         /// <typeparam name="TValue">The dictionary value type</typeparam>
         /// <param name="dictionary">The dictionary collection object</param>
         /// <returns>The log string</returns>
-        private string ToLogString<TKey, TValue>(IDictionary<TKey, TValue> dictionary)
+        private static string ToLogString<TKey, TValue>(IDictionary<TKey, TValue> dictionary)
         {
             if (dictionary == null)
                 return "{}";
