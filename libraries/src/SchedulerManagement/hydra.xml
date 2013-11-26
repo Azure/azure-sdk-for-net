@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hydra>
+  <Reference>./cloudservices.hydra.xml</Reference>
+  <Reference>./scheduler.hydra.xml</Reference>
+</Hydra>

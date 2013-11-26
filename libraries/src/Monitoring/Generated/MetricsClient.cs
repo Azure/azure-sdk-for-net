@@ -40,94 +40,127 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
 {
     /// <summary>
-    /// The setting for Endpoint monitoring.
+    /// An availability metric setting response.
     /// </summary>
     public partial class AvailabilityMetricSettingValue : MetricSettingValue
     {
-        private IList<NameConfig> _availableLocations;
-
+        private IList<NameConfig> _availabilityMetrics;
+        
         /// <summary>
-        /// The locations from which the Urls can be monitored.
+        /// The metric settings availability metrics.
+        /// </summary>
+        public IList<NameConfig> AvailabilityMetrics
+        {
+            get { return this._availabilityMetrics; }
+            set { this._availabilityMetrics = value; }
+        }
+        
+        private IList<NameConfig> _availableLocations;
+        
+        /// <summary>
+        /// The metric settings available locations.
         /// </summary>
         public IList<NameConfig> AvailableLocations
         {
             get { return this._availableLocations; }
             set { this._availableLocations = value; }
         }
-
-        private IList<EndpointConfig> _endpoints;
-
+        
+        private IList<NameConfig> _defaultMetrics;
+        
         /// <summary>
-        /// The configuration for Urls to be monitored using endpoint
-        /// monitoiring.
+        /// The metric settings default metrics.
+        /// </summary>
+        public IList<NameConfig> DefaultMetrics
+        {
+            get { return this._defaultMetrics; }
+            set { this._defaultMetrics = value; }
+        }
+        
+        private IList<EndpointConfig> _endpoints;
+        
+        /// <summary>
+        /// The metric settings endpoints.
         /// </summary>
         public IList<EndpointConfig> Endpoints
         {
             get { return this._endpoints; }
             set { this._endpoints = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the AvailabilityMetricSettingValue
         /// class.
         /// </summary>
         public AvailabilityMetricSettingValue()
         {
+            this._availabilityMetrics = new List<NameConfig>();
             this._availableLocations = new List<NameConfig>();
+            this._defaultMetrics = new List<NameConfig>();
             this._endpoints = new List<EndpointConfig>();
         }
     }
-
+    
     /// <summary>
-    /// The configuration to enable endpoint monitoring for a Url.
+    /// An availability metric endpoint config.
     /// </summary>
     public partial class EndpointConfig
     {
         private string _configId;
-
+        
         /// <summary>
-        /// The config id for endpoint monitoring config.
+        /// Availability Metric endpoint config config id.
         /// </summary>
         public string ConfigId
         {
             get { return this._configId; }
             set { this._configId = value; }
         }
-
+        
         private string _location;
-
+        
         /// <summary>
-        /// The location from which the endpoint is monitored.
+        /// Availability Metric endpoint config location.
         /// </summary>
         public string Location
         {
             get { return this._location; }
             set { this._location = value; }
         }
-
+        
         private string _name;
-
+        
         /// <summary>
-        /// The friendly name for the url for which endpoint monitoring is
-        /// configured.
+        /// Availability Metric endpoint config name.
         /// </summary>
         public string Name
         {
             get { return this._name; }
             set { this._name = value; }
         }
-
-        private Uri _url;
-
+        
+        private int _testIntervalInSeconds;
+        
         /// <summary>
-        /// The Url to be monitored.
+        /// Availability Metric endpoint config test interval in seconds.
+        /// </summary>
+        public int TestIntervalInSeconds
+        {
+            get { return this._testIntervalInSeconds; }
+            set { this._testIntervalInSeconds = value; }
+        }
+        
+        private Uri _url;
+        
+        /// <summary>
+        /// Availability Metric endpoint config Url.
         /// </summary>
         public Uri Url
         {
             get { return this._url; }
             set { this._url = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the EndpointConfig class.
         /// </summary>
@@ -135,35 +168,34 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         {
         }
     }
-
+    
     /// <summary>
-    /// Metric availability specifies the time grain (aggregation interval) and
-    /// the retention period for that timegrain.
+    /// A metric availability.
     /// </summary>
     public partial class MetricAvailability
     {
         private TimeSpan _retention;
-
+        
         /// <summary>
-        /// The retention period for the metric at the specified timegrain.
+        /// Metric definition is alertable.
         /// </summary>
         public TimeSpan Retention
         {
             get { return this._retention; }
             set { this._retention = value; }
         }
-
+        
         private TimeSpan _timeGrain;
-
+        
         /// <summary>
-        /// The time grain specifies the aggregation interval for the metric.
+        /// Metric availability time grain.
         /// </summary>
         public TimeSpan TimeGrain
         {
             get { return this._timeGrain; }
             set { this._timeGrain = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricAvailability class.
         /// </summary>
@@ -171,116 +203,111 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         {
         }
     }
-
+    
     /// <summary>
-    /// Metric definition class specifies the metadata for a metric
+    /// A metric definition.
     /// </summary>
     public partial class MetricDefinition
     {
         private string _displayName;
-
+        
         /// <summary>
-        /// Metric display name.
+        /// Metric definition display name.
         /// </summary>
         public string DisplayName
         {
             get { return this._displayName; }
             set { this._displayName = value; }
         }
-
+        
         private bool _isAlertable;
-
+        
         /// <summary>
-        /// Specifies if the metric is alertable. Alerts can be defined on a
-        /// metric only if this property is true.
+        /// Metric definition is alertable.
         /// </summary>
         public bool IsAlertable
         {
             get { return this._isAlertable; }
             set { this._isAlertable = value; }
         }
-
+        
         private IList<MetricAvailability> _metricAvailabilities;
-
+        
         /// <summary>
-        /// Metric availability specifies the time grain (aggregation interval)
-        /// and the retention period for the metric in a timegrain.
+        /// Metric definition metric availabilities.
         /// </summary>
         public IList<MetricAvailability> MetricAvailabilities
         {
             get { return this._metricAvailabilities; }
             set { this._metricAvailabilities = value; }
         }
-
+        
         private TimeSpan _minimumAlertableTimeWindow;
-
+        
         /// <summary>
-        /// Specifies the minimum alertable time window for the metric.
+        /// Metric definition minimum alertable time window.
         /// </summary>
         public TimeSpan MinimumAlertableTimeWindow
         {
             get { return this._minimumAlertableTimeWindow; }
             set { this._minimumAlertableTimeWindow = value; }
         }
-
+        
         private string _name;
-
+        
         /// <summary>
-        /// Get the metric name.
+        /// Metric definition name.
         /// </summary>
         public string Name
         {
             get { return this._name; }
             set { this._name = value; }
         }
-
+        
         private string _namespace;
-
+        
         /// <summary>
-        /// Get the metric namespace.
+        /// Metric definition namespace.
         /// </summary>
         public string Namespace
         {
             get { return this._namespace; }
             set { this._namespace = value; }
         }
-
+        
         private string _primaryAggregation;
-
+        
         /// <summary>
-        /// Metric primary aggregation specifies the default type for the
-        /// metrics. This indicates if the metric is of type average, total,
-        /// minimum or maximum.
+        /// Metric definition primary aggregation.
         /// </summary>
         public string PrimaryAggregation
         {
             get { return this._primaryAggregation; }
             set { this._primaryAggregation = value; }
         }
-
+        
         private string _resourceIdSuffix;
-
+        
         /// <summary>
-        /// Metric resource id suffix specfies the sub-resource path within the
-        /// the resource for the metric.
+        /// Metric definition resource id suffix.
         /// </summary>
         public string ResourceIdSuffix
         {
             get { return this._resourceIdSuffix; }
             set { this._resourceIdSuffix = value; }
         }
-
+        
         private string _unit;
-
+        
         /// <summary>
-        /// The unit for the metric.
+        /// Metric definition unit.
         /// </summary>
         public string Unit
         {
             get { return this._unit; }
             set { this._unit = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricDefinition class.
         /// </summary>
@@ -289,23 +316,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             this._metricAvailabilities = new List<MetricAvailability>();
         }
     }
-
+    
     /// <summary>
-    /// Represents collection of metric definitions.
+    /// An availability metric name config.
     /// </summary>
     public partial class MetricDefinitionCollection
     {
         private IList<MetricDefinition> _value;
-
+        
         /// <summary>
-        /// The values for the metric definitions.
+        /// The metric definitions.
         /// </summary>
         public IList<MetricDefinition> Value
         {
             get { return this._value; }
             set { this._value = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricDefinitionCollection class.
         /// </summary>
@@ -314,14 +341,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             this._value = new List<MetricDefinition>();
         }
     }
-
+    
     /// <summary>
     /// The List Metric Definitions operation response.
     /// </summary>
     public partial class MetricDefinitionListResponse : OperationResponse
     {
         private MetricDefinitionCollection _metricDefinitionCollection;
-
+        
         /// <summary>
         /// The retrieved metric definitions.
         /// </summary>
@@ -330,7 +357,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._metricDefinitionCollection; }
             set { this._metricDefinitionCollection = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricDefinitionListResponse
         /// class.
@@ -339,46 +366,45 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         {
         }
     }
-
+    
     /// <summary>
     /// A metric setting get response.
     /// </summary>
     public partial class MetricSetting
     {
         private string _namespace;
-
+        
         /// <summary>
-        /// The metric settings namespace. For endpoint monitoring metrics the
-        /// namespace value is WindowsAzure.Availability
+        /// Required. The metric settings namespace.
         /// </summary>
         public string Namespace
         {
             get { return this._namespace; }
             set { this._namespace = value; }
         }
-
+        
         private string _resourceId;
-
+        
         /// <summary>
-        /// The resource id of the service
+        /// Required. The resource id.
         /// </summary>
         public string ResourceId
         {
             get { return this._resourceId; }
             set { this._resourceId = value; }
         }
-
+        
         private MetricSettingValue _value;
-
+        
         /// <summary>
-        /// The metric settings value.
+        /// Required. The metric settings value.
         /// </summary>
         public MetricSettingValue Value
         {
             get { return this._value; }
             set { this._value = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricSetting class.
         /// </summary>
@@ -386,14 +412,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         {
         }
     }
-
+    
     /// <summary>
     /// A metric setting list response collection.
     /// </summary>
     public partial class MetricSettingCollection
     {
         private IList<MetricSetting> _value;
-
+        
         /// <summary>
         /// The collection.
         /// </summary>
@@ -402,7 +428,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._value; }
             set { this._value = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricSettingCollection class.
         /// </summary>
@@ -411,14 +437,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             this._value = new List<MetricSetting>();
         }
     }
-
+    
     /// <summary>
     /// The list metric settings operation response.
     /// </summary>
     public partial class MetricSettingListResponse : OperationResponse
     {
         private MetricSettingCollection _metricSettingCollection;
-
+        
         /// <summary>
         /// The retrieved metric settings.
         /// </summary>
@@ -427,7 +453,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._metricSettingCollection; }
             set { this._metricSettingCollection = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricSettingListResponse class.
         /// </summary>
@@ -435,14 +461,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         {
         }
     }
-
+    
     /// <summary>
     /// Parameters supplied to the Put Metric Settings operation.
     /// </summary>
     public partial class MetricSettingsPutParameters
     {
         private MetricSetting _metricSetting;
-
+        
         /// <summary>
         /// Required. The metric setting.
         /// </summary>
@@ -451,7 +477,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._metricSetting; }
             set { this._metricSetting = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricSettingsPutParameters class.
         /// </summary>
@@ -459,7 +485,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         {
         }
     }
-
+    
     /// <summary>
     /// A metric setting get response.
     /// </summary>
@@ -472,91 +498,89 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         {
         }
     }
-
+    
     /// <summary>
-    /// Represents a metric value.
+    /// A metric value.
     /// </summary>
     public partial class MetricValue
     {
         private string _annotation;
-
+        
         /// <summary>
-        /// Specifies annotation for the metric.
+        /// Metric annotation.
         /// </summary>
         public string Annotation
         {
             get { return this._annotation; }
             set { this._annotation = value; }
         }
-
+        
         private double? _average;
-
+        
         /// <summary>
-        /// Specifies the average value in the time interval.
+        /// Metric average.
         /// </summary>
         public double? Average
         {
             get { return this._average; }
             set { this._average = value; }
         }
-
+        
         private int? _count;
-
+        
         /// <summary>
-        /// Specifies the sample count in the time interval. Can be used to
-        /// determine the number of values that contributed to the average
-        /// value.
+        /// Metric count.
         /// </summary>
         public int? Count
         {
             get { return this._count; }
             set { this._count = value; }
         }
-
+        
         private double? _maximum;
-
+        
         /// <summary>
-        /// Specifies the maximum value in the time interval.
+        /// Metric maximum.
         /// </summary>
         public double? Maximum
         {
             get { return this._maximum; }
             set { this._maximum = value; }
         }
-
+        
         private double? _minimum;
-
+        
         /// <summary>
-        /// Specifies the minimum value in the time interval.
+        /// Metric minimum.
         /// </summary>
         public double? Minimum
         {
             get { return this._minimum; }
             set { this._minimum = value; }
         }
-
+        
         private DateTime _timestamp;
-
+        
         /// <summary>
-        /// The timestamp for the metric value.
+        /// Metric timestamp.
         /// </summary>
         public DateTime Timestamp
         {
             get { return this._timestamp; }
             set { this._timestamp = value; }
         }
-
+        
         private double? _total;
-
+        
         /// <summary>
-        /// Specifies the total value in the time interval.
+        /// Metric total.
         /// </summary>
         public double? Total
         {
             get { return this._total; }
             set { this._total = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricValue class.
         /// </summary>
@@ -564,14 +588,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         {
         }
     }
-
+    
     /// <summary>
     /// The List Metric values operation response.
     /// </summary>
     public partial class MetricValueListResponse : OperationResponse
     {
         private MetricValueSetCollection _metricValueSetCollection;
-
+        
         /// <summary>
         /// The retrieved metric value sets.
         /// </summary>
@@ -580,7 +604,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._metricValueSetCollection; }
             set { this._metricValueSetCollection = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricValueListResponse class.
         /// </summary>
@@ -588,14 +612,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         {
         }
     }
-
+    
     /// <summary>
-    /// A metric value set represents a set of metric values in a time period.
+    /// A metric value set.
     /// </summary>
     public partial class MetricValueSet
     {
         private string _displayName;
-
+        
         /// <summary>
         /// Metric display name.
         /// </summary>
@@ -604,20 +628,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._displayName; }
             set { this._displayName = value; }
         }
-
+        
         private DateTime _endTime;
-
+        
         /// <summary>
-        /// The end time in UTC for the metric queried.
+        /// Metric end time.
         /// </summary>
         public DateTime EndTime
         {
             get { return this._endTime; }
             set { this._endTime = value; }
         }
-
+        
         private IList<MetricValue> _metricValues;
-
+        
         /// <summary>
         /// Metric values.
         /// </summary>
@@ -626,9 +650,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._metricValues; }
             set { this._metricValues = value; }
         }
-
+        
         private string _name;
-
+        
         /// <summary>
         /// Metric name.
         /// </summary>
@@ -637,9 +661,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._name; }
             set { this._name = value; }
         }
-
+        
         private string _namespace;
-
+        
         /// <summary>
         /// Metric namespace.
         /// </summary>
@@ -648,9 +672,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._namespace; }
             set { this._namespace = value; }
         }
-
+        
         private string _primaryAggregation;
-
+        
         /// <summary>
         /// Metric primary aggregation.
         /// </summary>
@@ -659,31 +683,31 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._primaryAggregation; }
             set { this._primaryAggregation = value; }
         }
-
+        
         private DateTime _startTime;
-
+        
         /// <summary>
-        /// The start time in UTC for the metric queried.
+        /// Metric start time.
         /// </summary>
         public DateTime StartTime
         {
             get { return this._startTime; }
             set { this._startTime = value; }
         }
-
+        
         private TimeSpan _timeGrain;
-
+        
         /// <summary>
-        /// The time grain specifies the aggregation period of the metric value.
+        /// Metric time grain.
         /// </summary>
         public TimeSpan TimeGrain
         {
             get { return this._timeGrain; }
             set { this._timeGrain = value; }
         }
-
+        
         private string _unit;
-
+        
         /// <summary>
         /// Metric unit.
         /// </summary>
@@ -692,7 +716,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._unit; }
             set { this._unit = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricValueSet class.
         /// </summary>
@@ -701,14 +725,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             this._metricValues = new List<MetricValue>();
         }
     }
-
+    
     /// <summary>
     /// The collection of metric value sets.
     /// </summary>
     public partial class MetricValueSetCollection
     {
         private IList<MetricValueSet> _value;
-
+        
         /// <summary>
         /// The collection.
         /// </summary>
@@ -717,7 +741,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._value; }
             set { this._value = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricValueSetCollection class.
         /// </summary>
@@ -726,14 +750,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             this._value = new List<MetricValueSet>();
         }
     }
-
+    
     /// <summary>
     /// An availability metric name config.
     /// </summary>
     public partial class NameConfig
     {
         private string _displayName;
-
+        
         /// <summary>
         /// Availability metric name config display name.
         /// </summary>
@@ -742,9 +766,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._displayName; }
             set { this._displayName = value; }
         }
-
+        
         private string _name;
-
+        
         /// <summary>
         /// Availability metric name config name.
         /// </summary>
@@ -753,78 +777,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             get { return this._name; }
             set { this._name = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the NameConfig class.
         /// </summary>
         public NameConfig()
         {
         }
-    }
-}
-
-namespace Microsoft.WindowsAzure.Management.Monitoring.Models
-{
-    /// <summary>
-    /// Endpoint monitoring location.
-    /// </summary>
-    public static partial class EndpointMonitoringLocation
-    {
-        /// <summary>
-        /// Location - Chicago, IL USA.
-        /// </summary>
-        public const string USChicagoIL = "us-il-ch1-azr";
-
-        /// <summary>
-        /// Location - San Antonio, TX USA.
-        /// </summary>
-        public const string USSanAntonioTX = "us-tx-sn1-azr";
-
-        /// <summary>
-        /// Location - San Jose, CA USA.
-        /// </summary>
-        public const string USSanJoseCA = "us-ca-sjc-azr";
-
-        /// <summary>
-        /// Location - Ashburn, VA USA.
-        /// </summary>
-        public const string USAshburnVA = "us-va-ash-azr";
-
-        /// <summary>
-        /// Location - Dublin, Ireland.
-        /// </summary>
-        public const string IEDublin = "emea-gb-db3-azr";
-
-        /// <summary>
-        /// Location - Amsterdam, Netherlands.
-        /// </summary>
-        public const string NLAmsterdam = "emea-nl-ams-azr";
-
-        /// <summary>
-        /// Location - Hongkong.
-        /// </summary>
-        public const string HKHongkong = "apac-hk-hkn-azr";
-
-        /// <summary>
-        /// Location - Singapore.
-        /// </summary>
-        public const string SGSingapore = "apac-sg-sin-azr";
-    }
-
-    /// <summary>
-    /// Metric namespace value.
-    /// </summary>
-    public static partial class MetricNamespace
-    {
-        /// <summary>
-        /// Empty namespace
-        /// </summary>
-        public const string None = "";
-
-        /// <summary>
-        /// Endpoint monitoring metric namespace
-        /// </summary>
-        public const string EndpointMonitoring = "WindowsAzure.Availability";
     }
 }
 
@@ -837,41 +796,41 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// </summary>
         Uri BaseUri
         {
-            get;
+            get; 
         }
-
+        
         /// <summary>
         /// Windows Azure subscription id
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
-            get;
+            get; 
         }
-
+        
         IMetricDefinitionOperations MetricDefinitions
         {
-            get;
+            get; 
         }
-
+        
         IMetricSettingOperations MetricSettings
         {
-            get;
+            get; 
         }
-
+        
         IMetricValueOperations MetricValues
         {
-            get;
+            get; 
         }
     }
-
+    
     public static partial class MetricsClientExtensions
     {
     }
-
+    
     public partial class MetricsClient : ServiceClient<MetricsClient>, IMetricsClient
     {
         private Uri _baseUri;
-
+        
         /// <summary>
         /// Optional base uri parameter.
         /// </summary>
@@ -879,9 +838,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             get { return this._baseUri; }
         }
-
+        
         private SubscriptionCloudCredentials _credentials;
-
+        
         /// <summary>
         /// Windows Azure subscription id
         /// </summary>
@@ -889,28 +848,28 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             get { return this._credentials; }
         }
-
+        
         private IMetricDefinitionOperations _metricDefinitions;
-
+        
         public virtual IMetricDefinitionOperations MetricDefinitions
         {
             get { return this._metricDefinitions; }
         }
-
+        
         private IMetricSettingOperations _metricSettings;
-
+        
         public virtual IMetricSettingOperations MetricSettings
         {
             get { return this._metricSettings; }
         }
-
+        
         private IMetricValueOperations _metricValues;
-
+        
         public virtual IMetricValueOperations MetricValues
         {
             get { return this._metricValues; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
@@ -922,7 +881,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             this._metricValues = new MetricValueOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
@@ -945,10 +904,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             this._credentials = credentials;
             this._baseUri = baseUri;
-
+            
             this.Credentials.InitializeServiceClient(this);
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
@@ -964,11 +923,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
-
+            
             this.Credentials.InitializeServiceClient(this);
         }
     }
-
+    
     public partial interface IMetricDefinitionOperations
     {
         /// <summary>
@@ -976,16 +935,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// for the resource.
         /// </summary>
         /// <param name='resourceId'>
-        /// The id of the resource.The resource id can be built using the
-        /// resource id builder class under utilities
+        /// The id of the resource.
         /// </param>
         /// <param name='metricNames'>
         /// The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.The value is either null or
-        /// WindowsAzure.Availability.WindowsAzure.Availability returns the
-        /// metric definitions for endpoint monitoring metrics
+        /// The namespace of the metrics.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -995,7 +951,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// </returns>
         Task<MetricDefinitionListResponse> ListAsync(string resourceId, IList<string> metricNames, string metricNamespace, CancellationToken cancellationToken);
     }
-
+    
     public static partial class MetricDefinitionOperationsExtensions
     {
         /// <summary>
@@ -1007,16 +963,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricDefinitionOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The id of the resource.The resource id can be built using the
-        /// resource id builder class under utilities
+        /// The id of the resource.
         /// </param>
         /// <param name='metricNames'>
         /// The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.The value is either null or
-        /// WindowsAzure.Availability.WindowsAzure.Availability returns the
-        /// metric definitions for endpoint monitoring metrics
+        /// The namespace of the metrics.
         /// </param>
         /// <returns>
         /// The List Metric Definitions operation response.
@@ -1039,7 +992,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 }
             }
         }
-
+        
         /// <summary>
         /// The List Metric Definitions operation lists the metric definitions
         /// for the resource.
@@ -1049,16 +1002,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricDefinitionOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The id of the resource.The resource id can be built using the
-        /// resource id builder class under utilities
+        /// The id of the resource.
         /// </param>
         /// <param name='metricNames'>
         /// The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.The value is either null or
-        /// WindowsAzure.Availability.WindowsAzure.Availability returns the
-        /// metric definitions for endpoint monitoring metrics
+        /// The namespace of the metrics.
         /// </param>
         /// <returns>
         /// The List Metric Definitions operation response.
@@ -1068,7 +1018,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             return operations.ListAsync(resourceId, metricNames, metricNamespace, CancellationToken.None);
         }
     }
-
+    
     internal partial class MetricDefinitionOperations : IServiceOperations<MetricsClient>, IMetricDefinitionOperations
     {
         /// <summary>
@@ -1081,9 +1031,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             this._client = client;
         }
-
+        
         private MetricsClient _client;
-
+        
         /// <summary>
         /// Gets a reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.MetricsClient.
@@ -1092,22 +1042,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             get { return this._client; }
         }
-
+        
         /// <summary>
         /// The List Metric Definitions operation lists the metric definitions
         /// for the resource.
         /// </summary>
         /// <param name='resourceId'>
-        /// The id of the resource.The resource id can be built using the
-        /// resource id builder class under utilities
+        /// The id of the resource.
         /// </param>
         /// <param name='metricNames'>
         /// The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.The value is either null or
-        /// WindowsAzure.Availability.WindowsAzure.Availability returns the
-        /// metric definitions for endpoint monitoring metrics
+        /// The namespace of the metrics.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1122,7 +1069,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             {
                 throw new ArgumentNullException("resourceId");
             }
-
+            
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
@@ -1135,7 +1082,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 tracingParameters.Add("metricNamespace", metricNamespace);
                 Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricdefinitions/query?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
@@ -1147,7 +1094,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             {
                 url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
             }
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -1155,15 +1102,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-10-01");
-
+                httpRequest.Headers.Add("x-ms-version", "2012-08-01");
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -1189,7 +1136,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     MetricDefinitionListResponse result = new MetricDefinitionListResponse();
                     result.StatusCode = statusCode;
@@ -1197,17 +1144,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     JToken responseDoc = JToken.Parse(responseContent);
-
+                    
                     if (responseDoc != null)
                     {
                         MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
                         result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
-
+                        
                         JArray valueArray = (JArray)responseDoc["Value"];
                         if (valueArray != null)
                         {
@@ -1215,49 +1162,49 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             {
                                 MetricDefinition metricDefinitionInstance = new MetricDefinition();
                                 metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
-
+                                
                                 JToken nameValue = valueValue["Name"];
                                 if (nameValue != null)
                                 {
                                     string nameInstance = (string)nameValue;
                                     metricDefinitionInstance.Name = nameInstance;
                                 }
-
+                                
                                 JToken namespaceValue = valueValue["Namespace"];
                                 if (namespaceValue != null)
                                 {
                                     string namespaceInstance = (string)namespaceValue;
                                     metricDefinitionInstance.Namespace = namespaceInstance;
                                 }
-
+                                
                                 JToken resourceIdSuffixValue = valueValue["ResourceIdSuffix"];
                                 if (resourceIdSuffixValue != null)
                                 {
                                     string resourceIdSuffixInstance = (string)resourceIdSuffixValue;
                                     metricDefinitionInstance.ResourceIdSuffix = resourceIdSuffixInstance;
                                 }
-
+                                
                                 JToken displayNameValue = valueValue["DisplayName"];
                                 if (displayNameValue != null)
                                 {
                                     string displayNameInstance = (string)displayNameValue;
                                     metricDefinitionInstance.DisplayName = displayNameInstance;
                                 }
-
+                                
                                 JToken unitValue = valueValue["Unit"];
                                 if (unitValue != null)
                                 {
                                     string unitInstance = (string)unitValue;
                                     metricDefinitionInstance.Unit = unitInstance;
                                 }
-
+                                
                                 JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
                                 if (primaryAggregationValue != null)
                                 {
                                     string primaryAggregationInstance = (string)primaryAggregationValue;
                                     metricDefinitionInstance.PrimaryAggregation = primaryAggregationInstance;
                                 }
-
+                                
                                 JArray metricAvailabilitiesArray = (JArray)valueValue["MetricAvailabilities"];
                                 if (metricAvailabilitiesArray != null)
                                 {
@@ -1265,30 +1212,30 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                     {
                                         MetricAvailability metricAvailabilityInstance = new MetricAvailability();
                                         metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
-
+                                        
                                         JToken timeGrainValue = metricAvailabilitiesValue["TimeGrain"];
                                         if (timeGrainValue != null)
                                         {
-                                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                            TimeSpan timeGrainInstance = TimeSpan.Parse((string)timeGrainValue, CultureInfo.InvariantCulture);
                                             metricAvailabilityInstance.TimeGrain = timeGrainInstance;
                                         }
-
+                                        
                                         JToken retentionValue = metricAvailabilitiesValue["Retention"];
                                         if (retentionValue != null)
                                         {
-                                            TimeSpan retentionInstance = TypeConversion.From8601TimeSpan((string)retentionValue);
+                                            TimeSpan retentionInstance = TimeSpan.Parse((string)retentionValue, CultureInfo.InvariantCulture);
                                             metricAvailabilityInstance.Retention = retentionInstance;
                                         }
                                     }
                                 }
-
+                                
                                 JToken minimumAlertableTimeWindowValue = valueValue["MinimumAlertableTimeWindow"];
                                 if (minimumAlertableTimeWindowValue != null)
                                 {
-                                    TimeSpan minimumAlertableTimeWindowInstance = TypeConversion.From8601TimeSpan((string)minimumAlertableTimeWindowValue);
+                                    TimeSpan minimumAlertableTimeWindowInstance = TimeSpan.Parse((string)minimumAlertableTimeWindowValue, CultureInfo.InvariantCulture);
                                     metricDefinitionInstance.MinimumAlertableTimeWindow = minimumAlertableTimeWindowInstance;
                                 }
-
+                                
                                 JToken isAlertableValue = valueValue["IsAlertable"];
                                 if (isAlertableValue != null)
                                 {
@@ -1298,7 +1245,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             }
                         }
                     }
-
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -1322,7 +1269,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
         }
     }
-
+    
     public partial interface IMetricSettingOperations
     {
         /// <summary>
@@ -1340,7 +1287,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// request ID.
         /// </returns>
         Task<OperationResponse> CreateOrUpdateAsync(MetricSettingsPutParameters parameters, CancellationToken cancellationToken);
-
+        
         /// <summary>
         /// The List Metric Settings operation lists the metric settings for
         /// the resource.
@@ -1359,7 +1306,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// </returns>
         Task<MetricSettingListResponse> ListAsync(string resourceId, string metricNamespace, CancellationToken cancellationToken);
     }
-
+    
     public static partial class MetricSettingOperationsExtensions
     {
         /// <summary>
@@ -1395,7 +1342,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 }
             }
         }
-
+        
         /// <summary>
         /// The Put Metric Settings operation creates or updates the metric
         /// settings for the resource.
@@ -1415,7 +1362,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             return operations.CreateOrUpdateAsync(parameters, CancellationToken.None);
         }
-
+        
         /// <summary>
         /// The List Metric Settings operation lists the metric settings for
         /// the resource.
@@ -1451,7 +1398,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 }
             }
         }
-
+        
         /// <summary>
         /// The List Metric Settings operation lists the metric settings for
         /// the resource.
@@ -1474,7 +1421,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             return operations.ListAsync(resourceId, metricNamespace, CancellationToken.None);
         }
     }
-
+    
     internal partial class MetricSettingOperations : IServiceOperations<MetricsClient>, IMetricSettingOperations
     {
         /// <summary>
@@ -1487,9 +1434,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             this._client = client;
         }
-
+        
         private MetricsClient _client;
-
+        
         /// <summary>
         /// Gets a reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.MetricsClient.
@@ -1498,7 +1445,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             get { return this._client; }
         }
-
+        
         /// <summary>
         /// The Put Metric Settings operation creates or updates the metric
         /// settings for the resource.
@@ -1532,7 +1479,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             {
                 throw new ArgumentNullException("parameters.MetricSetting.Value");
             }
-
+            
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
@@ -1543,10 +1490,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings";
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -1554,38 +1501,38 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Put;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-10-01");
-
+                httpRequest.Headers.Add("x-ms-version", "2012-08-01");
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Serialize Request
                 string requestContent = null;
                 JToken requestDoc = null;
-
+                
                 JObject metricSettingValue = new JObject();
                 requestDoc = metricSettingValue;
-
+                
                 JToken resourceIdValue = parameters.MetricSetting.ResourceId;
                 metricSettingValue["ResourceId"] = resourceIdValue;
-
+                
                 if (parameters.MetricSetting.Namespace != null)
                 {
                     JToken namespaceValue = parameters.MetricSetting.Namespace;
                     metricSettingValue["Namespace"] = namespaceValue;
                 }
-
+                
                 JObject valueValue = new JObject();
                 metricSettingValue["Value"] = valueValue;
                 valueValue["odata.type"] = parameters.MetricSetting.Value.GetType().FullName;
                 if (parameters.MetricSetting.Value is AvailabilityMetricSettingValue)
                 {
                     AvailabilityMetricSettingValue derived = (AvailabilityMetricSettingValue)parameters.MetricSetting.Value;
-
+                    
                     if (derived.AvailableLocations != null)
                     {
                         JArray availableLocationsArray = new JArray();
@@ -1593,13 +1540,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         {
                             JObject nameConfigValue = new JObject();
                             availableLocationsArray.Add(nameConfigValue);
-
+                            
                             if (availableLocationsItem.Name != null)
                             {
                                 JToken nameValue = availableLocationsItem.Name;
                                 nameConfigValue["Name"] = nameValue;
                             }
-
+                            
                             if (availableLocationsItem.DisplayName != null)
                             {
                                 JToken displayNameValue = availableLocationsItem.DisplayName;
@@ -1608,7 +1555,53 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         }
                         valueValue["AvailableLocations"] = availableLocationsArray;
                     }
-
+                    
+                    if (derived.DefaultMetrics != null)
+                    {
+                        JArray defaultMetricsArray = new JArray();
+                        foreach (NameConfig defaultMetricsItem in derived.DefaultMetrics)
+                        {
+                            JObject nameConfigValue2 = new JObject();
+                            defaultMetricsArray.Add(nameConfigValue2);
+                            
+                            if (defaultMetricsItem.Name != null)
+                            {
+                                JToken nameValue2 = defaultMetricsItem.Name;
+                                nameConfigValue2["Name"] = nameValue2;
+                            }
+                            
+                            if (defaultMetricsItem.DisplayName != null)
+                            {
+                                JToken displayNameValue2 = defaultMetricsItem.DisplayName;
+                                nameConfigValue2["DisplayName"] = displayNameValue2;
+                            }
+                        }
+                        valueValue["DefaultMetrics"] = defaultMetricsArray;
+                    }
+                    
+                    if (derived.AvailabilityMetrics != null)
+                    {
+                        JArray availabilityMetricsArray = new JArray();
+                        foreach (NameConfig availabilityMetricsItem in derived.AvailabilityMetrics)
+                        {
+                            JObject nameConfigValue3 = new JObject();
+                            availabilityMetricsArray.Add(nameConfigValue3);
+                            
+                            if (availabilityMetricsItem.Name != null)
+                            {
+                                JToken nameValue3 = availabilityMetricsItem.Name;
+                                nameConfigValue3["Name"] = nameValue3;
+                            }
+                            
+                            if (availabilityMetricsItem.DisplayName != null)
+                            {
+                                JToken displayNameValue3 = availabilityMetricsItem.DisplayName;
+                                nameConfigValue3["DisplayName"] = displayNameValue3;
+                            }
+                        }
+                        valueValue["AvailabilityMetrics"] = availabilityMetricsArray;
+                    }
+                    
                     if (derived.Endpoints != null)
                     {
                         JArray endpointsArray = new JArray();
@@ -1616,39 +1609,42 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         {
                             JObject endpointConfigValue = new JObject();
                             endpointsArray.Add(endpointConfigValue);
-
+                            
                             if (endpointsItem.ConfigId != null)
                             {
                                 JToken configIdValue = endpointsItem.ConfigId;
                                 endpointConfigValue["ConfigId"] = configIdValue;
                             }
-
+                            
                             if (endpointsItem.Name != null)
                             {
-                                JToken nameValue2 = endpointsItem.Name;
-                                endpointConfigValue["Name"] = nameValue2;
+                                JToken nameValue4 = endpointsItem.Name;
+                                endpointConfigValue["Name"] = nameValue4;
                             }
-
+                            
                             if (endpointsItem.Location != null)
                             {
                                 JToken locationValue = endpointsItem.Location;
                                 endpointConfigValue["Location"] = locationValue;
                             }
-
+                            
                             if (endpointsItem.Url != null)
                             {
                                 JToken urlValue = endpointsItem.Url.ToString();
                                 endpointConfigValue["Url"] = urlValue;
                             }
+                            
+                            JToken testIntervalInSecondsValue = endpointsItem.TestIntervalInSeconds;
+                            endpointConfigValue["TestIntervalInSeconds"] = testIntervalInSecondsValue;
                         }
                         valueValue["Endpoints"] = endpointsArray;
                     }
                 }
-
+                
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -1667,14 +1663,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     OperationResponse result = new OperationResponse();
                     result.StatusCode = statusCode;
@@ -1682,7 +1678,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -1705,7 +1701,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 }
             }
         }
-
+        
         /// <summary>
         /// The List Metric Settings operation lists the metric settings for
         /// the resource.
@@ -1733,7 +1729,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             {
                 throw new ArgumentNullException("metricNamespace");
             }
-
+            
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
@@ -1745,12 +1741,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 tracingParameters.Add("metricNamespace", metricNamespace);
                 Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
             url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace);
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -1758,15 +1754,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-10-01");
-
+                httpRequest.Headers.Add("x-ms-version", "2012-08-01");
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -1792,7 +1788,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     MetricSettingListResponse result = new MetricSettingListResponse();
                     result.StatusCode = statusCode;
@@ -1800,17 +1796,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     JToken responseDoc = JToken.Parse(responseContent);
-
+                    
                     if (responseDoc != null)
                     {
                         MetricSettingCollection metricSettingCollectionInstance = new MetricSettingCollection();
                         result.MetricSettingCollection = metricSettingCollectionInstance;
-
+                        
                         JArray valueArray = (JArray)responseDoc["Value"];
                         if (valueArray != null)
                         {
@@ -1818,21 +1814,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             {
                                 MetricSetting metricSettingInstance = new MetricSetting();
                                 metricSettingCollectionInstance.Value.Add(metricSettingInstance);
-
+                                
                                 JToken resourceIdValue = valueValue["ResourceId"];
                                 if (resourceIdValue != null)
                                 {
                                     string resourceIdInstance = (string)resourceIdValue;
                                     metricSettingInstance.ResourceId = resourceIdInstance;
                                 }
-
+                                
                                 JToken namespaceValue = valueValue["Namespace"];
                                 if (namespaceValue != null)
                                 {
                                     string namespaceInstance = (string)namespaceValue;
                                     metricSettingInstance.Namespace = namespaceInstance;
                                 }
-
+                                
                                 JToken valueValue2 = valueValue["Value"];
                                 if (valueValue2 != null)
                                 {
@@ -1840,7 +1836,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                     if (typeName == "Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.AvailabilityMetricSettingValue")
                                     {
                                         AvailabilityMetricSettingValue availabilityMetricSettingValueInstance = new AvailabilityMetricSettingValue();
-
+                                        
                                         JArray availableLocationsArray = (JArray)valueValue2["AvailableLocations"];
                                         if (availableLocationsArray != null)
                                         {
@@ -1848,14 +1844,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                             {
                                                 NameConfig nameConfigInstance = new NameConfig();
                                                 availabilityMetricSettingValueInstance.AvailableLocations.Add(nameConfigInstance);
-
+                                                
                                                 JToken nameValue = availableLocationsValue["Name"];
                                                 if (nameValue != null)
                                                 {
                                                     string nameInstance = (string)nameValue;
                                                     nameConfigInstance.Name = nameInstance;
                                                 }
-
+                                                
                                                 JToken displayNameValue = availableLocationsValue["DisplayName"];
                                                 if (displayNameValue != null)
                                                 {
@@ -1864,7 +1860,55 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                                 }
                                             }
                                         }
-
+                                        
+                                        JArray defaultMetricsArray = (JArray)valueValue2["DefaultMetrics"];
+                                        if (defaultMetricsArray != null)
+                                        {
+                                            foreach (JToken defaultMetricsValue in defaultMetricsArray)
+                                            {
+                                                NameConfig nameConfigInstance2 = new NameConfig();
+                                                availabilityMetricSettingValueInstance.DefaultMetrics.Add(nameConfigInstance2);
+                                                
+                                                JToken nameValue2 = defaultMetricsValue["Name"];
+                                                if (nameValue2 != null)
+                                                {
+                                                    string nameInstance2 = (string)nameValue2;
+                                                    nameConfigInstance2.Name = nameInstance2;
+                                                }
+                                                
+                                                JToken displayNameValue2 = defaultMetricsValue["DisplayName"];
+                                                if (displayNameValue2 != null)
+                                                {
+                                                    string displayNameInstance2 = (string)displayNameValue2;
+                                                    nameConfigInstance2.DisplayName = displayNameInstance2;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JArray availabilityMetricsArray = (JArray)valueValue2["AvailabilityMetrics"];
+                                        if (availabilityMetricsArray != null)
+                                        {
+                                            foreach (JToken availabilityMetricsValue in availabilityMetricsArray)
+                                            {
+                                                NameConfig nameConfigInstance3 = new NameConfig();
+                                                availabilityMetricSettingValueInstance.AvailabilityMetrics.Add(nameConfigInstance3);
+                                                
+                                                JToken nameValue3 = availabilityMetricsValue["Name"];
+                                                if (nameValue3 != null)
+                                                {
+                                                    string nameInstance3 = (string)nameValue3;
+                                                    nameConfigInstance3.Name = nameInstance3;
+                                                }
+                                                
+                                                JToken displayNameValue3 = availabilityMetricsValue["DisplayName"];
+                                                if (displayNameValue3 != null)
+                                                {
+                                                    string displayNameInstance3 = (string)displayNameValue3;
+                                                    nameConfigInstance3.DisplayName = displayNameInstance3;
+                                                }
+                                            }
+                                        }
+                                        
                                         JArray endpointsArray = (JArray)valueValue2["Endpoints"];
                                         if (endpointsArray != null)
                                         {
@@ -1872,33 +1916,40 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                             {
                                                 EndpointConfig endpointConfigInstance = new EndpointConfig();
                                                 availabilityMetricSettingValueInstance.Endpoints.Add(endpointConfigInstance);
-
+                                                
                                                 JToken configIdValue = endpointsValue["ConfigId"];
                                                 if (configIdValue != null)
                                                 {
                                                     string configIdInstance = (string)configIdValue;
                                                     endpointConfigInstance.ConfigId = configIdInstance;
                                                 }
-
-                                                JToken nameValue2 = endpointsValue["Name"];
-                                                if (nameValue2 != null)
+                                                
+                                                JToken nameValue4 = endpointsValue["Name"];
+                                                if (nameValue4 != null)
                                                 {
-                                                    string nameInstance2 = (string)nameValue2;
-                                                    endpointConfigInstance.Name = nameInstance2;
+                                                    string nameInstance4 = (string)nameValue4;
+                                                    endpointConfigInstance.Name = nameInstance4;
                                                 }
-
+                                                
                                                 JToken locationValue = endpointsValue["Location"];
                                                 if (locationValue != null)
                                                 {
                                                     string locationInstance = (string)locationValue;
                                                     endpointConfigInstance.Location = locationInstance;
                                                 }
-
+                                                
                                                 JToken urlValue = endpointsValue["Url"];
                                                 if (urlValue != null)
                                                 {
                                                     Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
                                                     endpointConfigInstance.Url = urlInstance;
+                                                }
+                                                
+                                                JToken testIntervalInSecondsValue = endpointsValue["TestIntervalInSeconds"];
+                                                if (testIntervalInSecondsValue != null)
+                                                {
+                                                    int testIntervalInSecondsInstance = (int)testIntervalInSecondsValue;
+                                                    endpointConfigInstance.TestIntervalInSeconds = testIntervalInSecondsInstance;
                                                 }
                                             }
                                         }
@@ -1908,7 +1959,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             }
                         }
                     }
-
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -1932,7 +1983,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
         }
     }
-
+    
     public partial interface IMetricValueOperations
     {
         /// <summary>
@@ -1965,7 +2016,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// </returns>
         Task<MetricValueListResponse> ListAsync(string resourceId, IList<string> metricNames, string metricNamespace, TimeSpan timeGrain, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
     }
-
+    
     public static partial class MetricValueOperationsExtensions
     {
         /// <summary>
@@ -2015,7 +2066,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 }
             }
         }
-
+        
         /// <summary>
         /// The List Metric Value operation lists the metric value sets for the
         /// resource metrics.
@@ -2050,7 +2101,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             return operations.ListAsync(resourceId, metricNames, metricNamespace, timeGrain, startTime, endTime, CancellationToken.None);
         }
     }
-
+    
     internal partial class MetricValueOperations : IServiceOperations<MetricsClient>, IMetricValueOperations
     {
         /// <summary>
@@ -2063,9 +2114,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             this._client = client;
         }
-
+        
         private MetricsClient _client;
-
+        
         /// <summary>
         /// Gets a reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.MetricsClient.
@@ -2074,7 +2125,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             get { return this._client; }
         }
-
+        
         /// <summary>
         /// The List Metric Value operation lists the metric value sets for the
         /// resource metrics.
@@ -2118,7 +2169,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             {
                 throw new ArgumentException("metricNames cannot be empty.");
             }
-
+            
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
@@ -2134,7 +2185,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 tracingParameters.Add("endTime", endTime);
                 Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricvalues/query?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
@@ -2146,7 +2197,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             url = url + "&timeGrain=" + Uri.EscapeUriString(TypeConversion.To8601String(timeGrain));
             url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()));
             url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime()));
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -2154,15 +2205,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-10-01");
-
+                httpRequest.Headers.Add("x-ms-version", "2012-08-01");
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -2188,7 +2239,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     MetricValueListResponse result = new MetricValueListResponse();
                     result.StatusCode = statusCode;
@@ -2196,17 +2247,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     JToken responseDoc = JToken.Parse(responseContent);
-
+                    
                     if (responseDoc != null)
                     {
                         MetricValueSetCollection metricValueSetCollectionInstance = new MetricValueSetCollection();
                         result.MetricValueSetCollection = metricValueSetCollectionInstance;
-
+                        
                         JArray valueArray = (JArray)responseDoc["Value"];
                         if (valueArray != null)
                         {
@@ -2214,63 +2265,63 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             {
                                 MetricValueSet metricValueSetInstance = new MetricValueSet();
                                 metricValueSetCollectionInstance.Value.Add(metricValueSetInstance);
-
+                                
                                 JToken nameValue = valueValue["Name"];
                                 if (nameValue != null)
                                 {
                                     string nameInstance = (string)nameValue;
                                     metricValueSetInstance.Name = nameInstance;
                                 }
-
+                                
                                 JToken namespaceValue = valueValue["Namespace"];
                                 if (namespaceValue != null)
                                 {
                                     string namespaceInstance = (string)namespaceValue;
                                     metricValueSetInstance.Namespace = namespaceInstance;
                                 }
-
+                                
                                 JToken displayNameValue = valueValue["DisplayName"];
                                 if (displayNameValue != null)
                                 {
                                     string displayNameInstance = (string)displayNameValue;
                                     metricValueSetInstance.DisplayName = displayNameInstance;
                                 }
-
+                                
                                 JToken unitValue = valueValue["Unit"];
                                 if (unitValue != null)
                                 {
                                     string unitInstance = (string)unitValue;
                                     metricValueSetInstance.Unit = unitInstance;
                                 }
-
+                                
                                 JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
                                 if (primaryAggregationValue != null)
                                 {
                                     string primaryAggregationInstance = (string)primaryAggregationValue;
                                     metricValueSetInstance.PrimaryAggregation = primaryAggregationInstance;
                                 }
-
+                                
                                 JToken timeGrainValue = valueValue["TimeGrain"];
                                 if (timeGrainValue != null)
                                 {
-                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                    TimeSpan timeGrainInstance = TimeSpan.Parse((string)timeGrainValue, CultureInfo.InvariantCulture);
                                     metricValueSetInstance.TimeGrain = timeGrainInstance;
                                 }
-
+                                
                                 JToken startTimeValue = valueValue["StartTime"];
                                 if (startTimeValue != null)
                                 {
                                     DateTime startTimeInstance = (DateTime)startTimeValue;
                                     metricValueSetInstance.StartTime = startTimeInstance;
                                 }
-
+                                
                                 JToken endTimeValue = valueValue["EndTime"];
                                 if (endTimeValue != null)
                                 {
                                     DateTime endTimeInstance = (DateTime)endTimeValue;
                                     metricValueSetInstance.EndTime = endTimeInstance;
                                 }
-
+                                
                                 JArray metricValuesArray = (JArray)valueValue["MetricValues"];
                                 if (metricValuesArray != null)
                                 {
@@ -2278,49 +2329,49 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                     {
                                         MetricValue metricValueInstance = new MetricValue();
                                         metricValueSetInstance.MetricValues.Add(metricValueInstance);
-
+                                        
                                         JToken timestampValue = metricValuesValue["Timestamp"];
                                         if (timestampValue != null)
                                         {
                                             DateTime timestampInstance = (DateTime)timestampValue;
                                             metricValueInstance.Timestamp = timestampInstance;
                                         }
-
+                                        
                                         JToken averageValue = metricValuesValue["Average"];
                                         if (averageValue != null)
                                         {
                                             double averageInstance = (double)averageValue;
                                             metricValueInstance.Average = averageInstance;
                                         }
-
+                                        
                                         JToken minimumValue = metricValuesValue["Minimum"];
                                         if (minimumValue != null)
                                         {
                                             double minimumInstance = (double)minimumValue;
                                             metricValueInstance.Minimum = minimumInstance;
                                         }
-
+                                        
                                         JToken maximumValue = metricValuesValue["Maximum"];
                                         if (maximumValue != null)
                                         {
                                             double maximumInstance = (double)maximumValue;
                                             metricValueInstance.Maximum = maximumInstance;
                                         }
-
+                                        
                                         JToken totalValue = metricValuesValue["Total"];
                                         if (totalValue != null)
                                         {
                                             double totalInstance = (double)totalValue;
                                             metricValueInstance.Total = totalInstance;
                                         }
-
+                                        
                                         JToken annotationValue = metricValuesValue["Annotation"];
                                         if (annotationValue != null)
                                         {
                                             string annotationInstance = (string)annotationValue;
                                             metricValueInstance.Annotation = annotationInstance;
                                         }
-
+                                        
                                         JToken countValue = metricValuesValue["Count"];
                                         if (countValue != null)
                                         {
@@ -2332,7 +2383,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             }
                         }
                     }
-
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);

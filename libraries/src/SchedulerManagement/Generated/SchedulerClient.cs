@@ -539,10 +539,27 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             return this.GetEnumerator();
         }
         
+        /// <summary>
+        /// A job history entry.
+        /// </summary>
         public partial class JobHistoryEntry
         {
+            private JobHistoryActionName _actionName;
+            
+            /// <summary>
+            /// The action of this execution, MainAction or ErrorAction.
+            /// </summary>
+            public JobHistoryActionName ActionName
+            {
+                get { return this._actionName; }
+                set { this._actionName = value; }
+            }
+            
             private DateTime _endTime;
             
+            /// <summary>
+            /// The time the execution attempt concluded.
+            /// </summary>
             public DateTime EndTime
             {
                 get { return this._endTime; }
@@ -551,6 +568,9 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             
             private string _id;
             
+            /// <summary>
+            /// The job id that this history entry is for.
+            /// </summary>
             public string Id
             {
                 get { return this._id; }
@@ -559,6 +579,9 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             
             private string _message;
             
+            /// <summary>
+            /// A description of the result of the execution attempt.
+            /// </summary>
             public string Message
             {
                 get { return this._message; }
@@ -567,14 +590,42 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             
             private int _recordNumber;
             
+            /// <summary>
+            /// The zero-based index of the history entry.
+            /// </summary>
             public int RecordNumber
             {
                 get { return this._recordNumber; }
                 set { this._recordNumber = value; }
             }
             
+            private int _repeatCount;
+            
+            /// <summary>
+            /// The occurrence count of this execution.
+            /// </summary>
+            public int RepeatCount
+            {
+                get { return this._repeatCount; }
+                set { this._repeatCount = value; }
+            }
+            
+            private int _retryCount;
+            
+            /// <summary>
+            /// The retry count of this occurrence.
+            /// </summary>
+            public int RetryCount
+            {
+                get { return this._retryCount; }
+                set { this._retryCount = value; }
+            }
+            
             private DateTime _startTime;
             
+            /// <summary>
+            /// The time the execution attempt began.
+            /// </summary>
             public DateTime StartTime
             {
                 get { return this._startTime; }
@@ -583,14 +634,31 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             
             private JobState _state;
             
+            /// <summary>
+            /// The state of the job: enabled, disabled, faulted, or completed.
+            /// </summary>
             public JobState State
             {
                 get { return this._state; }
                 set { this._state = value; }
             }
             
+            private JobHistoryStatus _status;
+            
+            /// <summary>
+            /// The status of this execution attempt, completed or failed.
+            /// </summary>
+            public JobHistoryStatus Status
+            {
+                get { return this._status; }
+                set { this._status = value; }
+            }
+            
             private DateTime _timestamp;
             
+            /// <summary>
+            /// The time the execution attempt began.
+            /// </summary>
             public DateTime Timestamp
             {
                 get { return this._timestamp; }
@@ -628,6 +696,38 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobGetResponse()
         {
         }
+    }
+    
+    /// <summary>
+    /// The action of this execution, MainAction or ErrorAction.
+    /// </summary>
+    public enum JobHistoryActionName
+    {
+        /// <summary>
+        /// An execution attempt of the primary action.
+        /// </summary>
+        MainAction = 0,
+        
+        /// <summary>
+        /// An execution attempt of the error action.
+        /// </summary>
+        ErrorAction = 1,
+    }
+    
+    /// <summary>
+    /// The status of this execution attempt, completed or failed.
+    /// </summary>
+    public enum JobHistoryStatus
+    {
+        /// <summary>
+        /// A completed execution attempt.
+        /// </summary>
+        Completed = 0,
+        
+        /// <summary>
+        /// A failed execution attempt.
+        /// </summary>
+        Failed = 1,
     }
     
     /// <summary>
@@ -1440,6 +1540,94 @@ namespace Microsoft.WindowsAzure.Scheduler
             if (value == JobActionType.StorageQueue)
             {
                 return "storageQueue";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type JobHistoryActionName.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static JobHistoryActionName ParseJobHistoryActionName(string value)
+        {
+            if (value == "MainAction")
+            {
+                return JobHistoryActionName.MainAction;
+            }
+            if (value == "ErrorAction")
+            {
+                return JobHistoryActionName.ErrorAction;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type JobHistoryActionName to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string JobHistoryActionNameToString(JobHistoryActionName value)
+        {
+            if (value == JobHistoryActionName.MainAction)
+            {
+                return "MainAction";
+            }
+            if (value == JobHistoryActionName.ErrorAction)
+            {
+                return "ErrorAction";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type JobHistoryStatus.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static JobHistoryStatus ParseJobHistoryStatus(string value)
+        {
+            if (value == "completed")
+            {
+                return JobHistoryStatus.Completed;
+            }
+            if (value == "failed")
+            {
+                return JobHistoryStatus.Failed;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type JobHistoryStatus to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string JobHistoryStatusToString(JobHistoryStatus value)
+        {
+            if (value == JobHistoryStatus.Completed)
+            {
+                return "completed";
+            }
+            if (value == JobHistoryStatus.Failed)
+            {
+                return "failed";
             }
             throw new ArgumentOutOfRangeException("value");
         }
@@ -4708,6 +4896,34 @@ namespace Microsoft.WindowsAzure.Scheduler
                             {
                                 string messageInstance = (string)messageValue;
                                 jobHistoryEntryInstance.Message = messageInstance;
+                            }
+                            
+                            JToken statusValue = jobHistoryValue["status"];
+                            if (statusValue != null)
+                            {
+                                JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus((string)statusValue);
+                                jobHistoryEntryInstance.Status = statusInstance;
+                            }
+                            
+                            JToken actionNameValue = jobHistoryValue["actionName"];
+                            if (actionNameValue != null)
+                            {
+                                JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName((string)actionNameValue);
+                                jobHistoryEntryInstance.ActionName = actionNameInstance;
+                            }
+                            
+                            JToken repeatCountValue = jobHistoryValue["repeatCount"];
+                            if (repeatCountValue != null)
+                            {
+                                int repeatCountInstance = (int)repeatCountValue;
+                                jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
+                            }
+                            
+                            JToken retryCountValue = jobHistoryValue["retryCount"];
+                            if (retryCountValue != null)
+                            {
+                                int retryCountInstance = (int)retryCountValue;
+                                jobHistoryEntryInstance.RetryCount = retryCountInstance;
                             }
                         }
                     }
