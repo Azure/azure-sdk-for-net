@@ -13,10 +13,7 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.Net.Http;
 
 namespace Microsoft.WindowsAzure.Common.Tracing.Etw
 {
