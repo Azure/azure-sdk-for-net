@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
             CloudTracingEventSource.Log.Enter(invocationId, instance.ToString(), method, parametersLog);
         }
 
-        public void SendRequest(string invocationId, HttpRequestMessage request)
+        public virtual void SendRequest(string invocationId, HttpRequestMessage request)
         {
             string requestBody = request == null ? string.Empty : request.ToString();
             if (request != null && request.Content != null)
@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
             CloudTracingEventSource.Log.SendRequest(invocationId, requestBody);
         }
 
-        public void ReceiveResponse(string invocationId, HttpResponseMessage response)
+        public virtual void ReceiveResponse(string invocationId, HttpResponseMessage response)
         {
             string responseBody = response == null ? string.Empty : response.ToString();
             if (response != null && response.Content != null)
