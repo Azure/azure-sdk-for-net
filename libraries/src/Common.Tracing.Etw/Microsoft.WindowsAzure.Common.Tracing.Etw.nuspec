@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Common.Tracing.Etw</id>
-    <title>ETW logger for Windows Azure Library</title>
+    <title>Windows Azure Common Library ETW Logger</title>
     <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
