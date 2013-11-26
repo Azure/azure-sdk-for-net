@@ -161,4 +161,4 @@ Issues fixed in 2.1.0.3 :
 
 Issues fixed in 2.1.0.4 :
 
-  - Tables: Do not send the cast operator in the table query filter string since the server rejects empty cast operator as Bad Request.
+  - Tables: Do not send the cast operator in the table query filter string.
