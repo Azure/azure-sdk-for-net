@@ -58,7 +58,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "product", "product", "{CECF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tracing.Etw", "src\Common.Tracing.Etw\Common.Tracing.Etw.csproj", "{50B0A8CE-D290-4EB7-8C6C-16EAAB75225E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tracing.Etw.Test", "src\Common.Tracing.Etw.Test\Common.Tracing.Etw.Test.csproj", "{B2FAA0E6-2643-4011-8CFE-BA28BDFFC7E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tracing.Test", "src\Common.Tracing.Test\Common.Tracing.Test.csproj", "{B2FAA0E6-2643-4011-8CFE-BA28BDFFC7E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Test", "src\Common.Test\Common.Test.csproj", "{CB18ACEB-2825-4884-91FA-05C31AC779FE}"
 EndProject
