@@ -8002,26 +8002,30 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                                 }
                             }
                             
-                            XElement dnsServersSequenceElement = virtualNetworkSitesElement.Element(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
-                            if (dnsServersSequenceElement != null)
+                            XElement dnsElement = virtualNetworkSitesElement.Element(XName.Get("Dns", "http://schemas.microsoft.com/windowsazure"));
+                            if (dnsElement != null)
                             {
-                                foreach (XElement dnsServersElement in dnsServersSequenceElement.Elements(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure")))
+                                XElement dnsServersSequenceElement = dnsElement.Element(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
+                                if (dnsServersSequenceElement != null)
                                 {
-                                    NetworkListResponse.DnsServer dnsServerInstance = new NetworkListResponse.DnsServer();
-                                    virtualNetworkSiteInstance.DnsServers.Add(dnsServerInstance);
-                                    
-                                    XElement nameElement3 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement3 != null)
+                                    foreach (XElement dnsServersElement in dnsServersSequenceElement.Elements(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure")))
                                     {
-                                        string nameInstance3 = nameElement3.Value;
-                                        dnsServerInstance.Name = nameInstance3;
-                                    }
-                                    
-                                    XElement addressElement = dnsServersElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
-                                    if (addressElement != null)
-                                    {
-                                        string addressInstance = addressElement.Value;
-                                        dnsServerInstance.Address = addressInstance;
+                                        NetworkListResponse.DnsServer dnsServerInstance = new NetworkListResponse.DnsServer();
+                                        virtualNetworkSiteInstance.DnsServers.Add(dnsServerInstance);
+                                        
+                                        XElement nameElement3 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement3 != null)
+                                        {
+                                            string nameInstance3 = nameElement3.Value;
+                                            dnsServerInstance.Name = nameInstance3;
+                                        }
+                                        
+                                        XElement addressElement = dnsServersElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
+                                        if (addressElement != null)
+                                        {
+                                            string addressInstance = addressElement.Value;
+                                            dnsServerInstance.Address = addressInstance;
+                                        }
                                     }
                                 }
                             }
