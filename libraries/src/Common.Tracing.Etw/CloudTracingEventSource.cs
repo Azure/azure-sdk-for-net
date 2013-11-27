@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 
 namespace Microsoft.WindowsAzure.Common.Tracing.Etw
@@ -21,9 +22,22 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
     /// Class that inherits from EventSource and is used as a data model for ETW events.
     /// </summary>
     [EventSource(Name = "Microsoft-WindowsAzure")]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Internal class used by ETW engine to generate data model.")]
     internal sealed class CloudTracingEventSource : EventSource
     {
-        static public CloudTracingEventSource Log = new CloudTracingEventSource();
+        private static CloudTracingEventSource log;
+
+        public static CloudTracingEventSource Log
+        {
+            get
+            {
+                if (log == null)
+                {
+                    log = new CloudTracingEventSource();
+                }
+                return log;
+            }
+        }
 
         private CloudTracingEventSource() { }
 
@@ -66,7 +80,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
         [Event(7, Level = EventLevel.Informational)]
         public void Exit(string InvocationId, string ReturnValue)
         {
-            WriteEvent(7, InvocationId, ReturnValue);
+            this.WriteEvent(7, InvocationId, ReturnValue);
         }
     }
 }

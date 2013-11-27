@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure
         void SendRequest(string invocationId, HttpRequestMessage request);
 
         /// <summary>
-        /// Receive an HTTP reponse.
+        /// Receive an HTTP response.
         /// </summary>
         /// <param name="invocationId">Method invocation identifier.</param>
         /// <param name="response">The response instance.</param>
