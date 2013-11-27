@@ -25,17 +25,17 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Internal class used by ETW engine to generate data model.")]
     internal sealed class CloudTracingEventSource : EventSource
     {
-        private static CloudTracingEventSource log;
+        private static CloudTracingEventSource _log;
 
         public static CloudTracingEventSource Log
         {
             get
             {
-                if (log == null)
+                if (_log == null)
                 {
-                    log = new CloudTracingEventSource();
+                    _log = new CloudTracingEventSource();
                 }
-                return log;
+                return _log;
             }
         }
 
