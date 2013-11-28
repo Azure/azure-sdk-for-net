@@ -95,7 +95,20 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Root -->
-    <Compile Include="..\Common\*.cs" />
+    <Compile Include="..\Common\AccessCondition.cs" />
+    <Compile Include="..\Common\CloudStorageAccount.cs" />
+    <Compile Include="..\Common\DoesServiceRequest.cs" />
+    <Compile Include="..\Common\IContinuationToken.cs" />
+    <Compile Include="..\Common\IRequestOptions.cs" />
+    <Compile Include="..\Common\OperationContext.cs" />
+    <Compile Include="..\Common\RequestEventArgs.cs" />
+    <Compile Include="..\Common\RequestResult.cs" />
+    <Compile Include="..\Common\ResultSegment.cs" />
+    <Compile Include="..\Common\StorageException.cs" />
+    <Compile Include="..\Common\StorageExtendedErrorInformation.cs" />
+    <Compile Include="..\Common\RequestInterceptor.cs">
+      <Link>RequestInterceptor.cs</Link>
+    </Compile>
     <!-- Auth -->
     <Compile Include="..\Common\Auth\*.cs">
       <Link>Auth\Auth</Link>
