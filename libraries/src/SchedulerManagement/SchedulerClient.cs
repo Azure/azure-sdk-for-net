@@ -453,39 +453,25 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     /// </summary>
     public partial class JobGetHistoryParameters
     {
-        private int? _skip;
+        private int _skip;
         
         /// <summary>
-        /// By default the top 100 history entries will be returned in a call
-        /// to GET job history. A maximum of 1000 history entries can be
-        /// returned in any call.  To get history entries beyond 1000 entries
-        /// use $skip.
+        /// Specify the (0-based) index of the history list from which to begin
+        /// requesting entries.
         /// </summary>
-        public int? Skip
+        public int Skip
         {
             get { return this._skip; }
             set { this._skip = value; }
         }
         
-        private Microsoft.WindowsAzure.Scheduler.Models.JobState? _state;
+        private int _top;
         
         /// <summary>
-        /// Filter the job history to have it only return job histories of a
-        /// particular state.
+        /// Specify the number of history entries to request, in the of range
+        /// [1..100].
         /// </summary>
-        public Microsoft.WindowsAzure.Scheduler.Models.JobState? State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private int? _top;
-        
-        /// <summary>
-        /// To receive more or less than the default number of entries in a
-        /// call then use the $top OData operation.
-        /// </summary>
-        public int? Top
+        public int Top
         {
             get { return this._top; }
             set { this._top = value; }
@@ -539,10 +525,27 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             return this.GetEnumerator();
         }
         
+        /// <summary>
+        /// A job history entry.
+        /// </summary>
         public partial class JobHistoryEntry
         {
+            private JobHistoryActionName _actionName;
+            
+            /// <summary>
+            /// The action of this execution, MainAction or ErrorAction.
+            /// </summary>
+            public JobHistoryActionName ActionName
+            {
+                get { return this._actionName; }
+                set { this._actionName = value; }
+            }
+            
             private DateTime _endTime;
             
+            /// <summary>
+            /// The time the execution attempt concluded.
+            /// </summary>
             public DateTime EndTime
             {
                 get { return this._endTime; }
@@ -551,6 +554,9 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             
             private string _id;
             
+            /// <summary>
+            /// The job id that this history entry is for.
+            /// </summary>
             public string Id
             {
                 get { return this._id; }
@@ -559,6 +565,9 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             
             private string _message;
             
+            /// <summary>
+            /// A description of the result of the execution attempt.
+            /// </summary>
             public string Message
             {
                 get { return this._message; }
@@ -567,14 +576,42 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             
             private int _recordNumber;
             
+            /// <summary>
+            /// The zero-based index of the history entry.
+            /// </summary>
             public int RecordNumber
             {
                 get { return this._recordNumber; }
                 set { this._recordNumber = value; }
             }
             
+            private int _repeatCount;
+            
+            /// <summary>
+            /// The occurrence count of this execution.
+            /// </summary>
+            public int RepeatCount
+            {
+                get { return this._repeatCount; }
+                set { this._repeatCount = value; }
+            }
+            
+            private int _retryCount;
+            
+            /// <summary>
+            /// The retry count of this occurrence.
+            /// </summary>
+            public int RetryCount
+            {
+                get { return this._retryCount; }
+                set { this._retryCount = value; }
+            }
+            
             private DateTime _startTime;
             
+            /// <summary>
+            /// The time the execution attempt began.
+            /// </summary>
             public DateTime StartTime
             {
                 get { return this._startTime; }
@@ -583,14 +620,31 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             
             private JobState _state;
             
+            /// <summary>
+            /// The state of the job: enabled, disabled, faulted, or completed.
+            /// </summary>
             public JobState State
             {
                 get { return this._state; }
                 set { this._state = value; }
             }
             
+            private JobHistoryStatus _status;
+            
+            /// <summary>
+            /// The status of this execution attempt, completed or failed.
+            /// </summary>
+            public JobHistoryStatus Status
+            {
+                get { return this._status; }
+                set { this._status = value; }
+            }
+            
             private DateTime _timestamp;
             
+            /// <summary>
+            /// The time the execution attempt began.
+            /// </summary>
             public DateTime Timestamp
             {
                 get { return this._timestamp; }
@@ -603,6 +657,32 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             public JobHistoryEntry()
             {
             }
+        }
+    }
+    
+    /// <summary>
+    /// Parameters supplied to the Get Job History With Filter operation.
+    /// </summary>
+    public partial class JobGetHistoryWithFilterParameters : JobGetHistoryParameters
+    {
+        private JobHistoryStatus _status;
+        
+        /// <summary>
+        /// Filter the job history to have it only return job execution
+        /// attempts having a particular Status, 'completed' or 'failed'.
+        /// </summary>
+        public JobHistoryStatus Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobGetHistoryWithFilterParameters
+        /// class.
+        /// </summary>
+        public JobGetHistoryWithFilterParameters()
+        {
         }
     }
     
@@ -628,6 +708,38 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobGetResponse()
         {
         }
+    }
+    
+    /// <summary>
+    /// The action of this execution, MainAction or ErrorAction.
+    /// </summary>
+    public enum JobHistoryActionName
+    {
+        /// <summary>
+        /// An execution attempt of the primary action.
+        /// </summary>
+        MainAction = 0,
+        
+        /// <summary>
+        /// An execution attempt of the error action.
+        /// </summary>
+        ErrorAction = 1,
+    }
+    
+    /// <summary>
+    /// The status of this execution attempt, completed or failed.
+    /// </summary>
+    public enum JobHistoryStatus
+    {
+        /// <summary>
+        /// A completed execution attempt.
+        /// </summary>
+        Completed = 0,
+        
+        /// <summary>
+        /// A failed execution attempt.
+        /// </summary>
+        Failed = 1,
     }
     
     /// <summary>
@@ -1198,6 +1310,25 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         }
     }
     
+    public partial class PatchJobCollectionJobsUpdateStateParameters
+    {
+        private Patchable<JobState> _state;
+        
+        public Patchable<JobState> State
+        {
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// PatchJobCollectionJobsUpdateStateParameters class.
+        /// </summary>
+        public PatchJobCollectionJobsUpdateStateParameters()
+        {
+        }
+    }
+    
     /// <summary>
     /// Retry Policy for the job action.
     /// </summary>
@@ -1440,6 +1571,94 @@ namespace Microsoft.WindowsAzure.Scheduler
             if (value == JobActionType.StorageQueue)
             {
                 return "storageQueue";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type JobHistoryActionName.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static JobHistoryActionName ParseJobHistoryActionName(string value)
+        {
+            if (value == "MainAction")
+            {
+                return JobHistoryActionName.MainAction;
+            }
+            if (value == "ErrorAction")
+            {
+                return JobHistoryActionName.ErrorAction;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type JobHistoryActionName to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string JobHistoryActionNameToString(JobHistoryActionName value)
+        {
+            if (value == JobHistoryActionName.MainAction)
+            {
+                return "MainAction";
+            }
+            if (value == JobHistoryActionName.ErrorAction)
+            {
+                return "ErrorAction";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type JobHistoryStatus.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static JobHistoryStatus ParseJobHistoryStatus(string value)
+        {
+            if (value == "completed")
+            {
+                return JobHistoryStatus.Completed;
+            }
+            if (value == "failed")
+            {
+                return JobHistoryStatus.Failed;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type JobHistoryStatus to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string JobHistoryStatusToString(JobHistoryStatus value)
+        {
+            if (value == JobHistoryStatus.Completed)
+            {
+                return "completed";
+            }
+            if (value == JobHistoryStatus.Failed)
+            {
+                return "failed";
             }
             throw new ArgumentOutOfRangeException("value");
         }
@@ -1795,6 +2014,23 @@ namespace Microsoft.WindowsAzure.Scheduler
         Task<JobGetHistoryResponse> GetHistoryAsync(string jobId, JobGetHistoryParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Job history tracks the updates and executions of a job.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Id of the job to get the history of.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Get Job History With Filter operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Job History operation response.
+        /// </returns>
+        Task<JobGetHistoryResponse> GetHistoryWithFilterAsync(string jobId, JobGetHistoryWithFilterParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Fetch all jobs in a job collection.
         /// </summary>
         /// <param name='parameters'>
@@ -1823,7 +2059,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(JobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken);
+        Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(PatchJobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Jobs can be updated through a simple PATCH operation to a job's
@@ -2115,6 +2351,60 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
+        /// Job history tracks the updates and executions of a job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Id of the job to get the history of.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Get Job History With Filter operation.
+        /// </param>
+        /// <returns>
+        /// The Get Job History operation response.
+        /// </returns>
+        public static JobGetHistoryResponse GetHistoryWithFilter(this IJobOperations operations, string jobId, JobGetHistoryWithFilterParameters parameters)
+        {
+            try
+            {
+                return operations.GetHistoryWithFilterAsync(jobId, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Job history tracks the updates and executions of a job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
+        /// </param>
+        /// <param name='jobId'>
+        /// Id of the job to get the history of.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Get Job History With Filter operation.
+        /// </param>
+        /// <returns>
+        /// The Get Job History operation response.
+        /// </returns>
+        public static Task<JobGetHistoryResponse> GetHistoryWithFilterAsync(this IJobOperations operations, string jobId, JobGetHistoryWithFilterParameters parameters)
+        {
+            return operations.GetHistoryWithFilterAsync(jobId, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Fetch all jobs in a job collection.
         /// </summary>
         /// <param name='operations'>
@@ -2177,7 +2467,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        public static JobCollectionJobsUpdateStateResponse UpdateJobCollectionState(this IJobOperations operations, JobCollectionJobsUpdateStateParameters parameters)
+        public static JobCollectionJobsUpdateStateResponse UpdateJobCollectionState(this IJobOperations operations, PatchJobCollectionJobsUpdateStateParameters parameters)
         {
             try
             {
@@ -2211,7 +2501,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        public static Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(this IJobOperations operations, JobCollectionJobsUpdateStateParameters parameters)
+        public static Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(this IJobOperations operations, PatchJobCollectionJobsUpdateStateParameters parameters)
         {
             return operations.UpdateJobCollectionStateAsync(parameters, CancellationToken.None);
         }
@@ -4585,19 +4875,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?api-version=2013-10-31_Preview";
-            if (parameters.State != null)
-            {
-                url = url + "&state=" + Uri.EscapeUriString(SchedulerClient.JobStateToString(parameters.State.Value));
-            }
-            if (parameters.Skip != null)
-            {
-                url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.Value.ToString());
-            }
-            if (parameters.Top != null)
-            {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
-            }
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?api-version=2013-10-31_Preview&$skip=" + parameters.Skip + "&$top=" + parameters.Top;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4708,6 +4986,240 @@ namespace Microsoft.WindowsAzure.Scheduler
                             {
                                 string messageInstance = (string)messageValue;
                                 jobHistoryEntryInstance.Message = messageInstance;
+                            }
+                            
+                            JToken statusValue = jobHistoryValue["status"];
+                            if (statusValue != null)
+                            {
+                                JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus((string)statusValue);
+                                jobHistoryEntryInstance.Status = statusInstance;
+                            }
+                            
+                            JToken actionNameValue = jobHistoryValue["actionName"];
+                            if (actionNameValue != null)
+                            {
+                                JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName((string)actionNameValue);
+                                jobHistoryEntryInstance.ActionName = actionNameInstance;
+                            }
+                            
+                            JToken repeatCountValue = jobHistoryValue["repeatCount"];
+                            if (repeatCountValue != null)
+                            {
+                                int repeatCountInstance = (int)repeatCountValue;
+                                jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
+                            }
+                            
+                            JToken retryCountValue = jobHistoryValue["retryCount"];
+                            if (retryCountValue != null)
+                            {
+                                int retryCountInstance = (int)retryCountValue;
+                                jobHistoryEntryInstance.RetryCount = retryCountInstance;
+                            }
+                        }
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Job history tracks the updates and executions of a job.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Id of the job to get the history of.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Get Job History With Filter operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Job History operation response.
+        /// </returns>
+        public async Task<JobGetHistoryResponse> GetHistoryWithFilterAsync(string jobId, JobGetHistoryWithFilterParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (jobId == null)
+            {
+                throw new ArgumentNullException("jobId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "GetHistoryWithFilterAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?api-version=2013-10-31_Preview&$filter=status eq " + parameters.Status + "&$skip=" + parameters.Skip + "&$top=" + parameters.Top;
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    JobGetHistoryResponse result = new JobGetHistoryResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    JArray jobHistoryArray = (JArray)responseDoc;
+                    if (jobHistoryArray != null)
+                    {
+                        foreach (JToken jobHistoryValue in jobHistoryArray)
+                        {
+                            JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
+                            result.JobHistory.Add(jobHistoryEntryInstance);
+                            
+                            JToken jobIdValue = jobHistoryValue["jobId"];
+                            if (jobIdValue != null)
+                            {
+                                string jobIdInstance = (string)jobIdValue;
+                                jobHistoryEntryInstance.Id = jobIdInstance;
+                            }
+                            
+                            JToken recordNumberValue = jobHistoryValue["recordNumber"];
+                            if (recordNumberValue != null)
+                            {
+                                int recordNumberInstance = (int)recordNumberValue;
+                                jobHistoryEntryInstance.RecordNumber = recordNumberInstance;
+                            }
+                            
+                            JToken timestampValue = jobHistoryValue["timestamp"];
+                            if (timestampValue != null)
+                            {
+                                DateTime timestampInstance = (DateTime)timestampValue;
+                                jobHistoryEntryInstance.Timestamp = timestampInstance;
+                            }
+                            
+                            JToken startTimeValue = jobHistoryValue["startTime"];
+                            if (startTimeValue != null)
+                            {
+                                DateTime startTimeInstance = (DateTime)startTimeValue;
+                                jobHistoryEntryInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken endTimeValue = jobHistoryValue["endTime"];
+                            if (endTimeValue != null)
+                            {
+                                DateTime endTimeInstance = (DateTime)endTimeValue;
+                                jobHistoryEntryInstance.EndTime = endTimeInstance;
+                            }
+                            
+                            JToken stateValue = jobHistoryValue["state"];
+                            if (stateValue != null)
+                            {
+                                JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
+                                jobHistoryEntryInstance.State = stateInstance;
+                            }
+                            
+                            JToken messageValue = jobHistoryValue["message"];
+                            if (messageValue != null)
+                            {
+                                string messageInstance = (string)messageValue;
+                                jobHistoryEntryInstance.Message = messageInstance;
+                            }
+                            
+                            JToken statusValue = jobHistoryValue["status"];
+                            if (statusValue != null)
+                            {
+                                JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus((string)statusValue);
+                                jobHistoryEntryInstance.Status = statusInstance;
+                            }
+                            
+                            JToken actionNameValue = jobHistoryValue["actionName"];
+                            if (actionNameValue != null)
+                            {
+                                JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName((string)actionNameValue);
+                                jobHistoryEntryInstance.ActionName = actionNameInstance;
+                            }
+                            
+                            JToken repeatCountValue = jobHistoryValue["repeatCount"];
+                            if (repeatCountValue != null)
+                            {
+                                int repeatCountInstance = (int)repeatCountValue;
+                                jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
+                            }
+                            
+                            JToken retryCountValue = jobHistoryValue["retryCount"];
+                            if (retryCountValue != null)
+                            {
+                                int retryCountInstance = (int)retryCountValue;
+                                jobHistoryEntryInstance.RetryCount = retryCountInstance;
                             }
                         }
                     }
@@ -5261,7 +5773,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        public async Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(JobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
+        public async Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(PatchJobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -5305,8 +5817,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                 JObject jobCollectionJobsUpdateStateParametersValue = new JObject();
                 requestDoc = jobCollectionJobsUpdateStateParametersValue;
                 
-                JToken stateValue = SchedulerClient.JobStateToString(parameters.State);
-                jobCollectionJobsUpdateStateParametersValue["state"] = stateValue;
+                if (parameters.State.IsIncluded)
+                {
+                    JToken stateValue = SchedulerClient.JobStateToString(parameters.State);
+                    jobCollectionJobsUpdateStateParametersValue["state"] = stateValue;
+                }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
