@@ -37,6 +37,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Microsoft.WindowsAzure.Management.CloudServices.Specification.dll" />
+    <Content Include="Microsoft.WindowsAzure.Management.Scheduler.Specification.dll" />
     <None Include="cloudservices.hydra.xml" />
     <Content Include="hydra.xml" />
     <None Include="scheduler.hydra.xml" />

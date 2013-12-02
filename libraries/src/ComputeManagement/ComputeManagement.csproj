@@ -38,6 +38,7 @@
     <Content Include="hydra.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Microsoft.WindowsAzure.Management.Compute.Specification.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
