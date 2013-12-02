@@ -6,7 +6,7 @@
     <ProductFriendlyName>Windows Azure Management Libraries</ProductFriendlyName>
     <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
   </PropertyGroup>
-  
+
   <!--
   NuGet Packages
   -->
@@ -22,7 +22,7 @@
     Builds the .NET solution using the development key pair.
     Does not drop into the binaries folder.
 
-  /t:OfficialBuild  
+  /t:OfficialBuild
     Builds officially delay signed binaries.
     Drops into the binaries\unsigned folder.
 
@@ -32,7 +32,7 @@
 
   /t:PublishPackages
     Publishes the built packages. You will need to include your
-    publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY 
+    publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY
 
   Targets for build servers:
   /t:NightlyBuild
@@ -41,7 +41,7 @@
 
   Properties of interest:
 
-  /p:BuildVersionSuffix=BUILD_SUFFIX  
+  /p:BuildVersionSuffix=BUILD_SUFFIX
     Inserts a string suffix value at the end of all the NuGet package versions
     built and published.
 
@@ -88,12 +88,12 @@
     <AdditionalVersionSuffix></AdditionalVersionSuffix>
   </PropertyGroup>
 
-  <!-- 
+  <!--
     Compliance signing properties
     - - -
     Developer builds are signed using the c66ce9294aae1300 full key pair that
     is unofficial and provided to the public via the Development.snk key pair.
-    
+
     Official builds should never be shipped with the developer key pair token.
     -->
   <PropertyGroup>
@@ -119,7 +119,7 @@
   <!--
   Regular developer build
   -->
-  <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies">
+  <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies;RestorePackages">
     <MSBuild Projects="$(ProductSolution)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
@@ -145,16 +145,16 @@
   An official build is designed for use while shipping. It generates a release
   build and places binaries ready for the official Microsoft signing process
   inside the binaries\unsigned folder.
-  
+
   After signing is complete, additional work is required to prepare the NuGet
   packages for shipping.
-  
+
   This target can be run on any machine, but only on-premise build servers will
   be able to generate and ship a complete product build as this is only part of
   the story.
   -->
   <Target Name="OfficialBuild"
-          DependsOnTargets="BuildEngineeringDependencies;Clean">
+          DependsOnTargets="BuildEngineeringDependencies;Clean;RestorePackages">
     <CallTarget Targets="BuildServerPreparation" />
     <MSBuild Projects="$(ProductSolution)"
              Properties="$(OfficialMSBuildProperties)"
@@ -162,6 +162,25 @@
     <MSBuild Projects="$(ProductSolution)"
              Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
+  </Target>
+
+  <!--
+  Several of the nuget packages this build depends on include .targets files.
+  These packages cannot rely on the standard nuget package restore because
+  those .targets files must be present at sln/csproj load time, while package
+  restore happens after that point.
+
+  This target sidesteps that by specifically invoking package restore.
+  -->
+  <Target Name="RestorePackages">
+    <ItemGroup>
+      <ProjToRestore Include="src/**/*.csproj"
+        Exclude="src/**/Configuration.csproj" /> <!-- this project doesn't use nuget -->
+    </ItemGroup>
+    <Message Text="Projects = @(ProjToRestore)" />
+    <MSBuild Projects="%(ProjToRestore.Identity)" Targets="RestorePackages"
+     Properties="PackageSource=https://www.myget.org/F/Hydra/"
+     ContinueOnError="true"/>
   </Target>
 
   <!--
@@ -174,7 +193,7 @@
     <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
     <CallTarget Targets="OfficialSignedBuild; PublishPackages" />
   </Target>
-  
+
   <Target Name="NightlyBuildSetProperties"
           DependsOnTargets="GetGeneratedBuildDate">
     <Message Text="Nightly builds today have the date of $(GeneratedBuildDate)." />
@@ -196,7 +215,7 @@
       <Output PropertyName="BuildVersionSuffix" TaskParameter="Value" />
     </CreateProperty>
   </Target>
-  
+
   <!--
   Perform an on-premise official build server drop of this project. Sign the
   generated binaries, build officially-versioned packages, perform compliance
@@ -331,7 +350,7 @@
     <Message Text="Build Server Information" Importance="high" />
     <Message Text="Hostname      : $(COMPUTERNAME)" />
     <Message Text="Build Account : $(USERDOMAIN)\$(USERNAME)" />
-    
+
     <!-- Useful variables to log -->
     <Message Text="Build Properties and Variables" Importance="high" />
     <Message Text="Solution      : $(ProductSolution)" />
@@ -343,18 +362,18 @@
   </Target>
 
   <!--
-  Burn the build information into the assembly file information, NuGet specs, 
+  Burn the build information into the assembly file information, NuGet specs,
   and other source files before beginning a build.
-  
+
   This updates the AssemblyFileVersion for .NET assemblies. This is not the
   same thing as an AssemblyVersion; it is only used typically by test teams and
   developers when reporting bugs and associating a build to report.
-  
+
   WARNING:
   This target actively modifies source files and should only be used in build
   server scenarios where the source tree is archived or discarded after use,
   but not used again for additional builds.
-  
+
   If you accidentally run this within your enlistment, revert AssemblyInfo.cs
   changes before commiting to Git.
   -->
