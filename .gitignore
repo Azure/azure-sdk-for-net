@@ -114,6 +114,3 @@ libraries/packages
 
 # Mac development
 .DS_Store
-
-# Spec DLLs
-*.Specification.dll
