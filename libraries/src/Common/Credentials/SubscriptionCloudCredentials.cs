@@ -13,10 +13,6 @@
 // limitations under the License.
 //
 
-using System;
-using System.Net.Http;
-using Microsoft.WindowsAzure.Common;
-
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
@@ -26,9 +22,10 @@ namespace Microsoft.WindowsAzure
         : CloudCredentials
     {
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management API.
+        /// Gets subscription ID - a unique identifier for Windows 
+        /// Azure subscription. The subscription ID forms part of 
+        /// the URI for every call that is made to the Service 
+        /// Management API.
         /// </summary>
         public abstract string SubscriptionId { get; }
     }

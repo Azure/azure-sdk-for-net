@@ -23,10 +23,10 @@ namespace Microsoft.WindowsAzure.Common
     {
         public string Name
         {
-	        get { return "connection"; }
+            get { return "connection"; }
         }
 
-        public IDictionary<string,object> Parse(string settings)
+        public IDictionary<string, object> Parse(string settings)
         {
             if (settings == null)
             {
@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Common
             {
                 parameters[setting.Key] = setting.Value;
             }
-            return parameters; 
+            return parameters;
         }
     }
 }

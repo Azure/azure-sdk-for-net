@@ -17,6 +17,10 @@ using System;
 
 namespace Microsoft.WindowsAzure.Common.Internals
 {
+    /// <summary>
+    /// Wrapper class that provides manual reference count functionality
+    /// </summary>
+    /// <typeparam name="T">Type to wrap around. Must be disposable.</typeparam>
     public class DisposableReference<T>
         : IDisposable
         where T : class, IDisposable
@@ -40,14 +44,14 @@ namespace Microsoft.WindowsAzure.Common.Internals
         {
             lock (_lock)
             {
-               ReferenceCount++;
+                ReferenceCount++;
             }
         }
 
         public void ReleaseReference()
         {
             lock (_lock)
-            {                
+            {
                 if (ReferenceCount == 0)
                 {
                     throw new ObjectDisposedException(typeof(T).FullName);

@@ -50,6 +50,7 @@
         <StringProperty Name="CompanyName">Microsoft</StringProperty>
         <StringProperty Name="Copyright">[###LICENSE_NAME###]</StringProperty>
         <BooleanProperty Name="IgnorePrivates">True</BooleanProperty>
+        <BooleanProperty Name="IgnoreInternals">True</BooleanProperty>
       </AnalyzerSettings>
     </Analyzer>
     <Analyzer AnalyzerId="StyleCop.CSharp.LayoutRules">

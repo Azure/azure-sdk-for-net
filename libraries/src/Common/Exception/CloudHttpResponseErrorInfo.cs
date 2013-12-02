@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Common
         /// <summary>
         /// Creates a new CloudHttpResponseErrorInfo from a HttpResponseMessage.
         /// </summary>
-        /// <param name="response">The resposne message.</param>
+        /// <param name="response">The response message.</param>
         /// <returns>A CloudHttpResponseErrorInfo instance.</returns>
         public static CloudHttpResponseErrorInfo Create(HttpResponseMessage response)
         {
@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure.Common
         /// <summary>
         /// Creates a new CloudHttpResponseErrorInfo from a HttpResponseMessage.
         /// </summary>
-        /// <param name="response">The resposne message.</param>
+        /// <param name="response">The response message.</param>
         /// <param name="content">
         /// The response content, which may be passed separately if the
         /// response has already been disposed.
