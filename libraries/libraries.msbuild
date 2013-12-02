@@ -177,7 +177,17 @@
       <ProjToRestore Include="src/**/*.csproj"
         Exclude="src/**/Configuration.csproj" /> <!-- this project doesn't use nuget -->
     </ItemGroup>
-    <Message Text="Projects = @(ProjToRestore)" />
+
+    <Error Text="The PRIVATE_FEED_URL environment variable must be set" Condition="'$(PRIVATE_FEED_URL)' == ''" />
+    <Error Text="The PRIVATE_FEED_USER_NAME environment variable must be set" Condition="'$(PRIVATE_FEED_USER_NAME)' == ''" />
+    <Error Text="The PRIVATE_FEED_PASSWORD environment variable must be set" Condition="'$(PRIVATE_FEED_PASSWORD)' == ''" />
+
+    <!-- add private feed to nuget sources so the rest of this works -->
+    <Exec Command=".\.nuget\nuget.exe sources add -Name $(PRIVATE_FEED_URL) -Source $(PRIVATE_FEED_URL)" WorkingDirectory=""
+      ContinueOnError="true"/>
+    <Exec Command=".\.nuget\nuget.exe sources update -Name $(PRIVATE_FEED_URL) -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot;"
+      EchoOff="true" />
+
     <MSBuild Projects="%(ProjToRestore.Identity)" Targets="RestorePackages"
      Properties="PackageSource=https://www.myget.org/F/Hydra/"
      ContinueOnError="true"/>
