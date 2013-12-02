@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+
+  <PropertyGroup Condition="$(GetSpecFromNuGet) == ''">
+    <SpecAssemblyPath>..\$(SpecAssemblyProjectDirName)\bin\$(Configuration)\$(SpecAssemblyFileName)</SpecAssemblyPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(GetSpecFromNuGet) != ''">
+    <RestoreConfigFile>restore.config</RestoreConfigFile>
+    <RestoreConfigSwitch Condition="$(UsePrivateFeed) != ''">-ConfigFile $(RestoreConfigFile)</RestoreConfigSwitch>
+    <RestoreConfigSwitch Condition="$(UsePrivateFeed) == ''"></RestoreConfigSwitch>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <HydraExePath Condition="$(HydraExePath)==''">$(MSBuildThisFileDirectory)\..\tools\Hydra.exe</HydraExePath>
+    <!-- support running hydra either on Windows or under mono -->
+    <HydraCommand Condition="$(OS) == 'Windows_NT'">"$(HydraExePath)"</HydraCommand>
+    <HydraCommand Condition="$(OS) != 'Windows_NT'">mono --runtime=v4.0.30319 $(HydraExePath)</HydraCommand>
+  </PropertyGroup>
+
+  <Target Name="EnsureEnvironment">
+    <Error Text="The PRIVATE_FEED_URL property is not set. Either set it in the environment or specify it on the msbuild command line"
+      Condition="'$(PRIVATE_FEED_URL)'==''" ContinueOnError="ErrorAndContinue" />
+    <Error Text="The PRIVATE_FEED_USER_NAME property is not set. Either set it in the environment or specify it on the msbuild command line."
+      Condition="'$(PRIVATE_FEED_USER_NAME)'==''" ContinueOnError="ErrorAndContinue" />
+    <Error Text="The PRIVATE_FEED_PASSWORD property is not set. Either set it in the environment or specify it on the msbuild command line."
+      Condition="'$(PRIVATE_FEED_PASSWORD)'==''" ContinueOnError="ErrorAndContinue" />
+  </Target>
+
+  <Target Name="CreateRestoreConfig" DependsOnTargets="EnsureEnvironment" Condition="'$(UsePrivateFeed)'!=''">
+    <Exec Command='$(NuGetCommand) sources Add -Name Target -Source $(PRIVATE_FEED_URL) $(RestoreConfigSwitch)' />
+    <Exec Command='$(NuGetCommand) sources Update -Name Target -UserName $(PACKAGE_PUBLISHING_USER_NAME) -Password $(PACKAGE_PUBLISHING_PASSWORD) $(RestoreConfigSwitch)'
+      EchoOff="true"/>
+  </Target>
+
+  <Target Name="UpdateSpecDll" DependsOnTargets="CreateRestoreConfig" Condition="$(GetSpecFromNuGet)!=''">
+    <Exec Command="$(NuGetCommand) update $(PackagesConfig) $(RestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
+    <Delete Files="$(RestoreConfigFile)" Condition="'$(UsePrivateFeed)'!=''" />
+  </Target>
+
+  <Target Name="UpdateSpecDll" Condition="$(GetSpecFromNuGet)==''">
+    <Copy SourceFiles="$(SpecAssemblyPath)" DestinationFolder="$(OutputPath)" />
+  </Target>
+
+  <Target Name="GenerateCodeFromSpecs" DependsOnTargets="UpdateSpecDll">
+    <Exec Command="$(HydraCommand)" />
+  </Target>
+</Project>

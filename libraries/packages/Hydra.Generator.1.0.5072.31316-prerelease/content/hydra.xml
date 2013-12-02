@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hydra>
+    <Assembly>Spec assembly name goes here</Assembly>
+    <OutputDirectory>Generated</OutputDirectory>
+
+    <Specification>
+        <Type>REST Client type name goes here</Type>
+
+        <Platform>
+            <Flavor>CSharp.Azure</Flavor>
+            <OutputPath>Output file name goes here</OutputPath>
+        </Platform>
+
+    </Specification>
+</Hydra>
