@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.20905.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
@@ -56,6 +56,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "product", "product", "{CECF
 		src\Microsoft.WindowsAzure.Management.Libraries.nuspec = src\Microsoft.WindowsAzure.Management.Libraries.nuspec
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusManagement", "src\ServiceBusManagement\ServiceBusManagement.csproj", "{4B95E63A-62EB-4C27-BB96-ED8D97B0283C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlManagement", "src\SqlManagement\SqlManagement.csproj", "{74CEEF0C-D9DB-412E-B6AD-F63020C0AC72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagement", "src\StoreManagement\StoreManagement.csproj", "{E9119999-B156-4CE1-A83E-F7778992739B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +108,18 @@ Global
 		{184C2947-DF1E-4991-9465-CF323DA57710}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{184C2947-DF1E-4991-9465-CF323DA57710}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{184C2947-DF1E-4991-9465-CF323DA57710}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B95E63A-62EB-4C27-BB96-ED8D97B0283C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B95E63A-62EB-4C27-BB96-ED8D97B0283C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B95E63A-62EB-4C27-BB96-ED8D97B0283C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B95E63A-62EB-4C27-BB96-ED8D97B0283C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74CEEF0C-D9DB-412E-B6AD-F63020C0AC72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74CEEF0C-D9DB-412E-B6AD-F63020C0AC72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74CEEF0C-D9DB-412E-B6AD-F63020C0AC72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74CEEF0C-D9DB-412E-B6AD-F63020C0AC72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9119999-B156-4CE1-A83E-F7778992739B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9119999-B156-4CE1-A83E-F7778992739B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9119999-B156-4CE1-A83E-F7778992739B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9119999-B156-4CE1-A83E-F7778992739B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +135,9 @@ Global
 		{A3FD3224-3058-48CC-961F-E89D5DCB028D} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{184C2947-DF1E-4991-9465-CF323DA57710} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{4B95E63A-62EB-4C27-BB96-ED8D97B0283C} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{74CEEF0C-D9DB-412E-B6AD-F63020C0AC72} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{E9119999-B156-4CE1-A83E-F7778992739B} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
