@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Diagnostics.Tracing.TraceEvent">
       <HintPath>..\..\packages\Microsoft.Diagnostics.Tracing.TraceEvent.1.0.1-beta\lib\net40\Microsoft.Diagnostics.Tracing.TraceEvent.dll</HintPath>
     </Reference>
@@ -65,16 +68,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Etw\EtwTracingInterceptorTest.cs" />
+    <Compile Include="Log4NetTracingInterceptorTest.cs" />
+    <Compile Include="EtwTracingInterceptorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Tracing.Etw\Common.Tracing.Etw.csproj">
       <Project>{50b0a8ce-d290-4eb7-8c6c-16eaab75225e}</Project>
       <Name>Common.Tracing.Etw</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Tracing.Log4Net\Common.Tracing.Log4Net.csproj">
+      <Project>{e25ce47b-8d78-46ff-8468-7e8d2143685f}</Project>
+      <Name>Common.Tracing.Log4Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>

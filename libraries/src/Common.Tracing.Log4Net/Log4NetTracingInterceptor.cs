@@ -18,6 +18,7 @@ using System.Linq;
 using System.Net.Http;
 using log4net;
 using Microsoft.WindowsAzure;
+using System.IO;
 
 namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
 {
@@ -28,9 +29,18 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
     {
         ILog logger;
 
-        public Log4NetTracingInterceptor()
+        public Log4NetTracingInterceptor(string filePath = null)
         {
             logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+            {
+                log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(filePath));
+            }
+            else
+            {
+                throw new FileNotFoundException(filePath);
+            }
         }
 
         public void Information(string message)
@@ -40,52 +50,39 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
 
         public void Configuration(string source, string name, string value)
         {
-            throw new System.NotImplementedException();
+            logger.DebugFormat("Configuration: source={0}, name={1}, value={2}", source, name, value);
         }
 
         public void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters)
         {
             string parametersLog = ToLogString<string, object>(parameters);
-            logger.InfoFormat(@"invocationId: {0}\r\n
-                                instance: {1}\r\n
-                                method: {2}\r\n
-                                parameters: {3}", invocationId, instance, method, parametersLog);
+            logger.DebugFormat("invocationId: {0}\r\ninstance: {1}\r\nmethod: {2}\r\nparameters: {3}", 
+                invocationId, instance, method, parametersLog);
         }
 
         public void SendRequest(string invocationId, HttpRequestMessage request)
         {
-            logger.Debug("Request Message:");
-            logger.Debug(request);
-            if (request.Content != null)
-            {
-                logger.Debug("Request Body");
-                logger.Debug(request.Content.ReadAsStringAsync().Result);
-            }
-
-            logger.Debug("-----");
+            string requestAsString = request == null ? string.Empty : request.AsFormattedString();
+            logger.DebugFormat("InvocationId: {0}\r\nRequest: {1}", invocationId, requestAsString);
         }
 
         public void ReceiveResponse(string invocationId, HttpResponseMessage response)
         {
-            logger.Debug("Response Message:");
-            logger.Debug(response);
-            if (response.Content != null)
-            {
-                logger.Debug("Response Body");
-                logger.Debug(response.Content.ReadAsStringAsync().Result);
-            }
-            logger.Debug("-----");
+            string requestAsString = response == null ? string.Empty : response.AsFormattedString();
+            logger.DebugFormat("InvocationId: {0}\r\nResponse: {1}", invocationId, requestAsString);
         }
 
         public void Error(string invocationId, System.Exception ex)
         {
-            logger.Error(invocationId, ex);
+            logger.Error("InvocationId: " + invocationId, ex);
         }
 
         public void Exit(string invocationId, object returnValue)
         {
-            logger.Debug(string.Format("Exiting with invocation id {0}, the return value is logged in the next line", invocationId));
-            logger.Debug(returnValue);
+            string returnValueAsString = returnValue == null ? string.Empty : returnValue.ToString();
+            logger.Debug(string.Format("Exit with invocation id {0}, the return value is {1}", 
+                invocationId,
+                returnValueAsString));
         }
 
         /// <summary>

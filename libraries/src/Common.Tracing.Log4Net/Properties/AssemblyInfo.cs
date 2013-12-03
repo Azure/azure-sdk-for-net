@@ -13,15 +13,16 @@
 // limitations under the License.
 //
 
+using System;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Log4Net logger for Windows Azure SDK")]
-[assembly: AssemblyDescription("Provides log4net logger that works with Windows Azure Library.")]
+[assembly: AssemblyTitle("Windows Azure Common Library Log4Net Logger")]
+[assembly: AssemblyDescription("Exposes Windows Azure Libraries events via Log4Net")]
 
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
@@ -30,6 +31,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-
-[assembly: ComVisible(false)]
-[assembly: Guid("c0f61452-56df-4d19-8b67-ed184a9b5c99")]
+[assembly: CLSCompliant(true)]
+[assembly: ComVisibleAttribute(false)]
