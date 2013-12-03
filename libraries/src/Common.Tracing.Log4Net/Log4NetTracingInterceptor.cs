@@ -94,7 +94,14 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         /// <returns>The log string</returns>
         private string ToLogString<TKey, TValue>(IDictionary<TKey, TValue> dictionary)
         {
-            return "{" + string.Join(",", dictionary.Select(kv => kv.Key.ToString() + "=" + kv.Value.ToString()).ToArray()) + "}";
+            string dictionaryAsString = "{}";
+
+            if (dictionary != null)
+            {
+                dictionaryAsString = "{" + string.Join(",", dictionary.Select(kv => kv.Key.ToString() + "=" + kv.Value.ToString()).ToArray()) + "}";
+            }
+
+            return dictionaryAsString;
         }
     }
 }
