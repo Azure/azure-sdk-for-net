@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- 
+  Windows Azure SDK Targets  
+  -->
+  <PropertyGroup>
+    <!--
+    OfficialBuild:
+    When enabled, overwrites using the local development key pair
+    instead delay signs using the Microsoft key intended for
+    shipping.
+    -->
+    <OfficialBuild>false</OfficialBuild>
+    <!--
+    CopyToBinaries:
+    When enabled, copies the SDK outputs to the ../../binaries 
+    folder. Intended for use in preparing NuGet packages for
+    publishing.
+    -->
+    <CopyToBinaries>false</CopyToBinaries>
+    <!--
+    CopyToDestination:
+    Overwrites the destination for copying files when 
+    CopyToBinaries is enabled. Intended to prevent mistakes
+    when preparing delay signed bits.
+    
+    CopyToArtifacts:
+    Location for documentation files and symbols.
+    -->
+    <CopyToBinariesDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)</CopyToBinariesDestination>
+    <CopyToArtifactsDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)</CopyToArtifactsDestination>
+  </PropertyGroup>
+
+  <!--
+  References for standardized builds during both msbuild & Visual Studio builds
+  -->
+  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' != '' And '$(BuildingInsideVisualStudio)' != 'true' " Project="references.props" />
+
+  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.portable.props" />
+  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'net45' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.net45.props" />
+
+  <!--
+  Defining defaults depending on development or official build:
+  -->
+  <PropertyGroup Condition="$(OfficialBuild) == 'true'">
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <CopyToBinaries>true</CopyToBinaries>
+    <CopyToBinariesDestination>$(SolutionDir)\binaries\$(AdditionalBinariesFolder)unsigned\</CopyToBinariesDestination>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(OfficialBuild) == 'false'">
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)\src\Development.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Turn off XML documentation warnings. This is only for preview -->
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+
+  <Target Name="InformationAboutWindowsAzureBuild"
+          BeforeTargets="BeforeBuild"
+          Condition=" '$(LibraryPropertiesProjectIncluded)' == 'true' ">
+    <Message Text="This is Windows Azure .NET library supports multiple build types." Importance="high" />
+    <Message Text="Library build set:             $(WindowsAzureLibraryProfileSet)" />
+    <Message Text="Current build type:            $(WindowsAzureCurrentConfiguration)" />
+
+    <Error Text="The current build type has not been defined." Condition=" '$(WindowsAzureCurrentConfiguration)' == '' " />
+
+    <Message Text=".NET framework target version, profile: $(TargetFrameworkVersion) $(TargetFrameworkProfile)" />
+  </Target>
+
+  <Target Name="OfficialBuildsMustBeReleaseBuilds" BeforeTargets="BeforeBuild" Condition="'$(OfficialBuild)' == 'true' And '$(Configuration)' == 'Debug'">
+    <Error Text="Official Builds must be Release builds." />
+  </Target>
+
+  <Target Name="CopySdkBinaries" AfterTargets="AfterBuild" Condition="'$(CopyToBinaries)' == 'true'">
+    <Message Text="Copying built SDK assembly, symbols and documentation files to $(CopyToBinariesDestination)." />
+    <MakeDir Directories="$(CopyToBinariesDestination)" Condition="!Exists($(CopyToBinariesDestination))" />
+    <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).xml"
+          DestinationFolder="$(CopyToArtifactsDestination)"/>
+    <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).pdb"
+          DestinationFolder="$(CopyToArtifactsDestination)"/>
+    <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).dll"
+          DestinationFolder="$(CopyToBinariesDestination)"/>
+  </Target>
+</Project>

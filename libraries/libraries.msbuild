@@ -6,28 +6,11 @@
     <ProductFriendlyName>Windows Azure Management Libraries</ProductFriendlyName>
     <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
   </PropertyGroup>
-  <!--
-  Windows Azure Libraries Versioning
-  - - -
-  We version the baseline Common library in general and assume that early on,
-  there will not be much divergence. As Windows Azure is a service, over time
-  there will be some level of new functionality, breaking changes, and as a
-  result will be using SemVer to version independent components as appropriate.
-  
-  To enable nightly builds with NuGet packages, at runtime this baseline may
-  be altered in specification files to enable the proper update experience in
-  such feeds.
-  
-  The release notes can also use token replacement to share common information.
-  -->
-  <PropertyGroup>
-    <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
-  </PropertyGroup>
   
   <!--
-  NuGet Package Specifications
+  NuGet Packages
   -->
-  <Import Project="$(ProductSourceFolder)\PackageSpecs\NuGetSpecs.proj" />
+  <Import Project="nuget.targets" />
 
   <!--
   Windows Azure Management Libraries SDK Builder Guide
@@ -42,49 +25,45 @@
   /t:OfficialBuild  
     Builds officially delay signed binaries.
     Drops into the binaries\unsigned folder.
-    
-    To manually prepare an official build,
-    - Get these binaries signed officially
-    - Drop the fully signed bits into the binaries folder
-  
+
   /t:BuildPackages
     Builds NuGet packages using the binaries folder contents.
     The packages will drop to .\binaries\packages.
-    
+
   /t:PublishPackages
     Publishes the built packages. You will need to include your
     publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY 
-    
+
   Targets for build servers:
   /t:NightlyBuild
   /t:ContinuousIntegrationBuild
-  /t:OfficialSignedBuildNoPublish
-  
+  /t:OfficialSignedBuild
+
   Properties of interest:
-  
+
   /p:BuildVersionSuffix=BUILD_SUFFIX  
     Inserts a string suffix value at the end of all the NuGet package versions
     built and published.
-    
+
   /p:NuGetKey=NUGET_PUBLISHING_KEY
     Provides the key used to publish to a NuGet or MyGet server.
-    
+
     This key should never be committed to source control.
-    
+
   /p:PublishSymbolSourcePackages
     A true/false value indicating whether to push the symbol + source
     packages to a symbol server.
-  
+
   /p:NuGetPublishingSource=Uri
     The NuGet Server to push packages to.
-    
+
   /p:NuGetSymbolPublishingSource=Uri
     The NuGet Server to push symbol + source packages to.
-  
+
   -->
 
   <!--
-  Helpful build tasks in this tree, useful to anyone
+  Helpful build tasks in this tree
   -->
   <Import Project="..\tools\Microsoft.WindowsAzure.Build.msbuild" />
   <UsingTask AssemblyFile="..\tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
@@ -100,13 +79,11 @@
     <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
     <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
   </PropertyGroup>
-  
-  <!-- General NuGet packaging properties -->
+
+  <!--
+  Build version parameters
+  -->
   <PropertyGroup>
-    <NuGetCommand>.nuget\NuGet.exe</NuGetCommand>
-    <PackageOutputDir>binaries\packages</PackageOutputDir>
-    <NuGetVerbosity>normal</NuGetVerbosity>
-    <PublishSymbolSourcePackages>true</PublishSymbolSourcePackages>
     <BuildVersionSuffix></BuildVersionSuffix>
     <AdditionalVersionSuffix></AdditionalVersionSuffix>
   </PropertyGroup>
@@ -131,18 +108,39 @@
   </PropertyGroup>
 
   <!--
-  Regular developer build.
+  Build profiles
+  -->
+  <PropertyGroup>
+    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU</DeveloperBuildProperties>
+    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU</OfficialMSBuildProperties>
+    <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
+  </PropertyGroup>
+
+  <!--
+  Regular developer build
   -->
   <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies">
     <MSBuild Projects="$(ProductSolution)"
-             Properties="Configuration=Debug;Platform=Any CPU"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Rebuild" />
+    <MSBuild Projects="$(ProductSolution)"
+             Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
   </Target>
 
-  <PropertyGroup>
-    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU</OfficialMSBuildProperties>
-  </PropertyGroup>
-  
+  <!--
+  Clean produced binaries and object files
+  -->
+  <Target Name="Clean">
+    <MSBuild Projects="$(ProductSolution)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Clean" />
+    <MSBuild Projects="$(ProductSolution)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Clean" />
+    <RemoveDir Directories="binaries" Condition="Exists('binaries\')" ContinueOnError="true" />
+  </Target>
+
   <!--
   An official build is designed for use while shipping. It generates a release
   build and places binaries ready for the official Microsoft signing process
@@ -156,10 +154,13 @@
   the story.
   -->
   <Target Name="OfficialBuild"
-          DependsOnTargets="BuildEngineeringDependencies">
+          DependsOnTargets="BuildEngineeringDependencies;Clean">
     <CallTarget Targets="BuildServerPreparation" />
     <MSBuild Projects="$(ProductSolution)"
              Properties="$(OfficialMSBuildProperties)"
+             Targets="Rebuild" />
+    <MSBuild Projects="$(ProductSolution)"
+             Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
   </Target>
 
@@ -167,7 +168,7 @@
   Nightly and continuous builds. Nightly builds can push to a NuGet server.
   -->
   <Target Name="NightlyBuild"
-          DependsOnTargets="BuildEngineeringDependencies; NightlyBuildSetProperties">
+          DependsOnTargets="BuildEngineeringDependencies; Clean; NightlyBuildSetProperties">
     <Error Condition=" '$(NuGetKey)' == '' " Text="NuGetKey is not set." />
     <CallTarget Targets="BuildServerPreparation" />
     <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
@@ -177,13 +178,13 @@
   <Target Name="NightlyBuildSetProperties"
           DependsOnTargets="GetGeneratedBuildDate">
     <Message Text="Nightly builds today have the date of $(GeneratedBuildDate)." />
-    <CreateProperty Value="-$(GeneratedBuildDate)">
+    <CreateProperty Value="-pre-$(GeneratedBuildDate)">
       <Output PropertyName="BuildVersionSuffix" TaskParameter="Value" />
     </CreateProperty>
   </Target>
 
   <Target Name="ContinuousIntegrationBuild"
-          DependsOnTargets="BuildEngineeringDependencies; ContinuousIntegrationBuildSetProperties">
+          DependsOnTargets="BuildEngineeringDependencies; Clean; ContinuousIntegrationBuildSetProperties">
     <CallTarget Targets="BuildServerPreparation" />
     <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
     <CallTarget Targets="OfficialSignedBuild" />
@@ -191,52 +192,11 @@
 
   <Target Name="ContinuousIntegrationBuildSetProperties"
           DependsOnTargets="GetGeneratedBuildDate">
-    <CreateProperty Value="-$(GeneratedBuildDate)-CI">
+    <CreateProperty Value="-ci-$(GeneratedBuildDate)">
       <Output PropertyName="BuildVersionSuffix" TaskParameter="Value" />
     </CreateProperty>
   </Target>
-
-  <!--
-  Build NuGet packages
-  -->
-  <Target Name="BuildPackages">
-    <MakeDir Directories="binaries" Condition="!Exists('binaries')" />
-    <MakeDir Directories="binaries\packages" Condition="!Exists('binaries\packages')" />
-
-    <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
-    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' "
-          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;src\PackageSpecs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
-
-    <Message Text="Generating NuGet packages without symbol + source packages" Importance="high" />
-    <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' "
-          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;src\PackageSpecs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
-  </Target>
   
-  <Target Name="PublishPackagesOnly">
-    <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
-
-    <PropertyGroup>
-      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' "></ActualSource>
-      <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
-    </PropertyGroup>
-    
-    <Message Importance="high" Text="Publishing NuGet packages to the cloud at $(NuGetPublishingSource)" />
-    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).nupkg&quot; $(NuGetKey)$(ActualSource)"
-          Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
-          
-    <Message Importance="high" Text="Publishing NuGet symbol &amp; source packages to the cloud at $(NuGetSymbolPublishingSource)" 
-             Condition=" $(NuGetSymbolPublishingSource) != '' "/>
-    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).Symbols.nupkg&quot; $(NuGetKey) -Source $(NuGetSymbolPublishingSource)" 
-          Condition=" $(NuGetSymbolPublishingSource) != '' And '%(SdkNuGetPackage.Publish)' != 'false' And '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' And '$(PublishSymbolSourcePackages)' == 'true' " 
-          ContinueOnError="true" />
-    
-    <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
-             Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
-
-    <Warning Text="Symbol/source packages are not being pushed. The PublishSymbolSourcePackages property is not set to true." 
-             Condition=" '$(PublishSymbolSourcePackages)' != 'true' " />
-  </Target>
-
   <!--
   Perform an on-premise official build server drop of this project. Sign the
   generated binaries, build officially-versioned packages, perform compliance
@@ -254,17 +214,27 @@
     <Message Text="Code signing" Importance="high" />
     <ItemGroup>
       <AssembliesToBuild Include="binaries\unsigned\Microsoft.WindowsAzure.*.dll" />
+      <Net40AssembliesToBuild Include="binaries\net40\unsigned\Microsoft.WindowsAzure.*.dll" />
     </ItemGroup>
 
     <CodeSigningTask
         Description="Windows Azure SDK"
-        Keywords="Windows Azure SDK, Client Libraries"
+        Keywords="Windows Azure .NET SDK"
         UnsignedFiles="@(AssembliesToBuild)"
         DestinationPath="binaries\"
         SigningLogPath="binaries\signing.log"
         ToolsPath="$(OnPremiseBuildTasks)" />
-
     <Error Condition=" !Exists('binaries\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. Code signing likely failed." />
+
+    <Message Text="Signing .NET Framework 4.0 assemblies..." />
+    <CodeSigningTask
+      Description="Windows Azure SDK"
+      Keywords="Windows Azure .NET SDK"
+      UnsignedFiles="@(Net40AssembliesToBuild)"
+      DestinationPath="binaries\net40\"
+      SigningLogPath="binaries\net40\signing.log"
+      ToolsPath="$(OnPremiseBuildTasks)" />
+    <Error Condition=" !Exists('binaries\net40\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. .NET 4.0 code signing likely failed." />
 
     <Message Text="Validate the signed files" />
     <CallTarget Targets="ValidateOfficialBuildBinaries" />
@@ -275,6 +245,8 @@
     <Message Text="Build the official NuGet packages" />
     <CallTarget Targets="BuildPackages" />
 
+    <RemoveDir Directories="binaries\unsigned" Condition="Exists('binaries\unsigned')" ContinueOnError="true" />
+    <RemoveDir Directories="binaries\net40\unsigned" Condition="Exists('binaries\net40\unsigned')" ContinueOnError="true" />
     <Message Text="Have a nice day." />
   </Target>
 
@@ -289,12 +261,13 @@
     </GetFrameworkSdkPath>
     <ItemGroup>
       <DelaySignedAssembliesToValidate Include="binaries\unsigned\*.dll" />
+      <DelaySignedAssembliesToValidate Include="binaries\net40\unsigned\*.dll" />
     </ItemGroup>
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
         Assembly="%(DelaySignedAssembliesToValidate.Identity)"
         ExpectedTokenSignature="$(MicrosoftLibrariesStrongNameToken)"
-        ExpectedDelaySigned="true"        
+        ExpectedDelaySigned="true"
         ContinueOnError="ErrorAndContinue" />
   </Target>
 
@@ -308,6 +281,7 @@
     </GetFrameworkSdkPath>
     <ItemGroup>
       <AfterSignedAssembliesToValidate Include="binaries\*.dll" />
+      <AfterSignedAssembliesToValidate Include="binaries\net40\*.dll" />
     </ItemGroup>
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
@@ -384,9 +358,6 @@
   If you accidentally run this within your enlistment, revert AssemblyInfo.cs
   changes before commiting to Git.
   -->
-  <PropertyGroup>
-    <BaselineReleaseNotesReplacementToken>__BASELINE_RELEASE_NOTES__</BaselineReleaseNotesReplacementToken>
-  </PropertyGroup>
   <Target Name="BurnBuildVersions"
           DependsOnTargets="GetGeneratedBuildDate">
     <Message Text="Destructive burn of assembly file versions to include the build number in the revision component." />
@@ -402,18 +373,5 @@
                           NuGet semver for each assembly along with the build
                           information, but this would require refactoring the
                           build item groups. -->
-
-    <Message Text="Destructive burn of NuGet dependency versions in .nuspec files." />
-    <ItemGroup>
-      <NuspecFilesToUpdate Include="$(ProductSourceFolder)\**\Microsoft.WindowsAzure.*.nuspec" />
-    </ItemGroup>
-    <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
-                          Find="__VERSION_%(SdkNuGetPackage.Identity)__"
-                          Replace="%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix)"
-                          LogReplacement="true" />
-    <RegexReplacementTask Files="@(NuspecFilesToUpdate)"
-                          Find="__BASELINE_RELEASE_NOTES__"
-                          Replace="$(BaselineReleaseNotes)"
-                          LogReplacement="true" />
   </Target>
 </Project>
