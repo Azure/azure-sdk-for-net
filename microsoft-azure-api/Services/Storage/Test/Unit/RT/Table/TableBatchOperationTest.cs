@@ -1140,7 +1140,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
             }
             catch (Exception)
             {
-                TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "EntityTooLarge" }, "The entity is larger than allowed by the Table Service.");
+                TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "EntityTooLarge" }, "The entity is larger than the maximum allowed size (1MB).");
             }
         }
 
@@ -1174,7 +1174,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             catch (Exception)
             {
-                TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "ContentLengthExceeded" }, "The content length for the requested operation has exceeded the limit.");
+                TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "ContentLengthExceeded" }, "The content length for the requested operation has exceeded the limit (4MB).");
             }
         }
 
@@ -1340,7 +1340,7 @@ namespace Microsoft.WindowsAzure.Storage.Table
 
             catch (Exception)
             {
-                TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "PropertyNameTooLong" }, "The property name exceeds the maximum allowed length.");
+                TestHelper.ValidateResponse(opContext, 1, (int)HttpStatusCode.BadRequest, new string[] { "PropertyNameTooLong" }, "The property name exceeds the maximum allowed length (255).");
             }
         }
 

@@ -23,5 +23,6 @@
 // "In Suppression File".
 // You do not need to add suppressions to this file manually.
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames")]
-
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Etw", Justification = "ETW is a well known acronym in this context.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Etw", Scope = "namespace", Target = "Microsoft.WindowsAzure.Common.Tracing.Etw", Justification = "ETW is a well known acronym in this context.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Etw", Scope = "type", Target = "Microsoft.WindowsAzure.Common.Tracing.Etw.EtwTracingInterceptor", Justification = "ETW is a well known acronym in this context.")]

@@ -166,6 +166,42 @@ namespace Microsoft.WindowsAzure.Storage.Table
         #region Query Segmented
 
         #region Sync
+        [TestMethod]
+        [Description("IQueryable - A test to validate basic table query")]
+        [TestCategory(ComponentCategory.Table)]
+        [TestCategory(TestTypeCategory.UnitTest)]
+        [TestCategory(SmokeTestCategory.NonSmoke)]
+        [TestCategory(TenantTypeCategory.DevStore), TestCategory(TenantTypeCategory.DevFabric), TestCategory(TenantTypeCategory.Cloud)]
+        public void TableQueryableExecuteQueryGeneric()
+        {
+            CloudTableClient tableClient = GenerateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference(GenerateRandomTableName());
+            table.CreateIfNotExists();
+
+            BaseEntity entity = new BaseEntity("mypk", "myrk");
+            TableOperation operation = TableOperation.Insert(entity);
+            table.Execute(operation);
+
+            IQueryable<BaseEntity> query = table.CreateQuery<BaseEntity>().Where(x => x.PartitionKey == "mypk");
+            foreach (BaseEntity ent in query.ToList())
+            {
+                Assert.AreEqual("mypk", ent.PartitionKey);
+            }
+
+            IEnumerable<BaseEntity> entities1 = GetEntities<BaseEntity>(table, "mypk");
+            foreach (BaseEntity ent in entities1)
+            {
+                Assert.AreEqual("mypk", ent.PartitionKey);
+            }
+
+        }
+
+        private IEnumerable<T> GetEntities<T>(CloudTable table, string id) where T : ITableEntity, new()
+        {
+            IQueryable<T> query = table.CreateQuery<T>()
+               .Where(x => x.PartitionKey == "mypk");
+            return query.ToList();
+        }
 
         [TestMethod]
         [Description("IQueryable - A test to validate basic table query")]

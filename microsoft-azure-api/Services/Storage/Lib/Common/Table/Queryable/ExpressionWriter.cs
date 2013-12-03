@@ -219,7 +219,7 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
                 return m;
             }
 
-            if (!IsInputReference(e))
+            if (!IsInputReference(e) && e.NodeType != ExpressionType.Convert && e.NodeType != ExpressionType.ConvertChecked)
             {
                 this.builder.Append(UriHelper.FORWARDSLASH);
             }
@@ -266,30 +266,6 @@ namespace Microsoft.WindowsAzure.Storage.Table.Queryable
                     break;
                 case ExpressionType.Convert:
                 case ExpressionType.ConvertChecked:
-                    if (u.Type != typeof(object))
-                    {
-                        this.builder.Append(UriHelper.CAST);
-                        this.builder.Append(UriHelper.LEFTPAREN);
-                        if (!IsInputReference(u.Operand))
-                        {
-                            this.Visit(u.Operand);
-                            this.builder.Append(UriHelper.COMMA);
-                        }
-
-                        this.builder.Append(UriHelper.QUOTE);
-                        this.builder.Append(this.TypeNameForUri(u.Type));
-                        this.builder.Append(UriHelper.QUOTE);
-                        this.builder.Append(UriHelper.RIGHTPAREN);
-                    }
-                    else
-                    {
-                        if (!IsInputReference(u.Operand))
-                        {
-                            this.Visit(u.Operand);
-                        }
-                    }
-
-                    break;
                 case ExpressionType.UnaryPlus:
                     break;
                 default:
