@@ -1,6 +1,7 @@
 ﻿Using Log4Net for Windows Azure SDK:
 ------------------------------------
-1- Configure the log4net in your app.config/web.config (or your preferred way). For more example on the available configurations check: http://logging.apache.org/log4net/release/config-examples.html
+1- Configure the log4net in your app.config/web.config (or your preferred way).
+   For more example on the available configurations check: http://logging.apache.org/log4net/release/config-examples.html
    Here's an example of app.config for the logger used with ConsoleAppender:
 
 <?xml version="1.0" encoding="utf-8" ?>
