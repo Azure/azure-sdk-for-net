@@ -15,10 +15,10 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <Compile Include="AutoscaleClient.cs" />
-    <Compile Include="MetricsClient.cs" />
+    <Compile Include="Generated\AlertsClient.cs" />
+    <Compile Include="Generated\AutoscaleClient.cs" />
+    <Compile Include="Generated\MetricsClient.cs" />
     <Compile Include="MetricClient.Customization.cs" />
-    <Compile Include="AlertsClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AutoscaleMetricSourceBuilder.cs" />
     <Compile Include="Utilities\AutoscaleResourceIdBuilder.cs" />
@@ -26,6 +26,8 @@
     <Compile Include="Utilities\ResourceIdBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="GenerateCode.props" />
     <None Include="Microsoft.WindowsAzure.Management.Monitoring.nuspec" />
     <None Include="Microsoft.WindowsAzure.Management.Monitoring.nuget.proj" />
     <None Include="packages.config" />
@@ -36,6 +38,10 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="hydra.xml" />
+    <Content Include="readme.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
@@ -45,4 +51,10 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementMonitoringSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Monitoring.Specification.1.0.5085.30258-prerelease\tools\Microsoft.WindowsAzure.Management.Monitoring.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

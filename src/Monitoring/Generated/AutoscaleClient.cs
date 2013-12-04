@@ -1,5 +1,5 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved.
+// 
+// Copyright (c) Microsoft and contributors.  All rights reserved.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     public partial class AutoscaleProfile
     {
         private ScaleCapacity _capacity;
-
+        
         /// <summary>
         /// The number of instances that can be used in the scaling action.
         /// </summary>
@@ -53,9 +53,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._capacity; }
             set { this._capacity = value; }
         }
-
+        
         private TimeWindow _fixedDate;
-
+        
         /// <summary>
         /// A specific date for the scaling action. This element is not used if
         /// the Recurrence element is used.
@@ -65,9 +65,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._fixedDate; }
             set { this._fixedDate = value; }
         }
-
+        
         private string _name;
-
+        
         /// <summary>
         /// The name of the profile.
         /// </summary>
@@ -76,9 +76,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._name; }
             set { this._name = value; }
         }
-
+        
         private Recurrence _recurrence;
-
+        
         /// <summary>
         /// The frequency and schedule for the scaling action. This element is
         /// not used if the FixedDate element is used.
@@ -88,9 +88,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._recurrence; }
             set { this._recurrence = value; }
         }
-
+        
         private IList<ScaleRule> _rules;
-
+        
         /// <summary>
         /// A collection of rules that provide the triggers and parameters for
         /// the scaling action.
@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._rules; }
             set { this._rules = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the AutoscaleProfile class.
         /// </summary>
@@ -109,28 +109,28 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             this._rules = new List<ScaleRule>();
         }
     }
-
+    
     /// <summary>
     /// Autoscale setting.
     /// </summary>
     public partial class AutoscaleSetting
     {
         private bool _enabled;
-
+        
         public bool Enabled
         {
             get { return this._enabled; }
             set { this._enabled = value; }
         }
-
+        
         private IList<AutoscaleProfile> _profiles;
-
+        
         public IList<AutoscaleProfile> Profiles
         {
             get { return this._profiles; }
             set { this._profiles = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the AutoscaleSetting class.
         /// </summary>
@@ -139,14 +139,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             this._profiles = new List<AutoscaleProfile>();
         }
     }
-
+    
     /// <summary>
     /// Parameters supplied to the Create or Update autoscale setting operation.
     /// </summary>
     public partial class AutoscaleSettingCreateOrUpdateParameters
     {
         private AutoscaleSetting _setting;
-
+        
         /// <summary>
         /// The setting to create or update.
         /// </summary>
@@ -155,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._setting; }
             set { this._setting = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the
         /// AutoscaleSettingCreateOrUpdateParameters class.
@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         {
         }
     }
-
+    
     /// <summary>
     /// A standard service response including an HTTP status code and request
     /// ID.
@@ -172,13 +172,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     public partial class AutoscaleSettingGetResponse : OperationResponse
     {
         private AutoscaleSetting _setting;
-
+        
         public AutoscaleSetting Setting
         {
             get { return this._setting; }
             set { this._setting = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the AutoscaleSettingGetResponse class.
         /// </summary>
@@ -186,40 +186,40 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         {
         }
     }
-
+    
     public enum ComparisonOperationType
     {
         Equals = 0,
-
+        
         NotEquals = 1,
-
+        
         GreaterThan = 2,
-
+        
         GreaterThanOrEqual = 3,
-
+        
         LessThan = 4,
-
+        
         LessThanOrEqual = 5,
     }
-
+    
     public enum MetricStatisticType
     {
         Average = 0,
-
+        
         Min = 1,
-
+        
         Max = 2,
-
+        
         Sum = 3,
     }
-
+    
     /// <summary>
     /// A rule that provides the triggers and parameters for the scaling action.
     /// </summary>
     public partial class MetricTrigger
     {
         private string _metricName;
-
+        
         /// <summary>
         /// The name of the metric.
         /// </summary>
@@ -228,9 +228,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._metricName; }
             set { this._metricName = value; }
         }
-
+        
         private string _metricNamespace;
-
+        
         /// <summary>
         /// The namespace of the metric.
         /// </summary>
@@ -239,9 +239,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._metricNamespace; }
             set { this._metricNamespace = value; }
         }
-
+        
         private string _metricSource;
-
+        
         /// <summary>
         /// The metric source.
         /// </summary>
@@ -250,9 +250,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._metricSource; }
             set { this._metricSource = value; }
         }
-
+        
         private ComparisonOperationType _operator;
-
+        
         /// <summary>
         /// The operator that is used to evaluate the metric.
         /// </summary>
@@ -261,9 +261,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._operator; }
             set { this._operator = value; }
         }
-
+        
         private MetricStatisticType _statistic;
-
+        
         /// <summary>
         /// How the metrics from multiple instances are combined.
         /// </summary>
@@ -272,9 +272,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._statistic; }
             set { this._statistic = value; }
         }
-
+        
         private double _threshold;
-
+        
         /// <summary>
         /// The percentage of usage that triggers the scaling operation.
         /// </summary>
@@ -283,9 +283,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._threshold; }
             set { this._threshold = value; }
         }
-
+        
         private TimeAggregationType _timeAggregation;
-
+        
         /// <summary>
         /// How the data that is collected should be combined over time.
         /// </summary>
@@ -294,9 +294,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._timeAggregation; }
             set { this._timeAggregation = value; }
         }
-
+        
         private TimeSpan _timeGrain;
-
+        
         /// <summary>
         /// The frequency of data collection.
         /// </summary>
@@ -305,9 +305,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._timeGrain; }
             set { this._timeGrain = value; }
         }
-
+        
         private TimeSpan _timeWindow;
-
+        
         /// <summary>
         /// The range of time in which instance data is collected.
         /// </summary>
@@ -316,7 +316,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._timeWindow; }
             set { this._timeWindow = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the MetricTrigger class.
         /// </summary>
@@ -324,25 +324,25 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         {
         }
     }
-
+    
     public partial class Recurrence
     {
         private RecurrenceFrequency _frequency;
-
+        
         public RecurrenceFrequency Frequency
         {
             get { return this._frequency; }
             set { this._frequency = value; }
         }
-
+        
         private RecurrentSchedule _schedule;
-
+        
         public RecurrentSchedule Schedule
         {
             get { return this._schedule; }
             set { this._schedule = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the Recurrence class.
         /// </summary>
@@ -350,84 +350,84 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         {
         }
     }
-
+    
     public enum RecurrenceFrequency
     {
         /// <summary>
         /// No recurrence
         /// </summary>
         None = 0,
-
+        
         /// <summary>
         /// A recurrence value measured in seconds.
         /// </summary>
         Second = 1,
-
+        
         /// <summary>
         /// A recurrence value measured in minutes.
         /// </summary>
         Minute = 2,
-
+        
         /// <summary>
         /// A recurrence value measured in hours.
         /// </summary>
         Hour = 3,
-
+        
         /// <summary>
         /// A recurrence value measured in days.
         /// </summary>
         Day = 4,
-
+        
         /// <summary>
         /// A recurrence value measured in weeks.
         /// </summary>
         Week = 5,
-
+        
         /// <summary>
         /// A recurrence value measured in months.
         /// </summary>
         Month = 6,
-
+        
         /// <summary>
         /// A recurrence value measured in years.
         /// </summary>
         Year = 7,
     }
-
+    
     public partial class RecurrentSchedule
     {
         private IList<string> _days;
-
+        
         public IList<string> Days
         {
             get { return this._days; }
             set { this._days = value; }
         }
-
+        
         private IList<int> _hours;
-
+        
         public IList<int> Hours
         {
             get { return this._hours; }
             set { this._hours = value; }
         }
-
+        
         private IList<int> _minutes;
-
+        
         public IList<int> Minutes
         {
             get { return this._minutes; }
             set { this._minutes = value; }
         }
-
+        
         private string _timeZone;
-
+        
         public string TimeZone
         {
             get { return this._timeZone; }
             set { this._timeZone = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the RecurrentSchedule class.
         /// </summary>
@@ -438,14 +438,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             this._minutes = new List<int>();
         }
     }
-
+    
     /// <summary>
     /// The action for scaling.
     /// </summary>
     public partial class ScaleAction
     {
         private TimeSpan _cooldown;
-
+        
         /// <summary>
         /// The cooldown interval for scaling action.
         /// </summary>
@@ -454,9 +454,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._cooldown; }
             set { this._cooldown = value; }
         }
-
+        
         private ScaleDirection _direction;
-
+        
         /// <summary>
         /// The direction of scaling.
         /// </summary>
@@ -465,9 +465,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._direction; }
             set { this._direction = value; }
         }
-
+        
         private ScaleType _type;
-
+        
         /// <summary>
         /// The type of scaling.
         /// </summary>
@@ -476,9 +476,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._type; }
             set { this._type = value; }
         }
-
+        
         private string _value;
-
+        
         /// <summary>
         /// The rate of scaling.
         /// </summary>
@@ -487,7 +487,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._value; }
             set { this._value = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the ScaleAction class.
         /// </summary>
@@ -495,14 +495,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         {
         }
     }
-
+    
     /// <summary>
     /// The number of instances that can be used in the scaling action.
     /// </summary>
     public partial class ScaleCapacity
     {
         private string _default;
-
+        
         /// <summary>
         /// The default number of instances that are available for the scaling
         /// action.
@@ -512,9 +512,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._default; }
             set { this._default = value; }
         }
-
+        
         private string _maximum;
-
+        
         /// <summary>
         /// The maximum number of instances that are available for the scaling
         /// action.
@@ -524,9 +524,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._maximum; }
             set { this._maximum = value; }
         }
-
+        
         private string _minimum;
-
+        
         /// <summary>
         /// The minimum number of instances that are available for the scaling
         /// action.
@@ -536,7 +536,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._minimum; }
             set { this._minimum = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the ScaleCapacity class.
         /// </summary>
@@ -544,32 +544,32 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         {
         }
     }
-
+    
     public enum ScaleDirection
     {
         /// <summary>
         /// Do nothing.
         /// </summary>
         None = 0,
-
+        
         /// <summary>
         /// Increase capacity.
         /// </summary>
         Increase = 1,
-
+        
         /// <summary>
         /// Decrease capacity.
         /// </summary>
         Decrease = 2,
     }
-
+    
     /// <summary>
     /// A rule that provide the triggers and parameters for the scaling action.
     /// </summary>
     public partial class ScaleRule
     {
         private MetricTrigger _metricTrigger;
-
+        
         /// <summary>
         /// The metrics that are used to determine when a scaling action occurs.
         /// </summary>
@@ -578,9 +578,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._metricTrigger; }
             set { this._metricTrigger = value; }
         }
-
+        
         private ScaleAction _scaleAction;
-
+        
         /// <summary>
         /// The parameters for the scaling action.
         /// </summary>
@@ -589,7 +589,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._scaleAction; }
             set { this._scaleAction = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the ScaleRule class.
         /// </summary>
@@ -597,52 +597,52 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         {
         }
     }
-
+    
     public enum ScaleType
     {
         /// <summary>
         /// The change size.
         /// </summary>
         ChangeSize = 0,
-
+        
         /// <summary>
         /// The change count.
         /// </summary>
         ChangeCount = 1,
-
+        
         /// <summary>
         /// The percent change count.
         /// </summary>
         PercentChangeCount = 2,
-
+        
         /// <summary>
         /// The exact count.
         /// </summary>
         ExactCount = 3,
     }
-
+    
     public enum TimeAggregationType
     {
         Average = 0,
-
+        
         Minimum = 1,
-
+        
         Maximum = 2,
-
+        
         Last = 3,
-
+        
         Total = 4,
-
+        
         Count = 5,
     }
-
+    
     /// <summary>
     /// The action for scaling.
     /// </summary>
     public partial class TimeWindow
     {
         private DateTime _end;
-
+        
         /// <summary>
         /// The end of the time window.
         /// </summary>
@@ -651,9 +651,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._end; }
             set { this._end = value; }
         }
-
+        
         private DateTime _start;
-
+        
         /// <summary>
         /// The start of the time window.
         /// </summary>
@@ -662,9 +662,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._start; }
             set { this._start = value; }
         }
-
+        
         private string _timeZone;
-
+        
         /// <summary>
         /// The time zone information.
         /// </summary>
@@ -673,7 +673,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
             get { return this._timeZone; }
             set { this._timeZone = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the TimeWindow class.
         /// </summary>
@@ -692,9 +692,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// </summary>
         Uri BaseUri
         {
-            get;
+            get; 
         }
-
+        
         /// <summary>
         /// When you create a Windows Azure subscription, it is uniquely
         /// identified by a subscription ID. The subscription ID forms part of
@@ -706,26 +706,26 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
-            get;
+            get; 
         }
-
+        
         /// <summary>
         /// Operations for managing the autoscale settings.
         /// </summary>
         ISettingOperations Settings
         {
-            get;
+            get; 
         }
     }
-
+    
     public static partial class AutoscaleClientExtensions
     {
     }
-
+    
     public partial class AutoscaleClient : ServiceClient<AutoscaleClient>, IAutoscaleClient
     {
         private Uri _baseUri;
-
+        
         /// <summary>
         /// Optional base uri parameter.
         /// </summary>
@@ -733,9 +733,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         {
             get { return this._baseUri; }
         }
-
+        
         private SubscriptionCloudCredentials _credentials;
-
+        
         /// <summary>
         /// When you create a Windows Azure subscription, it is uniquely
         /// identified by a subscription ID. The subscription ID forms part of
@@ -749,9 +749,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         {
             get { return this._credentials; }
         }
-
+        
         private ISettingOperations _settings;
-
+        
         /// <summary>
         /// Operations for managing the autoscale settings.
         /// </summary>
@@ -759,7 +759,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         {
             get { return this._settings; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
@@ -769,7 +769,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             this._settings = new SettingOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
@@ -798,10 +798,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             this._credentials = credentials;
             this._baseUri = baseUri;
-
+            
             this.Credentials.InitializeServiceClient(this);
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
@@ -823,16 +823,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net");
-
+            
             this.Credentials.InitializeServiceClient(this);
         }
     }
-
+    
     /// <summary>
     /// Operations for managing the autoscale settings.
     /// </summary>
     public partial interface ISettingOperations
     {
+        /// <param name='resourceId'>
+        /// The resource ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -841,7 +847,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// request ID.
         /// </returns>
         Task<OperationResponse> CreateOrUpdateAsync(string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
-
+        
+        /// <param name='resourceId'>
+        /// The resource ID.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -850,7 +859,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// request ID.
         /// </returns>
         Task<OperationResponse> DeleteAsync(string resourceId, CancellationToken cancellationToken);
-
+        
+        /// <param name='resourceId'>
+        /// The resource ID.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -860,7 +872,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// </returns>
         Task<AutoscaleSettingGetResponse> GetAsync(string resourceId, CancellationToken cancellationToken);
     }
-
+    
     /// <summary>
     /// Operations for managing the autoscale settings.
     /// </summary>
@@ -869,6 +881,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// The resource ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -892,10 +910,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 }
             }
         }
-
+        
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// The resource ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -905,10 +929,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         {
             return operations.CreateOrUpdateAsync(resourceId, parameters, CancellationToken.None);
         }
-
+        
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// The resource ID.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -932,10 +959,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 }
             }
         }
-
+        
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// The resource ID.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -945,10 +975,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         {
             return operations.DeleteAsync(resourceId, CancellationToken.None);
         }
-
+        
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// The resource ID.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -972,10 +1005,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 }
             }
         }
-
+        
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// The resource ID.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -986,7 +1022,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             return operations.GetAsync(resourceId, CancellationToken.None);
         }
     }
-
+    
     /// <summary>
     /// Operations for managing the autoscale settings.
     /// </summary>
@@ -1002,9 +1038,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         {
             this._client = client;
         }
-
+        
         private AutoscaleClient _client;
-
+        
         /// <summary>
         /// Gets a reference to the
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.AutoscaleClient.
@@ -1013,7 +1049,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         {
             get { return this._client; }
         }
-
+        
+        /// <param name='resourceId'>
+        /// The resource ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1032,7 +1074,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             {
                 throw new ArgumentNullException("parameters");
             }
-
+            
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
@@ -1044,10 +1086,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?resourceId=" + resourceId;
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -1055,216 +1097,216 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Put;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("x-ms-version", "2013-10-01");
-
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Serialize Request
                 string requestContent = null;
                 JToken requestDoc = null;
-
+                
                 if (parameters.Setting != null)
                 {
                     JObject settingValue = new JObject();
                     requestDoc = settingValue;
-
-                    JArray profilesArray = new JArray();
+                    
                     if (parameters.Setting.Profiles != null)
                     {
+                        JArray profilesArray = new JArray();
                         foreach (AutoscaleProfile profilesItem in parameters.Setting.Profiles)
                         {
                             JObject autoscaleProfileValue = new JObject();
                             profilesArray.Add(autoscaleProfileValue);
-
+                            
                             if (profilesItem.Name != null)
                             {
                                 JToken nameValue = profilesItem.Name;
                                 autoscaleProfileValue["Name"] = nameValue;
                             }
-
+                            
                             if (profilesItem.Capacity != null)
                             {
                                 JObject capacityValue = new JObject();
                                 autoscaleProfileValue["Capacity"] = capacityValue;
-
+                                
                                 if (profilesItem.Capacity.Minimum != null)
                                 {
                                     JToken minimumValue = profilesItem.Capacity.Minimum;
                                     capacityValue["Minimum"] = minimumValue;
                                 }
-
+                                
                                 if (profilesItem.Capacity.Maximum != null)
                                 {
                                     JToken maximumValue = profilesItem.Capacity.Maximum;
                                     capacityValue["Maximum"] = maximumValue;
                                 }
-
+                                
                                 if (profilesItem.Capacity.Default != null)
                                 {
                                     JToken defaultValue = profilesItem.Capacity.Default;
                                     capacityValue["Default"] = defaultValue;
                                 }
                             }
-
-                            JArray rulesArray = new JArray();
+                            
                             if (profilesItem.Rules != null)
                             {
+                                JArray rulesArray = new JArray();
                                 foreach (ScaleRule rulesItem in profilesItem.Rules)
                                 {
                                     JObject scaleRuleValue = new JObject();
                                     rulesArray.Add(scaleRuleValue);
-
+                                    
                                     if (rulesItem.MetricTrigger != null)
                                     {
                                         JObject metricTriggerValue = new JObject();
                                         scaleRuleValue["MetricTrigger"] = metricTriggerValue;
-
+                                        
                                         if (rulesItem.MetricTrigger.MetricName != null)
                                         {
                                             JToken metricNameValue = rulesItem.MetricTrigger.MetricName;
                                             metricTriggerValue["MetricName"] = metricNameValue;
                                         }
-
+                                        
                                         if (rulesItem.MetricTrigger.MetricNamespace != null)
                                         {
                                             JToken metricNamespaceValue = rulesItem.MetricTrigger.MetricNamespace;
                                             metricTriggerValue["MetricNamespace"] = metricNamespaceValue;
                                         }
-
+                                        
                                         if (rulesItem.MetricTrigger.MetricSource != null)
                                         {
                                             JToken metricSourceValue = rulesItem.MetricTrigger.MetricSource;
                                             metricTriggerValue["MetricSource"] = metricSourceValue;
                                         }
-
+                                        
                                         JToken timeGrainValue = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeGrain);
                                         metricTriggerValue["TimeGrain"] = timeGrainValue;
-
+                                        
                                         JToken statisticValue = rulesItem.MetricTrigger.Statistic.ToString();
                                         metricTriggerValue["Statistic"] = statisticValue;
-
+                                        
                                         JToken timeWindowValue = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeWindow);
                                         metricTriggerValue["TimeWindow"] = timeWindowValue;
-
+                                        
                                         JToken timeAggregationValue = rulesItem.MetricTrigger.TimeAggregation.ToString();
                                         metricTriggerValue["TimeAggregation"] = timeAggregationValue;
-
+                                        
                                         JToken operatorValue = rulesItem.MetricTrigger.Operator.ToString();
                                         metricTriggerValue["Operator"] = operatorValue;
-
+                                        
                                         JToken thresholdValue = rulesItem.MetricTrigger.Threshold;
                                         metricTriggerValue["Threshold"] = thresholdValue;
                                     }
-
+                                    
                                     if (rulesItem.ScaleAction != null)
                                     {
                                         JObject scaleActionValue = new JObject();
                                         scaleRuleValue["ScaleAction"] = scaleActionValue;
-
+                                        
                                         JToken directionValue = rulesItem.ScaleAction.Direction.ToString();
                                         scaleActionValue["Direction"] = directionValue;
-
+                                        
                                         JToken typeValue = rulesItem.ScaleAction.Type.ToString();
                                         scaleActionValue["Type"] = typeValue;
-
+                                        
                                         if (rulesItem.ScaleAction.Value != null)
                                         {
                                             JToken valueValue = rulesItem.ScaleAction.Value;
                                             scaleActionValue["Value"] = valueValue;
                                         }
-
+                                        
                                         JToken cooldownValue = TypeConversion.To8601String(rulesItem.ScaleAction.Cooldown);
                                         scaleActionValue["Cooldown"] = cooldownValue;
                                     }
                                 }
+                                autoscaleProfileValue["Rules"] = rulesArray;
                             }
-                            autoscaleProfileValue["Rules"] = rulesArray;
-
+                            
                             if (profilesItem.FixedDate != null)
                             {
                                 JObject fixedDateValue = new JObject();
                                 autoscaleProfileValue["FixedDate"] = fixedDateValue;
-
+                                
                                 if (profilesItem.FixedDate.TimeZone != null)
                                 {
                                     JToken timeZoneValue = profilesItem.FixedDate.TimeZone;
                                     fixedDateValue["TimeZone"] = timeZoneValue;
                                 }
-
+                                
                                 JToken startValue = profilesItem.FixedDate.Start;
                                 fixedDateValue["Start"] = startValue;
-
+                                
                                 JToken endValue = profilesItem.FixedDate.End;
                                 fixedDateValue["End"] = endValue;
                             }
-
+                            
                             if (profilesItem.Recurrence != null)
                             {
                                 JObject recurrenceValue = new JObject();
                                 autoscaleProfileValue["Recurrence"] = recurrenceValue;
-
+                                
                                 JToken frequencyValue = profilesItem.Recurrence.Frequency.ToString();
                                 recurrenceValue["Frequency"] = frequencyValue;
-
+                                
                                 if (profilesItem.Recurrence.Schedule != null)
                                 {
                                     JObject scheduleValue = new JObject();
                                     recurrenceValue["Schedule"] = scheduleValue;
-
+                                    
                                     if (profilesItem.Recurrence.Schedule.TimeZone != null)
                                     {
                                         JToken timeZoneValue2 = profilesItem.Recurrence.Schedule.TimeZone;
                                         scheduleValue["TimeZone"] = timeZoneValue2;
                                     }
-
-                                    JArray daysArray = new JArray();
+                                    
                                     if (profilesItem.Recurrence.Schedule.Days != null)
                                     {
+                                        JArray daysArray = new JArray();
                                         foreach (string daysItem in profilesItem.Recurrence.Schedule.Days)
                                         {
                                             daysArray.Add(daysItem);
                                         }
+                                        scheduleValue["Days"] = daysArray;
                                     }
-                                    scheduleValue["Days"] = daysArray;
-
-                                    JArray hoursArray = new JArray();
+                                    
                                     if (profilesItem.Recurrence.Schedule.Hours != null)
                                     {
+                                        JArray hoursArray = new JArray();
                                         foreach (int hoursItem in profilesItem.Recurrence.Schedule.Hours)
                                         {
                                             hoursArray.Add(hoursItem);
                                         }
+                                        scheduleValue["Hours"] = hoursArray;
                                     }
-                                    scheduleValue["Hours"] = hoursArray;
-
-                                    JArray minutesArray = new JArray();
+                                    
                                     if (profilesItem.Recurrence.Schedule.Minutes != null)
                                     {
+                                        JArray minutesArray = new JArray();
                                         foreach (int minutesItem in profilesItem.Recurrence.Schedule.Minutes)
                                         {
                                             minutesArray.Add(minutesItem);
                                         }
+                                        scheduleValue["Minutes"] = minutesArray;
                                     }
-                                    scheduleValue["Minutes"] = minutesArray;
                                 }
                             }
                         }
+                        settingValue["Profiles"] = profilesArray;
                     }
-                    settingValue["Profiles"] = profilesArray;
-
+                    
                     JToken enabledValue = parameters.Setting.Enabled;
                     settingValue["Enabled"] = enabledValue;
                 }
-
+                
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -1290,7 +1332,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     OperationResponse result = new OperationResponse();
                     result.StatusCode = statusCode;
@@ -1298,7 +1340,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -1321,7 +1363,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 }
             }
         }
-
+        
+        /// <param name='resourceId'>
+        /// The resource ID.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1336,7 +1381,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             {
                 throw new ArgumentNullException("resourceId");
             }
-
+            
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
@@ -1347,10 +1392,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 tracingParameters.Add("resourceId", resourceId);
                 Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?resourceId=" + resourceId;
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -1358,15 +1403,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Delete;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("x-ms-version", "2013-10-01");
-
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -1392,7 +1437,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     OperationResponse result = new OperationResponse();
                     result.StatusCode = statusCode;
@@ -1400,7 +1445,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -1423,7 +1468,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 }
             }
         }
-
+        
+        /// <param name='resourceId'>
+        /// The resource ID.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1438,7 +1486,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             {
                 throw new ArgumentNullException("resourceId");
             }
-
+            
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
@@ -1449,10 +1497,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 tracingParameters.Add("resourceId", resourceId);
                 Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?resourceId=" + resourceId;
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -1460,15 +1508,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("x-ms-version", "2013-10-01");
-
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -1494,7 +1542,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     AutoscaleSettingGetResponse result = new AutoscaleSettingGetResponse();
                     result.StatusCode = statusCode;
@@ -1502,17 +1550,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     JToken responseDoc = JToken.Parse(responseContent);
-
+                    
                     if (responseDoc != null)
                     {
                         AutoscaleSetting settingInstance = new AutoscaleSetting();
                         result.Setting = settingInstance;
-
+                        
                         JArray profilesArray = (JArray)responseDoc["Profiles"];
                         if (profilesArray != null)
                         {
@@ -1520,34 +1568,34 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                             {
                                 AutoscaleProfile autoscaleProfileInstance = new AutoscaleProfile();
                                 settingInstance.Profiles.Add(autoscaleProfileInstance);
-
+                                
                                 JToken nameValue = profilesValue["Name"];
                                 if (nameValue != null)
                                 {
                                     string nameInstance = (string)nameValue;
                                     autoscaleProfileInstance.Name = nameInstance;
                                 }
-
+                                
                                 JToken capacityValue = profilesValue["Capacity"];
                                 if (capacityValue != null)
                                 {
                                     ScaleCapacity capacityInstance = new ScaleCapacity();
                                     autoscaleProfileInstance.Capacity = capacityInstance;
-
+                                    
                                     JToken minimumValue = capacityValue["Minimum"];
                                     if (minimumValue != null)
                                     {
                                         string minimumInstance = (string)minimumValue;
                                         capacityInstance.Minimum = minimumInstance;
                                     }
-
+                                    
                                     JToken maximumValue = capacityValue["Maximum"];
                                     if (maximumValue != null)
                                     {
                                         string maximumInstance = (string)maximumValue;
                                         capacityInstance.Maximum = maximumInstance;
                                     }
-
+                                    
                                     JToken defaultValue = capacityValue["Default"];
                                     if (defaultValue != null)
                                     {
@@ -1555,7 +1603,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         capacityInstance.Default = defaultInstance;
                                     }
                                 }
-
+                                
                                 JArray rulesArray = (JArray)profilesValue["Rules"];
                                 if (rulesArray != null)
                                 {
@@ -1563,69 +1611,69 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     {
                                         ScaleRule scaleRuleInstance = new ScaleRule();
                                         autoscaleProfileInstance.Rules.Add(scaleRuleInstance);
-
+                                        
                                         JToken metricTriggerValue = rulesValue["MetricTrigger"];
                                         if (metricTriggerValue != null)
                                         {
                                             MetricTrigger metricTriggerInstance = new MetricTrigger();
                                             scaleRuleInstance.MetricTrigger = metricTriggerInstance;
-
+                                            
                                             JToken metricNameValue = metricTriggerValue["MetricName"];
                                             if (metricNameValue != null)
                                             {
                                                 string metricNameInstance = (string)metricNameValue;
                                                 metricTriggerInstance.MetricName = metricNameInstance;
                                             }
-
+                                            
                                             JToken metricNamespaceValue = metricTriggerValue["MetricNamespace"];
                                             if (metricNamespaceValue != null)
                                             {
                                                 string metricNamespaceInstance = (string)metricNamespaceValue;
                                                 metricTriggerInstance.MetricNamespace = metricNamespaceInstance;
                                             }
-
+                                            
                                             JToken metricSourceValue = metricTriggerValue["MetricSource"];
                                             if (metricSourceValue != null)
                                             {
                                                 string metricSourceInstance = (string)metricSourceValue;
                                                 metricTriggerInstance.MetricSource = metricSourceInstance;
                                             }
-
+                                            
                                             JToken timeGrainValue = metricTriggerValue["TimeGrain"];
                                             if (timeGrainValue != null)
                                             {
                                                 TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
                                                 metricTriggerInstance.TimeGrain = timeGrainInstance;
                                             }
-
+                                            
                                             JToken statisticValue = metricTriggerValue["Statistic"];
                                             if (statisticValue != null)
                                             {
                                                 MetricStatisticType statisticInstance = (MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), (string)statisticValue, false);
                                                 metricTriggerInstance.Statistic = statisticInstance;
                                             }
-
+                                            
                                             JToken timeWindowValue = metricTriggerValue["TimeWindow"];
                                             if (timeWindowValue != null)
                                             {
                                                 TimeSpan timeWindowInstance = TypeConversion.From8601TimeSpan((string)timeWindowValue);
                                                 metricTriggerInstance.TimeWindow = timeWindowInstance;
                                             }
-
+                                            
                                             JToken timeAggregationValue = metricTriggerValue["TimeAggregation"];
                                             if (timeAggregationValue != null)
                                             {
                                                 TimeAggregationType timeAggregationInstance = (TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), (string)timeAggregationValue, false);
                                                 metricTriggerInstance.TimeAggregation = timeAggregationInstance;
                                             }
-
+                                            
                                             JToken operatorValue = metricTriggerValue["Operator"];
                                             if (operatorValue != null)
                                             {
                                                 ComparisonOperationType operatorInstance = (ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), (string)operatorValue, false);
                                                 metricTriggerInstance.Operator = operatorInstance;
                                             }
-
+                                            
                                             JToken thresholdValue = metricTriggerValue["Threshold"];
                                             if (thresholdValue != null)
                                             {
@@ -1633,34 +1681,34 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                                 metricTriggerInstance.Threshold = thresholdInstance;
                                             }
                                         }
-
+                                        
                                         JToken scaleActionValue = rulesValue["ScaleAction"];
                                         if (scaleActionValue != null)
                                         {
                                             ScaleAction scaleActionInstance = new ScaleAction();
                                             scaleRuleInstance.ScaleAction = scaleActionInstance;
-
+                                            
                                             JToken directionValue = scaleActionValue["Direction"];
                                             if (directionValue != null)
                                             {
                                                 ScaleDirection directionInstance = (ScaleDirection)Enum.Parse(typeof(ScaleDirection), (string)directionValue, false);
                                                 scaleActionInstance.Direction = directionInstance;
                                             }
-
+                                            
                                             JToken typeValue = scaleActionValue["Type"];
                                             if (typeValue != null)
                                             {
                                                 ScaleType typeInstance = (ScaleType)Enum.Parse(typeof(ScaleType), (string)typeValue, false);
                                                 scaleActionInstance.Type = typeInstance;
                                             }
-
+                                            
                                             JToken valueValue = scaleActionValue["Value"];
                                             if (valueValue != null)
                                             {
                                                 string valueInstance = (string)valueValue;
                                                 scaleActionInstance.Value = valueInstance;
                                             }
-
+                                            
                                             JToken cooldownValue = scaleActionValue["Cooldown"];
                                             if (cooldownValue != null)
                                             {
@@ -1670,27 +1718,27 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         }
                                     }
                                 }
-
+                                
                                 JToken fixedDateValue = profilesValue["FixedDate"];
                                 if (fixedDateValue != null)
                                 {
                                     TimeWindow fixedDateInstance = new TimeWindow();
                                     autoscaleProfileInstance.FixedDate = fixedDateInstance;
-
+                                    
                                     JToken timeZoneValue = fixedDateValue["TimeZone"];
                                     if (timeZoneValue != null)
                                     {
                                         string timeZoneInstance = (string)timeZoneValue;
                                         fixedDateInstance.TimeZone = timeZoneInstance;
                                     }
-
+                                    
                                     JToken startValue = fixedDateValue["Start"];
                                     if (startValue != null)
                                     {
                                         DateTime startInstance = (DateTime)startValue;
                                         fixedDateInstance.Start = startInstance;
                                     }
-
+                                    
                                     JToken endValue = fixedDateValue["End"];
                                     if (endValue != null)
                                     {
@@ -1698,33 +1746,33 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         fixedDateInstance.End = endInstance;
                                     }
                                 }
-
+                                
                                 JToken recurrenceValue = profilesValue["Recurrence"];
                                 if (recurrenceValue != null)
                                 {
                                     Recurrence recurrenceInstance = new Recurrence();
                                     autoscaleProfileInstance.Recurrence = recurrenceInstance;
-
+                                    
                                     JToken frequencyValue = recurrenceValue["Frequency"];
                                     if (frequencyValue != null)
                                     {
                                         RecurrenceFrequency frequencyInstance = (RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), (string)frequencyValue, false);
                                         recurrenceInstance.Frequency = frequencyInstance;
                                     }
-
+                                    
                                     JToken scheduleValue = recurrenceValue["Schedule"];
                                     if (scheduleValue != null)
                                     {
                                         RecurrentSchedule scheduleInstance = new RecurrentSchedule();
                                         recurrenceInstance.Schedule = scheduleInstance;
-
+                                        
                                         JToken timeZoneValue2 = scheduleValue["TimeZone"];
                                         if (timeZoneValue2 != null)
                                         {
                                             string timeZoneInstance2 = (string)timeZoneValue2;
                                             scheduleInstance.TimeZone = timeZoneInstance2;
                                         }
-
+                                        
                                         JArray daysArray = (JArray)scheduleValue["Days"];
                                         if (daysArray != null)
                                         {
@@ -1733,7 +1781,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                                 scheduleInstance.Days.Add((string)daysValue);
                                             }
                                         }
-
+                                        
                                         JArray hoursArray = (JArray)scheduleValue["Hours"];
                                         if (hoursArray != null)
                                         {
@@ -1742,7 +1790,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                                 scheduleInstance.Hours.Add((int)hoursValue);
                                             }
                                         }
-
+                                        
                                         JArray minutesArray = (JArray)scheduleValue["Minutes"];
                                         if (minutesArray != null)
                                         {
@@ -1755,7 +1803,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 }
                             }
                         }
-
+                        
                         JToken enabledValue = responseDoc["Enabled"];
                         if (enabledValue != null)
                         {
@@ -1763,7 +1811,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                             settingInstance.Enabled = enabledInstance;
                         }
                     }
-
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
