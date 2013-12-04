@@ -9,6 +9,9 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
 # Features
 
 - Storage
+
+    > Available in the separate [Storage repository](https://github.com/WindowsAzure/azure-storage-net/)
+
   - Tables
     - Create/Delete Tables
     - Query/Create/Read/Update/Delete Entities
@@ -18,8 +21,6 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
     - Create/Delete Queues
     - Insert/Peek Queue Messages
     - Advanced Queue Operations
-
-    > Available in the separate [Storage repository](https://github.com/WindowsAzure/azure-storage-net/)
 
 - Management Libraries (Preview)
   - Compute
@@ -71,11 +72,11 @@ We gladly accept community contributions.
 
 For general suggestions about Windows Azure please use our [UserVoice forum](http://www.mygreatwindowsazureidea.com/forums/34192-windows-azure-feature-voting).
 
-# Storage Client Library for .NET 4, Windows 8, and Windows Phone 8 (2.1.0.0)
+# Storage Client Library
 
-The Storage Client Library ships with the Windows Azure SDK for .NET and also on NuGet. You'll find the latest version and hotfixes on NuGet via the `WindowsAzure.Storage` package. You can [read about the 2.1 release on the storage team blog post](http://blogs.msdn.com/b/windowsazurestorage/archive/2013/09/07/announcing-storage-client-library-2-1-rtm.aspx).
+To use storage services (blog, table, queue), the storage client library provides rich APIs for interacting with the storage service.
 
-Please note that Windows 8 and Windows Phone 8 libraries are CTP (Community Technology Preview) releases.
+The Storage Client Library ships with the Windows Azure SDK for .NET and also on NuGet. You'll find the latest version and hotfixes on NuGet via the `WindowsAzure.Storage` package.
 
 ## Storage source code
 
@@ -87,13 +88,13 @@ With the release of the 3.0.0 storage client library, you can find the latest st
 
 The latest version of the v2.1.x storage client library is available in the azure-sdk-for-net repo under the [`v2.1.0.4` tag](https://github.com/WindowsAzure/azure-sdk-for-net/releases/tag/v2.1.0.4). 
 
-## NuGet install
+## NuGet package install
 
 The storage client libaries are delivered via NuGet officially by Microsoft, ready for use within your project. They are installed with the [NuGet package manager](http://www.nuget.org/) which is built into Visual Studio 2013; for earlier releases of Visual Studio, NuGet is a quick and easy extension to install.
 
 `Install-Package WindowsAzure.Storage`
 
-## Storage Code Samples
+## Storage code samples
 
 > Note:
 > How-Tos focused around accomplishing specific tasks are available on the [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
