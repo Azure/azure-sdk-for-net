@@ -1,5 +1,5 @@
 // 
-// Copyright (c) Microsoft.  All rights reserved.
+// Copyright (c) Microsoft and contributors.  All rights reserved.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -141,17 +141,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     /// </summary>
     public partial class JobCollectionGetResponse : OperationResponse
     {
-        private JobCollectionGetResponse.CloudServiceSettingInfo _cloudServiceSettings;
-        
-        /// <summary>
-        /// Settings for the Job Collection's containing Cloud Service.
-        /// </summary>
-        public JobCollectionGetResponse.CloudServiceSettingInfo CloudServiceSettings
-        {
-            get { return this._cloudServiceSettings; }
-            set { this._cloudServiceSettings = value; }
-        }
-        
         private string _eTag;
         
         /// <summary>
@@ -258,30 +247,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public JobCollectionGetResponse()
         {
-        }
-        
-        /// <summary>
-        /// Settings for the Job Collection's containing Cloud Service.
-        /// </summary>
-        public partial class CloudServiceSettingInfo
-        {
-            private string _geoRegion;
-            
-            /// <summary>
-            /// GeoRegion of the cloud service.
-            /// </summary>
-            public string GeoRegion
-            {
-                get { return this._geoRegion; }
-                set { this._geoRegion = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the CloudServiceSettingInfo class.
-            /// </summary>
-            public CloudServiceSettingInfo()
-            {
-            }
         }
         
         /// <summary>
@@ -2454,13 +2419,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     resourceElement.Add(schemaVersionElement);
                 }
                 
-                if (parameters.Label != null)
-                {
-                    XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                    labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
-                    resourceElement.Add(labelElement);
-                }
-                
                 if (parameters.IntrinsicSettings != null)
                 {
                     XElement intrinsicSettingsElement = new XElement(XName.Get("IntrinsicSettings", "http://schemas.microsoft.com/windowsazure"));
@@ -2503,6 +2461,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             maxRecurrenceElement.Add(intervalElement);
                         }
                     }
+                }
+                
+                if (parameters.Label != null)
+                {
+                    XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                    labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                    resourceElement.Add(labelElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -2773,12 +2738,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     resourceElement.Add(schemaVersionElement);
                 }
                 
-                if (parameters.Label != null)
-                {
-                    XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                    labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
-                    resourceElement.Add(labelElement);
-                }
+                XElement eTagElement = new XElement(XName.Get("ETag", "http://schemas.microsoft.com/windowsazure"));
+                resourceElement.Add(eTagElement);
                 
                 if (parameters.IntrinsicSettings != null)
                 {
@@ -2822,6 +2783,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             maxRecurrenceElement.Add(intervalElement);
                         }
                     }
+                }
+                
+                if (parameters.Label != null)
+                {
+                    XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                    labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                    resourceElement.Add(labelElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -3403,20 +3371,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         {
                             string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
                             result.Label = labelInstance;
-                        }
-                        
-                        XElement cloudServiceSettingsElement = resourceElement.Element(XName.Get("CloudServiceSettings", "http://schemas.microsoft.com/windowsazure"));
-                        if (cloudServiceSettingsElement != null)
-                        {
-                            JobCollectionGetResponse.CloudServiceSettingInfo cloudServiceSettingsInstance = new JobCollectionGetResponse.CloudServiceSettingInfo();
-                            result.CloudServiceSettings = cloudServiceSettingsInstance;
-                            
-                            XElement geoRegionElement = cloudServiceSettingsElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoRegionElement != null)
-                            {
-                                string geoRegionInstance = geoRegionElement.Value;
-                                cloudServiceSettingsInstance.GeoRegion = geoRegionInstance;
-                            }
                         }
                         
                         XElement operationStatusElement = resourceElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
