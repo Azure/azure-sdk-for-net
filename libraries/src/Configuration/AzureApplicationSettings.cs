@@ -136,6 +136,7 @@ namespace Microsoft.WindowsAzure
         /// <param name="settingName">Setting name</param>
         /// <param name="getValue">Method to obtain given setting.</param>
         /// <returns>Setting value, or null if not found.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Necessary for robust handling withing the configuration module.")]
         private static string GetValue(string providerName, string settingName, Func<string, string> getValue)
         {
             string value = getValue(settingName);
@@ -156,7 +157,7 @@ namespace Microsoft.WindowsAzure
             {
                 Trace.WriteLine(message);
             }
-            catch
+            catch (Exception)
             {
                 // Ommit writing the trace message, running outside of dev fabric.
             }
