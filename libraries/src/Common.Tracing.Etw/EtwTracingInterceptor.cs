@@ -17,20 +17,21 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Common.Tracing.Etw
 {
     /// <summary>
-    /// The ICloudTracingInterceptor provides useful information about cloud
-    /// operations.  Interception is global and a tracing interceptor can be
-    /// added via CloudContext.Configuration.Tracing.AddTracingInterceptor.
+    /// Implementation for ICloudTracingInterceptor that raises ETW events.
     /// </summary>
-    public interface ICloudTracingInterceptor
+    public class EtwTracingInterceptor : ICloudTracingInterceptor
     {
         /// <summary>
         /// Trace information.
         /// </summary>
         /// <param name="message">The information to trace.</param>
-        void Information(string message);
+        public void Information(string message)
+        {
+            CloudTracingEventSource.Log.Information(message);
+        }
 
         /// <summary>
         /// Probe configuration for the value of a setting.
@@ -38,7 +39,10 @@ namespace Microsoft.WindowsAzure
         /// <param name="source">The configuration source.</param>
         /// <param name="name">The name of the setting.</param>
         /// <param name="value">The value of the setting in the source.</param>
-        void Configuration(string source, string name, string value);
+        public void Configuration(string source, string name, string value)
+        {
+            CloudTracingEventSource.Log.Configuration(source, name, value);
+        }
 
         /// <summary>
         /// Enter a method.
@@ -47,28 +51,49 @@ namespace Microsoft.WindowsAzure
         /// <param name="instance">The instance with the method.</param>
         /// <param name="method">Name of the method.</param>
         /// <param name="parameters">Method parameters.</param>
-        void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters);
+        public void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters)
+        {
+            string instanceAsString = instance == null ? string.Empty : instance.ToString();
+            string parametersAsString = parameters == null ? string.Empty : parameters.AsFormattedString();
+
+            CloudTracingEventSource.Log.Enter(invocationId, instanceAsString, method, parametersAsString);
+        }
 
         /// <summary>
         /// Send an HTTP request.
         /// </summary>
         /// <param name="invocationId">Method invocation identifier.</param>
         /// <param name="request">The request about to be sent.</param>
-        void SendRequest(string invocationId, HttpRequestMessage request);
+        public virtual void SendRequest(string invocationId, HttpRequestMessage request)
+        {
+            string requestAsString = request == null ? string.Empty : request.AsFormattedString();
+
+            CloudTracingEventSource.Log.SendRequest(invocationId, requestAsString);
+        }
 
         /// <summary>
         /// Receive an HTTP response.
         /// </summary>
         /// <param name="invocationId">Method invocation identifier.</param>
         /// <param name="response">The response instance.</param>
-        void ReceiveResponse(string invocationId, HttpResponseMessage response);
+        public virtual void ReceiveResponse(string invocationId, HttpResponseMessage response)
+        {
+            string responseAsString = response == null ? string.Empty : response.AsFormattedString();
+
+            CloudTracingEventSource.Log.ReceiveResponse(invocationId, responseAsString);
+        }
 
         /// <summary>
         /// Raise an error.
         /// </summary>
         /// <param name="invocationId">Method invocation identifier.</param>
         /// <param name="exception">The error.</param>
-        void Error(string invocationId, Exception exception);
+        public void Error(string invocationId, Exception exception)
+        {
+            string exceptionAsString = exception == null ? string.Empty : exception.ToString();
+
+            CloudTracingEventSource.Log.Error(invocationId, exceptionAsString);
+        }
 
         /// <summary>
         /// Exit a method.  Note: Exit will not be called in the event of an
@@ -76,6 +101,11 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name="invocationId">Method invocation identifier.</param>
         /// <param name="returnValue">Method return value.</param>
-        void Exit(string invocationId, object returnValue);
+        public void Exit(string invocationId, object returnValue)
+        {
+            string returnValueAsString = returnValue == null ? string.Empty : returnValue.ToString();
+
+            CloudTracingEventSource.Log.Exit(invocationId, returnValueAsString);
+        }
     }
 }
