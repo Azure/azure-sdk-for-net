@@ -1,5 +1,5 @@
 // 
-// Copyright (c) Microsoft.  All rights reserved.
+// Copyright (c) Microsoft and contributors.  All rights reserved.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -3013,10 +3013,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The SQL DAC Management API includes operations for importing and
-        /// exporting SQL Databases into and out of Windows Azure.
+        /// Includes operations for importing and exporting SQL Databases into
+        /// and out of Windows Azure blob storage.
         /// </summary>
-        IDacOperations Dacs
+        IDacOperations Dac
         {
             get; 
         }
@@ -3121,15 +3121,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
             get { return this._credentials; }
         }
         
-        private IDacOperations _dacs;
+        private IDacOperations _dac;
         
         /// <summary>
-        /// The SQL DAC Management API includes operations for importing and
-        /// exporting SQL Databases into and out of Windows Azure.
+        /// Includes operations for importing and exporting SQL Databases into
+        /// and out of Windows Azure blob storage.
         /// </summary>
-        public virtual IDacOperations Dacs
+        public virtual IDacOperations Dac
         {
-            get { return this._dacs; }
+            get { return this._dac; }
         }
         
         private IDatabaseOperationOperations _databaseOperations;
@@ -3201,7 +3201,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private SqlManagementClient()
             : base()
         {
-            this._dacs = new DacOperations(this);
+            this._dac = new DacOperations(this);
             this._databaseOperations = new DatabaseOperationOperations(this);
             this._databases = new DatabaseOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
@@ -3269,8 +3269,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
     }
     
     /// <summary>
-    /// The SQL DAC Management API includes operations for importing and
-    /// exporting SQL Databases into and out of Windows Azure.
+    /// Includes operations for importing and exporting SQL Databases into and
+    /// out of Windows Azure blob storage.
     /// </summary>
     public partial interface IDacOperations
     {
@@ -3322,8 +3322,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
     }
     
     /// <summary>
-    /// The SQL DAC Management API includes operations for importing and
-    /// exporting SQL Databases into and out of Windows Azure.
+    /// Includes operations for importing and exporting SQL Databases into and
+    /// out of Windows Azure blob storage.
     /// </summary>
     public static partial class DacOperationsExtensions
     {
@@ -3487,8 +3487,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
     }
     
     /// <summary>
-    /// The SQL DAC Management API includes operations for importing and
-    /// exporting SQL Databases into and out of Windows Azure.
+    /// Includes operations for importing and exporting SQL Databases into and
+    /// out of Windows Azure blob storage.
     /// </summary>
     internal partial class DacOperations : IServiceOperations<SqlManagementClient>, IDacOperations
     {
