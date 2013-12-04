@@ -12,7 +12,9 @@
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>This package provides a logging implementation for the Windows Azure Libraries exposing events via ETW (Event Tracing for Windows).</summary>
-    <description>Exposes Windows Azure Libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to Microsoft-WindowsAzure event source.</description>
+    <description>Exposes Windows Azure Libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to Microsoft-WindowsAzure event source.
+    
+The ETW tracing provider requires .NET Framework 4.5 or newer.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Windows Azure" SDK ETW "Event Tracing" windowsazureofficial</tags>
     <references>
@@ -26,11 +28,9 @@
   </metadata>
   <files>
     <file src="Common.Tracing.Etw\**\*.cs" target="src" />
-	
-	<file src="readme.txt" target="" />
 
-    <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Etw.dll" target="lib\net45" />
-    <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Etw.pdb" target="lib\net45" />
-    <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Etw.xml" target="lib\net45" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.Tracing.Etw.dll" target="lib\net45" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.Tracing.Etw.pdb" target="lib\net45" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.Tracing.Etw.xml" target="lib\net45" />
   </files>
 </package>

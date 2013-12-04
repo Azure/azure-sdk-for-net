@@ -36,17 +36,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <!--
-  IsStandardWindowsAzureLibrary support
+  Standard library profile support
   -->
   <PropertyGroup>
-    <WindowsAzureLibraryPrimaryConfiguration 
-      Condition=" '$(WindowsAzureLibraryProfileSet)' == 'portable/net40' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">portable</WindowsAzureLibraryPrimaryConfiguration>
-    <WindowsAzureLibrarySecondaryConfiguration 
-      Condition=" '$(WindowsAzureLibraryProfileSet)' == 'portable/net40' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">net40</WindowsAzureLibrarySecondaryConfiguration>
-    <WindowsAzureLibraryPrimaryConfiguration 
-      Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45/net40' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">net45</WindowsAzureLibraryPrimaryConfiguration>
-    <WindowsAzureLibrarySecondaryConfiguration 
-      Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45/net40' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">net40</WindowsAzureLibrarySecondaryConfiguration>
+    <!-- Portable class and .NET 4.0 libraries -->
+    <WindowsAzureLibraryPrimaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'portable/net40' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">portable</WindowsAzureLibraryPrimaryConfiguration>
+    <WindowsAzureLibrarySecondaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'portable/net40' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">net40</WindowsAzureLibrarySecondaryConfiguration>
+
+    <!-- .NET 4.5 and 4.0 projects -->
+    <WindowsAzureLibraryPrimaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45/net40' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">net45</WindowsAzureLibraryPrimaryConfiguration>
+    <WindowsAzureLibrarySecondaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45/net40' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">net40</WindowsAzureLibrarySecondaryConfiguration>
+
+    <!-- .NET 4.5-only projects -->
+    <WindowsAzureLibraryPrimaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">net45</WindowsAzureLibraryPrimaryConfiguration>
+    <WindowsAzureLibrarySecondaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">net45</WindowsAzureLibrarySecondaryConfiguration>
   </PropertyGroup>
   <PropertyGroup>
     <WindowsAzureCurrentConfiguration 
