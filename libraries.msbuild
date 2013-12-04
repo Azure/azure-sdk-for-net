@@ -322,17 +322,12 @@
   -->
   <Target Name="ForceRestorePackages">
     <!-- Create config for user name and password for private feed access -->
-    <Delete Files="restore.config" />
-    <Exec Command='$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; -ConfigFile restore.config' />
-    <Exec Command='$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; -ConfigFile restore.config'
+    <Delete Files=".\restore.config" />
+    <Exec Command='$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; -ConfigFile .\restore.config' />
+    <Exec Command='$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; -ConfigFile .\restore.config'
       EchoOff="true"/>
 
-    <!-- we need to execute restore on each file -->
-    <ItemGroup>
-      <PackageConfig Include="src/**/packages.config" />
-    </ItemGroup>
-
-    <Exec Command="$(NuGetCommand) install %(PackageConfig.Identity) -solutionDir . -ConfigFile restore.config" />
+    <Exec Command="$(NuGetCommand) restore WindowsAzureLibraries.sln -ConfigFile .\restore.config" />
 
     <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
     <Delete Files="restore.config" />
