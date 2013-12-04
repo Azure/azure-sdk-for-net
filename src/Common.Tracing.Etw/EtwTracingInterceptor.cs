@@ -22,6 +22,19 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw
     /// <summary>
     /// Implementation for ICloudTracingInterceptor that raises ETW events.
     /// </summary>
+    /// <remarks>
+    /// To use ETW with the Windows Azure Common Library:
+    /// 1. Register the logger into the CloudContext.
+    /// 2. Use tools such as PerfView to capure events under the
+    /// Microsoft-WindowsAzure provider.
+    /// </remarks>
+    /// <example>
+    /// This shows how to hook up the tracing interceptor.
+    /// <code>
+    /// CloudContext.Configuration.Tracing.AddTracingInterceptor(
+    ///     new EtwTracingInterceptor());
+    /// </code>
+    /// </example>
     public class EtwTracingInterceptor : ICloudTracingInterceptor
     {
         /// <summary>
