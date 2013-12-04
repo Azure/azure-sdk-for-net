@@ -19,7 +19,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Windows Azure Common Library Log4Net Logger")]
-[assembly: AssemblyDescription("Exposes Windows Azure Libraries events via Log4Net (Event Tracing for Windows). Log4Net events can be captured by subscribing to Microsoft-WindowsAzure event source.")]
+[assembly: AssemblyDescription("Exposes Windows Azure Libraries events via Log4Net.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
 [assembly: AssemblyFileVersion("0.9.0.0")]

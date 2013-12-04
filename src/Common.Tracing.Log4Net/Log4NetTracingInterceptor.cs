@@ -82,9 +82,8 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         /// <param name="parameters">Method parameters.</param>
         public void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters)
         {
-            string parametersAsString = parameters == null ? string.Empty : parameters.AsFormattedString();
             logger.DebugFormat("invocationId: {0}\r\ninstance: {1}\r\nmethod: {2}\r\nparameters: {3}",
-                invocationId, instance, method, parametersAsString);
+                invocationId, instance, method, parameters.AsFormattedString());
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         public void SendRequest(string invocationId, HttpRequestMessage request)
         {
             string requestAsString = request == null ? string.Empty : request.AsFormattedString();
-            logger.DebugFormat("InvocationId: {0}\r\nRequest: {1}", invocationId, requestAsString);
+            logger.DebugFormat("invocationId: {0}\r\nrequest: {1}", invocationId, requestAsString);
         }
 
         /// <summary>
@@ -106,7 +105,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         public void ReceiveResponse(string invocationId, HttpResponseMessage response)
         {
             string requestAsString = response == null ? string.Empty : response.AsFormattedString();
-            logger.DebugFormat("InvocationId: {0}\r\nResponse: {1}", invocationId, requestAsString);
+            logger.DebugFormat("invocationId: {0}\r\nresponse: {1}", invocationId, requestAsString);
         }
 
         /// <summary>
@@ -116,7 +115,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         /// <param name="exception">The error.</param>
         public void Error(string invocationId, Exception exception)
         {
-            logger.Error("InvocationId: " + invocationId, exception);
+            logger.Error("invocationId: " + invocationId, exception);
         }
 
         /// <summary>
