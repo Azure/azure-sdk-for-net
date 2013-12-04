@@ -49,7 +49,7 @@
     <Compile Include="CloudConfigurationManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.WindowsAzure.Configuration\Microsoft.WindowsAzure.Configuration.csproj">
+    <ProjectReference Include="..\Configuration\Configuration.csproj">
       <Project>{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}</Project>
       <Name>Microsoft.WindowsAzure.Configuration</Name>
     </ProjectReference>
