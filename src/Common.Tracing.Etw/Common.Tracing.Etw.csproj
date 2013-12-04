@@ -25,15 +25,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Microsoft.WindowsAzure.Common.Tracing.Etw.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
