@@ -18,6 +18,9 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
     - Create/Delete Queues
     - Insert/Peek Queue Messages
     - Advanced Queue Operations
+
+    > Available in the separate [Storage repository](https://github.com/WindowsAzure/azure-storage-net/)
+
 - Management Libraries (Preview)
   - Compute
   - Infrastructure
@@ -72,57 +75,25 @@ For general suggestions about Windows Azure please use our [UserVoice forum](htt
 
 The Storage Client Library ships with the Windows Azure SDK for .NET and also on NuGet. You'll find the latest version and hotfixes on NuGet via the `WindowsAzure.Storage` package. You can [read about the 2.1 release on the storage team blog post](http://blogs.msdn.com/b/windowsazurestorage/archive/2013/09/07/announcing-storage-client-library-2-1-rtm.aspx).
 
-Please note that Windows 8 and Windows Phone 8 libraries are CTP (Community
-Technology Preview) releases.
+Please note that Windows 8 and Windows Phone 8 libraries are CTP (Community Technology Preview) releases.
 
-## Download & Install
+## Storage source code
 
-### Via Git
+### v3.0+
 
-To get the source code of the SDK via git just type:
+With the release of the 3.0.0 storage client library, you can find the latest storage library (and associated issues) in the separate repo [azure-storage-net](http://github.com/WindowsAzure/azure-storage-net/).
 
-```bash
-git clone git://github.com/WindowsAzure/azure-sdk-for-net.git
-cd azure-sdk-for-net
-```
+### v2.0.1.4
 
-### Via NuGet
+The latest version of the v2.1.x storage client library is available in the azure-sdk-for-net repo under the [`v2.1.0.4` tag](https://github.com/WindowsAzure/azure-sdk-for-net/releases/tag/v2.1.0.4). 
 
-To get the binaries of this library as distributed by Microsoft, ready for use
-within your project you can also have them installed by the .NET package manager [NuGet](http://www.nuget.org/).
+## NuGet install
+
+The storage client libaries are delivered via NuGet officially by Microsoft, ready for use within your project. They are installed with the [NuGet package manager](http://www.nuget.org/) which is built into Visual Studio 2013; for earlier releases of Visual Studio, NuGet is a quick and easy extension to install.
 
 `Install-Package WindowsAzure.Storage`
 
-## Dependencies
-
-### OData
-
-This version depends on three libraries (collectively referred to as ODataLib), which are resolved through the ODataLib (version 5.2.0) packages available through NuGet and not the WCF Data Services installer which currently contains 5.0.0 versions.
-
-The ODataLib libraries can be downloaded directly or referenced by your code project through NuGet.  
-
-The specific ODataLib packages are:
-
-- [Microsoft.Data.OData](http://nuget.org/packages/Microsoft.Data.OData/)
-- [Microsoft.Data.Edm](http://nuget.org/packages/Microsoft.Data.Edm/)
-- [System.Spatial](http://nuget.org/packages/System.Spatial)
-
-### Test Dependencies
-
-FiddlerCore is required by:
-
-- Test\Unit\FaultInjection\HttpMangler
-- Test\Unit\FaultInjection\XStoreMangler
-- Test\Unit\DotNet40
-
-This dependency is not included and must be downloaded from [http://www.fiddler2.com/Fiddler/Core/](http://www.fiddler2.com/Fiddler/Core/).
-
-Once installed:
-
-- Copy `FiddlerCore.dll` `\azure-sdk-for-net\microsoft-azure-api\Services\Storage\Test\Unit\FaultInjection\Dependencies\DotNet2`
-- Copy `FiddlerCore4.dll` to `azure-sdk-for-net\microsoft-azure-api\Services\Storage\Test\Unit\FaultInjection\Dependencies\DotNet4`
-
-## Code Samples
+## Storage Code Samples
 
 > Note:
 > How-Tos focused around accomplishing specific tasks are available on the [Windows Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
