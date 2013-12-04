@@ -13,13 +13,11 @@
 // limitations under the License.
 //
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using log4net;
-using Microsoft.WindowsAzure;
-using System.IO;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
 
 namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
 {
@@ -28,7 +26,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
     /// </summary>
     public class Log4NetTracingInterceptor : ICloudTracingInterceptor
     {
-        ILog logger;
+        private ILog _logger;
 
         /// <summary>
         /// Constructs new instance from log4net tracing interceptor.
@@ -36,7 +34,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         /// <param name="filePath">The configuration file absolute path</param>
         public Log4NetTracingInterceptor(string filePath)
         {
-            logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
@@ -59,7 +57,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         /// <param name="message">The information to trace.</param>
         public void Information(string message)
         {
-            logger.Info(message);
+            _logger.Info(message);
         }
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         /// <param name="value">The value of the setting in the source.</param>
         public void Configuration(string source, string name, string value)
         {
-            logger.DebugFormat("Configuration: source={0}, name={1}, value={2}", source, name, value);
+            _logger.DebugFormat("Configuration: source={0}, name={1}, value={2}", source, name, value);
         }
 
         /// <summary>
@@ -82,7 +80,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         /// <param name="parameters">Method parameters.</param>
         public void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters)
         {
-            logger.DebugFormat("invocationId: {0}\r\ninstance: {1}\r\nmethod: {2}\r\nparameters: {3}",
+            _logger.DebugFormat("invocationId: {0}\r\ninstance: {1}\r\nmethod: {2}\r\nparameters: {3}",
                 invocationId, instance, method, parameters.AsFormattedString());
         }
 
@@ -94,7 +92,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         public void SendRequest(string invocationId, HttpRequestMessage request)
         {
             string requestAsString = request == null ? string.Empty : request.AsFormattedString();
-            logger.DebugFormat("invocationId: {0}\r\nrequest: {1}", invocationId, requestAsString);
+            _logger.DebugFormat("invocationId: {0}\r\nrequest: {1}", invocationId, requestAsString);
         }
 
         /// <summary>
@@ -105,7 +103,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         public void ReceiveResponse(string invocationId, HttpResponseMessage response)
         {
             string requestAsString = response == null ? string.Empty : response.AsFormattedString();
-            logger.DebugFormat("invocationId: {0}\r\nresponse: {1}", invocationId, requestAsString);
+            _logger.DebugFormat("invocationId: {0}\r\nresponse: {1}", invocationId, requestAsString);
         }
 
         /// <summary>
@@ -115,7 +113,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         /// <param name="exception">The error.</param>
         public void Error(string invocationId, Exception exception)
         {
-            logger.Error("invocationId: " + invocationId, exception);
+            _logger.Error("invocationId: " + invocationId, exception);
         }
 
         /// <summary>
@@ -127,7 +125,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         public void Exit(string invocationId, object returnValue)
         {
             string returnValueAsString = returnValue == null ? string.Empty : returnValue.ToString();
-            logger.Debug(string.Format("Exit with invocation id {0}, the return value is {1}", 
+            _logger.Debug(string.Format("Exit with invocation id {0}, the return value is {1}", 
                 invocationId,
                 returnValueAsString));
         }
