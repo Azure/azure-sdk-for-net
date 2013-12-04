@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hydra>
+  <Assembly>Microsoft.WindowsAzure.Management.Compute.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.Compute.ComputeManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputPath>ComputeManagementClient.cs</OutputPath>
+    </Platform>
+
+  </Specification>
+</Hydra>
