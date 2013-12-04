@@ -65,9 +65,9 @@
   <!--
   Helpful build tasks in this tree
   -->
-  <Import Project="..\tools\Microsoft.WindowsAzure.Build.msbuild" />
-  <UsingTask AssemblyFile="..\tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
-  <UsingTask AssemblyFile="..\tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
+  <Import Project="tools\Microsoft.WindowsAzure.Build.msbuild" />
+  <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
+  <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
 
   <!--
   Build tasks (on-premise only)
@@ -304,7 +304,7 @@
   replacements in files such as NuGet specs.
   -->
   <Target Name="BuildEngineeringDependencies">
-    <MSBuild Projects="..\tools\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
+    <MSBuild Projects="tools\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
              Targets="Build"
              Properties="Configuration=Debug;Platform=AnyCPU" />
   </Target>
