@@ -26,7 +26,6 @@
     <Compile Include="Utilities\ResourceIdBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.WindowsAzure.Management.Monitoring.nuspec" />
     <None Include="Microsoft.WindowsAzure.Management.Monitoring.nuget.proj" />

@@ -20,7 +20,6 @@
     <Compile Include="VirtualNetworkManagementClient.Customizations.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.WindowsAzure.Management.VirtualNetworks.nuspec" />
     <None Include="Microsoft.WindowsAzure.Management.NetworkManagement.nuget.proj" />

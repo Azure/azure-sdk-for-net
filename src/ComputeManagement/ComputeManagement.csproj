@@ -20,7 +20,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.WindowsAzure.Management.Compute.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Management.Compute.nuspec" />
