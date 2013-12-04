@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Common.Dependencies
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Common.Dependencies">
-      <PackageVersion>0.9.0-preview</PackageVersion>
+      <PackageVersion>0.9.1-preview</PackageVersion>
       <SkipSymbolSourcePackage>true</SkipSymbolSourcePackage>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
