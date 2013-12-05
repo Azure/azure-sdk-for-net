@@ -65,16 +65,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Etw\EtwTracingInterceptorTest.cs" />
+    <Compile Include="EtwTracingInterceptorTest.cs" />
+    <Compile Include="Log4NetTracingInterceptorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Tracing.Etw\Common.Tracing.Etw.csproj">
       <Project>{50b0a8ce-d290-4eb7-8c6c-16eaab75225e}</Project>
       <Name>Common.Tracing.Etw</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Tracing.Log4Net\Common.Tracing.Log4Net.csproj">
+      <Project>{2efd6648-39b4-476a-b302-8bc236f5f1b8}</Project>
+      <Name>Common.Tracing.Log4Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>
