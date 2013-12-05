@@ -19,6 +19,9 @@
       <group targetFramework="net45">
         <reference file="Microsoft.WindowsAzure.Common.Tracing.Log4Net.dll" />
       </group>
+	  <group targetFramework="net40">
+        <reference file="Microsoft.WindowsAzure.Common.Tracing.Log4Net.dll" />
+      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
@@ -27,10 +30,12 @@
   <files>
     <file src="Common.Tracing.Log4Net\**\*.cs" target="src" />
 	
-	<file src="readme.txt" target="" />
-
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Log4Net.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Log4Net.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Log4Net.xml" target="lib\net45" />
+	
+	<file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Log4Net.dll" target="lib\net40" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Log4Net.pdb" target="lib\net40" />
+    <file src="..\binaries\net45\Microsoft.WindowsAzure.Common.Tracing.Log4Net.xml" target="lib\net40" />
   </files>
 </package>

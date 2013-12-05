@@ -13,18 +13,12 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.Diagnostics.Tracing;
-using Microsoft.Diagnostics.Tracing.Session;
-using Microsoft.WindowsAzure.Common.Tracing.Etw;
-using Xunit;
-using Xunit.Extensions;
 using Microsoft.WindowsAzure.Common.Tracing.Log4Net;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using Xunit;
 
 namespace Microsoft.WindowsAzure.Common.Tracing.Test
 {
