@@ -321,16 +321,22 @@
   PRIVATE_FEED_PASSWORD: Password for access to the feed
   -->
   <Target Name="ForceRestorePackages">
+    <PropertyGroup>
+      <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
+      <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
+    </PropertyGroup>
+
     <!-- Create config for user name and password for private feed access -->
-    <Delete Files=".\restore.config" />
-    <Exec Command='$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; -ConfigFile .\restore.config' />
-    <Exec Command='$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; -ConfigFile .\restore.config'
+    <Delete Files="$(NuGetRestoreConfigFile)" />
+    <Exec Command='$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetConfigSwitch)' />
+    <Exec Command='$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetConfigSwitch)'
       EchoOff="true"/>
 
-    <Exec Command="$(NuGetCommand) restore WindowsAzureLibraries.sln -ConfigFile .\restore.config" />
+    <Exec Command="$(NuGetCommand) restore WindowsAzureLibraries.sln $(NuGetRestoreConfigSwitch)"
+      ContinueOnError="ErrorAndContinue" />
 
     <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
-    <Delete Files="restore.config" />
+    <Delete Files="$(NuGetRestoreConfigFile)" />
   </Target>
 
   <!--
