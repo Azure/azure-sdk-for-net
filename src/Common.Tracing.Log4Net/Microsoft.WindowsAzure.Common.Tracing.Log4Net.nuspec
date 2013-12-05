@@ -8,7 +8,7 @@
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
     <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
-    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
+    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net/tree/master/src/Common.Tracing.Log4Net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>This package provides a logging implementation for the Windows Azure Libraries exposing HTTP messaging via Log4Net.</summary>
