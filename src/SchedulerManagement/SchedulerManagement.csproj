@@ -15,15 +15,16 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <Compile Include="CloudServiceManagementClient.cs" />
     <Compile Include="CloudServiceManagementClient.Customization.cs" />
+    <Compile Include="Generated\CloudServiceManagementClient.cs" />
+    <Compile Include="Generated\SchedulerClient.cs" />
+    <Compile Include="Generated\SchedulerManagementClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchedulerClient.cs" />
     <Compile Include="SchedulerClient.Customization.cs" />
-    <Compile Include="SchedulerManagementClient.cs" />
     <Compile Include="SchedulerManagementClient.Customization.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="GenerateCode.props" />
     <None Include="packages.config" />
     <None Include="Microsoft.WindowsAzure.Management.Scheduler.nuspec" />
     <None Include="Microsoft.WindowsAzure.Management.Scheduler.nuget.proj" />
@@ -34,6 +35,11 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="CloudServices.hydra.xml" />
+    <Content Include="hydra.xml" />
+    <Content Include="Scheduler.hydra.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
@@ -43,4 +49,13 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementCloudServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.CloudServices.Specification.1.0.5085.30241-prerelease\tools\Microsoft.WindowsAzure.Management.CloudServices.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementSchedulerSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Scheduler.Specification.1.0.5085.30263-prerelease\tools\Microsoft.WindowsAzure.Management.Scheduler.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

@@ -113,3 +113,6 @@ packages
 
 # Mac development
 .DS_Store
+
+# Specification DLLs
+*.Specification.dll
