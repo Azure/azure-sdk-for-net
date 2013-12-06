@@ -7,10 +7,11 @@
     <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
   </PropertyGroup>
 
-  <!--
-  NuGet Packages
-  -->
+  <!-- NuGet Packages -->
   <Import Project="nuget.targets" />
+  
+  <!-- Developer-specific properties -->
+  <Import Project="developer/$(USERNAME)/build.props" Condition="Exists('developer/$(USERNAME)/build.props')" />
 
   <!--
   Windows Azure Management Libraries SDK Builder Guide
@@ -332,6 +333,10 @@
       <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
       <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
     </PropertyGroup>
+
+    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_URL. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_URL)'=='' " />
+    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_USER_NAME. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_USER_NAME)'=='' " />
+    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_PASSWORD. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_PASSWORD)'=='' " />
 
     <!-- Create config for user name and password for private feed access -->
     <Delete Files="$(NuGetRestoreConfigFile)" />
