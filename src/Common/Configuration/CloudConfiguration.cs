@@ -27,6 +27,7 @@ namespace Microsoft.WindowsAzure.Common
     public sealed class CloudConfiguration
     {
         /// <summary>
+        /// Initializes static members of the <see cref="CloudConfiguration" /> class.
         /// Initializes platform-specific cloud configuration and credentials
         /// providers.
         /// </summary>

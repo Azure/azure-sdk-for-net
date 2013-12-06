@@ -28,12 +28,12 @@ namespace Microsoft.WindowsAzure.Common
         : CloudHttpErrorInfo
     {
         /// <summary>
-        /// Gets the status code of the HTTP response.
+        /// Gets or sets the status code of the HTTP response.
         /// </summary>
         public HttpStatusCode StatusCode { get; protected set; }
 
         /// <summary>
-        /// Gets the reason phrase which typically is sent by servers together
+        /// Gets or sets the reason phrase which typically is sent by servers together
         /// with the status code.
         /// </summary>
         public string ReasonPhrase { get; protected set; }

@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure
     public static class CloudContext
     {
         /// <summary>
-        /// Initializes the CloudContext static class.
+        /// Initializes static members of the <see cref="CloudContext" /> class.
         /// </summary>
         static CloudContext()
         {

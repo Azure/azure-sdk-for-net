@@ -19,13 +19,24 @@ using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Common
 {
+    /// <summary>
+    /// Helper class used for deserialization of OLEDB Connection Strings.
+    /// </summary>
     internal class ConnectionStringSettingsFormat : ICloudSettingsFormat
     {
+        /// <summary>
+        /// Gets the setting name.
+        /// </summary>
         public string Name
         {
             get { return "connection"; }
         }
 
+        /// <summary>
+        /// Deserializes OLEDB Connection String.
+        /// </summary>
+        /// <param name="settings">OLEDB Connection String.</param>
+        /// <returns>Dictionary representation of the Connection String.</returns>
         public IDictionary<string, object> Parse(string settings)
         {
             if (settings == null)

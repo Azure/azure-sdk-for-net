@@ -19,20 +19,20 @@ using System.Collections.Generic;
 namespace Microsoft.WindowsAzure.Common
 {
     /// <summary>
-    /// Cloud settings format.
+    /// Defines an interface for setting parsers.
     /// </summary>
     public interface ICloudSettingsFormat
     {
         /// <summary>
-        /// Gets format name.
+        /// Gets the setting name.
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// Parses settings into a dictionary.
+        /// Parses the setting.
         /// </summary>
-        /// <param name="settings">Settings to parse.</param>
-        /// <returns>Dictionary of settings.</returns>
+        /// <param name="settings">Setting to parse.</param>
+        /// <returns>Dictionary representation of the setting.</returns>
         IDictionary<string, object> Parse(string settings);
     }
 }

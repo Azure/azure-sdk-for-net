@@ -25,14 +25,14 @@ namespace Microsoft.WindowsAzure
     public class OperationResponse
     {
         /// <summary>
-        /// REST API operations for the Service Management API return standard
-        /// HTTP status codes.
+        /// Gets or sets the standard HTTP status code from the REST API 
+        /// operations for the Service Management API.
         /// </summary>
         public HttpStatusCode StatusCode { get; set; }
 
         /// <summary>
-        /// A value that uniquely identifies a request made against the
-        /// service.
+        /// Gets or sets the value that uniquely identifies a request 
+        /// made against the service.
         /// </summary>
         public string RequestId { get; set; }
     }
