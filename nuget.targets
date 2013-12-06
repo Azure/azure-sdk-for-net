@@ -94,7 +94,6 @@
   </ItemGroup>
 
   <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
-  <Import Project="tools\Microsoft.WindowsAzure.Build.msbuild" />
 
   <Target Name="BuildDynamicNuSpecs"
           DependsOnTargets="GetGeneratedBuildDate; EnsureBinariesFolderExists">

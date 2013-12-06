@@ -7,10 +7,11 @@
     <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
   </PropertyGroup>
 
-  <!--
-  NuGet Packages
-  -->
+  <!-- NuGet Packages -->
   <Import Project="nuget.targets" />
+  
+  <!-- Developer-specific properties -->
+  <Import Project="developer/$(USERNAME)/build.props" Condition="Exists('developer/$(USERNAME)/build.props')" />
 
   <!--
   Windows Azure Management Libraries SDK Builder Guide
@@ -20,7 +21,6 @@
 
   /t:DeveloperBuild
     Builds the .NET solution using the development key pair.
-    Does not drop into the binaries folder.
 
   /t:OfficialBuild
     Builds officially delay signed binaries.
@@ -111,7 +111,7 @@
   Build profiles
   -->
   <PropertyGroup>
-    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU</DeveloperBuildProperties>
+    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true</DeveloperBuildProperties>
     <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
   </PropertyGroup>
@@ -195,6 +195,14 @@
     <CreateProperty Value="-ci-$(GeneratedBuildDate)">
       <Output PropertyName="BuildVersionSuffix" TaskParameter="Value" />
     </CreateProperty>
+  </Target>
+
+  <Target Name="FastUnsignedBuild"
+        DependsOnTargets="BuildEngineeringDependencies; Clean; ContinuousIntegrationBuildSetProperties">
+    <CallTarget Targets="BuildServerPreparation" />
+    <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
+    <CallTarget Targets="DeveloperBuild" />
+    <CallTarget Targets="BuildPackages" />
   </Target>
 
   <!--
@@ -325,6 +333,10 @@
       <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
       <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
     </PropertyGroup>
+
+    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_URL. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_URL)'=='' " />
+    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_USER_NAME. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_USER_NAME)'=='' " />
+    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_PASSWORD. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_PASSWORD)'=='' " />
 
     <!-- Create config for user name and password for private feed access -->
     <Delete Files="$(NuGetRestoreConfigFile)" />

@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+developer/
 
 # Build results
 binaries/
