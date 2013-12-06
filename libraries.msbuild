@@ -21,7 +21,6 @@
 
   /t:DeveloperBuild
     Builds the .NET solution using the development key pair.
-    Does not drop into the binaries folder.
 
   /t:OfficialBuild
     Builds officially delay signed binaries.
@@ -112,7 +111,7 @@
   Build profiles
   -->
   <PropertyGroup>
-    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU</DeveloperBuildProperties>
+    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true</DeveloperBuildProperties>
     <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
   </PropertyGroup>
