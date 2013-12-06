@@ -10,7 +10,7 @@
   <!-- NuGet Packages -->
   <Import Project="nuget.targets" />
   
-  <!-- User-specific properties -->
+  <!-- Developer-specific properties -->
   <Import Project="developer/$(USERNAME)/build.props" Condition="Exists('developer/$(USERNAME)/build.props')" />
 
   <!--
