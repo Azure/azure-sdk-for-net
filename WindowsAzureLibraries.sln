@@ -70,6 +70,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Test", "src\Common.Test\Common.Test.csproj", "{CB18ACEB-2825-4884-91FA-05C31AC779FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tracing.Log4Net", "src\Common.Tracing.Log4Net\Common.Tracing.Log4Net.csproj", "{2EFD6648-39B4-476A-B302-8BC236F5F1B8}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.WindowsAzure.Configuration.Test", "src\Configuration.Test\Microsoft.WindowsAzure.Configuration.Test.csproj", "{0645E75E-9C0B-47EE-B5A2-239286E1DED9}"
 EndProject
 Global
