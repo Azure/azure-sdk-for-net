@@ -15,12 +15,13 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
+    <Compile Include="Generated\WebSiteManagementClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebSiteCloudException.cs" />
-    <Compile Include="WebSiteManagementClient.cs" />
     <Compile Include="WebSiteManagementClient.Customization.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="GenerateCode.props" />
     <None Include="packages.config" />
     <None Include="Microsoft.WindowsAzure.Management.WebSites.nuspec" />
     <None Include="Microsoft.WindowsAzure.Management.WebSites.nuget.proj" />
@@ -31,6 +32,9 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="hydra.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
@@ -40,4 +44,10 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementWebSitesSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.WebSites.Specification.1.0.5085.30285-prerelease\tools\Microsoft.WindowsAzure.Management.WebSites.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

@@ -6,7 +6,7 @@
     <ProductFriendlyName>Windows Azure Management Libraries</ProductFriendlyName>
     <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
   </PropertyGroup>
-  
+
   <!--
   NuGet Packages
   -->
@@ -22,7 +22,7 @@
     Builds the .NET solution using the development key pair.
     Does not drop into the binaries folder.
 
-  /t:OfficialBuild  
+  /t:OfficialBuild
     Builds officially delay signed binaries.
     Drops into the binaries\unsigned folder.
 
@@ -32,7 +32,7 @@
 
   /t:PublishPackages
     Publishes the built packages. You will need to include your
-    publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY 
+    publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY
 
   Targets for build servers:
   /t:NightlyBuild
@@ -41,7 +41,7 @@
 
   Properties of interest:
 
-  /p:BuildVersionSuffix=BUILD_SUFFIX  
+  /p:BuildVersionSuffix=BUILD_SUFFIX
     Inserts a string suffix value at the end of all the NuGet package versions
     built and published.
 
@@ -88,12 +88,12 @@
     <AdditionalVersionSuffix></AdditionalVersionSuffix>
   </PropertyGroup>
 
-  <!-- 
+  <!--
     Compliance signing properties
     - - -
     Developer builds are signed using the c66ce9294aae1300 full key pair that
     is unofficial and provided to the public via the Development.snk key pair.
-    
+
     Official builds should never be shipped with the developer key pair token.
     -->
   <PropertyGroup>
@@ -145,10 +145,10 @@
   An official build is designed for use while shipping. It generates a release
   build and places binaries ready for the official Microsoft signing process
   inside the binaries\unsigned folder.
-  
+
   After signing is complete, additional work is required to prepare the NuGet
   packages for shipping.
-  
+
   This target can be run on any machine, but only on-premise build servers will
   be able to generate and ship a complete product build as this is only part of
   the story.
@@ -174,7 +174,7 @@
     <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
     <CallTarget Targets="OfficialSignedBuild; PublishPackages" />
   </Target>
-  
+
   <Target Name="NightlyBuildSetProperties"
           DependsOnTargets="GetGeneratedBuildDate">
     <Message Text="Nightly builds today have the date of $(GeneratedBuildDate)." />
@@ -196,7 +196,7 @@
       <Output PropertyName="BuildVersionSuffix" TaskParameter="Value" />
     </CreateProperty>
   </Target>
-  
+
   <!--
   Perform an on-premise official build server drop of this project. Sign the
   generated binaries, build officially-versioned packages, perform compliance
@@ -303,10 +303,40 @@
   providing date-based build numbers, and processing regular expression
   replacements in files such as NuGet specs.
   -->
-  <Target Name="BuildEngineeringDependencies">
+  <Target Name="BuildEngineeringDependencies" DependsOnTargets="ForceRestorePackages">
     <MSBuild Projects="tools\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
              Targets="Build"
              Properties="Configuration=Debug;Platform=AnyCPU" />
+  </Target>
+
+  <!--
+  Force nuget package restore so that packages that include .targets files
+  don't need to be checked into source control.
+
+  Assumes use of a private feed, requires the following environment variables
+  to be set:
+
+  PRIVATE_FEED_URL: The url of the feed to pull from (in addition to the public default feed)
+  PRIVATE_FEED_USER_NAME: User name for access to the feed
+  PRIVATE_FEED_PASSWORD: Password for access to the feed
+  -->
+  <Target Name="ForceRestorePackages">
+    <PropertyGroup>
+      <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
+      <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
+    </PropertyGroup>
+
+    <!-- Create config for user name and password for private feed access -->
+    <Delete Files="$(NuGetRestoreConfigFile)" />
+    <Exec Command='$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)' />
+    <Exec Command='$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)'
+      EchoOff="true"/>
+
+    <Exec Command="$(NuGetCommand) restore WindowsAzureLibraries.sln $(NuGetRestoreConfigSwitch)"
+      ContinueOnError="ErrorAndContinue" />
+
+    <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
+    <Delete Files="$(NuGetRestoreConfigFile)" />
   </Target>
 
   <!--
@@ -331,7 +361,7 @@
     <Message Text="Build Server Information" Importance="high" />
     <Message Text="Hostname      : $(COMPUTERNAME)" />
     <Message Text="Build Account : $(USERDOMAIN)\$(USERNAME)" />
-    
+
     <!-- Useful variables to log -->
     <Message Text="Build Properties and Variables" Importance="high" />
     <Message Text="Solution      : $(ProductSolution)" />
@@ -343,18 +373,18 @@
   </Target>
 
   <!--
-  Burn the build information into the assembly file information, NuGet specs, 
+  Burn the build information into the assembly file information, NuGet specs,
   and other source files before beginning a build.
-  
+
   This updates the AssemblyFileVersion for .NET assemblies. This is not the
   same thing as an AssemblyVersion; it is only used typically by test teams and
   developers when reporting bugs and associating a build to report.
-  
+
   WARNING:
   This target actively modifies source files and should only be used in build
   server scenarios where the source tree is archived or discarded after use,
   but not used again for additional builds.
-  
+
   If you accidentally run this within your enlistment, revert AssemblyInfo.cs
   changes before commiting to Git.
   -->

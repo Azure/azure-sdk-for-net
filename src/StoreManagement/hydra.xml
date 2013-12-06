@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hydra>
+  <Assembly>Microsoft.WindowsAzure.Management.Store.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.Store.StoreManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputPath>StoreManagementClient.cs</OutputPath>
+    </Platform>
+  </Specification>
+</Hydra>
