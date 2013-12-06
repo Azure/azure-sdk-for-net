@@ -197,6 +197,14 @@
     </CreateProperty>
   </Target>
 
+  <Target Name="FastUnsignedBuild"
+        DependsOnTargets="BuildEngineeringDependencies; Clean; ContinuousIntegrationBuildSetProperties">
+    <CallTarget Targets="BuildServerPreparation" />
+    <Message Text="Packages will have the version suffix of: $(BuildVersionSuffix)$(AdditionalVersionSuffix)" Importance="high" />
+    <CallTarget Targets="DeveloperBuild" />
+    <CallTarget Targets="BuildPackages" />
+  </Target>
+
   <!--
   Perform an on-premise official build server drop of this project. Sign the
   generated binaries, build officially-versioned packages, perform compliance
