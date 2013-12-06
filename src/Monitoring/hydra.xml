@@ -8,19 +8,20 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>AlertsClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.monitoring</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
-
   </Specification>
   <Specification>
     <Type>Microsoft.WindowsAzure.Management.Monitoring.Autoscale.AutoscaleClient</Type>
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>AutoscaleClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.monitoring</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
-
-
   </Specification>
 
   <Specification>
@@ -28,9 +29,9 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>MetricsClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.monitoring</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
-
-
   </Specification>
 </Hydra>

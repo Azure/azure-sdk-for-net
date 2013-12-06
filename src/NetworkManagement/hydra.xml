@@ -8,8 +8,9 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>VirtualNetworkManagementClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.virtualnetworks</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
-
   </Specification>
 </Hydra>
