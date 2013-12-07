@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Common
         }
 
         /// <summary>
-        /// Initialize the ServiceClient class.
+        /// Initializes static members of the ServiceClient class.
         /// </summary>
         static ServiceClient()
         {

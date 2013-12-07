@@ -36,9 +36,9 @@ namespace Microsoft.WindowsAzure
         public string _subscriptionId = null;
 
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management API.
+        /// Gets subscription ID which uniquely identifies Windows Azure 
+        /// subscription. The subscription ID forms part of the URI for 
+        /// every call that you make to the Service Management API.
         /// </summary>
         public override string SubscriptionId
         {
@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name="settings">The settings to use.</param>
         /// <returns>
-        /// CertificateCloudCrendentials is created, null otherwise.
+        /// CertificateCloudCredentials is created, null otherwise.
         /// </returns>
         public static CertificateCloudCredentials Create(IDictionary<string, object> settings)
         {

@@ -31,8 +31,8 @@ namespace Microsoft.WindowsAzure.Common
     /// easily discovered via CloudContext.Clients without developers having to
     /// figure out which namespaces to import, etc.  You may also add extension
     /// methods that create 
-    /// 
-    /// This class is used as a static class (internal .ctor) but not declared
+    /// <para/>
+    /// This class is used as a static class (internal constructor) but not declared
     /// as such so it can be the target of extension methods.
     /// </remarks>
     public sealed class CloudClients

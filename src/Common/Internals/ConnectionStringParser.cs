@@ -29,8 +29,7 @@ namespace Microsoft.WindowsAzure.Common.Internals
     /// for full details.  We support case-insensitive keys and multiple
     /// occurrences of the same key, but not multiple values for keys (i.e.,
     /// the CompoundValue nonterminal in the spec's grammar).
-    /// 
-    /// 
+    /// <para/>
     /// ws :=           [ \t]*
     /// semi :=         ;
     /// eq :=           =
@@ -47,24 +46,23 @@ namespace Microsoft.WindowsAzure.Common.Internals
     /// lit-end:        [^ \t;]
     /// sq-lit:         ''|[^']
     /// dq-lit:         ""|[^"]
-    /// 
+    /// <para/>
     /// ConnectionString :=
     ///     (ConnectionStringClause semi)* (ConnectionStringClause semi?)?
-    ///   
+    /// <para/>
     /// ConnectionStringClause :=
     ///     KeyValuePair | ws
-    ///     
+    /// <para/> 
     /// KeyValuePair :=
     ///     ws Key ws eq ws Value ws
-    ///     
+    /// <para/>
     /// Key :=
     ///     key-start (key-body* key-end)?
-    ///     
+    /// <para/>
     /// Value :=
     ///     (lit-start (lit-body* lit-end)?)?
     ///     | sq sq-lit* sq
     ///     | dq dq-lit* dq    
-    ///
     /// </remarks>
     public class ConnectionStringParser
     {
@@ -102,7 +100,7 @@ namespace Microsoft.WindowsAzure.Common.Internals
         }
 
         /// <summary>
-        /// Initializes the object.
+        /// Initializes a new instance of the <see cref="ConnectionStringParser" /> class.
         /// </summary>
         /// <param name="value">Value to parse.</param>
         private ConnectionStringParser(string value)

@@ -27,12 +27,12 @@ namespace Microsoft.WindowsAzure.Common
         : CloudHttpErrorInfo
     {
         /// <summary>
-        /// Gets the HTTP method used by the HTTP request message.
+        /// Gets or sets the HTTP method used by the HTTP request message.
         /// </summary>
         public HttpMethod Method { get; protected set; }
 
         /// <summary>
-        /// Gets the Uri used for the HTTP request.
+        /// Gets or sets the Uri used for the HTTP request.
         /// </summary>
         public Uri RequestUri { get; protected set; }
 
