@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.Common
     public abstract class CloudHttpErrorInfo
     {
         /// <summary>
-        /// Gets the contents of the HTTP message.
+        /// Gets or sets the contents of the HTTP message.
         /// </summary>
         public string Content { get; protected set; }
 

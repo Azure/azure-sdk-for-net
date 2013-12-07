@@ -15,20 +15,29 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
 using Microsoft.WindowsAzure.Common.Internals;
+using Newtonsoft.Json;
 
 namespace Microsoft.WindowsAzure.Common
 {
+    /// <summary>
+    /// Helper class used for deserialization of JSON formatted Connection Strings.
+    /// </summary>
     internal class JsonSettingsFormat : ICloudSettingsFormat
     {
+        /// <summary>
+        /// Gets the setting name.
+        /// </summary>
         public string Name
         {
             get { return "json"; }
         }
 
+        /// <summary>
+        /// Deserializes JSON formatted Connection String.
+        /// </summary>
+        /// <param name="settings">JSON formatted Connection String.</param>
+        /// <returns>Dictionary representation of the Connection String.</returns>
         public IDictionary<string, object> Parse(string settings)
         {
             if (settings == null)

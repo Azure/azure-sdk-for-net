@@ -13,11 +13,10 @@
 // limitations under the License.
 //
 
-using System;
 using System.Net.Http;
-using Microsoft.WindowsAzure.Common;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.WindowsAzure
 {

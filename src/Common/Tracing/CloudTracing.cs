@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Common
         /// in progress on a different thread will not be affected by the
         /// change.
         /// </summary>
-        internal List<ICloudTracingInterceptor> _threadSafeInterceptors;
+        private List<ICloudTracingInterceptor> _threadSafeInterceptors;
 
         /// <summary>
         /// Lock used to synchronize mutation of the tracing interceptors.
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Common
         public bool IsEnabled { get; set; }
 
         /// <summary>
-        /// Gets a sequnce of the tracing interceptors to notify of changes.
+        /// Gets a sequence of the tracing interceptors to notify of changes.
         /// </summary>
         internal IEnumerable<ICloudTracingInterceptor> TracingInterceptors
         {
@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.Common
             bool removed = false;
             lock (_lock)
             {
-                removed =_interceptors.Remove(interceptor);
+                removed = _interceptors.Remove(interceptor);
                 if (removed)
                 {
                     _threadSafeInterceptors = new List<ICloudTracingInterceptor>(_interceptors);

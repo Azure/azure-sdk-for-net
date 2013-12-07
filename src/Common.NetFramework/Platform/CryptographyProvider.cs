@@ -20,6 +20,12 @@ namespace Microsoft.WindowsAzure.Common.Platform
 {
     internal class CryptographyProvider : ICryptographyProvider
     {
+        /// <summary>
+        /// Computes SHA256 hash from key and data using HMACSHA256.
+        /// </summary>
+        /// <param name="key">Key to use as hash salt.</param>
+        /// <param name="data">Data to hash.</param>
+        /// <returns>Hash value.</returns>
         public byte[] ComputeHmacSha256Hash(byte[] key, byte[] data)
         {
             return new HMACSHA256(key).ComputeHash(data);

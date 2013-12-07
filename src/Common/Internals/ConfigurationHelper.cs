@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-using Microsoft.WindowsAzure.Common.Platform;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

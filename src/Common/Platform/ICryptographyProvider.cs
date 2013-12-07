@@ -18,8 +18,17 @@ using System.Collections.Generic;
 
 namespace Microsoft.WindowsAzure.Common.Platform
 {
+    /// <summary>
+    /// Defines cryptographic methods.
+    /// </summary>
     public interface ICryptographyProvider
     {
+        /// <summary>
+        /// Computes SHA256 hash from key and data.
+        /// </summary>
+        /// <param name="key">Key to use as hash salt.</param>
+        /// <param name="data">Data to hash.</param>
+        /// <returns>Hash value.</returns>
         byte[] ComputeHmacSha256Hash(byte[] key, byte[] data);
     }
 }
