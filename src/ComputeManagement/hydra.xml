@@ -8,8 +8,9 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>ComputeManagementClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.compute</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
-
   </Specification>
 </Hydra>

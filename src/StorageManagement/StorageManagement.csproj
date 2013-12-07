@@ -15,7 +15,27 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
+    <Compile Include="Generated\IStorageAccountOperations.cs" />
+    <Compile Include="Generated\IStorageManagementClient.cs" />
+    <Compile Include="Generated\Models\CheckNameAvailabilityResponse.cs" />
+    <Compile Include="Generated\Models\GeoRegionNames.cs" />
+    <Compile Include="Generated\Models\GeoRegionStatus.cs" />
+    <Compile Include="Generated\Models\OperationStatus.cs" />
+    <Compile Include="Generated\Models\StorageAccountCreateParameters.cs" />
+    <Compile Include="Generated\Models\StorageAccountGetKeysResponse.cs" />
+    <Compile Include="Generated\Models\StorageAccountRegenerateKeysParameters.cs" />
+    <Compile Include="Generated\Models\StorageAccountRegenerateKeysResponse.cs" />
+    <Compile Include="Generated\Models\StorageAccountUpdateParameters.cs" />
+    <Compile Include="Generated\Models\StorageKeyType.cs" />
+    <Compile Include="Generated\Models\StorageOperationStatusResponse.cs" />
+    <Compile Include="Generated\Models\StorageServiceGetResponse.cs" />
+    <Compile Include="Generated\Models\StorageServiceListResponse.cs" />
+    <Compile Include="Generated\Models\StorageServiceProperties.cs" />
+    <Compile Include="Generated\Models\StorageServiceStatus.cs" />
+    <Compile Include="Generated\StorageAccountOperations.cs" />
+    <Compile Include="Generated\StorageAccountOperationsExtensions.cs" />
     <Compile Include="Generated\StorageManagementClient.cs" />
+    <Compile Include="Generated\StorageManagementClientExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StorageManagementClient.Customization.cs" />
   </ItemGroup>

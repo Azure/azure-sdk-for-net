@@ -8,7 +8,9 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>StorageManagementClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.storage</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
   </Specification>
 </Hydra>

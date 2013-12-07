@@ -11,11 +11,11 @@
 
         <!-- Determines if package restore consent is required to restore packages -->
         <RequireRestoreConsent Condition=" '$(RequireRestoreConsent)' != 'false' ">true</RequireRestoreConsent>
-        
+
         <!-- Download NuGet.exe if it does not already exist -->
         <DownloadNuGetExe Condition=" '$(DownloadNuGetExe)' == '' ">false</DownloadNuGetExe>
     </PropertyGroup>
-    
+
     <ItemGroup Condition=" '$(PackageSources)' == '' ">
         <!-- Package sources used to restore packages. By default, registered sources under %APPDATA%\NuGet\NuGet.Config will be used -->
         <!-- The official NuGet package source (https://www.nuget.org/api/v2/) will be excluded if package sources are specified and it does not appear in the list -->

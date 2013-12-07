@@ -8,7 +8,9 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>SqlManagementClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.sql</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
   </Specification>
 </Hydra>
