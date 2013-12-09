@@ -71,6 +71,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TransientFaultHandling\AsyncExecution.cs" />
+    <Compile Include="TransientFaultHandling\DefaultHttpErrorDetectionStrategy.cs" />
     <Compile Include="TransientFaultHandling\ExponentialBackoff.cs" />
     <Compile Include="TransientFaultHandling\FixedInterval.cs" />
     <Compile Include="TransientFaultHandling\Guard.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="TransientFaultHandling\RetryManager.cs" />
     <Compile Include="TransientFaultHandling\RetryPolicy.cs" />
     <Compile Include="TransientFaultHandling\RetryPolicy.Generic.cs" />
+    <Compile Include="TransientFaultHandling\RetryPolicyFactory.cs" />
     <Compile Include="TransientFaultHandling\RetryStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -68,6 +68,7 @@
     <Compile Include="RetryHandlerTest.cs" />
     <Compile Include="ServiceClientTest.cs" />
     <Compile Include="Tracing\CloudTracingExtensionsTest.cs" />
+    <Compile Include="TransientFaultHandling\GeneralRetryPolicyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
