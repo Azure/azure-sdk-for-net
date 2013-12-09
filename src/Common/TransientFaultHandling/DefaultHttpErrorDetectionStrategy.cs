@@ -15,9 +15,7 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 
 namespace Microsoft.WindowsAzure.Common.TransientFaultHandling
 {
@@ -25,7 +23,16 @@ namespace Microsoft.WindowsAzure.Common.TransientFaultHandling
     {
         public bool IsTransient(Exception ex)
         {
-            throw new NotImplementedException();
+            if (ex != null)
+            {
+                HttpRequestException httpException;
+                if ((httpException = ex as HttpRequestException) != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
