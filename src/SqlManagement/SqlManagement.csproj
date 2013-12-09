@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GenerateCode.props" />
+    <None Include="Microsoft.WindowsAzure.Management.Sql.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.Sql.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
