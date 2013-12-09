@@ -10,7 +10,7 @@
     <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Provides Windows Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.</summary>
     <description>Provides Windows Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
