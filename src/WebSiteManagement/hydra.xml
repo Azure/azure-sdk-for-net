@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Hydra>
   <Assembly>Microsoft.WindowsAzure.Management.WebSites.Specification.dll</Assembly>
-  <OutputDirectory>WebSites</OutputDirectory>
+  <OutputDirectory>Generated</OutputDirectory>
 
   <Specification>
     <Type>Microsoft.WindowsAzure.Management.WebSites.WebSiteManagementClient</Type>
