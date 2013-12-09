@@ -74,7 +74,6 @@
   <ItemGroup>
     <Content Include="management.hydra.xml" />
     <Content Include="hydra.xml" />
-    <Content Include="readme.txt" />
     <Content Include="subscriptions.hydra.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
