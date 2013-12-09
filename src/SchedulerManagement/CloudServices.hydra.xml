@@ -8,8 +8,9 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>CloudServiceManagementClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.scheduler</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
-
   </Specification>
 </Hydra>

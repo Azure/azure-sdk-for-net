@@ -6,9 +6,12 @@
   <Specification>
     <Type>Microsoft.WindowsAzure.Scheduler.SchedulerClient</Type>
 
+
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>SchedulerClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.scheduler</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
   </Specification>
   <Specification>
@@ -16,7 +19,9 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>SchedulerManagementClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.scheduler</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
   </Specification>
 </Hydra>

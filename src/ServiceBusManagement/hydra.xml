@@ -8,7 +8,9 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>ServiceBusManagementClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.servicebus</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
   </Specification>
 </Hydra>

@@ -6,10 +6,11 @@
     <Specification>
         <Type>Microsoft.WindowsAzure.Management.ManagementClient</Type>
 
-        <Platform>
-            <Flavor>CSharp.Azure</Flavor>
-            <OutputPath>ManagementClient.cs</OutputPath>
-        </Platform>
-
+      <Platform>
+        <Flavor>CSharp.Azure</Flavor>
+        <OutputDirectory></OutputDirectory>
+        <BaseNamespace>microsoft.windowsazure.management</BaseNamespace>
+        <Split>Namespace</Split>
+      </Platform>
     </Specification>
 </Hydra>
