@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure
         : SubscriptionCloudCredentials
     {
         // The Windows Azure Subscription ID.
-        public string _subscriptionId = null;
+        private readonly string _subscriptionId = null;
 
         /// <summary>
         /// Gets subscription ID which uniquely identifies Windows Azure 
@@ -122,7 +122,7 @@ namespace Microsoft.WindowsAzure
                 throw new PlatformNotSupportedException(
                     string.Format(
                         CultureInfo.InvariantCulture,
-                        Microsoft.WindowsAzure.Common.Platform.Properties.Resources.CertificateCloudCredentials_InitializeServiceClient_NoWebRequestHandler,
+                        Common.Properties.Resources.CertificateCloudCredentials_InitializeServiceClient_NoWebRequestHandler,
                         client.GetType().Name,
                         typeof(WebRequestHandler).Name));
             }

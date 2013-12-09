@@ -14,14 +14,16 @@
 //
 
 using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.Common.Platform
+namespace Microsoft.WindowsAzure.Common.Test.Fakes
 {
-    internal class HttpTransportHandlerProvider : IHttpTransportHandlerProvider
+    public class BadResponseDelegatingHandler : DelegatingHandler
     {
-        public HttpMessageHandler CreateHttpTransportHandler()
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {
-            return new WebRequestHandler();
+            var response = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            return Task.Run(() => response);
         }
     }
 }
