@@ -121,6 +121,12 @@
     <value>Value cannot be empty.
 Parameter name: {0}</value>
   </data>
+  <data name="ArgumentCannotBeGreaterThanBaseline" xml:space="preserve">
+    <value>The specified argument {0} cannot be greater than its ceiling value of {1}.</value>
+  </data>
+  <data name="ArgumentCannotBeNegative" xml:space="preserve">
+    <value>The specified argument {0} cannot be initialized with a negative value.</value>
+  </data>
   <data name="ConfigurationHelper_CreateCouldNotConvertException" xml:space="preserve">
     <value>Failed to convert parameter {0} value '{1}' to type {2}.</value>
   </data>
@@ -135,5 +141,32 @@ Parameter name: {0}</value>
   </data>
   <data name="ConfigurationHelper_GetParameter_NotFound" xml:space="preserve">
     <value>Parameter {0} is required.</value>
+  </data>
+  <data name="DefaultRetryStrategyMappingNotFound" xml:space="preserve">
+    <value>Default retry strategy for technology {0}, named '{1}', is not defined.</value>
+  </data>
+  <data name="DefaultRetryStrategyNotFound" xml:space="preserve">
+    <value>Default retry strategy for technology {0} was not not defined, and there is no overall default strategy.</value>
+  </data>
+  <data name="ExceptionRetryManagerAlreadySet" xml:space="preserve">
+    <value>The RetryManager is already set.</value>
+  </data>
+  <data name="ExceptionRetryManagerNotSet" xml:space="preserve">
+    <value>The default RetryManager has not been set. Set it by invoking the RetryManager.SetDefault static method, or if you are using declarative configuration, you can invoke the RetryPolicyFactory.CreateDefault() method to automatically create the retry manager from the configuration file.</value>
+  </data>
+  <data name="RetryLimitExceeded" xml:space="preserve">
+    <value>The action has exceeded its defined retry limit.</value>
+  </data>
+  <data name="RetryStrategyNotFound" xml:space="preserve">
+    <value>The retry strategy with name '{0}' cannot be found.</value>
+  </data>
+  <data name="StringCannotBeEmpty" xml:space="preserve">
+    <value>The specified string argument {0} must not be empty.</value>
+  </data>
+  <data name="TaskCannotBeNull" xml:space="preserve">
+    <value>The specified argument '{0}' cannot return a null task when invoked.</value>
+  </data>
+  <data name="TaskMustBeScheduled" xml:space="preserve">
+    <value>The specified argument '{0}' must return a scheduled task (also known as "hot" task) when invoked.</value>
   </data>
 </root>
