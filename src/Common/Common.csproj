@@ -28,6 +28,7 @@
   <ItemGroup>
     <Compile Include="Configuration\ConnectionStringSettingsFormat.cs" />
     <Compile Include="Credentials\SubscriptionCloudCredentials.cs" />
+    <Compile Include="Exception\CloudExceptionType.cs" />
     <Compile Include="Exception\CloudHttpErrorInfo.cs" />
     <Compile Include="Exception\CloudHttpRequestErrorInfo.cs" />
     <Compile Include="Exception\CloudHttpResponseErrorInfo.cs" />

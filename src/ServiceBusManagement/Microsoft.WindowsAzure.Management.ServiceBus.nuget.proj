@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <!--
-    Microsoft.WindowsAzure.Common
+    Microsoft.WindowsAzure.Management.ServiceBus
     -->
-    <SdkNuGetPackage Include="Microsoft.WindowsAzure.Common">
-      <PackageVersion>0.9.4-preview</PackageVersion>
+    <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.ServiceBus">
+      <PackageVersion>0.9.0-preview</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

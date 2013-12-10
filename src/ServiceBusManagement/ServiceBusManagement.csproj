@@ -65,6 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GenerateCode.props" />
+    <None Include="Microsoft.WindowsAzure.Management.ServiceBus.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.ServiceBus.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

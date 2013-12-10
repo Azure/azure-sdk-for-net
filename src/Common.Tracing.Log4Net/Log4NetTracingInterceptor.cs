@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using log4net;
 
 namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
 {
@@ -29,9 +29,9 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         private ILog _logger;
 
         /// <summary>
-        /// Constructs new instance from log4net tracing interceptor.
+        /// Initializes a new instance of the <see cref="Log4NetTracingInterceptor" /> class with configuration file.
         /// </summary>
-        /// <param name="filePath">The configuration file absolute path</param>
+        /// <param name="filePath">The configuration file absolute path.</param>
         public Log4NetTracingInterceptor(string filePath)
         {
             _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         }
 
         /// <summary>
-        /// Constructs new instance from log4net without config file.
+        /// Initializes a new instance of the <see cref="Log4NetTracingInterceptor" /> class without configuration file.
         /// </summary>
         public Log4NetTracingInterceptor() : this(null) { }
 
@@ -80,7 +80,8 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         /// <param name="parameters">Method parameters.</param>
         public void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters)
         {
-            _logger.DebugFormat("invocationId: {0}\r\ninstance: {1}\r\nmethod: {2}\r\nparameters: {3}",
+            _logger.DebugFormat(
+                "invocationId: {0}\r\ninstance: {1}\r\nmethod: {2}\r\nparameters: {3}",
                 invocationId, instance, method, parameters.AsFormattedString());
         }
 
@@ -125,7 +126,8 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Log4Net
         public void Exit(string invocationId, object returnValue)
         {
             string returnValueAsString = returnValue == null ? string.Empty : returnValue.ToString();
-            _logger.Debug(string.Format("Exit with invocation id {0}, the return value is {1}", 
+            _logger.Debug(
+                string.Format("Exit with invocation id {0}, the return value is {1}", 
                 invocationId,
                 returnValueAsString));
         }
