@@ -114,6 +114,7 @@
     <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true</DeveloperBuildProperties>
     <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
+    <BuildInParallelPreference>false</BuildInParallelPreference>
   </PropertyGroup>
 
   <!--
@@ -121,9 +122,11 @@
   -->
   <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies">
     <MSBuild Projects="$(ProductSolution)"
+             BuildInParallel="$(BuildInParallelPreference)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
     <MSBuild Projects="$(ProductSolution)"
+             BuildInParallel="$(BuildInParallelPreference)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
   </Target>
@@ -158,8 +161,10 @@
     <CallTarget Targets="BuildServerPreparation" />
     <MSBuild Projects="$(ProductSolution)"
              Properties="$(OfficialMSBuildProperties)"
+             BuildInParallel="$(BuildInParallelPreference)"
              Targets="Rebuild" />
     <MSBuild Projects="$(ProductSolution)"
+             BuildInParallel="$(BuildInParallelPreference)"
              Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
   </Target>
