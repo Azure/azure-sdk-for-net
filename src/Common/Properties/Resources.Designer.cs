@@ -170,6 +170,15 @@ namespace Microsoft.WindowsAzure.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Response status code indicates server error: {0} ({1})..
+        /// </summary>
+        internal static string ResponseStatusCodeError {
+            get {
+                return ResourceManager.GetString("ResponseStatusCodeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The action has exceeded its defined retry limit..
         /// </summary>
         internal static string RetryLimitExceeded {

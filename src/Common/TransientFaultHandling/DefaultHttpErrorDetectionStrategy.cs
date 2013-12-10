@@ -25,10 +25,11 @@ namespace Microsoft.WindowsAzure.Common.TransientFaultHandling
         {
             if (ex != null)
             {
-                HttpRequestException httpException;
-                if ((httpException = ex as HttpRequestException) != null)
+                HttpRequestExceptionWithStatus httpException;
+                if ((httpException = ex as HttpRequestExceptionWithStatus) != null)
                 {
-                    return true;
+                    if ((int)httpException.StatusCode >= 500)
+                        return true;
                 }
             }
 

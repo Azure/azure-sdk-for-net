@@ -13,9 +13,11 @@
 // limitations under the License.
 //
 
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Common.Test.Fakes;
+using Microsoft.WindowsAzure.Common.TransientFaultHandling;
 using Xunit;
 
 namespace Microsoft.WindowsAzure.Common.Test
@@ -34,6 +36,57 @@ namespace Microsoft.WindowsAzure.Common.Test
 
             var result2 = fakeClient.DoStuff();
             Assert.Equal(500, (int)result2.Result.StatusCode);
+        }
+
+        [Fact]
+        public void RetryHandlerRetriesWith500Errors()
+        {
+            var fakeClient = new FakeServiceClient(new CertificateCloudCredentials("1EAAFA05-0632-4EF4-85DF-09E871CE66D8",
+                new X509Certificate2()));
+            int counter = 0;
+
+            fakeClient.AddHandlerToPipeline(new BadResponseDelegatingHandler());
+            var retryHandler = new RetryHandler(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
+            retryHandler.Retrying += (sender, args) => { counter++; };
+            fakeClient.AddHandlerToPipeline(retryHandler);
+
+            var result = fakeClient.DoStuff();
+            Assert.Equal(HttpStatusCode.InternalServerError, result.Result.StatusCode);
+            Assert.Equal(2, counter);
+        }
+
+        [Fact]
+        public void RetryHandlerRetriesWith500ErrorsAndSucceeds()
+        {
+            var fakeClient = new FakeServiceClient(new CertificateCloudCredentials("1EAAFA05-0632-4EF4-85DF-09E871CE66D8",
+                new X509Certificate2()));
+            int counter = 0;
+
+            fakeClient.AddHandlerToPipeline(new BadResponseDelegatingHandler() { NumberOfTimesToFail = 1 });
+            var retryHandler = new RetryHandler(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
+            retryHandler.Retrying += (sender, args) => { counter++; };
+            fakeClient.AddHandlerToPipeline(retryHandler);
+
+            var result = fakeClient.DoStuff();
+            Assert.Equal(HttpStatusCode.OK, result.Result.StatusCode);
+            Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public void RetryHandlerDoesntRetryFor400Errors()
+        {
+            var fakeClient = new FakeServiceClient(new CertificateCloudCredentials("1EAAFA05-0632-4EF4-85DF-09E871CE66D8",
+                new X509Certificate2()));
+            int counter = 0;
+
+            fakeClient.AddHandlerToPipeline(new BadResponseDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Conflict });
+            var retryHandler = new RetryHandler(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
+            retryHandler.Retrying += (sender, args) => { counter++; };
+            fakeClient.AddHandlerToPipeline(retryHandler);
+
+            var result = fakeClient.DoStuff();
+            Assert.Equal(HttpStatusCode.Conflict, result.Result.StatusCode);
+            Assert.Equal(0, counter);
         }
     }
 }

@@ -14,31 +14,85 @@
 //
 
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Common.Properties;
+using Microsoft.WindowsAzure.Common.TransientFaultHandling;
 
 namespace Microsoft.WindowsAzure
 {
-    public abstract class RetryHandler
-        : DelegatingHandler
+    public class RetryHandler : DelegatingHandler
     {
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public RetryPolicy RetryPolicy { get; private set; }
+        
+        public RetryHandler()
+            : base()
         {
-            int retryCount = 0;
-            TimeSpan retryInterval;
-
-            HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
-            
-            while (ShouldRetry(request, response, retryCount++, out retryInterval))
-            {
-                await TaskEx.Delay(retryInterval, cancellationToken);
-                response = await base.SendAsync(request, cancellationToken);
-            }
-
-            return response;
+            var retryStrategy = new ExponentialBackoff(3, new TimeSpan(0, 0, 1), new TimeSpan(0, 0, 10), new TimeSpan(0, 0, 2));
+            RetryPolicy = new RetryPolicy<DefaultHttpErrorDetectionStrategy>(retryStrategy);
         }
 
-        protected abstract bool ShouldRetry(HttpRequestMessage request, HttpResponseMessage response, int retryCount, out TimeSpan retryInterval);
+        public RetryHandler(RetryPolicy retryPolicy)
+            : base()
+        {
+            if (retryPolicy == null)
+            {
+                throw new ArgumentNullException("retryPolicy");
+            }
+            RetryPolicy = retryPolicy;
+        }
+
+        public RetryHandler(RetryPolicy retryPolicy, DelegatingHandler innerHandler)
+            : base(innerHandler)
+        {
+            if (retryPolicy == null)
+            {
+                throw new ArgumentNullException("retryPolicy");
+            }
+            RetryPolicy = retryPolicy;
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            RetryPolicy.Retrying += (sender, args) =>
+            {
+                if (this.Retrying != null)
+                {
+                    this.Retrying(sender, args);
+                }
+            };
+
+            try
+            {
+                HttpResponseMessage response = await RetryPolicy.ExecuteAction(async () =>
+                    {
+                        var responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+                        if (!responseMessage.IsSuccessStatusCode)
+                        {
+                            throw new HttpRequestExceptionWithStatus(string.Format(
+                                CultureInfo.InvariantCulture,
+                                Resources.ResponseStatusCodeError,
+                                (int)responseMessage.StatusCode,
+                                responseMessage.StatusCode)) { StatusCode = responseMessage.StatusCode };
+                        }
+
+                        return responseMessage;
+                    });
+
+                return response;
+            }
+            catch (HttpRequestException)
+            {
+                return responseMessage;
+            }            
+        }
+
+        /// <summary>
+        /// An instance of a callback delegate that will be invoked whenever a retry condition is encountered.
+        /// </summary>
+        public event EventHandler<RetryingEventArgs> Retrying;
     }
 }
