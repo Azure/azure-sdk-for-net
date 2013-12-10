@@ -1,0 +1,45 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.WindowsAzure.Management.MediaServices</id>
+    <title>Windows Azure Media Services Management Library</title>
+    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Provides Windows Azure Media Services management functionality.</summary>
+    <description>
+      Provides Windows Azure Media Services management functionality.
+
+      Windows Azure is an open and flexible cloud platform that enables you to quickly build, deploy and manage applications across a global network of Microsoft-managed datacenters.
+    </description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft "Windows Azure" Azure media encoding management "media services" "media services management" REST HTTP client windowsazureofficial</tags>
+    <references>
+      <group targetFramework="portable-net45+sl50+wp80+win">
+        <reference file="Microsoft.WindowsAzure.Management.MediaServices.dll" />
+      </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.WindowsAzure.Management.MediaServices.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="MediaServicesManagement\**\*.cs" target="src" />
+
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.MediaServices.dll" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.MediaServices.pdb" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.MediaServices.xml" target="lib\portable-net45+sl50+wp80+win" />
+
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.MediaServices.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.MediaServices.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.MediaServices.xml" target="lib\net40" />
+  </files>
+</package>
