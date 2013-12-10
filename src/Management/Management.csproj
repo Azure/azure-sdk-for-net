@@ -22,6 +22,14 @@
     <Compile Include="Generated\IManagementCertificateOperations.cs" />
     <Compile Include="Generated\IManagementClient.cs" />
     <Compile Include="Generated\ISubscriptionOperations.cs" />
+    <Compile Include="Generated\ListSubscriptions\ISubscriptionClient.cs" />
+    <Compile Include="Generated\ListSubscriptions\ISubscriptionOperations.cs" />
+    <Compile Include="Generated\ListSubscriptions\Models\SubscriptionListOperationResponse.cs" />
+    <Compile Include="Generated\ListSubscriptions\Models\SubscriptionStatus.cs" />
+    <Compile Include="Generated\ListSubscriptions\SubscriptionClient.cs" />
+    <Compile Include="Generated\ListSubscriptions\SubscriptionClientExtensions.cs" />
+    <Compile Include="Generated\ListSubscriptions\SubscriptionOperations.cs" />
+    <Compile Include="Generated\ListSubscriptions\SubscriptionOperationsExtensions.cs" />
     <Compile Include="Generated\LocationOperations.cs" />
     <Compile Include="Generated\LocationOperationsExtensions.cs" />
     <Compile Include="Generated\ManagementCertificateOperations.cs" />
@@ -64,7 +72,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="management.hydra.xml" />
     <Content Include="hydra.xml" />
+    <Content Include="subscriptions.hydra.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
@@ -80,5 +90,8 @@
   <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
   <Target Name="CopyMicrosoftWindowsAzureManagementSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Specification.1.0.5085.30254-prerelease\tools\Microsoft.WindowsAzure.Management.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureSubscriptionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Subscriptions.Specification.1.0.5085.30284-prerelease\tools\Microsoft.WindowsAzure.Subscriptions.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
