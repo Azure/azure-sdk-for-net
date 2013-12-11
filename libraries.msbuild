@@ -106,16 +106,23 @@
     <NuGetSymbolPublishingSource></NuGetSymbolPublishingSource>
     <NuGetKey></NuGetKey>
   </PropertyGroup>
+  
+  <!--
+  Hydra related profiles
+  -->
+  <PropertyGroup>
+    <GenerateHydraSpecs></GenerateHydraSpecs>
+  </PropertyGroup>
 
   <!--
   Build profiles
   -->
   <PropertyGroup>
-    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true</DeveloperBuildProperties>
-    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU</OfficialMSBuildProperties>
+    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=true</DeveloperBuildProperties>
+    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=true</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
   </PropertyGroup>
-
+  
   <!--
   Regular developer build
   -->
