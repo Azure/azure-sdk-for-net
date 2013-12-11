@@ -12,11 +12,7 @@
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Provides Windows Azure Media Services management functionality.</summary>
-    <description>
-      Provides Windows Azure Media Services management functionality.
-
-      Windows Azure is an open and flexible cloud platform that enables you to quickly build, deploy and manage applications across a global network of Microsoft-managed datacenters.
-    </description>
+    <description>Provides Windows Azure Media Services management functionality.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Windows Azure" Azure media encoding management "media services" "media services management" REST HTTP client windowsazureofficial</tags>
     <references>
