@@ -64,11 +64,12 @@ namespace Microsoft.WindowsAzure
                 }
             };
 
+            HttpResponseMessage responseMessage = null;
             try
             {
-                HttpResponseMessage response = await RetryPolicy.ExecuteAction(async () =>
+                await RetryPolicy.ExecuteAsync(async () =>
                     {
-                        var responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                        responseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
                         if (!responseMessage.IsSuccessStatusCode)
                         {
@@ -80,13 +81,20 @@ namespace Microsoft.WindowsAzure
                         }
 
                         return responseMessage;
-                    });
+                    }, cancellationToken).ConfigureAwait(false);
 
-                return response;
-            }
-            catch (HttpRequestException)
-            {
                 return responseMessage;
+            }
+            catch
+            {
+                if (responseMessage != null)
+                {
+                    return responseMessage;
+                }
+                else
+                {
+                    throw;
+                }
             }            
         }
 
