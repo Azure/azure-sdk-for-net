@@ -22,6 +22,9 @@ using System.Text;
 
 namespace Microsoft.WindowsAzure.Common.TransientFaultHandling
 {
+    /// <summary>
+    /// Inherits HttpRequestException adding HttpStatusCode to the exception.
+    /// </summary>
     public class HttpRequestExceptionWithStatus : HttpRequestException
     {
         /// <summary>

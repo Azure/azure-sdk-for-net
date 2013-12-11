@@ -23,10 +23,20 @@ using Microsoft.WindowsAzure.Common.TransientFaultHandling;
 
 namespace Microsoft.WindowsAzure
 {
+    /// <summary>
+    /// Http retry handler.
+    /// </summary>
     public class RetryHandler : DelegatingHandler
     {
+        /// <summary>
+        /// Current retry policy.
+        /// </summary>
         public RetryPolicy RetryPolicy { get; private set; }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryHandler"/> class. Sets 
+        /// default retry policty base on Exponential Backoff.
+        /// </summary>
         public RetryHandler()
             : base()
         {
@@ -34,6 +44,10 @@ namespace Microsoft.WindowsAzure
             RetryPolicy = new RetryPolicy<DefaultHttpErrorDetectionStrategy>(retryStrategy);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryHandler"/> class. 
+        /// </summary>
+        /// <param name="retryPolicy">Retry policy to use.</param>
         public RetryHandler(RetryPolicy retryPolicy)
             : base()
         {
@@ -44,6 +58,11 @@ namespace Microsoft.WindowsAzure
             RetryPolicy = retryPolicy;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryHandler"/> class. 
+        /// </summary>
+        /// <param name="retryPolicy">Retry policy to use.</param>
+        /// <param name="innerHandler">Inner http handler.</param>
         public RetryHandler(RetryPolicy retryPolicy, DelegatingHandler innerHandler)
             : base(innerHandler)
         {
@@ -54,6 +73,14 @@ namespace Microsoft.WindowsAzure
             RetryPolicy = retryPolicy;
         }
 
+        /// <summary>
+        /// Sends an HTTP request to the inner handler to send to the server as an asynchronous
+        /// operation. Retries request if needed based on Retry Policy.
+        /// </summary>
+        /// <param name="request">The HTTP request message to send to the server.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel operation.</param>
+        /// <returns>Returns System.Threading.Tasks.Task<TResult>. The task object representing 
+        /// the asynchronous operation.</returns>
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             RetryPolicy.Retrying += (sender, args) =>
