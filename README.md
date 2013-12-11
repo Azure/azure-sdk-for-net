@@ -22,13 +22,21 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
     - Insert/Peek Queue Messages
     - Advanced Queue Operations
 
+- Configuration Manager
 - Management Libraries (Preview)
   - Compute
+    - Virtual Machines
+    - Hosted Services
   - Infrastructure
+  - Media Services Management
   - Monitoring Services
-  - Scheduler
+  - Scheduler Client & Management
+  - Service Bus Management
   - Storage
-  - Virtual Networks
+  - Windows Azure Store
+  - SQL Database
+  - Virtual Network
+  - Web Sites
 - Media Services
 
     > Available in the separate [Media Services repository](http://github.com/WindowsAzure/azure-sdk-for-media-services/tree/master/src/net/Client)
