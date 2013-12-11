@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{856A1D19-C3BF-439A-BEBF-E822A332BC12}"
@@ -70,10 +73,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Tracing.Log4Net", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.WindowsAzure.Configuration.Test", "src\Configuration.Test\Microsoft.WindowsAzure.Configuration.Test.csproj", "{0645E75E-9C0B-47EE-B5A2-239286E1DED9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaServicesManagement", "src\MediaServicesManagement\MediaServicesManagement.csproj", "{25DCF6F0-7972-4387-8810-0370B92B4135}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = WindowsAzureLibraries.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -151,6 +153,10 @@ Global
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25DCF6F0-7972-4387-8810-0370B92B4135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25DCF6F0-7972-4387-8810-0370B92B4135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25DCF6F0-7972-4387-8810-0370B92B4135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25DCF6F0-7972-4387-8810-0370B92B4135}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -171,8 +177,13 @@ Global
 		{E9119999-B156-4CE1-A83E-F7778992739B} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{50B0A8CE-D290-4EB7-8C6C-16EAAB75225E} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{2EFD6648-39B4-476A-B302-8BC236F5F1B8} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{25DCF6F0-7972-4387-8810-0370B92B4135} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{B2FAA0E6-2643-4011-8CFE-BA28BDFFC7E7} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
 		{CB18ACEB-2825-4884-91FA-05C31AC779FE} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
+	EndGlobalSection
+EndGlobal
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = WindowsAzureLibraries.vsmdi
 	EndGlobalSection
 EndGlobal
