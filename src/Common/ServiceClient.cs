@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Common
         /// Initializes HttpClient.
         /// </summary>
         /// <param name="httpMessageHandler">Http message handler to use with Http client.</param>
-        protected virtual void InitializeHttpClient(HttpMessageHandler httpMessageHandler)
+        protected void InitializeHttpClient(HttpMessageHandler httpMessageHandler)
         {
             _handler = new DisposableReference<HttpMessageHandler>(httpMessageHandler);
 
