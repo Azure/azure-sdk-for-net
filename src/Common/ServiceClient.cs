@@ -96,7 +96,10 @@ namespace Microsoft.WindowsAzure.Common
             _handler = new DisposableReference<HttpMessageHandler>(handler);
             
             // Create the HTTP client
-            HttpClient = CreateHttpClient();            
+            HttpClient = CreateHttpClient();
+
+            // Add retry handler
+            this.AddHandlerToPipeline(new RetryHandler());
         }
 
         /// <summary>

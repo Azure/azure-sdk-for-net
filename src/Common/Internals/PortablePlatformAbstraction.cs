@@ -31,6 +31,7 @@ namespace Microsoft.WindowsAzure.Common.Internals
                 "WindowsStore",                
                 "WindowsPhone",
                 "Silverlight",
+                "Test"
             };
 
         private static object _lock = new object();

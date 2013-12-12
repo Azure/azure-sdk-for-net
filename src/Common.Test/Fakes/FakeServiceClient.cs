@@ -61,6 +61,6 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
         public FakeServiceClient WithHandler(DelegatingHandler handler)
         {
             return (FakeServiceClient)WithHandler(new FakeServiceClient(_credentials), handler);
-        }
+        }        
     }
 }
