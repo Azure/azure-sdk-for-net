@@ -11,18 +11,8 @@ namespace Microsoft.WindowsAzure.Common.Test.TransientFaultHandling
     /// <summary>
     /// Implements general test cases for retry policies.
     /// </summary>
-    public class GeneralRetryPolicyTests : IDisposable
+    public class GeneralRetryPolicyTests
     {
-        public GeneralRetryPolicyTests()
-        {
-            //RetryPolicyFactory.CreateDefault();
-        }
-
-        public void Dispose()
-        {
-            //RetryPolicyFactory.SetRetryManager(null, false);
-        }
-
         [Fact]
         public void TestNegativeRetryCount()
         {
@@ -112,20 +102,6 @@ namespace Microsoft.WindowsAzure.Common.Test.TransientFaultHandling
                 Assert.Equal("minBackoff", ex.ParamName);
             }
         }
-
-        [Fact]
-        public void TestLargeDeltaBackoff()
-        {
-            int retryCount = 0;
-            TimeSpan totalDelay;
-
-            // First, instantiate a policy directly bypassing the configuration data validation.
-            var retryPolicy = new RetryPolicy<DefaultHttpErrorDetectionStrategy>(3, TimeSpan.FromMilliseconds(100), TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(100000000000000));
-
-            TestRetryPolicy(retryPolicy, out retryCount, out totalDelay);
-            Assert.Equal<int>(3, retryCount);
-        }
-
         
         #region Private methods
         internal static void TestRetryPolicy(RetryPolicy retryPolicy, out int retryCount, out TimeSpan totalDelay)

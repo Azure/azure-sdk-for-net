@@ -94,9 +94,9 @@ namespace Microsoft.WindowsAzure.Common
             // Create our root handler
             HttpMessageHandler handler = _transportHandlerProvider.CreateHttpTransportHandler();
             _handler = new DisposableReference<HttpMessageHandler>(handler);
-
+            
             // Create the HTTP client
-            HttpClient = CreateHttpClient();
+            HttpClient = CreateHttpClient();            
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Common
 
             Type type = this.GetType();
             client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(type.FullName, this.GetAssemblyVersion()));
-
+            
             return client;
         }
 

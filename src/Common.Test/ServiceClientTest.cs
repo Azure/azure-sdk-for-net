@@ -62,10 +62,10 @@ namespace Microsoft.WindowsAzure.Common.Test
                 new X509Certificate2()));
             int counter = 0;
 
-            fakeClient.AddHandlerToPipeline(new BadResponseDelegatingHandler() { NumberOfTimesToFail = 1 });
-            var retryHandler = new RetryHandler(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
-            retryHandler.Retrying += (sender, args) => { counter++; };
-            fakeClient.AddHandlerToPipeline(retryHandler);
+            fakeClient = fakeClient.WithHandler(new BadResponseDelegatingHandler() { NumberOfTimesToFail = 1 });
+            //var retryHandler = new RetryHandler(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
+            //retryHandler.Retrying += (sender, args) => { counter++; };
+            //fakeClient.AddHandlerToPipeline(retryHandler);
 
             var result = fakeClient.DoStuff();
             Assert.Equal(HttpStatusCode.OK, result.Result.StatusCode);

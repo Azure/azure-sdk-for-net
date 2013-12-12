@@ -57,5 +57,10 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
             cancellationToken.ThrowIfCancellationRequested();
             return await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
         }
+
+        public FakeServiceClient WithHandler(DelegatingHandler handler)
+        {
+            return (FakeServiceClient)WithHandler(new FakeServiceClient(_credentials), handler);
+        }
     }
 }
