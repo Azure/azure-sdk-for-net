@@ -107,8 +107,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// The base-64 encoded user supplied name of the cloud service. This
-        /// name can be used identify the service for your tracking purposes.
+        /// The user-supplied name of the cloud service. This name can be used
+        /// identify the service for your tracking purposes.
         /// </summary>
         public string Label
         {

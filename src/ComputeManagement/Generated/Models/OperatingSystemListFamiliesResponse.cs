@@ -118,7 +118,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _label;
             
             /// <summary>
-            /// The base-64 encoded label of the operating system version.
+            /// The label of the operating system version.
             /// </summary>
             public string Label
             {
@@ -157,7 +157,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _label;
             
             /// <summary>
-            /// The base-64 encoded label of the operating system family.
+            /// The label of the operating system family.
             /// </summary>
             public string Label
             {

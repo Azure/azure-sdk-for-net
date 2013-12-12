@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private byte[] _data;
         
         /// <summary>
-        /// The public portion of the X.509 service certificate as a base-64
-        /// encoded form of the .cer file.
+        /// The public portion of the X.509 service certificate as a form of
+        /// the .cer file.
         /// </summary>
         public byte[] Data
         {

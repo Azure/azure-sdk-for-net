@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _privateConfigurationSchema;
             
             /// <summary>
-            /// The base64-encoded schema of the private configuration.
+            /// The schema of the private configuration.
             /// </summary>
             public string PrivateConfigurationSchema
             {
@@ -134,7 +134,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _publicConfigurationSchema;
             
             /// <summary>
-            /// The base64-encoded schema of the public configuration.
+            /// The schema of the public configuration.
             /// </summary>
             public string PublicConfigurationSchema
             {

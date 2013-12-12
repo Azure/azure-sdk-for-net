@@ -67,11 +67,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// Optional. A name for the cloud service that is base64-encoded. The
-        /// name may be up to 100 characters in length. You must specify a
-        /// value for either Label or Description, or for both.  It is
-        /// recommended that the label be unique within the subscription. The
-        /// name can be used identify the service for your tracking purposes.
+        /// Optional. A name for the cloud service. The name may be up to 100
+        /// characters in length. You must specify a value for either Label or
+        /// Description, or for both. It is recommended that the label be
+        /// unique within the subscription. The name can be used identify the
+        /// service for your tracking purposes.
         /// </summary>
         public string Label
         {

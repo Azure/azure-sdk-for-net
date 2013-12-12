@@ -34,8 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _configuration;
         
         /// <summary>
-        /// Required. The base-64 encoded service configuration file for the
-        /// deployment.
+        /// Required. The encoded service configuration file for the deployment.
         /// </summary>
         public string Configuration
         {
