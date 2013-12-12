@@ -3,6 +3,10 @@
   <!-- 
   Windows Azure SDK Targets  
   -->
+  <!-- Developer-specific properties -->
+  <Import Project="$(SolutionDir)\developer\$(USERNAME)\build.props" Condition="Exists('$(SolutionDir)\developer\$(USERNAME)\build.props')" />
+
+  <!-- Standard properties -->
   <PropertyGroup>
     <!--
     OfficialBuild:

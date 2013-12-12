@@ -9,9 +9,9 @@
 
   <!-- NuGet Packages -->
   <Import Project="nuget.targets" />
-  
+
   <!-- Developer-specific properties -->
-  <Import Project="developer/$(USERNAME)/build.props" Condition="Exists('developer/$(USERNAME)/build.props')" />
+  <Import Project="developer\$(USERNAME)\build.props" Condition="Exists('developer\$(USERNAME)\build.props')" />
 
   <!--
   Windows Azure Management Libraries SDK Builder Guide
