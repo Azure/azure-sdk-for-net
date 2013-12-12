@@ -93,8 +93,17 @@ namespace Microsoft.WindowsAzure.Common
         {
             // Create our root handler
             HttpMessageHandler handler = _transportHandlerProvider.CreateHttpTransportHandler();
-            _handler = new DisposableReference<HttpMessageHandler>(handler);
-            
+            InitializeHttpClient(handler);
+        }
+
+        /// <summary>
+        /// Initializes HttpClient.
+        /// </summary>
+        /// <param name="httpMessageHandler">Http message handler to use with Http client.</param>
+        protected virtual void InitializeHttpClient(HttpMessageHandler httpMessageHandler)
+        {
+            _handler = new DisposableReference<HttpMessageHandler>(httpMessageHandler);
+
             // Create the HTTP client
             HttpClient = CreateHttpClient();
 

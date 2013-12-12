@@ -20,21 +20,21 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Common.Test.Fakes
 {
     public class FakeServiceClient : ServiceClient<FakeServiceClient>
     {
-        private readonly SubscriptionCloudCredentials _credentials;
-
-        public FakeServiceClient(SubscriptionCloudCredentials credentials)
+        public FakeServiceClient()
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
-            this._credentials = credentials;
-            this._credentials.InitializeServiceClient(this);
+            // Prevent base constructor from executing
+        }
+
+        public FakeServiceClient(HttpMessageHandler httpMessageHandler)
+            : this()
+        {
+            InitializeHttpClient(httpMessageHandler);
         }
 
         public async Task<HttpResponseMessage> DoStuff()
@@ -56,11 +56,6 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
             var cancellationToken = new CancellationToken();
             cancellationToken.ThrowIfCancellationRequested();
             return await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-        }
-
-        public FakeServiceClient WithHandler(DelegatingHandler handler)
-        {
-            return (FakeServiceClient)WithHandler(new FakeServiceClient(_credentials), handler);
-        }        
+        }     
     }
 }

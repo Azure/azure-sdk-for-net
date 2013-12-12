@@ -20,6 +20,7 @@ using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Common.Test.Fakes;
 using Microsoft.WindowsAzure.Common.TransientFaultHandling;
 using Xunit;
+using System.Net.Http;
 
 namespace Microsoft.WindowsAzure.Common.Test
 {
@@ -28,7 +29,7 @@ namespace Microsoft.WindowsAzure.Common.Test
         [Fact]
         public void ClientAddHandlerToPipelineAddsHandler()
         {
-            var fakeClient = new FakeServiceClient(new FakeCertificateCloudCredentials());
+            var fakeClient = new FakeServiceClient(new WebRequestHandler());
             var result1 = fakeClient.DoStuff();
             Assert.Equal(200, (int)result1.Result.StatusCode);
 
@@ -41,10 +42,12 @@ namespace Microsoft.WindowsAzure.Common.Test
         [Fact]
         public void RetryHandlerRetriesWith500Errors()
         {
-            var fakeClient = new FakeServiceClient(new FakeCertificateCloudCredentials());
+            var fakeClient = new FakeServiceClient(new FakeHttpHandler());
             int counter = 0;
 
             fakeClient.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
+            var retryHandler = fakeClient.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
+            retryHandler.Retrying += (sender, args) => { counter++; };
 
             var result = fakeClient.DoStuff();
             Assert.Equal(HttpStatusCode.InternalServerError, result.Result.StatusCode);
@@ -54,10 +57,8 @@ namespace Microsoft.WindowsAzure.Common.Test
         [Fact]
         public void RetryHandlerRetriesWith500ErrorsAndSucceeds()
         {
-            var fakeClient = new FakeServiceClient(new FakeCertificateCloudCredentials());
+            var fakeClient = new FakeServiceClient(new FakeHttpHandler() { NumberOfTimesToFail = 1 });
             int counter = 0;
-
-            //fakeClient = fakeClient.WithHandler(new BadResponseDelegatingHandler() { NumberOfTimesToFail = 1 });
 
             fakeClient.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
             var retryHandler = fakeClient.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
@@ -71,10 +72,9 @@ namespace Microsoft.WindowsAzure.Common.Test
         [Fact]
         public void RetryHandlerDoesntRetryFor400Errors()
         {
-            var fakeClient = new FakeServiceClient(new FakeCertificateCloudCredentials());
+            var fakeClient = new FakeServiceClient(new FakeHttpHandler() { StatusCodeToReturn = HttpStatusCode.Conflict });
             int counter = 0;
 
-            //fakeClient.AddHandlerToPipeline(new BadResponseDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Conflict });
             fakeClient.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
             var retryHandler = fakeClient.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
             retryHandler.Retrying += (sender, args) => { counter++; };
