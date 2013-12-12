@@ -36,5 +36,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// rollback to each upgrade domain.
         /// </summary>
         Manual = 1,
+        
+        /// <summary>
+        /// Rollback proceeds using the simultaneous mode.
+        /// </summary>
+        Simultaneous = 2,
     }
 }

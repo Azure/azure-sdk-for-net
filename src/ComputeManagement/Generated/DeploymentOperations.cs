@@ -6494,7 +6494,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?comp=rollback";
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=rollback";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -6519,7 +6519,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 requestDoc.Add(rollbackUpdateOrUpgradeElement);
                 
                 XElement modeElement = new XElement(XName.Get("Mode", "http://schemas.microsoft.com/windowsazure"));
-                modeElement.Value = ComputeManagementClient.RollbackUpdateOrUpgradeModeToString(parameters.Mode);
+                modeElement.Value = parameters.Mode.ToString();
                 rollbackUpdateOrUpgradeElement.Add(modeElement);
                 
                 XElement forceElement = new XElement(XName.Get("Force", "http://schemas.microsoft.com/windowsazure"));
@@ -6642,7 +6642,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "?comp=rollback";
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=rollback";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -6667,7 +6667,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 requestDoc.Add(rollbackUpdateOrUpgradeElement);
                 
                 XElement modeElement = new XElement(XName.Get("Mode", "http://schemas.microsoft.com/windowsazure"));
-                modeElement.Value = ComputeManagementClient.RollbackUpdateOrUpgradeModeToString(parameters.Mode);
+                modeElement.Value = parameters.Mode.ToString();
                 rollbackUpdateOrUpgradeElement.Add(modeElement);
                 
                 XElement forceElement = new XElement(XName.Get("Force", "http://schemas.microsoft.com/windowsazure"));
