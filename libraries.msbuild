@@ -111,15 +111,15 @@
   Hydra related profiles
   -->
   <PropertyGroup>
-    <GenerateHydraSpecs></GenerateHydraSpecs>
+    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' ">true</GenerateHydraSpecs>
   </PropertyGroup>
 
   <!--
   Build profiles
   -->
   <PropertyGroup>
-    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=true</DeveloperBuildProperties>
-    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=true</OfficialMSBuildProperties>
+    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=$(GenerateHydraSpecs)</DeveloperBuildProperties>
+    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=$(GenerateHydraSpecs)</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
   </PropertyGroup>
   
@@ -335,7 +335,7 @@
   PRIVATE_FEED_USER_NAME: User name for access to the feed
   PRIVATE_FEED_PASSWORD: Password for access to the feed
   -->
-  <Target Name="ForceRestorePackages" Condition="$(GenerateHydraSpecs)!=''">
+  <Target Name="ForceRestorePackages" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
     <PropertyGroup>
       <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
       <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
@@ -347,12 +347,10 @@
 
     <!-- Create config for user name and password for private feed access -->
     <Delete Files="$(NuGetRestoreConfigFile)" />
-    <Exec Command='$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)'/>
-    <Exec Command='$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)'
-      EchoOff="true"/>
-
-    <Exec Command="$(NuGetCommand) restore WindowsAzureLibraries.sln $(NuGetRestoreConfigSwitch)"
-      ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" />
+    <Exec Command="$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)"
+          EchoOff="true" />
+    <Exec Command="$(NuGetCommand) restore WindowsAzureLibraries.sln $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
 
     <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
     <Delete Files="$(NuGetRestoreConfigFile)" />
