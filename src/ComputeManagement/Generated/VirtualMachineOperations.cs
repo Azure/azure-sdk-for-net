@@ -1004,9 +1004,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (roleListItem.OSVersion != null)
                     {
-                        XElement oSVersionElement = new XElement(XName.Get("OSVersion", "http://schemas.microsoft.com/windowsazure"));
-                        oSVersionElement.Value = roleListItem.OSVersion;
-                        roleElement.Add(oSVersionElement);
+                        XElement osVersionElement = new XElement(XName.Get("OsVersion", "http://schemas.microsoft.com/windowsazure"));
+                        osVersionElement.Value = roleListItem.OSVersion;
+                        roleElement.Add(osVersionElement);
                     }
                     
                     if (roleListItem.RoleType != null)
