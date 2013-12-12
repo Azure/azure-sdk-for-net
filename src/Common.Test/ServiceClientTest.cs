@@ -14,6 +14,7 @@
 //
 
 using System.Net;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Common.Test.Fakes;
@@ -43,10 +44,7 @@ namespace Microsoft.WindowsAzure.Common.Test
             var fakeClient = new FakeServiceClient(new FakeCertificateCloudCredentials());
             int counter = 0;
 
-            //fakeClient.AddHandlerToPipeline(new BadResponseDelegatingHandler());
-            var retryHandler = new RetryHandler(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
-            retryHandler.Retrying += (sender, args) => { counter++; };
-            fakeClient.AddHandlerToPipeline(retryHandler);
+            fakeClient.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
 
             var result = fakeClient.DoStuff();
             Assert.Equal(HttpStatusCode.InternalServerError, result.Result.StatusCode);
@@ -60,9 +58,10 @@ namespace Microsoft.WindowsAzure.Common.Test
             int counter = 0;
 
             //fakeClient = fakeClient.WithHandler(new BadResponseDelegatingHandler() { NumberOfTimesToFail = 1 });
-            //var retryHandler = new RetryHandler(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
-            //retryHandler.Retrying += (sender, args) => { counter++; };
-            //fakeClient.AddHandlerToPipeline(retryHandler);
+
+            fakeClient.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
+            var retryHandler = fakeClient.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
+            retryHandler.Retrying += (sender, args) => { counter++; };
 
             var result = fakeClient.DoStuff();
             Assert.Equal(HttpStatusCode.OK, result.Result.StatusCode);
@@ -76,9 +75,9 @@ namespace Microsoft.WindowsAzure.Common.Test
             int counter = 0;
 
             //fakeClient.AddHandlerToPipeline(new BadResponseDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Conflict });
-            var retryHandler = new RetryHandler(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
+            fakeClient.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
+            var retryHandler = fakeClient.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
             retryHandler.Retrying += (sender, args) => { counter++; };
-            fakeClient.AddHandlerToPipeline(retryHandler);
 
             var result = fakeClient.DoStuff();
             Assert.Equal(HttpStatusCode.Conflict, result.Result.StatusCode);

@@ -148,6 +148,9 @@ Parameter name: {0}</value>
   <data name="DefaultRetryStrategyNotFound" xml:space="preserve">
     <value>Default retry strategy for technology {0} was not not defined, and there is no overall default strategy.</value>
   </data>
+  <data name="ExceptionRetryHandlerMissing" xml:space="preserve">
+    <value>Retry handler is not present in the HttpClient handler stack.</value>
+  </data>
   <data name="ExceptionRetryManagerAlreadySet" xml:space="preserve">
     <value>The RetryManager is already set.</value>
   </data>

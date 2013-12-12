@@ -152,6 +152,15 @@ namespace Microsoft.WindowsAzure.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Retry handler is not present in the HttpClient handler stack..
+        /// </summary>
+        internal static string ExceptionRetryHandlerMissing {
+            get {
+                return ResourceManager.GetString("ExceptionRetryHandlerMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The RetryManager is already set..
         /// </summary>
         internal static string ExceptionRetryManagerAlreadySet {

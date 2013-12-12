@@ -29,9 +29,9 @@ namespace Microsoft.WindowsAzure
     public class RetryHandler : DelegatingHandler
     {
         /// <summary>
-        /// Current retry policy.
+        /// Gets or sets retry policy.
         /// </summary>
-        public RetryPolicy RetryPolicy { get; private set; }
+        public RetryPolicy RetryPolicy { get; set; }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryHandler"/> class. Sets 
@@ -45,17 +45,15 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RetryHandler"/> class. 
+        /// Initializes a new instance of the <see cref="RetryHandler"/> class. Sets 
+        /// default retry policty base on Exponential Backoff.
         /// </summary>
-        /// <param name="retryPolicy">Retry policy to use.</param>
-        public RetryHandler(RetryPolicy retryPolicy)
-            : base()
+        /// <param name="innerHandler">Inner http handler.</param>
+        public RetryHandler(DelegatingHandler innerHandler)
+            : base(innerHandler)
         {
-            if (retryPolicy == null)
-            {
-                throw new ArgumentNullException("retryPolicy");
-            }
-            RetryPolicy = retryPolicy;
+            var retryStrategy = new ExponentialBackoff(3, new TimeSpan(0, 0, 1), new TimeSpan(0, 0, 10), new TimeSpan(0, 0, 2));
+            RetryPolicy = new RetryPolicy<DefaultHttpErrorDetectionStrategy>(retryStrategy);
         }
 
         /// <summary>
