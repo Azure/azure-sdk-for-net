@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private byte[] _data;
         
         /// <summary>
-        /// The base-64 encoded form of the pfx or .cer file.
+        /// The pfx or .cer file.
         /// </summary>
         public byte[] Data
         {

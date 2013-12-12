@@ -546,49 +546,5 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             throw new ArgumentOutOfRangeException("value");
         }
-        
-        /// <summary>
-        /// Parse enum values for type RollbackUpdateOrUpgradeMode.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static RollbackUpdateOrUpgradeMode ParseRollbackUpdateOrUpgradeMode(string value)
-        {
-            if (value == "auto")
-            {
-                return RollbackUpdateOrUpgradeMode.Auto;
-            }
-            if (value == "manual")
-            {
-                return RollbackUpdateOrUpgradeMode.Manual;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type RollbackUpdateOrUpgradeMode to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string RollbackUpdateOrUpgradeModeToString(RollbackUpdateOrUpgradeMode value)
-        {
-            if (value == RollbackUpdateOrUpgradeMode.Auto)
-            {
-                return "auto";
-            }
-            if (value == RollbackUpdateOrUpgradeMode.Manual)
-            {
-                return "manual";
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
     }
 }

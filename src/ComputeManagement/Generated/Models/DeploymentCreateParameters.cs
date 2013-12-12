@@ -34,8 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _configuration;
         
         /// <summary>
-        /// Required. The base-64 encoded service configuration file for the
-        /// deployment.
+        /// Required. The service configuration file for the deployment.
         /// </summary>
         public string Configuration
         {
@@ -82,10 +81,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// Required. A name for the hosted service that is base-64 encoded.
-        /// The name can be up to 100 characters in length. It is recommended
-        /// that the label be unique within the subscription. The name can be
-        /// used identify the hosted service for your tracking purposes.
+        /// Required. A name for the hosted service. The name can be up to 100
+        /// characters in length. It is recommended that the label be unique
+        /// within the subscription. The name can be used identify the hosted
+        /// service for your tracking purposes.
         /// </summary>
         public string Label
         {

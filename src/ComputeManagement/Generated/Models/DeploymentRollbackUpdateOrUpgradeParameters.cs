@@ -33,9 +33,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool _force;
         
         /// <summary>
-        /// Required. Specifies whether the rollback should proceed even when
-        /// it will cause local data to be lost from some role instances. True
-        /// if the rollback should proceed; otherwise false.
+        /// Specifies whether the rollback should proceed even when it will
+        /// cause local data to be lost from some role instances. True if the
+        /// rollback should proceed; otherwise false.
         /// </summary>
         public bool Force
         {
