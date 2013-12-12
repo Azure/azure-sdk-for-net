@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <ProjectGuid>{7E8328EC-E439-4CF2-B375-16EB2EDAF34D}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.WindowsAzure.Management.Compute</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Management.Compute</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\library.props" />
+  <ItemGroup>
+    <Compile Include="ComputeManagementClient.Customization.cs" />
+    <Compile Include="Generated\ComputeManagementClient.cs" />
+    <Compile Include="Generated\ComputeManagementClientExtensions.cs" />
+    <Compile Include="Generated\DeploymentOperations.cs" />
+    <Compile Include="Generated\DeploymentOperationsExtensions.cs" />
+    <Compile Include="Generated\HostedServiceOperations.cs" />
+    <Compile Include="Generated\HostedServiceOperationsExtensions.cs" />
+    <Compile Include="Generated\IComputeManagementClient.cs" />
+    <Compile Include="Generated\IDeploymentOperations.cs" />
+    <Compile Include="Generated\IHostedServiceOperations.cs" />
+    <Compile Include="Generated\IOperatingSystemOperations.cs" />
+    <Compile Include="Generated\IServiceCertificateOperations.cs" />
+    <Compile Include="Generated\IVirtualMachineDiskOperations.cs" />
+    <Compile Include="Generated\IVirtualMachineImageOperations.cs" />
+    <Compile Include="Generated\IVirtualMachineOperations.cs" />
+    <Compile Include="Generated\Models\AccessControlListRule.cs" />
+    <Compile Include="Generated\Models\CertificateFormat.cs" />
+    <Compile Include="Generated\Models\CertificateThumbprintAlgorithms.cs" />
+    <Compile Include="Generated\Models\ComputeOperationStatusResponse.cs" />
+    <Compile Include="Generated\Models\ConfigurationSet.cs" />
+    <Compile Include="Generated\Models\ConfigurationSetTypes.cs" />
+    <Compile Include="Generated\Models\DataVirtualHardDisk.cs" />
+    <Compile Include="Generated\Models\DeploymentChangeConfigurationMode.cs" />
+    <Compile Include="Generated\Models\DeploymentChangeConfigurationParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentCreateParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentGetPackageParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentGetResponse.cs" />
+    <Compile Include="Generated\Models\DeploymentRollbackUpdateOrUpgradeParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentSlot.cs" />
+    <Compile Include="Generated\Models\DeploymentStatus.cs" />
+    <Compile Include="Generated\Models\DeploymentSwapParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentUpdateStatusParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentUpgradeMode.cs" />
+    <Compile Include="Generated\Models\DeploymentUpgradeParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentUpgradeType.cs" />
+    <Compile Include="Generated\Models\DeploymentWalkUpgradeDomainParameters.cs" />
+    <Compile Include="Generated\Models\DnsServer.cs" />
+    <Compile Include="Generated\Models\DnsSettings.cs" />
+    <Compile Include="Generated\Models\DomainJoinCredentials.cs" />
+    <Compile Include="Generated\Models\DomainJoinProvisioning.cs" />
+    <Compile Include="Generated\Models\DomainJoinSettings.cs" />
+    <Compile Include="Generated\Models\EndpointAcl.cs" />
+    <Compile Include="Generated\Models\ExtensionConfiguration.cs" />
+    <Compile Include="Generated\Models\HostedServiceAddExtensionParameters.cs" />
+    <Compile Include="Generated\Models\HostedServiceCheckNameAvailabilityResponse.cs" />
+    <Compile Include="Generated\Models\HostedServiceCreateParameters.cs" />
+    <Compile Include="Generated\Models\HostedServiceGetDetailedResponse.cs" />
+    <Compile Include="Generated\Models\HostedServiceGetExtensionResponse.cs" />
+    <Compile Include="Generated\Models\HostedServiceGetResponse.cs" />
+    <Compile Include="Generated\Models\HostedServiceListAvailableExtensionsResponse.cs" />
+    <Compile Include="Generated\Models\HostedServiceListExtensionsResponse.cs" />
+    <Compile Include="Generated\Models\HostedServiceListResponse.cs" />
+    <Compile Include="Generated\Models\HostedServiceProperties.cs" />
+    <Compile Include="Generated\Models\HostedServiceStatus.cs" />
+    <Compile Include="Generated\Models\HostedServiceUpdateParameters.cs" />
+    <Compile Include="Generated\Models\HostingResources.cs" />
+    <Compile Include="Generated\Models\InputEndpoint.cs" />
+    <Compile Include="Generated\Models\InputEndpointTransportProtocol.cs" />
+    <Compile Include="Generated\Models\InstanceEndpoint.cs" />
+    <Compile Include="Generated\Models\LoadBalancerProbe.cs" />
+    <Compile Include="Generated\Models\LoadBalancerProbeTransportProtocol.cs" />
+    <Compile Include="Generated\Models\OperatingSystemFamilies.cs" />
+    <Compile Include="Generated\Models\OperatingSystemListFamiliesResponse.cs" />
+    <Compile Include="Generated\Models\OperatingSystemListResponse.cs" />
+    <Compile Include="Generated\Models\OperationStatus.cs" />
+    <Compile Include="Generated\Models\OSVirtualHardDisk.cs" />
+    <Compile Include="Generated\Models\PersistentVMDowntime.cs" />
+    <Compile Include="Generated\Models\PostCaptureAction.cs" />
+    <Compile Include="Generated\Models\PostShutdownAction.cs" />
+    <Compile Include="Generated\Models\Role.cs" />
+    <Compile Include="Generated\Models\RoleInstance.cs" />
+    <Compile Include="Generated\Models\RoleInstancePowerState.cs" />
+    <Compile Include="Generated\Models\RoleInstanceStatus.cs" />
+    <Compile Include="Generated\Models\RollbackUpdateOrUpgradeMode.cs" />
+    <Compile Include="Generated\Models\ServiceCertificateCreateParameters.cs" />
+    <Compile Include="Generated\Models\ServiceCertificateDeleteParameters.cs" />
+    <Compile Include="Generated\Models\ServiceCertificateGetParameters.cs" />
+    <Compile Include="Generated\Models\ServiceCertificateGetResponse.cs" />
+    <Compile Include="Generated\Models\ServiceCertificateListResponse.cs" />
+    <Compile Include="Generated\Models\SshSettingKeyPair.cs" />
+    <Compile Include="Generated\Models\SshSettingPublicKey.cs" />
+    <Compile Include="Generated\Models\SshSettings.cs" />
+    <Compile Include="Generated\Models\StoredCertificateSettings.cs" />
+    <Compile Include="Generated\Models\UpdatedDeploymentStatus.cs" />
+    <Compile Include="Generated\Models\UpgradeDomainState.cs" />
+    <Compile Include="Generated\Models\UpgradeStatus.cs" />
+    <Compile Include="Generated\Models\VirtualHardDiskHostCaching.cs" />
+    <Compile Include="Generated\Models\VirtualIPAddress.cs" />
+    <Compile Include="Generated\Models\VirtualMachineCaptureParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineCreateDeploymentParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineCreateParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineDiskCreateDataDiskParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineDiskCreateDiskParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineDiskCreateDiskResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineDiskGetDataDiskResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineDiskGetDiskResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineDiskListResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineDiskUpdateDataDiskParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineDiskUpdateDiskParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineDiskUpdateDiskResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineGetRemoteDesktopFileResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineGetResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineImageCreateParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineImageCreateResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineImageGetResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineImageListResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineImageOperatingSystemType.cs" />
+    <Compile Include="Generated\Models\VirtualMachineImageUpdateParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineImageUpdateResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineRoleSize.cs" />
+    <Compile Include="Generated\Models\VirtualMachineRoleType.cs" />
+    <Compile Include="Generated\Models\VirtualMachineShutdownParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineShutdownRolesParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineStartRolesParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineUpdateLoadBalancedSetParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineUpdateParameters.cs" />
+    <Compile Include="Generated\Models\VirtualMachineWindowsRemoteManagementListenerType.cs" />
+    <Compile Include="Generated\Models\WindowsRemoteManagementListener.cs" />
+    <Compile Include="Generated\Models\WindowsRemoteManagementSettings.cs" />
+    <Compile Include="Generated\OperatingSystemOperations.cs" />
+    <Compile Include="Generated\OperatingSystemOperationsExtensions.cs" />
+    <Compile Include="Generated\ServiceCertificateOperations.cs" />
+    <Compile Include="Generated\ServiceCertificateOperationsExtensions.cs" />
+    <Compile Include="Generated\VirtualMachineDiskOperations.cs" />
+    <Compile Include="Generated\VirtualMachineDiskOperationsExtensions.cs" />
+    <Compile Include="Generated\VirtualMachineImageOperations.cs" />
+    <Compile Include="Generated\VirtualMachineImageOperationsExtensions.cs" />
+    <Compile Include="Generated\VirtualMachineOperations.cs" />
+    <Compile Include="Generated\VirtualMachineOperationsExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenerateCode.props" />
+    <None Include="Microsoft.WindowsAzure.Management.Compute.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.Compute.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hydra.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
+  <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementComputeSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Compute.Specification.1.0.5093.26248-prerelease\tools\Microsoft.WindowsAzure.Management.Compute.Specification.dll" DestinationFolder="." />
+  </Target>
+</Project>
