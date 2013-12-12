@@ -140,14 +140,22 @@ namespace Microsoft.WindowsAzure.Common.Internals
         }
 
         /// <summary>
-        /// Sets
+        /// Sets retry policy for the client.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="client"></param>
-        /// <param name="retryPolicy"></param>
+        /// <typeparam name="T">Service client type.</typeparam>
+        /// <param name="client">Service client.</param>
+        /// <param name="retryPolicy">Retry policy to set.</param>
         public static void SetRetryPolicy<T>(this ServiceClient<T> client, RetryPolicy retryPolicy)
             where T : ServiceClient<T>
         {
+            if (client == null)
+            {
+                throw new ArgumentNullException("client");
+            }
+            else if (retryPolicy == null)
+            {
+                throw new ArgumentNullException("retryPolicy");
+            }
             RetryHandler handler = client.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
             if (handler != null)
             {
