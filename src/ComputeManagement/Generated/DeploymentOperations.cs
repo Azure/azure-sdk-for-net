@@ -3841,11 +3841,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     roleInstance.RoleName = roleNameInstance2;
                                 }
                                 
-                                XElement oSVersionElement = roleListElement.Element(XName.Get("OSVersion", "http://schemas.microsoft.com/windowsazure"));
-                                if (oSVersionElement != null)
+                                XElement osVersionElement = roleListElement.Element(XName.Get("OsVersion", "http://schemas.microsoft.com/windowsazure"));
+                                if (osVersionElement != null)
                                 {
-                                    string oSVersionInstance = oSVersionElement.Value;
-                                    roleInstance.OSVersion = oSVersionInstance;
+                                    string osVersionInstance = osVersionElement.Value;
+                                    roleInstance.OSVersion = osVersionInstance;
                                 }
                                 
                                 XElement roleTypeElement = roleListElement.Element(XName.Get("RoleType", "http://schemas.microsoft.com/windowsazure"));
@@ -4974,11 +4974,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     roleInstance.RoleName = roleNameInstance2;
                                 }
                                 
-                                XElement oSVersionElement = roleListElement.Element(XName.Get("OSVersion", "http://schemas.microsoft.com/windowsazure"));
-                                if (oSVersionElement != null)
+                                XElement osVersionElement = roleListElement.Element(XName.Get("OsVersion", "http://schemas.microsoft.com/windowsazure"));
+                                if (osVersionElement != null)
                                 {
-                                    string oSVersionInstance = oSVersionElement.Value;
-                                    roleInstance.OSVersion = oSVersionInstance;
+                                    string osVersionInstance = osVersionElement.Value;
+                                    roleInstance.OSVersion = osVersionInstance;
                                 }
                                 
                                 XElement roleTypeElement = roleListElement.Element(XName.Get("RoleType", "http://schemas.microsoft.com/windowsazure"));
