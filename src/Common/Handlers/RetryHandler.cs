@@ -29,9 +29,9 @@ namespace Microsoft.WindowsAzure
     public class RetryHandler : DelegatingHandler
     {
         private const int DefaultNumberOfAttempts = 3;
-        private const TimeSpan DefaultMinBackoff = new TimeSpan(0, 0, 1);
-        private const TimeSpan DefaultMaxBackoff = new TimeSpan(0, 0, 10);
-        private const TimeSpan DefaultBackoffDelta = new TimeSpan(0, 0, 10);
+        private TimeSpan DefaultMinBackoff = new TimeSpan(0, 0, 1);
+        private TimeSpan DefaultMaxBackoff = new TimeSpan(0, 0, 10);
+        private TimeSpan DefaultBackoffDelta = new TimeSpan(0, 0, 10);
 
         /// <summary>
         /// Gets or sets retry policy.
