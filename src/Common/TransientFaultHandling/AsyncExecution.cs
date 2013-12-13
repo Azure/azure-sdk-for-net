@@ -110,7 +110,10 @@ namespace Microsoft.WindowsAzure.Common.TransientFaultHandling
             }
 
             // Fast path if the user-initiated task is already completed.
-            if (task.Status == TaskStatus.RanToCompletion) return task;
+            if (task.Status == TaskStatus.RanToCompletion)
+            {
+                return task;
+            }
 
             if (task.Status == TaskStatus.Created)
             {

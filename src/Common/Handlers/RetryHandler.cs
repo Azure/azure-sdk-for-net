@@ -28,6 +28,11 @@ namespace Microsoft.WindowsAzure
     /// </summary>
     public class RetryHandler : DelegatingHandler
     {
+        private const int DefaultNumberOfAttempts = 3;
+        private const TimeSpan DefaultMinBackoff = new TimeSpan(0, 0, 1);
+        private const TimeSpan DefaultMaxBackoff = new TimeSpan(0, 0, 10);
+        private const TimeSpan DefaultBackoffDelta = new TimeSpan(0, 0, 10);
+
         /// <summary>
         /// Gets or sets retry policy.
         /// </summary>
@@ -40,19 +45,27 @@ namespace Microsoft.WindowsAzure
         public RetryHandler()
             : base()
         {
-            var retryStrategy = new ExponentialBackoff(3, new TimeSpan(0, 0, 1), new TimeSpan(0, 0, 10), new TimeSpan(0, 0, 2));
+            var retryStrategy = new ExponentialBackoff(
+                DefaultNumberOfAttempts, 
+                DefaultMinBackoff,
+                DefaultMaxBackoff, 
+                DefaultBackoffDelta);
             RetryPolicy = new RetryPolicy<DefaultHttpErrorDetectionStrategy>(retryStrategy);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryHandler"/> class. Sets 
-        /// default retry policty base on Exponential Backoff.
+        /// the default retry policty base on Exponential Backoff.
         /// </summary>
         /// <param name="innerHandler">Inner http handler.</param>
         public RetryHandler(DelegatingHandler innerHandler)
             : base(innerHandler)
         {
-            var retryStrategy = new ExponentialBackoff(3, new TimeSpan(0, 0, 1), new TimeSpan(0, 0, 10), new TimeSpan(0, 0, 2));
+            var retryStrategy = new ExponentialBackoff(
+                DefaultNumberOfAttempts,
+                DefaultMinBackoff,
+                DefaultMaxBackoff,
+                DefaultBackoffDelta);
             RetryPolicy = new RetryPolicy<DefaultHttpErrorDetectionStrategy>(retryStrategy);
         }
 

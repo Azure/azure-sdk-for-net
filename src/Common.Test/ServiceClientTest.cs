@@ -31,57 +31,57 @@ namespace Microsoft.WindowsAzure.Common.Test
         {
             var fakeClient = new FakeServiceClient(new WebRequestHandler());
             var result1 = fakeClient.DoStuff();
-            Assert.Equal(200, (int)result1.Result.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, result1.Result.StatusCode);
 
             fakeClient.AddHandlerToPipeline(new BadResponseDelegatingHandler());
 
             var result2 = fakeClient.DoStuff();
-            Assert.Equal(500, (int)result2.Result.StatusCode);
+            Assert.Equal(HttpStatusCode.InternalServerError, result2.Result.StatusCode);
         }
 
         [Fact]
         public void RetryHandlerRetriesWith500Errors()
         {
             var fakeClient = new FakeServiceClient(new FakeHttpHandler());
-            int counter = 0;
+            int attemptsFailed = 0;
 
             fakeClient.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
             var retryHandler = fakeClient.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
-            retryHandler.Retrying += (sender, args) => { counter++; };
+            retryHandler.Retrying += (sender, args) => { attemptsFailed++; };
 
             var result = fakeClient.DoStuff();
             Assert.Equal(HttpStatusCode.InternalServerError, result.Result.StatusCode);
-            Assert.Equal(2, counter);
+            Assert.Equal(2, attemptsFailed);
         }
 
         [Fact]
         public void RetryHandlerRetriesWith500ErrorsAndSucceeds()
         {
             var fakeClient = new FakeServiceClient(new FakeHttpHandler() { NumberOfTimesToFail = 1 });
-            int counter = 0;
+            int attemptsFailed = 0;
 
             fakeClient.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
             var retryHandler = fakeClient.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
-            retryHandler.Retrying += (sender, args) => { counter++; };
+            retryHandler.Retrying += (sender, args) => { attemptsFailed++; };
 
             var result = fakeClient.DoStuff();
             Assert.Equal(HttpStatusCode.OK, result.Result.StatusCode);
-            Assert.Equal(1, counter);
+            Assert.Equal(1, attemptsFailed);
         }
 
         [Fact]
         public void RetryHandlerDoesntRetryFor400Errors()
         {
             var fakeClient = new FakeServiceClient(new FakeHttpHandler() { StatusCodeToReturn = HttpStatusCode.Conflict });
-            int counter = 0;
+            int attemptsFailed = 0;
 
             fakeClient.SetRetryPolicy(new RetryPolicy<DefaultHttpErrorDetectionStrategy>(2));
             var retryHandler = fakeClient.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
-            retryHandler.Retrying += (sender, args) => { counter++; };
+            retryHandler.Retrying += (sender, args) => { attemptsFailed++; };
 
             var result = fakeClient.DoStuff();
             Assert.Equal(HttpStatusCode.Conflict, result.Result.StatusCode);
-            Assert.Equal(0, counter);
+            Assert.Equal(0, attemptsFailed);
         }
     }
 }
