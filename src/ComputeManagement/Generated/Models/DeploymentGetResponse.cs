@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _configuration;
         
         /// <summary>
-        /// The base-64 encoded the configuration file of the deployment.
+        /// The configuration file of the deployment.
         /// </summary>
         public string Configuration
         {
@@ -111,8 +111,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// The base-64 encoded user supplied name of the deployment. This name
-        /// can be used identify the deployment for your tracking purposes.
+        /// The user supplied name of the deployment. This name can be used
+        /// identify the deployment for tracking purposes.
         /// </summary>
         public string Label
         {
@@ -272,7 +272,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _uri;
         
         /// <summary>
-        /// The URL used to access the hosted service.  For example, if the
+        /// The URL used to access the hosted service. For example, if the
         /// service name is MyService you could access the access the service
         /// by calling: http://MyService.cloudapp.net
         /// </summary>

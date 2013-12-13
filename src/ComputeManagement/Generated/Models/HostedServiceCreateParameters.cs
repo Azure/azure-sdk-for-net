@@ -82,9 +82,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// Required. A name for the cloud service that is base-64 encoded. The
-        /// name can be up to 100 characters in length. The name can be used
-        /// identify the storage account for your tracking purposes.
+        /// Required. A name for the cloud service. The name can be up to 100
+        /// characters in length. The name can be used to identify the storage
+        /// account for your tracking purposes.
         /// </summary>
         public string Label
         {
