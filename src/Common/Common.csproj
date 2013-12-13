@@ -45,7 +45,6 @@
     <Compile Include="Tracing\CloudTracing.cs" />
     <Compile Include="Credentials\CloudCredentials.cs" />
     <Compile Include="Handlers\ClientRequestTrackingHandler.cs" />
-    <Compile Include="Handlers\LinearRetryHandler.cs" />
     <Compile Include="Handlers\RetryHandler.cs" />
     <Compile Include="Internals\ConfigurationHelper.cs" />
     <Compile Include="Internals\Tracing.cs" />
@@ -71,6 +70,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TransientFaultHandling\AsyncExecution.cs" />
+    <Compile Include="TransientFaultHandling\DefaultHttpErrorDetectionStrategy.cs" />
+    <Compile Include="TransientFaultHandling\ExponentialBackoff.cs" />
+    <Compile Include="TransientFaultHandling\FixedInterval.cs" />
+    <Compile Include="TransientFaultHandling\Guard.cs" />
+    <Compile Include="TransientFaultHandling\HttpRequestExceptionWithStatus.cs" />
+    <Compile Include="TransientFaultHandling\Incremental.cs" />
+    <Compile Include="TransientFaultHandling\ITransientErrorDetectionStrategy.cs" />
+    <Compile Include="TransientFaultHandling\RetryingEventArgs.cs" />
+    <Compile Include="TransientFaultHandling\RetryLimitExceededException.cs" />
+    <Compile Include="TransientFaultHandling\RetryManager.cs" />
+    <Compile Include="TransientFaultHandling\RetryPolicy.cs" />
+    <Compile Include="TransientFaultHandling\RetryPolicy.Generic.cs" />
+    <Compile Include="TransientFaultHandling\RetryStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

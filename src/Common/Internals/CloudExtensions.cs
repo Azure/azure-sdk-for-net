@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using Microsoft.WindowsAzure.Common.TransientFaultHandling;
 
 namespace Microsoft.WindowsAzure.Common.Internals
 {
@@ -137,5 +138,33 @@ namespace Microsoft.WindowsAzure.Common.Internals
             client.HttpClient = new HttpClient(handler, false);
             ServiceClient<T>.CloneHttpClient(oldClient, client.HttpClient);
         }
-    }
+
+        /// <summary>
+        /// Sets retry policy for the client.
+        /// </summary>
+        /// <typeparam name="T">Service client type.</typeparam>
+        /// <param name="client">Service client.</param>
+        /// <param name="retryPolicy">Retry policy to set.</param>
+        public static void SetRetryPolicy<T>(this ServiceClient<T> client, RetryPolicy retryPolicy)
+            where T : ServiceClient<T>
+        {
+            if (client == null)
+            {
+                throw new ArgumentNullException("client");
+            }
+            else if (retryPolicy == null)
+            {
+                throw new ArgumentNullException("retryPolicy");
+            }
+            RetryHandler handler = client.GetHttpPipeline().OfType<RetryHandler>().FirstOrDefault();
+            if (handler != null)
+            {
+                handler.RetryPolicy = retryPolicy;
+            }
+            else
+            {
+                throw new InvalidOperationException(Properties.Resources.ExceptionRetryHandlerMissing);
+            }
+        }
+    }    
 }

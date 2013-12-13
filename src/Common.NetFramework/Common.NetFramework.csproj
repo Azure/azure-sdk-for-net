@@ -8,7 +8,7 @@
     <ProjectGuid>{14529261-9F9F-4D2F-80D5-B26677F51E8B}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.Common.Platform</RootNamespace>
+    <RootNamespace>Microsoft.WindowsAzure.Common</RootNamespace>
     <AssemblyName>Microsoft.WindowsAzure.Common.NetFramework</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
