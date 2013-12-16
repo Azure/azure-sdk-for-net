@@ -400,6 +400,54 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
+        /// Fetch jobs in a job collection via a filter.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the List Jobs with filter operation.
+        /// </param>
+        /// <returns>
+        /// The List Jobs operation response.
+        /// </returns>
+        public static JobListResponse ListWithFilter(this IJobOperations operations, JobListWithFilterParameters parameters)
+        {
+            try
+            {
+                return operations.ListWithFilterAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Fetch jobs in a job collection via a filter.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the List Jobs with filter operation.
+        /// </param>
+        /// <returns>
+        /// The List Jobs operation response.
+        /// </returns>
+        public static Task<JobListResponse> ListWithFilterAsync(this IJobOperations operations, JobListWithFilterParameters parameters)
+        {
+            return operations.ListWithFilterAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Job collections can be updated through a simple PATCH operation.
         /// The format of the request is the same as that for creating a job,
         /// though if a field is unspecified we will carry forward the current

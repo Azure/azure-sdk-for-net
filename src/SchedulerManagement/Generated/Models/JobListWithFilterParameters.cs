@@ -21,41 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// Parameters supplied to the List Jobs operation.
+    /// Parameters supplied to the List Jobs with filter operation.
     /// </summary>
-    public partial class JobListParameters
+    public partial class JobListWithFilterParameters : JobListParameters
     {
-        private int? _skip;
+        private JobState _state;
         
         /// <summary>
-        /// Specify the (0-based) index of the job list from which to begin
-        /// requesting entries.
+        /// Filter the job history to have it only return job execution
+        /// attempts having a particular State, enabled, disabled, faulted, or
+        /// completed.
         /// </summary>
-        public int? Skip
+        public JobState State
         {
-            get { return this._skip; }
-            set { this._skip = value; }
-        }
-        
-        private int? _top;
-        
-        /// <summary>
-        /// Specify the number of jobs to request, in the of range [1..100].
-        /// </summary>
-        public int? Top
-        {
-            get { return this._top; }
-            set { this._top = value; }
+            get { return this._state; }
+            set { this._state = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListParameters class.
+        /// Initializes a new instance of the JobListWithFilterParameters class.
         /// </summary>
-        public JobListParameters()
+        public JobListWithFilterParameters()
         {
         }
     }

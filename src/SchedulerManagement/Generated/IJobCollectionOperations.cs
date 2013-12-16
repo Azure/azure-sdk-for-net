@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         Task<JobCollectionCreateResponse> BeginCreatingAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Deletes a job collection
+        /// Deletes a job collection.
         /// </summary>
         /// <param name='cloudServiceName'>
         /// The name of the cloud service.
@@ -137,7 +137,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         Task<SchedulerOperationStatusResponse> CreateAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Deletes a job collection
+        /// Deletes a job collection.
         /// </summary>
         /// <param name='cloudServiceName'>
         /// The name of the cloud service.
