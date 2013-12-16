@@ -3,7 +3,7 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Libraries</id>
     <title>Windows Azure Management Libraries</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <releaseNotes>Projects also have .NET 4.0 support now: __BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -16,18 +16,19 @@
 - Windows Azure Virtual Machines
 - Hosted Services
 - Infrastructure services
-- Basic Subscription information
-- Service Bus
+- Monitoring
 - Scheduler
+- Service Bus
 - Storage Accounts
 - SQL Database
+- Subscription information
 - Virtual Networks
 - Web Sites
 
-.NET Framework Recommended during preview.
+Using the full .NET Framework is recommended during preview.
 
-At this time, applications looking to use the Windows Azure Management Libraries should use the .NET Framework. Management operations require the X509Certificate2 type that is not present in the Portable Class Library API surface area. The Common.NetFramework library exposes this functionality. Looking to the future, we are enabling PCL early: Windows Azure Active Directory integration enables token-based authentication. Coupled with appropriate platform-specific libraries, in the future more platforms will light up with support for managing Windows Azure services.
-</description>
+Management operations require the X509Certificate2 type that is not present in the Portable Class Library API surface area. The Common.NetFramework library exposes this functionality. Looking to the future, we are enabling PCL early: Windows Azure Active Directory integration enables token-based authentication. Coupled with appropriate platform-specific libraries, in the future more platforms will light up with support for managing Windows Azure services.
+    </description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>windowsazureofficial management cloud libraries "windows azure management"</tags>
     <dependencies>
@@ -40,6 +41,7 @@ At this time, applications looking to use the Windows Azure Management Libraries
         <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="__VERSION_Microsoft.WindowsAzure.Management.WebSites__" />
         <dependency id="Microsoft.WindowsAzure.Management.Scheduler" version="__VERSION_Microsoft.WindowsAzure.Management.Scheduler__" />
         <dependency id="Microsoft.WindowsAzure.Management.Sql" version="__VERSION_Microsoft.WindowsAzure.Management.Sql__" />
+        <dependency id="Microsoft.WindowsAzure.Management.Monitoring" version="__VERSION_Microsoft.WindowsAzure.Management.Monitoring__" />
       </group>
     </dependencies>
   </metadata>
