@@ -90,8 +90,8 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name="request">The HTTP request message to send to the server.</param>
         /// <param name="cancellationToken">A cancellation token to cancel operation.</param>
-        /// <returns>Returns System.Threading.Tasks.Task<TResult>. The task object representing 
-        /// the asynchronous operation.</returns>
+        /// <returns>Returns System.Threading.Tasks.Task&lt;TResult&gt;. The 
+        /// task object representing the asynchronous operation.</returns>
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             RetryPolicy.Retrying += (sender, args) =>
