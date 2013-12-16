@@ -94,7 +94,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         }
         
         /// <summary>
-        /// Deletes a job collection
+        /// Deletes a job collection.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         }
         
         /// <summary>
-        /// Deletes a job collection
+        /// Deletes a job collection.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -354,7 +354,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         }
         
         /// <summary>
-        /// Deletes a job collection
+        /// Deletes a job collection.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -397,7 +397,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         }
         
         /// <summary>
-        /// Deletes a job collection
+        /// Deletes a job collection.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

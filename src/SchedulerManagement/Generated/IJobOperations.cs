@@ -145,6 +145,20 @@ namespace Microsoft.WindowsAzure.Scheduler
         Task<JobListResponse> ListAsync(JobListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Fetch jobs in a job collection via a filter.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the List Jobs with filter operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Jobs operation response.
+        /// </returns>
+        Task<JobListResponse> ListWithFilterAsync(JobListWithFilterParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Job collections can be updated through a simple PATCH operation.
         /// The format of the request is the same as that for creating a job,
         /// though if a field is unspecified we will carry forward the current
