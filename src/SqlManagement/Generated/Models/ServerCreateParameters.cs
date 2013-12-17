@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _administratorPassword;
         
         /// <summary>
-        /// The administrator password
+        /// Gets or sets the administrator password.
         /// </summary>
         public string AdministratorPassword
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _administratorUserName;
         
         /// <summary>
-        /// The administrator username
+        /// Gets or sets the administrator username.
         /// </summary>
         public string AdministratorUserName
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _location;
         
         /// <summary>
-        /// The region in which this server will be created.
+        /// Gets or sets the region in which this server will be created.
         /// </summary>
         public string Location
         {

@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Specifies the edition of the SQL database
+    /// Specifies the edition of the SQL database.
     /// </summary>
     public static partial class DatabaseEditions
     {

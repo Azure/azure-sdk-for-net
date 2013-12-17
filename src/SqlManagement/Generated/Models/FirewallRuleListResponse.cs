@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<FirewallRuleListResponse.FirewallRule> _firewallRules;
         
         /// <summary>
-        /// The firewall rules for this SQL Database Server.
+        /// Gets or sets the firewall rules for this SQL Database Server.
         /// </summary>
         public IList<FirewallRuleListResponse.FirewallRule> FirewallRules
         {
@@ -69,12 +69,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             return this.GetEnumerator();
         }
         
+        /// <summary>
+        /// Firewall rule.
+        /// </summary>
         public partial class FirewallRule
         {
             private string _endIPAddress;
             
             /// <summary>
-            /// The ending IP address applied to this rule.
+            /// Gets or sets the ending IP address applied to this rule.
             /// </summary>
             public string EndIPAddress
             {
@@ -85,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _name;
             
             /// <summary>
-            /// The name of the Firewall Rule.
+            /// Gets or sets the name of the Firewall Rule.
             /// </summary>
             public string Name
             {
@@ -96,7 +99,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _startIPAddress;
             
             /// <summary>
-            /// The beginning IP address applied to this rule.
+            /// Gets or sets the beginning IP address applied to this rule.
             /// </summary>
             public string StartIPAddress
             {
@@ -107,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _type;
             
             /// <summary>
-            /// The type of resource.
+            /// Gets or sets the type of resource.
             /// </summary>
             public string Type
             {

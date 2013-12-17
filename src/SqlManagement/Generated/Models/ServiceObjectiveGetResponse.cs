@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _description;
         
         /// <summary>
-        /// The service objective description.
+        /// Gets or sets the service objective description.
         /// </summary>
         public string Description
         {
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<ServiceObjectiveGetResponse.DimensionSettingResponse> _dimensionSettings;
         
         /// <summary>
-        /// The service objective dimension settings.
+        /// Gets or sets the service objective dimension settings.
         /// </summary>
         public IList<ServiceObjectiveGetResponse.DimensionSettingResponse> DimensionSettings
         {
@@ -58,7 +58,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _enabled;
         
         /// <summary>
-        /// The value indicating whether the service objective is enabled.
+        /// Gets or sets a value indicating whether the service objective is
+        /// enabled.
         /// </summary>
         public bool Enabled
         {
@@ -69,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _id;
         
         /// <summary>
-        /// The service objective id.
+        /// Gets or sets the service objective id.
         /// </summary>
         public string Id
         {
@@ -80,8 +81,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isDefault;
         
         /// <summary>
-        /// The value indicating whether the service objective is the default
-        /// objective.
+        /// Gets or sets a value indicating whether the service objective is
+        /// the default objective.
         /// </summary>
         public bool IsDefault
         {
@@ -92,8 +93,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isSystem;
         
         /// <summary>
-        /// The value indicating whether the service objective is a system
-        /// objective.
+        /// Gets or sets a value indicating whether the service objective is a
+        /// system objective.
         /// </summary>
         public bool IsSystem
         {
@@ -104,7 +105,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// The name of the service objective.
+        /// Gets or sets the name of the service objective.
         /// </summary>
         public string Name
         {
@@ -115,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _parentLink;
         
         /// <summary>
-        /// The ParentLink of the service objective.
+        /// Gets or sets the ParentLink of the service objective.
         /// </summary>
         public string ParentLink
         {
@@ -126,7 +127,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _selfLink;
         
         /// <summary>
-        /// The SelfLink of the service objective.
+        /// Gets or sets the SelfLink of the service objective.
         /// </summary>
         public string SelfLink
         {
@@ -137,7 +138,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _state;
         
         /// <summary>
-        /// The state of the service objective.
+        /// Gets or sets the state of the service objective.
         /// </summary>
         public string State
         {
@@ -148,7 +149,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _type;
         
         /// <summary>
-        /// The type of resource.
+        /// Gets or sets the type of resource.
         /// </summary>
         public string Type
         {
@@ -164,12 +165,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             this._dimensionSettings = new List<ServiceObjectiveGetResponse.DimensionSettingResponse>();
         }
         
+        /// <summary>
+        /// Dimension setting.
+        /// </summary>
         public partial class DimensionSettingResponse
         {
             private string _description;
             
             /// <summary>
-            /// The dimension setting description.
+            /// Gets or sets the dimension setting description.
             /// </summary>
             public string Description
             {
@@ -180,7 +184,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _id;
             
             /// <summary>
-            /// The dimension setting id.
+            /// Gets or sets the dimension setting id.
             /// </summary>
             public string Id
             {
@@ -191,8 +195,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private bool _isDefault;
             
             /// <summary>
-            /// The value indicating whether the dimension setting is the
-            /// default setting.
+            /// Gets or sets a value indicating whether the dimension setting
+            /// is the default setting.
             /// </summary>
             public bool IsDefault
             {
@@ -203,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _name;
             
             /// <summary>
-            /// The name of the dimension setting.
+            /// Gets or sets the name of the dimension setting.
             /// </summary>
             public string Name
             {
@@ -214,7 +218,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private byte _ordinal;
             
             /// <summary>
-            /// The dimension setting ordinal position.
+            /// Gets or sets the dimension setting ordinal position.
             /// </summary>
             public byte Ordinal
             {
@@ -225,7 +229,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _parentLink;
             
             /// <summary>
-            /// The ParentLink of the dimension setting.
+            /// Gets or sets the ParentLink of the dimension setting.
             /// </summary>
             public string ParentLink
             {
@@ -236,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _selfLink;
             
             /// <summary>
-            /// The SelfLink of the dimension setting.
+            /// Gets or sets the SelfLink of the dimension setting.
             /// </summary>
             public string SelfLink
             {
@@ -247,7 +251,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _state;
             
             /// <summary>
-            /// The state of the dimension setting.
+            /// Gets or sets the state of the dimension setting.
             /// </summary>
             public string State
             {
@@ -258,7 +262,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _type;
             
             /// <summary>
-            /// The type of resource.
+            /// Gets or sets the type of resource.
             /// </summary>
             public string Type
             {

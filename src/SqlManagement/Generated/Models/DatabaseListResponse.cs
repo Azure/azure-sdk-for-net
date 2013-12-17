@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<DatabaseListResponse.Database> _databases;
         
         /// <summary>
-        /// The SQL Server databases that are housed in a server.
+        /// Gets or sets the SQL Server databases that are housed in a server.
         /// </summary>
         public IList<DatabaseListResponse.Database> Databases
         {
@@ -67,12 +67,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             return this.GetEnumerator();
         }
         
+        /// <summary>
+        /// SQL Server database.
+        /// </summary>
         public partial class Database
         {
             private string _collationName;
             
             /// <summary>
-            /// This database resource's collation name.
+            /// Gets or sets the database resource's collation name.
             /// </summary>
             public string CollationName
             {
@@ -83,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private DateTime _creationDate;
             
             /// <summary>
-            /// The date this database was created.
+            /// Gets or sets the date this database was created.
             /// </summary>
             public DateTime CreationDate
             {
@@ -94,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _edition;
             
             /// <summary>
-            /// This database resource's edition.
+            /// Gets or sets the database resource's edition.
             /// </summary>
             public string Edition
             {
@@ -105,7 +108,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private int _id;
             
             /// <summary>
-            /// The id of the database.
+            /// Gets or sets the id of the database.
             /// </summary>
             public int Id
             {
@@ -116,7 +119,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private bool _isFederationRoot;
             
             /// <summary>
-            /// Determines if this database is a federation root.
+            /// Gets or sets a value indicating whether the database is a
+            /// federation root.
             /// </summary>
             public bool IsFederationRoot
             {
@@ -127,7 +131,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private bool _isSystemObject;
             
             /// <summary>
-            /// Determines if this database a system object.
+            /// Gets or sets a value indicating whether the database is a
+            /// system object.
             /// </summary>
             public bool IsSystemObject
             {
@@ -138,7 +143,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private long _maximumDatabaseSizeInGB;
             
             /// <summary>
-            /// Maximum size of this database, in Gigabytes.
+            /// Gets or sets the maximum size of this database, in Gigabytes.
             /// </summary>
             public long MaximumDatabaseSizeInGB
             {
@@ -149,7 +154,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _name;
             
             /// <summary>
-            /// The name of the database.
+            /// Gets or sets the name of the database.
             /// </summary>
             public string Name
             {
@@ -160,7 +165,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serviceObjectiveAssignmentErrorCode;
             
             /// <summary>
-            /// The error code for this sevice objective.
+            /// Gets or sets the error code for this service objective.
             /// </summary>
             public string ServiceObjectiveAssignmentErrorCode
             {
@@ -171,7 +176,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serviceObjectiveAssignmentErrorDescription;
             
             /// <summary>
-            /// The error description, if any.
+            /// Gets or sets the error description, if any.
             /// </summary>
             public string ServiceObjectiveAssignmentErrorDescription
             {
@@ -182,7 +187,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serviceObjectiveAssignmentState;
             
             /// <summary>
-            /// The state of the current assignment.
+            /// Gets or sets the state of the current assignment.
             /// </summary>
             public string ServiceObjectiveAssignmentState
             {
@@ -193,7 +198,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serviceObjectiveAssignmentStateDescription;
             
             /// <summary>
-            /// The state description.
+            /// Gets or sets the state description.
             /// </summary>
             public string ServiceObjectiveAssignmentStateDescription
             {
@@ -204,7 +209,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serviceObjectiveAssignmentSuccessDate;
             
             /// <summary>
-            /// The date the service's assignment succeeded.
+            /// Gets or sets the date the service's assignment succeeded.
             /// </summary>
             public string ServiceObjectiveAssignmentSuccessDate
             {
@@ -215,7 +220,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serviceObjectiveId;
             
             /// <summary>
-            /// The id of this service objective.
+            /// Gets or sets the id of this service objective.
             /// </summary>
             public string ServiceObjectiveId
             {
@@ -226,7 +231,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _sizeMB;
             
             /// <summary>
-            /// The size of this database in megabytes (MB).
+            /// Gets or sets the size of this database in megabytes (MB).
             /// </summary>
             public string SizeMB
             {
@@ -237,7 +242,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _state;
             
             /// <summary>
-            /// The state of the database.
+            /// Gets or sets the state of the database.
             /// </summary>
             public string State
             {
@@ -248,7 +253,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _type;
             
             /// <summary>
-            /// The type of resource.
+            /// Gets or sets the type of resource.
             /// </summary>
             public string Type
             {

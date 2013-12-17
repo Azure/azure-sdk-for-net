@@ -66,8 +66,14 @@ namespace Microsoft.WindowsAzure.Management.Sql
             get { return this._client; }
         }
         
+        /// <summary>
+        /// Export DAC into Windows Azure blob storage.
+        /// </summary>
         /// <param name='serverName'>
-        /// The name of the server being imported to or exported from
+        /// The name of the server being exported from.
+        /// </param>
+        /// <param name='parameters'>
+        /// Export parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -268,27 +274,29 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Gets the status of the DAC.
+        /// </summary>
         /// <param name='serverName'>
-        /// The name of the server being imported to or exported from
+        /// The name of the server.
         /// </param>
         /// <param name='fullyQualifiedServerName'>
-        /// The fully qualified name of the server being imported to or
-        /// exported from
+        /// The fully qualified name of the server.
         /// </param>
         /// <param name='username'>
-        /// The server's username
+        /// The server's username.
         /// </param>
         /// <param name='password'>
-        /// The server's password
+        /// The server's password.
         /// </param>
         /// <param name='requestId'>
-        /// The request ID of the operation being queried
+        /// The request ID of the operation being queried.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the DAC GetStatus operation
+        /// The response structure for the DAC GetStatus operation.
         /// </returns>
         public async Task<DacGetStatusResponse> GetStatusAsync(string serverName, string fullyQualifiedServerName, string username, string password, string requestId, CancellationToken cancellationToken)
         {
@@ -494,8 +502,14 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Import DAC from Windows Azure blob storage.
+        /// </summary>
         /// <param name='serverName'>
-        /// The name of the server being imported to or exported from
+        /// The name of the server being imported to.
+        /// </param>
+        /// <param name='parameters'>
+        /// Import parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
