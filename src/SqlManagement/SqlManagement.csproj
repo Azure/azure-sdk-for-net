@@ -17,6 +17,8 @@
   <ItemGroup>
     <Compile Include="Generated\DacOperations.cs" />
     <Compile Include="Generated\DacOperationsExtensions.cs" />
+    <Compile Include="Generated\DatabaseCopyOperations.cs" />
+    <Compile Include="Generated\DatabaseCopyOperationsExtensions.cs" />
     <Compile Include="Generated\DatabaseOperationOperations.cs" />
     <Compile Include="Generated\DatabaseOperationOperationsExtensions.cs" />
     <Compile Include="Generated\DatabaseOperations.cs" />
@@ -24,6 +26,7 @@
     <Compile Include="Generated\FirewallRuleOperations.cs" />
     <Compile Include="Generated\FirewallRuleOperationsExtensions.cs" />
     <Compile Include="Generated\IDacOperations.cs" />
+    <Compile Include="Generated\IDatabaseCopyOperations.cs" />
     <Compile Include="Generated\IDatabaseOperationOperations.cs" />
     <Compile Include="Generated\IDatabaseOperations.cs" />
     <Compile Include="Generated\IFirewallRuleOperations.cs" />
@@ -34,6 +37,10 @@
     <Compile Include="Generated\Models\DacGetStatusResponse.cs" />
     <Compile Include="Generated\Models\DacImportExportResponse.cs" />
     <Compile Include="Generated\Models\DacImportParameters.cs" />
+    <Compile Include="Generated\Models\DatabaseCopyCreateParameters.cs" />
+    <Compile Include="Generated\Models\DatabaseCopyListResponse.cs" />
+    <Compile Include="Generated\Models\DatabaseCopyResponse.cs" />
+    <Compile Include="Generated\Models\DatabaseCopyUpdateParameters.cs" />
     <Compile Include="Generated\Models\DatabaseCreateParameters.cs" />
     <Compile Include="Generated\Models\DatabaseCreateResponse.cs" />
     <Compile Include="Generated\Models\DatabaseEditions.cs" />
@@ -88,10 +95,10 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
-  <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets')" />
-  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
   <Target Name="CopyMicrosoftWindowsAzureManagementSqlSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Sql.Specification.1.0.5085.25526-prerelease\tools\Microsoft.WindowsAzure.Management.Sql.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Sql.Specification.1.0.5091.22045-prerelease\tools\Microsoft.WindowsAzure.Management.Sql.Specification.dll" DestinationFolder="." />
   </Target>
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5091.18965-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5091.18965-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
 </Project>

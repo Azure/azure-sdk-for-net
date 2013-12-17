@@ -34,12 +34,18 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// </summary>
     public static partial class DacOperationsExtensions
     {
+        /// <summary>
+        /// Export DAC into Windows Azure blob storage.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being imported to or exported from
+        /// The name of the server being exported from.
+        /// </param>
+        /// <param name='parameters'>
+        /// Export parameters.
         /// </param>
         /// <returns>
         /// Response for an DAC Import/Export request.
@@ -63,12 +69,18 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Export DAC into Windows Azure blob storage.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being imported to or exported from
+        /// The name of the server being exported from.
+        /// </param>
+        /// <param name='parameters'>
+        /// Export parameters.
         /// </param>
         /// <returns>
         /// Response for an DAC Import/Export request.
@@ -78,28 +90,30 @@ namespace Microsoft.WindowsAzure.Management.Sql
             return operations.ExportAsync(serverName, parameters, CancellationToken.None);
         }
         
+        /// <summary>
+        /// Gets the status of the DAC.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being imported to or exported from
+        /// The name of the server.
         /// </param>
         /// <param name='fullyQualifiedServerName'>
-        /// The fully qualified name of the server being imported to or
-        /// exported from
+        /// The fully qualified name of the server.
         /// </param>
         /// <param name='username'>
-        /// The server's username
+        /// The server's username.
         /// </param>
         /// <param name='password'>
-        /// The server's password
+        /// The server's password.
         /// </param>
         /// <param name='requestId'>
-        /// The request ID of the operation being queried
+        /// The request ID of the operation being queried.
         /// </param>
         /// <returns>
-        /// The response structure for the DAC GetStatus operation
+        /// The response structure for the DAC GetStatus operation.
         /// </returns>
         public static DacGetStatusResponse GetStatus(this IDacOperations operations, string serverName, string fullyQualifiedServerName, string username, string password, string requestId)
         {
@@ -120,40 +134,48 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Gets the status of the DAC.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being imported to or exported from
+        /// The name of the server.
         /// </param>
         /// <param name='fullyQualifiedServerName'>
-        /// The fully qualified name of the server being imported to or
-        /// exported from
+        /// The fully qualified name of the server.
         /// </param>
         /// <param name='username'>
-        /// The server's username
+        /// The server's username.
         /// </param>
         /// <param name='password'>
-        /// The server's password
+        /// The server's password.
         /// </param>
         /// <param name='requestId'>
-        /// The request ID of the operation being queried
+        /// The request ID of the operation being queried.
         /// </param>
         /// <returns>
-        /// The response structure for the DAC GetStatus operation
+        /// The response structure for the DAC GetStatus operation.
         /// </returns>
         public static Task<DacGetStatusResponse> GetStatusAsync(this IDacOperations operations, string serverName, string fullyQualifiedServerName, string username, string password, string requestId)
         {
             return operations.GetStatusAsync(serverName, fullyQualifiedServerName, username, password, requestId, CancellationToken.None);
         }
         
+        /// <summary>
+        /// Import DAC from Windows Azure blob storage.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being imported to or exported from
+        /// The name of the server being imported to.
+        /// </param>
+        /// <param name='parameters'>
+        /// Import parameters.
         /// </param>
         /// <returns>
         /// Response for an DAC Import/Export request.
@@ -177,12 +199,18 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Import DAC from Windows Azure blob storage.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being imported to or exported from
+        /// The name of the server being imported to.
+        /// </param>
+        /// <param name='parameters'>
+        /// Import parameters.
         /// </param>
         /// <returns>
         /// Response for an DAC Import/Export request.

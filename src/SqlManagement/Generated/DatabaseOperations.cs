@@ -67,14 +67,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The Create Database operation creates a database in a SQL Server
-        /// database server.
+        /// Creates a database in a SQL Server database server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server where the database will be created
+        /// The name of the SQL Server where the database will be created.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the create database operation
+        /// The parameters for the create database operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -357,8 +356,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The Drop Server operation drops a SQL Database server from a
-        /// subscription.  (see
+        /// Drops a SQL Database server from a subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715285.aspx
         /// for more information)
         /// </summary>
@@ -475,8 +473,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The Get Database operation retrieves information about a SQL Server
-        /// database.
+        /// Returns information about a SQL Server database.
         /// </summary>
         /// <param name='serverName'>
         /// The name of the SQL Server on which the database is housed.
@@ -718,6 +715,9 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Returns the list SQL Server databases.
+        /// </summary>
         /// <param name='serverName'>
         /// The name of the database server to be queried.
         /// </param>
@@ -956,8 +956,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The Get Database operation retrieves information about a SQL Server
-        /// database.
+        /// Updates SQL Server database information.
         /// </summary>
         /// <param name='serverName'>
         /// The name of the SQL Server where the database is housed.

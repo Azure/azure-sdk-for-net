@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _collationName;
         
         /// <summary>
-        /// The collation name for the new database.
+        /// Gets or sets the collation name for the new database.
         /// </summary>
         public string CollationName
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _edition;
         
         /// <summary>
-        /// The edition for the new database.
+        /// Gets or sets the edition for the new database.
         /// </summary>
         public string Edition
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _id;
         
         /// <summary>
-        /// The id of the database.
+        /// Gets or sets the id of the database.
         /// </summary>
         public int Id
         {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private long _maximumDatabaseSizeInGB;
         
         /// <summary>
-        /// Maximum size of this database, in Gigabytes.
+        /// Gets or sets the maximum size of this database, in Gigabytes.
         /// </summary>
         public long MaximumDatabaseSizeInGB
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// The name of the database.
+        /// Gets or sets the name of the database.
         /// </summary>
         public string Name
         {
@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveId;
         
         /// <summary>
-        /// The id of this service objective.
+        /// Gets or sets the id of this service objective.
         /// </summary>
         public string ServiceObjectiveId
         {

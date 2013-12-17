@@ -28,14 +28,14 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The response structure for the Server List operation
+    /// The response structure for the Server List operation.
     /// </summary>
     public partial class ServerListResponse : OperationResponse, IEnumerable<ServerListResponse.Server>
     {
         private IList<ServerListResponse.Server> _servers;
         
         /// <summary>
-        /// The SQL Servers that are valid for your subscription.
+        /// Gets or sets the SQL Servers that are valid for your subscription.
         /// </summary>
         public IList<ServerListResponse.Server> Servers
         {
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _administratorUserName;
             
             /// <summary>
-            /// The name of an administrator for this server.
+            /// Gets or sets the name of an administrator for this server.
             /// </summary>
             public string AdministratorUserName
             {
@@ -86,8 +86,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private IDictionary<string, string> _features;
             
             /// <summary>
-            /// The list of features and the type of database server for an
-            /// individual server.
+            /// Gets or sets the list of features and the type of database
+            /// server for an individual server.
             /// </summary>
             public IDictionary<string, string> Features
             {
@@ -98,8 +98,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _location;
             
             /// <summary>
-            /// The name of a data center location that is valid for your
-            /// subscription.
+            /// Gets or sets the name of a data center location that is valid
+            /// for your subscription.
             /// </summary>
             public string Location
             {
@@ -110,7 +110,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _name;
             
             /// <summary>
-            /// The name of a SQL Server running in your subscription.
+            /// Gets or sets the name of a SQL Server running in your
+            /// subscription.
             /// </summary>
             public string Name
             {

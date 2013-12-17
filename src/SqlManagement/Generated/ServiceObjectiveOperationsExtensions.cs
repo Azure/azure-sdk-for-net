@@ -35,8 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     public static partial class ServiceObjectiveOperationsExtensions
     {
         /// <summary>
-        /// The Get Service Objective operation retrieves information about a
-        /// certain Service Objective on a given Id.
+        /// Returns information about a certain Service Objective on a given Id.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -72,8 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The Get Service Objective operation retrieves information about a
-        /// certain Service Objective on a given Id.
+        /// Returns information about a certain Service Objective on a given Id.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -94,6 +92,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
             return operations.GetAsync(serverName, serviceObjectiveId, CancellationToken.None);
         }
         
+        /// <summary>
+        /// Returns information about all Service Objectives on a database
+        /// server.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.
@@ -124,6 +126,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Returns information about all Service Objectives on a database
+        /// server.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.

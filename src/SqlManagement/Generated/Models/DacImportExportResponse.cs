@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _guid;
         
         /// <summary>
-        /// The operation's identifier.
+        /// Gets or sets the operation's identifier.
         /// </summary>
         public string Guid
         {

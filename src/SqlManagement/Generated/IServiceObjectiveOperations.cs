@@ -34,8 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     public partial interface IServiceObjectiveOperations
     {
         /// <summary>
-        /// The Get Service Objective operation retrieves information about a
-        /// certain Service Objective on a given Id.
+        /// Returns information about a certain Service Objective on a given Id.
         /// </summary>
         /// <param name='serverName'>
         /// The name of the SQL Server to be queried.
@@ -52,6 +51,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// </returns>
         Task<ServiceObjectiveGetResponse> GetAsync(string serverName, string serviceObjectiveId, CancellationToken cancellationToken);
         
+        /// <summary>
+        /// Returns information about all Service Objectives on a database
+        /// server.
+        /// </summary>
         /// <param name='serverName'>
         /// The name of the database server to be queried.
         /// </param>

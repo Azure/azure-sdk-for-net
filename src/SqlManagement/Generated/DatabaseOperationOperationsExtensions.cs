@@ -35,8 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     public static partial class DatabaseOperationOperationsExtensions
     {
         /// <summary>
-        /// The 'Get Database Operation' retrieves information about one
-        /// operation on a given operation Guid.
+        /// Returns information about one operation on a given operation Guid.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -72,8 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The 'Get Database Operation' retrieves information about one
-        /// operation on a given operation Guid.
+        /// Returns information about one operation on a given operation Guid.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -94,6 +92,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
             return operations.GetAsync(serverName, operationGuid, CancellationToken.None);
         }
         
+        /// <summary>
+        /// Returns the list database operations for a given server and
+        /// database.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
@@ -127,6 +129,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Returns the list database operations for a given server and
+        /// database.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
@@ -146,6 +152,9 @@ namespace Microsoft.WindowsAzure.Management.Sql
             return operations.ListByDatabaseAsync(serverName, databaseName, CancellationToken.None);
         }
         
+        /// <summary>
+        /// Returns the list database operations for a given server.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
@@ -176,6 +185,9 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Returns the list database operations for a given server.
+        /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
