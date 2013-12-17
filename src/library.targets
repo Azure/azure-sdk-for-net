@@ -67,7 +67,7 @@
   <Target Name="InformationAboutWindowsAzureBuild"
           BeforeTargets="BeforeBuild"
           Condition=" '$(LibraryPropertiesProjectIncluded)' == 'true' ">
-    <Message Text="This is Windows Azure .NET library supports multiple build types." Importance="high" />
+    <Message Text="This Windows Azure .NET library supports multiple target frameworks." Importance="high" />
     <Message Text="Library build set:             $(WindowsAzureLibraryProfileSet)" />
     <Message Text="Current build type:            $(WindowsAzureCurrentConfiguration)" />
 

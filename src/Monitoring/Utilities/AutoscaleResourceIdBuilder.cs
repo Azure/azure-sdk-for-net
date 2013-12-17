@@ -85,8 +85,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
         /// Build the resource id of the cloud service resource to use in Autoscale API.
         /// </summary>
         /// <param name="cloudServiceName">The cloud service name.</param>
-        /// <param name="deploymentSlot">The deployment slot</param>
         /// <param name="roleName">The role name.</param>
+        /// <param name="isProductionSlot">A value indicating whether the
+        /// deployment slot is a production slot.</param>
         /// <returns>The resource id.</returns>
         public static string BuildCloudServiceResourceId(string cloudServiceName, string roleName, bool isProductionSlot)
         {
