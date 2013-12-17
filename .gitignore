@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+developer/
 
 # Build results
 binaries/
@@ -109,8 +110,10 @@ Backup*/
 UpgradeLog*.XML
 
 # NuGet
-/microsoft-azure-api/Services/Storage/Test/Unit/RT/AppPackages/
-libraries/packages
+packages
 
 # Mac development
 .DS_Store
+
+# Specification DLLs
+*.Specification.dll

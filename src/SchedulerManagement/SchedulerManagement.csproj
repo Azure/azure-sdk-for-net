@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <ProjectGuid>{A3FD3224-3058-48CC-961F-E89D5DCB028D}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.WindowsAzure.Scheduler</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Management.Scheduler</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\library.props" />
+  <ItemGroup>
+    <Compile Include="CloudServiceManagementClient.Customization.cs" />
+    <Compile Include="Generated\CloudServiceManagementClient.cs" />
+    <Compile Include="Generated\CloudServiceManagementClientExtensions.cs" />
+    <Compile Include="Generated\CloudServiceOperations.cs" />
+    <Compile Include="Generated\CloudServiceOperationsExtensions.cs" />
+    <Compile Include="Generated\ICloudServiceManagementClient.cs" />
+    <Compile Include="Generated\ICloudServiceOperations.cs" />
+    <Compile Include="Generated\IJobCollectionOperations.cs" />
+    <Compile Include="Generated\IJobOperations.cs" />
+    <Compile Include="Generated\ISchedulerClient.cs" />
+    <Compile Include="Generated\ISchedulerManagementClient.cs" />
+    <Compile Include="Generated\JobCollectionOperations.cs" />
+    <Compile Include="Generated\JobCollectionOperationsExtensions.cs" />
+    <Compile Include="Generated\JobOperations.cs" />
+    <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\CloudServiceCreateParameters.cs" />
+    <Compile Include="Generated\Models\CloudServiceGetResponse.cs" />
+    <Compile Include="Generated\Models\CloudServiceListResponse.cs" />
+    <Compile Include="Generated\Models\CloudServiceOperationStatus.cs" />
+    <Compile Include="Generated\Models\CloudServiceOperationStatusResponse.cs" />
+    <Compile Include="Generated\Models\EntitleResourceParameters.cs" />
+    <Compile Include="Generated\Models\GetCloudServiceResourceState.cs" />
+    <Compile Include="Generated\Models\Job.cs" />
+    <Compile Include="Generated\Models\JobAction.cs" />
+    <Compile Include="Generated\Models\JobActionType.cs" />
+    <Compile Include="Generated\Models\JobCollectionCheckNameAvailabilityResponse.cs" />
+    <Compile Include="Generated\Models\JobCollectionCreateParameters.cs" />
+    <Compile Include="Generated\Models\JobCollectionCreateResponse.cs" />
+    <Compile Include="Generated\Models\JobCollectionGetResponse.cs" />
+    <Compile Include="Generated\Models\JobCollectionIntrinsicSettings.cs" />
+    <Compile Include="Generated\Models\JobCollectionJobsUpdateStateParameters.cs" />
+    <Compile Include="Generated\Models\JobCollectionJobsUpdateStateResponse.cs" />
+    <Compile Include="Generated\Models\JobCollectionMaxRecurrence.cs" />
+    <Compile Include="Generated\Models\JobCollectionPlan.cs" />
+    <Compile Include="Generated\Models\JobCollectionQuota.cs" />
+    <Compile Include="Generated\Models\JobCollectionRecurrenceFrequency.cs" />
+    <Compile Include="Generated\Models\JobCollectionState.cs" />
+    <Compile Include="Generated\Models\JobCollectionUpdateParameters.cs" />
+    <Compile Include="Generated\Models\JobCollectionUpdateResponse.cs" />
+    <Compile Include="Generated\Models\JobCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\JobCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\JobCreateParameters.cs" />
+    <Compile Include="Generated\Models\JobCreateResponse.cs" />
+    <Compile Include="Generated\Models\JobErrorAction.cs" />
+    <Compile Include="Generated\Models\JobGetHistoryParameters.cs" />
+    <Compile Include="Generated\Models\JobGetHistoryResponse.cs" />
+    <Compile Include="Generated\Models\JobGetHistoryWithFilterParameters.cs" />
+    <Compile Include="Generated\Models\JobGetResponse.cs" />
+    <Compile Include="Generated\Models\JobHistoryActionName.cs" />
+    <Compile Include="Generated\Models\JobHistoryStatus.cs" />
+    <Compile Include="Generated\Models\JobHttpRequest.cs" />
+    <Compile Include="Generated\Models\JobListParameters.cs" />
+    <Compile Include="Generated\Models\JobListResponse.cs" />
+    <Compile Include="Generated\Models\JobListWithFilterParameters.cs" />
+    <Compile Include="Generated\Models\JobQueueMessage.cs" />
+    <Compile Include="Generated\Models\JobRecurrence.cs" />
+    <Compile Include="Generated\Models\JobRecurrenceFrequency.cs" />
+    <Compile Include="Generated\Models\JobRecurrenceSchedule.cs" />
+    <Compile Include="Generated\Models\JobScheduleDay.cs" />
+    <Compile Include="Generated\Models\JobScheduleMonthlyOccurrence.cs" />
+    <Compile Include="Generated\Models\JobState.cs" />
+    <Compile Include="Generated\Models\JobStatus.cs" />
+    <Compile Include="Generated\Models\JobUpdateStateParameters.cs" />
+    <Compile Include="Generated\Models\JobUpdateStateResponse.cs" />
+    <Compile Include="Generated\Models\PatchJobCollectionJobsUpdateStateParameters.cs" />
+    <Compile Include="Generated\Models\ResourceProviderGetPropertiesResponse.cs" />
+    <Compile Include="Generated\Models\RetryPolicy.cs" />
+    <Compile Include="Generated\Models\RetryType.cs" />
+    <Compile Include="Generated\Models\SchedulerOperationStatus.cs" />
+    <Compile Include="Generated\Models\SchedulerOperationStatusResponse.cs" />
+    <Compile Include="Generated\SchedulerClient.cs" />
+    <Compile Include="Generated\SchedulerClientExtensions.cs" />
+    <Compile Include="Generated\SchedulerManagementClient.cs" />
+    <Compile Include="Generated\SchedulerManagementClientExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchedulerClient.Customization.cs" />
+    <Compile Include="SchedulerManagementClient.Customization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenerateCode.props" />
+    <None Include="packages.config" />
+    <None Include="Microsoft.WindowsAzure.Management.Scheduler.nuspec" />
+    <None Include="Microsoft.WindowsAzure.Management.Scheduler.nuget.proj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CloudServices.hydra.xml" />
+    <Content Include="hydra.xml" />
+    <Content Include="Scheduler.hydra.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
+  <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5091.18965-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5091.18965-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementCloudServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.CloudServices.Specification.1.0.5091.22006-prerelease\tools\Microsoft.WindowsAzure.Management.CloudServices.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementSchedulerSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Scheduler.Specification.1.0.5098.23462-prerelease\tools\Microsoft.WindowsAzure.Management.Scheduler.Specification.dll" DestinationFolder="." />
+  </Target>
+</Project>

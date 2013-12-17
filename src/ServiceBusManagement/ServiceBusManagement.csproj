@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <ProjectGuid>{4B95E63A-62EB-4C27-BB96-ED8D97B0283C}</ProjectGuid>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.WindowsAzure.Management.ServiceBus</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Management.ServiceBus</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\library.props" />
+  <ItemGroup>
+    <Compile Include="Generated\INamespaceOperations.cs" />
+    <Compile Include="Generated\INotificationHubOperations.cs" />
+    <Compile Include="Generated\IQueueOperations.cs" />
+    <Compile Include="Generated\IRelayOperations.cs" />
+    <Compile Include="Generated\IServiceBusManagementClient.cs" />
+    <Compile Include="Generated\ITopicOperations.cs" />
+    <Compile Include="Generated\Models\AccessRight.cs" />
+    <Compile Include="Generated\Models\CheckNamespaceAvailabilityResponse.cs" />
+    <Compile Include="Generated\Models\CountDetails.cs" />
+    <Compile Include="Generated\Models\NamespaceDescription.cs" />
+    <Compile Include="Generated\Models\OperationStatus.cs" />
+    <Compile Include="Generated\Models\ServiceBusAuthorizationRuleResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusAuthorizationRulesResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusConnectionDetail.cs" />
+    <Compile Include="Generated\Models\ServiceBusConnectionDetailsResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusLocation.cs" />
+    <Compile Include="Generated\Models\ServiceBusNamespace.cs" />
+    <Compile Include="Generated\Models\ServiceBusNamespaceDescriptionResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusNamespaceResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusNamespacesResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusNotificationHub.cs" />
+    <Compile Include="Generated\Models\ServiceBusNotificationHubResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusNotificationHubsResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusOperationStatusResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusQueue.cs" />
+    <Compile Include="Generated\Models\ServiceBusQueueResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusQueuesResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusRegionsResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusSharedAccessAuthorizationRule.cs" />
+    <Compile Include="Generated\Models\ServiceBusTopic.cs" />
+    <Compile Include="Generated\Models\ServiceBusTopicResponse.cs" />
+    <Compile Include="Generated\Models\ServiceBusTopicsResponse.cs" />
+    <Compile Include="Generated\NamespaceOperations.cs" />
+    <Compile Include="Generated\NamespaceOperationsExtensions.cs" />
+    <Compile Include="Generated\NotificationHubOperations.cs" />
+    <Compile Include="Generated\NotificationHubOperationsExtensions.cs" />
+    <Compile Include="Generated\QueueOperations.cs" />
+    <Compile Include="Generated\QueueOperationsExtensions.cs" />
+    <Compile Include="Generated\RelayOperations.cs" />
+    <Compile Include="Generated\RelayOperationsExtensions.cs" />
+    <Compile Include="Generated\ServiceBusManagementClient.cs" />
+    <Compile Include="Generated\ServiceBusManagementClientExtensions.cs" />
+    <Compile Include="Generated\TopicOperations.cs" />
+    <Compile Include="Generated\TopicOperationsExtensions.cs" />
+    <Compile Include="ServiceBus.Customizations.cs" />
+    <Compile Include="ServiceBus.DiscoveryExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenerateCode.props" />
+    <None Include="Microsoft.WindowsAzure.Management.ServiceBus.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.ServiceBus.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hydra.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
+  <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementServiceBusSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.ServiceBus.Specification.1.0.0.0-prerelease\tools\Microsoft.WindowsAzure.Management.ServiceBus.Specification.dll" DestinationFolder="." />
+  </Target>
+</Project>

@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <ProjectGuid>{7F032828-B8EC-4716-8BC4-AF2FA703B24B}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.WindowsAzure.Management.VirtualNetworks</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Management.VirtualNetworks</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\library.props" />
+  <ItemGroup>
+    <Compile Include="Generated\ClientRootCertificateOperations.cs" />
+    <Compile Include="Generated\ClientRootCertificateOperationsExtensions.cs" />
+    <Compile Include="Generated\GatewayOperations.cs" />
+    <Compile Include="Generated\GatewayOperationsExtensions.cs" />
+    <Compile Include="Generated\IClientRootCertificateOperations.cs" />
+    <Compile Include="Generated\IGatewayOperations.cs" />
+    <Compile Include="Generated\INetworkOperations.cs" />
+    <Compile Include="Generated\IReservedIPOperations.cs" />
+    <Compile Include="Generated\IVirtualNetworkManagementClient.cs" />
+    <Compile Include="Generated\Models\ClientRootCertificateCreateParameters.cs" />
+    <Compile Include="Generated\Models\ClientRootCertificateGetResponse.cs" />
+    <Compile Include="Generated\Models\ClientRootCertificateListResponse.cs" />
+    <Compile Include="Generated\Models\GatewayConnectDisconnectOrTestParameters.cs" />
+    <Compile Include="Generated\Models\GatewayConnectionUpdateOperation.cs" />
+    <Compile Include="Generated\Models\GatewayConnectivityState.cs" />
+    <Compile Include="Generated\Models\GatewayCreateParameters.cs" />
+    <Compile Include="Generated\Models\GatewayEvent.cs" />
+    <Compile Include="Generated\Models\GatewayGenerateVpnClientPackageParameters.cs" />
+    <Compile Include="Generated\Models\GatewayGetDeviceConfigurationScriptParameters.cs" />
+    <Compile Include="Generated\Models\GatewayGetDeviceConfigurationScriptResponse.cs" />
+    <Compile Include="Generated\Models\GatewayGetOperationStatusResponse.cs" />
+    <Compile Include="Generated\Models\GatewayGetResponse.cs" />
+    <Compile Include="Generated\Models\GatewayGetSharedKeyResponse.cs" />
+    <Compile Include="Generated\Models\GatewayListConnectionsResponse.cs" />
+    <Compile Include="Generated\Models\GatewayListSupportedDevicesResponse.cs" />
+    <Compile Include="Generated\Models\GatewayOperationResponse.cs" />
+    <Compile Include="Generated\Models\GatewayOperationStatus.cs" />
+    <Compile Include="Generated\Models\GatewayProcessorArchitecture.cs" />
+    <Compile Include="Generated\Models\GatewayProfile.cs" />
+    <Compile Include="Generated\Models\GatewayProvisioningEventStates.cs" />
+    <Compile Include="Generated\Models\GatewayResetSharedKeyParameters.cs" />
+    <Compile Include="Generated\Models\GatewayType.cs" />
+    <Compile Include="Generated\Models\LocalNetworkConnectionType.cs" />
+    <Compile Include="Generated\Models\NetworkGetConfigurationResponse.cs" />
+    <Compile Include="Generated\Models\NetworkListResponse.cs" />
+    <Compile Include="Generated\Models\NetworkReservedIPCreateParameters.cs" />
+    <Compile Include="Generated\Models\NetworkReservedIPGetResponse.cs" />
+    <Compile Include="Generated\Models\NetworkReservedIPListResponse.cs" />
+    <Compile Include="Generated\Models\NetworkSetConfigurationParameters.cs" />
+    <Compile Include="Generated\Models\OperationStatus.cs" />
+    <Compile Include="Generated\Models\ReservedIPState.cs" />
+    <Compile Include="Generated\Models\VirtualNetworkOperationStatusResponse.cs" />
+    <Compile Include="Generated\Models\VirtualNetworkState.cs" />
+    <Compile Include="Generated\NetworkOperations.cs" />
+    <Compile Include="Generated\NetworkOperationsExtensions.cs" />
+    <Compile Include="Generated\ReservedIPOperations.cs" />
+    <Compile Include="Generated\ReservedIPOperationsExtensions.cs" />
+    <Compile Include="Generated\VirtualNetworkManagementClient.cs" />
+    <Compile Include="Generated\VirtualNetworkManagementClientExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VirtualNetworkManagementClient.Customizations.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenerateCode.props" />
+    <None Include="Microsoft.WindowsAzure.Management.VirtualNetworks.nuspec" />
+    <None Include="Microsoft.WindowsAzure.Management.NetworkManagement.nuget.proj" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hydra.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
+  <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementNetworkSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Network.Specification.1.0.0.0-prerelease\tools\Microsoft.WindowsAzure.Management.Network.Specification.dll" DestinationFolder="." />
+  </Target>
+</Project>
