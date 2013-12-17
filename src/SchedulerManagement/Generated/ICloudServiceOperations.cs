@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Cloud Service List operation
+        /// The response structure for the Cloud Service List operation.
         /// </returns>
         Task<CloudServiceListResponse> ListAsync(CancellationToken cancellationToken);
     }

@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -718,7 +717,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Cloud Service List operation
+        /// The response structure for the Cloud Service List operation.
         /// </returns>
         public async Task<CloudServiceListResponse> ListAsync(CancellationToken cancellationToken)
         {
@@ -909,14 +908,14 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                             XElement includedElement = usageMetersElement.Element(XName.Get("Included", "http://schemas.microsoft.com/windowsazure"));
                                             if (includedElement != null)
                                             {
-                                                long includedInstance = long.Parse(includedElement.Value, CultureInfo.InvariantCulture);
+                                                string includedInstance = includedElement.Value;
                                                 usageMeterInstance.AmountIncluded = includedInstance;
                                             }
                                             
                                             XElement usedElement = usageMetersElement.Element(XName.Get("Used", "http://schemas.microsoft.com/windowsazure"));
                                             if (usedElement != null)
                                             {
-                                                long usedInstance = long.Parse(usedElement.Value, CultureInfo.InvariantCulture);
+                                                string usedInstance = usedElement.Value;
                                                 usageMeterInstance.AmountUsed = usedInstance;
                                             }
                                         }

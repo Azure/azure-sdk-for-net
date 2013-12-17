@@ -338,7 +338,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Cloud Service List operation
+        /// The response structure for the Cloud Service List operation.
         /// </returns>
         public static CloudServiceListResponse List(this ICloudServiceOperations operations)
         {
@@ -368,7 +368,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Cloud Service List operation
+        /// The response structure for the Cloud Service List operation.
         /// </returns>
         public static Task<CloudServiceListResponse> ListAsync(this ICloudServiceOperations operations)
         {
