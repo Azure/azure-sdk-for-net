@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.WindowsAzure.Management.Sql.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Management.Sql.nuspec" />
@@ -99,6 +100,6 @@
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Sql.Specification.1.0.5091.22045-prerelease\tools\Microsoft.WindowsAzure.Management.Sql.Specification.dll" DestinationFolder="." />
   </Target>
   <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5091.18965-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5091.18965-prerelease\build\Hydra.Generator.targets')" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
 </Project>

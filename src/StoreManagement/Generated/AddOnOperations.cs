@@ -200,7 +200,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -209,7 +209,8 @@ namespace Microsoft.WindowsAzure.Management.Store
                     }
                     
                     // Create Result
-                    AddOnOperationStatusResponse result = new AddOnOperationStatusResponse();
+                    AddOnOperationStatusResponse result = null;
+                    result = new AddOnOperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -340,7 +341,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -349,7 +350,8 @@ namespace Microsoft.WindowsAzure.Management.Store
                     }
                     
                     // Create Result
-                    AddOnOperationStatusResponse result = new AddOnOperationStatusResponse();
+                    AddOnOperationStatusResponse result = null;
+                    result = new AddOnOperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -705,7 +707,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -714,7 +716,8 @@ namespace Microsoft.WindowsAzure.Management.Store
                     }
                     
                     // Create Result
-                    AddOnOperationStatusResponse result = new AddOnOperationStatusResponse();
+                    AddOnOperationStatusResponse result = null;
+                    result = new AddOnOperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

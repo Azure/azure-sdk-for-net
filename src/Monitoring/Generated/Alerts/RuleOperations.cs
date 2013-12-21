@@ -124,24 +124,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (parameters.Rule.Id != null)
                     {
-                        JToken idValue = parameters.Rule.Id;
-                        ruleValue["Id"] = idValue;
+                        ruleValue["Id"] = parameters.Rule.Id;
                     }
                     
                     if (parameters.Rule.Name != null)
                     {
-                        JToken nameValue = parameters.Rule.Name;
-                        ruleValue["Name"] = nameValue;
+                        ruleValue["Name"] = parameters.Rule.Name;
                     }
                     
                     if (parameters.Rule.Description != null)
                     {
-                        JToken descriptionValue = parameters.Rule.Description;
-                        ruleValue["Description"] = descriptionValue;
+                        ruleValue["Description"] = parameters.Rule.Description;
                     }
                     
-                    JToken isEnabledValue = parameters.Rule.IsEnabled;
-                    ruleValue["IsEnabled"] = isEnabledValue;
+                    ruleValue["IsEnabled"] = parameters.Rule.IsEnabled;
                     
                     if (parameters.Rule.Condition != null)
                     {
@@ -163,32 +159,26 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     
                                     if (derived2.ResourceId != null)
                                     {
-                                        JToken resourceIdValue = derived2.ResourceId;
-                                        dataSourceValue["ResourceId"] = resourceIdValue;
+                                        dataSourceValue["ResourceId"] = derived2.ResourceId;
                                     }
                                     
                                     if (derived2.MetricNamespace != null)
                                     {
-                                        JToken metricNamespaceValue = derived2.MetricNamespace;
-                                        dataSourceValue["MetricNamespace"] = metricNamespaceValue;
+                                        dataSourceValue["MetricNamespace"] = derived2.MetricNamespace;
                                     }
                                     
                                     if (derived2.MetricName != null)
                                     {
-                                        JToken metricNameValue = derived2.MetricName;
-                                        dataSourceValue["MetricName"] = metricNameValue;
+                                        dataSourceValue["MetricName"] = derived2.MetricName;
                                     }
                                 }
                             }
                             
-                            JToken operatorValue = derived.Operator.ToString();
-                            conditionValue["Operator"] = operatorValue;
+                            conditionValue["Operator"] = derived.Operator.ToString();
                             
-                            JToken thresholdValue = derived.Threshold;
-                            conditionValue["Threshold"] = thresholdValue;
+                            conditionValue["Threshold"] = derived.Threshold;
                             
-                            JToken windowSizeValue = TypeConversion.To8601String(derived.WindowSize);
-                            conditionValue["WindowSize"] = windowSizeValue;
+                            conditionValue["WindowSize"] = TypeConversion.To8601String(derived.WindowSize);
                         }
                     }
                     
@@ -204,8 +194,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                             {
                                 RuleEmailAction derived3 = (RuleEmailAction)actionsItem;
                                 
-                                JToken sendToServiceOwnersValue = derived3.SendToServiceOwners;
-                                ruleActionValue["SendToServiceOwners"] = sendToServiceOwnersValue;
+                                ruleActionValue["SendToServiceOwners"] = derived3.SendToServiceOwners;
                                 
                                 if (derived3.CustomEmails != null)
                                 {
@@ -221,8 +210,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         ruleValue["Actions"] = actionsArray;
                     }
                     
-                    JToken lastUpdatedTimeValue = parameters.Rule.LastUpdatedTime;
-                    ruleValue["LastUpdatedTime"] = lastUpdatedTimeValue;
+                    ruleValue["LastUpdatedTime"] = parameters.Rule.LastUpdatedTime;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -247,7 +235,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -256,7 +244,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -352,7 +341,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -361,7 +350,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -456,7 +446,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -465,16 +455,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     }
                     
                     // Create Result
-                    RuleGetResponse result = new RuleGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    RuleGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new RuleGetResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
                     if (responseDoc != null)
@@ -612,6 +597,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -695,7 +686,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -704,16 +695,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     }
                     
                     // Create Result
-                    RuleListResponse result = new RuleListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    RuleListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new RuleListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
                     if (responseDoc != null)
@@ -859,6 +845,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
