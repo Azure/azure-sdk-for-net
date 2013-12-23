@@ -102,4 +102,7 @@
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementSqlSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Sql.Specification.1.0.5105.19140-prerelease\tools\Microsoft.WindowsAzure.Management.Sql.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

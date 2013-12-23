@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
     /// <summary>
-    /// The response to a storage account check name availability request
+    /// The response to a storage account check name availability request.
     /// </summary>
     public partial class CheckNameAvailabilityResponse : OperationResponse
     {

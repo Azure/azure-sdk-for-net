@@ -27,7 +27,7 @@ using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
 {
     /// <summary>
-    /// Specifies the action to send email when the rule condition is evaluated
+    /// Specifies the action to send email when the rule condition is evaluated.
     /// </summary>
     public partial class RuleEmailAction : RuleAction
     {

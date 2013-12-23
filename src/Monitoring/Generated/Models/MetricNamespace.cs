@@ -30,12 +30,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Models
     public static partial class MetricNamespace
     {
         /// <summary>
-        /// Empty namespace
+        /// Empty namespace.
         /// </summary>
         public const string None = "";
         
         /// <summary>
-        /// Endpoint monitoring metric namespace
+        /// Endpoint monitoring metric namespace.
         /// </summary>
         public const string EndpointMonitoring = "WindowsAzure.Availability";
     }

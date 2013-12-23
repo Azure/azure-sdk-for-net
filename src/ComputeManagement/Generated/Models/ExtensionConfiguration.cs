@@ -27,7 +27,7 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Represents an extension that is added to the cloud service
+    /// Represents an extension that is added to the cloud service.
     /// </summary>
     public partial class ExtensionConfiguration
     {

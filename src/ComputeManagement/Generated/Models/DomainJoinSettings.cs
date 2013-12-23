@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private DomainJoinProvisioning _provisioning;
         
         /// <summary>
-        /// Additional information for domain join provisioning
+        /// Additional information for domain join provisioning.
         /// </summary>
         public DomainJoinProvisioning Provisioning
         {

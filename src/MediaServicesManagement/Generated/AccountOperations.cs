@@ -412,7 +412,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// The name of the Media Services account
+        /// The name of the Media Services account.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -743,7 +743,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// The name of the Media Services Account
+        /// The name of the Media Services Account.
         /// </param>
         /// <param name='keyType'>
         /// The type of key to regenerate (primary or secondary)

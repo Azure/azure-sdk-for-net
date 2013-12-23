@@ -315,7 +315,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Cloud Service List operation
+        /// The response structure for the Cloud Service List operation.
         /// </returns>
         public async Task<CloudServiceListResponse> ListAsync(CancellationToken cancellationToken)
         {

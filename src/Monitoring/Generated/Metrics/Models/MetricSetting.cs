@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _resourceId;
         
         /// <summary>
-        /// The resource id of the service
+        /// The resource id of the service.
         /// </summary>
         public string ResourceId
         {

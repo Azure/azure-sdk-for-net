@@ -627,7 +627,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <summary>
-        /// List the alert rules within a subscription
+        /// List the alert rules within a subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

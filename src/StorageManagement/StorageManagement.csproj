@@ -74,4 +74,7 @@
   <Target Name="CopyMicrosoftWindowsAzureManagementStorageSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Storage.Specification.1.0.5091.22049-prerelease\tools\Microsoft.WindowsAzure.Management.Storage.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementStorageSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Storage.Specification.1.0.5105.19144-prerelease\tools\Microsoft.WindowsAzure.Management.Storage.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _iconUri;
         
         /// <summary>
-        /// Provides the URI to the icon for this Operating System Image
+        /// Provides the URI to the icon for this Operating System Image.
         /// </summary>
         public Uri IconUri
         {
@@ -232,7 +232,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _publisherName;
         
         /// <summary>
-        /// The name of the publisher of this OS Image in Windows Azure
+        /// The name of the publisher of this OS Image in Windows Azure.
         /// </summary>
         public string PublisherName
         {
@@ -256,7 +256,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Indicates whther the image should be shown in the windows azure
-        /// portal
+        /// portal.
         /// </summary>
         public bool? ShowInGui
         {

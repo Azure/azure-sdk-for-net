@@ -112,12 +112,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public const string ParameterNameIsEmpty = "01014";
         
         /// <summary>
-        /// Not ready
+        /// Not ready.
         /// </summary>
         public const string NotReady = "01015";
         
         /// <summary>
-        /// Ready
+        /// Ready.
         /// </summary>
         public const string Ready = "01016";
         

@@ -1047,7 +1047,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters
+        /// Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
