@@ -26,14 +26,14 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters for the start roles operation
+    /// Parameters for the start roles operation.
     /// </summary>
     public partial class VirtualMachineStartRolesParameters
     {
         private IList<string> _roles;
         
         /// <summary>
-        /// The set of roles to shut down
+        /// The set of roles to shut down.
         /// </summary>
         public IList<string> Roles
         {

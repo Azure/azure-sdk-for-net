@@ -40,6 +40,7 @@
     <Compile Include="StorageManagementClient.Customization.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="packages.config" />
     <None Include="Microsoft.WindowsAzure.Management.Storage.nuspec" />
@@ -53,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="hydra.xml" />
+    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
@@ -63,10 +65,16 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
-  <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5085.22928-prerelease\build\Hydra.Generator.targets')" />
-  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
   <Target Name="CopyMicrosoftWindowsAzureManagementStorageSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Storage.Specification.1.0.5085.30278-prerelease\tools\Microsoft.WindowsAzure.Management.Storage.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementStorageSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Storage.Specification.1.0.5091.22049-prerelease\tools\Microsoft.WindowsAzure.Management.Storage.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementStorageSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Storage.Specification.1.0.5105.19144-prerelease\tools\Microsoft.WindowsAzure.Management.Storage.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>

@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The set of access control rules for the endpoint
+    /// The set of access control rules for the endpoint.
     /// </summary>
     public partial class EndpointAcl
     {
         private IList<AccessControlListRule> _rules;
         
         /// <summary>
-        /// The set of access control rules for the endpoint
+        /// The set of access control rules for the endpoint.
         /// </summary>
         public IList<AccessControlListRule> Rules
         {

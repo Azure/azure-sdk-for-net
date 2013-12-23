@@ -249,7 +249,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -258,7 +258,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -301,7 +302,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a storage account check name availability request
+        /// The response to a storage account check name availability request.
         /// </returns>
         public async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken)
         {
@@ -358,7 +359,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -367,16 +368,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    CheckNameAvailabilityResponse result = new CheckNameAvailabilityResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    CheckNameAvailabilityResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new CheckNameAvailabilityResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement availabilityResponseElement = responseDoc.Element(XName.Get("AvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
@@ -404,6 +400,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 result.Reason = reasonInstance;
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -584,7 +586,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -593,7 +595,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -693,7 +696,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -702,16 +705,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    StorageServiceGetResponse result = new StorageServiceGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    StorageServiceGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new StorageServiceGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServiceElement = responseDoc.Element(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure"));
@@ -854,6 +852,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -947,7 +951,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -956,16 +960,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    StorageAccountGetKeysResponse result = new StorageAccountGetKeysResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    StorageAccountGetKeysResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new StorageAccountGetKeysResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServiceElement = responseDoc.Element(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure"));
@@ -995,6 +994,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 result.SecondaryKey = secondaryInstance;
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -1082,7 +1087,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1091,16 +1096,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    StorageServiceListResponse result = new StorageServiceListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    StorageServiceListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new StorageServiceListResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServicesSequenceElement = responseDoc.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
@@ -1240,6 +1240,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -1352,7 +1358,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1361,16 +1367,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    StorageAccountRegenerateKeysResponse result = new StorageAccountRegenerateKeysResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    StorageAccountRegenerateKeysResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new StorageAccountRegenerateKeysResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServiceElement = responseDoc.Element(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure"));
@@ -1400,6 +1401,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 result.SecondaryKey = secondaryInstance;
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -1586,7 +1593,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1595,7 +1602,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

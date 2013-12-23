@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// The desired storage account name to check for availability.
         /// </param>
         /// <returns>
-        /// The response to a storage account check name availability request
+        /// The response to a storage account check name availability request.
         /// </returns>
         public static CheckNameAvailabilityResponse CheckNameAvailability(this IStorageAccountOperations operations, string serviceName)
         {
@@ -144,7 +144,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// The desired storage account name to check for availability.
         /// </param>
         /// <returns>
-        /// The response to a storage account check name availability request
+        /// The response to a storage account check name availability request.
         /// </returns>
         public static Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IStorageAccountOperations operations, string serviceName)
         {

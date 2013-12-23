@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The parameters required for shutting down the virtual machine
+    /// The parameters required for shutting down the virtual machine.
     /// </summary>
     public partial class VirtualMachineShutdownParameters
     {

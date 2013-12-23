@@ -375,7 +375,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation
+        /// The parameters for the shutdown vm operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -420,7 +420,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation
+        /// The parameters for the shutdown vm operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1405,7 +1405,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation
+        /// The parameters for the shutdown vm operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1457,7 +1457,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation
+        /// The parameters for the shutdown vm operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         Task<RuleGetResponse> GetAsync(string ruleId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// List the alert rules within a subscription
+        /// List the alert rules within a subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

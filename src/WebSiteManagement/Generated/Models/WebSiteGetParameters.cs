@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _propertiesToInclude;
         
         /// <summary>
-        /// Specifies a list of the names of any addtional parameters to return
+        /// Specifies a list of the names of any addtional parameters to return.
         /// </summary>
         public IList<string> PropertiesToInclude
         {

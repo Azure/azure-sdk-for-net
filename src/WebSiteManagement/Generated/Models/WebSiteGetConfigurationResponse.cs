@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _documentRoot;
         
         /// <summary>
-        /// The document root
+        /// The document root.
         /// </summary>
         public string DocumentRoot
         {
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private int? _logsDirectorySizeLimit;
         
         /// <summary>
-        /// The limit of the logs directory
+        /// The limit of the logs directory.
         /// </summary>
         public int? LogsDirectorySizeLimit
         {

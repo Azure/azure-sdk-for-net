@@ -27,7 +27,7 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters for the shutdown roles operation
+    /// Parameters for the shutdown roles operation.
     /// </summary>
     public partial class VirtualMachineShutdownRolesParameters
     {
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<string> _roles;
         
         /// <summary>
-        /// The set of roles to shut down
+        /// The set of roles to shut down.
         /// </summary>
         public IList<string> Roles
         {

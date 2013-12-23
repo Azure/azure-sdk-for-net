@@ -29,7 +29,7 @@ using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// The response structure for the Server List operation
+    /// The response structure for the Server List operation.
     /// </summary>
     public partial class NetworkListResponse : OperationResponse, IEnumerable<NetworkListResponse.VirtualNetworkSite>
     {
@@ -115,7 +115,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private string _address;
             
             /// <summary>
-            /// The IPv4 address of the DNS server
+            /// The IPv4 address of the DNS server.
             /// </summary>
             public string Address
             {
@@ -126,7 +126,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private string _name;
             
             /// <summary>
-            /// The name of the DNS server
+            /// The name of the DNS server.
             /// </summary>
             public string Name
             {
@@ -151,7 +151,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private GatewayProfile _profile;
             
             /// <summary>
-            /// The gateway connection size
+            /// The gateway connection size.
             /// </summary>
             public GatewayProfile Profile
             {
@@ -201,7 +201,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private NetworkListResponse.AddressSpace _addressSpace;
             
             /// <summary>
-            /// The address space of the local network site
+            /// The address space of the local network site.
             /// </summary>
             public NetworkListResponse.AddressSpace AddressSpace
             {
@@ -212,7 +212,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private IList<NetworkListResponse.Connection> _connections;
             
             /// <summary>
-            /// Specifies the types of connections to the local network site
+            /// Specifies the types of connections to the local network site.
             /// </summary>
             public IList<NetworkListResponse.Connection> Connections
             {
@@ -223,7 +223,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private string _name;
             
             /// <summary>
-            /// The name of the local network site
+            /// The name of the local network site.
             /// </summary>
             public string Name
             {
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private string _vpnGatewayAddress;
             
             /// <summary>
-            /// The IPv4 address of the local network site
+            /// The IPv4 address of the local network site.
             /// </summary>
             public string VpnGatewayAddress
             {
@@ -268,7 +268,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private string _name;
             
             /// <summary>
-            /// Name for the subnet
+            /// Name for the subnet.
             /// </summary>
             public string Name
             {

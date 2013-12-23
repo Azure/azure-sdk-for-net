@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Windows Azure subscription id
+        /// Windows Azure subscription id.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Windows Azure subscription id
+        /// Windows Azure subscription id.
         /// </param>
         /// <param name='baseUri'>
         /// Optional base uri parameter.
@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Windows Azure subscription id
+        /// Windows Azure subscription id.
         /// </param>
         public MetricsClient(SubscriptionCloudCredentials credentials)
             : this()

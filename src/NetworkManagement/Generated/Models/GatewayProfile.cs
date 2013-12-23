@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// Possible values for Gateway Profile
+    /// Possible values for Gateway Profile.
     /// </summary>
     public enum GatewayProfile
     {

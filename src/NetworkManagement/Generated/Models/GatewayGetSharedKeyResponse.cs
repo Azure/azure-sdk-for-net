@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// The response to the get shared key request
+    /// The response to the get shared key request.
     /// </summary>
     public partial class GatewayGetSharedKeyResponse : OperationResponse
     {
@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         
         /// <summary>
         /// Contains the shared key used by the gateway to authenticate
-        /// connections to sites on a virtual network
+        /// connections to sites on a virtual network.
         /// </summary>
         public string SharedKey
         {

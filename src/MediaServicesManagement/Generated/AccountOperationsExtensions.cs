@@ -156,7 +156,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Media Services account
+        /// The name of the Media Services account.
         /// </param>
         /// <returns>
         /// The Get Media Services Account operation response.
@@ -191,7 +191,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Media Services account
+        /// The name of the Media Services account.
         /// </param>
         /// <returns>
         /// The Get Media Services Account operation response.
@@ -265,7 +265,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Media Services Account
+        /// The name of the Media Services Account.
         /// </param>
         /// <param name='keyType'>
         /// The type of key to regenerate (primary or secondary)
@@ -305,7 +305,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Media Services Account
+        /// The name of the Media Services Account.
         /// </param>
         /// <param name='keyType'>
         /// The type of key to regenerate (primary or secondary)

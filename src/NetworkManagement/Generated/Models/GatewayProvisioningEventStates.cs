@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// Standard states for Virtual Network Gateway Provisioning Events
+    /// Standard states for Virtual Network Gateway Provisioning Events.
     /// </summary>
     public static partial class GatewayProvisioningEventStates
     {

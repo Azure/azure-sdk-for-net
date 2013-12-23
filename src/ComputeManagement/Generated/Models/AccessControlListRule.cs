@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// An access control rule for a public endpoint
+    /// An access control rule for a public endpoint.
     /// </summary>
     public partial class AccessControlListRule
     {
         private string _action;
         
         /// <summary>
-        /// the action allowed by this Access Control List Rule
+        /// the action allowed by this Access Control List Rule.
         /// </summary>
         public string Action
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _description;
         
         /// <summary>
-        /// the description for this Access Control List Rule
+        /// the description for this Access Control List Rule.
         /// </summary>
         public string Description
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _order;
         
         /// <summary>
-        /// the order of application for this Access Control List Rule
+        /// the order of application for this Access Control List Rule.
         /// </summary>
         public int? Order
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// the remote subnet that is granted access for this Access Control
-        /// List Rule
+        /// List Rule.
         /// </summary>
         public string RemoteSubnet
         {

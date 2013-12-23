@@ -298,7 +298,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
-        /// The name of the reserved IP to retrieve
+        /// The name of the reserved IP to retrieve.
         /// </param>
         /// <returns>
         /// Preview Only. A reserved IP associated with your subscription.
@@ -331,7 +331,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
-        /// The name of the reserved IP to retrieve
+        /// The name of the reserved IP to retrieve.
         /// </param>
         /// <returns>
         /// Preview Only. A reserved IP associated with your subscription.

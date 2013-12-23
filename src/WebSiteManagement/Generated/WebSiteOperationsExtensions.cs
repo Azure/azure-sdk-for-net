@@ -413,7 +413,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters
+        /// Additional parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Details operation response.
@@ -454,7 +454,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters
+        /// Additional parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Details operation response.

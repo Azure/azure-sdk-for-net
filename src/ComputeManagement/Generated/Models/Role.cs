@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// The friendly name for the role
+        /// The friendly name for the role.
         /// </summary>
         public string Label
         {

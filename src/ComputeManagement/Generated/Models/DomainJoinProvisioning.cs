@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The configuration needed to provision the machine in the domain
+    /// The configuration needed to provision the machine in the domain.
     /// </summary>
     public partial class DomainJoinProvisioning
     {
         private string _accountData;
         
         /// <summary>
-        /// The account infor for joining the domain
+        /// The account infor for joining the domain.
         /// </summary>
         public string AccountData
         {

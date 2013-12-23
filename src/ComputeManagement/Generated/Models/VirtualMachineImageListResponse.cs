@@ -282,7 +282,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _publisherName;
             
             /// <summary>
-            /// The name of the publisher of this OS Image in Windows Azure
+            /// The name of the publisher of this OS Image in Windows Azure.
             /// </summary>
             public string PublisherName
             {

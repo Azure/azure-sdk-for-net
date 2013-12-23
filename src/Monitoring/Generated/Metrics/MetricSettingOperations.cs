@@ -133,13 +133,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 JObject metricSettingValue = new JObject();
                 requestDoc = metricSettingValue;
                 
-                JToken resourceIdValue = parameters.MetricSetting.ResourceId;
-                metricSettingValue["ResourceId"] = resourceIdValue;
+                metricSettingValue["ResourceId"] = parameters.MetricSetting.ResourceId;
                 
                 if (parameters.MetricSetting.Namespace != null)
                 {
-                    JToken namespaceValue = parameters.MetricSetting.Namespace;
-                    metricSettingValue["Namespace"] = namespaceValue;
+                    metricSettingValue["Namespace"] = parameters.MetricSetting.Namespace;
                 }
                 
                 JObject valueValue = new JObject();
@@ -159,14 +157,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             
                             if (availableLocationsItem.Name != null)
                             {
-                                JToken nameValue = availableLocationsItem.Name;
-                                nameConfigValue["Name"] = nameValue;
+                                nameConfigValue["Name"] = availableLocationsItem.Name;
                             }
                             
                             if (availableLocationsItem.DisplayName != null)
                             {
-                                JToken displayNameValue = availableLocationsItem.DisplayName;
-                                nameConfigValue["DisplayName"] = displayNameValue;
+                                nameConfigValue["DisplayName"] = availableLocationsItem.DisplayName;
                             }
                         }
                         valueValue["AvailableLocations"] = availableLocationsArray;
@@ -182,26 +178,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             
                             if (endpointsItem.ConfigId != null)
                             {
-                                JToken configIdValue = endpointsItem.ConfigId;
-                                endpointConfigValue["ConfigId"] = configIdValue;
+                                endpointConfigValue["ConfigId"] = endpointsItem.ConfigId;
                             }
                             
                             if (endpointsItem.Name != null)
                             {
-                                JToken nameValue2 = endpointsItem.Name;
-                                endpointConfigValue["Name"] = nameValue2;
+                                endpointConfigValue["Name"] = endpointsItem.Name;
                             }
                             
                             if (endpointsItem.Location != null)
                             {
-                                JToken locationValue = endpointsItem.Location;
-                                endpointConfigValue["Location"] = locationValue;
+                                endpointConfigValue["Location"] = endpointsItem.Location;
                             }
                             
                             if (endpointsItem.Url != null)
                             {
-                                JToken urlValue = endpointsItem.Url.ToString();
-                                endpointConfigValue["Url"] = urlValue;
+                                endpointConfigValue["Url"] = endpointsItem.Url.ToString();
                             }
                         }
                         valueValue["Endpoints"] = endpointsArray;
@@ -230,7 +222,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -239,7 +231,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -348,7 +341,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -357,16 +350,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     }
                     
                     // Create Result
-                    MetricSettingListResponse result = new MetricSettingListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    MetricSettingListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new MetricSettingListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
                     if (responseDoc != null)
@@ -470,6 +458,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// A management event for the virtual network gateway
+    /// A management event for the virtual network gateway.
     /// </summary>
     public partial class GatewayEvent
     {
         private string _data;
         
         /// <summary>
-        /// Additional data associated with this event
+        /// Additional data associated with this event.
         /// </summary>
         public string Data
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private string _id;
         
         /// <summary>
-        /// The event ID
+        /// The event ID.
         /// </summary>
         public string Id
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private string _message;
         
         /// <summary>
-        /// The event message
+        /// The event message.
         /// </summary>
         public string Message
         {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private DateTime _timestamp;
         
         /// <summary>
-        /// The date and time when the event occurred
+        /// The date and time when the event occurred.
         /// </summary>
         public DateTime Timestamp
         {
