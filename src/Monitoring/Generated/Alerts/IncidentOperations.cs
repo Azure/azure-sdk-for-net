@@ -288,16 +288,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (responseDoc != null)
                     {
-                        IncidentCollection incidentCollectionInstance = new IncidentCollection();
-                        result.IncidentCollection = incidentCollectionInstance;
-                        
                         JArray valueArray = (JArray)responseDoc["Value"];
                         if (valueArray != null)
                         {
                             foreach (JToken valueValue in valueArray)
                             {
                                 Incident incidentInstance = new Incident();
-                                incidentCollectionInstance.Value.Add(incidentInstance);
+                                result.Value.Add(incidentInstance);
                                 
                                 JToken idValue = valueValue["Id"];
                                 if (idValue != null)
@@ -453,16 +450,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (responseDoc != null)
                     {
-                        IncidentCollection incidentCollectionInstance = new IncidentCollection();
-                        result.IncidentCollection = incidentCollectionInstance;
-                        
                         JArray valueArray = (JArray)responseDoc["Value"];
                         if (valueArray != null)
                         {
                             foreach (JToken valueValue in valueArray)
                             {
                                 Incident incidentInstance = new Incident();
-                                incidentCollectionInstance.Value.Add(incidentInstance);
+                                result.Value.Add(incidentInstance);
                                 
                                 JToken idValue = valueValue["Id"];
                                 if (idValue != null)

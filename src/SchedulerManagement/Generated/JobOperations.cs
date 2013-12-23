@@ -2350,89 +2350,92 @@ namespace Microsoft.WindowsAzure.Scheduler
                     result = new JobGetHistoryResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    JArray jobHistoryArray = (JArray)responseDoc;
-                    if (jobHistoryArray != null)
+                    if (responseDoc != null)
                     {
-                        foreach (JToken jobHistoryValue in jobHistoryArray)
+                        JArray jobHistoryArray = (JArray)responseDoc;
+                        if (jobHistoryArray != null)
                         {
-                            JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
-                            result.JobHistory.Add(jobHistoryEntryInstance);
-                            
-                            JToken jobIdValue = jobHistoryValue["jobId"];
-                            if (jobIdValue != null)
+                            foreach (JToken jobHistoryValue in jobHistoryArray)
                             {
-                                string jobIdInstance = (string)jobIdValue;
-                                jobHistoryEntryInstance.Id = jobIdInstance;
-                            }
-                            
-                            JToken recordNumberValue = jobHistoryValue["recordNumber"];
-                            if (recordNumberValue != null)
-                            {
-                                int recordNumberInstance = (int)recordNumberValue;
-                                jobHistoryEntryInstance.RecordNumber = recordNumberInstance;
-                            }
-                            
-                            JToken timestampValue = jobHistoryValue["timestamp"];
-                            if (timestampValue != null)
-                            {
-                                DateTime timestampInstance = (DateTime)timestampValue;
-                                jobHistoryEntryInstance.Timestamp = timestampInstance;
-                            }
-                            
-                            JToken startTimeValue = jobHistoryValue["startTime"];
-                            if (startTimeValue != null)
-                            {
-                                DateTime startTimeInstance = (DateTime)startTimeValue;
-                                jobHistoryEntryInstance.StartTime = startTimeInstance;
-                            }
-                            
-                            JToken endTimeValue = jobHistoryValue["endTime"];
-                            if (endTimeValue != null)
-                            {
-                                DateTime endTimeInstance = (DateTime)endTimeValue;
-                                jobHistoryEntryInstance.EndTime = endTimeInstance;
-                            }
-                            
-                            JToken stateValue = jobHistoryValue["state"];
-                            if (stateValue != null)
-                            {
-                                JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
-                                jobHistoryEntryInstance.State = stateInstance;
-                            }
-                            
-                            JToken messageValue = jobHistoryValue["message"];
-                            if (messageValue != null)
-                            {
-                                string messageInstance = (string)messageValue;
-                                jobHistoryEntryInstance.Message = messageInstance;
-                            }
-                            
-                            JToken statusValue = jobHistoryValue["status"];
-                            if (statusValue != null)
-                            {
-                                JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus((string)statusValue);
-                                jobHistoryEntryInstance.Status = statusInstance;
-                            }
-                            
-                            JToken actionNameValue = jobHistoryValue["actionName"];
-                            if (actionNameValue != null)
-                            {
-                                JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName((string)actionNameValue);
-                                jobHistoryEntryInstance.ActionName = actionNameInstance;
-                            }
-                            
-                            JToken repeatCountValue = jobHistoryValue["repeatCount"];
-                            if (repeatCountValue != null)
-                            {
-                                int repeatCountInstance = (int)repeatCountValue;
-                                jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
-                            }
-                            
-                            JToken retryCountValue = jobHistoryValue["retryCount"];
-                            if (retryCountValue != null)
-                            {
-                                int retryCountInstance = (int)retryCountValue;
-                                jobHistoryEntryInstance.RetryCount = retryCountInstance;
+                                JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
+                                result.JobHistory.Add(jobHistoryEntryInstance);
+                                
+                                JToken jobIdValue = jobHistoryValue["jobId"];
+                                if (jobIdValue != null)
+                                {
+                                    string jobIdInstance = (string)jobIdValue;
+                                    jobHistoryEntryInstance.Id = jobIdInstance;
+                                }
+                                
+                                JToken recordNumberValue = jobHistoryValue["recordNumber"];
+                                if (recordNumberValue != null)
+                                {
+                                    int recordNumberInstance = (int)recordNumberValue;
+                                    jobHistoryEntryInstance.RecordNumber = recordNumberInstance;
+                                }
+                                
+                                JToken timestampValue = jobHistoryValue["timestamp"];
+                                if (timestampValue != null)
+                                {
+                                    DateTime timestampInstance = (DateTime)timestampValue;
+                                    jobHistoryEntryInstance.Timestamp = timestampInstance;
+                                }
+                                
+                                JToken startTimeValue = jobHistoryValue["startTime"];
+                                if (startTimeValue != null)
+                                {
+                                    DateTime startTimeInstance = (DateTime)startTimeValue;
+                                    jobHistoryEntryInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken endTimeValue = jobHistoryValue["endTime"];
+                                if (endTimeValue != null)
+                                {
+                                    DateTime endTimeInstance = (DateTime)endTimeValue;
+                                    jobHistoryEntryInstance.EndTime = endTimeInstance;
+                                }
+                                
+                                JToken stateValue = jobHistoryValue["state"];
+                                if (stateValue != null)
+                                {
+                                    JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
+                                    jobHistoryEntryInstance.State = stateInstance;
+                                }
+                                
+                                JToken messageValue = jobHistoryValue["message"];
+                                if (messageValue != null)
+                                {
+                                    string messageInstance = (string)messageValue;
+                                    jobHistoryEntryInstance.Message = messageInstance;
+                                }
+                                
+                                JToken statusValue = jobHistoryValue["status"];
+                                if (statusValue != null)
+                                {
+                                    JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus((string)statusValue);
+                                    jobHistoryEntryInstance.Status = statusInstance;
+                                }
+                                
+                                JToken actionNameValue = jobHistoryValue["actionName"];
+                                if (actionNameValue != null)
+                                {
+                                    JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName((string)actionNameValue);
+                                    jobHistoryEntryInstance.ActionName = actionNameInstance;
+                                }
+                                
+                                JToken repeatCountValue = jobHistoryValue["repeatCount"];
+                                if (repeatCountValue != null)
+                                {
+                                    int repeatCountInstance = (int)repeatCountValue;
+                                    jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
+                                }
+                                
+                                JToken retryCountValue = jobHistoryValue["retryCount"];
+                                if (retryCountValue != null)
+                                {
+                                    int retryCountInstance = (int)retryCountValue;
+                                    jobHistoryEntryInstance.RetryCount = retryCountInstance;
+                                }
                             }
                         }
                     }
@@ -2557,89 +2560,92 @@ namespace Microsoft.WindowsAzure.Scheduler
                     result = new JobGetHistoryResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    JArray jobHistoryArray = (JArray)responseDoc;
-                    if (jobHistoryArray != null)
+                    if (responseDoc != null)
                     {
-                        foreach (JToken jobHistoryValue in jobHistoryArray)
+                        JArray jobHistoryArray = (JArray)responseDoc;
+                        if (jobHistoryArray != null)
                         {
-                            JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
-                            result.JobHistory.Add(jobHistoryEntryInstance);
-                            
-                            JToken jobIdValue = jobHistoryValue["jobId"];
-                            if (jobIdValue != null)
+                            foreach (JToken jobHistoryValue in jobHistoryArray)
                             {
-                                string jobIdInstance = (string)jobIdValue;
-                                jobHistoryEntryInstance.Id = jobIdInstance;
-                            }
-                            
-                            JToken recordNumberValue = jobHistoryValue["recordNumber"];
-                            if (recordNumberValue != null)
-                            {
-                                int recordNumberInstance = (int)recordNumberValue;
-                                jobHistoryEntryInstance.RecordNumber = recordNumberInstance;
-                            }
-                            
-                            JToken timestampValue = jobHistoryValue["timestamp"];
-                            if (timestampValue != null)
-                            {
-                                DateTime timestampInstance = (DateTime)timestampValue;
-                                jobHistoryEntryInstance.Timestamp = timestampInstance;
-                            }
-                            
-                            JToken startTimeValue = jobHistoryValue["startTime"];
-                            if (startTimeValue != null)
-                            {
-                                DateTime startTimeInstance = (DateTime)startTimeValue;
-                                jobHistoryEntryInstance.StartTime = startTimeInstance;
-                            }
-                            
-                            JToken endTimeValue = jobHistoryValue["endTime"];
-                            if (endTimeValue != null)
-                            {
-                                DateTime endTimeInstance = (DateTime)endTimeValue;
-                                jobHistoryEntryInstance.EndTime = endTimeInstance;
-                            }
-                            
-                            JToken stateValue = jobHistoryValue["state"];
-                            if (stateValue != null)
-                            {
-                                JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
-                                jobHistoryEntryInstance.State = stateInstance;
-                            }
-                            
-                            JToken messageValue = jobHistoryValue["message"];
-                            if (messageValue != null)
-                            {
-                                string messageInstance = (string)messageValue;
-                                jobHistoryEntryInstance.Message = messageInstance;
-                            }
-                            
-                            JToken statusValue = jobHistoryValue["status"];
-                            if (statusValue != null)
-                            {
-                                JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus((string)statusValue);
-                                jobHistoryEntryInstance.Status = statusInstance;
-                            }
-                            
-                            JToken actionNameValue = jobHistoryValue["actionName"];
-                            if (actionNameValue != null)
-                            {
-                                JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName((string)actionNameValue);
-                                jobHistoryEntryInstance.ActionName = actionNameInstance;
-                            }
-                            
-                            JToken repeatCountValue = jobHistoryValue["repeatCount"];
-                            if (repeatCountValue != null)
-                            {
-                                int repeatCountInstance = (int)repeatCountValue;
-                                jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
-                            }
-                            
-                            JToken retryCountValue = jobHistoryValue["retryCount"];
-                            if (retryCountValue != null)
-                            {
-                                int retryCountInstance = (int)retryCountValue;
-                                jobHistoryEntryInstance.RetryCount = retryCountInstance;
+                                JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
+                                result.JobHistory.Add(jobHistoryEntryInstance);
+                                
+                                JToken jobIdValue = jobHistoryValue["jobId"];
+                                if (jobIdValue != null)
+                                {
+                                    string jobIdInstance = (string)jobIdValue;
+                                    jobHistoryEntryInstance.Id = jobIdInstance;
+                                }
+                                
+                                JToken recordNumberValue = jobHistoryValue["recordNumber"];
+                                if (recordNumberValue != null)
+                                {
+                                    int recordNumberInstance = (int)recordNumberValue;
+                                    jobHistoryEntryInstance.RecordNumber = recordNumberInstance;
+                                }
+                                
+                                JToken timestampValue = jobHistoryValue["timestamp"];
+                                if (timestampValue != null)
+                                {
+                                    DateTime timestampInstance = (DateTime)timestampValue;
+                                    jobHistoryEntryInstance.Timestamp = timestampInstance;
+                                }
+                                
+                                JToken startTimeValue = jobHistoryValue["startTime"];
+                                if (startTimeValue != null)
+                                {
+                                    DateTime startTimeInstance = (DateTime)startTimeValue;
+                                    jobHistoryEntryInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken endTimeValue = jobHistoryValue["endTime"];
+                                if (endTimeValue != null)
+                                {
+                                    DateTime endTimeInstance = (DateTime)endTimeValue;
+                                    jobHistoryEntryInstance.EndTime = endTimeInstance;
+                                }
+                                
+                                JToken stateValue = jobHistoryValue["state"];
+                                if (stateValue != null)
+                                {
+                                    JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
+                                    jobHistoryEntryInstance.State = stateInstance;
+                                }
+                                
+                                JToken messageValue = jobHistoryValue["message"];
+                                if (messageValue != null)
+                                {
+                                    string messageInstance = (string)messageValue;
+                                    jobHistoryEntryInstance.Message = messageInstance;
+                                }
+                                
+                                JToken statusValue = jobHistoryValue["status"];
+                                if (statusValue != null)
+                                {
+                                    JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus((string)statusValue);
+                                    jobHistoryEntryInstance.Status = statusInstance;
+                                }
+                                
+                                JToken actionNameValue = jobHistoryValue["actionName"];
+                                if (actionNameValue != null)
+                                {
+                                    JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName((string)actionNameValue);
+                                    jobHistoryEntryInstance.ActionName = actionNameInstance;
+                                }
+                                
+                                JToken repeatCountValue = jobHistoryValue["repeatCount"];
+                                if (repeatCountValue != null)
+                                {
+                                    int repeatCountInstance = (int)repeatCountValue;
+                                    jobHistoryEntryInstance.RepeatCount = repeatCountInstance;
+                                }
+                                
+                                JToken retryCountValue = jobHistoryValue["retryCount"];
+                                if (retryCountValue != null)
+                                {
+                                    int retryCountInstance = (int)retryCountValue;
+                                    jobHistoryEntryInstance.RetryCount = retryCountInstance;
+                                }
                             }
                         }
                     }
@@ -2764,390 +2770,393 @@ namespace Microsoft.WindowsAzure.Scheduler
                     result = new JobListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    JArray jobsArray = (JArray)responseDoc;
-                    if (jobsArray != null)
+                    if (responseDoc != null)
                     {
-                        foreach (JToken jobsValue in jobsArray)
+                        JArray jobsArray = (JArray)responseDoc;
+                        if (jobsArray != null)
                         {
-                            Job jobInstance = new Job();
-                            result.Jobs.Add(jobInstance);
-                            
-                            JToken idValue = jobsValue["id"];
-                            if (idValue != null)
+                            foreach (JToken jobsValue in jobsArray)
                             {
-                                string idInstance = (string)idValue;
-                                jobInstance.Id = idInstance;
-                            }
-                            
-                            JToken startTimeValue = jobsValue["startTime"];
-                            if (startTimeValue != null)
-                            {
-                                DateTime startTimeInstance = (DateTime)startTimeValue;
-                                jobInstance.StartTime = startTimeInstance;
-                            }
-                            
-                            JToken actionValue = jobsValue["action"];
-                            if (actionValue != null)
-                            {
-                                JobAction actionInstance = new JobAction();
-                                jobInstance.Action = actionInstance;
+                                Job jobInstance = new Job();
+                                result.Jobs.Add(jobInstance);
                                 
-                                JToken typeValue = actionValue["type"];
-                                if (typeValue != null)
+                                JToken idValue = jobsValue["id"];
+                                if (idValue != null)
                                 {
-                                    JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
-                                    actionInstance.Type = typeInstance;
+                                    string idInstance = (string)idValue;
+                                    jobInstance.Id = idInstance;
                                 }
                                 
-                                JToken retryPolicyValue = actionValue["retryPolicy"];
-                                if (retryPolicyValue != null)
+                                JToken startTimeValue = jobsValue["startTime"];
+                                if (startTimeValue != null)
                                 {
-                                    RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                    actionInstance.RetryPolicy = retryPolicyInstance;
-                                    
-                                    JToken retryTypeValue = retryPolicyValue["retryType"];
-                                    if (retryTypeValue != null)
-                                    {
-                                        RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
-                                        retryPolicyInstance.RetryType = retryTypeInstance;
-                                    }
-                                    
-                                    JToken retryIntervalValue = retryPolicyValue["retryInterval"];
-                                    if (retryIntervalValue != null)
-                                    {
-                                        TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
-                                        retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                    }
-                                    
-                                    JToken retryCountValue = retryPolicyValue["retryCount"];
-                                    if (retryCountValue != null)
-                                    {
-                                        int retryCountInstance = (int)retryCountValue;
-                                        retryPolicyInstance.RetryCount = retryCountInstance;
-                                    }
+                                    DateTime startTimeInstance = (DateTime)startTimeValue;
+                                    jobInstance.StartTime = startTimeInstance;
                                 }
                                 
-                                JToken errorActionValue = actionValue["errorAction"];
-                                if (errorActionValue != null)
+                                JToken actionValue = jobsValue["action"];
+                                if (actionValue != null)
                                 {
-                                    JobErrorAction errorActionInstance = new JobErrorAction();
-                                    actionInstance.ErrorAction = errorActionInstance;
+                                    JobAction actionInstance = new JobAction();
+                                    jobInstance.Action = actionInstance;
                                     
-                                    JToken typeValue2 = errorActionValue["type"];
-                                    if (typeValue2 != null)
+                                    JToken typeValue = actionValue["type"];
+                                    if (typeValue != null)
                                     {
-                                        JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
-                                        errorActionInstance.Type = typeInstance2;
+                                        JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
+                                        actionInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken requestValue = errorActionValue["request"];
-                                    if (requestValue != null)
+                                    JToken retryPolicyValue = actionValue["retryPolicy"];
+                                    if (retryPolicyValue != null)
                                     {
-                                        JobHttpRequest requestInstance = new JobHttpRequest();
-                                        errorActionInstance.Request = requestInstance;
+                                        RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                        actionInstance.RetryPolicy = retryPolicyInstance;
                                         
-                                        JToken uriValue = requestValue["uri"];
-                                        if (uriValue != null)
+                                        JToken retryTypeValue = retryPolicyValue["retryType"];
+                                        if (retryTypeValue != null)
                                         {
-                                            Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
-                                            requestInstance.Uri = uriInstance;
+                                            RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
+                                            retryPolicyInstance.RetryType = retryTypeInstance;
                                         }
                                         
-                                        JToken methodValue = requestValue["method"];
-                                        if (methodValue != null)
+                                        JToken retryIntervalValue = retryPolicyValue["retryInterval"];
+                                        if (retryIntervalValue != null)
                                         {
-                                            string methodInstance = (string)methodValue;
-                                            requestInstance.Method = methodInstance;
+                                            TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
+                                            retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                         }
                                         
-                                        JToken headersSequenceElement = requestValue["headers"];
-                                        if (headersSequenceElement != null)
+                                        JToken retryCountValue = retryPolicyValue["retryCount"];
+                                        if (retryCountValue != null)
                                         {
-                                            foreach (JProperty property in headersSequenceElement)
-                                            {
-                                                string headersKey = (string)property.Name;
-                                                string headersValue = (string)property.Value;
-                                                requestInstance.Headers.Add(headersKey, headersValue);
-                                            }
+                                            int retryCountInstance = (int)retryCountValue;
+                                            retryPolicyInstance.RetryCount = retryCountInstance;
+                                        }
+                                    }
+                                    
+                                    JToken errorActionValue = actionValue["errorAction"];
+                                    if (errorActionValue != null)
+                                    {
+                                        JobErrorAction errorActionInstance = new JobErrorAction();
+                                        actionInstance.ErrorAction = errorActionInstance;
+                                        
+                                        JToken typeValue2 = errorActionValue["type"];
+                                        if (typeValue2 != null)
+                                        {
+                                            JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
+                                            errorActionInstance.Type = typeInstance2;
                                         }
                                         
-                                        JToken bodyValue = requestValue["body"];
-                                        if (bodyValue != null)
+                                        JToken requestValue = errorActionValue["request"];
+                                        if (requestValue != null)
                                         {
-                                            string bodyInstance = (string)bodyValue;
-                                            requestInstance.Body = bodyInstance;
-                                        }
-                                    }
-                                    
-                                    JToken queueMessageValue = errorActionValue["queueMessage"];
-                                    if (queueMessageValue != null)
-                                    {
-                                        JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                        errorActionInstance.QueueMessage = queueMessageInstance;
-                                        
-                                        JToken storageAccountValue = queueMessageValue["storageAccount"];
-                                        if (storageAccountValue != null)
-                                        {
-                                            string storageAccountInstance = (string)storageAccountValue;
-                                            queueMessageInstance.StorageAccountName = storageAccountInstance;
-                                        }
-                                        
-                                        JToken queueNameValue = queueMessageValue["queueName"];
-                                        if (queueNameValue != null)
-                                        {
-                                            string queueNameInstance = (string)queueNameValue;
-                                            queueMessageInstance.QueueName = queueNameInstance;
-                                        }
-                                        
-                                        JToken sasTokenValue = queueMessageValue["sasToken"];
-                                        if (sasTokenValue != null)
-                                        {
-                                            string sasTokenInstance = (string)sasTokenValue;
-                                            queueMessageInstance.SasToken = sasTokenInstance;
-                                        }
-                                        
-                                        JToken messageValue = queueMessageValue["message"];
-                                        if (messageValue != null)
-                                        {
-                                            string messageInstance = (string)messageValue;
-                                            queueMessageInstance.Message = messageInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken requestValue2 = actionValue["request"];
-                                if (requestValue2 != null)
-                                {
-                                    JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                    actionInstance.Request = requestInstance2;
-                                    
-                                    JToken uriValue2 = requestValue2["uri"];
-                                    if (uriValue2 != null)
-                                    {
-                                        Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
-                                        requestInstance2.Uri = uriInstance2;
-                                    }
-                                    
-                                    JToken methodValue2 = requestValue2["method"];
-                                    if (methodValue2 != null)
-                                    {
-                                        string methodInstance2 = (string)methodValue2;
-                                        requestInstance2.Method = methodInstance2;
-                                    }
-                                    
-                                    JToken headersSequenceElement2 = requestValue2["headers"];
-                                    if (headersSequenceElement2 != null)
-                                    {
-                                        foreach (JProperty property2 in headersSequenceElement2)
-                                        {
-                                            string headersKey2 = (string)property2.Name;
-                                            string headersValue2 = (string)property2.Value;
-                                            requestInstance2.Headers.Add(headersKey2, headersValue2);
-                                        }
-                                    }
-                                    
-                                    JToken bodyValue2 = requestValue2["body"];
-                                    if (bodyValue2 != null)
-                                    {
-                                        string bodyInstance2 = (string)bodyValue2;
-                                        requestInstance2.Body = bodyInstance2;
-                                    }
-                                }
-                                
-                                JToken queueMessageValue2 = actionValue["queueMessage"];
-                                if (queueMessageValue2 != null)
-                                {
-                                    JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                    actionInstance.QueueMessage = queueMessageInstance2;
-                                    
-                                    JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
-                                    if (storageAccountValue2 != null)
-                                    {
-                                        string storageAccountInstance2 = (string)storageAccountValue2;
-                                        queueMessageInstance2.StorageAccountName = storageAccountInstance2;
-                                    }
-                                    
-                                    JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                    if (queueNameValue2 != null)
-                                    {
-                                        string queueNameInstance2 = (string)queueNameValue2;
-                                        queueMessageInstance2.QueueName = queueNameInstance2;
-                                    }
-                                    
-                                    JToken sasTokenValue2 = queueMessageValue2["sasToken"];
-                                    if (sasTokenValue2 != null)
-                                    {
-                                        string sasTokenInstance2 = (string)sasTokenValue2;
-                                        queueMessageInstance2.SasToken = sasTokenInstance2;
-                                    }
-                                    
-                                    JToken messageValue2 = queueMessageValue2["message"];
-                                    if (messageValue2 != null)
-                                    {
-                                        string messageInstance2 = (string)messageValue2;
-                                        queueMessageInstance2.Message = messageInstance2;
-                                    }
-                                }
-                            }
-                            
-                            JToken recurrenceValue = jobsValue["recurrence"];
-                            if (recurrenceValue != null)
-                            {
-                                JobRecurrence recurrenceInstance = new JobRecurrence();
-                                jobInstance.Recurrence = recurrenceInstance;
-                                
-                                JToken frequencyValue = recurrenceValue["frequency"];
-                                if (frequencyValue != null)
-                                {
-                                    JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
-                                    recurrenceInstance.Frequency = frequencyInstance;
-                                }
-                                
-                                JToken intervalValue = recurrenceValue["interval"];
-                                if (intervalValue != null)
-                                {
-                                    int intervalInstance = (int)intervalValue;
-                                    recurrenceInstance.Interval = intervalInstance;
-                                }
-                                
-                                JToken countValue = recurrenceValue["count"];
-                                if (countValue != null)
-                                {
-                                    int countInstance = (int)countValue;
-                                    recurrenceInstance.Count = countInstance;
-                                }
-                                
-                                JToken endTimeValue = recurrenceValue["endTime"];
-                                if (endTimeValue != null)
-                                {
-                                    DateTime endTimeInstance = (DateTime)endTimeValue;
-                                    recurrenceInstance.EndTime = endTimeInstance;
-                                }
-                                
-                                JToken scheduleValue = recurrenceValue["schedule"];
-                                if (scheduleValue != null)
-                                {
-                                    JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                    recurrenceInstance.Schedule = scheduleInstance;
-                                    
-                                    JArray minutesArray = (JArray)scheduleValue["minutes"];
-                                    if (minutesArray != null)
-                                    {
-                                        foreach (JToken minutesValue in minutesArray)
-                                        {
-                                            scheduleInstance.Minutes.Add((int)minutesValue);
-                                        }
-                                    }
-                                    
-                                    JArray hoursArray = (JArray)scheduleValue["hours"];
-                                    if (hoursArray != null)
-                                    {
-                                        foreach (JToken hoursValue in hoursArray)
-                                        {
-                                            scheduleInstance.Hours.Add((int)hoursValue);
-                                        }
-                                    }
-                                    
-                                    JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
-                                    if (weekDaysArray != null)
-                                    {
-                                        foreach (JToken weekDaysValue in weekDaysArray)
-                                        {
-                                            scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
-                                        }
-                                    }
-                                    
-                                    JArray monthsArray = (JArray)scheduleValue["months"];
-                                    if (monthsArray != null)
-                                    {
-                                        foreach (JToken monthsValue in monthsArray)
-                                        {
-                                            scheduleInstance.Months.Add((int)monthsValue);
-                                        }
-                                    }
-                                    
-                                    JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
-                                    if (monthDaysArray != null)
-                                    {
-                                        foreach (JToken monthDaysValue in monthDaysArray)
-                                        {
-                                            scheduleInstance.MonthDays.Add((int)monthDaysValue);
-                                        }
-                                    }
-                                    
-                                    JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
-                                    if (monthlyOccurrencesArray != null)
-                                    {
-                                        foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
-                                        {
-                                            JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                            scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                            JobHttpRequest requestInstance = new JobHttpRequest();
+                                            errorActionInstance.Request = requestInstance;
                                             
-                                            JToken dayValue = monthlyOccurrencesValue["day"];
-                                            if (dayValue != null)
+                                            JToken uriValue = requestValue["uri"];
+                                            if (uriValue != null)
                                             {
-                                                JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
-                                                jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
+                                                requestInstance.Uri = uriInstance;
                                             }
                                             
-                                            JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                            if (occurrenceValue != null)
+                                            JToken methodValue = requestValue["method"];
+                                            if (methodValue != null)
                                             {
-                                                int occurrenceInstance = (int)occurrenceValue;
-                                                jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                string methodInstance = (string)methodValue;
+                                                requestInstance.Method = methodInstance;
+                                            }
+                                            
+                                            JToken headersSequenceElement = requestValue["headers"];
+                                            if (headersSequenceElement != null)
+                                            {
+                                                foreach (JProperty property in headersSequenceElement)
+                                                {
+                                                    string headersKey = (string)property.Name;
+                                                    string headersValue = (string)property.Value;
+                                                    requestInstance.Headers.Add(headersKey, headersValue);
+                                                }
+                                            }
+                                            
+                                            JToken bodyValue = requestValue["body"];
+                                            if (bodyValue != null)
+                                            {
+                                                string bodyInstance = (string)bodyValue;
+                                                requestInstance.Body = bodyInstance;
+                                            }
+                                        }
+                                        
+                                        JToken queueMessageValue = errorActionValue["queueMessage"];
+                                        if (queueMessageValue != null)
+                                        {
+                                            JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                            errorActionInstance.QueueMessage = queueMessageInstance;
+                                            
+                                            JToken storageAccountValue = queueMessageValue["storageAccount"];
+                                            if (storageAccountValue != null)
+                                            {
+                                                string storageAccountInstance = (string)storageAccountValue;
+                                                queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                            }
+                                            
+                                            JToken queueNameValue = queueMessageValue["queueName"];
+                                            if (queueNameValue != null)
+                                            {
+                                                string queueNameInstance = (string)queueNameValue;
+                                                queueMessageInstance.QueueName = queueNameInstance;
+                                            }
+                                            
+                                            JToken sasTokenValue = queueMessageValue["sasToken"];
+                                            if (sasTokenValue != null)
+                                            {
+                                                string sasTokenInstance = (string)sasTokenValue;
+                                                queueMessageInstance.SasToken = sasTokenInstance;
+                                            }
+                                            
+                                            JToken messageValue = queueMessageValue["message"];
+                                            if (messageValue != null)
+                                            {
+                                                string messageInstance = (string)messageValue;
+                                                queueMessageInstance.Message = messageInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken requestValue2 = actionValue["request"];
+                                    if (requestValue2 != null)
+                                    {
+                                        JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                        actionInstance.Request = requestInstance2;
+                                        
+                                        JToken uriValue2 = requestValue2["uri"];
+                                        if (uriValue2 != null)
+                                        {
+                                            Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
+                                            requestInstance2.Uri = uriInstance2;
+                                        }
+                                        
+                                        JToken methodValue2 = requestValue2["method"];
+                                        if (methodValue2 != null)
+                                        {
+                                            string methodInstance2 = (string)methodValue2;
+                                            requestInstance2.Method = methodInstance2;
+                                        }
+                                        
+                                        JToken headersSequenceElement2 = requestValue2["headers"];
+                                        if (headersSequenceElement2 != null)
+                                        {
+                                            foreach (JProperty property2 in headersSequenceElement2)
+                                            {
+                                                string headersKey2 = (string)property2.Name;
+                                                string headersValue2 = (string)property2.Value;
+                                                requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                            }
+                                        }
+                                        
+                                        JToken bodyValue2 = requestValue2["body"];
+                                        if (bodyValue2 != null)
+                                        {
+                                            string bodyInstance2 = (string)bodyValue2;
+                                            requestInstance2.Body = bodyInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken queueMessageValue2 = actionValue["queueMessage"];
+                                    if (queueMessageValue2 != null)
+                                    {
+                                        JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                        actionInstance.QueueMessage = queueMessageInstance2;
+                                        
+                                        JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
+                                        if (storageAccountValue2 != null)
+                                        {
+                                            string storageAccountInstance2 = (string)storageAccountValue2;
+                                            queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                        }
+                                        
+                                        JToken queueNameValue2 = queueMessageValue2["queueName"];
+                                        if (queueNameValue2 != null)
+                                        {
+                                            string queueNameInstance2 = (string)queueNameValue2;
+                                            queueMessageInstance2.QueueName = queueNameInstance2;
+                                        }
+                                        
+                                        JToken sasTokenValue2 = queueMessageValue2["sasToken"];
+                                        if (sasTokenValue2 != null)
+                                        {
+                                            string sasTokenInstance2 = (string)sasTokenValue2;
+                                            queueMessageInstance2.SasToken = sasTokenInstance2;
+                                        }
+                                        
+                                        JToken messageValue2 = queueMessageValue2["message"];
+                                        if (messageValue2 != null)
+                                        {
+                                            string messageInstance2 = (string)messageValue2;
+                                            queueMessageInstance2.Message = messageInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken recurrenceValue = jobsValue["recurrence"];
+                                if (recurrenceValue != null)
+                                {
+                                    JobRecurrence recurrenceInstance = new JobRecurrence();
+                                    jobInstance.Recurrence = recurrenceInstance;
+                                    
+                                    JToken frequencyValue = recurrenceValue["frequency"];
+                                    if (frequencyValue != null)
+                                    {
+                                        JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
+                                        recurrenceInstance.Frequency = frequencyInstance;
+                                    }
+                                    
+                                    JToken intervalValue = recurrenceValue["interval"];
+                                    if (intervalValue != null)
+                                    {
+                                        int intervalInstance = (int)intervalValue;
+                                        recurrenceInstance.Interval = intervalInstance;
+                                    }
+                                    
+                                    JToken countValue = recurrenceValue["count"];
+                                    if (countValue != null)
+                                    {
+                                        int countInstance = (int)countValue;
+                                        recurrenceInstance.Count = countInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = recurrenceValue["endTime"];
+                                    if (endTimeValue != null)
+                                    {
+                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                        recurrenceInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken scheduleValue = recurrenceValue["schedule"];
+                                    if (scheduleValue != null)
+                                    {
+                                        JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                        recurrenceInstance.Schedule = scheduleInstance;
+                                        
+                                        JArray minutesArray = (JArray)scheduleValue["minutes"];
+                                        if (minutesArray != null)
+                                        {
+                                            foreach (JToken minutesValue in minutesArray)
+                                            {
+                                                scheduleInstance.Minutes.Add((int)minutesValue);
+                                            }
+                                        }
+                                        
+                                        JArray hoursArray = (JArray)scheduleValue["hours"];
+                                        if (hoursArray != null)
+                                        {
+                                            foreach (JToken hoursValue in hoursArray)
+                                            {
+                                                scheduleInstance.Hours.Add((int)hoursValue);
+                                            }
+                                        }
+                                        
+                                        JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
+                                        if (weekDaysArray != null)
+                                        {
+                                            foreach (JToken weekDaysValue in weekDaysArray)
+                                            {
+                                                scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
+                                            }
+                                        }
+                                        
+                                        JArray monthsArray = (JArray)scheduleValue["months"];
+                                        if (monthsArray != null)
+                                        {
+                                            foreach (JToken monthsValue in monthsArray)
+                                            {
+                                                scheduleInstance.Months.Add((int)monthsValue);
+                                            }
+                                        }
+                                        
+                                        JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
+                                        if (monthDaysArray != null)
+                                        {
+                                            foreach (JToken monthDaysValue in monthDaysArray)
+                                            {
+                                                scheduleInstance.MonthDays.Add((int)monthDaysValue);
+                                            }
+                                        }
+                                        
+                                        JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
+                                        if (monthlyOccurrencesArray != null)
+                                        {
+                                            foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
+                                            {
+                                                JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                                scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                                
+                                                JToken dayValue = monthlyOccurrencesValue["day"];
+                                                if (dayValue != null)
+                                                {
+                                                    JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
+                                                    jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                }
+                                                
+                                                JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                                if (occurrenceValue != null)
+                                                {
+                                                    int occurrenceInstance = (int)occurrenceValue;
+                                                    jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            
-                            JToken statusValue = jobsValue["status"];
-                            if (statusValue != null)
-                            {
-                                JobStatus statusInstance = new JobStatus();
-                                jobInstance.Status = statusInstance;
                                 
-                                JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                                if (lastExecutionTimeValue != null)
+                                JToken statusValue = jobsValue["status"];
+                                if (statusValue != null)
                                 {
-                                    DateTime lastExecutionTimeInstance = (DateTime)lastExecutionTimeValue;
-                                    statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                    JobStatus statusInstance = new JobStatus();
+                                    jobInstance.Status = statusInstance;
+                                    
+                                    JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                    if (lastExecutionTimeValue != null)
+                                    {
+                                        DateTime lastExecutionTimeInstance = (DateTime)lastExecutionTimeValue;
+                                        statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                    }
+                                    
+                                    JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                    if (nextExecutionTimeValue != null)
+                                    {
+                                        DateTime nextExecutionTimeInstance = (DateTime)nextExecutionTimeValue;
+                                        statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                    }
+                                    
+                                    JToken executionCountValue = statusValue["executionCount"];
+                                    if (executionCountValue != null)
+                                    {
+                                        int executionCountInstance = (int)executionCountValue;
+                                        statusInstance.ExecutionCount = executionCountInstance;
+                                    }
+                                    
+                                    JToken failureCountValue = statusValue["failureCount"];
+                                    if (failureCountValue != null)
+                                    {
+                                        int failureCountInstance = (int)failureCountValue;
+                                        statusInstance.FailureCount = failureCountInstance;
+                                    }
+                                    
+                                    JToken faultedCountValue = statusValue["faultedCount"];
+                                    if (faultedCountValue != null)
+                                    {
+                                        int faultedCountInstance = (int)faultedCountValue;
+                                        statusInstance.FaultedCount = faultedCountInstance;
+                                    }
                                 }
                                 
-                                JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                                if (nextExecutionTimeValue != null)
+                                JToken stateValue = jobsValue["state"];
+                                if (stateValue != null)
                                 {
-                                    DateTime nextExecutionTimeInstance = (DateTime)nextExecutionTimeValue;
-                                    statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                    JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
+                                    jobInstance.State = stateInstance;
                                 }
-                                
-                                JToken executionCountValue = statusValue["executionCount"];
-                                if (executionCountValue != null)
-                                {
-                                    int executionCountInstance = (int)executionCountValue;
-                                    statusInstance.ExecutionCount = executionCountInstance;
-                                }
-                                
-                                JToken failureCountValue = statusValue["failureCount"];
-                                if (failureCountValue != null)
-                                {
-                                    int failureCountInstance = (int)failureCountValue;
-                                    statusInstance.FailureCount = failureCountInstance;
-                                }
-                                
-                                JToken faultedCountValue = statusValue["faultedCount"];
-                                if (faultedCountValue != null)
-                                {
-                                    int faultedCountInstance = (int)faultedCountValue;
-                                    statusInstance.FaultedCount = faultedCountInstance;
-                                }
-                            }
-                            
-                            JToken stateValue = jobsValue["state"];
-                            if (stateValue != null)
-                            {
-                                JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
-                                jobInstance.State = stateInstance;
                             }
                         }
                     }
@@ -3272,390 +3281,393 @@ namespace Microsoft.WindowsAzure.Scheduler
                     result = new JobListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    JArray jobsArray = (JArray)responseDoc;
-                    if (jobsArray != null)
+                    if (responseDoc != null)
                     {
-                        foreach (JToken jobsValue in jobsArray)
+                        JArray jobsArray = (JArray)responseDoc;
+                        if (jobsArray != null)
                         {
-                            Job jobInstance = new Job();
-                            result.Jobs.Add(jobInstance);
-                            
-                            JToken idValue = jobsValue["id"];
-                            if (idValue != null)
+                            foreach (JToken jobsValue in jobsArray)
                             {
-                                string idInstance = (string)idValue;
-                                jobInstance.Id = idInstance;
-                            }
-                            
-                            JToken startTimeValue = jobsValue["startTime"];
-                            if (startTimeValue != null)
-                            {
-                                DateTime startTimeInstance = (DateTime)startTimeValue;
-                                jobInstance.StartTime = startTimeInstance;
-                            }
-                            
-                            JToken actionValue = jobsValue["action"];
-                            if (actionValue != null)
-                            {
-                                JobAction actionInstance = new JobAction();
-                                jobInstance.Action = actionInstance;
+                                Job jobInstance = new Job();
+                                result.Jobs.Add(jobInstance);
                                 
-                                JToken typeValue = actionValue["type"];
-                                if (typeValue != null)
+                                JToken idValue = jobsValue["id"];
+                                if (idValue != null)
                                 {
-                                    JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
-                                    actionInstance.Type = typeInstance;
+                                    string idInstance = (string)idValue;
+                                    jobInstance.Id = idInstance;
                                 }
                                 
-                                JToken retryPolicyValue = actionValue["retryPolicy"];
-                                if (retryPolicyValue != null)
+                                JToken startTimeValue = jobsValue["startTime"];
+                                if (startTimeValue != null)
                                 {
-                                    RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                    actionInstance.RetryPolicy = retryPolicyInstance;
-                                    
-                                    JToken retryTypeValue = retryPolicyValue["retryType"];
-                                    if (retryTypeValue != null)
-                                    {
-                                        RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
-                                        retryPolicyInstance.RetryType = retryTypeInstance;
-                                    }
-                                    
-                                    JToken retryIntervalValue = retryPolicyValue["retryInterval"];
-                                    if (retryIntervalValue != null)
-                                    {
-                                        TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
-                                        retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                    }
-                                    
-                                    JToken retryCountValue = retryPolicyValue["retryCount"];
-                                    if (retryCountValue != null)
-                                    {
-                                        int retryCountInstance = (int)retryCountValue;
-                                        retryPolicyInstance.RetryCount = retryCountInstance;
-                                    }
+                                    DateTime startTimeInstance = (DateTime)startTimeValue;
+                                    jobInstance.StartTime = startTimeInstance;
                                 }
                                 
-                                JToken errorActionValue = actionValue["errorAction"];
-                                if (errorActionValue != null)
+                                JToken actionValue = jobsValue["action"];
+                                if (actionValue != null)
                                 {
-                                    JobErrorAction errorActionInstance = new JobErrorAction();
-                                    actionInstance.ErrorAction = errorActionInstance;
+                                    JobAction actionInstance = new JobAction();
+                                    jobInstance.Action = actionInstance;
                                     
-                                    JToken typeValue2 = errorActionValue["type"];
-                                    if (typeValue2 != null)
+                                    JToken typeValue = actionValue["type"];
+                                    if (typeValue != null)
                                     {
-                                        JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
-                                        errorActionInstance.Type = typeInstance2;
+                                        JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
+                                        actionInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken requestValue = errorActionValue["request"];
-                                    if (requestValue != null)
+                                    JToken retryPolicyValue = actionValue["retryPolicy"];
+                                    if (retryPolicyValue != null)
                                     {
-                                        JobHttpRequest requestInstance = new JobHttpRequest();
-                                        errorActionInstance.Request = requestInstance;
+                                        RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                        actionInstance.RetryPolicy = retryPolicyInstance;
                                         
-                                        JToken uriValue = requestValue["uri"];
-                                        if (uriValue != null)
+                                        JToken retryTypeValue = retryPolicyValue["retryType"];
+                                        if (retryTypeValue != null)
                                         {
-                                            Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
-                                            requestInstance.Uri = uriInstance;
+                                            RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
+                                            retryPolicyInstance.RetryType = retryTypeInstance;
                                         }
                                         
-                                        JToken methodValue = requestValue["method"];
-                                        if (methodValue != null)
+                                        JToken retryIntervalValue = retryPolicyValue["retryInterval"];
+                                        if (retryIntervalValue != null)
                                         {
-                                            string methodInstance = (string)methodValue;
-                                            requestInstance.Method = methodInstance;
+                                            TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
+                                            retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                         }
                                         
-                                        JToken headersSequenceElement = requestValue["headers"];
-                                        if (headersSequenceElement != null)
+                                        JToken retryCountValue = retryPolicyValue["retryCount"];
+                                        if (retryCountValue != null)
                                         {
-                                            foreach (JProperty property in headersSequenceElement)
-                                            {
-                                                string headersKey = (string)property.Name;
-                                                string headersValue = (string)property.Value;
-                                                requestInstance.Headers.Add(headersKey, headersValue);
-                                            }
+                                            int retryCountInstance = (int)retryCountValue;
+                                            retryPolicyInstance.RetryCount = retryCountInstance;
+                                        }
+                                    }
+                                    
+                                    JToken errorActionValue = actionValue["errorAction"];
+                                    if (errorActionValue != null)
+                                    {
+                                        JobErrorAction errorActionInstance = new JobErrorAction();
+                                        actionInstance.ErrorAction = errorActionInstance;
+                                        
+                                        JToken typeValue2 = errorActionValue["type"];
+                                        if (typeValue2 != null)
+                                        {
+                                            JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
+                                            errorActionInstance.Type = typeInstance2;
                                         }
                                         
-                                        JToken bodyValue = requestValue["body"];
-                                        if (bodyValue != null)
+                                        JToken requestValue = errorActionValue["request"];
+                                        if (requestValue != null)
                                         {
-                                            string bodyInstance = (string)bodyValue;
-                                            requestInstance.Body = bodyInstance;
-                                        }
-                                    }
-                                    
-                                    JToken queueMessageValue = errorActionValue["queueMessage"];
-                                    if (queueMessageValue != null)
-                                    {
-                                        JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                        errorActionInstance.QueueMessage = queueMessageInstance;
-                                        
-                                        JToken storageAccountValue = queueMessageValue["storageAccount"];
-                                        if (storageAccountValue != null)
-                                        {
-                                            string storageAccountInstance = (string)storageAccountValue;
-                                            queueMessageInstance.StorageAccountName = storageAccountInstance;
-                                        }
-                                        
-                                        JToken queueNameValue = queueMessageValue["queueName"];
-                                        if (queueNameValue != null)
-                                        {
-                                            string queueNameInstance = (string)queueNameValue;
-                                            queueMessageInstance.QueueName = queueNameInstance;
-                                        }
-                                        
-                                        JToken sasTokenValue = queueMessageValue["sasToken"];
-                                        if (sasTokenValue != null)
-                                        {
-                                            string sasTokenInstance = (string)sasTokenValue;
-                                            queueMessageInstance.SasToken = sasTokenInstance;
-                                        }
-                                        
-                                        JToken messageValue = queueMessageValue["message"];
-                                        if (messageValue != null)
-                                        {
-                                            string messageInstance = (string)messageValue;
-                                            queueMessageInstance.Message = messageInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken requestValue2 = actionValue["request"];
-                                if (requestValue2 != null)
-                                {
-                                    JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                    actionInstance.Request = requestInstance2;
-                                    
-                                    JToken uriValue2 = requestValue2["uri"];
-                                    if (uriValue2 != null)
-                                    {
-                                        Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
-                                        requestInstance2.Uri = uriInstance2;
-                                    }
-                                    
-                                    JToken methodValue2 = requestValue2["method"];
-                                    if (methodValue2 != null)
-                                    {
-                                        string methodInstance2 = (string)methodValue2;
-                                        requestInstance2.Method = methodInstance2;
-                                    }
-                                    
-                                    JToken headersSequenceElement2 = requestValue2["headers"];
-                                    if (headersSequenceElement2 != null)
-                                    {
-                                        foreach (JProperty property2 in headersSequenceElement2)
-                                        {
-                                            string headersKey2 = (string)property2.Name;
-                                            string headersValue2 = (string)property2.Value;
-                                            requestInstance2.Headers.Add(headersKey2, headersValue2);
-                                        }
-                                    }
-                                    
-                                    JToken bodyValue2 = requestValue2["body"];
-                                    if (bodyValue2 != null)
-                                    {
-                                        string bodyInstance2 = (string)bodyValue2;
-                                        requestInstance2.Body = bodyInstance2;
-                                    }
-                                }
-                                
-                                JToken queueMessageValue2 = actionValue["queueMessage"];
-                                if (queueMessageValue2 != null)
-                                {
-                                    JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                    actionInstance.QueueMessage = queueMessageInstance2;
-                                    
-                                    JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
-                                    if (storageAccountValue2 != null)
-                                    {
-                                        string storageAccountInstance2 = (string)storageAccountValue2;
-                                        queueMessageInstance2.StorageAccountName = storageAccountInstance2;
-                                    }
-                                    
-                                    JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                    if (queueNameValue2 != null)
-                                    {
-                                        string queueNameInstance2 = (string)queueNameValue2;
-                                        queueMessageInstance2.QueueName = queueNameInstance2;
-                                    }
-                                    
-                                    JToken sasTokenValue2 = queueMessageValue2["sasToken"];
-                                    if (sasTokenValue2 != null)
-                                    {
-                                        string sasTokenInstance2 = (string)sasTokenValue2;
-                                        queueMessageInstance2.SasToken = sasTokenInstance2;
-                                    }
-                                    
-                                    JToken messageValue2 = queueMessageValue2["message"];
-                                    if (messageValue2 != null)
-                                    {
-                                        string messageInstance2 = (string)messageValue2;
-                                        queueMessageInstance2.Message = messageInstance2;
-                                    }
-                                }
-                            }
-                            
-                            JToken recurrenceValue = jobsValue["recurrence"];
-                            if (recurrenceValue != null)
-                            {
-                                JobRecurrence recurrenceInstance = new JobRecurrence();
-                                jobInstance.Recurrence = recurrenceInstance;
-                                
-                                JToken frequencyValue = recurrenceValue["frequency"];
-                                if (frequencyValue != null)
-                                {
-                                    JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
-                                    recurrenceInstance.Frequency = frequencyInstance;
-                                }
-                                
-                                JToken intervalValue = recurrenceValue["interval"];
-                                if (intervalValue != null)
-                                {
-                                    int intervalInstance = (int)intervalValue;
-                                    recurrenceInstance.Interval = intervalInstance;
-                                }
-                                
-                                JToken countValue = recurrenceValue["count"];
-                                if (countValue != null)
-                                {
-                                    int countInstance = (int)countValue;
-                                    recurrenceInstance.Count = countInstance;
-                                }
-                                
-                                JToken endTimeValue = recurrenceValue["endTime"];
-                                if (endTimeValue != null)
-                                {
-                                    DateTime endTimeInstance = (DateTime)endTimeValue;
-                                    recurrenceInstance.EndTime = endTimeInstance;
-                                }
-                                
-                                JToken scheduleValue = recurrenceValue["schedule"];
-                                if (scheduleValue != null)
-                                {
-                                    JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                    recurrenceInstance.Schedule = scheduleInstance;
-                                    
-                                    JArray minutesArray = (JArray)scheduleValue["minutes"];
-                                    if (minutesArray != null)
-                                    {
-                                        foreach (JToken minutesValue in minutesArray)
-                                        {
-                                            scheduleInstance.Minutes.Add((int)minutesValue);
-                                        }
-                                    }
-                                    
-                                    JArray hoursArray = (JArray)scheduleValue["hours"];
-                                    if (hoursArray != null)
-                                    {
-                                        foreach (JToken hoursValue in hoursArray)
-                                        {
-                                            scheduleInstance.Hours.Add((int)hoursValue);
-                                        }
-                                    }
-                                    
-                                    JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
-                                    if (weekDaysArray != null)
-                                    {
-                                        foreach (JToken weekDaysValue in weekDaysArray)
-                                        {
-                                            scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
-                                        }
-                                    }
-                                    
-                                    JArray monthsArray = (JArray)scheduleValue["months"];
-                                    if (monthsArray != null)
-                                    {
-                                        foreach (JToken monthsValue in monthsArray)
-                                        {
-                                            scheduleInstance.Months.Add((int)monthsValue);
-                                        }
-                                    }
-                                    
-                                    JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
-                                    if (monthDaysArray != null)
-                                    {
-                                        foreach (JToken monthDaysValue in monthDaysArray)
-                                        {
-                                            scheduleInstance.MonthDays.Add((int)monthDaysValue);
-                                        }
-                                    }
-                                    
-                                    JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
-                                    if (monthlyOccurrencesArray != null)
-                                    {
-                                        foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
-                                        {
-                                            JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                            scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                            JobHttpRequest requestInstance = new JobHttpRequest();
+                                            errorActionInstance.Request = requestInstance;
                                             
-                                            JToken dayValue = monthlyOccurrencesValue["day"];
-                                            if (dayValue != null)
+                                            JToken uriValue = requestValue["uri"];
+                                            if (uriValue != null)
                                             {
-                                                JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
-                                                jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
+                                                requestInstance.Uri = uriInstance;
                                             }
                                             
-                                            JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                            if (occurrenceValue != null)
+                                            JToken methodValue = requestValue["method"];
+                                            if (methodValue != null)
                                             {
-                                                int occurrenceInstance = (int)occurrenceValue;
-                                                jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                string methodInstance = (string)methodValue;
+                                                requestInstance.Method = methodInstance;
+                                            }
+                                            
+                                            JToken headersSequenceElement = requestValue["headers"];
+                                            if (headersSequenceElement != null)
+                                            {
+                                                foreach (JProperty property in headersSequenceElement)
+                                                {
+                                                    string headersKey = (string)property.Name;
+                                                    string headersValue = (string)property.Value;
+                                                    requestInstance.Headers.Add(headersKey, headersValue);
+                                                }
+                                            }
+                                            
+                                            JToken bodyValue = requestValue["body"];
+                                            if (bodyValue != null)
+                                            {
+                                                string bodyInstance = (string)bodyValue;
+                                                requestInstance.Body = bodyInstance;
+                                            }
+                                        }
+                                        
+                                        JToken queueMessageValue = errorActionValue["queueMessage"];
+                                        if (queueMessageValue != null)
+                                        {
+                                            JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                            errorActionInstance.QueueMessage = queueMessageInstance;
+                                            
+                                            JToken storageAccountValue = queueMessageValue["storageAccount"];
+                                            if (storageAccountValue != null)
+                                            {
+                                                string storageAccountInstance = (string)storageAccountValue;
+                                                queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                            }
+                                            
+                                            JToken queueNameValue = queueMessageValue["queueName"];
+                                            if (queueNameValue != null)
+                                            {
+                                                string queueNameInstance = (string)queueNameValue;
+                                                queueMessageInstance.QueueName = queueNameInstance;
+                                            }
+                                            
+                                            JToken sasTokenValue = queueMessageValue["sasToken"];
+                                            if (sasTokenValue != null)
+                                            {
+                                                string sasTokenInstance = (string)sasTokenValue;
+                                                queueMessageInstance.SasToken = sasTokenInstance;
+                                            }
+                                            
+                                            JToken messageValue = queueMessageValue["message"];
+                                            if (messageValue != null)
+                                            {
+                                                string messageInstance = (string)messageValue;
+                                                queueMessageInstance.Message = messageInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken requestValue2 = actionValue["request"];
+                                    if (requestValue2 != null)
+                                    {
+                                        JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                        actionInstance.Request = requestInstance2;
+                                        
+                                        JToken uriValue2 = requestValue2["uri"];
+                                        if (uriValue2 != null)
+                                        {
+                                            Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
+                                            requestInstance2.Uri = uriInstance2;
+                                        }
+                                        
+                                        JToken methodValue2 = requestValue2["method"];
+                                        if (methodValue2 != null)
+                                        {
+                                            string methodInstance2 = (string)methodValue2;
+                                            requestInstance2.Method = methodInstance2;
+                                        }
+                                        
+                                        JToken headersSequenceElement2 = requestValue2["headers"];
+                                        if (headersSequenceElement2 != null)
+                                        {
+                                            foreach (JProperty property2 in headersSequenceElement2)
+                                            {
+                                                string headersKey2 = (string)property2.Name;
+                                                string headersValue2 = (string)property2.Value;
+                                                requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                            }
+                                        }
+                                        
+                                        JToken bodyValue2 = requestValue2["body"];
+                                        if (bodyValue2 != null)
+                                        {
+                                            string bodyInstance2 = (string)bodyValue2;
+                                            requestInstance2.Body = bodyInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken queueMessageValue2 = actionValue["queueMessage"];
+                                    if (queueMessageValue2 != null)
+                                    {
+                                        JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                        actionInstance.QueueMessage = queueMessageInstance2;
+                                        
+                                        JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
+                                        if (storageAccountValue2 != null)
+                                        {
+                                            string storageAccountInstance2 = (string)storageAccountValue2;
+                                            queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                        }
+                                        
+                                        JToken queueNameValue2 = queueMessageValue2["queueName"];
+                                        if (queueNameValue2 != null)
+                                        {
+                                            string queueNameInstance2 = (string)queueNameValue2;
+                                            queueMessageInstance2.QueueName = queueNameInstance2;
+                                        }
+                                        
+                                        JToken sasTokenValue2 = queueMessageValue2["sasToken"];
+                                        if (sasTokenValue2 != null)
+                                        {
+                                            string sasTokenInstance2 = (string)sasTokenValue2;
+                                            queueMessageInstance2.SasToken = sasTokenInstance2;
+                                        }
+                                        
+                                        JToken messageValue2 = queueMessageValue2["message"];
+                                        if (messageValue2 != null)
+                                        {
+                                            string messageInstance2 = (string)messageValue2;
+                                            queueMessageInstance2.Message = messageInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken recurrenceValue = jobsValue["recurrence"];
+                                if (recurrenceValue != null)
+                                {
+                                    JobRecurrence recurrenceInstance = new JobRecurrence();
+                                    jobInstance.Recurrence = recurrenceInstance;
+                                    
+                                    JToken frequencyValue = recurrenceValue["frequency"];
+                                    if (frequencyValue != null)
+                                    {
+                                        JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
+                                        recurrenceInstance.Frequency = frequencyInstance;
+                                    }
+                                    
+                                    JToken intervalValue = recurrenceValue["interval"];
+                                    if (intervalValue != null)
+                                    {
+                                        int intervalInstance = (int)intervalValue;
+                                        recurrenceInstance.Interval = intervalInstance;
+                                    }
+                                    
+                                    JToken countValue = recurrenceValue["count"];
+                                    if (countValue != null)
+                                    {
+                                        int countInstance = (int)countValue;
+                                        recurrenceInstance.Count = countInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = recurrenceValue["endTime"];
+                                    if (endTimeValue != null)
+                                    {
+                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                        recurrenceInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken scheduleValue = recurrenceValue["schedule"];
+                                    if (scheduleValue != null)
+                                    {
+                                        JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                        recurrenceInstance.Schedule = scheduleInstance;
+                                        
+                                        JArray minutesArray = (JArray)scheduleValue["minutes"];
+                                        if (minutesArray != null)
+                                        {
+                                            foreach (JToken minutesValue in minutesArray)
+                                            {
+                                                scheduleInstance.Minutes.Add((int)minutesValue);
+                                            }
+                                        }
+                                        
+                                        JArray hoursArray = (JArray)scheduleValue["hours"];
+                                        if (hoursArray != null)
+                                        {
+                                            foreach (JToken hoursValue in hoursArray)
+                                            {
+                                                scheduleInstance.Hours.Add((int)hoursValue);
+                                            }
+                                        }
+                                        
+                                        JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
+                                        if (weekDaysArray != null)
+                                        {
+                                            foreach (JToken weekDaysValue in weekDaysArray)
+                                            {
+                                                scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
+                                            }
+                                        }
+                                        
+                                        JArray monthsArray = (JArray)scheduleValue["months"];
+                                        if (monthsArray != null)
+                                        {
+                                            foreach (JToken monthsValue in monthsArray)
+                                            {
+                                                scheduleInstance.Months.Add((int)monthsValue);
+                                            }
+                                        }
+                                        
+                                        JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
+                                        if (monthDaysArray != null)
+                                        {
+                                            foreach (JToken monthDaysValue in monthDaysArray)
+                                            {
+                                                scheduleInstance.MonthDays.Add((int)monthDaysValue);
+                                            }
+                                        }
+                                        
+                                        JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
+                                        if (monthlyOccurrencesArray != null)
+                                        {
+                                            foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
+                                            {
+                                                JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                                scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                                
+                                                JToken dayValue = monthlyOccurrencesValue["day"];
+                                                if (dayValue != null)
+                                                {
+                                                    JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
+                                                    jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                }
+                                                
+                                                JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                                if (occurrenceValue != null)
+                                                {
+                                                    int occurrenceInstance = (int)occurrenceValue;
+                                                    jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            
-                            JToken statusValue = jobsValue["status"];
-                            if (statusValue != null)
-                            {
-                                JobStatus statusInstance = new JobStatus();
-                                jobInstance.Status = statusInstance;
                                 
-                                JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                                if (lastExecutionTimeValue != null)
+                                JToken statusValue = jobsValue["status"];
+                                if (statusValue != null)
                                 {
-                                    DateTime lastExecutionTimeInstance = (DateTime)lastExecutionTimeValue;
-                                    statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                    JobStatus statusInstance = new JobStatus();
+                                    jobInstance.Status = statusInstance;
+                                    
+                                    JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                    if (lastExecutionTimeValue != null)
+                                    {
+                                        DateTime lastExecutionTimeInstance = (DateTime)lastExecutionTimeValue;
+                                        statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                    }
+                                    
+                                    JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                    if (nextExecutionTimeValue != null)
+                                    {
+                                        DateTime nextExecutionTimeInstance = (DateTime)nextExecutionTimeValue;
+                                        statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                    }
+                                    
+                                    JToken executionCountValue = statusValue["executionCount"];
+                                    if (executionCountValue != null)
+                                    {
+                                        int executionCountInstance = (int)executionCountValue;
+                                        statusInstance.ExecutionCount = executionCountInstance;
+                                    }
+                                    
+                                    JToken failureCountValue = statusValue["failureCount"];
+                                    if (failureCountValue != null)
+                                    {
+                                        int failureCountInstance = (int)failureCountValue;
+                                        statusInstance.FailureCount = failureCountInstance;
+                                    }
+                                    
+                                    JToken faultedCountValue = statusValue["faultedCount"];
+                                    if (faultedCountValue != null)
+                                    {
+                                        int faultedCountInstance = (int)faultedCountValue;
+                                        statusInstance.FaultedCount = faultedCountInstance;
+                                    }
                                 }
                                 
-                                JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                                if (nextExecutionTimeValue != null)
+                                JToken stateValue = jobsValue["state"];
+                                if (stateValue != null)
                                 {
-                                    DateTime nextExecutionTimeInstance = (DateTime)nextExecutionTimeValue;
-                                    statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                    JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
+                                    jobInstance.State = stateInstance;
                                 }
-                                
-                                JToken executionCountValue = statusValue["executionCount"];
-                                if (executionCountValue != null)
-                                {
-                                    int executionCountInstance = (int)executionCountValue;
-                                    statusInstance.ExecutionCount = executionCountInstance;
-                                }
-                                
-                                JToken failureCountValue = statusValue["failureCount"];
-                                if (failureCountValue != null)
-                                {
-                                    int failureCountInstance = (int)failureCountValue;
-                                    statusInstance.FailureCount = failureCountInstance;
-                                }
-                                
-                                JToken faultedCountValue = statusValue["faultedCount"];
-                                if (faultedCountValue != null)
-                                {
-                                    int faultedCountInstance = (int)faultedCountValue;
-                                    statusInstance.FaultedCount = faultedCountInstance;
-                                }
-                            }
-                            
-                            JToken stateValue = jobsValue["state"];
-                            if (stateValue != null)
-                            {
-                                JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
-                                jobInstance.State = stateInstance;
                             }
                         }
                     }
@@ -3791,390 +3803,393 @@ namespace Microsoft.WindowsAzure.Scheduler
                     result = new JobCollectionJobsUpdateStateResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    JArray jobsArray = (JArray)responseDoc;
-                    if (jobsArray != null)
+                    if (responseDoc != null)
                     {
-                        foreach (JToken jobsValue in jobsArray)
+                        JArray jobsArray = (JArray)responseDoc;
+                        if (jobsArray != null)
                         {
-                            Job jobInstance = new Job();
-                            result.Jobs.Add(jobInstance);
-                            
-                            JToken idValue = jobsValue["id"];
-                            if (idValue != null)
+                            foreach (JToken jobsValue in jobsArray)
                             {
-                                string idInstance = (string)idValue;
-                                jobInstance.Id = idInstance;
-                            }
-                            
-                            JToken startTimeValue = jobsValue["startTime"];
-                            if (startTimeValue != null)
-                            {
-                                DateTime startTimeInstance = (DateTime)startTimeValue;
-                                jobInstance.StartTime = startTimeInstance;
-                            }
-                            
-                            JToken actionValue = jobsValue["action"];
-                            if (actionValue != null)
-                            {
-                                JobAction actionInstance = new JobAction();
-                                jobInstance.Action = actionInstance;
+                                Job jobInstance = new Job();
+                                result.Jobs.Add(jobInstance);
                                 
-                                JToken typeValue = actionValue["type"];
-                                if (typeValue != null)
+                                JToken idValue = jobsValue["id"];
+                                if (idValue != null)
                                 {
-                                    JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
-                                    actionInstance.Type = typeInstance;
+                                    string idInstance = (string)idValue;
+                                    jobInstance.Id = idInstance;
                                 }
                                 
-                                JToken retryPolicyValue = actionValue["retryPolicy"];
-                                if (retryPolicyValue != null)
+                                JToken startTimeValue = jobsValue["startTime"];
+                                if (startTimeValue != null)
                                 {
-                                    RetryPolicy retryPolicyInstance = new RetryPolicy();
-                                    actionInstance.RetryPolicy = retryPolicyInstance;
-                                    
-                                    JToken retryTypeValue = retryPolicyValue["retryType"];
-                                    if (retryTypeValue != null)
-                                    {
-                                        RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
-                                        retryPolicyInstance.RetryType = retryTypeInstance;
-                                    }
-                                    
-                                    JToken retryIntervalValue = retryPolicyValue["retryInterval"];
-                                    if (retryIntervalValue != null)
-                                    {
-                                        TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
-                                        retryPolicyInstance.RetryInterval = retryIntervalInstance;
-                                    }
-                                    
-                                    JToken retryCountValue = retryPolicyValue["retryCount"];
-                                    if (retryCountValue != null)
-                                    {
-                                        int retryCountInstance = (int)retryCountValue;
-                                        retryPolicyInstance.RetryCount = retryCountInstance;
-                                    }
+                                    DateTime startTimeInstance = (DateTime)startTimeValue;
+                                    jobInstance.StartTime = startTimeInstance;
                                 }
                                 
-                                JToken errorActionValue = actionValue["errorAction"];
-                                if (errorActionValue != null)
+                                JToken actionValue = jobsValue["action"];
+                                if (actionValue != null)
                                 {
-                                    JobErrorAction errorActionInstance = new JobErrorAction();
-                                    actionInstance.ErrorAction = errorActionInstance;
+                                    JobAction actionInstance = new JobAction();
+                                    jobInstance.Action = actionInstance;
                                     
-                                    JToken typeValue2 = errorActionValue["type"];
-                                    if (typeValue2 != null)
+                                    JToken typeValue = actionValue["type"];
+                                    if (typeValue != null)
                                     {
-                                        JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
-                                        errorActionInstance.Type = typeInstance2;
+                                        JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
+                                        actionInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken requestValue = errorActionValue["request"];
-                                    if (requestValue != null)
+                                    JToken retryPolicyValue = actionValue["retryPolicy"];
+                                    if (retryPolicyValue != null)
                                     {
-                                        JobHttpRequest requestInstance = new JobHttpRequest();
-                                        errorActionInstance.Request = requestInstance;
+                                        RetryPolicy retryPolicyInstance = new RetryPolicy();
+                                        actionInstance.RetryPolicy = retryPolicyInstance;
                                         
-                                        JToken uriValue = requestValue["uri"];
-                                        if (uriValue != null)
+                                        JToken retryTypeValue = retryPolicyValue["retryType"];
+                                        if (retryTypeValue != null)
                                         {
-                                            Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
-                                            requestInstance.Uri = uriInstance;
+                                            RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
+                                            retryPolicyInstance.RetryType = retryTypeInstance;
                                         }
                                         
-                                        JToken methodValue = requestValue["method"];
-                                        if (methodValue != null)
+                                        JToken retryIntervalValue = retryPolicyValue["retryInterval"];
+                                        if (retryIntervalValue != null)
                                         {
-                                            string methodInstance = (string)methodValue;
-                                            requestInstance.Method = methodInstance;
+                                            TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
+                                            retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                         }
                                         
-                                        JToken headersSequenceElement = requestValue["headers"];
-                                        if (headersSequenceElement != null)
+                                        JToken retryCountValue = retryPolicyValue["retryCount"];
+                                        if (retryCountValue != null)
                                         {
-                                            foreach (JProperty property in headersSequenceElement)
-                                            {
-                                                string headersKey = (string)property.Name;
-                                                string headersValue = (string)property.Value;
-                                                requestInstance.Headers.Add(headersKey, headersValue);
-                                            }
+                                            int retryCountInstance = (int)retryCountValue;
+                                            retryPolicyInstance.RetryCount = retryCountInstance;
+                                        }
+                                    }
+                                    
+                                    JToken errorActionValue = actionValue["errorAction"];
+                                    if (errorActionValue != null)
+                                    {
+                                        JobErrorAction errorActionInstance = new JobErrorAction();
+                                        actionInstance.ErrorAction = errorActionInstance;
+                                        
+                                        JToken typeValue2 = errorActionValue["type"];
+                                        if (typeValue2 != null)
+                                        {
+                                            JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
+                                            errorActionInstance.Type = typeInstance2;
                                         }
                                         
-                                        JToken bodyValue = requestValue["body"];
-                                        if (bodyValue != null)
+                                        JToken requestValue = errorActionValue["request"];
+                                        if (requestValue != null)
                                         {
-                                            string bodyInstance = (string)bodyValue;
-                                            requestInstance.Body = bodyInstance;
-                                        }
-                                    }
-                                    
-                                    JToken queueMessageValue = errorActionValue["queueMessage"];
-                                    if (queueMessageValue != null)
-                                    {
-                                        JobQueueMessage queueMessageInstance = new JobQueueMessage();
-                                        errorActionInstance.QueueMessage = queueMessageInstance;
-                                        
-                                        JToken storageAccountValue = queueMessageValue["storageAccount"];
-                                        if (storageAccountValue != null)
-                                        {
-                                            string storageAccountInstance = (string)storageAccountValue;
-                                            queueMessageInstance.StorageAccountName = storageAccountInstance;
-                                        }
-                                        
-                                        JToken queueNameValue = queueMessageValue["queueName"];
-                                        if (queueNameValue != null)
-                                        {
-                                            string queueNameInstance = (string)queueNameValue;
-                                            queueMessageInstance.QueueName = queueNameInstance;
-                                        }
-                                        
-                                        JToken sasTokenValue = queueMessageValue["sasToken"];
-                                        if (sasTokenValue != null)
-                                        {
-                                            string sasTokenInstance = (string)sasTokenValue;
-                                            queueMessageInstance.SasToken = sasTokenInstance;
-                                        }
-                                        
-                                        JToken messageValue = queueMessageValue["message"];
-                                        if (messageValue != null)
-                                        {
-                                            string messageInstance = (string)messageValue;
-                                            queueMessageInstance.Message = messageInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken requestValue2 = actionValue["request"];
-                                if (requestValue2 != null)
-                                {
-                                    JobHttpRequest requestInstance2 = new JobHttpRequest();
-                                    actionInstance.Request = requestInstance2;
-                                    
-                                    JToken uriValue2 = requestValue2["uri"];
-                                    if (uriValue2 != null)
-                                    {
-                                        Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
-                                        requestInstance2.Uri = uriInstance2;
-                                    }
-                                    
-                                    JToken methodValue2 = requestValue2["method"];
-                                    if (methodValue2 != null)
-                                    {
-                                        string methodInstance2 = (string)methodValue2;
-                                        requestInstance2.Method = methodInstance2;
-                                    }
-                                    
-                                    JToken headersSequenceElement2 = requestValue2["headers"];
-                                    if (headersSequenceElement2 != null)
-                                    {
-                                        foreach (JProperty property2 in headersSequenceElement2)
-                                        {
-                                            string headersKey2 = (string)property2.Name;
-                                            string headersValue2 = (string)property2.Value;
-                                            requestInstance2.Headers.Add(headersKey2, headersValue2);
-                                        }
-                                    }
-                                    
-                                    JToken bodyValue2 = requestValue2["body"];
-                                    if (bodyValue2 != null)
-                                    {
-                                        string bodyInstance2 = (string)bodyValue2;
-                                        requestInstance2.Body = bodyInstance2;
-                                    }
-                                }
-                                
-                                JToken queueMessageValue2 = actionValue["queueMessage"];
-                                if (queueMessageValue2 != null)
-                                {
-                                    JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
-                                    actionInstance.QueueMessage = queueMessageInstance2;
-                                    
-                                    JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
-                                    if (storageAccountValue2 != null)
-                                    {
-                                        string storageAccountInstance2 = (string)storageAccountValue2;
-                                        queueMessageInstance2.StorageAccountName = storageAccountInstance2;
-                                    }
-                                    
-                                    JToken queueNameValue2 = queueMessageValue2["queueName"];
-                                    if (queueNameValue2 != null)
-                                    {
-                                        string queueNameInstance2 = (string)queueNameValue2;
-                                        queueMessageInstance2.QueueName = queueNameInstance2;
-                                    }
-                                    
-                                    JToken sasTokenValue2 = queueMessageValue2["sasToken"];
-                                    if (sasTokenValue2 != null)
-                                    {
-                                        string sasTokenInstance2 = (string)sasTokenValue2;
-                                        queueMessageInstance2.SasToken = sasTokenInstance2;
-                                    }
-                                    
-                                    JToken messageValue2 = queueMessageValue2["message"];
-                                    if (messageValue2 != null)
-                                    {
-                                        string messageInstance2 = (string)messageValue2;
-                                        queueMessageInstance2.Message = messageInstance2;
-                                    }
-                                }
-                            }
-                            
-                            JToken recurrenceValue = jobsValue["recurrence"];
-                            if (recurrenceValue != null)
-                            {
-                                JobRecurrence recurrenceInstance = new JobRecurrence();
-                                jobInstance.Recurrence = recurrenceInstance;
-                                
-                                JToken frequencyValue = recurrenceValue["frequency"];
-                                if (frequencyValue != null)
-                                {
-                                    JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
-                                    recurrenceInstance.Frequency = frequencyInstance;
-                                }
-                                
-                                JToken intervalValue = recurrenceValue["interval"];
-                                if (intervalValue != null)
-                                {
-                                    int intervalInstance = (int)intervalValue;
-                                    recurrenceInstance.Interval = intervalInstance;
-                                }
-                                
-                                JToken countValue = recurrenceValue["count"];
-                                if (countValue != null)
-                                {
-                                    int countInstance = (int)countValue;
-                                    recurrenceInstance.Count = countInstance;
-                                }
-                                
-                                JToken endTimeValue = recurrenceValue["endTime"];
-                                if (endTimeValue != null)
-                                {
-                                    DateTime endTimeInstance = (DateTime)endTimeValue;
-                                    recurrenceInstance.EndTime = endTimeInstance;
-                                }
-                                
-                                JToken scheduleValue = recurrenceValue["schedule"];
-                                if (scheduleValue != null)
-                                {
-                                    JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
-                                    recurrenceInstance.Schedule = scheduleInstance;
-                                    
-                                    JArray minutesArray = (JArray)scheduleValue["minutes"];
-                                    if (minutesArray != null)
-                                    {
-                                        foreach (JToken minutesValue in minutesArray)
-                                        {
-                                            scheduleInstance.Minutes.Add((int)minutesValue);
-                                        }
-                                    }
-                                    
-                                    JArray hoursArray = (JArray)scheduleValue["hours"];
-                                    if (hoursArray != null)
-                                    {
-                                        foreach (JToken hoursValue in hoursArray)
-                                        {
-                                            scheduleInstance.Hours.Add((int)hoursValue);
-                                        }
-                                    }
-                                    
-                                    JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
-                                    if (weekDaysArray != null)
-                                    {
-                                        foreach (JToken weekDaysValue in weekDaysArray)
-                                        {
-                                            scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
-                                        }
-                                    }
-                                    
-                                    JArray monthsArray = (JArray)scheduleValue["months"];
-                                    if (monthsArray != null)
-                                    {
-                                        foreach (JToken monthsValue in monthsArray)
-                                        {
-                                            scheduleInstance.Months.Add((int)monthsValue);
-                                        }
-                                    }
-                                    
-                                    JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
-                                    if (monthDaysArray != null)
-                                    {
-                                        foreach (JToken monthDaysValue in monthDaysArray)
-                                        {
-                                            scheduleInstance.MonthDays.Add((int)monthDaysValue);
-                                        }
-                                    }
-                                    
-                                    JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
-                                    if (monthlyOccurrencesArray != null)
-                                    {
-                                        foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
-                                        {
-                                            JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
-                                            scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                            JobHttpRequest requestInstance = new JobHttpRequest();
+                                            errorActionInstance.Request = requestInstance;
                                             
-                                            JToken dayValue = monthlyOccurrencesValue["day"];
-                                            if (dayValue != null)
+                                            JToken uriValue = requestValue["uri"];
+                                            if (uriValue != null)
                                             {
-                                                JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
-                                                jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
+                                                requestInstance.Uri = uriInstance;
                                             }
                                             
-                                            JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
-                                            if (occurrenceValue != null)
+                                            JToken methodValue = requestValue["method"];
+                                            if (methodValue != null)
                                             {
-                                                int occurrenceInstance = (int)occurrenceValue;
-                                                jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                string methodInstance = (string)methodValue;
+                                                requestInstance.Method = methodInstance;
+                                            }
+                                            
+                                            JToken headersSequenceElement = requestValue["headers"];
+                                            if (headersSequenceElement != null)
+                                            {
+                                                foreach (JProperty property in headersSequenceElement)
+                                                {
+                                                    string headersKey = (string)property.Name;
+                                                    string headersValue = (string)property.Value;
+                                                    requestInstance.Headers.Add(headersKey, headersValue);
+                                                }
+                                            }
+                                            
+                                            JToken bodyValue = requestValue["body"];
+                                            if (bodyValue != null)
+                                            {
+                                                string bodyInstance = (string)bodyValue;
+                                                requestInstance.Body = bodyInstance;
+                                            }
+                                        }
+                                        
+                                        JToken queueMessageValue = errorActionValue["queueMessage"];
+                                        if (queueMessageValue != null)
+                                        {
+                                            JobQueueMessage queueMessageInstance = new JobQueueMessage();
+                                            errorActionInstance.QueueMessage = queueMessageInstance;
+                                            
+                                            JToken storageAccountValue = queueMessageValue["storageAccount"];
+                                            if (storageAccountValue != null)
+                                            {
+                                                string storageAccountInstance = (string)storageAccountValue;
+                                                queueMessageInstance.StorageAccountName = storageAccountInstance;
+                                            }
+                                            
+                                            JToken queueNameValue = queueMessageValue["queueName"];
+                                            if (queueNameValue != null)
+                                            {
+                                                string queueNameInstance = (string)queueNameValue;
+                                                queueMessageInstance.QueueName = queueNameInstance;
+                                            }
+                                            
+                                            JToken sasTokenValue = queueMessageValue["sasToken"];
+                                            if (sasTokenValue != null)
+                                            {
+                                                string sasTokenInstance = (string)sasTokenValue;
+                                                queueMessageInstance.SasToken = sasTokenInstance;
+                                            }
+                                            
+                                            JToken messageValue = queueMessageValue["message"];
+                                            if (messageValue != null)
+                                            {
+                                                string messageInstance = (string)messageValue;
+                                                queueMessageInstance.Message = messageInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken requestValue2 = actionValue["request"];
+                                    if (requestValue2 != null)
+                                    {
+                                        JobHttpRequest requestInstance2 = new JobHttpRequest();
+                                        actionInstance.Request = requestInstance2;
+                                        
+                                        JToken uriValue2 = requestValue2["uri"];
+                                        if (uriValue2 != null)
+                                        {
+                                            Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
+                                            requestInstance2.Uri = uriInstance2;
+                                        }
+                                        
+                                        JToken methodValue2 = requestValue2["method"];
+                                        if (methodValue2 != null)
+                                        {
+                                            string methodInstance2 = (string)methodValue2;
+                                            requestInstance2.Method = methodInstance2;
+                                        }
+                                        
+                                        JToken headersSequenceElement2 = requestValue2["headers"];
+                                        if (headersSequenceElement2 != null)
+                                        {
+                                            foreach (JProperty property2 in headersSequenceElement2)
+                                            {
+                                                string headersKey2 = (string)property2.Name;
+                                                string headersValue2 = (string)property2.Value;
+                                                requestInstance2.Headers.Add(headersKey2, headersValue2);
+                                            }
+                                        }
+                                        
+                                        JToken bodyValue2 = requestValue2["body"];
+                                        if (bodyValue2 != null)
+                                        {
+                                            string bodyInstance2 = (string)bodyValue2;
+                                            requestInstance2.Body = bodyInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken queueMessageValue2 = actionValue["queueMessage"];
+                                    if (queueMessageValue2 != null)
+                                    {
+                                        JobQueueMessage queueMessageInstance2 = new JobQueueMessage();
+                                        actionInstance.QueueMessage = queueMessageInstance2;
+                                        
+                                        JToken storageAccountValue2 = queueMessageValue2["storageAccount"];
+                                        if (storageAccountValue2 != null)
+                                        {
+                                            string storageAccountInstance2 = (string)storageAccountValue2;
+                                            queueMessageInstance2.StorageAccountName = storageAccountInstance2;
+                                        }
+                                        
+                                        JToken queueNameValue2 = queueMessageValue2["queueName"];
+                                        if (queueNameValue2 != null)
+                                        {
+                                            string queueNameInstance2 = (string)queueNameValue2;
+                                            queueMessageInstance2.QueueName = queueNameInstance2;
+                                        }
+                                        
+                                        JToken sasTokenValue2 = queueMessageValue2["sasToken"];
+                                        if (sasTokenValue2 != null)
+                                        {
+                                            string sasTokenInstance2 = (string)sasTokenValue2;
+                                            queueMessageInstance2.SasToken = sasTokenInstance2;
+                                        }
+                                        
+                                        JToken messageValue2 = queueMessageValue2["message"];
+                                        if (messageValue2 != null)
+                                        {
+                                            string messageInstance2 = (string)messageValue2;
+                                            queueMessageInstance2.Message = messageInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                JToken recurrenceValue = jobsValue["recurrence"];
+                                if (recurrenceValue != null)
+                                {
+                                    JobRecurrence recurrenceInstance = new JobRecurrence();
+                                    jobInstance.Recurrence = recurrenceInstance;
+                                    
+                                    JToken frequencyValue = recurrenceValue["frequency"];
+                                    if (frequencyValue != null)
+                                    {
+                                        JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
+                                        recurrenceInstance.Frequency = frequencyInstance;
+                                    }
+                                    
+                                    JToken intervalValue = recurrenceValue["interval"];
+                                    if (intervalValue != null)
+                                    {
+                                        int intervalInstance = (int)intervalValue;
+                                        recurrenceInstance.Interval = intervalInstance;
+                                    }
+                                    
+                                    JToken countValue = recurrenceValue["count"];
+                                    if (countValue != null)
+                                    {
+                                        int countInstance = (int)countValue;
+                                        recurrenceInstance.Count = countInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = recurrenceValue["endTime"];
+                                    if (endTimeValue != null)
+                                    {
+                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                        recurrenceInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken scheduleValue = recurrenceValue["schedule"];
+                                    if (scheduleValue != null)
+                                    {
+                                        JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
+                                        recurrenceInstance.Schedule = scheduleInstance;
+                                        
+                                        JArray minutesArray = (JArray)scheduleValue["minutes"];
+                                        if (minutesArray != null)
+                                        {
+                                            foreach (JToken minutesValue in minutesArray)
+                                            {
+                                                scheduleInstance.Minutes.Add((int)minutesValue);
+                                            }
+                                        }
+                                        
+                                        JArray hoursArray = (JArray)scheduleValue["hours"];
+                                        if (hoursArray != null)
+                                        {
+                                            foreach (JToken hoursValue in hoursArray)
+                                            {
+                                                scheduleInstance.Hours.Add((int)hoursValue);
+                                            }
+                                        }
+                                        
+                                        JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
+                                        if (weekDaysArray != null)
+                                        {
+                                            foreach (JToken weekDaysValue in weekDaysArray)
+                                            {
+                                                scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
+                                            }
+                                        }
+                                        
+                                        JArray monthsArray = (JArray)scheduleValue["months"];
+                                        if (monthsArray != null)
+                                        {
+                                            foreach (JToken monthsValue in monthsArray)
+                                            {
+                                                scheduleInstance.Months.Add((int)monthsValue);
+                                            }
+                                        }
+                                        
+                                        JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
+                                        if (monthDaysArray != null)
+                                        {
+                                            foreach (JToken monthDaysValue in monthDaysArray)
+                                            {
+                                                scheduleInstance.MonthDays.Add((int)monthDaysValue);
+                                            }
+                                        }
+                                        
+                                        JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
+                                        if (monthlyOccurrencesArray != null)
+                                        {
+                                            foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
+                                            {
+                                                JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
+                                                scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
+                                                
+                                                JToken dayValue = monthlyOccurrencesValue["day"];
+                                                if (dayValue != null)
+                                                {
+                                                    JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
+                                                    jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
+                                                }
+                                                
+                                                JToken occurrenceValue = monthlyOccurrencesValue["occurrence"];
+                                                if (occurrenceValue != null)
+                                                {
+                                                    int occurrenceInstance = (int)occurrenceValue;
+                                                    jobScheduleMonthlyOccurrenceInstance.Occurrence = occurrenceInstance;
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            
-                            JToken statusValue = jobsValue["status"];
-                            if (statusValue != null)
-                            {
-                                JobStatus statusInstance = new JobStatus();
-                                jobInstance.Status = statusInstance;
                                 
-                                JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
-                                if (lastExecutionTimeValue != null)
+                                JToken statusValue = jobsValue["status"];
+                                if (statusValue != null)
                                 {
-                                    DateTime lastExecutionTimeInstance = (DateTime)lastExecutionTimeValue;
-                                    statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                    JobStatus statusInstance = new JobStatus();
+                                    jobInstance.Status = statusInstance;
+                                    
+                                    JToken lastExecutionTimeValue = statusValue["lastExecutionTime"];
+                                    if (lastExecutionTimeValue != null)
+                                    {
+                                        DateTime lastExecutionTimeInstance = (DateTime)lastExecutionTimeValue;
+                                        statusInstance.LastExecutionTime = lastExecutionTimeInstance;
+                                    }
+                                    
+                                    JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
+                                    if (nextExecutionTimeValue != null)
+                                    {
+                                        DateTime nextExecutionTimeInstance = (DateTime)nextExecutionTimeValue;
+                                        statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                    }
+                                    
+                                    JToken executionCountValue = statusValue["executionCount"];
+                                    if (executionCountValue != null)
+                                    {
+                                        int executionCountInstance = (int)executionCountValue;
+                                        statusInstance.ExecutionCount = executionCountInstance;
+                                    }
+                                    
+                                    JToken failureCountValue = statusValue["failureCount"];
+                                    if (failureCountValue != null)
+                                    {
+                                        int failureCountInstance = (int)failureCountValue;
+                                        statusInstance.FailureCount = failureCountInstance;
+                                    }
+                                    
+                                    JToken faultedCountValue = statusValue["faultedCount"];
+                                    if (faultedCountValue != null)
+                                    {
+                                        int faultedCountInstance = (int)faultedCountValue;
+                                        statusInstance.FaultedCount = faultedCountInstance;
+                                    }
                                 }
                                 
-                                JToken nextExecutionTimeValue = statusValue["nextExecutionTime"];
-                                if (nextExecutionTimeValue != null)
+                                JToken stateValue = jobsValue["state"];
+                                if (stateValue != null)
                                 {
-                                    DateTime nextExecutionTimeInstance = (DateTime)nextExecutionTimeValue;
-                                    statusInstance.NextExecutionTime = nextExecutionTimeInstance;
+                                    JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
+                                    jobInstance.State = stateInstance;
                                 }
-                                
-                                JToken executionCountValue = statusValue["executionCount"];
-                                if (executionCountValue != null)
-                                {
-                                    int executionCountInstance = (int)executionCountValue;
-                                    statusInstance.ExecutionCount = executionCountInstance;
-                                }
-                                
-                                JToken failureCountValue = statusValue["failureCount"];
-                                if (failureCountValue != null)
-                                {
-                                    int failureCountInstance = (int)failureCountValue;
-                                    statusInstance.FailureCount = failureCountInstance;
-                                }
-                                
-                                JToken faultedCountValue = statusValue["faultedCount"];
-                                if (faultedCountValue != null)
-                                {
-                                    int faultedCountInstance = (int)faultedCountValue;
-                                    statusInstance.FaultedCount = faultedCountInstance;
-                                }
-                            }
-                            
-                            JToken stateValue = jobsValue["state"];
-                            if (stateValue != null)
-                            {
-                                JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
-                                jobInstance.State = stateInstance;
                             }
                         }
                     }
