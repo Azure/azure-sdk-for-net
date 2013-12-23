@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The updated network configuration
+        /// The updated network configuration.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The updated network configuration
+        /// The updated network configuration.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -150,7 +150,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Server List operation
+        /// The response structure for the Server List operation.
         /// </returns>
         public static NetworkListResponse List(this INetworkOperations operations)
         {
@@ -182,7 +182,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Server List operation
+        /// The response structure for the Server List operation.
         /// </returns>
         public static Task<NetworkListResponse> ListAsync(this INetworkOperations operations)
         {
@@ -200,7 +200,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The updated network configuration
+        /// The updated network configuration.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -243,7 +243,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The updated network configuration
+        /// The updated network configuration.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

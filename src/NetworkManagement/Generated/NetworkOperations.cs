@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// The updated network configuration
+        /// The updated network configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -299,7 +299,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Server List operation
+        /// The response structure for the Server List operation.
         /// </returns>
         public async Task<NetworkListResponse> ListAsync(CancellationToken cancellationToken)
         {
@@ -603,7 +603,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// The updated network configuration
+        /// The updated network configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

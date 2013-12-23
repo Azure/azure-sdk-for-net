@@ -28,14 +28,14 @@ using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// The response to a ListConnections request to a Virtual Network Gateway
+    /// The response to a ListConnections request to a Virtual Network Gateway.
     /// </summary>
     public partial class GatewayListConnectionsResponse : OperationResponse, IEnumerable<GatewayListConnectionsResponse.GatewayConnection>
     {
         private IList<GatewayListConnectionsResponse.GatewayConnection> _connections;
         
         /// <summary>
-        /// The list of connections
+        /// The list of connections.
         /// </summary>
         public IList<GatewayListConnectionsResponse.GatewayConnection> Connections
         {
@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             
             /// <summary>
             /// The number of bytes of data transferred out through this
-            /// connection since it was started
+            /// connection since it was started.
             /// </summary>
             public long EgressBytesTransferred
             {
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             
             /// <summary>
             /// The number of bytes of data transferred in through this
-            /// connection since it was started
+            /// connection since it was started.
             /// </summary>
             public long IngressBytesTransferred
             {
@@ -141,7 +141,8 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private string _localNetworkSiteName;
             
             /// <summary>
-            /// The name of the local network site represented by the connection
+            /// The name of the local network site represented by the
+            /// connection.
             /// </summary>
             public string LocalNetworkSiteName
             {

@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// for more information)
         /// </summary>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Upload client certificate Virtual
@@ -216,10 +216,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// for more information)
         /// </summary>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
-        /// The X509 certificate thumbprint
+        /// The X509 certificate thumbprint.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -352,10 +352,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// for more information)
         /// </summary>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
-        /// The X509 certificate thumbprint
+        /// The X509 certificate thumbprint.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -477,13 +477,13 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// for more information)
         /// </summary>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to the list client root certificates request
+        /// The response to the list client root certificates request.
         /// </returns>
         public async Task<ClientRootCertificateListResponse> ListAsync(string virtualNetworkName, CancellationToken cancellationToken)
         {

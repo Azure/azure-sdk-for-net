@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         
         /// <summary>
         /// The get authorization rule operation gets an authorization rule for
-        /// a namespace by name
+        /// a namespace by name.
         /// </summary>
         /// <param name='namespaceName'>
         /// The namespace to get the authorization rule for.
@@ -160,13 +160,13 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to the request for a listing of namespaces
+        /// The response to the request for a listing of namespaces.
         /// </returns>
         Task<ServiceBusNamespacesResponse> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
         /// The get authorization rules operation gets the authorization rules
-        /// for a namespace
+        /// for a namespace.
         /// </summary>
         /// <param name='namespaceName'>
         /// The namespace to get the authorization rule for.

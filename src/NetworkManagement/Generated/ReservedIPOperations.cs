@@ -501,7 +501,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// for virtual IP reserved for the subscription.
         /// </summary>
         /// <param name='ipName'>
-        /// The name of the reserved IP to retrieve
+        /// The name of the reserved IP to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

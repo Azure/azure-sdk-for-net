@@ -28,14 +28,14 @@ using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// The respoonse to the get supported platform configuration request
+    /// The respoonse to the get supported platform configuration request.
     /// </summary>
     public partial class GatewayListSupportedDevicesResponse : OperationResponse
     {
         private IList<GatewayListSupportedDevicesResponse.Vendor> _vendors;
         
         /// <summary>
-        /// The set of supported vendors
+        /// The set of supported vendors.
         /// </summary>
         public IList<GatewayListSupportedDevicesResponse.Vendor> Vendors
         {
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private string _name;
             
             /// <summary>
-            /// The name of the os family
+            /// The name of the os family.
             /// </summary>
             public string Name
             {
@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         }
         
         /// <summary>
-        /// The name and supported OS Families for this vendor on the platform
+        /// The name and supported OS Families for this vendor on the platform.
         /// </summary>
         public partial class Platform
         {
@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private IList<GatewayListSupportedDevicesResponse.OSFamily> _oSFamilies;
             
             /// <summary>
-            /// The supported OS Families for this platform
+            /// The supported OS Families for this platform.
             /// </summary>
             public IList<GatewayListSupportedDevicesResponse.OSFamily> OSFamilies
             {
@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
             private string _name;
             
             /// <summary>
-            /// The vendor name
+            /// The vendor name.
             /// </summary>
             public string Name
             {
