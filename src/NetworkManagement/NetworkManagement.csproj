@@ -96,6 +96,6 @@
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Network.Specification.1.0.0.0-prerelease\tools\Microsoft.WindowsAzure.Management.Network.Specification.dll" DestinationFolder="." />
   </Target>
   <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets')" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5105.25348-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5105.25348-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
 </Project>
