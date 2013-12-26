@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
@@ -29,17 +30,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
     /// <summary>
     /// The List Rules operation response.
     /// </summary>
-    public partial class RuleListResponse : OperationResponse
+    public partial class RuleListResponse : OperationResponse, IEnumerable<Rule>
     {
-        private RuleCollection _ruleCollection;
+        private IList<Rule> _value;
         
         /// <summary>
-        /// The retrieved rules.
+        /// Alert rules collection.
         /// </summary>
-        public RuleCollection RuleCollection
+        public IList<Rule> Value
         {
-            get { return this._ruleCollection; }
-            set { this._ruleCollection = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
@@ -47,6 +48,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleListResponse()
         {
+            this._value = new List<Rule>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Value.
+        /// </summary>
+        public IEnumerator<Rule> GetEnumerator()
+        {
+            return this.Value.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Value.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

@@ -704,16 +704,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (responseDoc != null)
                     {
-                        RuleCollection ruleCollectionInstance = new RuleCollection();
-                        result.RuleCollection = ruleCollectionInstance;
-                        
                         JArray valueArray = (JArray)responseDoc["Value"];
                         if (valueArray != null)
                         {
                             foreach (JToken valueValue in valueArray)
                             {
                                 Rule ruleInstance = new Rule();
-                                ruleCollectionInstance.Value.Add(ruleInstance);
+                                result.Value.Add(ruleInstance);
                                 
                                 JToken idValue = valueValue["Id"];
                                 if (idValue != null)

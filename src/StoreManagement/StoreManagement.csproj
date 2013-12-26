@@ -61,13 +61,13 @@
   <Target Name="CopyMicrosoftWindowsAzureManagementStoreSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Store.Specification.1.0.5085.30282-prerelease\tools\Microsoft.WindowsAzure.Management.Store.Specification.dll" DestinationFolder="." />
   </Target>
-  <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5101.27990-prerelease\build\Hydra.Generator.targets')" />
-  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
   <Target Name="CopyMicrosoftWindowsAzureManagementStoreSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Store.Specification.1.0.5091.22053-prerelease\tools\Microsoft.WindowsAzure.Management.Store.Specification.dll" DestinationFolder="." />
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementStoreSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Store.Specification.1.0.5105.19147-prerelease\tools\Microsoft.WindowsAzure.Management.Store.Specification.dll" DestinationFolder="." />
   </Target>
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5105.25348-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5105.25348-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="BeforeBuild" DependsOnTargets="RestorePackages;GenerateCodeFromSpecs" />
 </Project>
