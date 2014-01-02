@@ -41,9 +41,11 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <typeparam name="T">Type of ServiceClient.</typeparam>
         /// <param name="client">The ServiceClient.</param>
-        public virtual void RefreshServiceClient<T>(ServiceClient<T> client)
+        public virtual Task RefreshServiceClient<T>(ServiceClient<T> client)
             where T : ServiceClient<T>
         {
+            // Return an empty task by default
+            return TaskEx.FromResult<object>(null);
         }
 
         /// <summary>

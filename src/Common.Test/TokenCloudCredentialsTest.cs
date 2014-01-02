@@ -14,42 +14,38 @@
 //
 
 using System.Net;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Common.Test.Fakes;
-using Microsoft.WindowsAzure.Common.TransientFaultHandling;
 using Xunit;
-using System.Net.Http;
 
 namespace Microsoft.WindowsAzure.Common.Test
 {
     public class TokenCloudCredentialsTest
     {
         [Fact]
-        public async void TokenCloudCredentialAddsHeader()
+        public void TokenCloudCredentialAddsHeader()
         {
             var tokenCredentials = new TokenCloudCredentials("123","abc");
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var fakeClient = new FakeServiceClientWithCredentials(tokenCredentials).WithHandler(handler);
-            await fakeClient.DoStuff();
+            fakeClient.DoStuff().Wait();
 
             Assert.Equal("Bearer", handler.RequestHeaders.Authorization.Scheme);
             Assert.Equal("abc", handler.RequestHeaders.Authorization.Parameter);
         }
 
         [Fact]
-        public async void TokenCloudCredentialUpdatesHeader()
+        public void TokenCloudCredentialUpdatesHeader()
         {
-            var tokenCredentials = new TokenCloudCredentials("123", "abc");
+            var credentials = new TokenCloudCredentials("123", "abc");
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            var fakeClient = new FakeServiceClientWithCredentials(tokenCredentials).WithHandler(handler);
-            await fakeClient.DoStuff();
+            var fakeClient = new FakeServiceClientWithCredentials(credentials).WithHandler(handler);
+            fakeClient.DoStuff().Wait();
 
             Assert.Equal("Bearer", handler.RequestHeaders.Authorization.Scheme);
             Assert.Equal("abc", handler.RequestHeaders.Authorization.Parameter);
 
-            tokenCredentials.Token = "xyz";
+            credentials.Token = "xyz";
+            fakeClient.DoStuff().Wait();
 
             Assert.Equal("Bearer", handler.RequestHeaders.Authorization.Scheme);
             Assert.Equal("xyz", handler.RequestHeaders.Authorization.Parameter);

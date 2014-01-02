@@ -89,6 +89,7 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
         {
             // Construct URL
             string url = "http://www.microsoft.com";
+            await this.Credentials.RefreshServiceClient(this);
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -109,6 +110,18 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
         public FakeServiceClientWithCredentials WithHandler(DelegatingHandler handler)
         {
             return (FakeServiceClientWithCredentials)WithHandler(new FakeServiceClientWithCredentials(), handler);
+        }
+
+        protected override void Clone(ServiceClient<FakeServiceClientWithCredentials> client)
+        {
+            base.Clone(client);
+            FakeServiceClientWithCredentials management = client as FakeServiceClientWithCredentials;
+            if (management != null)
+            {
+                management._credentials = Credentials;
+                management._baseUri = BaseUri;
+                management.Credentials.InitializeServiceClient(management);
+            }
         }
     }
 }

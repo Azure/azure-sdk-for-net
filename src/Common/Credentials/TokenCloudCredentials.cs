@@ -113,7 +113,7 @@ namespace Microsoft.WindowsAzure
         /// </remarks>
         public override void InitializeServiceClient<T>(ServiceClient<T> client)
         {
-            RefreshServiceClient(client);
+            RefreshServiceClient(client).Wait();
         }
 
         /// <summary>
@@ -124,9 +124,12 @@ namespace Microsoft.WindowsAzure
         /// <remarks>
         /// This will add a bearer token header to the ServiceClient's HttpClient.
         /// </remarks>
-        public override void RefreshServiceClient<T>(ServiceClient<T> client)
+        public override Task RefreshServiceClient<T>(ServiceClient<T> client)
         {
-            client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            return Task.Factory.StartNew(() =>
+                {
+                    client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                });
         }
     }
 }
