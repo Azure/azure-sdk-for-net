@@ -37,6 +37,16 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
+        /// Refreshes credentials in a ServiceClient instance.
+        /// </summary>
+        /// <typeparam name="T">Type of ServiceClient.</typeparam>
+        /// <param name="client">The ServiceClient.</param>
+        public virtual void RefreshServiceClient<T>(ServiceClient<T> client)
+            where T : ServiceClient<T>
+        {
+        }
+
+        /// <summary>
         /// Apply the credentials to the HTTP request.
         /// </summary>
         /// <param name="request">The HTTP request.</param>

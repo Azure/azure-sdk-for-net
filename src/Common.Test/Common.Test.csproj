@@ -64,8 +64,11 @@
   <ItemGroup>
     <Compile Include="Fakes\BadResponseDelegatingHandler.cs" />
     <Compile Include="Fakes\FakeHttpHandler.cs" />
+    <Compile Include="Fakes\FakeServiceClientWithCredentials.cs" />
     <Compile Include="Fakes\FakeServiceClient.cs" />
+    <Compile Include="Fakes\RecordedDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TokenCloudCredentialsTest.cs" />
     <Compile Include="ServiceClientTest.cs" />
     <Compile Include="Tracing\CloudTracingExtensionsTest.cs" />
     <Compile Include="TransientFaultHandling\GeneralRetryPolicyTests.cs" />

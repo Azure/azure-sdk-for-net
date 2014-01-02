@@ -15,6 +15,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 
@@ -22,7 +26,6 @@ namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// Class for token based credentials associated with a particular subscription.
-    /// Requires a valid JWT token to be passed in.
     /// </summary>
     public class TokenCloudCredentials : SubscriptionCloudCredentials
     {
@@ -43,14 +46,14 @@ namespace Microsoft.WindowsAzure
         /// Gets secure token used to authenticate against Windows Azure API. 
         /// No anonymous requests are allowed.
         /// </summary>
-        public string Token { get; private set; }
+        public string Token { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TokenCloudCredentials"/>
         /// class.
         /// </summary>
         /// <param name="subscriptionId">The Subscription ID.</param>
-        /// <param name="token">JWT token.</param>
+        /// <param name="token">Valid JSON Web Token (JWT).</param>
         public TokenCloudCredentials(string subscriptionId, string token)
         {
             if (subscriptionId == null)
@@ -106,15 +109,24 @@ namespace Microsoft.WindowsAzure
         /// <typeparam name="T">Type of ServiceClient.</typeparam>
         /// <param name="client">The ServiceClient.</param>
         /// <remarks>
-        /// This will add a certificate to the shared root WebRequestHandler in
-        /// the ServiceClient's HttpClient handler pipeline.
+        /// This will add a bearer token header to the ServiceClient's HttpClient.
         /// </remarks>
         public override void InitializeServiceClient<T>(ServiceClient<T> client)
         {
-            if (client.HttpClient.DefaultRequestHeaders.Authorization == null)
-            {
-                client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
-            }
+            RefreshServiceClient(client);
+        }
+
+        /// <summary>
+        /// Refreshes credentials in a ServiceClient instance.
+        /// </summary>
+        /// <typeparam name="T">Type of ServiceClient.</typeparam>
+        /// <param name="client">The ServiceClient.</param>
+        /// <remarks>
+        /// This will add a bearer token header to the ServiceClient's HttpClient.
+        /// </remarks>
+        public override void RefreshServiceClient<T>(ServiceClient<T> client)
+        {
+            client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
         }
     }
 }
