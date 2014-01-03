@@ -29,13 +29,19 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
 {
     /// <summary>
     /// The Service Bus Management API includes operations for managing Service
-    /// Bus queues.
+    /// Bus notification hubs.
     /// </summary>
     public partial interface INotificationHubOperations
     {
         /// <summary>
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -48,6 +54,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <summary>
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -59,6 +71,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <summary>
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>

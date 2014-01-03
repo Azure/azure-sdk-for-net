@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         
         /// <summary>
         /// The Service Bus Management API includes operations for managing
-        /// Service Bus queues.
+        /// Service Bus notification hubs.
         /// </summary>
         public virtual INotificationHubOperations NotificationHubs
         {
