@@ -172,7 +172,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
         /// </param>
         /// <param name='imageName'>
-        /// The name of the OS image to retrieve
+        /// The name of the OS image to retrieve.
         /// </param>
         /// <returns>
         /// A virtual machine image associated with your subscription.
@@ -207,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
         /// </param>
         /// <param name='imageName'>
-        /// The name of the OS image to retrieve
+        /// The name of the OS image to retrieve.
         /// </param>
         /// <returns>
         /// A virtual machine image associated with your subscription.

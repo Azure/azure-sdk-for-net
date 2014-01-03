@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// The parameters to the Gateway Create request
+    /// The parameters to the Gateway Create request.
     /// </summary>
     public partial class GatewayCreateParameters
     {

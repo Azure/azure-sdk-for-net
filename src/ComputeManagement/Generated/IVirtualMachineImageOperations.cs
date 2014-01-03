@@ -83,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='imageName'>
-        /// The name of the OS image to retrieve
+        /// The name of the OS image to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

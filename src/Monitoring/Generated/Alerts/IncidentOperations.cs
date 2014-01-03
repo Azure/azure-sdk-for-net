@@ -127,7 +127,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -136,16 +136,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     }
                     
                     // Create Result
-                    IncidentGetResponse result = new IncidentGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    IncidentGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new IncidentGetResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
                     if (responseDoc != null)
@@ -187,6 +182,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                             DateTime resolvedTimeInstance = (DateTime)resolvedTimeValue;
                             incidentInstance.ResolvedTime = resolvedTimeInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -269,7 +270,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -278,30 +279,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     }
                     
                     // Create Result
-                    IncidentListResponse result = new IncidentListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    IncidentListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new IncidentListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
                     if (responseDoc != null)
                     {
-                        IncidentCollection incidentCollectionInstance = new IncidentCollection();
-                        result.IncidentCollection = incidentCollectionInstance;
-                        
                         JArray valueArray = (JArray)responseDoc["Value"];
                         if (valueArray != null)
                         {
                             foreach (JToken valueValue in valueArray)
                             {
                                 Incident incidentInstance = new Incident();
-                                incidentCollectionInstance.Value.Add(incidentInstance);
+                                result.Value.Add(incidentInstance);
                                 
                                 JToken idValue = valueValue["Id"];
                                 if (idValue != null)
@@ -339,6 +332,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -433,7 +432,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -442,30 +441,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     }
                     
                     // Create Result
-                    IncidentListResponse result = new IncidentListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    IncidentListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new IncidentListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
                     if (responseDoc != null)
                     {
-                        IncidentCollection incidentCollectionInstance = new IncidentCollection();
-                        result.IncidentCollection = incidentCollectionInstance;
-                        
                         JArray valueArray = (JArray)responseDoc["Value"];
                         if (valueArray != null)
                         {
                             foreach (JToken valueValue in valueArray)
                             {
                                 Incident incidentInstance = new Incident();
-                                incidentCollectionInstance.Value.Add(incidentInstance);
+                                result.Value.Add(incidentInstance);
                                 
                                 JToken idValue = valueValue["Id"];
                                 if (idValue != null)
@@ -503,6 +494,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

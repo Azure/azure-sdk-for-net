@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.Store.Models;
 namespace Microsoft.WindowsAzure.Management.Store.Models
 {
     /// <summary>
-    /// The response structure for the Cloud Service List operation
+    /// The response structure for the Cloud Service List operation.
     /// </summary>
     public partial class CloudServiceListResponse : OperationResponse, IEnumerable<CloudServiceListResponse.CloudService>
     {

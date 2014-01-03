@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
     /// <summary>
-    /// The geographical region in which a storage account exists
+    /// The geographical region in which a storage account exists.
     /// </summary>
     public static partial class GeoRegionNames
     {

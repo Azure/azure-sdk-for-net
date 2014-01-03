@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -141,16 +141,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    CheckNamespaceAvailabilityResponse result = new CheckNamespaceAvailabilityResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    CheckNamespaceAvailabilityResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new CheckNamespaceAvailabilityResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement entryElement = responseDoc.Element(XName.Get("entry", "http://www.w3.org/2005/Atom"));
@@ -177,6 +172,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -296,7 +297,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -305,16 +306,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    ServiceBusNamespaceResponse result = new ServiceBusNamespaceResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ServiceBusNamespaceResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ServiceBusNamespaceResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement entryElement2 = responseDoc.Element(XName.Get("entry", "http://www.w3.org/2005/Atom"));
@@ -386,6 +382,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -556,7 +558,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -565,16 +567,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    ServiceBusAuthorizationRuleResponse result = new ServiceBusAuthorizationRuleResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ServiceBusAuthorizationRuleResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ServiceBusAuthorizationRuleResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement entryElement2 = responseDoc.Element(XName.Get("entry", "http://www.w3.org/2005/Atom"));
@@ -655,6 +652,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -746,7 +749,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -755,7 +758,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -856,7 +860,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -865,7 +869,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -958,7 +963,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -967,16 +972,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    ServiceBusNamespaceResponse result = new ServiceBusNamespaceResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ServiceBusNamespaceResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ServiceBusNamespaceResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement entryElement = responseDoc.Element(XName.Get("entry", "http://www.w3.org/2005/Atom"));
@@ -1050,6 +1050,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -1075,7 +1081,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         
         /// <summary>
         /// The get authorization rule operation gets an authorization rule for
-        /// a namespace by name
+        /// a namespace by name.
         /// </summary>
         /// <param name='namespaceName'>
         /// The namespace to get the authorization rule for.
@@ -1150,7 +1156,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1159,16 +1165,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    ServiceBusAuthorizationRuleResponse result = new ServiceBusAuthorizationRuleResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ServiceBusAuthorizationRuleResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ServiceBusAuthorizationRuleResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement entryElement = responseDoc.Element(XName.Get("entry", "http://www.w3.org/2005/Atom"));
@@ -1249,6 +1250,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -1339,7 +1346,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1348,16 +1355,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    ServiceBusNamespaceDescriptionResponse result = new ServiceBusNamespaceDescriptionResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ServiceBusNamespaceDescriptionResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ServiceBusNamespaceDescriptionResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement feedElement = responseDoc.Element(XName.Get("feed", "http://www.w3.org/2005/Atom"));
@@ -1418,6 +1420,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -1450,7 +1458,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to the request for a listing of namespaces
+        /// The response to the request for a listing of namespaces.
         /// </returns>
         public async Task<ServiceBusNamespacesResponse> ListAsync(CancellationToken cancellationToken)
         {
@@ -1503,7 +1511,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1512,16 +1520,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    ServiceBusNamespacesResponse result = new ServiceBusNamespacesResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ServiceBusNamespacesResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ServiceBusNamespacesResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement feedElement = responseDoc.Element(XName.Get("feed", "http://www.w3.org/2005/Atom"));
@@ -1601,6 +1604,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -1626,7 +1635,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         
         /// <summary>
         /// The get authorization rules operation gets the authorization rules
-        /// for a namespace
+        /// for a namespace.
         /// </summary>
         /// <param name='namespaceName'>
         /// The namespace to get the authorization rule for.
@@ -1693,7 +1702,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1702,16 +1711,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    ServiceBusAuthorizationRulesResponse result = new ServiceBusAuthorizationRulesResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ServiceBusAuthorizationRulesResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ServiceBusAuthorizationRulesResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement feedElement = responseDoc.Element(XName.Get("feed", "http://www.w3.org/2005/Atom"));
@@ -1798,6 +1802,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -1964,7 +1974,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1973,16 +1983,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     }
                     
                     // Create Result
-                    ServiceBusAuthorizationRuleResponse result = new ServiceBusAuthorizationRuleResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ServiceBusAuthorizationRuleResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ServiceBusAuthorizationRuleResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement entryElement2 = responseDoc.Element(XName.Get("entry", "http://www.w3.org/2005/Atom"));
@@ -2063,6 +2068,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

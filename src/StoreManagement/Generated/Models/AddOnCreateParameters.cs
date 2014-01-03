@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Store.Models
 {
     /// <summary>
-    /// Represents the data passed to the Create Store Resource API method
+    /// Represents the data passed to the Create Store Resource API method.
     /// </summary>
     public partial class AddOnCreateParameters
     {

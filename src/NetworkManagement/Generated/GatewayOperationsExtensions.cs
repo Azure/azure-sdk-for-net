@@ -43,10 +43,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkSiteName'>
-        /// The name of the site to connect to
+        /// The name of the site to connect to.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -87,10 +87,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkSiteName'>
-        /// The name of the site to connect to
+        /// The name of the site to connect to.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -115,7 +115,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -154,7 +154,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -299,14 +299,14 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
-        /// The name of the local network
+        /// The name of the local network.
         /// </param>
         /// <param name='parameters'>
         /// The parameters to the Virtual Network Gateway Reset Shared Key
-        /// request
+        /// request.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -344,14 +344,14 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
-        /// The name of the local network
+        /// The name of the local network.
         /// </param>
         /// <param name='parameters'>
         /// The parameters to the Virtual Network Gateway Reset Shared Key
-        /// request
+        /// request.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -375,10 +375,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkSiteName'>
-        /// The name of the site to connect to
+        /// The name of the site to connect to.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -426,10 +426,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkSiteName'>
-        /// The name of the site to connect to
+        /// The name of the site to connect to.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -461,7 +461,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -507,7 +507,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -685,7 +685,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -724,7 +724,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Network Gateway operation.
@@ -750,7 +750,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -787,7 +787,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -810,14 +810,14 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the GetDeviceConfigurationScript request
+        /// The parameters for the GetDeviceConfigurationScript request.
         /// </param>
         /// <returns>
         /// The configuration script returned from the get device configuration
-        /// script request
+        /// script request.
         /// </returns>
         public static GatewayGetDeviceConfigurationScriptResponse GetDeviceConfigurationScript(this IGatewayOperations operations, string virtualNetworkName, GatewayGetDeviceConfigurationScriptParameters parameters)
         {
@@ -850,14 +850,14 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the GetDeviceConfigurationScript request
+        /// The parameters for the GetDeviceConfigurationScript request.
         /// </param>
         /// <returns>
         /// The configuration script returned from the get device configuration
-        /// script request
+        /// script request.
         /// </returns>
         public static Task<GatewayGetDeviceConfigurationScriptResponse> GetDeviceConfigurationScriptAsync(this IGatewayOperations operations, string virtualNetworkName, GatewayGetDeviceConfigurationScriptParameters parameters)
         {
@@ -875,7 +875,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='operationId'>
-        /// The id  of the virtualnetwork operation
+        /// The id  of the virtualnetwork operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -918,7 +918,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='operationId'>
-        /// The id  of the virtualnetwork operation
+        /// The id  of the virtualnetwork operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -949,13 +949,13 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
-        /// The name of the local network
+        /// The name of the local network.
         /// </param>
         /// <returns>
-        /// The response to the get shared key request
+        /// The response to the get shared key request.
         /// </returns>
         public static GatewayGetSharedKeyResponse GetSharedKey(this IGatewayOperations operations, string virtualNetworkName, string localNetworkName)
         {
@@ -989,13 +989,13 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
-        /// The name of the local network
+        /// The name of the local network.
         /// </param>
         /// <returns>
-        /// The response to the get shared key request
+        /// The response to the get shared key request.
         /// </returns>
         public static Task<GatewayGetSharedKeyResponse> GetSharedKeyAsync(this IGatewayOperations operations, string virtualNetworkName, string localNetworkName)
         {
@@ -1013,11 +1013,11 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
         /// The response to a ListConnections request to a Virtual Network
-        /// Gateway
+        /// Gateway.
         /// </returns>
         public static GatewayListConnectionsResponse ListConnections(this IGatewayOperations operations, string virtualNetworkName)
         {
@@ -1049,11 +1049,11 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
         /// The response to a ListConnections request to a Virtual Network
-        /// Gateway
+        /// Gateway.
         /// </returns>
         public static Task<GatewayListConnectionsResponse> ListConnectionsAsync(this IGatewayOperations operations, string virtualNetworkName)
         {
@@ -1072,7 +1072,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <returns>
-        /// The respoonse to the get supported platform configuration request
+        /// The respoonse to the get supported platform configuration request.
         /// </returns>
         public static GatewayListSupportedDevicesResponse ListSupportedDevices(this IGatewayOperations operations)
         {
@@ -1105,7 +1105,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <returns>
-        /// The respoonse to the get supported platform configuration request
+        /// The respoonse to the get supported platform configuration request.
         /// </returns>
         public static Task<GatewayListSupportedDevicesResponse> ListSupportedDevicesAsync(this IGatewayOperations operations)
         {
@@ -1125,14 +1125,14 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
-        /// The name of the local network
+        /// The name of the local network.
         /// </param>
         /// <param name='parameters'>
         /// The parameters to the Virtual Network Gateway Reset Shared Key
-        /// request
+        /// request.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1177,14 +1177,14 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
-        /// The name of the virtual network for this gateway
+        /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
-        /// The name of the local network
+        /// The name of the local network.
         /// </param>
         /// <param name='parameters'>
         /// The parameters to the Virtual Network Gateway Reset Shared Key
-        /// request
+        /// request.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

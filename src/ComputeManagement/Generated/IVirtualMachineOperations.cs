@@ -167,7 +167,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation
+        /// The parameters for the shutdown vm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -539,7 +539,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation
+        /// The parameters for the shutdown vm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

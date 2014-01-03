@@ -186,7 +186,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -195,16 +195,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     }
                     
                     // Create Result
-                    FirewallRuleCreateResponse result = new FirewallRuleCreateResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    FirewallRuleCreateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new FirewallRuleCreateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
@@ -244,6 +239,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             string endIPAddressInstance = endIPAddressElement2.Value;
                             result.EndIPAddress = endIPAddressInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -349,7 +350,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -358,7 +359,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -459,7 +461,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -468,16 +470,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     }
                     
                     // Create Result
-                    FirewallRuleListResponse result = new FirewallRuleListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    FirewallRuleListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new FirewallRuleListResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
@@ -516,6 +513,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                 serviceResourceInstance.EndIPAddress = endIPAddressInstance;
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -664,7 +667,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -673,16 +676,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     }
                     
                     // Create Result
-                    FirewallRuleUpdateResponse result = new FirewallRuleUpdateResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    FirewallRuleUpdateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new FirewallRuleUpdateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
@@ -722,6 +720,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             string endIPAddressInstance = endIPAddressElement2.Value;
                             result.EndIPAddress = endIPAddressInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

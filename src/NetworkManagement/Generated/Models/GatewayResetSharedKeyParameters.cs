@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// The length of shared key to generate
+    /// The length of shared key to generate.
     /// </summary>
     public partial class GatewayResetSharedKeyParameters
     {

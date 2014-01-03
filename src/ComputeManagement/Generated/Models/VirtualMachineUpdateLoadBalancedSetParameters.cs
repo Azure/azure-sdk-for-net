@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The set of parameters required to update a load balanced endpoint set
+    /// The set of parameters required to update a load balanced endpoint set.
     /// </summary>
     public partial class VirtualMachineUpdateLoadBalancedSetParameters
     {
@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         }
         
         /// <summary>
-        /// The modeled external endpoint for a persistent VM role
+        /// The modeled external endpoint for a persistent VM role.
         /// </summary>
         public partial class InputEndpoint
         {

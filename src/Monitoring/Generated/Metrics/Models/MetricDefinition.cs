@@ -27,7 +27,7 @@ using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
 {
     /// <summary>
-    /// Metric definition class specifies the metadata for a metric
+    /// Metric definition class specifies the metadata for a metric.
     /// </summary>
     public partial class MetricDefinition
     {

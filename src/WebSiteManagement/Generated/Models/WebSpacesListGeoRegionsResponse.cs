@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSpacesListGeoRegionsResponse.GeoRegion> _geoRegions;
         
         /// <summary>
-        /// The available geo regions
+        /// The available geo regions.
         /// </summary>
         public IList<WebSpacesListGeoRegionsResponse.GeoRegion> GeoRegions
         {
@@ -69,14 +69,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// An available geo region for a web space
+        /// An available geo region for a web space.
         /// </summary>
         public partial class GeoRegion
         {
             private string _description;
             
             /// <summary>
-            /// Geo Region description
+            /// Geo Region description.
             /// </summary>
             public string Description
             {
@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// Name of the region
+            /// Name of the region.
             /// </summary>
             public string Name
             {
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private int _sortOrder;
             
             /// <summary>
-            /// Sort order
+            /// Sort order.
             /// </summary>
             public int SortOrder
             {

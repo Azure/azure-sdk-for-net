@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private GatewayType _gatewayType;
         
         /// <summary>
-        /// The type of gateway routing used for this virtual network
+        /// The type of gateway routing used for this virtual network.
         /// </summary>
         public GatewayType GatewayType
         {
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private GatewayEvent _lastEvent;
         
         /// <summary>
-        /// The last recorded event for this virtual network gateway
+        /// The last recorded event for this virtual network gateway.
         /// </summary>
         public GatewayEvent LastEvent
         {
@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private string _state;
         
         /// <summary>
-        /// The provisioning state of the virtual network gateway
+        /// The provisioning state of the virtual network gateway.
         /// </summary>
         public string State
         {
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private string _vipAddress;
         
         /// <summary>
-        /// The virtual IP address for this virtual network gateway
+        /// The virtual IP address for this virtual network gateway.
         /// </summary>
         public string VipAddress
         {

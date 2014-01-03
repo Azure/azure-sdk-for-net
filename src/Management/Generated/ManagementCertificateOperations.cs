@@ -177,7 +177,7 @@ namespace Microsoft.WindowsAzure.Management
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -186,7 +186,8 @@ namespace Microsoft.WindowsAzure.Management
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -290,7 +291,7 @@ namespace Microsoft.WindowsAzure.Management
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NotFound)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -299,7 +300,8 @@ namespace Microsoft.WindowsAzure.Management
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -403,7 +405,7 @@ namespace Microsoft.WindowsAzure.Management
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -412,16 +414,11 @@ namespace Microsoft.WindowsAzure.Management
                     }
                     
                     // Create Result
-                    ManagementCertificateGetResponse result = new ManagementCertificateGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ManagementCertificateGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ManagementCertificateGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement subscriptionCertificateElement = responseDoc.Element(XName.Get("SubscriptionCertificate", "http://schemas.microsoft.com/windowsazure"));
@@ -454,6 +451,12 @@ namespace Microsoft.WindowsAzure.Management
                             DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture);
                             result.Created = createdInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -545,7 +548,7 @@ namespace Microsoft.WindowsAzure.Management
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -554,16 +557,11 @@ namespace Microsoft.WindowsAzure.Management
                     }
                     
                     // Create Result
-                    ManagementCertificateListResponse result = new ManagementCertificateListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    ManagementCertificateListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new ManagementCertificateListResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement subscriptionCertificatesSequenceElement = responseDoc.Element(XName.Get("SubscriptionCertificates", "http://schemas.microsoft.com/windowsazure"));
@@ -602,6 +600,12 @@ namespace Microsoft.WindowsAzure.Management
                                 subscriptionCertificateInstance.Created = createdInstance;
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
