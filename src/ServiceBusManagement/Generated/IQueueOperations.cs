@@ -41,6 +41,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856295.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='queue'>
+        /// The service bus queue.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -57,6 +63,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780773.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='queueName'>
+        /// The queue name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -68,6 +80,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <summary>
         /// Gets the set of connection strings for a queue.
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='queueName'>
+        /// The queue name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -85,6 +103,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780759.asp
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -99,6 +120,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856305.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='queue'>
+        /// The service bus queue.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>

@@ -41,6 +41,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.IRelayOperations.
         /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name.
+        /// </param>
         /// <returns>
         /// The set of connection details for a service bus entity.
         /// </returns>
@@ -69,6 +75,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.IRelayOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name.
         /// </param>
         /// <returns>
         /// The set of connection details for a service bus entity.
