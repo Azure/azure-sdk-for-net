@@ -119,10 +119,14 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+
             return Task.Factory.StartNew(() =>
-            {
-                request.Headers.Authorization = new AuthenticationHeaderValue(TokenType, Token);
-            });
+                {
+                    if (request != null)
+                    {
+                        request.Headers.Authorization = new AuthenticationHeaderValue(TokenType, Token);
+                    }
+                }, cancellationToken);
         }
     }
 }
