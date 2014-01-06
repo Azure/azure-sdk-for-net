@@ -104,32 +104,19 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
-        /// Initialize a ServiceClient instance to process credentials.
+        /// Apply the credentials to the HTTP request.
         /// </summary>
-        /// <typeparam name="T">Type of ServiceClient.</typeparam>
-        /// <param name="client">The ServiceClient.</param>
-        /// <remarks>
-        /// This will add a bearer token header to the ServiceClient's HttpClient.
-        /// </remarks>
-        public override void InitializeServiceClient<T>(ServiceClient<T> client)
-        {
-            RefreshServiceClient(client).Wait();
-        }
-
-        /// <summary>
-        /// Refreshes credentials in a ServiceClient instance.
-        /// </summary>
-        /// <typeparam name="T">Type of ServiceClient.</typeparam>
-        /// <param name="client">The ServiceClient.</param>
-        /// <remarks>
-        /// This will add a bearer token header to the ServiceClient's HttpClient.
-        /// </remarks>
-        public override Task RefreshServiceClient<T>(ServiceClient<T> client)
+        /// <param name="request">The HTTP request.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>
+        /// Task that will complete when processing has completed.
+        /// </returns>
+        public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             return Task.Factory.StartNew(() =>
-                {
-                    client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-                });
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            });
         }
     }
 }

@@ -89,7 +89,6 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
         {
             // Construct URL
             string url = "http://www.microsoft.com";
-            await this.Credentials.RefreshServiceClient(this);
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -97,6 +96,8 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
             httpRequest = new HttpRequestMessage();
             httpRequest.Method = HttpMethod.Get;
             httpRequest.RequestUri = new Uri(url);
+
+            await this.Credentials.ProcessHttpRequestAsync(httpRequest, new CancellationToken());
                 
             // Set Headers
             httpRequest.Headers.Add("x-ms-version", "2013-11-01");
