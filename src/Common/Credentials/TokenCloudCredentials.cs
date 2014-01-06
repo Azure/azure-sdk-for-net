@@ -49,11 +49,6 @@ namespace Microsoft.WindowsAzure
         public string Token { get; set; }
 
         /// <summary>
-        /// Gets or sets token type. Default is Bearer.
-        /// </summary>
-        public string TokenType { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="TokenCloudCredentials"/>
         /// class.
         /// </summary>
@@ -80,7 +75,6 @@ namespace Microsoft.WindowsAzure
 
             _subscriptionId = subscriptionId;
             Token = token;
-            TokenType = "Bearer";
         }
 
         /// <summary>
@@ -119,13 +113,13 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            return Task.Factory.StartNew(() =>
-                {
-                    if (request != null)
-                    {
-                        request.Headers.Authorization = new AuthenticationHeaderValue(TokenType, Token);
-                    }
-                }, cancellationToken);
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            return base.ProcessHttpRequestAsync(request, cancellationToken);
         }
     }
 }

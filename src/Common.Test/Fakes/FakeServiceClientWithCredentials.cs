@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
         }
 
         /// <summary>
-        /// Initializes a new instance of the JsonPropertyBagModelService class.
+        /// Initializes a new instance of the FakeServiceClientWithCredentials class.
         /// </summary>
         public FakeServiceClientWithCredentials(SubscriptionCloudCredentials credentials)
             : this()
