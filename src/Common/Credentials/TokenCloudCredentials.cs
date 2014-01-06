@@ -119,7 +119,6 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-
             return Task.Factory.StartNew(() =>
                 {
                     if (request != null)
