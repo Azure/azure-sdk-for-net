@@ -64,8 +64,11 @@
   <ItemGroup>
     <Compile Include="Fakes\BadResponseDelegatingHandler.cs" />
     <Compile Include="Fakes\FakeHttpHandler.cs" />
+    <Compile Include="Fakes\FakeServiceClientWithCredentials.cs" />
     <Compile Include="Fakes\FakeServiceClient.cs" />
+    <Compile Include="Fakes\RecordedDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TokenCloudCredentialsTest.cs" />
     <Compile Include="ServiceClientTest.cs" />
     <Compile Include="Tracing\CloudTracingExtensionsTest.cs" />
     <Compile Include="TransientFaultHandling\GeneralRetryPolicyTests.cs" />
@@ -74,9 +77,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.NetFramework\Common.NetFramework.csproj">
+      <Project>{14529261-9f9f-4d2f-80d5-b26677f51e8b}</Project>
+      <Name>Common.NetFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Management\Management.csproj">
+      <Project>{2b6d304f-5dc0-4052-a8ab-80e53c291e5f}</Project>
+      <Name>Management</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
