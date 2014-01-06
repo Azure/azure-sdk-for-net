@@ -46,6 +46,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
         /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topic'>
+        /// The Service Bus topic.
+        /// </param>
         /// <returns>
         /// A response to a request for a particular topic.
         /// </returns>
@@ -80,6 +86,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
         /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topic'>
+        /// The Service Bus topic.
+        /// </param>
         /// <returns>
         /// A response to a request for a particular topic.
         /// </returns>
@@ -99,6 +111,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topicName'>
+        /// The topic.
         /// </param>
         /// <returns>
         /// A response to a request for a particular topic.
@@ -134,6 +152,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
         /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topicName'>
+        /// The topic.
+        /// </param>
         /// <returns>
         /// A response to a request for a particular topic.
         /// </returns>
@@ -148,6 +172,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topicName'>
+        /// The topic.
         /// </param>
         /// <returns>
         /// The set of connection details for a service bus entity.
@@ -178,6 +208,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
         /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topicName'>
+        /// The topic.
+        /// </param>
         /// <returns>
         /// The set of connection details for a service bus entity.
         /// </returns>
@@ -195,6 +231,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
         /// </param>
         /// <returns>
         /// A response to a request for a list of topics.
@@ -228,6 +267,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
         /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
         /// <returns>
         /// A response to a request for a list of topics.
         /// </returns>
@@ -244,6 +286,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topic'>
+        /// The Service Bus topic.
         /// </param>
         /// <returns>
         /// A response to a request for a particular topic.
@@ -275,6 +323,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topic'>
+        /// The Service Bus topic.
         /// </param>
         /// <returns>
         /// A response to a request for a particular topic.

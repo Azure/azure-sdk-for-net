@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
 {
     /// <summary>
     /// The Service Bus Management API includes operations for managing Service
-    /// Bus queues.
+    /// Bus notification hubs.
     /// </summary>
     internal partial class NotificationHubOperations : IServiceOperations<ServiceBusManagementClient>, INotificationHubOperations
     {
@@ -67,6 +67,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <summary>
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -77,6 +83,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         public async Task<ServiceBusNotificationHubResponse> GetAsync(string namespaceName, string notificationHubName, CancellationToken cancellationToken)
         {
             // Validate
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException("namespaceName");
+            }
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException("notificationHubName");
+            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -269,6 +283,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <summary>
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -278,6 +298,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         public async Task<ServiceBusConnectionDetailsResponse> GetConnectionDetailsAsync(string namespaceName, string notificationHubName, CancellationToken cancellationToken)
         {
             // Validate
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException("namespaceName");
+            }
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException("notificationHubName");
+            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -426,6 +454,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <summary>
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -436,6 +467,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         public async Task<ServiceBusNotificationHubsResponse> ListAsync(string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException("namespaceName");
+            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

@@ -41,6 +41,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj870968.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -56,6 +59,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='region'>
+        /// The namespace region.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -68,6 +77,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// The create namespace authorization rule operation creates an
         /// authorization rule for a namespace
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='rule'>
+        /// The shared access authorization rule.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -83,6 +98,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj856296.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -96,6 +114,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// The delete namespace authorization rule operation deletes an
         /// authorization rule for a namespace
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='ruleName'>
+        /// The rule name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -110,6 +134,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn140232.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -143,6 +170,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -183,6 +213,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// The update authorization rule operation updates an authorization
         /// rule for a namespace.
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='rule'>
+        /// Updated access authorization rule.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>

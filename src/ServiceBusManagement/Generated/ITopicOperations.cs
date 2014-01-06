@@ -41,6 +41,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780728.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topic'>
+        /// The Service Bus topic.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -57,6 +63,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topicName'>
+        /// The topic.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -68,6 +80,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <summary>
         /// Gets the set of connection strings for a topic.
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topicName'>
+        /// The topic.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -82,6 +100,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780744.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -95,6 +116,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj839740.aspx
         /// for more information)
         /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topic'>
+        /// The Service Bus topic.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
