@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.PublishedDate != null)
                 {
                     XElement publishedDateElement = new XElement(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                    publishedDateElement.Value = parameters.PublishedDate.ToString();
+                    publishedDateElement.Value = string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.PublishedDate.Value.ToUniversalTime());
                     oSImageElement.Add(publishedDateElement);
                 }
                 
@@ -214,7 +214,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.RecommendedVMSize != null)
                 {
                     XElement recommendedVMSizeElement = new XElement(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                    recommendedVMSizeElement.Value = parameters.RecommendedVMSize.ToString();
+                    recommendedVMSizeElement.Value = parameters.RecommendedVMSize;
                     oSImageElement.Add(recommendedVMSizeElement);
                 }
                 
@@ -388,7 +388,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement recommendedVMSizeElement2 = oSImageElement2.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
                         if (recommendedVMSizeElement2 != null)
                         {
-                            VirtualMachineRoleSize recommendedVMSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), recommendedVMSizeElement2.Value, false);
+                            string recommendedVMSizeInstance = recommendedVMSizeElement2.Value;
                             result.RecommendedVMSize = recommendedVMSizeInstance;
                         }
                         
@@ -760,7 +760,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement recommendedVMSizeElement = oSImageElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
                         if (recommendedVMSizeElement != null)
                         {
-                            VirtualMachineRoleSize recommendedVMSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), recommendedVMSizeElement.Value, false);
+                            string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
                             result.RecommendedVMSize = recommendedVMSizeInstance;
                         }
                         
@@ -1002,7 +1002,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement recommendedVMSizeElement = imagesElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
                             if (recommendedVMSizeElement != null)
                             {
-                                VirtualMachineRoleSize recommendedVMSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), recommendedVMSizeElement.Value, false);
+                                string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
                                 oSImageInstance.RecommendedVMSize = recommendedVMSizeInstance;
                             }
                             
@@ -1164,7 +1164,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.PublishedDate != null)
                 {
                     XElement publishedDateElement = new XElement(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                    publishedDateElement.Value = parameters.PublishedDate.ToString();
+                    publishedDateElement.Value = string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.PublishedDate.Value.ToUniversalTime());
                     oSImageElement.Add(publishedDateElement);
                 }
                 
@@ -1189,7 +1189,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.RecommendedVMSize != null)
                 {
                     XElement recommendedVMSizeElement = new XElement(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                    recommendedVMSizeElement.Value = parameters.RecommendedVMSize.ToString();
+                    recommendedVMSizeElement.Value = parameters.RecommendedVMSize;
                     oSImageElement.Add(recommendedVMSizeElement);
                 }
                 
@@ -1363,7 +1363,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement recommendedVMSizeElement2 = oSImageElement2.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
                         if (recommendedVMSizeElement2 != null)
                         {
-                            VirtualMachineRoleSize recommendedVMSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), recommendedVMSizeElement2.Value, false);
+                            string recommendedVMSizeInstance = recommendedVMSizeElement2.Value;
                             result.RecommendedVMSize = recommendedVMSizeInstance;
                         }
                         

@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -177,13 +176,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._publishedDate = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineRoleSize? _recommendedVMSize;
+        private string _recommendedVMSize;
         
         /// <summary>
         /// Optional. Specifies the size to use for the virtual machine that is
         /// created from the OS image.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineRoleSize? RecommendedVMSize
+        public string RecommendedVMSize
         {
             get { return this._recommendedVMSize; }
             set { this._recommendedVMSize = value; }
