@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
@@ -30,17 +29,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
     /// <summary>
     /// The List incidents operation response.
     /// </summary>
-    public partial class IncidentListResponse : OperationResponse, IEnumerable<Incident>
+    public partial class IncidentListResponse : OperationResponse
     {
-        private IList<Incident> _value;
+        private IncidentCollection _incidentCollection;
         
         /// <summary>
-        /// Incident collection.
+        /// The retrieved incidents.
         /// </summary>
-        public IList<Incident> Value
+        public IncidentCollection IncidentCollection
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._incidentCollection; }
+            set { this._incidentCollection = value; }
         }
         
         /// <summary>
@@ -48,23 +47,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IncidentListResponse()
         {
-            this._value = new List<Incident>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Value.
-        /// </summary>
-        public IEnumerator<Incident> GetEnumerator()
-        {
-            return this.Value.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Value.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

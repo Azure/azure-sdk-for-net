@@ -240,28 +240,32 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     
                     if (responseDoc != null)
                     {
-                        MediaServicesCreatedAccount accountInstance = new MediaServicesCreatedAccount();
-                        result.Account = accountInstance;
-                        
-                        JToken accountIdValue = responseDoc["AccountId"];
-                        if (accountIdValue != null)
+                        JToken accountValue = responseDoc["Account"];
+                        if (accountValue != null)
                         {
-                            string accountIdInstance = (string)accountIdValue;
-                            accountInstance.AccountId = accountIdInstance;
-                        }
-                        
-                        JToken accountNameValue = responseDoc["AccountName"];
-                        if (accountNameValue != null)
-                        {
-                            string accountNameInstance = (string)accountNameValue;
-                            accountInstance.AccountName = accountNameInstance;
-                        }
-                        
-                        JToken subscriptionValue = responseDoc["Subscription"];
-                        if (subscriptionValue != null)
-                        {
-                            string subscriptionInstance = (string)subscriptionValue;
-                            accountInstance.SubscriptionId = subscriptionInstance;
+                            MediaServicesCreatedAccount accountInstance = new MediaServicesCreatedAccount();
+                            result.Account = accountInstance;
+                            
+                            JToken accountIdValue = accountValue["AccountId"];
+                            if (accountIdValue != null)
+                            {
+                                string accountIdInstance = (string)accountIdValue;
+                                accountInstance.AccountId = accountIdInstance;
+                            }
+                            
+                            JToken accountNameValue = accountValue["AccountName"];
+                            if (accountNameValue != null)
+                            {
+                                string accountNameInstance = (string)accountNameValue;
+                                accountInstance.AccountName = accountNameInstance;
+                            }
+                            
+                            JToken subscriptionValue = accountValue["Subscription"];
+                            if (subscriptionValue != null)
+                            {
+                                string subscriptionInstance = (string)subscriptionValue;
+                                accountInstance.SubscriptionId = subscriptionInstance;
+                            }
                         }
                     }
                     
@@ -493,56 +497,60 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     
                     if (responseDoc != null)
                     {
-                        MediaServicesAccount accountInstance = new MediaServicesAccount();
-                        result.Account = accountInstance;
-                        
-                        JToken accountNameValue = responseDoc["AccountName"];
-                        if (accountNameValue != null)
+                        JToken accountValue = responseDoc["Account"];
+                        if (accountValue != null)
                         {
-                            string accountNameInstance = (string)accountNameValue;
-                            accountInstance.AccountName = accountNameInstance;
-                        }
-                        
-                        JToken accountKeyValue = responseDoc["AccountKey"];
-                        if (accountKeyValue != null)
-                        {
-                            string accountKeyInstance = (string)accountKeyValue;
-                            accountInstance.AccountKey = accountKeyInstance;
-                        }
-                        
-                        JToken accountKeysValue = responseDoc["AccountKeys"];
-                        if (accountKeysValue != null)
-                        {
-                            MediaServicesAccount.AccountKeys accountKeysInstance = new MediaServicesAccount.AccountKeys();
-                            accountInstance.StorageAccountKeys = accountKeysInstance;
+                            MediaServicesAccount accountInstance = new MediaServicesAccount();
+                            result.Account = accountInstance;
                             
-                            JToken primaryValue = accountKeysValue["Primary"];
-                            if (primaryValue != null)
+                            JToken accountNameValue = accountValue["AccountName"];
+                            if (accountNameValue != null)
                             {
-                                string primaryInstance = (string)primaryValue;
-                                accountKeysInstance.Primary = primaryInstance;
+                                string accountNameInstance = (string)accountNameValue;
+                                accountInstance.AccountName = accountNameInstance;
                             }
                             
-                            JToken secondaryValue = accountKeysValue["Secondary"];
-                            if (secondaryValue != null)
+                            JToken accountKeyValue = accountValue["AccountKey"];
+                            if (accountKeyValue != null)
                             {
-                                string secondaryInstance = (string)secondaryValue;
-                                accountKeysInstance.Secondary = secondaryInstance;
+                                string accountKeyInstance = (string)accountKeyValue;
+                                accountInstance.AccountKey = accountKeyInstance;
                             }
-                        }
-                        
-                        JToken accountRegionValue = responseDoc["AccountRegion"];
-                        if (accountRegionValue != null)
-                        {
-                            string accountRegionInstance = (string)accountRegionValue;
-                            accountInstance.AccountRegion = accountRegionInstance;
-                        }
-                        
-                        JToken storageAccountNameValue = responseDoc["StorageAccountName"];
-                        if (storageAccountNameValue != null)
-                        {
-                            string storageAccountNameInstance = (string)storageAccountNameValue;
-                            accountInstance.StorageAccountName = storageAccountNameInstance;
+                            
+                            JToken accountKeysValue = accountValue["AccountKeys"];
+                            if (accountKeysValue != null)
+                            {
+                                MediaServicesAccount.AccountKeys accountKeysInstance = new MediaServicesAccount.AccountKeys();
+                                accountInstance.StorageAccountKeys = accountKeysInstance;
+                                
+                                JToken primaryValue = accountKeysValue["Primary"];
+                                if (primaryValue != null)
+                                {
+                                    string primaryInstance = (string)primaryValue;
+                                    accountKeysInstance.Primary = primaryInstance;
+                                }
+                                
+                                JToken secondaryValue = accountKeysValue["Secondary"];
+                                if (secondaryValue != null)
+                                {
+                                    string secondaryInstance = (string)secondaryValue;
+                                    accountKeysInstance.Secondary = secondaryInstance;
+                                }
+                            }
+                            
+                            JToken accountRegionValue = accountValue["AccountRegion"];
+                            if (accountRegionValue != null)
+                            {
+                                string accountRegionInstance = (string)accountRegionValue;
+                                accountInstance.AccountRegion = accountRegionInstance;
+                            }
+                            
+                            JToken storageAccountNameValue = accountValue["StorageAccountName"];
+                            if (storageAccountNameValue != null)
+                            {
+                                string storageAccountNameInstance = (string)storageAccountNameValue;
+                                accountInstance.StorageAccountName = storageAccountNameInstance;
+                            }
                         }
                     }
                     

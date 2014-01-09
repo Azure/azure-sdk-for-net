@@ -173,6 +173,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._sshSettings = value; }
         }
         
+        private string _staticVirtualNetworkIPAddress;
+        
+        /// <summary>
+        /// Optional. Specifies a Customer Address, i.e. an IP address assigned
+        /// to a VM in a VNet's SubNet, for example: 10.0.0.4.
+        /// </summary>
+        public string StaticVirtualNetworkIPAddress
+        {
+            get { return this._staticVirtualNetworkIPAddress; }
+            set { this._staticVirtualNetworkIPAddress = value; }
+        }
+        
         private IList<StoredCertificateSettings> _storedCertificateSettings;
         
         /// <summary>
