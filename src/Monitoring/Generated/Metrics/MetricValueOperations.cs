@@ -184,128 +184,132 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     
                     if (responseDoc != null)
                     {
-                        MetricValueSetCollection metricValueSetCollectionInstance = new MetricValueSetCollection();
-                        result.MetricValueSetCollection = metricValueSetCollectionInstance;
-                        
-                        JArray valueArray = (JArray)responseDoc["Value"];
-                        if (valueArray != null)
+                        JToken metricValueSetCollectionValue = responseDoc["MetricValueSetCollection"];
+                        if (metricValueSetCollectionValue != null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            MetricValueSetCollection metricValueSetCollectionInstance = new MetricValueSetCollection();
+                            result.MetricValueSetCollection = metricValueSetCollectionInstance;
+                            
+                            JArray valueArray = (JArray)metricValueSetCollectionValue["Value"];
+                            if (valueArray != null)
                             {
-                                MetricValueSet metricValueSetInstance = new MetricValueSet();
-                                metricValueSetCollectionInstance.Value.Add(metricValueSetInstance);
-                                
-                                JToken nameValue = valueValue["Name"];
-                                if (nameValue != null)
+                                foreach (JToken valueValue in valueArray)
                                 {
-                                    string nameInstance = (string)nameValue;
-                                    metricValueSetInstance.Name = nameInstance;
-                                }
-                                
-                                JToken namespaceValue = valueValue["Namespace"];
-                                if (namespaceValue != null)
-                                {
-                                    string namespaceInstance = (string)namespaceValue;
-                                    metricValueSetInstance.Namespace = namespaceInstance;
-                                }
-                                
-                                JToken displayNameValue = valueValue["DisplayName"];
-                                if (displayNameValue != null)
-                                {
-                                    string displayNameInstance = (string)displayNameValue;
-                                    metricValueSetInstance.DisplayName = displayNameInstance;
-                                }
-                                
-                                JToken unitValue = valueValue["Unit"];
-                                if (unitValue != null)
-                                {
-                                    string unitInstance = (string)unitValue;
-                                    metricValueSetInstance.Unit = unitInstance;
-                                }
-                                
-                                JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
-                                if (primaryAggregationValue != null)
-                                {
-                                    string primaryAggregationInstance = (string)primaryAggregationValue;
-                                    metricValueSetInstance.PrimaryAggregation = primaryAggregationInstance;
-                                }
-                                
-                                JToken timeGrainValue = valueValue["TimeGrain"];
-                                if (timeGrainValue != null)
-                                {
-                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
-                                    metricValueSetInstance.TimeGrain = timeGrainInstance;
-                                }
-                                
-                                JToken startTimeValue = valueValue["StartTime"];
-                                if (startTimeValue != null)
-                                {
-                                    DateTime startTimeInstance = (DateTime)startTimeValue;
-                                    metricValueSetInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken endTimeValue = valueValue["EndTime"];
-                                if (endTimeValue != null)
-                                {
-                                    DateTime endTimeInstance = (DateTime)endTimeValue;
-                                    metricValueSetInstance.EndTime = endTimeInstance;
-                                }
-                                
-                                JArray metricValuesArray = (JArray)valueValue["MetricValues"];
-                                if (metricValuesArray != null)
-                                {
-                                    foreach (JToken metricValuesValue in metricValuesArray)
+                                    MetricValueSet metricValueSetInstance = new MetricValueSet();
+                                    metricValueSetCollectionInstance.Value.Add(metricValueSetInstance);
+                                    
+                                    JToken nameValue = valueValue["Name"];
+                                    if (nameValue != null)
                                     {
-                                        MetricValue metricValueInstance = new MetricValue();
-                                        metricValueSetInstance.MetricValues.Add(metricValueInstance);
-                                        
-                                        JToken timestampValue = metricValuesValue["Timestamp"];
-                                        if (timestampValue != null)
+                                        string nameInstance = (string)nameValue;
+                                        metricValueSetInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken namespaceValue = valueValue["Namespace"];
+                                    if (namespaceValue != null)
+                                    {
+                                        string namespaceInstance = (string)namespaceValue;
+                                        metricValueSetInstance.Namespace = namespaceInstance;
+                                    }
+                                    
+                                    JToken displayNameValue = valueValue["DisplayName"];
+                                    if (displayNameValue != null)
+                                    {
+                                        string displayNameInstance = (string)displayNameValue;
+                                        metricValueSetInstance.DisplayName = displayNameInstance;
+                                    }
+                                    
+                                    JToken unitValue = valueValue["Unit"];
+                                    if (unitValue != null)
+                                    {
+                                        string unitInstance = (string)unitValue;
+                                        metricValueSetInstance.Unit = unitInstance;
+                                    }
+                                    
+                                    JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
+                                    if (primaryAggregationValue != null)
+                                    {
+                                        string primaryAggregationInstance = (string)primaryAggregationValue;
+                                        metricValueSetInstance.PrimaryAggregation = primaryAggregationInstance;
+                                    }
+                                    
+                                    JToken timeGrainValue = valueValue["TimeGrain"];
+                                    if (timeGrainValue != null)
+                                    {
+                                        TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                        metricValueSetInstance.TimeGrain = timeGrainInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = valueValue["StartTime"];
+                                    if (startTimeValue != null)
+                                    {
+                                        DateTime startTimeInstance = (DateTime)startTimeValue;
+                                        metricValueSetInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = valueValue["EndTime"];
+                                    if (endTimeValue != null)
+                                    {
+                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                        metricValueSetInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JArray metricValuesArray = (JArray)valueValue["MetricValues"];
+                                    if (metricValuesArray != null)
+                                    {
+                                        foreach (JToken metricValuesValue in metricValuesArray)
                                         {
-                                            DateTime timestampInstance = (DateTime)timestampValue;
-                                            metricValueInstance.Timestamp = timestampInstance;
-                                        }
-                                        
-                                        JToken averageValue = metricValuesValue["Average"];
-                                        if (averageValue != null)
-                                        {
-                                            double averageInstance = (double)averageValue;
-                                            metricValueInstance.Average = averageInstance;
-                                        }
-                                        
-                                        JToken minimumValue = metricValuesValue["Minimum"];
-                                        if (minimumValue != null)
-                                        {
-                                            double minimumInstance = (double)minimumValue;
-                                            metricValueInstance.Minimum = minimumInstance;
-                                        }
-                                        
-                                        JToken maximumValue = metricValuesValue["Maximum"];
-                                        if (maximumValue != null)
-                                        {
-                                            double maximumInstance = (double)maximumValue;
-                                            metricValueInstance.Maximum = maximumInstance;
-                                        }
-                                        
-                                        JToken totalValue = metricValuesValue["Total"];
-                                        if (totalValue != null)
-                                        {
-                                            double totalInstance = (double)totalValue;
-                                            metricValueInstance.Total = totalInstance;
-                                        }
-                                        
-                                        JToken annotationValue = metricValuesValue["Annotation"];
-                                        if (annotationValue != null)
-                                        {
-                                            string annotationInstance = (string)annotationValue;
-                                            metricValueInstance.Annotation = annotationInstance;
-                                        }
-                                        
-                                        JToken countValue = metricValuesValue["Count"];
-                                        if (countValue != null)
-                                        {
-                                            int countInstance = (int)countValue;
-                                            metricValueInstance.Count = countInstance;
+                                            MetricValue metricValueInstance = new MetricValue();
+                                            metricValueSetInstance.MetricValues.Add(metricValueInstance);
+                                            
+                                            JToken timestampValue = metricValuesValue["Timestamp"];
+                                            if (timestampValue != null)
+                                            {
+                                                DateTime timestampInstance = (DateTime)timestampValue;
+                                                metricValueInstance.Timestamp = timestampInstance;
+                                            }
+                                            
+                                            JToken averageValue = metricValuesValue["Average"];
+                                            if (averageValue != null)
+                                            {
+                                                double averageInstance = (double)averageValue;
+                                                metricValueInstance.Average = averageInstance;
+                                            }
+                                            
+                                            JToken minimumValue = metricValuesValue["Minimum"];
+                                            if (minimumValue != null)
+                                            {
+                                                double minimumInstance = (double)minimumValue;
+                                                metricValueInstance.Minimum = minimumInstance;
+                                            }
+                                            
+                                            JToken maximumValue = metricValuesValue["Maximum"];
+                                            if (maximumValue != null)
+                                            {
+                                                double maximumInstance = (double)maximumValue;
+                                                metricValueInstance.Maximum = maximumInstance;
+                                            }
+                                            
+                                            JToken totalValue = metricValuesValue["Total"];
+                                            if (totalValue != null)
+                                            {
+                                                double totalInstance = (double)totalValue;
+                                                metricValueInstance.Total = totalInstance;
+                                            }
+                                            
+                                            JToken annotationValue = metricValuesValue["Annotation"];
+                                            if (annotationValue != null)
+                                            {
+                                                string annotationInstance = (string)annotationValue;
+                                                metricValueInstance.Annotation = annotationInstance;
+                                            }
+                                            
+                                            JToken countValue = metricValuesValue["Count"];
+                                            if (countValue != null)
+                                            {
+                                                int countInstance = (int)countValue;
+                                                metricValueInstance.Count = countInstance;
+                                            }
                                         }
                                     }
                                 }
