@@ -1583,9 +1583,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         }
                                         
                                         XElement instanceSizeElement = roleInstanceListElement.Element(XName.Get("InstanceSize", "http://schemas.microsoft.com/windowsazure"));
-                                        if (instanceSizeElement != null && string.IsNullOrEmpty(instanceSizeElement.Value) == false)
+                                        if (instanceSizeElement != null)
                                         {
-                                            VirtualMachineRoleSize instanceSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), instanceSizeElement.Value, false);
+                                            string instanceSizeInstance = instanceSizeElement.Value;
                                             roleInstanceInstance.InstanceSize = instanceSizeInstance;
                                         }
                                         
@@ -1910,6 +1910,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     {
                                                         configurationSetInstance.SubnetNames.Add(subnetNamesElement.Value);
                                                     }
+                                                }
+                                                
+                                                XElement staticVirtualNetworkIPAddressElement = configurationSetsElement.Element(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                                if (staticVirtualNetworkIPAddressElement != null)
+                                                {
+                                                    string staticVirtualNetworkIPAddressInstance = staticVirtualNetworkIPAddressElement.Value;
+                                                    configurationSetInstance.StaticVirtualNetworkIPAddress = staticVirtualNetworkIPAddressInstance;
                                                 }
                                                 
                                                 XElement computerNameElement = configurationSetsElement.Element(XName.Get("ComputerName", "http://schemas.microsoft.com/windowsazure"));
@@ -2278,9 +2285,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         }
                                         
                                         XElement roleSizeElement = roleListElement.Element(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure"));
-                                        if (roleSizeElement != null && string.IsNullOrEmpty(roleSizeElement.Value) == false)
+                                        if (roleSizeElement != null)
                                         {
-                                            VirtualMachineRoleSize roleSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), roleSizeElement.Value, false);
+                                            string roleSizeInstance = roleSizeElement.Value;
                                             roleInstance.RoleSize = roleSizeInstance;
                                         }
                                         

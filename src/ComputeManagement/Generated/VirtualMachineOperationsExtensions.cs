@@ -38,6 +38,98 @@ namespace Microsoft.WindowsAzure.Management.Compute
     public static partial class VirtualMachineOperationsExtensions
     {
         /// <summary>
+        /// The Capture Role operation creates a copy of the operating system
+        /// virtual hard disk (VHD) that is deployed in the virtual machine,
+        /// saves the VHD copy in the same storage location as the operating
+        /// system VHD, and registers the copy as an image in your image
+        /// gallery. From the captured image, you can create additional
+        /// customized virtual machines. For more information about images and
+        /// disks, see Manage Disks and Images. For more information about
+        /// capturing images, see How to Capture an Image of a Virtual Machine
+        /// Running Windows Server 2008 R2 or How to Capture an Image of a
+        /// Virtual Machine Running Linux.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157201.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// The name of the virtual machine to restart.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginCapturing(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        {
+            try
+            {
+                return operations.BeginCapturingAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Capture Role operation creates a copy of the operating system
+        /// virtual hard disk (VHD) that is deployed in the virtual machine,
+        /// saves the VHD copy in the same storage location as the operating
+        /// system VHD, and registers the copy as an image in your image
+        /// gallery. From the captured image, you can create additional
+        /// customized virtual machines. For more information about images and
+        /// disks, see Manage Disks and Images. For more information about
+        /// capturing images, see How to Capture an Image of a Virtual Machine
+        /// Running Windows Server 2008 R2 or How to Capture an Image of a
+        /// Virtual Machine Running Linux.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157201.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// The name of the virtual machine to restart.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginCapturingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        {
+            return operations.BeginCapturingAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Add Role operation adds a virtual machine to an existing
         /// deployment.  You can refer to the OSDisk in the Add Role operation
         /// in the following ways.  Platform/User Image – Set the
@@ -812,10 +904,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Parameters supplied to the Capture Virtual Machine operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static OperationResponse Capture(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        public static ComputeOperationStatusResponse Capture(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
         {
             try
             {
@@ -865,10 +964,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Parameters supplied to the Capture Virtual Machine operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static Task<OperationResponse> CaptureAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        public static Task<ComputeOperationStatusResponse> CaptureAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
         {
             return operations.CaptureAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }

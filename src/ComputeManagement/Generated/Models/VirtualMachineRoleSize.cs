@@ -27,26 +27,26 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The size of a virtual machine.
     /// </summary>
-    public enum VirtualMachineRoleSize
+    public static partial class VirtualMachineRoleSize
     {
-        Small = 0,
+        public const string Small = "Small";
         
-        ExtraSmall = 1,
+        public const string ExtraSmall = "ExtraSmall";
         
-        Large = 2,
+        public const string Large = "Large";
         
-        Medium = 3,
+        public const string Medium = "Medium";
         
-        ExtraLarge = 4,
+        public const string ExtraLarge = "ExtraLarge";
         
-        A5 = 5,
+        public const string A5 = "A5";
         
-        A6 = 6,
+        public const string A6 = "A6";
         
-        A7 = 7,
+        public const string A7 = "A7";
         
-        A8 = 8,
+        public const string A8 = "A8";
         
-        A9 = 9,
+        public const string A9 = "A9";
     }
 }
