@@ -58,6 +58,13 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
+        /// Initializes a new instance of the CertificateCloudCredentials
+        /// class without subscription.
+        /// </summary>
+        public CertificateCloudCredentials()
+        { }
+
+        /// <summary>
         /// Attempt to create certificate credentials from a collection of
         /// settings.
         /// </summary>
@@ -78,8 +85,10 @@ namespace Microsoft.WindowsAzure
             {
                 return new CertificateCloudCredentials(subscriptionId);
             }
-
-            return null;
+            else
+            {
+                return new CertificateCloudCredentials();
+            }
         }
     }
 }
