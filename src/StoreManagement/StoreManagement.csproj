@@ -37,6 +37,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="GenerateCode.props" />
+    <None Include="Microsoft.WindowsAzure.Management.Store.nuget.proj" />
+    <None Include="Microsoft.WindowsAzure.Management.Store.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
