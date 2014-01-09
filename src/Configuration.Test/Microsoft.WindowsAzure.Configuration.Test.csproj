@@ -51,7 +51,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Configuration\Configuration.csproj">
       <Project>{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}</Project>
-      <Name>Microsoft.WindowsAzure.Configuration</Name>
+      <Name>Configuration</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

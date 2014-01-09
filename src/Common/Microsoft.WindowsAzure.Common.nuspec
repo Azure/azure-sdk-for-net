@@ -37,6 +37,10 @@ Supported Portable Library Platforms:
         <reference file="Microsoft.WindowsAzure.Common.dll" />
         <reference file="Microsoft.WindowsAzure.Common.NetFramework.dll" />
       </group>
+	  <group targetFramework="windows8">
+        <reference file="Microsoft.WindowsAzure.Common.dll" />
+        <reference file="Microsoft.WindowsAzure.Common.WindowsStore.dll" />
+      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common.Dependencies" version="__VERSION_Microsoft.WindowsAzure.Common.Dependencies__" />
@@ -64,5 +68,12 @@ Supported Portable Library Platforms:
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.NetFramework.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.NetFramework.xml" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.NetFramework.pdb" target="lib\net40" />
+	
+	<file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\windows8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.pdb" target="lib\windows8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.xml" target="lib\windows8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.dll" target="lib\windows8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.xml" target="lib\windows8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.pdb" target="lib\windows8" />
   </files>
 </package>
