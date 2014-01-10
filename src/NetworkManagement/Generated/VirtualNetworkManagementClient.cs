@@ -97,6 +97,13 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             get { return this._reservedIPs; }
         }
         
+        private IStaticIPOperations _staticIPs;
+        
+        public virtual IStaticIPOperations StaticIPs
+        {
+            get { return this._staticIPs; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkManagementClient
         /// class.
@@ -108,6 +115,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             this._gateways = new GatewayOperations(this);
             this._networks = new NetworkOperations(this);
             this._reservedIPs = new ReservedIPOperations(this);
+            this._staticIPs = new StaticIPOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
