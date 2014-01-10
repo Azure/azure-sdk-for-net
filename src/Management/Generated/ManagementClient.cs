@@ -113,6 +113,17 @@ namespace Microsoft.WindowsAzure.Management
             get { return this._managementCertificates; }
         }
         
+        private IRoleSizeOperations _roleSizes;
+        
+        /// <summary>
+        /// The Service Management API includes operations for listing the
+        /// available role sizes for VMs in your subscription.
+        /// </summary>
+        public virtual IRoleSizeOperations RoleSizes
+        {
+            get { return this._roleSizes; }
+        }
+        
         private ISubscriptionOperations _subscriptions;
         
         /// <summary>
@@ -134,6 +145,7 @@ namespace Microsoft.WindowsAzure.Management
             this._affinityGroups = new AffinityGroupOperations(this);
             this._locations = new LocationOperations(this);
             this._managementCertificates = new ManagementCertificateOperations(this);
+            this._roleSizes = new RoleSizeOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }

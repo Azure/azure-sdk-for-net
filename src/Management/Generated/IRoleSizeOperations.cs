@@ -21,17 +21,28 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Management.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
+namespace Microsoft.WindowsAzure.Management
 {
-    public enum GatewayConnectivityState
+    /// <summary>
+    /// The Service Management API includes operations for listing the
+    /// available role sizes for VMs in your subscription.
+    /// </summary>
+    public partial interface IRoleSizeOperations
     {
-        Connected = 0,
-        
-        Connecting = 1,
-        
-        NotConnected = 2,
-        
-        Unknown = 3,
+        /// <summary>
+        /// The List Role Sizes operation lists all of the role sizes that are
+        /// valid for your subscription.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Role Sizes operation response.
+        /// </returns>
+        Task<RoleSizeListResponse> ListAsync(CancellationToken cancellationToken);
     }
 }

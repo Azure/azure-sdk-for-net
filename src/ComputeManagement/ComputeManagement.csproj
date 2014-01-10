@@ -186,4 +186,7 @@
   <Target Name="CopyMicrosoftWindowsAzureManagementComputeSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Compute.Specification.1.0.5122.16658-prerelease\tools\Microsoft.WindowsAzure.Management.Compute.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementComputeSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Compute.Specification.1.0.5122.29079-prerelease\tools\Microsoft.WindowsAzure.Management.Compute.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

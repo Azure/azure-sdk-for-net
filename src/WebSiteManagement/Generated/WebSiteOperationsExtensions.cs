@@ -188,22 +188,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
-        /// <param name='deleteEmptyServerFarm'>
-        /// If the site being deleted is the last web site in a server farm,
-        /// you can delete the server farm.
-        /// </param>
-        /// <param name='deleteMetrics'>
-        /// Delete the metrics for the site that you are deleting
+        /// <param name='parameters'>
+        /// The parameters to delete a web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IWebSiteOperations operations, string webSpaceName, string webSiteName, bool deleteEmptyServerFarm, bool deleteMetrics)
+        public static OperationResponse Delete(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters)
         {
             try
             {
-                return operations.DeleteAsync(webSpaceName, webSiteName, deleteEmptyServerFarm, deleteMetrics).Result;
+                return operations.DeleteAsync(webSpaceName, webSiteName, parameters).Result;
             }
             catch (AggregateException ex)
             {
@@ -236,20 +232,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
-        /// <param name='deleteEmptyServerFarm'>
-        /// If the site being deleted is the last web site in a server farm,
-        /// you can delete the server farm.
-        /// </param>
-        /// <param name='deleteMetrics'>
-        /// Delete the metrics for the site that you are deleting
+        /// <param name='parameters'>
+        /// The parameters to delete a web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, bool deleteEmptyServerFarm, bool deleteMetrics)
+        public static Task<OperationResponse> DeleteAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters)
         {
-            return operations.DeleteAsync(webSpaceName, webSiteName, deleteEmptyServerFarm, deleteMetrics, CancellationToken.None);
+            return operations.DeleteAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -856,6 +848,70 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public static Task<OperationResponse> RestartAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return operations.RestartAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can swap a web site from one slot to the production slot.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the web site slot to swap with the production slot.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse SwapSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        {
+            try
+            {
+                return operations.SwapSlotsAsync(webSpaceName, webSiteName, slotName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can swap a web site from one slot to the production slot.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the web site slot to swap with the production slot.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> SwapSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        {
+            return operations.SwapSlotsAsync(webSpaceName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>

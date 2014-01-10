@@ -79,6 +79,11 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             get; 
         }
         
+        IStaticIPOperations StaticIPs
+        {
+            get; 
+        }
+        
         /// <summary>
         /// The Get Operation Status operation returns the status of
         /// thespecified operation. After calling an asynchronous operation,
