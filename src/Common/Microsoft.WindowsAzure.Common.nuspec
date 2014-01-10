@@ -68,8 +68,8 @@ Supported Portable Library Platforms:
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.NetFramework.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.NetFramework.xml" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Common.NetFramework.pdb" target="lib\net40" />
-	
-	<file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\windows8" />
+
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\windows8" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.pdb" target="lib\windows8" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.xml" target="lib\windows8" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.dll" target="lib\windows8" />
