@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -192,7 +191,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -201,7 +200,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -299,7 +299,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -308,7 +308,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -575,7 +576,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -584,12 +585,11 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     }
                     
                     // Create Result
-                    CloudServiceGetResponse result = new CloudServiceGetResponse();
-                    result.StatusCode = statusCode;
-                    
+                    CloudServiceGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new CloudServiceGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement cloudServiceElement = responseDoc.Element(XName.Get("CloudService", "http://schemas.microsoft.com/windowsazure"));
@@ -687,6 +687,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -718,7 +720,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Cloud Service List operation
+        /// The response structure for the Cloud Service List operation.
         /// </returns>
         public async Task<CloudServiceListResponse> ListAsync(CancellationToken cancellationToken)
         {
@@ -770,7 +772,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -779,16 +781,11 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     }
                     
                     // Create Result
-                    CloudServiceListResponse result = new CloudServiceListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    CloudServiceListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new CloudServiceListResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement cloudServicesSequenceElement = responseDoc.Element(XName.Get("CloudServices", "http://schemas.microsoft.com/windowsazure"));
@@ -909,14 +906,14 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                             XElement includedElement = usageMetersElement.Element(XName.Get("Included", "http://schemas.microsoft.com/windowsazure"));
                                             if (includedElement != null)
                                             {
-                                                long includedInstance = long.Parse(includedElement.Value, CultureInfo.InvariantCulture);
+                                                string includedInstance = includedElement.Value;
                                                 usageMeterInstance.AmountIncluded = includedInstance;
                                             }
                                             
                                             XElement usedElement = usageMetersElement.Element(XName.Get("Used", "http://schemas.microsoft.com/windowsazure"));
                                             if (usedElement != null)
                                             {
-                                                long usedInstance = long.Parse(usedElement.Value, CultureInfo.InvariantCulture);
+                                                string usedInstance = usedElement.Value;
                                                 usageMeterInstance.AmountUsed = usedInstance;
                                             }
                                         }
@@ -956,6 +953,12 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                 }
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

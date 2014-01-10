@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// The friendly name for the role
+        /// The friendly name for the role.
         /// </summary>
         public string Label
         {
@@ -124,12 +124,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._roleName = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineRoleSize? _roleSize;
+        private string _roleSize;
         
         /// <summary>
         /// The size of the role instance.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineRoleSize? RoleSize
+        public string RoleSize
         {
             get { return this._roleSize; }
             set { this._roleSize = value; }

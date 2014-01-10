@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a storage account check name availability request
+        /// The response to a storage account check name availability request.
         /// </returns>
         Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken);
         

@@ -67,6 +67,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
+        /// The SQL Database Management API includes operations for managing
+        /// SQL Database Copies for a subscription.
+        /// </summary>
+        IDatabaseCopyOperations DatabaseCopies
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The SQL Database Management API includes operations for get/stop
         /// SQL Databases' operations for a subscription.
         /// </summary>

@@ -28,14 +28,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The response structure for the DAC GetStatus operation
+    /// The response structure for the DAC GetStatus operation.
     /// </summary>
     public partial class DacGetStatusResponse : OperationResponse, IEnumerable<DacGetStatusResponse.StatusInfo>
     {
         private IList<DacGetStatusResponse.StatusInfo> _statusInfoList;
         
         /// <summary>
-        /// The list of statuses relevant to this import/export request.
+        /// Gets or sets the list of statuses relevant to this import/export
+        /// request.
         /// </summary>
         public IList<DacGetStatusResponse.StatusInfo> StatusInfoList
         {
@@ -68,15 +69,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         }
         
         /// <summary>
-        /// Status of a DAC import
+        /// Status of a DAC import.
         /// </summary>
         public partial class StatusInfo
         {
             private Uri _blobUri;
             
             /// <summary>
-            /// The URI of the DAC file stored in Windows Azure Blob Storage to
-            /// be imported.
+            /// Gets or sets the URI of the DAC file stored in Windows Azure
+            /// Blob Storage to be imported.
             /// </summary>
             public Uri BlobUri
             {
@@ -87,7 +88,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _databaseName;
             
             /// <summary>
-            /// The name of the database into which this DAC will be imported.
+            /// Gets or sets the name of the database into which this DAC will
+            /// be imported.
             /// </summary>
             public string DatabaseName
             {
@@ -98,8 +100,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _errorMessage;
             
             /// <summary>
-            /// The error message of the request if the request failed in some
-            /// way.
+            /// Gets or sets the error message of the request if the request
+            /// failed in some way.
             /// </summary>
             public string ErrorMessage
             {
@@ -110,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private DateTime _lastModifiedTime;
             
             /// <summary>
-            /// The last time the status changed.
+            /// Gets or sets the last time the status changed.
             /// </summary>
             public DateTime LastModifiedTime
             {
@@ -121,8 +123,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private DateTime _queuedTime;
             
             /// <summary>
-            /// The time at which the import/export request was queued and the
-            /// process initiated.
+            /// Gets or sets the time at which the import/export request was
+            /// queued and the process initiated.
             /// </summary>
             public DateTime QueuedTime
             {
@@ -133,8 +135,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _requestId;
             
             /// <summary>
-            /// The request ID of this import/export request, so that it can be
-            /// tracked with future calls to GetStatus.
+            /// Gets or sets the request ID of this import/export request, so
+            /// that it can be tracked with future calls to GetStatus.
             /// </summary>
             public string RequestId
             {
@@ -145,7 +147,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _requestType;
             
             /// <summary>
-            /// The type (Import/Export) of this request.
+            /// Gets or sets the type (Import/Export) of this request.
             /// </summary>
             public string RequestType
             {
@@ -156,8 +158,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serverName;
             
             /// <summary>
-            /// The name of the SQL database server into which this DAC will be
-            /// imported or from which it will be exported.
+            /// Gets or sets the name of the SQL database server into which
+            /// this DAC will be imported or from which it will be exported.
             /// </summary>
             public string ServerName
             {
@@ -168,7 +170,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _status;
             
             /// <summary>
-            /// The status of the import/export request.
+            /// Gets or sets the status of the import/export request.
             /// </summary>
             public string Status
             {

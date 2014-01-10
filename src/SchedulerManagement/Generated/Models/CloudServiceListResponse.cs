@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.Scheduler.Models;
 namespace Microsoft.WindowsAzure.Management.Scheduler.Models
 {
     /// <summary>
-    /// The response structure for the Cloud Service List operation
+    /// The response structure for the Cloud Service List operation.
     /// </summary>
     public partial class CloudServiceListResponse : OperationResponse, IEnumerable<CloudServiceListResponse.CloudService>
     {
@@ -303,24 +303,24 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 /// </summary>
                 public partial class UsageLimit
                 {
-                    private long _amountIncluded;
+                    private string _amountIncluded;
                     
                     /// <summary>
                     /// Defines the limit of this usage included in this
                     /// resource's plan.
                     /// </summary>
-                    public long AmountIncluded
+                    public string AmountIncluded
                     {
                         get { return this._amountIncluded; }
                         set { this._amountIncluded = value; }
                     }
                     
-                    private long _amountUsed;
+                    private string _amountUsed;
                     
                     /// <summary>
                     /// The amount of this resource that has already been used.
                     /// </summary>
-                    public long AmountUsed
+                    public string AmountUsed
                     {
                         get { return this._amountUsed; }
                         set { this._amountUsed = value; }

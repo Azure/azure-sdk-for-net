@@ -26,14 +26,14 @@ using System.Net;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Information about a DNS Server in the virtual network
+    /// Information about a DNS Server in the virtual network.
     /// </summary>
     public partial class DnsServer
     {
         private string _address;
         
         /// <summary>
-        /// The DNS server address
+        /// The DNS server address.
         /// </summary>
         public string Address
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// The name of the DNS server
+        /// The name of the DNS server.
         /// </summary>
         public string Name
         {

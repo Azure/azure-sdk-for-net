@@ -22,7 +22,6 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -85,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _iconUri;
         
         /// <summary>
-        /// Provides the URI to the icon for this Operating System Image
+        /// Provides the URI to the icon for this Operating System Image.
         /// </summary>
         public Uri IconUri
         {
@@ -232,7 +231,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _publisherName;
         
         /// <summary>
-        /// The name of the publisher of this OS Image in Windows Azure
+        /// The name of the publisher of this OS Image in Windows Azure.
         /// </summary>
         public string PublisherName
         {
@@ -240,13 +239,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._publisherName = value; }
         }
         
-        private VirtualMachineRoleSize _recommendedVMSize;
+        private string _recommendedVMSize;
         
         /// <summary>
         /// Optional. Specifies the size to use for the virtual machine that is
         /// created from the OS image.
         /// </summary>
-        public VirtualMachineRoleSize RecommendedVMSize
+        public string RecommendedVMSize
         {
             get { return this._recommendedVMSize; }
             set { this._recommendedVMSize = value; }
@@ -256,7 +255,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Indicates whther the image should be shown in the windows azure
-        /// portal
+        /// portal.
         /// </summary>
         public bool? ShowInGui
         {

@@ -97,6 +97,13 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             get { return this._reservedIPs; }
         }
         
+        private IStaticIPOperations _staticIPs;
+        
+        public virtual IStaticIPOperations StaticIPs
+        {
+            get { return this._staticIPs; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkManagementClient
         /// class.
@@ -108,6 +115,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             this._gateways = new GatewayOperations(this);
             this._networks = new NetworkOperations(this);
             this._reservedIPs = new ReservedIPOperations(this);
+            this._staticIPs = new StaticIPOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -251,7 +259,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -260,16 +268,11 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                     }
                     
                     // Create Result
-                    VirtualNetworkOperationStatusResponse result = new VirtualNetworkOperationStatusResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    VirtualNetworkOperationStatusResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new VirtualNetworkOperationStatusResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
@@ -316,6 +319,12 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                                 errorInstance.Message = messageInstance;
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

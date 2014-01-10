@@ -93,12 +93,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
-        /// <param name='deleteEmptyServerFarm'>
-        /// If the site being deleted is the last web site in a server farm,
-        /// you can delete the server farm.
-        /// </param>
-        /// <param name='deleteMetrics'>
-        /// Delete the metrics for the site that you are deleting
+        /// <param name='parameters'>
+        /// The parameters to delete a web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -107,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string webSpaceName, string webSiteName, bool deleteEmptyServerFarm, bool deleteMetrics, CancellationToken cancellationToken);
+        Task<OperationResponse> DeleteAsync(string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// A web site repository is essentially a GIT repository that you can
@@ -172,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters
+        /// Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -312,6 +308,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// request ID.
         /// </returns>
         Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can swap a web site from one slot to the production slot.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the web site slot to swap with the production slot.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> SwapSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can update the settings for a web site by using the HTTP PUT

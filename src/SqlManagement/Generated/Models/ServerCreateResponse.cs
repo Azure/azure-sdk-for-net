@@ -26,14 +26,14 @@ using Microsoft.WindowsAzure.Management.Sql;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The response returned from the Create Server operation
+    /// The response returned from the Create Server operation.
     /// </summary>
     public partial class ServerCreateResponse : OperationResponse
     {
         private string _serverName;
         
         /// <summary>
-        /// The name of the server that was created
+        /// Gets or sets the name of the server that was created.
         /// </summary>
         public string ServerName
         {

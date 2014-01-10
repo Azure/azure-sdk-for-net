@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _webSpaceName;
         
         /// <summary>
-        /// The name of the webspace
+        /// The name of the webspace.
         /// </summary>
         public string WebSpaceName
         {

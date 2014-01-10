@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -227,7 +227,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     }
                     
                     // Create Result
-                    JobCollectionCreateResponse result = new JobCollectionCreateResponse();
+                    JobCollectionCreateResponse result = null;
+                    result = new JobCollectionCreateResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -337,7 +338,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -346,7 +347,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -540,7 +542,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -549,7 +551,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     }
                     
                     // Create Result
-                    JobCollectionUpdateResponse result = new JobCollectionUpdateResponse();
+                    JobCollectionUpdateResponse result = null;
+                    result = new JobCollectionUpdateResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("ETag"))
                     {
@@ -665,7 +668,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -674,16 +677,11 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     }
                     
                     // Create Result
-                    JobCollectionCheckNameAvailabilityResponse result = new JobCollectionCheckNameAvailabilityResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    JobCollectionCheckNameAvailabilityResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new JobCollectionCheckNameAvailabilityResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement resourceNameAvailabilityResponseElement = responseDoc.Element(XName.Get("ResourceNameAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
@@ -695,6 +693,12 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
                             result.IsAvailable = isAvailableInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -970,7 +974,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -979,16 +983,11 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     }
                     
                     // Create Result
-                    JobCollectionGetResponse result = new JobCollectionGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    JobCollectionGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new JobCollectionGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement resourceElement = responseDoc.Element(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure"));
@@ -1133,6 +1132,12 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                 operationStatusInstance.Status = resultInstance;
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

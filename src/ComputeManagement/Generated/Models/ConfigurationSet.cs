@@ -173,6 +173,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._sshSettings = value; }
         }
         
+        private string _staticVirtualNetworkIPAddress;
+        
+        /// <summary>
+        /// Optional. Specifies a Customer Address, i.e. an IP address assigned
+        /// to a VM in a VNet's SubNet, for example: 10.0.0.4.
+        /// </summary>
+        public string StaticVirtualNetworkIPAddress
+        {
+            get { return this._staticVirtualNetworkIPAddress; }
+            set { this._staticVirtualNetworkIPAddress = value; }
+        }
+        
         private IList<StoredCertificateSettings> _storedCertificateSettings;
         
         /// <summary>
@@ -206,8 +218,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// element is only used with the WindowsProvisioningConfiguration
         /// set.  For a complete list of supported time zone entries, you can:
         /// Refer to the values listed in the registry entry
-        /// HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
-        /// NT\CurrentVersion\Time Zones on a computer running Windows 7,
+        /// HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows
+        /// NT\\CurrentVersion\\Time Zones on a computer running Windows 7,
         /// Windows Server 2008, and Windows Server 2008 R2.  You can use the
         /// tzutil command-line tool to list the valid time. The tzutil tool
         /// is installed by default on Windows 7, Windows Server 2008, and

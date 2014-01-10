@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DacExportParameters.BlobCredentialsParameter _blobCredentials;
         
         /// <summary>
-        /// Credentials for getting the DAC.
+        /// Gets or sets credentials for getting the DAC.
         /// </summary>
         public DacExportParameters.BlobCredentialsParameter BlobCredentials
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DacExportParameters.ConnectionInfoParameter _connectionInfo;
         
         /// <summary>
-        /// Connection information for the SQL Server Database.
+        /// Gets or sets connection information for the SQL Server Database.
         /// </summary>
         public DacExportParameters.ConnectionInfoParameter ConnectionInfo
         {
@@ -60,14 +60,14 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         }
         
         /// <summary>
-        /// Credentials for getting the DAC
+        /// Credentials for getting the DAC.
         /// </summary>
         public partial class BlobCredentialsParameter
         {
             private string _storageAccessKey;
             
             /// <summary>
-            /// The key for the Windows Azure Storage account.
+            /// Gets or sets the key for the Windows Azure Storage account.
             /// </summary>
             public string StorageAccessKey
             {
@@ -78,7 +78,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private Uri _uri;
             
             /// <summary>
-            /// The URI of the DAC file in stored in Windows Azure Blob Storage.
+            /// Gets or sets the URI of the DAC file stored in Windows Azure
+            /// Blob Storage.
             /// </summary>
             public Uri Uri
             {
@@ -103,7 +104,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _databaseName;
             
             /// <summary>
-            /// The name of the database.
+            /// Gets or sets the name of the database.
             /// </summary>
             public string DatabaseName
             {
@@ -114,7 +115,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _password;
             
             /// <summary>
-            /// The password for the database user.
+            /// Gets or sets the password for the database user.
             /// </summary>
             public string Password
             {
@@ -125,7 +126,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serverName;
             
             /// <summary>
-            /// The SQL server name.
+            /// Gets or sets the SQL server name.
             /// </summary>
             public string ServerName
             {
@@ -136,7 +137,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _userName;
             
             /// <summary>
-            /// The username of the database user.
+            /// Gets or sets the username of the database user.
             /// </summary>
             public string UserName
             {

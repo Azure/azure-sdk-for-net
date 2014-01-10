@@ -34,8 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     public partial interface IDatabaseOperationOperations
     {
         /// <summary>
-        /// The 'Get Database Operation' retrieves information about one
-        /// operation on a given operation Guid.
+        /// Returns information about one operation on a given operation Guid.
         /// </summary>
         /// <param name='serverName'>
         /// The name of the SQL Server on which the operation was executed.
@@ -52,6 +51,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// </returns>
         Task<DatabaseOperationGetResponse> GetAsync(string serverName, string operationGuid, CancellationToken cancellationToken);
         
+        /// <summary>
+        /// Returns the list database operations for a given server and
+        /// database.
+        /// </summary>
         /// <param name='serverName'>
         /// The name of the SQL Server to be queried.
         /// </param>
@@ -67,6 +70,9 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// </returns>
         Task<DatabaseOperationListResponse> ListByDatabaseAsync(string serverName, string databaseName, CancellationToken cancellationToken);
         
+        /// <summary>
+        /// Returns the list database operations for a given server.
+        /// </summary>
         /// <param name='serverName'>
         /// The name of the SQL Server to be queried.
         /// </param>

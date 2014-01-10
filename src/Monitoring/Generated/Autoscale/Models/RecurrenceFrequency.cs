@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     public enum RecurrenceFrequency
     {
         /// <summary>
-        /// No recurrence
+        /// No recurrence.
         /// </summary>
         None = 0,
         

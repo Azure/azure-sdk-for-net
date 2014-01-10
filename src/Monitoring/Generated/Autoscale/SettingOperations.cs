@@ -140,8 +140,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                             
                             if (profilesItem.Name != null)
                             {
-                                JToken nameValue = profilesItem.Name;
-                                autoscaleProfileValue["Name"] = nameValue;
+                                autoscaleProfileValue["Name"] = profilesItem.Name;
                             }
                             
                             if (profilesItem.Capacity != null)
@@ -151,20 +150,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 
                                 if (profilesItem.Capacity.Minimum != null)
                                 {
-                                    JToken minimumValue = profilesItem.Capacity.Minimum;
-                                    capacityValue["Minimum"] = minimumValue;
+                                    capacityValue["Minimum"] = profilesItem.Capacity.Minimum;
                                 }
                                 
                                 if (profilesItem.Capacity.Maximum != null)
                                 {
-                                    JToken maximumValue = profilesItem.Capacity.Maximum;
-                                    capacityValue["Maximum"] = maximumValue;
+                                    capacityValue["Maximum"] = profilesItem.Capacity.Maximum;
                                 }
                                 
                                 if (profilesItem.Capacity.Default != null)
                                 {
-                                    JToken defaultValue = profilesItem.Capacity.Default;
-                                    capacityValue["Default"] = defaultValue;
+                                    capacityValue["Default"] = profilesItem.Capacity.Default;
                                 }
                             }
                             
@@ -183,39 +179,30 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         
                                         if (rulesItem.MetricTrigger.MetricName != null)
                                         {
-                                            JToken metricNameValue = rulesItem.MetricTrigger.MetricName;
-                                            metricTriggerValue["MetricName"] = metricNameValue;
+                                            metricTriggerValue["MetricName"] = rulesItem.MetricTrigger.MetricName;
                                         }
                                         
                                         if (rulesItem.MetricTrigger.MetricNamespace != null)
                                         {
-                                            JToken metricNamespaceValue = rulesItem.MetricTrigger.MetricNamespace;
-                                            metricTriggerValue["MetricNamespace"] = metricNamespaceValue;
+                                            metricTriggerValue["MetricNamespace"] = rulesItem.MetricTrigger.MetricNamespace;
                                         }
                                         
                                         if (rulesItem.MetricTrigger.MetricSource != null)
                                         {
-                                            JToken metricSourceValue = rulesItem.MetricTrigger.MetricSource;
-                                            metricTriggerValue["MetricSource"] = metricSourceValue;
+                                            metricTriggerValue["MetricSource"] = rulesItem.MetricTrigger.MetricSource;
                                         }
                                         
-                                        JToken timeGrainValue = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeGrain);
-                                        metricTriggerValue["TimeGrain"] = timeGrainValue;
+                                        metricTriggerValue["TimeGrain"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeGrain);
                                         
-                                        JToken statisticValue = rulesItem.MetricTrigger.Statistic.ToString();
-                                        metricTriggerValue["Statistic"] = statisticValue;
+                                        metricTriggerValue["Statistic"] = rulesItem.MetricTrigger.Statistic.ToString();
                                         
-                                        JToken timeWindowValue = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeWindow);
-                                        metricTriggerValue["TimeWindow"] = timeWindowValue;
+                                        metricTriggerValue["TimeWindow"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeWindow);
                                         
-                                        JToken timeAggregationValue = rulesItem.MetricTrigger.TimeAggregation.ToString();
-                                        metricTriggerValue["TimeAggregation"] = timeAggregationValue;
+                                        metricTriggerValue["TimeAggregation"] = rulesItem.MetricTrigger.TimeAggregation.ToString();
                                         
-                                        JToken operatorValue = rulesItem.MetricTrigger.Operator.ToString();
-                                        metricTriggerValue["Operator"] = operatorValue;
+                                        metricTriggerValue["Operator"] = rulesItem.MetricTrigger.Operator.ToString();
                                         
-                                        JToken thresholdValue = rulesItem.MetricTrigger.Threshold;
-                                        metricTriggerValue["Threshold"] = thresholdValue;
+                                        metricTriggerValue["Threshold"] = rulesItem.MetricTrigger.Threshold;
                                     }
                                     
                                     if (rulesItem.ScaleAction != null)
@@ -223,20 +210,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         JObject scaleActionValue = new JObject();
                                         scaleRuleValue["ScaleAction"] = scaleActionValue;
                                         
-                                        JToken directionValue = rulesItem.ScaleAction.Direction.ToString();
-                                        scaleActionValue["Direction"] = directionValue;
+                                        scaleActionValue["Direction"] = rulesItem.ScaleAction.Direction.ToString();
                                         
-                                        JToken typeValue = rulesItem.ScaleAction.Type.ToString();
-                                        scaleActionValue["Type"] = typeValue;
+                                        scaleActionValue["Type"] = rulesItem.ScaleAction.Type.ToString();
                                         
                                         if (rulesItem.ScaleAction.Value != null)
                                         {
-                                            JToken valueValue = rulesItem.ScaleAction.Value;
-                                            scaleActionValue["Value"] = valueValue;
+                                            scaleActionValue["Value"] = rulesItem.ScaleAction.Value;
                                         }
                                         
-                                        JToken cooldownValue = TypeConversion.To8601String(rulesItem.ScaleAction.Cooldown);
-                                        scaleActionValue["Cooldown"] = cooldownValue;
+                                        scaleActionValue["Cooldown"] = TypeConversion.To8601String(rulesItem.ScaleAction.Cooldown);
                                     }
                                 }
                                 autoscaleProfileValue["Rules"] = rulesArray;
@@ -249,15 +232,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 
                                 if (profilesItem.FixedDate.TimeZone != null)
                                 {
-                                    JToken timeZoneValue = profilesItem.FixedDate.TimeZone;
-                                    fixedDateValue["TimeZone"] = timeZoneValue;
+                                    fixedDateValue["TimeZone"] = profilesItem.FixedDate.TimeZone;
                                 }
                                 
-                                JToken startValue = profilesItem.FixedDate.Start;
-                                fixedDateValue["Start"] = startValue;
+                                fixedDateValue["Start"] = profilesItem.FixedDate.Start;
                                 
-                                JToken endValue = profilesItem.FixedDate.End;
-                                fixedDateValue["End"] = endValue;
+                                fixedDateValue["End"] = profilesItem.FixedDate.End;
                             }
                             
                             if (profilesItem.Recurrence != null)
@@ -265,8 +245,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 JObject recurrenceValue = new JObject();
                                 autoscaleProfileValue["Recurrence"] = recurrenceValue;
                                 
-                                JToken frequencyValue = profilesItem.Recurrence.Frequency.ToString();
-                                recurrenceValue["Frequency"] = frequencyValue;
+                                recurrenceValue["Frequency"] = profilesItem.Recurrence.Frequency.ToString();
                                 
                                 if (profilesItem.Recurrence.Schedule != null)
                                 {
@@ -275,8 +254,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     
                                     if (profilesItem.Recurrence.Schedule.TimeZone != null)
                                     {
-                                        JToken timeZoneValue2 = profilesItem.Recurrence.Schedule.TimeZone;
-                                        scheduleValue["TimeZone"] = timeZoneValue2;
+                                        scheduleValue["TimeZone"] = profilesItem.Recurrence.Schedule.TimeZone;
                                     }
                                     
                                     if (profilesItem.Recurrence.Schedule.Days != null)
@@ -314,8 +292,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                         settingValue["Profiles"] = profilesArray;
                     }
                     
-                    JToken enabledValue = parameters.Setting.Enabled;
-                    settingValue["Enabled"] = enabledValue;
+                    settingValue["Enabled"] = parameters.Setting.Enabled;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -340,7 +317,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -349,7 +326,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -445,7 +423,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -454,7 +432,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -550,7 +529,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromJson(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -559,16 +538,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     }
                     
                     // Create Result
-                    AutoscaleSettingGetResponse result = new AutoscaleSettingGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    AutoscaleSettingGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new AutoscaleSettingGetResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
                     if (responseDoc != null)
@@ -664,6 +638,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken statisticValue = metricTriggerValue["Statistic"];
                                             if (statisticValue != null)
                                             {
+                                                // how
                                                 MetricStatisticType statisticInstance = (MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), (string)statisticValue, false);
                                                 metricTriggerInstance.Statistic = statisticInstance;
                                             }
@@ -678,6 +653,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken timeAggregationValue = metricTriggerValue["TimeAggregation"];
                                             if (timeAggregationValue != null)
                                             {
+                                                // how
                                                 TimeAggregationType timeAggregationInstance = (TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), (string)timeAggregationValue, false);
                                                 metricTriggerInstance.TimeAggregation = timeAggregationInstance;
                                             }
@@ -685,6 +661,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken operatorValue = metricTriggerValue["Operator"];
                                             if (operatorValue != null)
                                             {
+                                                // how
                                                 ComparisonOperationType operatorInstance = (ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), (string)operatorValue, false);
                                                 metricTriggerInstance.Operator = operatorInstance;
                                             }
@@ -706,6 +683,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken directionValue = scaleActionValue["Direction"];
                                             if (directionValue != null)
                                             {
+                                                // how
                                                 ScaleDirection directionInstance = (ScaleDirection)Enum.Parse(typeof(ScaleDirection), (string)directionValue, false);
                                                 scaleActionInstance.Direction = directionInstance;
                                             }
@@ -713,6 +691,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken typeValue = scaleActionValue["Type"];
                                             if (typeValue != null)
                                             {
+                                                // how
                                                 ScaleType typeInstance = (ScaleType)Enum.Parse(typeof(ScaleType), (string)typeValue, false);
                                                 scaleActionInstance.Type = typeInstance;
                                             }
@@ -771,6 +750,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     JToken frequencyValue = recurrenceValue["Frequency"];
                                     if (frequencyValue != null)
                                     {
+                                        // how
                                         RecurrenceFrequency frequencyInstance = (RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), (string)frequencyValue, false);
                                         recurrenceInstance.Frequency = frequencyInstance;
                                     }
@@ -825,6 +805,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                             bool enabledInstance = (bool)enabledValue;
                             settingInstance.Enabled = enabledInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

@@ -72,10 +72,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The Set Server Firewall Rule operation updates an existing
-        /// server-level firewall rule or adds a new server-level firewall
-        /// rule for a SQL Database server that belongs to a subscription.
-        /// (see
+        /// Adds a new server-level firewall rule for a SQL Database server
+        /// that belongs to a subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
         /// for more information)
         /// </summary>
@@ -84,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// applied.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Create Firewall Rule operation
+        /// Parameters for the Create Firewall Rule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -188,7 +186,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -197,16 +195,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     }
                     
                     // Create Result
-                    FirewallRuleCreateResponse result = new FirewallRuleCreateResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    FirewallRuleCreateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new FirewallRuleCreateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
@@ -248,6 +241,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -272,18 +271,17 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The Delete Server Firewall Rule operation deletes a server-level
-        /// firewall rule from a SQL Database server that belongs to a
-        /// subscription.  (see
+        /// Deletes a server-level firewall rule from a SQL Database server
+        /// that belongs to a subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715277.aspx
         /// for more information)
         /// </summary>
         /// <param name='serverName'>
         /// The name of the server that will be have new firewall rule applied
-        /// to it
+        /// to it.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the new firewall rule
+        /// The name of the new firewall rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -352,7 +350,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -361,7 +359,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -392,14 +391,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The Get Server Firewall Rules operation retrieves a list of all the
-        /// server-level firewall rules for a SQL Database server that belongs
-        /// to a subscription.  (see
+        /// Returns a list of all the server-level firewall rules for a SQL
+        /// Database server that belongs to a subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
         /// for more information)
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server for which the call is being made
+        /// The name of the server for which the call is being made.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -463,7 +461,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -472,16 +470,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     }
                     
                     // Create Result
-                    FirewallRuleListResponse result = new FirewallRuleListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    FirewallRuleListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new FirewallRuleListResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
@@ -522,6 +515,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -546,10 +545,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// The Set Server Firewall Rule operation updates an existing
-        /// server-level firewall rule or adds a new server-level firewall
-        /// rule for a SQL Database server that belongs to a subscription.
-        /// (see
+        /// Updates an existing server-level firewall rule for a SQL Database
+        /// server that belongs to a subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
         /// for more information)
         /// </summary>
@@ -561,7 +558,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// The name of the firewall rule to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Update Firewall Rule operation
+        /// Parameters for the Update Firewall Rule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -670,7 +667,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -679,16 +676,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     }
                     
                     // Create Result
-                    FirewallRuleUpdateResponse result = new FirewallRuleUpdateResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    FirewallRuleUpdateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new FirewallRuleUpdateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
@@ -728,6 +720,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             string endIPAddressInstance = endIPAddressElement2.Value;
                             result.EndIPAddress = endIPAddressInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

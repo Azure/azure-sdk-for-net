@@ -31,5 +31,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         Connecting = 1,
         
         NotConnected = 2,
+        
+        Unknown = 3,
     }
 }

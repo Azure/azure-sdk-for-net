@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private string _oSFamily;
         
         /// <summary>
-        /// The device OS Family
+        /// The device OS Family.
         /// </summary>
         public string OSFamily
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private string _platform;
         
         /// <summary>
-        /// The device platform
+        /// The device platform.
         /// </summary>
         public string Platform
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
         private string _vendor;
         
         /// <summary>
-        /// The name of the device vendor
+        /// The name of the device vendor.
         /// </summary>
         public string Vendor
         {

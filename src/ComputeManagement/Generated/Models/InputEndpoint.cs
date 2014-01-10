@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _enableDirectServerReturn;
         
         /// <summary>
-        /// Specifies whether direct server return is enabled for the endpoint
+        /// Specifies whether direct server return is enabled for the endpoint.
         /// </summary>
         public bool? EnableDirectServerReturn
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private EndpointAcl _endpointAcl;
         
         /// <summary>
-        /// Specifies the list of access control rules for the endpoint
+        /// Specifies the list of access control rules for the endpoint.
         /// </summary>
         public EndpointAcl EndpointAcl
         {

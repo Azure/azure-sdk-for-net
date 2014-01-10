@@ -26,14 +26,14 @@ using System.Net;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The parameters for the Create Firewall Rule operation
+    /// The parameters for the Create Firewall Rule operation.
     /// </summary>
     public partial class FirewallRuleCreateParameters
     {
         private string _endIPAddress;
         
         /// <summary>
-        /// The ending IP address applied to this firewall rule.
+        /// Gets or sets the ending IP address applied to this firewall rule.
         /// </summary>
         public string EndIPAddress
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// The name of this firewall rule.
+        /// Gets or sets the name of this firewall rule.
         /// </summary>
         public string Name
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _startIPAddress;
         
         /// <summary>
-        /// The beginning IP address applied to this firewall rule.
+        /// Gets or sets the beginning IP address applied to this firewall rule.
         /// </summary>
         public string StartIPAddress
         {

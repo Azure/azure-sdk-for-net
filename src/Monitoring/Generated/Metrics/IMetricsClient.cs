@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         }
         
         /// <summary>
-        /// Windows Azure subscription id
+        /// Windows Azure subscription id.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {

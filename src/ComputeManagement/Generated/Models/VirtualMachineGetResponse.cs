@@ -119,12 +119,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._roleName = value; }
         }
         
-        private VirtualMachineRoleSize _roleSize;
+        private string _roleSize;
         
         /// <summary>
         /// The size of the virtual machine.
         /// </summary>
-        public VirtualMachineRoleSize RoleSize
+        public string RoleSize
         {
             get { return this._roleSize; }
             set { this._roleSize = value; }

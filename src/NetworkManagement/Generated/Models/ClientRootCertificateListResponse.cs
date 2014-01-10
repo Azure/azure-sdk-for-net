@@ -28,14 +28,14 @@ using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
 namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
 {
     /// <summary>
-    /// The response to the list client root certificates request
+    /// The response to the list client root certificates request.
     /// </summary>
     public partial class ClientRootCertificateListResponse : OperationResponse, IEnumerable<ClientRootCertificateListResponse.ClientRootCertificate>
     {
         private IList<ClientRootCertificateListResponse.ClientRootCertificate> _clientRootCertificates;
         
         /// <summary>
-        /// The list of client root certificates
+        /// The list of client root certificates.
         /// </summary>
         public IList<ClientRootCertificateListResponse.ClientRootCertificate> ClientRootCertificates
         {

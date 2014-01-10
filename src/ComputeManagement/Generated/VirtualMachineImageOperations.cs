@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.PublishedDate != null)
                 {
                     XElement publishedDateElement = new XElement(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                    publishedDateElement.Value = parameters.PublishedDate.ToString();
+                    publishedDateElement.Value = string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.PublishedDate.Value.ToUniversalTime());
                     oSImageElement.Add(publishedDateElement);
                 }
                 
@@ -214,7 +214,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.RecommendedVMSize != null)
                 {
                     XElement recommendedVMSizeElement = new XElement(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                    recommendedVMSizeElement.Value = parameters.RecommendedVMSize.ToString();
+                    recommendedVMSizeElement.Value = parameters.RecommendedVMSize;
                     oSImageElement.Add(recommendedVMSizeElement);
                 }
                 
@@ -254,7 +254,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -263,16 +263,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineImageCreateResponse result = new VirtualMachineImageCreateResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    VirtualMachineImageCreateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new VirtualMachineImageCreateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement oSImageElement2 = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
@@ -393,7 +388,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement recommendedVMSizeElement2 = oSImageElement2.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
                         if (recommendedVMSizeElement2 != null)
                         {
-                            VirtualMachineRoleSize recommendedVMSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), recommendedVMSizeElement2.Value, false);
+                            string recommendedVMSizeInstance = recommendedVMSizeElement2.Value;
                             result.RecommendedVMSize = recommendedVMSizeInstance;
                         }
                         
@@ -410,6 +405,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             string languageInstance = languageElement2.Value;
                             result.Language = languageInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -515,7 +516,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -524,7 +525,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -561,7 +563,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='imageName'>
-        /// The name of the OS image to retrieve
+        /// The name of the OS image to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -624,7 +626,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -633,16 +635,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineImageGetResponse result = new VirtualMachineImageGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    VirtualMachineImageGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new VirtualMachineImageGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement oSImageElement = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
@@ -763,7 +760,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement recommendedVMSizeElement = oSImageElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
                         if (recommendedVMSizeElement != null)
                         {
-                            VirtualMachineRoleSize recommendedVMSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), recommendedVMSizeElement.Value, false);
+                            string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
                             result.RecommendedVMSize = recommendedVMSizeInstance;
                         }
                         
@@ -787,6 +784,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             string languageInstance = languageElement.Value;
                             result.Language = languageInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -874,7 +877,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -883,16 +886,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineImageListResponse result = new VirtualMachineImageListResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    VirtualMachineImageListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new VirtualMachineImageListResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement imagesSequenceElement = responseDoc.Element(XName.Get("Images", "http://schemas.microsoft.com/windowsazure"));
@@ -1004,7 +1002,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement recommendedVMSizeElement = imagesElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
                             if (recommendedVMSizeElement != null)
                             {
-                                VirtualMachineRoleSize recommendedVMSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), recommendedVMSizeElement.Value, false);
+                                string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
                                 oSImageInstance.RecommendedVMSize = recommendedVMSizeInstance;
                             }
                             
@@ -1036,6 +1034,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 oSImageInstance.Language = languageInstance;
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
@@ -1160,7 +1164,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.PublishedDate != null)
                 {
                     XElement publishedDateElement = new XElement(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                    publishedDateElement.Value = parameters.PublishedDate.ToString();
+                    publishedDateElement.Value = string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.PublishedDate.Value.ToUniversalTime());
                     oSImageElement.Add(publishedDateElement);
                 }
                 
@@ -1185,7 +1189,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.RecommendedVMSize != null)
                 {
                     XElement recommendedVMSizeElement = new XElement(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                    recommendedVMSizeElement.Value = parameters.RecommendedVMSize.ToString();
+                    recommendedVMSizeElement.Value = parameters.RecommendedVMSize;
                     oSImageElement.Add(recommendedVMSizeElement);
                 }
                 
@@ -1225,7 +1229,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1234,16 +1238,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineImageUpdateResponse result = new VirtualMachineImageUpdateResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    VirtualMachineImageUpdateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new VirtualMachineImageUpdateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement oSImageElement2 = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
@@ -1364,7 +1363,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement recommendedVMSizeElement2 = oSImageElement2.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
                         if (recommendedVMSizeElement2 != null)
                         {
-                            VirtualMachineRoleSize recommendedVMSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), recommendedVMSizeElement2.Value, false);
+                            string recommendedVMSizeInstance = recommendedVMSizeElement2.Value;
                             result.RecommendedVMSize = recommendedVMSizeInstance;
                         }
                         
@@ -1381,6 +1380,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             string languageInstance = languageElement2.Value;
                             result.Language = languageInstance;
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)

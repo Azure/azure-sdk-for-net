@@ -94,7 +94,7 @@
     Developer builds are signed using the c66ce9294aae1300 full key pair that
     is unofficial and provided to the public via the Development.snk key pair.
 
-    Official builds should never be shipped with the developer key pair token.
+    Official builds should never use the developer key pair token.
     -->
   <PropertyGroup>
     <MicrosoftLibrariesStrongNameToken>31bf3856ad364e35</MicrosoftLibrariesStrongNameToken>

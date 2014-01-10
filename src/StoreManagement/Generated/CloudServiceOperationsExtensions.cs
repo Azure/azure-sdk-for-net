@@ -179,7 +179,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// Microsoft.WindowsAzure.Management.Store.ICloudServiceOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Cloud Service List operation
+        /// The response structure for the Cloud Service List operation.
         /// </returns>
         public static CloudServiceListResponse List(this ICloudServiceOperations operations)
         {
@@ -209,7 +209,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// Microsoft.WindowsAzure.Management.Store.ICloudServiceOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Cloud Service List operation
+        /// The response structure for the Cloud Service List operation.
         /// </returns>
         public static Task<CloudServiceListResponse> ListAsync(this ICloudServiceOperations operations)
         {

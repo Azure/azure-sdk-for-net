@@ -69,6 +69,652 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Capture Role operation creates a copy of the operating system
+        /// virtual hard disk (VHD) that is deployed in the virtual machine,
+        /// saves the VHD copy in the same storage location as the operating
+        /// system VHD, and registers the copy as an image in your image
+        /// gallery. From the captured image, you can create additional
+        /// customized virtual machines. For more information about images and
+        /// disks, see Manage Disks and Images. For more information about
+        /// capturing images, see How to Capture an Image of a Virtual Machine
+        /// Running Windows Server 2008 R2 or How to Capture an Image of a
+        /// Virtual Machine Running Linux.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157201.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// The name of the virtual machine to restart.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> BeginCapturingAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (virtualMachineName == null)
+            {
+                throw new ArgumentNullException("virtualMachineName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.ProvisioningConfiguration != null)
+            {
+                if (parameters.ProvisioningConfiguration.DomainJoin != null)
+                {
+                    if (parameters.ProvisioningConfiguration.DomainJoin.Credentials != null)
+                    {
+                        if (parameters.ProvisioningConfiguration.DomainJoin.Credentials.Password == null)
+                        {
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.DomainJoin.Credentials.Password");
+                        }
+                        if (parameters.ProvisioningConfiguration.DomainJoin.Credentials.UserName == null)
+                        {
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.DomainJoin.Credentials.UserName");
+                        }
+                    }
+                }
+                if (parameters.ProvisioningConfiguration.HostName != null && parameters.ProvisioningConfiguration.HostName.Length < 1)
+                {
+                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.HostName");
+                }
+                if (parameters.ProvisioningConfiguration.HostName != null && parameters.ProvisioningConfiguration.HostName.Length > 64)
+                {
+                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.HostName");
+                }
+                if (parameters.ProvisioningConfiguration.SshSettings != null)
+                {
+                    foreach (SshSettingKeyPair keyPairsParameterItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairs)
+                    {
+                        if (keyPairsParameterItem.Fingerprint == null)
+                        {
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Fingerprint");
+                        }
+                        if (keyPairsParameterItem.Path == null)
+                        {
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Path");
+                        }
+                    }
+                    foreach (SshSettingPublicKey publicKeysParameterItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeys)
+                    {
+                        if (publicKeysParameterItem.Fingerprint == null)
+                        {
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Fingerprint");
+                        }
+                        if (publicKeysParameterItem.Path == null)
+                        {
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Path");
+                        }
+                    }
+                }
+                foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in parameters.ProvisioningConfiguration.StoredCertificateSettings)
+                {
+                    if (storedCertificateSettingsParameterItem.StoreName == null)
+                    {
+                        throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.StoreName");
+                    }
+                    if (storedCertificateSettingsParameterItem.Thumbprint == null)
+                    {
+                        throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.Thumbprint");
+                    }
+                }
+                if (parameters.ProvisioningConfiguration.UserName != null && parameters.ProvisioningConfiguration.UserName.Length < 1)
+                {
+                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserName");
+                }
+                if (parameters.ProvisioningConfiguration.UserName != null && parameters.ProvisioningConfiguration.UserName.Length > 32)
+                {
+                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserName");
+                }
+                if (parameters.ProvisioningConfiguration.UserPassword != null && parameters.ProvisioningConfiguration.UserPassword.Length < 6 && (parameters.ProvisioningConfiguration.DisableSshPasswordAuthentication == false || parameters.ProvisioningConfiguration.UserPassword.Length != 0))
+                {
+                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserPassword");
+                }
+                if (parameters.ProvisioningConfiguration.UserPassword != null && parameters.ProvisioningConfiguration.UserPassword.Length > 72)
+                {
+                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserPassword");
+                }
+            }
+            if (parameters.TargetImageLabel == null)
+            {
+                throw new ArgumentNullException("parameters.TargetImageLabel");
+            }
+            if (parameters.TargetImageName == null)
+            {
+                throw new ArgumentNullException("parameters.TargetImageName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("virtualMachineName", virtualMachineName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "BeginCapturingAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement captureRoleOperationElement = new XElement(XName.Get("CaptureRoleOperation", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(captureRoleOperationElement);
+                
+                XElement operationTypeElement = new XElement(XName.Get("OperationType", "http://schemas.microsoft.com/windowsazure"));
+                operationTypeElement.Value = "CaptureRoleOperation";
+                captureRoleOperationElement.Add(operationTypeElement);
+                
+                XElement postCaptureActionElement = new XElement(XName.Get("PostCaptureAction", "http://schemas.microsoft.com/windowsazure"));
+                postCaptureActionElement.Value = parameters.PostCaptureAction.ToString();
+                captureRoleOperationElement.Add(postCaptureActionElement);
+                
+                if (parameters.ProvisioningConfiguration != null)
+                {
+                    XElement provisioningConfigurationElement = new XElement(XName.Get("ProvisioningConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                    captureRoleOperationElement.Add(provisioningConfigurationElement);
+                    
+                    if (parameters.ProvisioningConfiguration.ConfigurationSetType != null)
+                    {
+                        XElement configurationSetTypeElement = new XElement(XName.Get("ConfigurationSetType", "http://schemas.microsoft.com/windowsazure"));
+                        configurationSetTypeElement.Value = parameters.ProvisioningConfiguration.ConfigurationSetType;
+                        provisioningConfigurationElement.Add(configurationSetTypeElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.InputEndpoints != null)
+                    {
+                        XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (InputEndpoint inputEndpointsItem in parameters.ProvisioningConfiguration.InputEndpoints)
+                        {
+                            XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
+                            inputEndpointsSequenceElement.Add(inputEndpointElement);
+                            
+                            if (inputEndpointsItem.LoadBalancedEndpointSetName != null)
+                            {
+                                XElement loadBalancedEndpointSetNameElement = new XElement(XName.Get("LoadBalancedEndpointSetName", "http://schemas.microsoft.com/windowsazure"));
+                                loadBalancedEndpointSetNameElement.Value = inputEndpointsItem.LoadBalancedEndpointSetName;
+                                inputEndpointElement.Add(loadBalancedEndpointSetNameElement);
+                            }
+                            
+                            if (inputEndpointsItem.LocalPort != null)
+                            {
+                                XElement localPortElement = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
+                                localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
+                                inputEndpointElement.Add(localPortElement);
+                            }
+                            
+                            if (inputEndpointsItem.Name != null)
+                            {
+                                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement.Value = inputEndpointsItem.Name;
+                                inputEndpointElement.Add(nameElement);
+                            }
+                            
+                            if (inputEndpointsItem.Port != null)
+                            {
+                                XElement portElement = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                portElement.Value = inputEndpointsItem.Port.ToString();
+                                inputEndpointElement.Add(portElement);
+                            }
+                            
+                            if (inputEndpointsItem.LoadBalancerProbe != null)
+                            {
+                                XElement loadBalancerProbeElement = new XElement(XName.Get("LoadBalancerProbe", "http://schemas.microsoft.com/windowsazure"));
+                                inputEndpointElement.Add(loadBalancerProbeElement);
+                                
+                                if (inputEndpointsItem.LoadBalancerProbe.Path != null)
+                                {
+                                    XElement pathElement = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
+                                    pathElement.Value = inputEndpointsItem.LoadBalancerProbe.Path;
+                                    loadBalancerProbeElement.Add(pathElement);
+                                }
+                                
+                                XElement portElement2 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                portElement2.Value = inputEndpointsItem.LoadBalancerProbe.Port.ToString();
+                                loadBalancerProbeElement.Add(portElement2);
+                                
+                                XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement.Value = ComputeManagementClient.LoadBalancerProbeTransportProtocolToString(inputEndpointsItem.LoadBalancerProbe.Protocol);
+                                loadBalancerProbeElement.Add(protocolElement);
+                                
+                                if (inputEndpointsItem.LoadBalancerProbe.IntervalInSeconds != null)
+                                {
+                                    XElement intervalInSecondsElement = new XElement(XName.Get("IntervalInSeconds", "http://schemas.microsoft.com/windowsazure"));
+                                    intervalInSecondsElement.Value = inputEndpointsItem.LoadBalancerProbe.IntervalInSeconds.ToString();
+                                    loadBalancerProbeElement.Add(intervalInSecondsElement);
+                                }
+                                
+                                if (inputEndpointsItem.LoadBalancerProbe.TimeoutInSeconds != null)
+                                {
+                                    XElement timeoutInSecondsElement = new XElement(XName.Get("TimeoutInSeconds", "http://schemas.microsoft.com/windowsazure"));
+                                    timeoutInSecondsElement.Value = inputEndpointsItem.LoadBalancerProbe.TimeoutInSeconds.ToString();
+                                    loadBalancerProbeElement.Add(timeoutInSecondsElement);
+                                }
+                            }
+                            
+                            if (inputEndpointsItem.Protocol != null)
+                            {
+                                XElement protocolElement2 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement2.Value = inputEndpointsItem.Protocol;
+                                inputEndpointElement.Add(protocolElement2);
+                            }
+                            
+                            if (inputEndpointsItem.VirtualIPAddress != null)
+                            {
+                                XElement vipElement = new XElement(XName.Get("Vip", "http://schemas.microsoft.com/windowsazure"));
+                                vipElement.Value = inputEndpointsItem.VirtualIPAddress;
+                                inputEndpointElement.Add(vipElement);
+                            }
+                            
+                            if (inputEndpointsItem.EnableDirectServerReturn != null)
+                            {
+                                XElement enableDirectServerReturnElement = new XElement(XName.Get("EnableDirectServerReturn", "http://schemas.microsoft.com/windowsazure"));
+                                enableDirectServerReturnElement.Value = inputEndpointsItem.EnableDirectServerReturn.ToString().ToLower();
+                                inputEndpointElement.Add(enableDirectServerReturnElement);
+                            }
+                            
+                            if (inputEndpointsItem.EndpointAcl != null)
+                            {
+                                XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
+                                inputEndpointElement.Add(endpointAclElement);
+                                
+                                if (inputEndpointsItem.EndpointAcl.Rules != null)
+                                {
+                                    XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
+                                    foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
+                                    {
+                                        XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
+                                        rulesSequenceElement.Add(ruleElement);
+                                        
+                                        if (rulesItem.Order != null)
+                                        {
+                                            XElement orderElement = new XElement(XName.Get("Order", "http://schemas.microsoft.com/windowsazure"));
+                                            orderElement.Value = rulesItem.Order.ToString();
+                                            ruleElement.Add(orderElement);
+                                        }
+                                        
+                                        if (rulesItem.Action != null)
+                                        {
+                                            XElement actionElement = new XElement(XName.Get("Action", "http://schemas.microsoft.com/windowsazure"));
+                                            actionElement.Value = rulesItem.Action;
+                                            ruleElement.Add(actionElement);
+                                        }
+                                        
+                                        if (rulesItem.RemoteSubnet != null)
+                                        {
+                                            XElement remoteSubnetElement = new XElement(XName.Get("RemoteSubnet", "http://schemas.microsoft.com/windowsazure"));
+                                            remoteSubnetElement.Value = rulesItem.RemoteSubnet;
+                                            ruleElement.Add(remoteSubnetElement);
+                                        }
+                                        
+                                        if (rulesItem.Description != null)
+                                        {
+                                            XElement descriptionElement = new XElement(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                                            descriptionElement.Value = rulesItem.Description;
+                                            ruleElement.Add(descriptionElement);
+                                        }
+                                    }
+                                    endpointAclElement.Add(rulesSequenceElement);
+                                }
+                            }
+                        }
+                        provisioningConfigurationElement.Add(inputEndpointsSequenceElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.SubnetNames != null)
+                    {
+                        XElement subnetNamesSequenceElement = new XElement(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (string subnetNamesItem in parameters.ProvisioningConfiguration.SubnetNames)
+                        {
+                            XElement subnetNamesItemElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
+                            subnetNamesItemElement.Value = subnetNamesItem;
+                            subnetNamesSequenceElement.Add(subnetNamesItemElement);
+                        }
+                        provisioningConfigurationElement.Add(subnetNamesSequenceElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.StaticVirtualNetworkIPAddress != null)
+                    {
+                        XElement staticVirtualNetworkIPAddressElement = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                        staticVirtualNetworkIPAddressElement.Value = parameters.ProvisioningConfiguration.StaticVirtualNetworkIPAddress;
+                        provisioningConfigurationElement.Add(staticVirtualNetworkIPAddressElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.ComputerName != null)
+                    {
+                        XElement computerNameElement = new XElement(XName.Get("ComputerName", "http://schemas.microsoft.com/windowsazure"));
+                        computerNameElement.Value = parameters.ProvisioningConfiguration.ComputerName;
+                        provisioningConfigurationElement.Add(computerNameElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.AdminPassword != null)
+                    {
+                        XElement adminPasswordElement = new XElement(XName.Get("AdminPassword", "http://schemas.microsoft.com/windowsazure"));
+                        adminPasswordElement.Value = parameters.ProvisioningConfiguration.AdminPassword;
+                        provisioningConfigurationElement.Add(adminPasswordElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.ResetPasswordOnFirstLogon != null)
+                    {
+                        XElement resetPasswordOnFirstLogonElement = new XElement(XName.Get("ResetPasswordOnFirstLogon", "http://schemas.microsoft.com/windowsazure"));
+                        resetPasswordOnFirstLogonElement.Value = parameters.ProvisioningConfiguration.ResetPasswordOnFirstLogon.ToString().ToLower();
+                        provisioningConfigurationElement.Add(resetPasswordOnFirstLogonElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.EnableAutomaticUpdates != null)
+                    {
+                        XElement enableAutomaticUpdatesElement = new XElement(XName.Get("EnableAutomaticUpdates", "http://schemas.microsoft.com/windowsazure"));
+                        enableAutomaticUpdatesElement.Value = parameters.ProvisioningConfiguration.EnableAutomaticUpdates.ToString().ToLower();
+                        provisioningConfigurationElement.Add(enableAutomaticUpdatesElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.TimeZone != null)
+                    {
+                        XElement timeZoneElement = new XElement(XName.Get("TimeZone", "http://schemas.microsoft.com/windowsazure"));
+                        timeZoneElement.Value = parameters.ProvisioningConfiguration.TimeZone;
+                        provisioningConfigurationElement.Add(timeZoneElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.DomainJoin != null)
+                    {
+                        XElement domainJoinElement = new XElement(XName.Get("DomainJoin", "http://schemas.microsoft.com/windowsazure"));
+                        provisioningConfigurationElement.Add(domainJoinElement);
+                        
+                        if (parameters.ProvisioningConfiguration.DomainJoin.Credentials != null)
+                        {
+                            XElement credentialsElement = new XElement(XName.Get("Credentials", "http://schemas.microsoft.com/windowsazure"));
+                            domainJoinElement.Add(credentialsElement);
+                            
+                            if (parameters.ProvisioningConfiguration.DomainJoin.Credentials.Domain != null)
+                            {
+                                XElement domainElement = new XElement(XName.Get("Domain", "http://schemas.microsoft.com/windowsazure"));
+                                domainElement.Value = parameters.ProvisioningConfiguration.DomainJoin.Credentials.Domain;
+                                credentialsElement.Add(domainElement);
+                            }
+                            
+                            XElement usernameElement = new XElement(XName.Get("Username", "http://schemas.microsoft.com/windowsazure"));
+                            usernameElement.Value = parameters.ProvisioningConfiguration.DomainJoin.Credentials.UserName;
+                            credentialsElement.Add(usernameElement);
+                            
+                            XElement passwordElement = new XElement(XName.Get("Password", "http://schemas.microsoft.com/windowsazure"));
+                            passwordElement.Value = parameters.ProvisioningConfiguration.DomainJoin.Credentials.Password;
+                            credentialsElement.Add(passwordElement);
+                        }
+                        
+                        if (parameters.ProvisioningConfiguration.DomainJoin.DomainToJoin != null)
+                        {
+                            XElement joinDomainElement = new XElement(XName.Get("JoinDomain", "http://schemas.microsoft.com/windowsazure"));
+                            joinDomainElement.Value = parameters.ProvisioningConfiguration.DomainJoin.DomainToJoin;
+                            domainJoinElement.Add(joinDomainElement);
+                        }
+                        
+                        if (parameters.ProvisioningConfiguration.DomainJoin.LdapMachineObjectOU != null)
+                        {
+                            XElement machineObjectOUElement = new XElement(XName.Get("MachineObjectOU", "http://schemas.microsoft.com/windowsazure"));
+                            machineObjectOUElement.Value = parameters.ProvisioningConfiguration.DomainJoin.LdapMachineObjectOU;
+                            domainJoinElement.Add(machineObjectOUElement);
+                        }
+                        
+                        if (parameters.ProvisioningConfiguration.DomainJoin.Provisioning != null)
+                        {
+                            XElement provisioningElement = new XElement(XName.Get("Provisioning", "http://schemas.microsoft.com/windowsazure"));
+                            domainJoinElement.Add(provisioningElement);
+                            
+                            if (parameters.ProvisioningConfiguration.DomainJoin.Provisioning.AccountData != null)
+                            {
+                                XElement accountDataElement = new XElement(XName.Get("AccountData", "http://schemas.microsoft.com/windowsazure"));
+                                accountDataElement.Value = parameters.ProvisioningConfiguration.DomainJoin.Provisioning.AccountData;
+                                provisioningElement.Add(accountDataElement);
+                            }
+                        }
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.StoredCertificateSettings != null)
+                    {
+                        XElement storedCertificateSettingsSequenceElement = new XElement(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (StoredCertificateSettings storedCertificateSettingsItem in parameters.ProvisioningConfiguration.StoredCertificateSettings)
+                        {
+                            XElement certificateSettingElement = new XElement(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure"));
+                            storedCertificateSettingsSequenceElement.Add(certificateSettingElement);
+                            
+                            XElement storeLocationElement = new XElement(XName.Get("StoreLocation", "http://schemas.microsoft.com/windowsazure"));
+                            storeLocationElement.Value = "LocalMachine";
+                            certificateSettingElement.Add(storeLocationElement);
+                            
+                            XElement storeNameElement = new XElement(XName.Get("StoreName", "http://schemas.microsoft.com/windowsazure"));
+                            storeNameElement.Value = storedCertificateSettingsItem.StoreName;
+                            certificateSettingElement.Add(storeNameElement);
+                            
+                            XElement thumbprintElement = new XElement(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
+                            thumbprintElement.Value = storedCertificateSettingsItem.Thumbprint;
+                            certificateSettingElement.Add(thumbprintElement);
+                        }
+                        provisioningConfigurationElement.Add(storedCertificateSettingsSequenceElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.WindowsRemoteManagement != null)
+                    {
+                        XElement winRMElement = new XElement(XName.Get("WinRM", "http://schemas.microsoft.com/windowsazure"));
+                        provisioningConfigurationElement.Add(winRMElement);
+                        
+                        if (parameters.ProvisioningConfiguration.WindowsRemoteManagement.Listeners != null)
+                        {
+                            XElement listenersSequenceElement = new XElement(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (WindowsRemoteManagementListener listenersItem in parameters.ProvisioningConfiguration.WindowsRemoteManagement.Listeners)
+                            {
+                                XElement listenerElement = new XElement(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure"));
+                                listenersSequenceElement.Add(listenerElement);
+                                
+                                if (listenersItem.CertificateThumbprint != null)
+                                {
+                                    XElement certificateThumbprintElement = new XElement(XName.Get("CertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
+                                    certificateThumbprintElement.Value = listenersItem.CertificateThumbprint;
+                                    listenerElement.Add(certificateThumbprintElement);
+                                }
+                                
+                                XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement3.Value = listenersItem.ListenerType.ToString();
+                                listenerElement.Add(protocolElement3);
+                            }
+                            winRMElement.Add(listenersSequenceElement);
+                        }
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.AdminUserName != null)
+                    {
+                        XElement adminUsernameElement = new XElement(XName.Get("AdminUsername", "http://schemas.microsoft.com/windowsazure"));
+                        adminUsernameElement.Value = parameters.ProvisioningConfiguration.AdminUserName;
+                        provisioningConfigurationElement.Add(adminUsernameElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.HostName != null)
+                    {
+                        XElement hostNameElement = new XElement(XName.Get("HostName", "http://schemas.microsoft.com/windowsazure"));
+                        hostNameElement.Value = parameters.ProvisioningConfiguration.HostName;
+                        provisioningConfigurationElement.Add(hostNameElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.UserName != null)
+                    {
+                        XElement userNameElement = new XElement(XName.Get("UserName", "http://schemas.microsoft.com/windowsazure"));
+                        userNameElement.Value = parameters.ProvisioningConfiguration.UserName;
+                        provisioningConfigurationElement.Add(userNameElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.UserPassword != null)
+                    {
+                        XElement userPasswordElement = new XElement(XName.Get("UserPassword", "http://schemas.microsoft.com/windowsazure"));
+                        userPasswordElement.Value = parameters.ProvisioningConfiguration.UserPassword;
+                        provisioningConfigurationElement.Add(userPasswordElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.DisableSshPasswordAuthentication != null)
+                    {
+                        XElement disableSshPasswordAuthenticationElement = new XElement(XName.Get("DisableSshPasswordAuthentication", "http://schemas.microsoft.com/windowsazure"));
+                        disableSshPasswordAuthenticationElement.Value = parameters.ProvisioningConfiguration.DisableSshPasswordAuthentication.ToString().ToLower();
+                        provisioningConfigurationElement.Add(disableSshPasswordAuthenticationElement);
+                    }
+                    
+                    if (parameters.ProvisioningConfiguration.SshSettings != null)
+                    {
+                        XElement sSHElement = new XElement(XName.Get("SSH", "http://schemas.microsoft.com/windowsazure"));
+                        provisioningConfigurationElement.Add(sSHElement);
+                        
+                        if (parameters.ProvisioningConfiguration.SshSettings.PublicKeys != null)
+                        {
+                            XElement publicKeysSequenceElement = new XElement(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (SshSettingPublicKey publicKeysItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeys)
+                            {
+                                XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
+                                publicKeysSequenceElement.Add(publicKeyElement);
+                                
+                                XElement fingerprintElement = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                fingerprintElement.Value = publicKeysItem.Fingerprint;
+                                publicKeyElement.Add(fingerprintElement);
+                                
+                                XElement pathElement2 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
+                                pathElement2.Value = publicKeysItem.Path;
+                                publicKeyElement.Add(pathElement2);
+                            }
+                            sSHElement.Add(publicKeysSequenceElement);
+                        }
+                        
+                        if (parameters.ProvisioningConfiguration.SshSettings.KeyPairs != null)
+                        {
+                            XElement keyPairsSequenceElement = new XElement(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (SshSettingKeyPair keyPairsItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairs)
+                            {
+                                XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
+                                keyPairsSequenceElement.Add(keyPairElement);
+                                
+                                XElement fingerprintElement2 = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
+                                fingerprintElement2.Value = keyPairsItem.Fingerprint;
+                                keyPairElement.Add(fingerprintElement2);
+                                
+                                XElement pathElement3 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
+                                pathElement3.Value = keyPairsItem.Path;
+                                keyPairElement.Add(pathElement3);
+                            }
+                            sSHElement.Add(keyPairsSequenceElement);
+                        }
+                    }
+                }
+                
+                XElement targetImageLabelElement = new XElement(XName.Get("TargetImageLabel", "http://schemas.microsoft.com/windowsazure"));
+                targetImageLabelElement.Value = parameters.TargetImageLabel;
+                captureRoleOperationElement.Add(targetImageLabelElement);
+                
+                XElement targetImageNameElement = new XElement(XName.Get("TargetImageName", "http://schemas.microsoft.com/windowsazure"));
+                targetImageNameElement.Value = parameters.TargetImageName;
+                captureRoleOperationElement.Add(targetImageNameElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Add Role operation adds a virtual machine to an existing
         /// deployment.  You can refer to the OSDisk in the Add Role operation
         /// in the following ways.  Platform/User Image – Set the
@@ -411,6 +1057,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             configurationSetElement.Add(subnetNamesSequenceElement);
                         }
                         
+                        if (configurationSetsItem.StaticVirtualNetworkIPAddress != null)
+                        {
+                            XElement staticVirtualNetworkIPAddressElement = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            staticVirtualNetworkIPAddressElement.Value = configurationSetsItem.StaticVirtualNetworkIPAddress;
+                            configurationSetElement.Add(staticVirtualNetworkIPAddressElement);
+                        }
+                        
                         if (configurationSetsItem.ComputerName != null)
                         {
                             XElement computerNameElement = new XElement(XName.Get("ComputerName", "http://schemas.microsoft.com/windowsazure"));
@@ -536,16 +1189,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement listenerElement = new XElement(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure"));
                                     listenersSequenceElement.Add(listenerElement);
                                     
-                                    XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                    protocolElement3.Value = listenersItem.ListenerType.ToString();
-                                    listenerElement.Add(protocolElement3);
-                                    
                                     if (listenersItem.CertificateThumbprint != null)
                                     {
                                         XElement certificateThumbprintElement = new XElement(XName.Get("CertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
                                         certificateThumbprintElement.Value = listenersItem.CertificateThumbprint;
                                         listenerElement.Add(certificateThumbprintElement);
                                     }
+                                    
+                                    XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                    protocolElement3.Value = listenersItem.ListenerType.ToString();
+                                    listenerElement.Add(protocolElement3);
                                 }
                                 winRMElement.Add(listenersSequenceElement);
                             }
@@ -741,7 +1394,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.RoleSize != null)
                 {
                     XElement roleSizeElement = new XElement(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure"));
-                    roleSizeElement.Value = parameters.RoleSize.ToString();
+                    roleSizeElement.Value = parameters.RoleSize;
                     persistentVMRoleElement.Add(roleSizeElement);
                 }
                 
@@ -767,7 +1420,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -776,7 +1429,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1183,6 +1837,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 configurationSetElement.Add(subnetNamesSequenceElement);
                             }
                             
+                            if (configurationSetsItem.StaticVirtualNetworkIPAddress != null)
+                            {
+                                XElement staticVirtualNetworkIPAddressElement = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                staticVirtualNetworkIPAddressElement.Value = configurationSetsItem.StaticVirtualNetworkIPAddress;
+                                configurationSetElement.Add(staticVirtualNetworkIPAddressElement);
+                            }
+                            
                             if (configurationSetsItem.ComputerName != null)
                             {
                                 XElement computerNameElement = new XElement(XName.Get("ComputerName", "http://schemas.microsoft.com/windowsazure"));
@@ -1308,16 +1969,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement listenerElement = new XElement(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure"));
                                         listenersSequenceElement.Add(listenerElement);
                                         
-                                        XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                        protocolElement3.Value = listenersItem.ListenerType.ToString();
-                                        listenerElement.Add(protocolElement3);
-                                        
                                         if (listenersItem.CertificateThumbprint != null)
                                         {
                                             XElement certificateThumbprintElement = new XElement(XName.Get("CertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
                                             certificateThumbprintElement.Value = listenersItem.CertificateThumbprint;
                                             listenerElement.Add(certificateThumbprintElement);
                                         }
+                                        
+                                        XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                        protocolElement3.Value = listenersItem.ListenerType.ToString();
+                                        listenerElement.Add(protocolElement3);
                                     }
                                     winRMElement.Add(listenersSequenceElement);
                                 }
@@ -1520,7 +2181,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (roleListItem.RoleSize != null)
                     {
                         XElement roleSizeElement = new XElement(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure"));
-                        roleSizeElement.Value = roleListItem.RoleSize.ToString();
+                        roleSizeElement.Value = roleListItem.RoleSize;
                         roleElement.Add(roleSizeElement);
                     }
                     
@@ -1600,7 +2261,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1609,7 +2270,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1735,7 +2397,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1744,7 +2406,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1867,7 +2530,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1876,7 +2539,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1922,7 +2586,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation
+        /// The parameters for the shutdown vm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2020,7 +2684,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2029,7 +2693,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2179,7 +2844,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2188,7 +2853,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2310,7 +2976,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2319,7 +2985,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2461,7 +3128,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2470,7 +3137,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2844,6 +3512,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             configurationSetElement.Add(subnetNamesSequenceElement);
                         }
                         
+                        if (configurationSetsItem.StaticVirtualNetworkIPAddress != null)
+                        {
+                            XElement staticVirtualNetworkIPAddressElement = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            staticVirtualNetworkIPAddressElement.Value = configurationSetsItem.StaticVirtualNetworkIPAddress;
+                            configurationSetElement.Add(staticVirtualNetworkIPAddressElement);
+                        }
+                        
                         if (configurationSetsItem.ComputerName != null)
                         {
                             XElement computerNameElement = new XElement(XName.Get("ComputerName", "http://schemas.microsoft.com/windowsazure"));
@@ -2969,16 +3644,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement listenerElement = new XElement(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure"));
                                     listenersSequenceElement.Add(listenerElement);
                                     
-                                    XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                    protocolElement3.Value = listenersItem.ListenerType.ToString();
-                                    listenerElement.Add(protocolElement3);
-                                    
                                     if (listenersItem.CertificateThumbprint != null)
                                     {
                                         XElement certificateThumbprintElement = new XElement(XName.Get("CertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
                                         certificateThumbprintElement.Value = listenersItem.CertificateThumbprint;
                                         listenerElement.Add(certificateThumbprintElement);
                                     }
+                                    
+                                    XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                    protocolElement3.Value = listenersItem.ListenerType.ToString();
+                                    listenerElement.Add(protocolElement3);
                                 }
                                 winRMElement.Add(listenersSequenceElement);
                             }
@@ -3171,7 +3846,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.RoleSize != null)
                 {
                     XElement roleSizeElement = new XElement(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure"));
-                    roleSizeElement.Value = parameters.RoleSize.ToString();
+                    roleSizeElement.Value = parameters.RoleSize;
                     persistentVMRoleElement.Add(roleSizeElement);
                 }
                 
@@ -3197,7 +3872,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -3206,7 +3881,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3474,7 +4150,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -3483,7 +4159,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    OperationResponse result = new OperationResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3543,115 +4220,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public async Task<OperationResponse> CaptureAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken)
+        public async Task<ComputeOperationStatusResponse> CaptureAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken)
         {
-            // Validate
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException("serviceName");
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException("deploymentName");
-            }
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException("virtualMachineName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ProvisioningConfiguration != null)
-            {
-                if (parameters.ProvisioningConfiguration.DomainJoin != null)
-                {
-                    if (parameters.ProvisioningConfiguration.DomainJoin.Credentials != null)
-                    {
-                        if (parameters.ProvisioningConfiguration.DomainJoin.Credentials.Password == null)
-                        {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.DomainJoin.Credentials.Password");
-                        }
-                        if (parameters.ProvisioningConfiguration.DomainJoin.Credentials.UserName == null)
-                        {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.DomainJoin.Credentials.UserName");
-                        }
-                    }
-                }
-                if (parameters.ProvisioningConfiguration.HostName != null && parameters.ProvisioningConfiguration.HostName.Length < 1)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.HostName");
-                }
-                if (parameters.ProvisioningConfiguration.HostName != null && parameters.ProvisioningConfiguration.HostName.Length > 64)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.HostName");
-                }
-                if (parameters.ProvisioningConfiguration.SshSettings != null)
-                {
-                    foreach (SshSettingKeyPair keyPairsParameterItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairs)
-                    {
-                        if (keyPairsParameterItem.Fingerprint == null)
-                        {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Fingerprint");
-                        }
-                        if (keyPairsParameterItem.Path == null)
-                        {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Path");
-                        }
-                    }
-                    foreach (SshSettingPublicKey publicKeysParameterItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeys)
-                    {
-                        if (publicKeysParameterItem.Fingerprint == null)
-                        {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Fingerprint");
-                        }
-                        if (publicKeysParameterItem.Path == null)
-                        {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Path");
-                        }
-                    }
-                }
-                foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in parameters.ProvisioningConfiguration.StoredCertificateSettings)
-                {
-                    if (storedCertificateSettingsParameterItem.StoreName == null)
-                    {
-                        throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.StoreName");
-                    }
-                    if (storedCertificateSettingsParameterItem.Thumbprint == null)
-                    {
-                        throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.Thumbprint");
-                    }
-                }
-                if (parameters.ProvisioningConfiguration.UserName != null && parameters.ProvisioningConfiguration.UserName.Length < 1)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserName");
-                }
-                if (parameters.ProvisioningConfiguration.UserName != null && parameters.ProvisioningConfiguration.UserName.Length > 32)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserName");
-                }
-                if (parameters.ProvisioningConfiguration.UserPassword != null && parameters.ProvisioningConfiguration.UserPassword.Length < 6 && (parameters.ProvisioningConfiguration.DisableSshPasswordAuthentication == false || parameters.ProvisioningConfiguration.UserPassword.Length != 0))
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserPassword");
-                }
-                if (parameters.ProvisioningConfiguration.UserPassword != null && parameters.ProvisioningConfiguration.UserPassword.Length > 72)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserPassword");
-                }
-            }
-            if (parameters.TargetImageLabel == null)
-            {
-                throw new ArgumentNullException("parameters.TargetImageLabel");
-            }
-            if (parameters.TargetImageName == null)
-            {
-                throw new ArgumentNullException("parameters.TargetImageName");
-            }
-            
-            // Tracing
+            ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -3664,489 +4245,51 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "CaptureAsync", tracingParameters);
             }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
             try
             {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
                 
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
-                
-                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                XDocument requestDoc = new XDocument();
-                
-                XElement captureRoleOperationElement = new XElement(XName.Get("CaptureRoleOperation", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(captureRoleOperationElement);
-                
-                XElement operationTypeElement = new XElement(XName.Get("OperationType", "http://schemas.microsoft.com/windowsazure"));
-                operationTypeElement.Value = "CaptureRoleOperation";
-                captureRoleOperationElement.Add(operationTypeElement);
-                
-                XElement postCaptureActionElement = new XElement(XName.Get("PostCaptureAction", "http://schemas.microsoft.com/windowsazure"));
-                postCaptureActionElement.Value = parameters.PostCaptureAction.ToString();
-                captureRoleOperationElement.Add(postCaptureActionElement);
-                
-                if (parameters.ProvisioningConfiguration != null)
+                OperationResponse response = await client.VirtualMachines.BeginCapturingAsync(serviceName, deploymentName, virtualMachineName, parameters, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
-                    XElement provisioningConfigurationElement = new XElement(XName.Get("ProvisioningConfiguration", "http://schemas.microsoft.com/windowsazure"));
-                    captureRoleOperationElement.Add(provisioningConfigurationElement);
-                    
-                    if (parameters.ProvisioningConfiguration.ConfigurationSetType != null)
-                    {
-                        XElement configurationSetTypeElement = new XElement(XName.Get("ConfigurationSetType", "http://schemas.microsoft.com/windowsazure"));
-                        configurationSetTypeElement.Value = parameters.ProvisioningConfiguration.ConfigurationSetType;
-                        provisioningConfigurationElement.Add(configurationSetTypeElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.InputEndpoints != null)
-                    {
-                        XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (InputEndpoint inputEndpointsItem in parameters.ProvisioningConfiguration.InputEndpoints)
-                        {
-                            XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
-                            inputEndpointsSequenceElement.Add(inputEndpointElement);
-                            
-                            if (inputEndpointsItem.LoadBalancedEndpointSetName != null)
-                            {
-                                XElement loadBalancedEndpointSetNameElement = new XElement(XName.Get("LoadBalancedEndpointSetName", "http://schemas.microsoft.com/windowsazure"));
-                                loadBalancedEndpointSetNameElement.Value = inputEndpointsItem.LoadBalancedEndpointSetName;
-                                inputEndpointElement.Add(loadBalancedEndpointSetNameElement);
-                            }
-                            
-                            if (inputEndpointsItem.LocalPort != null)
-                            {
-                                XElement localPortElement = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
-                                localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
-                                inputEndpointElement.Add(localPortElement);
-                            }
-                            
-                            if (inputEndpointsItem.Name != null)
-                            {
-                                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                nameElement.Value = inputEndpointsItem.Name;
-                                inputEndpointElement.Add(nameElement);
-                            }
-                            
-                            if (inputEndpointsItem.Port != null)
-                            {
-                                XElement portElement = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                                portElement.Value = inputEndpointsItem.Port.ToString();
-                                inputEndpointElement.Add(portElement);
-                            }
-                            
-                            if (inputEndpointsItem.LoadBalancerProbe != null)
-                            {
-                                XElement loadBalancerProbeElement = new XElement(XName.Get("LoadBalancerProbe", "http://schemas.microsoft.com/windowsazure"));
-                                inputEndpointElement.Add(loadBalancerProbeElement);
-                                
-                                if (inputEndpointsItem.LoadBalancerProbe.Path != null)
-                                {
-                                    XElement pathElement = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
-                                    pathElement.Value = inputEndpointsItem.LoadBalancerProbe.Path;
-                                    loadBalancerProbeElement.Add(pathElement);
-                                }
-                                
-                                XElement portElement2 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                                portElement2.Value = inputEndpointsItem.LoadBalancerProbe.Port.ToString();
-                                loadBalancerProbeElement.Add(portElement2);
-                                
-                                XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                protocolElement.Value = ComputeManagementClient.LoadBalancerProbeTransportProtocolToString(inputEndpointsItem.LoadBalancerProbe.Protocol);
-                                loadBalancerProbeElement.Add(protocolElement);
-                                
-                                if (inputEndpointsItem.LoadBalancerProbe.IntervalInSeconds != null)
-                                {
-                                    XElement intervalInSecondsElement = new XElement(XName.Get("IntervalInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                                    intervalInSecondsElement.Value = inputEndpointsItem.LoadBalancerProbe.IntervalInSeconds.ToString();
-                                    loadBalancerProbeElement.Add(intervalInSecondsElement);
-                                }
-                                
-                                if (inputEndpointsItem.LoadBalancerProbe.TimeoutInSeconds != null)
-                                {
-                                    XElement timeoutInSecondsElement = new XElement(XName.Get("TimeoutInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                                    timeoutInSecondsElement.Value = inputEndpointsItem.LoadBalancerProbe.TimeoutInSeconds.ToString();
-                                    loadBalancerProbeElement.Add(timeoutInSecondsElement);
-                                }
-                            }
-                            
-                            if (inputEndpointsItem.Protocol != null)
-                            {
-                                XElement protocolElement2 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                protocolElement2.Value = inputEndpointsItem.Protocol;
-                                inputEndpointElement.Add(protocolElement2);
-                            }
-                            
-                            if (inputEndpointsItem.VirtualIPAddress != null)
-                            {
-                                XElement vipElement = new XElement(XName.Get("Vip", "http://schemas.microsoft.com/windowsazure"));
-                                vipElement.Value = inputEndpointsItem.VirtualIPAddress;
-                                inputEndpointElement.Add(vipElement);
-                            }
-                            
-                            if (inputEndpointsItem.EnableDirectServerReturn != null)
-                            {
-                                XElement enableDirectServerReturnElement = new XElement(XName.Get("EnableDirectServerReturn", "http://schemas.microsoft.com/windowsazure"));
-                                enableDirectServerReturnElement.Value = inputEndpointsItem.EnableDirectServerReturn.ToString().ToLower();
-                                inputEndpointElement.Add(enableDirectServerReturnElement);
-                            }
-                            
-                            if (inputEndpointsItem.EndpointAcl != null)
-                            {
-                                XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
-                                inputEndpointElement.Add(endpointAclElement);
-                                
-                                if (inputEndpointsItem.EndpointAcl.Rules != null)
-                                {
-                                    XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                                    foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
-                                    {
-                                        XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
-                                        rulesSequenceElement.Add(ruleElement);
-                                        
-                                        if (rulesItem.Order != null)
-                                        {
-                                            XElement orderElement = new XElement(XName.Get("Order", "http://schemas.microsoft.com/windowsazure"));
-                                            orderElement.Value = rulesItem.Order.ToString();
-                                            ruleElement.Add(orderElement);
-                                        }
-                                        
-                                        if (rulesItem.Action != null)
-                                        {
-                                            XElement actionElement = new XElement(XName.Get("Action", "http://schemas.microsoft.com/windowsazure"));
-                                            actionElement.Value = rulesItem.Action;
-                                            ruleElement.Add(actionElement);
-                                        }
-                                        
-                                        if (rulesItem.RemoteSubnet != null)
-                                        {
-                                            XElement remoteSubnetElement = new XElement(XName.Get("RemoteSubnet", "http://schemas.microsoft.com/windowsazure"));
-                                            remoteSubnetElement.Value = rulesItem.RemoteSubnet;
-                                            ruleElement.Add(remoteSubnetElement);
-                                        }
-                                        
-                                        if (rulesItem.Description != null)
-                                        {
-                                            XElement descriptionElement = new XElement(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                                            descriptionElement.Value = rulesItem.Description;
-                                            ruleElement.Add(descriptionElement);
-                                        }
-                                    }
-                                    endpointAclElement.Add(rulesSequenceElement);
-                                }
-                            }
-                        }
-                        provisioningConfigurationElement.Add(inputEndpointsSequenceElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.SubnetNames != null)
-                    {
-                        XElement subnetNamesSequenceElement = new XElement(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (string subnetNamesItem in parameters.ProvisioningConfiguration.SubnetNames)
-                        {
-                            XElement subnetNamesItemElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
-                            subnetNamesItemElement.Value = subnetNamesItem;
-                            subnetNamesSequenceElement.Add(subnetNamesItemElement);
-                        }
-                        provisioningConfigurationElement.Add(subnetNamesSequenceElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.ComputerName != null)
-                    {
-                        XElement computerNameElement = new XElement(XName.Get("ComputerName", "http://schemas.microsoft.com/windowsazure"));
-                        computerNameElement.Value = parameters.ProvisioningConfiguration.ComputerName;
-                        provisioningConfigurationElement.Add(computerNameElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.AdminPassword != null)
-                    {
-                        XElement adminPasswordElement = new XElement(XName.Get("AdminPassword", "http://schemas.microsoft.com/windowsazure"));
-                        adminPasswordElement.Value = parameters.ProvisioningConfiguration.AdminPassword;
-                        provisioningConfigurationElement.Add(adminPasswordElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.ResetPasswordOnFirstLogon != null)
-                    {
-                        XElement resetPasswordOnFirstLogonElement = new XElement(XName.Get("ResetPasswordOnFirstLogon", "http://schemas.microsoft.com/windowsazure"));
-                        resetPasswordOnFirstLogonElement.Value = parameters.ProvisioningConfiguration.ResetPasswordOnFirstLogon.ToString().ToLower();
-                        provisioningConfigurationElement.Add(resetPasswordOnFirstLogonElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.EnableAutomaticUpdates != null)
-                    {
-                        XElement enableAutomaticUpdatesElement = new XElement(XName.Get("EnableAutomaticUpdates", "http://schemas.microsoft.com/windowsazure"));
-                        enableAutomaticUpdatesElement.Value = parameters.ProvisioningConfiguration.EnableAutomaticUpdates.ToString().ToLower();
-                        provisioningConfigurationElement.Add(enableAutomaticUpdatesElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.TimeZone != null)
-                    {
-                        XElement timeZoneElement = new XElement(XName.Get("TimeZone", "http://schemas.microsoft.com/windowsazure"));
-                        timeZoneElement.Value = parameters.ProvisioningConfiguration.TimeZone;
-                        provisioningConfigurationElement.Add(timeZoneElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.DomainJoin != null)
-                    {
-                        XElement domainJoinElement = new XElement(XName.Get("DomainJoin", "http://schemas.microsoft.com/windowsazure"));
-                        provisioningConfigurationElement.Add(domainJoinElement);
-                        
-                        if (parameters.ProvisioningConfiguration.DomainJoin.Credentials != null)
-                        {
-                            XElement credentialsElement = new XElement(XName.Get("Credentials", "http://schemas.microsoft.com/windowsazure"));
-                            domainJoinElement.Add(credentialsElement);
-                            
-                            if (parameters.ProvisioningConfiguration.DomainJoin.Credentials.Domain != null)
-                            {
-                                XElement domainElement = new XElement(XName.Get("Domain", "http://schemas.microsoft.com/windowsazure"));
-                                domainElement.Value = parameters.ProvisioningConfiguration.DomainJoin.Credentials.Domain;
-                                credentialsElement.Add(domainElement);
-                            }
-                            
-                            XElement usernameElement = new XElement(XName.Get("Username", "http://schemas.microsoft.com/windowsazure"));
-                            usernameElement.Value = parameters.ProvisioningConfiguration.DomainJoin.Credentials.UserName;
-                            credentialsElement.Add(usernameElement);
-                            
-                            XElement passwordElement = new XElement(XName.Get("Password", "http://schemas.microsoft.com/windowsazure"));
-                            passwordElement.Value = parameters.ProvisioningConfiguration.DomainJoin.Credentials.Password;
-                            credentialsElement.Add(passwordElement);
-                        }
-                        
-                        if (parameters.ProvisioningConfiguration.DomainJoin.DomainToJoin != null)
-                        {
-                            XElement joinDomainElement = new XElement(XName.Get("JoinDomain", "http://schemas.microsoft.com/windowsazure"));
-                            joinDomainElement.Value = parameters.ProvisioningConfiguration.DomainJoin.DomainToJoin;
-                            domainJoinElement.Add(joinDomainElement);
-                        }
-                        
-                        if (parameters.ProvisioningConfiguration.DomainJoin.LdapMachineObjectOU != null)
-                        {
-                            XElement machineObjectOUElement = new XElement(XName.Get("MachineObjectOU", "http://schemas.microsoft.com/windowsazure"));
-                            machineObjectOUElement.Value = parameters.ProvisioningConfiguration.DomainJoin.LdapMachineObjectOU;
-                            domainJoinElement.Add(machineObjectOUElement);
-                        }
-                        
-                        if (parameters.ProvisioningConfiguration.DomainJoin.Provisioning != null)
-                        {
-                            XElement provisioningElement = new XElement(XName.Get("Provisioning", "http://schemas.microsoft.com/windowsazure"));
-                            domainJoinElement.Add(provisioningElement);
-                            
-                            if (parameters.ProvisioningConfiguration.DomainJoin.Provisioning.AccountData != null)
-                            {
-                                XElement accountDataElement = new XElement(XName.Get("AccountData", "http://schemas.microsoft.com/windowsazure"));
-                                accountDataElement.Value = parameters.ProvisioningConfiguration.DomainJoin.Provisioning.AccountData;
-                                provisioningElement.Add(accountDataElement);
-                            }
-                        }
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.StoredCertificateSettings != null)
-                    {
-                        XElement storedCertificateSettingsSequenceElement = new XElement(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (StoredCertificateSettings storedCertificateSettingsItem in parameters.ProvisioningConfiguration.StoredCertificateSettings)
-                        {
-                            XElement certificateSettingElement = new XElement(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure"));
-                            storedCertificateSettingsSequenceElement.Add(certificateSettingElement);
-                            
-                            XElement storeLocationElement = new XElement(XName.Get("StoreLocation", "http://schemas.microsoft.com/windowsazure"));
-                            storeLocationElement.Value = "LocalMachine";
-                            certificateSettingElement.Add(storeLocationElement);
-                            
-                            XElement storeNameElement = new XElement(XName.Get("StoreName", "http://schemas.microsoft.com/windowsazure"));
-                            storeNameElement.Value = storedCertificateSettingsItem.StoreName;
-                            certificateSettingElement.Add(storeNameElement);
-                            
-                            XElement thumbprintElement = new XElement(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                            thumbprintElement.Value = storedCertificateSettingsItem.Thumbprint;
-                            certificateSettingElement.Add(thumbprintElement);
-                        }
-                        provisioningConfigurationElement.Add(storedCertificateSettingsSequenceElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.WindowsRemoteManagement != null)
-                    {
-                        XElement winRMElement = new XElement(XName.Get("WinRM", "http://schemas.microsoft.com/windowsazure"));
-                        provisioningConfigurationElement.Add(winRMElement);
-                        
-                        if (parameters.ProvisioningConfiguration.WindowsRemoteManagement.Listeners != null)
-                        {
-                            XElement listenersSequenceElement = new XElement(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (WindowsRemoteManagementListener listenersItem in parameters.ProvisioningConfiguration.WindowsRemoteManagement.Listeners)
-                            {
-                                XElement listenerElement = new XElement(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure"));
-                                listenersSequenceElement.Add(listenerElement);
-                                
-                                XElement protocolElement3 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                protocolElement3.Value = listenersItem.ListenerType.ToString();
-                                listenerElement.Add(protocolElement3);
-                                
-                                if (listenersItem.CertificateThumbprint != null)
-                                {
-                                    XElement certificateThumbprintElement = new XElement(XName.Get("CertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                    certificateThumbprintElement.Value = listenersItem.CertificateThumbprint;
-                                    listenerElement.Add(certificateThumbprintElement);
-                                }
-                            }
-                            winRMElement.Add(listenersSequenceElement);
-                        }
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.AdminUserName != null)
-                    {
-                        XElement adminUsernameElement = new XElement(XName.Get("AdminUsername", "http://schemas.microsoft.com/windowsazure"));
-                        adminUsernameElement.Value = parameters.ProvisioningConfiguration.AdminUserName;
-                        provisioningConfigurationElement.Add(adminUsernameElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.HostName != null)
-                    {
-                        XElement hostNameElement = new XElement(XName.Get("HostName", "http://schemas.microsoft.com/windowsazure"));
-                        hostNameElement.Value = parameters.ProvisioningConfiguration.HostName;
-                        provisioningConfigurationElement.Add(hostNameElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.UserName != null)
-                    {
-                        XElement userNameElement = new XElement(XName.Get("UserName", "http://schemas.microsoft.com/windowsazure"));
-                        userNameElement.Value = parameters.ProvisioningConfiguration.UserName;
-                        provisioningConfigurationElement.Add(userNameElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.UserPassword != null)
-                    {
-                        XElement userPasswordElement = new XElement(XName.Get("UserPassword", "http://schemas.microsoft.com/windowsazure"));
-                        userPasswordElement.Value = parameters.ProvisioningConfiguration.UserPassword;
-                        provisioningConfigurationElement.Add(userPasswordElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.DisableSshPasswordAuthentication != null)
-                    {
-                        XElement disableSshPasswordAuthenticationElement = new XElement(XName.Get("DisableSshPasswordAuthentication", "http://schemas.microsoft.com/windowsazure"));
-                        disableSshPasswordAuthenticationElement.Value = parameters.ProvisioningConfiguration.DisableSshPasswordAuthentication.ToString().ToLower();
-                        provisioningConfigurationElement.Add(disableSshPasswordAuthenticationElement);
-                    }
-                    
-                    if (parameters.ProvisioningConfiguration.SshSettings != null)
-                    {
-                        XElement sSHElement = new XElement(XName.Get("SSH", "http://schemas.microsoft.com/windowsazure"));
-                        provisioningConfigurationElement.Add(sSHElement);
-                        
-                        if (parameters.ProvisioningConfiguration.SshSettings.PublicKeys != null)
-                        {
-                            XElement publicKeysSequenceElement = new XElement(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (SshSettingPublicKey publicKeysItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeys)
-                            {
-                                XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
-                                publicKeysSequenceElement.Add(publicKeyElement);
-                                
-                                XElement fingerprintElement = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
-                                fingerprintElement.Value = publicKeysItem.Fingerprint;
-                                publicKeyElement.Add(fingerprintElement);
-                                
-                                XElement pathElement2 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
-                                pathElement2.Value = publicKeysItem.Path;
-                                publicKeyElement.Add(pathElement2);
-                            }
-                            sSHElement.Add(publicKeysSequenceElement);
-                        }
-                        
-                        if (parameters.ProvisioningConfiguration.SshSettings.KeyPairs != null)
-                        {
-                            XElement keyPairsSequenceElement = new XElement(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (SshSettingKeyPair keyPairsItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairs)
-                            {
-                                XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
-                                keyPairsSequenceElement.Add(keyPairElement);
-                                
-                                XElement fingerprintElement2 = new XElement(XName.Get("Fingerprint", "http://schemas.microsoft.com/windowsazure"));
-                                fingerprintElement2.Value = keyPairsItem.Fingerprint;
-                                keyPairElement.Add(fingerprintElement2);
-                                
-                                XElement pathElement3 = new XElement(XName.Get("Path", "http://schemas.microsoft.com/windowsazure"));
-                                pathElement3.Value = keyPairsItem.Path;
-                                keyPairElement.Add(pathElement3);
-                            }
-                            sSHElement.Add(keyPairsSequenceElement);
-                        }
-                    }
-                }
-                
-                XElement targetImageLabelElement = new XElement(XName.Get("TargetImageLabel", "http://schemas.microsoft.com/windowsazure"));
-                targetImageLabelElement.Value = parameters.TargetImageLabel;
-                captureRoleOperationElement.Add(targetImageLabelElement);
-                
-                XElement targetImageNameElement = new XElement(XName.Get("TargetImageName", "http://schemas.microsoft.com/windowsazure"));
-                targetImageNameElement.Value = parameters.TargetImageName;
-                captureRoleOperationElement.Add(targetImageNameElement);
-                
-                requestContent = requestDoc.ToString();
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
                     cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    OperationResponse result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
                 }
-                finally
+                
+                if (shouldTrace)
                 {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
+                    Tracing.Exit(invocationId, result);
                 }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.ErrorCode = result.Error.Code;
+                    ex.ErrorMessage = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        Tracing.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                
+                return result;
             }
             finally
             {
-                if (httpRequest != null)
+                if (client != null && shouldTrace)
                 {
-                    httpRequest.Dispose();
+                    client.Dispose();
                 }
             }
         }
@@ -4532,7 +4675,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -4541,16 +4684,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineGetResponse result = new VirtualMachineGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    VirtualMachineGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new VirtualMachineGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement persistentVMRoleElement = responseDoc.Element(XName.Get("PersistentVMRole", "http://schemas.microsoft.com/windowsazure"));
@@ -4587,7 +4725,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement roleSizeElement = persistentVMRoleElement.Element(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure"));
                         if (roleSizeElement != null)
                         {
-                            VirtualMachineRoleSize roleSizeInstance = (VirtualMachineRoleSize)Enum.Parse(typeof(VirtualMachineRoleSize), roleSizeElement.Value, false);
+                            string roleSizeInstance = roleSizeElement.Value;
                             result.RoleSize = roleSizeInstance;
                         }
                         
@@ -4766,6 +4904,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     {
                                         configurationSetInstance.SubnetNames.Add(subnetNamesElement.Value);
                                     }
+                                }
+                                
+                                XElement staticVirtualNetworkIPAddressElement = configurationSetsElement.Element(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                if (staticVirtualNetworkIPAddressElement != null)
+                                {
+                                    string staticVirtualNetworkIPAddressInstance = staticVirtualNetworkIPAddressElement.Value;
+                                    configurationSetInstance.StaticVirtualNetworkIPAddress = staticVirtualNetworkIPAddressInstance;
                                 }
                                 
                                 XElement computerNameElement = configurationSetsElement.Element(XName.Get("ComputerName", "http://schemas.microsoft.com/windowsazure"));
@@ -5120,6 +5265,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
                         Tracing.Exit(invocationId, result);
@@ -5230,7 +5381,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -5239,17 +5390,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineGetRemoteDesktopFileResponse result = new VirtualMachineGetRemoteDesktopFileResponse();
+                    VirtualMachineGetRemoteDesktopFileResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new VirtualMachineGetRemoteDesktopFileResponse();
+                    result.RemoteDesktopFile = Encoding.UTF8.GetBytes(responseContent);
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result.RemoteDesktopFile = Encoding.UTF8.GetBytes(responseContent);
                     
                     if (shouldTrace)
                     {
@@ -5382,7 +5534,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation
+        /// The parameters for the shutdown vm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

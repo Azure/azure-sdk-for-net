@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _newPassword;
         
         /// <summary>
-        /// The new password for the administrator
+        /// Gets or sets new password for the administrator.
         /// </summary>
         public string NewPassword
         {

@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private bool? _isCorrupted;
             
             /// <summary>
-            /// Specifies thether the disk is known to be corrupt
+            /// Specifies thether the disk is known to be corrupt.
             /// </summary>
             public bool? IsCorrupted
             {

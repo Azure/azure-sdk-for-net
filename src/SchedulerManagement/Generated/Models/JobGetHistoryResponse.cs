@@ -116,17 +116,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
                 set { this._message = value; }
             }
             
-            private int _recordNumber;
-            
-            /// <summary>
-            /// The zero-based index of the history entry.
-            /// </summary>
-            public int RecordNumber
-            {
-                get { return this._recordNumber; }
-                set { this._recordNumber = value; }
-            }
-            
             private int _repeatCount;
             
             /// <summary>

@@ -113,6 +113,17 @@ namespace Microsoft.WindowsAzure.Management
             get { return this._managementCertificates; }
         }
         
+        private IRoleSizeOperations _roleSizes;
+        
+        /// <summary>
+        /// The Service Management API includes operations for listing the
+        /// available role sizes for VMs in your subscription.
+        /// </summary>
+        public virtual IRoleSizeOperations RoleSizes
+        {
+            get { return this._roleSizes; }
+        }
+        
         private ISubscriptionOperations _subscriptions;
         
         /// <summary>
@@ -134,6 +145,7 @@ namespace Microsoft.WindowsAzure.Management
             this._affinityGroups = new AffinityGroupOperations(this);
             this._locations = new LocationOperations(this);
             this._managementCertificates = new ManagementCertificateOperations(this);
+            this._roleSizes = new RoleSizeOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
@@ -276,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.CreateFromXml(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -285,16 +297,11 @@ namespace Microsoft.WindowsAzure.Management
                     }
                     
                     // Create Result
-                    OperationStatusResponse result = new OperationStatusResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
+                    OperationStatusResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new OperationStatusResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
@@ -341,6 +348,12 @@ namespace Microsoft.WindowsAzure.Management
                                 errorInstance.Message = messageInstance;
                             }
                         }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     
                     if (shouldTrace)
