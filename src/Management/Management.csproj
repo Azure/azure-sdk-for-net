@@ -90,24 +90,6 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
-  <Target Name="CopyMicrosoftWindowsAzureManagementSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Specification.1.0.5085.30254-prerelease\tools\Microsoft.WindowsAzure.Management.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureSubscriptionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Subscriptions.Specification.1.0.5085.30284-prerelease\tools\Microsoft.WindowsAzure.Subscriptions.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Specification.1.0.5091.22021-prerelease\tools\Microsoft.WindowsAzure.Management.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureSubscriptionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Subscriptions.Specification.1.0.5091.22056-prerelease\tools\Microsoft.WindowsAzure.Subscriptions.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Specification.1.0.5105.17724-prerelease\tools\Microsoft.WindowsAzure.Management.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureSubscriptionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Subscriptions.Specification.1.0.5105.19149-prerelease\tools\Microsoft.WindowsAzure.Subscriptions.Specification.dll" DestinationFolder="." />
-  </Target>
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hydra.Generator.1.0.5121.20416-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5121.20416-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
