@@ -34,6 +34,19 @@ namespace Microsoft.WindowsAzure.Common.Test
         }
 
         [Fact]
+        public void TokenCloudCredentialWithoutSubscriptionAddsHeader()
+        {
+            var tokenCredentials = new TokenCloudCredentials("abc");
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var fakeClient = new FakeServiceClientWithCredentials(tokenCredentials).WithHandler(handler);
+            fakeClient.DoStuff().Wait();
+
+            Assert.Null(fakeClient.Credentials.SubscriptionId);
+            Assert.Equal("Bearer", handler.RequestHeaders.Authorization.Scheme);
+            Assert.Equal("abc", handler.RequestHeaders.Authorization.Parameter);
+        }
+
+        [Fact]
         public void TokenCloudCredentialUpdatesHeader()
         {
             var credentials = new TokenCloudCredentials("123", "abc");
