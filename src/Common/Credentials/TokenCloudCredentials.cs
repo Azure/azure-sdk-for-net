@@ -19,7 +19,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure
@@ -50,7 +49,7 @@ namespace Microsoft.WindowsAzure
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TokenCloudCredentials"/>
-        /// class.
+        /// class with subscription ID.
         /// </summary>
         /// <param name="subscriptionId">The Subscription ID.</param>
         /// <param name="token">Valid JSON Web Token (JWT).</param>
@@ -78,6 +77,25 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TokenCloudCredentials"/>
+        /// class without subscription ID.
+        /// </summary>
+        /// <param name="token">Valid JSON Web Token (JWT).</param>
+        public TokenCloudCredentials(string token)
+        {
+            if (token == null)
+            {
+                throw new ArgumentNullException("token");
+            }
+            else if (token.Length == 0)
+            {
+                throw CloudExtensions.CreateArgumentEmptyException("token");
+            }
+
+            Token = token;
+        }
+
+        /// <summary>
         /// Attempt to create token credentials from a collection of
         /// settings.
         /// </summary>
@@ -98,6 +116,10 @@ namespace Microsoft.WindowsAzure
             if (subscriptionId != null && token != null)
             {
                 return new TokenCloudCredentials(subscriptionId, token);
+            }
+            else if (token != null)
+            {
+                return new TokenCloudCredentials(token);
             }
 
             return null;
