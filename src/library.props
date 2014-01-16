@@ -50,6 +50,10 @@
     <!-- .NET 4.5-only projects -->
     <WindowsAzureLibraryPrimaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">net45</WindowsAzureLibraryPrimaryConfiguration>
     <WindowsAzureLibrarySecondaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">net45</WindowsAzureLibrarySecondaryConfiguration>
+	
+	<!-- Windows Store App-only projects -->
+	<WindowsAzureLibraryPrimaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'windows8' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">windows8</WindowsAzureLibraryPrimaryConfiguration>
+    <WindowsAzureLibrarySecondaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'windows8' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">windows8</WindowsAzureLibrarySecondaryConfiguration>
   </PropertyGroup>
   <PropertyGroup>
     <WindowsAzureCurrentConfiguration 
@@ -74,5 +78,9 @@
     <TargetFrameworkProfile />
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'windows8' ">
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
 </Project>
