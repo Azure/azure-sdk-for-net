@@ -118,29 +118,38 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                if (parameters.ExtensionConfiguration.AllRoles != null)
                 {
-                    if (allRolesParameterItem.Id == null)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
-                    }
-                }
-                foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
-                {
-                    if (namedRolesParameterItem.Extensions == null)
-                    {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
-                    }
-                    foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
-                    {
-                        if (extensionsParameterItem.Id == null)
+                        if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
                         }
                     }
-                    if (namedRolesParameterItem.RoleName == null)
+                }
+                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                {
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        if (namedRolesParameterItem.Extensions == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                        }
+                        if (namedRolesParameterItem.Extensions != null)
+                        {
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            {
+                                if (extensionsParameterItem.Id == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                }
+                            }
+                        }
+                        if (namedRolesParameterItem.RoleName == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        }
                     }
                 }
             }
@@ -378,29 +387,38 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                if (parameters.ExtensionConfiguration.AllRoles != null)
                 {
-                    if (allRolesParameterItem.Id == null)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
-                    }
-                }
-                foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
-                {
-                    if (namedRolesParameterItem.Extensions == null)
-                    {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
-                    }
-                    foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
-                    {
-                        if (extensionsParameterItem.Id == null)
+                        if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
                         }
                     }
-                    if (namedRolesParameterItem.RoleName == null)
+                }
+                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                {
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        if (namedRolesParameterItem.Extensions == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                        }
+                        if (namedRolesParameterItem.Extensions != null)
+                        {
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            {
+                                if (extensionsParameterItem.Id == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                }
+                            }
+                        }
+                        if (namedRolesParameterItem.RoleName == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        }
                     }
                 }
             }
@@ -637,29 +655,38 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                if (parameters.ExtensionConfiguration.AllRoles != null)
                 {
-                    if (allRolesParameterItem.Id == null)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
-                    }
-                }
-                foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
-                {
-                    if (namedRolesParameterItem.Extensions == null)
-                    {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
-                    }
-                    foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
-                    {
-                        if (extensionsParameterItem.Id == null)
+                        if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
                         }
                     }
-                    if (namedRolesParameterItem.RoleName == null)
+                }
+                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                {
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        if (namedRolesParameterItem.Extensions == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                        }
+                        if (namedRolesParameterItem.Extensions != null)
+                        {
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            {
+                                if (extensionsParameterItem.Id == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                }
+                            }
+                        }
+                        if (namedRolesParameterItem.RoleName == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        }
                     }
                 }
             }
@@ -935,7 +962,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?";
             if (deleteFromStorage == true)
             {
-                url = url + "&comp=" + Uri.EscapeUriString("media");
+                url = url + "comp=media";
             }
             
             // Create HTTP transport objects
@@ -2164,29 +2191,38 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                if (parameters.ExtensionConfiguration.AllRoles != null)
                 {
-                    if (allRolesParameterItem.Id == null)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
-                    }
-                }
-                foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
-                {
-                    if (namedRolesParameterItem.Extensions == null)
-                    {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
-                    }
-                    foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
-                    {
-                        if (extensionsParameterItem.Id == null)
+                        if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
                         }
                     }
-                    if (namedRolesParameterItem.RoleName == null)
+                }
+                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                {
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        if (namedRolesParameterItem.Extensions == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                        }
+                        if (namedRolesParameterItem.Extensions != null)
+                        {
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            {
+                                if (extensionsParameterItem.Id == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                }
+                            }
+                        }
+                        if (namedRolesParameterItem.RoleName == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        }
                     }
                 }
             }
@@ -2466,29 +2502,38 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                if (parameters.ExtensionConfiguration.AllRoles != null)
                 {
-                    if (allRolesParameterItem.Id == null)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
-                    }
-                }
-                foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
-                {
-                    if (namedRolesParameterItem.Extensions == null)
-                    {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
-                    }
-                    foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
-                    {
-                        if (extensionsParameterItem.Id == null)
+                        if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
                         }
                     }
-                    if (namedRolesParameterItem.RoleName == null)
+                }
+                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                {
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
                     {
-                        throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        if (namedRolesParameterItem.Extensions == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                        }
+                        if (namedRolesParameterItem.Extensions != null)
+                        {
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            {
+                                if (extensionsParameterItem.Id == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                }
+                            }
+                        }
+                        if (namedRolesParameterItem.RoleName == null)
+                        {
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                        }
                     }
                 }
             }
@@ -3112,14 +3157,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -3210,14 +3267,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -3307,14 +3376,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -3404,14 +3485,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -3496,14 +3589,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -5865,7 +5970,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/package?containerUri=" + parameters.ContainerUri + " +";
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/package?";
+            url = url + "containerUri=" + Uri.EscapeUriString(parameters.ContainerUri.ToString()) + " +";
             if (parameters.OverwriteExisting != null)
             {
                 url = url + "&overwriteExisting=" + Uri.EscapeUriString(parameters.OverwriteExisting.Value.ToString().ToLower());
@@ -6002,7 +6108,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/package?containerUri=" + parameters.ContainerUri + " +";
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/package?";
+            url = url + "containerUri=" + Uri.EscapeUriString(parameters.ContainerUri.ToString()) + " +";
             if (parameters.OverwriteExisting != null)
             {
                 url = url + "&overwriteExisting=" + Uri.EscapeUriString(parameters.OverwriteExisting.Value.ToString().ToLower());
@@ -6157,14 +6264,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -6254,14 +6373,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -6351,14 +6482,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -6448,14 +6591,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -6843,14 +6998,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -6940,14 +7107,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -7037,14 +7216,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -7156,14 +7347,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -7275,14 +7478,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -7394,14 +7609,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -7513,14 +7740,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
