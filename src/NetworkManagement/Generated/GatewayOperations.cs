@@ -874,14 +874,26 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 
                 if (result.Status != GatewayOperationStatus.Successful)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -962,14 +974,26 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 
                 if (result.Status != GatewayOperationStatus.Successful)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -1046,14 +1070,26 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 
                 if (result.Status != GatewayOperationStatus.Successful)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -1131,14 +1167,26 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 
                 if (result.Status != GatewayOperationStatus.Successful)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -1524,7 +1572,19 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/vpndeviceconfigurationscript?vendor=" + parameters.Vendor + "&platform=" + parameters.Platform + "&OSfamily=" + parameters.OSFamily;
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/vpndeviceconfigurationscript?";
+            if (parameters.Vendor != null)
+            {
+                url = url + "vendor=" + Uri.EscapeUriString(parameters.Vendor);
+            }
+            if (parameters.Platform != null)
+            {
+                url = url + "&platform=" + Uri.EscapeUriString(parameters.Platform);
+            }
+            if (parameters.OSFamily != null)
+            {
+                url = url + "&OSfamily=" + Uri.EscapeUriString(parameters.OSFamily);
+            }
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2351,14 +2411,26 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 
                 if (result.Status != GatewayOperationStatus.Successful)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;

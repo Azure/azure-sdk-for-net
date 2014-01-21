@@ -343,7 +343,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databaseoperations?databaseName=" + databaseName;
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databaseoperations?";
+            url = url + "databaseName=" + Uri.EscapeUriString(databaseName);
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -567,7 +567,8 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services?service=" + resourceName + "&action=register";
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services?&action=register";
+            url = url + "service=" + Uri.EscapeUriString(resourceName);
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -675,7 +676,8 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services?service=" + resourceName + "&action=unregister";
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services?&action=unregister";
+            url = url + "service=" + Uri.EscapeUriString(resourceName);
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

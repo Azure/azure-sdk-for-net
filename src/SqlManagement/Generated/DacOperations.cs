@@ -339,7 +339,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Status?servername=" + fullyQualifiedServerName + "&username=" + username + "&password=" + password + "&reqId=" + requestId;
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Status?";
+            url = url + "servername=" + Uri.EscapeUriString(fullyQualifiedServerName);
+            url = url + "&username=" + Uri.EscapeUriString(username);
+            url = url + "&password=" + Uri.EscapeUriString(password);
+            url = url + "&reqId=" + Uri.EscapeUriString(requestId);
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

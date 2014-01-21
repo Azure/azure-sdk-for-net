@@ -103,7 +103,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/ServiceBus/CheckNamespaceAvailability?namespace=" + namespaceName;
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/ServiceBus/CheckNamespaceAvailability?";
+            url = url + "namespace=" + Uri.EscapeUriString(namespaceName);
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

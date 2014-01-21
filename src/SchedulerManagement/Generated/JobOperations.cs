@@ -163,7 +163,8 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?api-version=2013-10-31_Preview";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -974,7 +975,8 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?api-version=2013-10-31_Preview";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1707,7 +1709,8 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?api-version=2013-10-31_Preview";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1815,7 +1818,8 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?api-version=2013-10-31_Preview";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2329,7 +2333,10 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?api-version=2013-10-31_Preview&$skip=" + parameters.Skip + "&$top=" + parameters.Top;
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
+            url = url + "api-version=2013-10-31_Preview";
+            url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
+            url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.ToString());
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2535,7 +2542,11 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?api-version=2013-10-31_Preview&$filter=status eq " + parameters.Status + "&$skip=" + parameters.Skip + "&$top=" + parameters.Top;
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
+            url = url + "api-version=2013-10-31_Preview";
+            url = url + "&$filter=status eq " + Uri.EscapeUriString(SchedulerClient.JobHistoryStatusToString(parameters.Status));
+            url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
+            url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.ToString());
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2733,7 +2744,8 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?api-version=2013-10-31_Preview";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            url = url + "api-version=2013-10-31_Preview";
             if (parameters.Skip != null)
             {
                 url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.Value.ToString());
@@ -3254,7 +3266,9 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?api-version=2013-10-31_Preview&$filter=state eq " + parameters.State;
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            url = url + "api-version=2013-10-31_Preview";
+            url = url + "&$filter=state eq " + Uri.EscapeUriString(SchedulerClient.JobStateToString(parameters.State));
             if (parameters.Skip != null)
             {
                 url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.Value.ToString());
@@ -4318,7 +4332,8 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?api-version=2013-10-31_Preview";
+            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
