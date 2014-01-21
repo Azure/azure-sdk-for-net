@@ -39,10 +39,12 @@ namespace Microsoft.WindowsAzure.Common.Test
         }
 
         [Fact]
-        public void ExceptionIsCreatedFromEmptyResponse()
+        public void ExceptionIsCreatedFromHeaderlessResponse()
         {
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse,
                                            "", CloudExceptionType.Json);
+
+            Assert.Null(notFoundResponse.Content.Headers.ContentType);
             Assert.NotNull(ex);
             Assert.Equal("", ex.Message);
         }
