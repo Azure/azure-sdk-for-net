@@ -27,7 +27,33 @@ namespace Microsoft.WindowsAzure.Common.Test
     public class CloudExceptionTest
     {
         private HttpResponseMessage notFoundResponse;
+        private HttpResponseMessage serverErrorResponse;
+        private HttpResponseMessage serverErrorResponseWithCamelCase;
         private string genericMessageString = "{'key'='value'}";
+        private string jsonErrorMessageString = @"{
+                                    'code': 'BadRequest',
+                                    'message': 'The provided database ‘foo’ has an invalid username.',
+                                    'target': 'query',
+                                    'details': [
+                                      {
+                                       'code': '301',
+                                       'target': '$search',
+                                       'message': '$search query option not supported.',
+                                      }
+                                    ]
+                                }";
+        private string jsonErrorMessageStringWithCamelCase = @"{
+                                    'Code': 'BadRequest',
+                                    'Message': 'The provided database ‘foo’ has an invalid username.',
+                                    'Target': 'query',
+                                    'Details': [
+                                      {
+                                       'Code': '301',
+                                       'Target': '$search',
+                                       'Message': '$search query option not supported.',
+                                      }
+                                    ]
+                                }";
         private HttpRequestMessage genericMessage;
 
         public CloudExceptionTest()
@@ -36,6 +62,10 @@ namespace Microsoft.WindowsAzure.Common.Test
             genericMessage.Content = new StringContent(genericMessageString);
             notFoundResponse = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
             notFoundResponse.Content = new StreamContent(new MemoryStream());
+            serverErrorResponse = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            serverErrorResponse.Content = new StringContent(jsonErrorMessageString);
+            serverErrorResponseWithCamelCase = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            serverErrorResponseWithCamelCase.Content = new StringContent(jsonErrorMessageStringWithCamelCase);
         }
 
         [Fact]
@@ -46,7 +76,37 @@ namespace Microsoft.WindowsAzure.Common.Test
 
             Assert.Null(notFoundResponse.Content.Headers.ContentType);
             Assert.NotNull(ex);
-            Assert.Equal("", ex.Message);
+        }
+
+        [Fact]
+        public void ExceptionContainsHttpStatusCodeIfBodyIsEmpty()
+        {
+            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse,
+                                           "", CloudExceptionType.Json);
+
+            Assert.Equal("Not Found", ex.Message);
+        }
+
+        [Fact]
+        public void JsonExceptionIsParsedCorrectlyWithLowerCase()
+        {
+            var ex = CloudException.Create(genericMessage, genericMessageString, serverErrorResponse,
+                                           jsonErrorMessageString, CloudExceptionType.Json);
+
+            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.ErrorMessage);
+            Assert.Equal("BadRequest", ex.ErrorCode);
+        }
+
+        [Fact]
+        public void JsonExceptionIsParsedCorrectlyWithCamelCase()
+        {
+            var ex = CloudException.Create(genericMessage, genericMessageString, serverErrorResponseWithCamelCase,
+                                           jsonErrorMessageStringWithCamelCase, CloudExceptionType.Json);
+
+            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.ErrorMessage);
+            Assert.Equal("BadRequest", ex.ErrorCode);
         }
     }
 }
