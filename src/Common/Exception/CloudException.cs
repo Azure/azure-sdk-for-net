@@ -117,20 +117,29 @@ namespace Microsoft.WindowsAzure
             CloudExceptionType defaultTo,
             Exception innerException = null)
         {
-            if (response.Content.Headers.ContentType.MediaType.Equals("application/json") ||
-                response.Content.Headers.ContentType.MediaType.Equals("text/json"))
+            if (response.Content != null && response.Content.Headers.ContentType != null)
             {
-                return CreateFromJson(request, requestContent, response, responseContent, innerException);
-            } else if (response.Content.Headers.ContentType.MediaType.Equals("application/xml") ||
-                       response.Content.Headers.ContentType.MediaType.Equals("text/xml"))
-            {
-                return CreateFromXml(request, requestContent, response, responseContent, innerException);
-            } else if (defaultTo == CloudExceptionType.Json)
-            {
-                return CreateFromJson(request, requestContent, response, responseContent, innerException);
+                if (response.Content.Headers.ContentType.MediaType.Equals("application/json") ||
+                    response.Content.Headers.ContentType.MediaType.Equals("text/json"))
+                {
+                    return CreateFromJson(request, requestContent, response, responseContent, innerException);
+                }
+                else
+                {
+                    return CreateFromXml(request, requestContent, response, responseContent, innerException);
+                }
             }
-
-            return CreateFromXml(request, requestContent, response, responseContent, innerException);
+            else
+            {
+                if (defaultTo == CloudExceptionType.Json)
+                {
+                    return CreateFromJson(request, requestContent, response, responseContent, innerException);
+                }
+                else
+                {
+                    return CreateFromXml(request, requestContent, response, responseContent, innerException);
+                }
+            }
         }
 
         /// <summary>
