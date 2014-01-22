@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber + "?";
             if (deleteFromStorage == true)
             {
-                url = url + "&comp=" + Uri.EscapeUriString("media");
+                url = url + "comp=media";
             }
             
             // Create HTTP transport objects
@@ -748,14 +748,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -813,7 +825,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName + "?";
             if (deleteFromStorage == true)
             {
-                url = url + "&comp=" + Uri.EscapeUriString("media");
+                url = url + "comp=media";
             }
             
             // Create HTTP transport objects

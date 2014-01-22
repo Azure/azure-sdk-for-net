@@ -117,20 +117,28 @@ namespace Microsoft.WindowsAzure
             CloudExceptionType defaultTo,
             Exception innerException = null)
         {
-            if (response.Content.Headers.ContentType.MediaType.Equals("application/json") ||
-                response.Content.Headers.ContentType.MediaType.Equals("text/json"))
+            if (response.Content != null && response.Content.Headers.ContentType != null)
             {
-                return CreateFromJson(request, requestContent, response, responseContent, innerException);
-            } else if (response.Content.Headers.ContentType.MediaType.Equals("application/xml") ||
+                if (response.Content.Headers.ContentType.MediaType.Equals("application/json") ||
+                    response.Content.Headers.ContentType.MediaType.Equals("text/json"))
+                {
+                    return CreateFromJson(request, requestContent, response, responseContent, innerException);
+                } 
+                else if (response.Content.Headers.ContentType.MediaType.Equals("application/xml") ||
                        response.Content.Headers.ContentType.MediaType.Equals("text/xml"))
-            {
-                return CreateFromXml(request, requestContent, response, responseContent, innerException);
-            } else if (defaultTo == CloudExceptionType.Json)
+                {
+                    return CreateFromXml(request, requestContent, response, responseContent, innerException);
+                }
+            }
+
+            if (defaultTo == CloudExceptionType.Json)
             {
                 return CreateFromJson(request, requestContent, response, responseContent, innerException);
             }
-
-            return CreateFromXml(request, requestContent, response, responseContent, innerException);
+            else
+            {
+                return CreateFromXml(request, requestContent, response, responseContent, innerException);
+            }
         }
 
         /// <summary>
@@ -214,7 +222,7 @@ namespace Microsoft.WindowsAzure
                 (code != null && message != null) ? code + ": " + message :
                 (message != null) ? message :
                 (code != null) ? code :
-                (responseContent != null) ? responseContent :
+                !string.IsNullOrEmpty(responseContent) ? responseContent :
                 (response != null && response.ReasonPhrase != null) ? response.ReasonPhrase :
                 (response != null) ? response.StatusCode.ToString() :
                 new InvalidOperationException().Message;
@@ -286,8 +294,8 @@ namespace Microsoft.WindowsAzure
                 try
                 {
                     JObject response = JObject.Parse(content);
-                    code = (string)response["Code"];
-                    message = (string)response["Message"];
+                    code = response.GetValue("Code", StringComparison.CurrentCultureIgnoreCase).ToString();
+                    message = response.GetValue("Message", StringComparison.CurrentCultureIgnoreCase).ToString();
                 }
                 catch
                 {

@@ -396,7 +396,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId + "/alertincidents?$filter=IsActive eq " + isActive;
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId + "/alertincidents?";
+            url = url + "$filter=IsActive eq " + Uri.EscapeUriString(isActive.ToString().ToLower());
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
