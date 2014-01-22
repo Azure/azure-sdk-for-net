@@ -403,14 +403,26 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 
                 if (result.Status != CloudServiceOperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -484,14 +496,26 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 
                 if (result.Status != CloudServiceOperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;

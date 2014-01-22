@@ -146,38 +146,47 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 }
                 if (parameters.ProvisioningConfiguration.SshSettings != null)
                 {
-                    foreach (SshSettingKeyPair keyPairsParameterItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairs)
+                    if (parameters.ProvisioningConfiguration.SshSettings.KeyPairs != null)
                     {
-                        if (keyPairsParameterItem.Fingerprint == null)
+                        foreach (SshSettingKeyPair keyPairsParameterItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairs)
                         {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Fingerprint");
-                        }
-                        if (keyPairsParameterItem.Path == null)
-                        {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Path");
+                            if (keyPairsParameterItem.Fingerprint == null)
+                            {
+                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Fingerprint");
+                            }
+                            if (keyPairsParameterItem.Path == null)
+                            {
+                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Path");
+                            }
                         }
                     }
-                    foreach (SshSettingPublicKey publicKeysParameterItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeys)
+                    if (parameters.ProvisioningConfiguration.SshSettings.PublicKeys != null)
                     {
-                        if (publicKeysParameterItem.Fingerprint == null)
+                        foreach (SshSettingPublicKey publicKeysParameterItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeys)
                         {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Fingerprint");
-                        }
-                        if (publicKeysParameterItem.Path == null)
-                        {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Path");
+                            if (publicKeysParameterItem.Fingerprint == null)
+                            {
+                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Fingerprint");
+                            }
+                            if (publicKeysParameterItem.Path == null)
+                            {
+                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Path");
+                            }
                         }
                     }
                 }
-                foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in parameters.ProvisioningConfiguration.StoredCertificateSettings)
+                if (parameters.ProvisioningConfiguration.StoredCertificateSettings != null)
                 {
-                    if (storedCertificateSettingsParameterItem.StoreName == null)
+                    foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in parameters.ProvisioningConfiguration.StoredCertificateSettings)
                     {
-                        throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.StoreName");
-                    }
-                    if (storedCertificateSettingsParameterItem.Thumbprint == null)
-                    {
-                        throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.Thumbprint");
+                        if (storedCertificateSettingsParameterItem.StoreName == null)
+                        {
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.StoreName");
+                        }
+                        if (storedCertificateSettingsParameterItem.Thumbprint == null)
+                        {
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.Thumbprint");
+                        }
                     }
                 }
                 if (parameters.ProvisioningConfiguration.UserName != null && parameters.ProvisioningConfiguration.UserName.Length < 1)
@@ -762,81 +771,93 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters");
             }
-            foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSets)
+            if (parameters.ConfigurationSets != null)
             {
-                if (configurationSetsParameterItem.DomainJoin != null)
+                foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSets)
                 {
-                    if (configurationSetsParameterItem.DomainJoin.Credentials != null)
+                    if (configurationSetsParameterItem.DomainJoin != null)
                     {
-                        if (configurationSetsParameterItem.DomainJoin.Credentials.Password == null)
+                        if (configurationSetsParameterItem.DomainJoin.Credentials != null)
                         {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.Password");
-                        }
-                        if (configurationSetsParameterItem.DomainJoin.Credentials.UserName == null)
-                        {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.UserName");
+                            if (configurationSetsParameterItem.DomainJoin.Credentials.Password == null)
+                            {
+                                throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.Password");
+                            }
+                            if (configurationSetsParameterItem.DomainJoin.Credentials.UserName == null)
+                            {
+                                throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.UserName");
+                            }
                         }
                     }
-                }
-                if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length < 1)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
-                }
-                if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length > 64)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
-                }
-                if (configurationSetsParameterItem.SshSettings != null)
-                {
-                    foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairs)
+                    if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length < 1)
                     {
-                        if (keyPairsParameterItem.Fingerprint == null)
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
+                    }
+                    if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length > 64)
+                    {
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
+                    }
+                    if (configurationSetsParameterItem.SshSettings != null)
+                    {
+                        if (configurationSetsParameterItem.SshSettings.KeyPairs != null)
                         {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Fingerprint");
+                            foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairs)
+                            {
+                                if (keyPairsParameterItem.Fingerprint == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Fingerprint");
+                                }
+                                if (keyPairsParameterItem.Path == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Path");
+                                }
+                            }
                         }
-                        if (keyPairsParameterItem.Path == null)
+                        if (configurationSetsParameterItem.SshSettings.PublicKeys != null)
                         {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Path");
+                            foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeys)
+                            {
+                                if (publicKeysParameterItem.Fingerprint == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Fingerprint");
+                                }
+                                if (publicKeysParameterItem.Path == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Path");
+                                }
+                            }
                         }
                     }
-                    foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeys)
+                    if (configurationSetsParameterItem.StoredCertificateSettings != null)
                     {
-                        if (publicKeysParameterItem.Fingerprint == null)
+                        foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettings)
                         {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Fingerprint");
+                            if (storedCertificateSettingsParameterItem.StoreName == null)
+                            {
+                                throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.StoreName");
+                            }
+                            if (storedCertificateSettingsParameterItem.Thumbprint == null)
+                            {
+                                throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.Thumbprint");
+                            }
                         }
-                        if (publicKeysParameterItem.Path == null)
-                        {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Path");
-                        }
                     }
-                }
-                foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettings)
-                {
-                    if (storedCertificateSettingsParameterItem.StoreName == null)
+                    if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length < 1)
                     {
-                        throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.StoreName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
                     }
-                    if (storedCertificateSettingsParameterItem.Thumbprint == null)
+                    if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length > 32)
                     {
-                        throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.Thumbprint");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
                     }
-                }
-                if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length < 1)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
-                }
-                if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length > 32)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
-                }
-                if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
-                }
-                if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length > 72)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
+                    {
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                    }
+                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length > 72)
+                    {
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                    }
                 }
             }
             if (parameters.RoleName == null)
@@ -1513,83 +1534,98 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters.Roles");
             }
-            foreach (Role rolesParameterItem in parameters.Roles)
+            if (parameters.Roles != null)
             {
-                foreach (ConfigurationSet configurationSetsParameterItem in rolesParameterItem.ConfigurationSets)
+                foreach (Role rolesParameterItem in parameters.Roles)
                 {
-                    if (configurationSetsParameterItem.DomainJoin != null)
+                    if (rolesParameterItem.ConfigurationSets != null)
                     {
-                        if (configurationSetsParameterItem.DomainJoin.Credentials != null)
+                        foreach (ConfigurationSet configurationSetsParameterItem in rolesParameterItem.ConfigurationSets)
                         {
-                            if (configurationSetsParameterItem.DomainJoin.Credentials.Password == null)
+                            if (configurationSetsParameterItem.DomainJoin != null)
                             {
-                                throw new ArgumentNullException("parameters.Roles.ConfigurationSets.DomainJoin.Credentials.Password");
+                                if (configurationSetsParameterItem.DomainJoin.Credentials != null)
+                                {
+                                    if (configurationSetsParameterItem.DomainJoin.Credentials.Password == null)
+                                    {
+                                        throw new ArgumentNullException("parameters.Roles.ConfigurationSets.DomainJoin.Credentials.Password");
+                                    }
+                                    if (configurationSetsParameterItem.DomainJoin.Credentials.UserName == null)
+                                    {
+                                        throw new ArgumentNullException("parameters.Roles.ConfigurationSets.DomainJoin.Credentials.UserName");
+                                    }
+                                }
                             }
-                            if (configurationSetsParameterItem.DomainJoin.Credentials.UserName == null)
+                            if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length < 1)
                             {
-                                throw new ArgumentNullException("parameters.Roles.ConfigurationSets.DomainJoin.Credentials.UserName");
+                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.HostName");
+                            }
+                            if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length > 64)
+                            {
+                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.HostName");
+                            }
+                            if (configurationSetsParameterItem.SshSettings != null)
+                            {
+                                if (configurationSetsParameterItem.SshSettings.KeyPairs != null)
+                                {
+                                    foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairs)
+                                    {
+                                        if (keyPairsParameterItem.Fingerprint == null)
+                                        {
+                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.KeyPairs.Fingerprint");
+                                        }
+                                        if (keyPairsParameterItem.Path == null)
+                                        {
+                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.KeyPairs.Path");
+                                        }
+                                    }
+                                }
+                                if (configurationSetsParameterItem.SshSettings.PublicKeys != null)
+                                {
+                                    foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeys)
+                                    {
+                                        if (publicKeysParameterItem.Fingerprint == null)
+                                        {
+                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.PublicKeys.Fingerprint");
+                                        }
+                                        if (publicKeysParameterItem.Path == null)
+                                        {
+                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.PublicKeys.Path");
+                                        }
+                                    }
+                                }
+                            }
+                            if (configurationSetsParameterItem.StoredCertificateSettings != null)
+                            {
+                                foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettings)
+                                {
+                                    if (storedCertificateSettingsParameterItem.StoreName == null)
+                                    {
+                                        throw new ArgumentNullException("parameters.Roles.ConfigurationSets.StoredCertificateSettings.StoreName");
+                                    }
+                                    if (storedCertificateSettingsParameterItem.Thumbprint == null)
+                                    {
+                                        throw new ArgumentNullException("parameters.Roles.ConfigurationSets.StoredCertificateSettings.Thumbprint");
+                                    }
+                                }
+                            }
+                            if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length < 1)
+                            {
+                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserName");
+                            }
+                            if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length > 32)
+                            {
+                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserName");
+                            }
+                            if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
+                            {
+                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserPassword");
+                            }
+                            if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length > 72)
+                            {
+                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserPassword");
                             }
                         }
-                    }
-                    if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length < 1)
-                    {
-                        throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.HostName");
-                    }
-                    if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length > 64)
-                    {
-                        throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.HostName");
-                    }
-                    if (configurationSetsParameterItem.SshSettings != null)
-                    {
-                        foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairs)
-                        {
-                            if (keyPairsParameterItem.Fingerprint == null)
-                            {
-                                throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.KeyPairs.Fingerprint");
-                            }
-                            if (keyPairsParameterItem.Path == null)
-                            {
-                                throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.KeyPairs.Path");
-                            }
-                        }
-                        foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeys)
-                        {
-                            if (publicKeysParameterItem.Fingerprint == null)
-                            {
-                                throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.PublicKeys.Fingerprint");
-                            }
-                            if (publicKeysParameterItem.Path == null)
-                            {
-                                throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.PublicKeys.Path");
-                            }
-                        }
-                    }
-                    foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettings)
-                    {
-                        if (storedCertificateSettingsParameterItem.StoreName == null)
-                        {
-                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.StoredCertificateSettings.StoreName");
-                        }
-                        if (storedCertificateSettingsParameterItem.Thumbprint == null)
-                        {
-                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.StoredCertificateSettings.Thumbprint");
-                        }
-                    }
-                    if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length < 1)
-                    {
-                        throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserName");
-                    }
-                    if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length > 32)
-                    {
-                        throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserName");
-                    }
-                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
-                    {
-                        throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserPassword");
-                    }
-                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length > 72)
-                    {
-                        throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserPassword");
                     }
                 }
             }
@@ -2361,7 +2397,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName + "?";
             if (deleteFromStorage == true)
             {
-                url = url + "&comp=" + Uri.EscapeUriString("media");
+                url = url + "comp=media";
             }
             
             // Create HTTP transport objects
@@ -3212,81 +3248,93 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters");
             }
-            foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSets)
+            if (parameters.ConfigurationSets != null)
             {
-                if (configurationSetsParameterItem.DomainJoin != null)
+                foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSets)
                 {
-                    if (configurationSetsParameterItem.DomainJoin.Credentials != null)
+                    if (configurationSetsParameterItem.DomainJoin != null)
                     {
-                        if (configurationSetsParameterItem.DomainJoin.Credentials.Password == null)
+                        if (configurationSetsParameterItem.DomainJoin.Credentials != null)
                         {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.Password");
-                        }
-                        if (configurationSetsParameterItem.DomainJoin.Credentials.UserName == null)
-                        {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.UserName");
+                            if (configurationSetsParameterItem.DomainJoin.Credentials.Password == null)
+                            {
+                                throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.Password");
+                            }
+                            if (configurationSetsParameterItem.DomainJoin.Credentials.UserName == null)
+                            {
+                                throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.UserName");
+                            }
                         }
                     }
-                }
-                if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length < 1)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
-                }
-                if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length > 64)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
-                }
-                if (configurationSetsParameterItem.SshSettings != null)
-                {
-                    foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairs)
+                    if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length < 1)
                     {
-                        if (keyPairsParameterItem.Fingerprint == null)
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
+                    }
+                    if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length > 64)
+                    {
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
+                    }
+                    if (configurationSetsParameterItem.SshSettings != null)
+                    {
+                        if (configurationSetsParameterItem.SshSettings.KeyPairs != null)
                         {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Fingerprint");
+                            foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairs)
+                            {
+                                if (keyPairsParameterItem.Fingerprint == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Fingerprint");
+                                }
+                                if (keyPairsParameterItem.Path == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Path");
+                                }
+                            }
                         }
-                        if (keyPairsParameterItem.Path == null)
+                        if (configurationSetsParameterItem.SshSettings.PublicKeys != null)
                         {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Path");
+                            foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeys)
+                            {
+                                if (publicKeysParameterItem.Fingerprint == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Fingerprint");
+                                }
+                                if (publicKeysParameterItem.Path == null)
+                                {
+                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Path");
+                                }
+                            }
                         }
                     }
-                    foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeys)
+                    if (configurationSetsParameterItem.StoredCertificateSettings != null)
                     {
-                        if (publicKeysParameterItem.Fingerprint == null)
+                        foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettings)
                         {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Fingerprint");
+                            if (storedCertificateSettingsParameterItem.StoreName == null)
+                            {
+                                throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.StoreName");
+                            }
+                            if (storedCertificateSettingsParameterItem.Thumbprint == null)
+                            {
+                                throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.Thumbprint");
+                            }
                         }
-                        if (publicKeysParameterItem.Path == null)
-                        {
-                            throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Path");
-                        }
                     }
-                }
-                foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettings)
-                {
-                    if (storedCertificateSettingsParameterItem.StoreName == null)
+                    if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length < 1)
                     {
-                        throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.StoreName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
                     }
-                    if (storedCertificateSettingsParameterItem.Thumbprint == null)
+                    if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length > 32)
                     {
-                        throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.Thumbprint");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
                     }
-                }
-                if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length < 1)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
-                }
-                if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length > 32)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
-                }
-                if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
-                }
-                if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length > 72)
-                {
-                    throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
+                    {
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                    }
+                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length > 72)
+                    {
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                    }
                 }
             }
             if (parameters.OSVirtualHardDisk == null)
@@ -3950,11 +3998,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters");
             }
-            foreach (VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint loadBalancedEndpointsParameterItem in parameters.LoadBalancedEndpoints)
+            if (parameters.LoadBalancedEndpoints != null)
             {
-                if (loadBalancedEndpointsParameterItem.LoadBalancedEndpointSetName == null)
+                foreach (VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint loadBalancedEndpointsParameterItem in parameters.LoadBalancedEndpoints)
                 {
-                    throw new ArgumentNullException("parameters.LoadBalancedEndpoints.LoadBalancedEndpointSetName");
+                    if (loadBalancedEndpointsParameterItem.LoadBalancedEndpointSetName == null)
+                    {
+                        throw new ArgumentNullException("parameters.LoadBalancedEndpoints.LoadBalancedEndpointSetName");
+                    }
                 }
             }
             
@@ -4273,14 +4324,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -4376,14 +4439,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -4471,14 +4546,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -4568,14 +4655,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -5497,14 +5596,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -5593,14 +5704,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -5684,14 +5807,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -5775,14 +5910,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -5865,14 +6012,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -5961,14 +6120,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;
@@ -6054,14 +6225,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (result.Status != OperationStatus.Succeeded)
                 {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.ErrorCode = result.Error.Code;
-                    ex.ErrorMessage = result.Error.Message;
-                    if (shouldTrace)
+                    if (result.Error != null)
                     {
-                        Tracing.Error(invocationId, ex);
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
-                    throw ex;
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
                 }
                 
                 return result;

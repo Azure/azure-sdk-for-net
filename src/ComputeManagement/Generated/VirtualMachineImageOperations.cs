@@ -480,7 +480,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName + "?";
             if (deleteFromStorage == true)
             {
-                url = url + "&comp=" + Uri.EscapeUriString("media");
+                url = url + "comp=media";
             }
             
             // Create HTTP transport objects
