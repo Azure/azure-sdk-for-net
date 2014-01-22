@@ -73,17 +73,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
             get { return this._dac; }
         }
         
-        private IDatabaseCopyOperations _databaseCopies;
-        
-        /// <summary>
-        /// The SQL Database Management API includes operations for managing
-        /// SQL Database Copies for a subscription.
-        /// </summary>
-        public virtual IDatabaseCopyOperations DatabaseCopies
-        {
-            get { return this._databaseCopies; }
-        }
-        
         private IDatabaseOperationOperations _databaseOperations;
         
         /// <summary>
@@ -154,7 +143,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
             : base()
         {
             this._dac = new DacOperations(this);
-            this._databaseCopies = new DatabaseCopyOperations(this);
             this._databaseOperations = new DatabaseOperationOperations(this);
             this._databases = new DatabaseOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
