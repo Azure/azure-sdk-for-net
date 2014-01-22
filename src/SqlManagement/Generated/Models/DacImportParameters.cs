@@ -30,6 +30,17 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// </summary>
     public partial class DacImportParameters
     {
+        private string _azureEdition;
+        
+        /// <summary>
+        /// The edition of this database.
+        /// </summary>
+        public string AzureEdition
+        {
+            get { return this._azureEdition; }
+            set { this._azureEdition = value; }
+        }
+        
         private DacImportParameters.BlobCredentialsParameter _blobCredentials;
         
         /// <summary>

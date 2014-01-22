@@ -603,6 +603,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XElement importInputElement = new XElement(XName.Get("ImportInput", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
                     requestDoc.Add(importInputElement);
                     
+                    if (parameters.AzureEdition != null)
+                    {
+                        XElement azureEditionElement = new XElement(XName.Get("AzureEdition", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
+                        azureEditionElement.Value = parameters.AzureEdition;
+                        importInputElement.Add(azureEditionElement);
+                    }
+                    
                     if (parameters.BlobCredentials != null)
                     {
                         XElement blobCredentialsElement = new XElement(XName.Get("BlobCredentials", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
