@@ -93,6 +93,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._oSVirtualHardDisk = value; }
         }
         
+        private bool? _provisionGuestAgent;
+        
+        /// <summary>
+        /// Optional. Indicates whether the WindowsAzureGuestAgent service is
+        /// installed on the Virtual Machine. To run a resource extension in
+        /// aVirtual Machine, this service must be installed.
+        /// </summary>
+        public bool? ProvisionGuestAgent
+        {
+            get { return this._provisionGuestAgent; }
+            set { this._provisionGuestAgent = value; }
+        }
+        
+        private IList<ResourceExtensionReference> _resourceExtensionReferences;
+        
+        /// <summary>
+        /// Optional. Contains a collection of resource extensions that are to
+        /// be installed on the Virtual Machine. This element is used if
+        /// ProvisionGuestAgent is set to true.
+        /// </summary>
+        public IList<ResourceExtensionReference> ResourceExtensionReferences
+        {
+            get { return this._resourceExtensionReferences; }
+            set { this._resourceExtensionReferences = value; }
+        }
+        
         private string _roleName;
         
         /// <summary>
@@ -124,6 +150,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             this._configurationSets = new List<ConfigurationSet>();
             this._dataVirtualHardDisks = new List<DataVirtualHardDisk>();
+            this._resourceExtensionReferences = new List<ResourceExtensionReference>();
         }
     }
 }

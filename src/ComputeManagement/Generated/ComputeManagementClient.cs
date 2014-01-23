@@ -136,6 +136,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
             get { return this._virtualMachineDisks; }
         }
         
+        private IVirtualMachineExtensionOperations _virtualMachineExtensions;
+        
+        /// <summary>
+        /// The Service Management API includes operations for managing the
+        /// virtual machine extensions in your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157206.aspx
+        /// for more information)
+        /// </summary>
+        public virtual IVirtualMachineExtensionOperations VirtualMachineExtensions
+        {
+            get { return this._virtualMachineExtensions; }
+        }
+        
         private IVirtualMachineImageOperations _virtualMachineImages;
         
         /// <summary>
@@ -173,6 +186,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             this._operatingSystems = new OperatingSystemOperations(this);
             this._serviceCertificates = new ServiceCertificateOperations(this);
             this._virtualMachineDisks = new VirtualMachineDiskOperations(this);
+            this._virtualMachineExtensions = new VirtualMachineExtensionOperations(this);
             this._virtualMachineImages = new VirtualMachineImageOperations(this);
             this._virtualMachines = new VirtualMachineOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

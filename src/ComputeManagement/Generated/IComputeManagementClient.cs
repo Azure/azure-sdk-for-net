@@ -117,6 +117,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Service Management API includes operations for managing the
+        /// virtual machine extensions in your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157206.aspx
+        /// for more information)
+        /// </summary>
+        IVirtualMachineExtensionOperations VirtualMachineExtensions
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Service Management API includes operations for managing the OS
         /// images in your subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157175.aspx
