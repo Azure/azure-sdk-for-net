@@ -4398,6 +4398,82 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     }
                                 }
                                 
+                                XElement resourceExtensionReferencesSequenceElement = roleListElement.Element(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceExtensionReferencesSequenceElement != null)
+                                {
+                                    foreach (XElement resourceExtensionReferencesElement in resourceExtensionReferencesSequenceElement.Elements(XName.Get("ResourceExtensionReference", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        ResourceExtensionReference resourceExtensionReferenceInstance = new ResourceExtensionReference();
+                                        roleInstance.ResourceExtensionReferences.Add(resourceExtensionReferenceInstance);
+                                        
+                                        XElement referenceNameElement = resourceExtensionReferencesElement.Element(XName.Get("ReferenceName", "http://schemas.microsoft.com/windowsazure"));
+                                        if (referenceNameElement != null)
+                                        {
+                                            string referenceNameInstance = referenceNameElement.Value;
+                                            resourceExtensionReferenceInstance.ReferenceName = referenceNameInstance;
+                                        }
+                                        
+                                        XElement publisherElement = resourceExtensionReferencesElement.Element(XName.Get("Publisher", "http://schemas.microsoft.com/windowsazure"));
+                                        if (publisherElement != null)
+                                        {
+                                            string publisherInstance = publisherElement.Value;
+                                            resourceExtensionReferenceInstance.Publisher = publisherInstance;
+                                        }
+                                        
+                                        XElement nameElement4 = resourceExtensionReferencesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement4 != null)
+                                        {
+                                            string nameInstance4 = nameElement4.Value;
+                                            resourceExtensionReferenceInstance.Name = nameInstance4;
+                                        }
+                                        
+                                        XElement versionElement = resourceExtensionReferencesElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
+                                        if (versionElement != null)
+                                        {
+                                            string versionInstance = versionElement.Value;
+                                            resourceExtensionReferenceInstance.Version = versionInstance;
+                                        }
+                                        
+                                        XElement stateElement = resourceExtensionReferencesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                        if (stateElement != null && string.IsNullOrEmpty(stateElement.Value) == false)
+                                        {
+                                            ResourceExtensionReferenceState stateInstance = (ResourceExtensionReferenceState)Enum.Parse(typeof(ResourceExtensionReferenceState), stateElement.Value, false);
+                                            resourceExtensionReferenceInstance.State = stateInstance;
+                                        }
+                                        
+                                        XElement resourceExtensionParameterValuesSequenceElement = resourceExtensionReferencesElement.Element(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
+                                        if (resourceExtensionParameterValuesSequenceElement != null)
+                                        {
+                                            foreach (XElement resourceExtensionParameterValuesElement in resourceExtensionParameterValuesSequenceElement.Elements(XName.Get("ResourceExtensionParameterValue", "http://schemas.microsoft.com/windowsazure")))
+                                            {
+                                                ResourceExtensionParameterValue resourceExtensionParameterValueInstance = new ResourceExtensionParameterValue();
+                                                resourceExtensionReferenceInstance.ResourceExtensionParameterValues.Add(resourceExtensionParameterValueInstance);
+                                                
+                                                XElement keyElement = resourceExtensionParameterValuesElement.Element(XName.Get("Key", "http://schemas.microsoft.com/windowsazure"));
+                                                if (keyElement != null)
+                                                {
+                                                    string keyInstance = keyElement.Value;
+                                                    resourceExtensionParameterValueInstance.Key = keyInstance;
+                                                }
+                                                
+                                                XElement valueElement = resourceExtensionParameterValuesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                                                if (valueElement != null)
+                                                {
+                                                    string valueInstance = TypeConversion.FromBase64String(valueElement.Value);
+                                                    resourceExtensionParameterValueInstance.Value = valueInstance;
+                                                }
+                                                
+                                                XElement typeElement = resourceExtensionParameterValuesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                                if (typeElement != null && string.IsNullOrEmpty(typeElement.Value) == false)
+                                                {
+                                                    ResourceExtensionParameterValueType typeInstance = (ResourceExtensionParameterValueType)Enum.Parse(typeof(ResourceExtensionParameterValueType), typeElement.Value, false);
+                                                    resourceExtensionParameterValueInstance.Type = typeInstance;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                
                                 XElement availabilitySetNameElement = roleListElement.Element(XName.Get("AvailabilitySetName", "http://schemas.microsoft.com/windowsazure"));
                                 if (availabilitySetNameElement != null)
                                 {
@@ -4520,6 +4596,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     roleInstance.RoleSize = roleSizeInstance;
                                 }
                                 
+                                XElement provisionGuestAgentElement = roleListElement.Element(XName.Get("ProvisionGuestAgent", "http://schemas.microsoft.com/windowsazure"));
+                                if (provisionGuestAgentElement != null && string.IsNullOrEmpty(provisionGuestAgentElement.Value) == false)
+                                {
+                                    bool provisionGuestAgentInstance = bool.Parse(provisionGuestAgentElement.Value);
+                                    roleInstance.ProvisionGuestAgent = provisionGuestAgentInstance;
+                                }
+                                
                                 XElement defaultWinRmCertificateThumbprintElement = roleListElement.Element(XName.Get("DefaultWinRmCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
                                 if (defaultWinRmCertificateThumbprintElement != null)
                                 {
@@ -4625,11 +4708,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     virtualIPInstance.Address = addressInstance;
                                 }
                                 
-                                XElement nameElement4 = virtualIPsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                if (nameElement4 != null)
+                                XElement nameElement5 = virtualIPsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement5 != null)
                                 {
-                                    string nameInstance4 = nameElement4.Value;
-                                    virtualIPInstance.Name = nameInstance4;
+                                    string nameInstance5 = nameElement5.Value;
+                                    virtualIPInstance.Name = nameInstance5;
                                 }
                                 
                                 XElement isDnsProgrammedElement = virtualIPsElement.Element(XName.Get("IsDnsProgrammed", "http://schemas.microsoft.com/windowsazure"));
@@ -4662,11 +4745,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     DnsServer dnsServerInstance = new DnsServer();
                                     dnsInstance.DnsServers.Add(dnsServerInstance);
                                     
-                                    XElement nameElement5 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement5 != null)
+                                    XElement nameElement6 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement6 != null)
                                     {
-                                        string nameInstance5 = nameElement5.Value;
-                                        dnsServerInstance.Name = nameInstance5;
+                                        string nameInstance6 = nameElement6.Value;
+                                        dnsServerInstance.Name = nameInstance6;
                                     }
                                     
                                     XElement addressElement2 = dnsServersElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
@@ -5539,6 +5622,82 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     }
                                 }
                                 
+                                XElement resourceExtensionReferencesSequenceElement = roleListElement.Element(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceExtensionReferencesSequenceElement != null)
+                                {
+                                    foreach (XElement resourceExtensionReferencesElement in resourceExtensionReferencesSequenceElement.Elements(XName.Get("ResourceExtensionReference", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        ResourceExtensionReference resourceExtensionReferenceInstance = new ResourceExtensionReference();
+                                        roleInstance.ResourceExtensionReferences.Add(resourceExtensionReferenceInstance);
+                                        
+                                        XElement referenceNameElement = resourceExtensionReferencesElement.Element(XName.Get("ReferenceName", "http://schemas.microsoft.com/windowsazure"));
+                                        if (referenceNameElement != null)
+                                        {
+                                            string referenceNameInstance = referenceNameElement.Value;
+                                            resourceExtensionReferenceInstance.ReferenceName = referenceNameInstance;
+                                        }
+                                        
+                                        XElement publisherElement = resourceExtensionReferencesElement.Element(XName.Get("Publisher", "http://schemas.microsoft.com/windowsazure"));
+                                        if (publisherElement != null)
+                                        {
+                                            string publisherInstance = publisherElement.Value;
+                                            resourceExtensionReferenceInstance.Publisher = publisherInstance;
+                                        }
+                                        
+                                        XElement nameElement4 = resourceExtensionReferencesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement4 != null)
+                                        {
+                                            string nameInstance4 = nameElement4.Value;
+                                            resourceExtensionReferenceInstance.Name = nameInstance4;
+                                        }
+                                        
+                                        XElement versionElement = resourceExtensionReferencesElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
+                                        if (versionElement != null)
+                                        {
+                                            string versionInstance = versionElement.Value;
+                                            resourceExtensionReferenceInstance.Version = versionInstance;
+                                        }
+                                        
+                                        XElement stateElement = resourceExtensionReferencesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                        if (stateElement != null && string.IsNullOrEmpty(stateElement.Value) == false)
+                                        {
+                                            ResourceExtensionReferenceState stateInstance = (ResourceExtensionReferenceState)Enum.Parse(typeof(ResourceExtensionReferenceState), stateElement.Value, false);
+                                            resourceExtensionReferenceInstance.State = stateInstance;
+                                        }
+                                        
+                                        XElement resourceExtensionParameterValuesSequenceElement = resourceExtensionReferencesElement.Element(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
+                                        if (resourceExtensionParameterValuesSequenceElement != null)
+                                        {
+                                            foreach (XElement resourceExtensionParameterValuesElement in resourceExtensionParameterValuesSequenceElement.Elements(XName.Get("ResourceExtensionParameterValue", "http://schemas.microsoft.com/windowsazure")))
+                                            {
+                                                ResourceExtensionParameterValue resourceExtensionParameterValueInstance = new ResourceExtensionParameterValue();
+                                                resourceExtensionReferenceInstance.ResourceExtensionParameterValues.Add(resourceExtensionParameterValueInstance);
+                                                
+                                                XElement keyElement = resourceExtensionParameterValuesElement.Element(XName.Get("Key", "http://schemas.microsoft.com/windowsazure"));
+                                                if (keyElement != null)
+                                                {
+                                                    string keyInstance = keyElement.Value;
+                                                    resourceExtensionParameterValueInstance.Key = keyInstance;
+                                                }
+                                                
+                                                XElement valueElement = resourceExtensionParameterValuesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                                                if (valueElement != null)
+                                                {
+                                                    string valueInstance = TypeConversion.FromBase64String(valueElement.Value);
+                                                    resourceExtensionParameterValueInstance.Value = valueInstance;
+                                                }
+                                                
+                                                XElement typeElement = resourceExtensionParameterValuesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                                if (typeElement != null && string.IsNullOrEmpty(typeElement.Value) == false)
+                                                {
+                                                    ResourceExtensionParameterValueType typeInstance = (ResourceExtensionParameterValueType)Enum.Parse(typeof(ResourceExtensionParameterValueType), typeElement.Value, false);
+                                                    resourceExtensionParameterValueInstance.Type = typeInstance;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                
                                 XElement availabilitySetNameElement = roleListElement.Element(XName.Get("AvailabilitySetName", "http://schemas.microsoft.com/windowsazure"));
                                 if (availabilitySetNameElement != null)
                                 {
@@ -5661,6 +5820,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     roleInstance.RoleSize = roleSizeInstance;
                                 }
                                 
+                                XElement provisionGuestAgentElement = roleListElement.Element(XName.Get("ProvisionGuestAgent", "http://schemas.microsoft.com/windowsazure"));
+                                if (provisionGuestAgentElement != null && string.IsNullOrEmpty(provisionGuestAgentElement.Value) == false)
+                                {
+                                    bool provisionGuestAgentInstance = bool.Parse(provisionGuestAgentElement.Value);
+                                    roleInstance.ProvisionGuestAgent = provisionGuestAgentInstance;
+                                }
+                                
                                 XElement defaultWinRmCertificateThumbprintElement = roleListElement.Element(XName.Get("DefaultWinRmCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
                                 if (defaultWinRmCertificateThumbprintElement != null)
                                 {
@@ -5766,11 +5932,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     virtualIPInstance.Address = addressInstance;
                                 }
                                 
-                                XElement nameElement4 = virtualIPsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                if (nameElement4 != null)
+                                XElement nameElement5 = virtualIPsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement5 != null)
                                 {
-                                    string nameInstance4 = nameElement4.Value;
-                                    virtualIPInstance.Name = nameInstance4;
+                                    string nameInstance5 = nameElement5.Value;
+                                    virtualIPInstance.Name = nameInstance5;
                                 }
                                 
                                 XElement isDnsProgrammedElement = virtualIPsElement.Element(XName.Get("IsDnsProgrammed", "http://schemas.microsoft.com/windowsazure"));
@@ -5803,11 +5969,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     DnsServer dnsServerInstance = new DnsServer();
                                     dnsInstance.DnsServers.Add(dnsServerInstance);
                                     
-                                    XElement nameElement5 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement5 != null)
+                                    XElement nameElement6 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement6 != null)
                                     {
-                                        string nameInstance5 = nameElement5.Value;
-                                        dnsServerInstance.Name = nameInstance5;
+                                        string nameInstance6 = nameElement6.Value;
+                                        dnsServerInstance.Name = nameInstance6;
                                     }
                                     
                                     XElement addressElement2 = dnsServersElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
