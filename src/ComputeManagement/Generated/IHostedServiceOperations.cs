@@ -351,6 +351,29 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<HostedServiceListExtensionsResponse> ListExtensionsAsync(string serviceName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The List Extension Versions operation lists the versions of an
+        /// extension that are available to add to a cloud service. In Windows
+        /// Azure, a process can run as an extension of a cloud service. For
+        /// example, Remote Desktop Access or the Windows Azure Diagnostics
+        /// Agent can run as extensions to the cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495437.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
+        /// </param>
+        /// <param name='extensionType'>
+        /// The extension type name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Available Extensions operation response.
+        /// </returns>
+        Task<HostedServiceListAvailableExtensionsResponse> ListExtensionVersionsAsync(string providerNamespace, string extensionType, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Update Hosted Service operation can update the label or
         /// description of a cloud service in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441303.aspx

@@ -996,6 +996,74 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The List Extension Versions operation lists the versions of an
+        /// extension that are available to add to a cloud service. In Windows
+        /// Azure, a process can run as an extension of a cloud service. For
+        /// example, Remote Desktop Access or the Windows Azure Diagnostics
+        /// Agent can run as extensions to the cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495437.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
+        /// </param>
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
+        /// </param>
+        /// <param name='extensionType'>
+        /// The extension type name.
+        /// </param>
+        /// <returns>
+        /// The List Available Extensions operation response.
+        /// </returns>
+        public static HostedServiceListAvailableExtensionsResponse ListExtensionVersions(this IHostedServiceOperations operations, string providerNamespace, string extensionType)
+        {
+            try
+            {
+                return operations.ListExtensionVersionsAsync(providerNamespace, extensionType).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Extension Versions operation lists the versions of an
+        /// extension that are available to add to a cloud service. In Windows
+        /// Azure, a process can run as an extension of a cloud service. For
+        /// example, Remote Desktop Access or the Windows Azure Diagnostics
+        /// Agent can run as extensions to the cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495437.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
+        /// </param>
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
+        /// </param>
+        /// <param name='extensionType'>
+        /// The extension type name.
+        /// </param>
+        /// <returns>
+        /// The List Available Extensions operation response.
+        /// </returns>
+        public static Task<HostedServiceListAvailableExtensionsResponse> ListExtensionVersionsAsync(this IHostedServiceOperations operations, string providerNamespace, string extensionType)
+        {
+            return operations.ListExtensionVersionsAsync(providerNamespace, extensionType, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Update Hosted Service operation can update the label or
         /// description of a cloud service in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441303.aspx
