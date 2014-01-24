@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public partial interface IManagementClient
+    public partial interface IManagementClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all Service Management requests.

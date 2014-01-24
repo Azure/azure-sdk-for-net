@@ -111,11 +111,14 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             {
                 throw new ArgumentNullException("parameters.Policy.Endpoints");
             }
-            foreach (DefinitionEndpointCreateParameters endpointsParameterItem in parameters.Policy.Endpoints)
+            if (parameters.Policy.Endpoints != null)
             {
-                if (endpointsParameterItem.DomainName == null)
+                foreach (DefinitionEndpointCreateParameters endpointsParameterItem in parameters.Policy.Endpoints)
                 {
-                    throw new ArgumentNullException("parameters.Policy.Endpoints.DomainName");
+                    if (endpointsParameterItem.DomainName == null)
+                    {
+                        throw new ArgumentNullException("parameters.Policy.Endpoints.DomainName");
+                    }
                 }
             }
             

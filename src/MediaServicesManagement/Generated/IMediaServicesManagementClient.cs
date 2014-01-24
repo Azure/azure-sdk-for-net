@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.MediaServices;
 
 namespace Microsoft.WindowsAzure.Management.MediaServices
 {
-    public partial interface IMediaServicesManagementClient
+    public partial interface IMediaServicesManagementClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all Media Services requests.

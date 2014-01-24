@@ -29,7 +29,7 @@ using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler
 {
-    public partial interface ISchedulerManagementClient
+    public partial interface ISchedulerManagementClient : IDisposable
     {
         Uri BaseUri
         {

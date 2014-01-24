@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Scheduler;
 
 namespace Microsoft.WindowsAzure.Scheduler
 {
-    public partial interface ISchedulerClient
+    public partial interface ISchedulerClient : IDisposable
     {
         Uri BaseUri
         {
