@@ -3,9 +3,10 @@
   <ItemGroup>
     <!--
     Microsoft.WindowsAzure.Management.WebSites
+    Microsoft.WindowsAzure.WebSitesExtensions
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.WebSites">
-      <PackageVersion>0.9.3-preview</PackageVersion>
+      <PackageVersion>0.9.4-preview</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
