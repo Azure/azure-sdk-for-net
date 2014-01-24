@@ -448,7 +448,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                                 JToken urlValue = endpointsValue["Url"];
                                                 if (urlValue != null)
                                                 {
-                                                    // how
                                                     Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
                                                     endpointConfigInstance.Url = urlInstance;
                                                 }

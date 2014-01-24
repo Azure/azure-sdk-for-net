@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Store
     /// The Windows Azure Store API is a REST API for managing Windows Azure
     /// Store add-ins.
     /// </summary>
-    public partial interface IStoreManagementClient
+    public partial interface IStoreManagementClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all Store requests.

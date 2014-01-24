@@ -27,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConnectionStringSettingsFormat.cs" />
+    <Compile Include="Credentials\BasicAuthenticationCloudCredentials.cs" />
     <Compile Include="Credentials\TokenCloudCredentials.cs" />
     <Compile Include="Credentials\SubscriptionCloudCredentials.cs" />
     <Compile Include="Exception\CloudExceptionType.cs" />

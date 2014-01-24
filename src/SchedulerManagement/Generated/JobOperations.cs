@@ -469,7 +469,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                             JToken typeValue = actionValue2["type"];
                             if (typeValue != null)
                             {
-                                // how
                                 JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
                                 actionInstance.Type = typeInstance;
                             }
@@ -483,7 +482,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken retryTypeValue = retryPolicyValue2["retryType"];
                                 if (retryTypeValue != null)
                                 {
-                                    // how
                                     RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
                                     retryPolicyInstance.RetryType = retryTypeInstance;
                                 }
@@ -491,7 +489,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken retryIntervalValue = retryPolicyValue2["retryInterval"];
                                 if (retryIntervalValue != null)
                                 {
-                                    // how
                                     TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
                                     retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                 }
@@ -513,7 +510,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken typeValue2 = errorActionValue2["type"];
                                 if (typeValue2 != null)
                                 {
-                                    // how
                                     JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
                                     errorActionInstance.Type = typeInstance2;
                                 }
@@ -527,7 +523,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken uriValue = requestValue3["uri"];
                                     if (uriValue != null)
                                     {
-                                        // how
                                         Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
                                         requestInstance.Uri = uriInstance;
                                     }
@@ -603,7 +598,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken uriValue2 = requestValue4["uri"];
                                 if (uriValue2 != null)
                                 {
-                                    // how
                                     Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
                                     requestInstance2.Uri = uriInstance2;
                                 }
@@ -679,7 +673,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                             JToken frequencyValue = recurrenceValue2["frequency"];
                             if (frequencyValue != null)
                             {
-                                // how
                                 JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
                                 recurrenceInstance.Frequency = frequencyInstance;
                             }
@@ -734,7 +727,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     foreach (JToken weekDaysValue in weekDaysArray2)
                                     {
-                                        // how
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                     }
                                 }
@@ -768,7 +760,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken dayValue = monthlyOccurrencesValue["day"];
                                         if (dayValue != null)
                                         {
-                                            // how
                                             JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
                                             jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
                                         }
@@ -829,7 +820,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JToken stateValue = responseDoc["state"];
                         if (stateValue != null)
                         {
-                            // how
                             JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
                             jobInstance.State = stateInstance;
                         }
@@ -1281,7 +1271,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                             JToken typeValue = actionValue2["type"];
                             if (typeValue != null)
                             {
-                                // how
                                 JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
                                 actionInstance.Type = typeInstance;
                             }
@@ -1295,7 +1284,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken retryTypeValue = retryPolicyValue2["retryType"];
                                 if (retryTypeValue != null)
                                 {
-                                    // how
                                     RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
                                     retryPolicyInstance.RetryType = retryTypeInstance;
                                 }
@@ -1303,7 +1291,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken retryIntervalValue = retryPolicyValue2["retryInterval"];
                                 if (retryIntervalValue != null)
                                 {
-                                    // how
                                     TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
                                     retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                 }
@@ -1325,7 +1312,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken typeValue2 = errorActionValue2["type"];
                                 if (typeValue2 != null)
                                 {
-                                    // how
                                     JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
                                     errorActionInstance.Type = typeInstance2;
                                 }
@@ -1339,7 +1325,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken uriValue = requestValue3["uri"];
                                     if (uriValue != null)
                                     {
-                                        // how
                                         Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
                                         requestInstance.Uri = uriInstance;
                                     }
@@ -1415,7 +1400,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken uriValue2 = requestValue4["uri"];
                                 if (uriValue2 != null)
                                 {
-                                    // how
                                     Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
                                     requestInstance2.Uri = uriInstance2;
                                 }
@@ -1491,7 +1475,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                             JToken frequencyValue = recurrenceValue2["frequency"];
                             if (frequencyValue != null)
                             {
-                                // how
                                 JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
                                 recurrenceInstance.Frequency = frequencyInstance;
                             }
@@ -1546,7 +1529,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     foreach (JToken weekDaysValue in weekDaysArray2)
                                     {
-                                        // how
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                     }
                                 }
@@ -1580,7 +1562,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken dayValue = monthlyOccurrencesValue["day"];
                                         if (dayValue != null)
                                         {
-                                            // how
                                             JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
                                             jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
                                         }
@@ -1641,7 +1622,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JToken stateValue = responseDoc["state"];
                         if (stateValue != null)
                         {
-                            // how
                             JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
                             jobInstance.State = stateInstance;
                         }
@@ -1898,7 +1878,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                             JToken typeValue = actionValue["type"];
                             if (typeValue != null)
                             {
-                                // how
                                 JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
                                 actionInstance.Type = typeInstance;
                             }
@@ -1912,7 +1891,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken retryTypeValue = retryPolicyValue["retryType"];
                                 if (retryTypeValue != null)
                                 {
-                                    // how
                                     RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
                                     retryPolicyInstance.RetryType = retryTypeInstance;
                                 }
@@ -1920,7 +1898,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken retryIntervalValue = retryPolicyValue["retryInterval"];
                                 if (retryIntervalValue != null)
                                 {
-                                    // how
                                     TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
                                     retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                 }
@@ -1942,7 +1919,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken typeValue2 = errorActionValue["type"];
                                 if (typeValue2 != null)
                                 {
-                                    // how
                                     JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
                                     errorActionInstance.Type = typeInstance2;
                                 }
@@ -1956,7 +1932,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken uriValue = requestValue["uri"];
                                     if (uriValue != null)
                                     {
-                                        // how
                                         Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
                                         requestInstance.Uri = uriInstance;
                                     }
@@ -2032,7 +2007,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken uriValue2 = requestValue2["uri"];
                                 if (uriValue2 != null)
                                 {
-                                    // how
                                     Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
                                     requestInstance2.Uri = uriInstance2;
                                 }
@@ -2108,7 +2082,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                             JToken frequencyValue = recurrenceValue["frequency"];
                             if (frequencyValue != null)
                             {
-                                // how
                                 JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
                                 recurrenceInstance.Frequency = frequencyInstance;
                             }
@@ -2163,7 +2136,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     foreach (JToken weekDaysValue in weekDaysArray)
                                     {
-                                        // how
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                     }
                                 }
@@ -2197,7 +2169,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken dayValue = monthlyOccurrencesValue["day"];
                                         if (dayValue != null)
                                         {
-                                            // how
                                             JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
                                             jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
                                         }
@@ -2258,7 +2229,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JToken stateValue = responseDoc["state"];
                         if (stateValue != null)
                         {
-                            // how
                             JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
                             jobInstance.State = stateInstance;
                         }
@@ -2428,7 +2398,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken stateValue = jobHistoryValue["state"];
                                 if (stateValue != null)
                                 {
-                                    // how
                                     JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
                                     jobHistoryEntryInstance.State = stateInstance;
                                 }
@@ -2443,7 +2412,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken statusValue = jobHistoryValue["status"];
                                 if (statusValue != null)
                                 {
-                                    // how
                                     JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus((string)statusValue);
                                     jobHistoryEntryInstance.Status = statusInstance;
                                 }
@@ -2451,7 +2419,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken actionNameValue = jobHistoryValue["actionName"];
                                 if (actionNameValue != null)
                                 {
-                                    // how
                                     JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName((string)actionNameValue);
                                     jobHistoryEntryInstance.ActionName = actionNameInstance;
                                 }
@@ -2638,7 +2605,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken stateValue = jobHistoryValue["state"];
                                 if (stateValue != null)
                                 {
-                                    // how
                                     JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
                                     jobHistoryEntryInstance.State = stateInstance;
                                 }
@@ -2653,7 +2619,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken statusValue = jobHistoryValue["status"];
                                 if (statusValue != null)
                                 {
-                                    // how
                                     JobHistoryStatus statusInstance = SchedulerClient.ParseJobHistoryStatus((string)statusValue);
                                     jobHistoryEntryInstance.Status = statusInstance;
                                 }
@@ -2661,7 +2626,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken actionNameValue = jobHistoryValue["actionName"];
                                 if (actionNameValue != null)
                                 {
-                                    // how
                                     JobHistoryActionName actionNameInstance = SchedulerClient.ParseJobHistoryActionName((string)actionNameValue);
                                     jobHistoryEntryInstance.ActionName = actionNameInstance;
                                 }
@@ -2837,7 +2801,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken typeValue = actionValue["type"];
                                     if (typeValue != null)
                                     {
-                                        // how
                                         JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
                                         actionInstance.Type = typeInstance;
                                     }
@@ -2851,7 +2814,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken retryTypeValue = retryPolicyValue["retryType"];
                                         if (retryTypeValue != null)
                                         {
-                                            // how
                                             RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
                                             retryPolicyInstance.RetryType = retryTypeInstance;
                                         }
@@ -2859,7 +2821,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken retryIntervalValue = retryPolicyValue["retryInterval"];
                                         if (retryIntervalValue != null)
                                         {
-                                            // how
                                             TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
                                             retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                         }
@@ -2881,7 +2842,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken typeValue2 = errorActionValue["type"];
                                         if (typeValue2 != null)
                                         {
-                                            // how
                                             JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
                                             errorActionInstance.Type = typeInstance2;
                                         }
@@ -2895,7 +2855,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             JToken uriValue = requestValue["uri"];
                                             if (uriValue != null)
                                             {
-                                                // how
                                                 Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
                                                 requestInstance.Uri = uriInstance;
                                             }
@@ -2971,7 +2930,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken uriValue2 = requestValue2["uri"];
                                         if (uriValue2 != null)
                                         {
-                                            // how
                                             Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
                                             requestInstance2.Uri = uriInstance2;
                                         }
@@ -3047,7 +3005,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken frequencyValue = recurrenceValue["frequency"];
                                     if (frequencyValue != null)
                                     {
-                                        // how
                                         JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
                                         recurrenceInstance.Frequency = frequencyInstance;
                                     }
@@ -3102,7 +3059,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             foreach (JToken weekDaysValue in weekDaysArray)
                                             {
-                                                // how
                                                 scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                             }
                                         }
@@ -3136,7 +3092,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 JToken dayValue = monthlyOccurrencesValue["day"];
                                                 if (dayValue != null)
                                                 {
-                                                    // how
                                                     JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
                                                     jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
                                                 }
@@ -3197,7 +3152,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken stateValue = jobsValue["state"];
                                 if (stateValue != null)
                                 {
-                                    // how
                                     JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
                                     jobInstance.State = stateInstance;
                                 }
@@ -3360,7 +3314,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken typeValue = actionValue["type"];
                                     if (typeValue != null)
                                     {
-                                        // how
                                         JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
                                         actionInstance.Type = typeInstance;
                                     }
@@ -3374,7 +3327,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken retryTypeValue = retryPolicyValue["retryType"];
                                         if (retryTypeValue != null)
                                         {
-                                            // how
                                             RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
                                             retryPolicyInstance.RetryType = retryTypeInstance;
                                         }
@@ -3382,7 +3334,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken retryIntervalValue = retryPolicyValue["retryInterval"];
                                         if (retryIntervalValue != null)
                                         {
-                                            // how
                                             TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
                                             retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                         }
@@ -3404,7 +3355,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken typeValue2 = errorActionValue["type"];
                                         if (typeValue2 != null)
                                         {
-                                            // how
                                             JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
                                             errorActionInstance.Type = typeInstance2;
                                         }
@@ -3418,7 +3368,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             JToken uriValue = requestValue["uri"];
                                             if (uriValue != null)
                                             {
-                                                // how
                                                 Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
                                                 requestInstance.Uri = uriInstance;
                                             }
@@ -3494,7 +3443,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken uriValue2 = requestValue2["uri"];
                                         if (uriValue2 != null)
                                         {
-                                            // how
                                             Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
                                             requestInstance2.Uri = uriInstance2;
                                         }
@@ -3570,7 +3518,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken frequencyValue = recurrenceValue["frequency"];
                                     if (frequencyValue != null)
                                     {
-                                        // how
                                         JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
                                         recurrenceInstance.Frequency = frequencyInstance;
                                     }
@@ -3625,7 +3572,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             foreach (JToken weekDaysValue in weekDaysArray)
                                             {
-                                                // how
                                                 scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                             }
                                         }
@@ -3659,7 +3605,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 JToken dayValue = monthlyOccurrencesValue["day"];
                                                 if (dayValue != null)
                                                 {
-                                                    // how
                                                     JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
                                                     jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
                                                 }
@@ -3720,7 +3665,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken stateValue = jobsValue["state"];
                                 if (stateValue != null)
                                 {
-                                    // how
                                     JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
                                     jobInstance.State = stateInstance;
                                 }
@@ -3892,7 +3836,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken typeValue = actionValue["type"];
                                     if (typeValue != null)
                                     {
-                                        // how
                                         JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
                                         actionInstance.Type = typeInstance;
                                     }
@@ -3906,7 +3849,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken retryTypeValue = retryPolicyValue["retryType"];
                                         if (retryTypeValue != null)
                                         {
-                                            // how
                                             RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
                                             retryPolicyInstance.RetryType = retryTypeInstance;
                                         }
@@ -3914,7 +3856,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken retryIntervalValue = retryPolicyValue["retryInterval"];
                                         if (retryIntervalValue != null)
                                         {
-                                            // how
                                             TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
                                             retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                         }
@@ -3936,7 +3877,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken typeValue2 = errorActionValue["type"];
                                         if (typeValue2 != null)
                                         {
-                                            // how
                                             JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
                                             errorActionInstance.Type = typeInstance2;
                                         }
@@ -3950,7 +3890,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             JToken uriValue = requestValue["uri"];
                                             if (uriValue != null)
                                             {
-                                                // how
                                                 Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
                                                 requestInstance.Uri = uriInstance;
                                             }
@@ -4026,7 +3965,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken uriValue2 = requestValue2["uri"];
                                         if (uriValue2 != null)
                                         {
-                                            // how
                                             Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
                                             requestInstance2.Uri = uriInstance2;
                                         }
@@ -4102,7 +4040,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken frequencyValue = recurrenceValue["frequency"];
                                     if (frequencyValue != null)
                                     {
-                                        // how
                                         JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
                                         recurrenceInstance.Frequency = frequencyInstance;
                                     }
@@ -4157,7 +4094,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             foreach (JToken weekDaysValue in weekDaysArray)
                                             {
-                                                // how
                                                 scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                             }
                                         }
@@ -4191,7 +4127,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 JToken dayValue = monthlyOccurrencesValue["day"];
                                                 if (dayValue != null)
                                                 {
-                                                    // how
                                                     JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
                                                     jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
                                                 }
@@ -4252,7 +4187,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken stateValue = jobsValue["state"];
                                 if (stateValue != null)
                                 {
-                                    // how
                                     JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
                                     jobInstance.State = stateInstance;
                                 }
@@ -4430,7 +4364,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                             JToken typeValue = actionValue["type"];
                             if (typeValue != null)
                             {
-                                // how
                                 JobActionType typeInstance = SchedulerClient.ParseJobActionType((string)typeValue);
                                 actionInstance.Type = typeInstance;
                             }
@@ -4444,7 +4377,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken retryTypeValue = retryPolicyValue["retryType"];
                                 if (retryTypeValue != null)
                                 {
-                                    // how
                                     RetryType retryTypeInstance = SchedulerClient.ParseRetryType((string)retryTypeValue);
                                     retryPolicyInstance.RetryType = retryTypeInstance;
                                 }
@@ -4452,7 +4384,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken retryIntervalValue = retryPolicyValue["retryInterval"];
                                 if (retryIntervalValue != null)
                                 {
-                                    // how
                                     TimeSpan retryIntervalInstance = TimeSpan.Parse((string)retryIntervalValue, CultureInfo.InvariantCulture);
                                     retryPolicyInstance.RetryInterval = retryIntervalInstance;
                                 }
@@ -4474,7 +4405,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken typeValue2 = errorActionValue["type"];
                                 if (typeValue2 != null)
                                 {
-                                    // how
                                     JobActionType typeInstance2 = SchedulerClient.ParseJobActionType((string)typeValue2);
                                     errorActionInstance.Type = typeInstance2;
                                 }
@@ -4488,7 +4418,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken uriValue = requestValue["uri"];
                                     if (uriValue != null)
                                     {
-                                        // how
                                         Uri uriInstance = TypeConversion.TryParseUri((string)uriValue);
                                         requestInstance.Uri = uriInstance;
                                     }
@@ -4564,7 +4493,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken uriValue2 = requestValue2["uri"];
                                 if (uriValue2 != null)
                                 {
-                                    // how
                                     Uri uriInstance2 = TypeConversion.TryParseUri((string)uriValue2);
                                     requestInstance2.Uri = uriInstance2;
                                 }
@@ -4640,7 +4568,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                             JToken frequencyValue = recurrenceValue["frequency"];
                             if (frequencyValue != null)
                             {
-                                // how
                                 JobRecurrenceFrequency frequencyInstance = SchedulerClient.ParseJobRecurrenceFrequency((string)frequencyValue);
                                 recurrenceInstance.Frequency = frequencyInstance;
                             }
@@ -4695,7 +4622,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     foreach (JToken weekDaysValue in weekDaysArray)
                                     {
-                                        // how
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                     }
                                 }
@@ -4729,7 +4655,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken dayValue = monthlyOccurrencesValue["day"];
                                         if (dayValue != null)
                                         {
-                                            // how
                                             JobScheduleDay dayInstance = SchedulerClient.ParseJobScheduleDay((string)dayValue);
                                             jobScheduleMonthlyOccurrenceInstance.Day = dayInstance;
                                         }
@@ -4790,7 +4715,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JToken stateValue = responseDoc["state"];
                         if (stateValue != null)
                         {
-                            // how
                             JobState stateInstance = SchedulerClient.ParseJobState((string)stateValue);
                             jobInstance.State = stateInstance;
                         }
