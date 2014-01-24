@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.WebSites;
+using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites
 {
@@ -86,6 +87,40 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         {
             get; 
         }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of
+        /// thespecified operation. After calling a long-running operation,
+        /// you can call Get Operation Status to determine whether the
+        /// operation has succeeded, failed, timed out, or is still in
+        /// progress.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460783.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the webspace for the website where the operation was
+        /// targeted.
+        /// </param>
+        /// <param name='siteName'>
+        /// The name of the site where the operation was targeted.
+        /// </param>
+        /// <param name='operationId'>
+        /// The operation ID for the operation you wish to track. The operation
+        /// ID is returned in the Id field in the body of the response for
+        /// long-running operations.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified long-running
+        /// operation, indicating whether it has succeeded, is inprogress, has
+        /// time dout, or has failed. Note that this status is distinct from
+        /// the HTTP status code returned for the Get Operation Status
+        /// operation itself.  If the long-running operation failed, the
+        /// response body includes error information regarding the failure.
+        /// </returns>
+        Task<WebSiteOperationStatusResponse> GetOperationStatusAsync(string webSpaceName, string siteName, string operationId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Register your subscription to use Windows Azure Web Sites.

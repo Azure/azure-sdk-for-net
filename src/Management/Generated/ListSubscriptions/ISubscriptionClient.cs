@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Subscriptions;
 
 namespace Microsoft.WindowsAzure.Subscriptions
 {
-    public partial interface ISubscriptionClient
+    public partial interface ISubscriptionClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all Service Management requests.

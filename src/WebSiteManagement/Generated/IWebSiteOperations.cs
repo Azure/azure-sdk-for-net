@@ -34,6 +34,31 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     public partial interface IWebSiteOperations
     {
         /// <summary>
+        /// You can swap a web site from one slot to the production slot.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the web site slot to swap with the production slot.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified long-running
+        /// operation, indicating whether it has succeeded, is inprogress, has
+        /// time dout, or has failed. Note that this status is distinct from
+        /// the HTTP status code returned for the Get Operation Status
+        /// operation itself.  If the long-running operation failed, the
+        /// response body includes error information regarding the failure.
+        /// </returns>
+        Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can create a web site by using a POST request that includes the
         /// name of the web site and other information in the request body.
         /// (see
@@ -325,10 +350,37 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
+        /// The response body contains the status of the specified long-running
+        /// operation, indicating whether it has succeeded, is inprogress, has
+        /// time dout, or has failed. Note that this status is distinct from
+        /// the HTTP status code returned for the Get Operation Status
+        /// operation itself.  If the long-running operation failed, the
+        /// response body includes error information regarding the failure.
+        /// </returns>
+        Task<WebSiteOperationStatusResponse> SwapSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. This API executes a repository sync operation.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> SwapSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        Task<OperationResponse> SyncRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can update the settings for a web site by using the HTTP PUT
