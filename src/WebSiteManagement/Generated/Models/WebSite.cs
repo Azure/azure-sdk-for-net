@@ -403,13 +403,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public partial class WebSiteSslCertificate
         {
-            private DateTime _expirationDate;
+            private System.DateTime? _expirationDate;
             
             /// <summary>
             /// A dateTime value that contains the expiration date of the
             /// certificate.
             /// </summary>
-            public DateTime ExpirationDate
+            public System.DateTime? ExpirationDate
             {
                 get { return this._expirationDate; }
                 set { this._expirationDate = value; }
@@ -438,13 +438,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._hostNames = value; }
             }
             
-            private DateTime _issueDate;
+            private System.DateTime? _issueDate;
             
             /// <summary>
             /// A dateTime value that contains the date that the certificate
             /// was issued.
             /// </summary>
-            public DateTime IssueDate
+            public System.DateTime? IssueDate
             {
                 get { return this._issueDate; }
                 set { this._issueDate = value; }
@@ -461,23 +461,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._issuer = value; }
             }
             
-            private bool _isToBeDeleted;
+            private bool? _isToBeDeleted;
             
             /// <summary>
             /// Boolean. true if the certificate is to be deleted.
             /// </summary>
-            public bool IsToBeDeleted
+            public bool? IsToBeDeleted
             {
                 get { return this._isToBeDeleted; }
                 set { this._isToBeDeleted = value; }
             }
             
-            private bool _isValid;
+            private bool? _isValid;
             
             /// <summary>
             /// Boolean. true if the certificate is valid; otherwise, false.
             /// </summary>
-            public bool IsValid
+            public bool? IsValid
             {
                 get { return this._isValid; }
                 set { this._isValid = value; }
