@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Hydra>
-  <Assembly>Microsoft.WindowsAzure.Management.WebSites.Specification.dll</Assembly>
-  <OutputDirectory>Generated</OutputDirectory>
-
-  <Specification>
-    <Type>Microsoft.WindowsAzure.Management.WebSites.WebSiteManagementClient</Type>
-
-    <Platform>
-      <Flavor>CSharp.Azure</Flavor>
-      <OutputDirectory></OutputDirectory>
-      <BaseNamespace>microsoft.windowsazure.management.websites</BaseNamespace>
-      <Split>Namespace</Split>
-    </Platform>
-  </Specification>
+  <Reference>websites.hydra.xml</Reference>
+  <Reference>websitesextensions.hydra.xml</Reference>
 </Hydra>

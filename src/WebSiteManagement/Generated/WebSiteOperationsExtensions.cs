@@ -35,6 +35,78 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     public static partial class WebSiteOperationsExtensions
     {
         /// <summary>
+        /// You can swap a web site from one slot to the production slot.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the web site slot to swap with the production slot.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified long-running
+        /// operation, indicating whether it has succeeded, is inprogress, has
+        /// time dout, or has failed. Note that this status is distinct from
+        /// the HTTP status code returned for the Get Operation Status
+        /// operation itself.  If the long-running operation failed, the
+        /// response body includes error information regarding the failure.
+        /// </returns>
+        public static WebSiteOperationStatusResponse BeginSwapingSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        {
+            try
+            {
+                return operations.BeginSwapingSlotsAsync(webSpaceName, webSiteName, slotName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can swap a web site from one slot to the production slot.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the web site slot to swap with the production slot.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified long-running
+        /// operation, indicating whether it has succeeded, is inprogress, has
+        /// time dout, or has failed. Note that this status is distinct from
+        /// the HTTP status code returned for the Get Operation Status
+        /// operation itself.  If the long-running operation failed, the
+        /// response body includes error information regarding the failure.
+        /// </returns>
+        public static Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        {
+            return operations.BeginSwapingSlotsAsync(webSpaceName, webSiteName, slotName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// You can create a web site by using a POST request that includes the
         /// name of the web site and other information in the request body.
         /// (see
@@ -867,10 +939,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site slot to swap with the production slot.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified long-running
+        /// operation, indicating whether it has succeeded, is inprogress, has
+        /// time dout, or has failed. Note that this status is distinct from
+        /// the HTTP status code returned for the Get Operation Status
+        /// operation itself.  If the long-running operation failed, the
+        /// response body includes error information regarding the failure.
         /// </returns>
-        public static OperationResponse SwapSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        public static WebSiteOperationStatusResponse SwapSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
         {
             try
             {
@@ -906,12 +982,84 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site slot to swap with the production slot.
         /// </param>
         /// <returns>
+        /// The response body contains the status of the specified long-running
+        /// operation, indicating whether it has succeeded, is inprogress, has
+        /// time dout, or has failed. Note that this status is distinct from
+        /// the HTTP status code returned for the Get Operation Status
+        /// operation itself.  If the long-running operation failed, the
+        /// response body includes error information regarding the failure.
+        /// </returns>
+        public static Task<WebSiteOperationStatusResponse> SwapSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        {
+            return operations.SwapSlotsAsync(webSpaceName, webSiteName, slotName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. This API executes a repository sync operation.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> SwapSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        public static OperationResponse SyncRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            return operations.SwapSlotsAsync(webSpaceName, webSiteName, slotName, CancellationToken.None);
+            try
+            {
+                return operations.SyncRepositoryAsync(webSpaceName, webSiteName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// A web site repository is essentially a GIT repository that you can
+        /// use to manage your web site content. By using GIT source control
+        /// tools, you can push or pull version controlled changes to your
+        /// site. This API executes a repository sync operation.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> SyncRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.SyncRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
         
         /// <summary>
