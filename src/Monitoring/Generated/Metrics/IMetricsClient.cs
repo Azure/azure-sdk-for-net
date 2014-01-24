@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.Monitoring.Metrics;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
 {
-    public partial interface IMetricsClient
+    public partial interface IMetricsClient : IDisposable
     {
         /// <summary>
         /// Optional base uri parameter.

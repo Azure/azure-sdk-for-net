@@ -29,7 +29,7 @@ using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler
 {
-    public partial interface ICloudServiceManagementClient
+    public partial interface ICloudServiceManagementClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all cloud service management requests.

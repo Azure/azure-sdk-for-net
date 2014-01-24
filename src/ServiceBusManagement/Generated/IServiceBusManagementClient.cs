@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780776.aspx for
     /// more information)
     /// </summary>
-    public partial interface IServiceBusManagementClient
+    public partial interface IServiceBusManagementClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all Service Bus requests.

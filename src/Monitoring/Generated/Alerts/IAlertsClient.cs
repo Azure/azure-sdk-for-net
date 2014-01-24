@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.Monitoring.Alerts;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
 {
-    public partial interface IAlertsClient
+    public partial interface IAlertsClient : IDisposable
     {
         /// <summary>
         /// Optional base uri parameter for Azure REST.

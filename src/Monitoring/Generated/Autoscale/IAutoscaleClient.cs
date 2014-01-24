@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.Monitoring.Autoscale;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
 {
-    public partial interface IAutoscaleClient
+    public partial interface IAutoscaleClient : IDisposable
     {
         /// <summary>
         /// Optional base uri parameter.

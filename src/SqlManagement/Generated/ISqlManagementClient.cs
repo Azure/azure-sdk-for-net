@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
     /// more information)
     /// </summary>
-    public partial interface ISqlManagementClient
+    public partial interface ISqlManagementClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all SQL requests.
