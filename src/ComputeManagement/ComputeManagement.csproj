@@ -178,9 +178,6 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
-  <Target Name="CopyMicrosoftWindowsAzureManagementComputeSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Compute.Specification.1.0.5135.30992-prerelease\tools\Microsoft.WindowsAzure.Management.Compute.Specification.dll" DestinationFolder="." />
-  </Target>
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hydra.Generator.1.0.5136.489-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5136.489-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
