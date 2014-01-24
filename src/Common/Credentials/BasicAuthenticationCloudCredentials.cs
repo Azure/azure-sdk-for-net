@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure
 {
-    public class WebSiteExtensionsCloudCredentials
+    public class BasicAuthenticationCloudCredentials
         : CloudCredentials
     {
         public string Username { get; set; }

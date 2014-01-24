@@ -43,12 +43,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             get { return this._baseUri; }
         }
         
-        private WebSiteExtensionsCloudCredentials _credentials;
+        private BasicAuthenticationCloudCredentials _credentials;
         
         /// <summary>
         /// TBD.
         /// </summary>
-        public WebSiteExtensionsCloudCredentials Credentials
+        public BasicAuthenticationCloudCredentials Credentials
         {
             get { return this._credentials; }
         }
@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <param name='baseUri'>
         /// The URI used as the base for all kudu requests.
         /// </param>
-        public WebSiteExtensionsClient(string siteName, WebSiteExtensionsCloudCredentials credentials, Uri baseUri)
+        public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (siteName == null)
@@ -137,7 +137,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <param name='credentials'>
         /// TBD.
         /// </param>
-        public WebSiteExtensionsClient(string siteName, WebSiteExtensionsCloudCredentials credentials)
+        public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials)
             : this()
         {
             if (siteName == null)

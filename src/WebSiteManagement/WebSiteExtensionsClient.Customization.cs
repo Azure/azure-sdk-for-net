@@ -26,12 +26,12 @@ namespace Microsoft.WindowsAzure
 {
     public static class WebSiteExtensionsDiscoveryExtensions
     {
-        public static WebSiteExtensionsClient CreateWebSiteExtensionsClient(this CloudClients clients, WebSiteExtensionsCloudCredentials credentials, string siteName)
+        public static WebSiteExtensionsClient CreateWebSiteExtensionsClient(this CloudClients clients, BasicAuthenticationCloudCredentials credentials, string siteName)
         {
             return new WebSiteExtensionsClient(siteName, credentials);
         }
 
-        public static WebSiteExtensionsClient CreateWebSiteExtensionsClient(this CloudClients clients, WebSiteExtensionsCloudCredentials credentials, string siteName, Uri baseUri)
+        public static WebSiteExtensionsClient CreateWebSiteExtensionsClient(this CloudClients clients, BasicAuthenticationCloudCredentials credentials, string siteName, Uri baseUri)
         {
             return new WebSiteExtensionsClient(siteName, credentials, baseUri);
         }
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 throw new ArgumentNullException("settings");
             }
 
-            WebSiteExtensionsCloudCredentials credentials = ConfigurationHelper.GetCredentials<WebSiteExtensionsCloudCredentials>(settings);
+            BasicAuthenticationCloudCredentials credentials = ConfigurationHelper.GetCredentials<BasicAuthenticationCloudCredentials>(settings);
 
             Uri baseUri = ConfigurationHelper.GetUri(settings, "BaseUri", false);
             

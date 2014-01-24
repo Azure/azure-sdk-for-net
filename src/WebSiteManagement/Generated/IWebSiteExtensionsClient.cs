@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// TBD.
         /// </summary>
-        WebSiteExtensionsCloudCredentials Credentials
+        BasicAuthenticationCloudCredentials Credentials
         {
             get; 
         }

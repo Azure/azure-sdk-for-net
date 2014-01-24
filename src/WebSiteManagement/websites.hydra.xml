@@ -9,7 +9,7 @@
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
       <OutputDirectory></OutputDirectory>
-      <BaseNamespace>microsoft.windowsazure.management.websites</BaseNamespace>
+      <BaseNamespace>Microsoft.WindowsAzure.Management.WebSites</BaseNamespace>
       <Split>Namespace</Split>
     </Platform>
   </Specification>
