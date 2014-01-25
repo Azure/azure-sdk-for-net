@@ -145,142 +145,139 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     result = new DeploymentGetResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         Deployment deploymentInstance = new Deployment();
                         result.Deployment = deploymentInstance;
                         
                         JToken idValue = responseDoc["id"];
-                        if (idValue != null)
+                        if (idValue != null && idValue.Type != JTokenType.Null)
                         {
                             string idInstance = (string)idValue;
                             deploymentInstance.Id = idInstance;
                         }
                         
                         JToken statusValue = responseDoc["status"];
-                        if (statusValue != null)
+                        if (statusValue != null && statusValue.Type != JTokenType.Null)
                         {
-                            // how
                             DeployStatus statusInstance = (DeployStatus)Enum.Parse(typeof(DeployStatus), (string)statusValue, false);
                             deploymentInstance.Status = statusInstance;
                         }
                         
                         JToken statusTextValue = responseDoc["status_text"];
-                        if (statusTextValue != null)
+                        if (statusTextValue != null && statusTextValue.Type != JTokenType.Null)
                         {
                             string statusTextInstance = (string)statusTextValue;
                             deploymentInstance.StatusText = statusTextInstance;
                         }
                         
                         JToken authorEmailValue = responseDoc["author_email"];
-                        if (authorEmailValue != null)
+                        if (authorEmailValue != null && authorEmailValue.Type != JTokenType.Null)
                         {
                             string authorEmailInstance = (string)authorEmailValue;
                             deploymentInstance.AuthorEmail = authorEmailInstance;
                         }
                         
                         JToken authorValue = responseDoc["author"];
-                        if (authorValue != null)
+                        if (authorValue != null && authorValue.Type != JTokenType.Null)
                         {
                             string authorInstance = (string)authorValue;
                             deploymentInstance.Author = authorInstance;
                         }
                         
                         JToken deployerValue = responseDoc["deployer"];
-                        if (deployerValue != null)
+                        if (deployerValue != null && deployerValue.Type != JTokenType.Null)
                         {
                             string deployerInstance = (string)deployerValue;
                             deploymentInstance.Deployer = deployerInstance;
                         }
                         
                         JToken messageValue = responseDoc["message"];
-                        if (messageValue != null)
+                        if (messageValue != null && messageValue.Type != JTokenType.Null)
                         {
                             string messageInstance = (string)messageValue;
                             deploymentInstance.Message = messageInstance;
                         }
                         
                         JToken progressValue = responseDoc["progress"];
-                        if (progressValue != null)
+                        if (progressValue != null && progressValue.Type != JTokenType.Null)
                         {
                             string progressInstance = (string)progressValue;
                             deploymentInstance.Progress = progressInstance;
                         }
                         
                         JToken receivedTimeValue = responseDoc["received_time"];
-                        if (receivedTimeValue != null)
+                        if (receivedTimeValue != null && receivedTimeValue.Type != JTokenType.Null)
                         {
                             DateTime receivedTimeInstance = (DateTime)receivedTimeValue;
                             deploymentInstance.ReceivedTime = receivedTimeInstance;
                         }
                         
                         JToken startTimeValue = responseDoc["start_time"];
-                        if (startTimeValue != null)
+                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                         {
                             DateTime startTimeInstance = (DateTime)startTimeValue;
                             deploymentInstance.StartTime = startTimeInstance;
                         }
                         
                         JToken endTimeValue = responseDoc["end_time"];
-                        if (endTimeValue != null)
+                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                         {
                             DateTime endTimeInstance = (DateTime)endTimeValue;
                             deploymentInstance.EndTime = endTimeInstance;
                         }
                         
                         JToken lastSuccessEndTimeValue = responseDoc["last_success_end_time"];
-                        if (lastSuccessEndTimeValue != null)
+                        if (lastSuccessEndTimeValue != null && lastSuccessEndTimeValue.Type != JTokenType.Null)
                         {
                             DateTime lastSuccessEndTimeInstance = (DateTime)lastSuccessEndTimeValue;
                             deploymentInstance.LastSuccessEndTime = lastSuccessEndTimeInstance;
                         }
                         
                         JToken completeValue = responseDoc["complete"];
-                        if (completeValue != null)
+                        if (completeValue != null && completeValue.Type != JTokenType.Null)
                         {
                             bool completeInstance = (bool)completeValue;
                             deploymentInstance.Complete = completeInstance;
                         }
                         
                         JToken activeValue = responseDoc["active"];
-                        if (activeValue != null)
+                        if (activeValue != null && activeValue.Type != JTokenType.Null)
                         {
                             bool activeInstance = (bool)activeValue;
                             deploymentInstance.Active = activeInstance;
                         }
                         
                         JToken isTempValue = responseDoc["is_temp"];
-                        if (isTempValue != null)
+                        if (isTempValue != null && isTempValue.Type != JTokenType.Null)
                         {
                             bool isTempInstance = (bool)isTempValue;
                             deploymentInstance.IsTemp = isTempInstance;
                         }
                         
                         JToken isReadonlyValue = responseDoc["is_readonly"];
-                        if (isReadonlyValue != null)
+                        if (isReadonlyValue != null && isReadonlyValue.Type != JTokenType.Null)
                         {
                             bool isReadonlyInstance = (bool)isReadonlyValue;
                             deploymentInstance.IsReadOnly = isReadonlyInstance;
                         }
                         
                         JToken urlValue = responseDoc["url"];
-                        if (urlValue != null)
+                        if (urlValue != null && urlValue.Type != JTokenType.Null)
                         {
-                            // how
                             Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
                             deploymentInstance.Url = urlInstance;
                         }
                         
                         JToken logUrlValue = responseDoc["log_url"];
-                        if (logUrlValue != null)
+                        if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
                         {
-                            // how
                             Uri logUrlInstance = TypeConversion.TryParseUri((string)logUrlValue);
                             deploymentInstance.LogUrl = logUrlInstance;
                         }
                         
                         JToken siteNameValue = responseDoc["site_name"];
-                        if (siteNameValue != null)
+                        if (siteNameValue != null && siteNameValue.Type != JTokenType.Null)
                         {
                             string siteNameInstance = (string)siteNameValue;
                             deploymentInstance.SiteName = siteNameInstance;
@@ -403,10 +400,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     result = new DeploymentListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         JArray deploymentsArray = (JArray)responseDoc;
-                        if (deploymentsArray != null)
+                        if (deploymentsArray != null && deploymentsArray.Type != JTokenType.Null)
                         {
                             foreach (JToken deploymentsValue in deploymentsArray)
                             {
@@ -414,136 +411,133 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 result.Deployments.Add(deploymentInstance);
                                 
                                 JToken idValue = deploymentsValue["id"];
-                                if (idValue != null)
+                                if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
                                     string idInstance = (string)idValue;
                                     deploymentInstance.Id = idInstance;
                                 }
                                 
                                 JToken statusValue = deploymentsValue["status"];
-                                if (statusValue != null)
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
                                 {
-                                    // how
                                     DeployStatus statusInstance = (DeployStatus)Enum.Parse(typeof(DeployStatus), (string)statusValue, false);
                                     deploymentInstance.Status = statusInstance;
                                 }
                                 
                                 JToken statusTextValue = deploymentsValue["status_text"];
-                                if (statusTextValue != null)
+                                if (statusTextValue != null && statusTextValue.Type != JTokenType.Null)
                                 {
                                     string statusTextInstance = (string)statusTextValue;
                                     deploymentInstance.StatusText = statusTextInstance;
                                 }
                                 
                                 JToken authorEmailValue = deploymentsValue["author_email"];
-                                if (authorEmailValue != null)
+                                if (authorEmailValue != null && authorEmailValue.Type != JTokenType.Null)
                                 {
                                     string authorEmailInstance = (string)authorEmailValue;
                                     deploymentInstance.AuthorEmail = authorEmailInstance;
                                 }
                                 
                                 JToken authorValue = deploymentsValue["author"];
-                                if (authorValue != null)
+                                if (authorValue != null && authorValue.Type != JTokenType.Null)
                                 {
                                     string authorInstance = (string)authorValue;
                                     deploymentInstance.Author = authorInstance;
                                 }
                                 
                                 JToken deployerValue = deploymentsValue["deployer"];
-                                if (deployerValue != null)
+                                if (deployerValue != null && deployerValue.Type != JTokenType.Null)
                                 {
                                     string deployerInstance = (string)deployerValue;
                                     deploymentInstance.Deployer = deployerInstance;
                                 }
                                 
                                 JToken messageValue = deploymentsValue["message"];
-                                if (messageValue != null)
+                                if (messageValue != null && messageValue.Type != JTokenType.Null)
                                 {
                                     string messageInstance = (string)messageValue;
                                     deploymentInstance.Message = messageInstance;
                                 }
                                 
                                 JToken progressValue = deploymentsValue["progress"];
-                                if (progressValue != null)
+                                if (progressValue != null && progressValue.Type != JTokenType.Null)
                                 {
                                     string progressInstance = (string)progressValue;
                                     deploymentInstance.Progress = progressInstance;
                                 }
                                 
                                 JToken receivedTimeValue = deploymentsValue["received_time"];
-                                if (receivedTimeValue != null)
+                                if (receivedTimeValue != null && receivedTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime receivedTimeInstance = (DateTime)receivedTimeValue;
                                     deploymentInstance.ReceivedTime = receivedTimeInstance;
                                 }
                                 
                                 JToken startTimeValue = deploymentsValue["start_time"];
-                                if (startTimeValue != null)
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime startTimeInstance = (DateTime)startTimeValue;
                                     deploymentInstance.StartTime = startTimeInstance;
                                 }
                                 
                                 JToken endTimeValue = deploymentsValue["end_time"];
-                                if (endTimeValue != null)
+                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime endTimeInstance = (DateTime)endTimeValue;
                                     deploymentInstance.EndTime = endTimeInstance;
                                 }
                                 
                                 JToken lastSuccessEndTimeValue = deploymentsValue["last_success_end_time"];
-                                if (lastSuccessEndTimeValue != null)
+                                if (lastSuccessEndTimeValue != null && lastSuccessEndTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime lastSuccessEndTimeInstance = (DateTime)lastSuccessEndTimeValue;
                                     deploymentInstance.LastSuccessEndTime = lastSuccessEndTimeInstance;
                                 }
                                 
                                 JToken completeValue = deploymentsValue["complete"];
-                                if (completeValue != null)
+                                if (completeValue != null && completeValue.Type != JTokenType.Null)
                                 {
                                     bool completeInstance = (bool)completeValue;
                                     deploymentInstance.Complete = completeInstance;
                                 }
                                 
                                 JToken activeValue = deploymentsValue["active"];
-                                if (activeValue != null)
+                                if (activeValue != null && activeValue.Type != JTokenType.Null)
                                 {
                                     bool activeInstance = (bool)activeValue;
                                     deploymentInstance.Active = activeInstance;
                                 }
                                 
                                 JToken isTempValue = deploymentsValue["is_temp"];
-                                if (isTempValue != null)
+                                if (isTempValue != null && isTempValue.Type != JTokenType.Null)
                                 {
                                     bool isTempInstance = (bool)isTempValue;
                                     deploymentInstance.IsTemp = isTempInstance;
                                 }
                                 
                                 JToken isReadonlyValue = deploymentsValue["is_readonly"];
-                                if (isReadonlyValue != null)
+                                if (isReadonlyValue != null && isReadonlyValue.Type != JTokenType.Null)
                                 {
                                     bool isReadonlyInstance = (bool)isReadonlyValue;
                                     deploymentInstance.IsReadOnly = isReadonlyInstance;
                                 }
                                 
                                 JToken urlValue = deploymentsValue["url"];
-                                if (urlValue != null)
+                                if (urlValue != null && urlValue.Type != JTokenType.Null)
                                 {
-                                    // how
                                     Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
                                     deploymentInstance.Url = urlInstance;
                                 }
                                 
                                 JToken logUrlValue = deploymentsValue["log_url"];
-                                if (logUrlValue != null)
+                                if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
                                 {
-                                    // how
                                     Uri logUrlInstance = TypeConversion.TryParseUri((string)logUrlValue);
                                     deploymentInstance.LogUrl = logUrlInstance;
                                 }
                                 
                                 JToken siteNameValue = deploymentsValue["site_name"];
-                                if (siteNameValue != null)
+                                if (siteNameValue != null && siteNameValue.Type != JTokenType.Null)
                                 {
                                     string siteNameInstance = (string)siteNameValue;
                                     deploymentInstance.SiteName = siteNameInstance;

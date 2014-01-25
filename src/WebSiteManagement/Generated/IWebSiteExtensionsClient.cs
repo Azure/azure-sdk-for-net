@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// <summary>
     /// TBD.
     /// </summary>
-    public partial interface IWebSiteExtensionsClient
+    public partial interface IWebSiteExtensionsClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all kudu requests.
