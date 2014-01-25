@@ -837,7 +837,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                     webJobInstance.Name = nameInstance;
                                 }
                                 
-                                JToken runCommandValue = jobsValue["runCommand"];
+                                JToken runCommandValue = jobsValue["run_command"];
                                 if (runCommandValue != null)
                                 {
                                     string runCommandInstance = (string)runCommandValue;
@@ -847,7 +847,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken typeValue = jobsValue["type"];
                                 if (typeValue != null)
                                 {
-                                    string typeInstance = (string)typeValue;
+                                    // how
+                                    WebJobType typeInstance = (WebJobType)Enum.Parse(typeof(WebJobType), (string)typeValue, false);
                                     webJobInstance.Type = typeInstance;
                                 }
                                 
@@ -938,6 +939,27 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                         Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
                                         latestRunInstance.Url = urlInstance2;
                                     }
+                                }
+                                
+                                JToken statusValue2 = jobsValue["status"];
+                                if (statusValue2 != null)
+                                {
+                                    string statusInstance2 = (string)statusValue2;
+                                    webJobInstance.Status = statusInstance2;
+                                }
+                                
+                                JToken detailedStatusValue = jobsValue["detailed_status"];
+                                if (detailedStatusValue != null)
+                                {
+                                    string detailedStatusInstance = (string)detailedStatusValue;
+                                    webJobInstance.DetailedStatus = detailedStatusInstance;
+                                }
+                                
+                                JToken logUrlValue = jobsValue["log_url"];
+                                if (logUrlValue != null)
+                                {
+                                    string logUrlInstance = (string)logUrlValue;
+                                    webJobInstance.LogUrl = logUrlInstance;
                                 }
                             }
                         }
@@ -1076,7 +1098,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                     webJobInstance.Name = nameInstance;
                                 }
                                 
-                                JToken runCommandValue = jobsValue["runCommand"];
+                                JToken runCommandValue = jobsValue["run_command"];
                                 if (runCommandValue != null)
                                 {
                                     string runCommandInstance = (string)runCommandValue;
@@ -1086,7 +1108,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken typeValue = jobsValue["type"];
                                 if (typeValue != null)
                                 {
-                                    string typeInstance = (string)typeValue;
+                                    // how
+                                    WebJobType typeInstance = (WebJobType)Enum.Parse(typeof(WebJobType), (string)typeValue, false);
                                     webJobInstance.Type = typeInstance;
                                 }
                                 
@@ -1177,6 +1200,27 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                         Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
                                         latestRunInstance.Url = urlInstance2;
                                     }
+                                }
+                                
+                                JToken statusValue2 = jobsValue["status"];
+                                if (statusValue2 != null)
+                                {
+                                    string statusInstance2 = (string)statusValue2;
+                                    webJobInstance.Status = statusInstance2;
+                                }
+                                
+                                JToken detailedStatusValue = jobsValue["detailed_status"];
+                                if (detailedStatusValue != null)
+                                {
+                                    string detailedStatusInstance = (string)detailedStatusValue;
+                                    webJobInstance.DetailedStatus = detailedStatusInstance;
+                                }
+                                
+                                JToken logUrlValue = jobsValue["log_url"];
+                                if (logUrlValue != null)
+                                {
+                                    string logUrlInstance = (string)logUrlValue;
+                                    webJobInstance.LogUrl = logUrlInstance;
                                 }
                             }
                         }
@@ -1512,7 +1556,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                     webJobInstance.Name = nameInstance;
                                 }
                                 
-                                JToken runCommandValue = jobsValue["runCommand"];
+                                JToken runCommandValue = jobsValue["run_command"];
                                 if (runCommandValue != null)
                                 {
                                     string runCommandInstance = (string)runCommandValue;
@@ -1522,7 +1566,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken typeValue = jobsValue["type"];
                                 if (typeValue != null)
                                 {
-                                    string typeInstance = (string)typeValue;
+                                    // how
+                                    WebJobType typeInstance = (WebJobType)Enum.Parse(typeof(WebJobType), (string)typeValue, false);
                                     webJobInstance.Type = typeInstance;
                                 }
                                 
@@ -1613,6 +1658,27 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                         Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
                                         latestRunInstance.Url = urlInstance2;
                                     }
+                                }
+                                
+                                JToken statusValue2 = jobsValue["status"];
+                                if (statusValue2 != null)
+                                {
+                                    string statusInstance2 = (string)statusValue2;
+                                    webJobInstance.Status = statusInstance2;
+                                }
+                                
+                                JToken detailedStatusValue = jobsValue["detailed_status"];
+                                if (detailedStatusValue != null)
+                                {
+                                    string detailedStatusInstance = (string)detailedStatusValue;
+                                    webJobInstance.DetailedStatus = detailedStatusInstance;
+                                }
+                                
+                                JToken logUrlValue = jobsValue["log_url"];
+                                if (logUrlValue != null)
+                                {
+                                    string logUrlInstance = (string)logUrlValue;
+                                    webJobInstance.LogUrl = logUrlInstance;
                                 }
                             }
                         }
