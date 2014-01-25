@@ -3594,9 +3594,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (result.Errors != null && result.Errors.Count > 0)
                     {
-                        CloudException ex = new CloudException(result.Errors[0].Code + " : " + result.Errors[0].Message);
-                        ex.ErrorCode = result.Errors[0].Code;
-                        ex.ErrorMessage = result.Errors[0].Message;
+                        CloudException ex = new CloudException(result.Errors.ElementAtOrDefault(0).Code + " : " + result.Errors.ElementAtOrDefault(0).Message);
+                        ex.ErrorCode = result.Errors.ElementAtOrDefault(0).Code;
+                        ex.ErrorMessage = result.Errors.ElementAtOrDefault(0).Message;
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
