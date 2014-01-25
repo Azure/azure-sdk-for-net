@@ -848,7 +848,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 if (typeValue != null)
                                 {
                                     // how
-                                    WebJobType typeInstance = (WebJobType)Enum.Parse(typeof(WebJobType), (string)typeValue, false);
+                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
                                     webJobInstance.Type = typeInstance;
                                 }
                                 
@@ -1109,7 +1109,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 if (typeValue != null)
                                 {
                                     // how
-                                    WebJobType typeInstance = (WebJobType)Enum.Parse(typeof(WebJobType), (string)typeValue, false);
+                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
                                     webJobInstance.Type = typeInstance;
                                 }
                                 
@@ -1567,7 +1567,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 if (typeValue != null)
                                 {
                                     // how
-                                    WebJobType typeInstance = (WebJobType)Enum.Parse(typeof(WebJobType), (string)typeValue, false);
+                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
                                     webJobInstance.Type = typeInstance;
                                 }
                                 

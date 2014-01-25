@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="hydra.xml" />
+    <Content Include="readme.txt" />
     <Content Include="websites.hydra.xml" />
     <Content Include="websitesextensions.hydra.xml" />
   </ItemGroup>
@@ -163,5 +164,8 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.1.0.5137.32342-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.1.0.5137.32593-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
