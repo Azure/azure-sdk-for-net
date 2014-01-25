@@ -49,6 +49,7 @@
     <Compile Include="Generated\Models\WebJobRun.cs" />
     <Compile Include="Generated\Models\WebJobRunListParameters.cs" />
     <Compile Include="Generated\Models\WebJobRunListResponse.cs" />
+    <Compile Include="Generated\Models\WebJobType.cs" />
     <Compile Include="Generated\Models\WebSite.cs" />
     <Compile Include="Generated\Models\WebSiteComputeMode.cs" />
     <Compile Include="Generated\Models\WebSiteCreateParameters.cs" />
@@ -159,5 +160,8 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.1.0.5136.29852-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.1.0.5137.32342-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
