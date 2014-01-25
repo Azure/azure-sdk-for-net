@@ -164,4 +164,7 @@
   <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.1.0.5137.32342-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.1.0.5137.32593-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

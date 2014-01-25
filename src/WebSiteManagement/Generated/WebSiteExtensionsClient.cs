@@ -25,6 +25,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.WebSitesExtensions;
+using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
@@ -153,6 +154,50 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Parse enum values for type WebJobType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static WebJobType ParseWebJobType(string value)
+        {
+            if (value == "triggered")
+            {
+                return WebJobType.Triggered;
+            }
+            if (value == "continuous")
+            {
+                return WebJobType.Continuous;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type WebJobType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string WebJobTypeToString(WebJobType value)
+        {
+            if (value == WebJobType.Triggered)
+            {
+                return "triggered";
+            }
+            if (value == WebJobType.Continuous)
+            {
+                return "continuous";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
     }
 }
