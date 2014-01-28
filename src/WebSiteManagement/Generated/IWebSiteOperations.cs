@@ -315,6 +315,20 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Determines if a hostname is available
+        /// </summary>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Is Hostname Available operation response.
+        /// </returns>
+        Task<WebSiteIsHostnameAvailableResponse> IsHostnameAvailableAsync(string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can restart a web site by issuing an HTTP POST request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
         /// for more information)
