@@ -42,6 +42,7 @@
     <Compile Include="Internals\TypeConversion.cs" />
     <Compile Include="Models\OperationResponse.cs" />
     <Compile Include="Models\Patchable.cs" />
+    <Compile Include="OData\FilterString.cs" />
     <Compile Include="Platform\ICloudCredentialsProvider.cs" />
     <Compile Include="Platform\ICryptographyProvider.cs" />
     <Compile Include="Tracing\CloudTracing.cs" />
