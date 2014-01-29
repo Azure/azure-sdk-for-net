@@ -74,6 +74,36 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             get { return this._deployment; }
         }
         
+        private IDiagnosticOperations _diagnostics;
+        
+        /// <summary>
+        /// Operations for managing the diagnostics settings.
+        /// </summary>
+        public virtual IDiagnosticOperations Diagnostics
+        {
+            get { return this._diagnostics; }
+        }
+        
+        private IRepositoryOperations _repository;
+        
+        /// <summary>
+        /// Operations for managing the repository.
+        /// </summary>
+        public virtual IRepositoryOperations Repository
+        {
+            get { return this._repository; }
+        }
+        
+        private ISettingsOperations _settings;
+        
+        /// <summary>
+        /// Operations for managing the settings.
+        /// </summary>
+        public virtual ISettingsOperations Settings
+        {
+            get { return this._settings; }
+        }
+        
         private IWebJobOperations _webJobs;
         
         /// <summary>
@@ -91,6 +121,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             : base()
         {
             this._deployment = new DeploymentOperations(this);
+            this._diagnostics = new DiagnosticOperations(this);
+            this._repository = new RepositoryOperations(this);
+            this._settings = new SettingsOperations(this);
             this._webJobs = new WebJobOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
