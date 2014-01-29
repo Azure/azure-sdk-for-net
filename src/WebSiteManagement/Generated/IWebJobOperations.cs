@@ -37,8 +37,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Delete a continuous job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='recursive'>
         /// Removing the specified directory and all its files and
@@ -51,13 +51,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteContinuousAsync(string jobId, bool recursive, CancellationToken cancellationToken);
+        Task<OperationResponse> DeleteContinuousAsync(string jobName, bool recursive, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete a triggered job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='recursive'>
         /// Removing the specified directory and all its files and
@@ -70,13 +70,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteTriggeredAsync(string jobId, bool recursive, CancellationToken cancellationToken);
+        Task<OperationResponse> DeleteTriggeredAsync(string jobName, bool recursive, CancellationToken cancellationToken);
         
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -84,13 +84,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        Task<WebJobGetResponse> GetAsync(string jobId, CancellationToken cancellationToken);
+        Task<WebJobGetResponse> GetAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The deployment identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -98,13 +98,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        Task<WebJobGetResponse> GetContinuousAsync(string jobId, CancellationToken cancellationToken);
+        Task<WebJobGetResponse> GetContinuousAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a web job run.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='jobRunId'>
         /// The job run identifier.
@@ -115,13 +115,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The Get Web Job Run operation response.
         /// </returns>
-        Task<WebJobGetRunResponse> GetRunAsync(string jobId, string jobRunId, CancellationToken cancellationToken);
+        Task<WebJobGetRunResponse> GetRunAsync(string jobName, string jobRunId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a triggered web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The deployment identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -129,7 +129,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        Task<WebJobGetResponse> GetTriggeredAsync(string jobId, CancellationToken cancellationToken);
+        Task<WebJobGetResponse> GetTriggeredAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// List the web jobs.
@@ -193,8 +193,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Run a triggered web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -203,14 +203,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RunTriggeredAsync(string jobId, CancellationToken cancellationToken);
+        Task<OperationResponse> RunTriggeredAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// If a continuous job is set as singleton it'll run only on a single
         /// instance opposed to running on all instances.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='isSingleton'>
         /// Boolean value indicating if the job is singleton or not.
@@ -222,13 +222,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> SetSingletonAsync(string jobId, bool isSingleton, CancellationToken cancellationToken);
+        Task<OperationResponse> SetSingletonAsync(string jobName, bool isSingleton, CancellationToken cancellationToken);
         
         /// <summary>
         /// Start a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -237,13 +237,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> StartContinousAsync(string jobId, CancellationToken cancellationToken);
+        Task<OperationResponse> StartContinousAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Stop a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -252,13 +252,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> StopContinousAsync(string jobId, CancellationToken cancellationToken);
+        Task<OperationResponse> StopContinousAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Upload a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='jobContent'>
         /// The job content.
@@ -270,13 +270,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UploadContinuousAsync(string jobId, Stream jobContent, CancellationToken cancellationToken);
+        Task<OperationResponse> UploadContinuousAsync(string jobName, Stream jobContent, CancellationToken cancellationToken);
         
         /// <summary>
         /// Upload a triggered web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='jobContent'>
         /// The job content.
@@ -288,6 +288,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UploadTriggeredAsync(string jobId, Stream jobContent, CancellationToken cancellationToken);
+        Task<OperationResponse> UploadTriggeredAsync(string jobName, Stream jobContent, CancellationToken cancellationToken);
     }
 }
