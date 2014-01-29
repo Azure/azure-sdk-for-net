@@ -64,6 +64,30 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
+        /// Operations for managing the diagnostics settings.
+        /// </summary>
+        IDiagnosticOperations Diagnostics
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing the repository.
+        /// </summary>
+        IRepositoryOperations Repository
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing the settings.
+        /// </summary>
+        ISettingsOperations Settings
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing the jobs.
         /// </summary>
         IWebJobOperations WebJobs

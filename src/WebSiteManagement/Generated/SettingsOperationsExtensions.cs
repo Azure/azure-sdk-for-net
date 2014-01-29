@@ -23,34 +23,36 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
-    /// Operations for managing the repositories.
+    /// Operations for managing the settings.
     /// </summary>
-    public static partial class DeploymentOperationsExtensions
+    public static partial class SettingsOperationsExtensions
     {
         /// <summary>
-        /// Gets a deployment for a website.
+        /// Gets a setting.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
-        /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// <param name='settingId'>
+        /// The setting identifier.
         /// </param>
         /// <returns>
-        /// The deployment information operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static DeploymentGetResponse Get(this IDeploymentOperations operations, string deploymentId)
+        public static OperationResponse Delete(this ISettingsOperations operations, string settingId)
         {
             try
             {
-                return operations.GetAsync(deploymentId).Result;
+                return operations.DeleteAsync(settingId).Result;
             }
             catch (AggregateException ex)
             {
@@ -66,41 +68,42 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// Gets a deployment for a website.
+        /// Gets a setting.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
-        /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// <param name='settingId'>
+        /// The setting identifier.
         /// </param>
         /// <returns>
-        /// The deployment information operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<DeploymentGetResponse> GetAsync(this IDeploymentOperations operations, string deploymentId)
+        public static Task<OperationResponse> DeleteAsync(this ISettingsOperations operations, string settingId)
         {
-            return operations.GetAsync(deploymentId, CancellationToken.None);
+            return operations.DeleteAsync(settingId, CancellationToken.None);
         }
         
         /// <summary>
-        /// List the deployments for a website.
+        /// Gets a setting.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters.
+        /// <param name='settingId'>
+        /// The setting identifier.
         /// </param>
         /// <returns>
-        /// The list of deployments operation response.
+        /// The get setting operation response.
         /// </returns>
-        public static DeploymentListResponse List(this IDeploymentOperations operations, DeploymentListParameters parameters)
+        public static SettingsGetResponse Get(this ISettingsOperations operations, string settingId)
         {
             try
             {
-                return operations.ListAsync(parameters).Result;
+                return operations.GetAsync(settingId).Result;
             }
             catch (AggregateException ex)
             {
@@ -116,44 +119,38 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// List the deployments for a website.
+        /// Gets a setting.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters.
+        /// <param name='settingId'>
+        /// The setting identifier.
         /// </param>
         /// <returns>
-        /// The list of deployments operation response.
+        /// The get setting operation response.
         /// </returns>
-        public static Task<DeploymentListResponse> ListAsync(this IDeploymentOperations operations, DeploymentListParameters parameters)
+        public static Task<SettingsGetResponse> GetAsync(this ISettingsOperations operations, string settingId)
         {
-            return operations.ListAsync(parameters, CancellationToken.None);
+            return operations.GetAsync(settingId, CancellationToken.None);
         }
         
         /// <summary>
-        /// List the logs for a deployment for a website.
+        /// Lists the settings.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
-        /// </param>
-        /// <param name='deploymentId'>
-        /// The deployment identifier.
-        /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters.
+        /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
         /// <returns>
-        /// The list of deployments operation response.
+        /// The list settings operation response.
         /// </returns>
-        public static DeploymentListLogsResponse ListLogs(this IDeploymentOperations operations, string deploymentId, DeploymentListParameters parameters)
+        public static SettingsListResponse List(this ISettingsOperations operations)
         {
             try
             {
-                return operations.ListLogsAsync(deploymentId, parameters).Result;
+                return operations.ListAsync().Result;
             }
             catch (AggregateException ex)
             {
@@ -169,44 +166,39 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// List the logs for a deployment for a website.
+        /// Lists the settings.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
-        /// </param>
-        /// <param name='deploymentId'>
-        /// The deployment identifier.
-        /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters.
+        /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
         /// <returns>
-        /// The list of deployments operation response.
+        /// The list settings operation response.
         /// </returns>
-        public static Task<DeploymentListLogsResponse> ListLogsAsync(this IDeploymentOperations operations, string deploymentId, DeploymentListParameters parameters)
+        public static Task<SettingsListResponse> ListAsync(this ISettingsOperations operations)
         {
-            return operations.ListLogsAsync(deploymentId, parameters, CancellationToken.None);
+            return operations.ListAsync(CancellationToken.None);
         }
         
         /// <summary>
-        /// Redeploys a specific website deployment.
+        /// Updates a setting.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
-        /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// <param name='parameters'>
+        /// The setting value.
         /// </param>
         /// <returns>
-        /// The deployment information operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static DeploymentUpdateResponse Reploy(this IDeploymentOperations operations, string deploymentId)
+        public static OperationResponse Update(this ISettingsOperations operations, SettingsUpdateParameters parameters)
         {
             try
             {
-                return operations.ReployAsync(deploymentId).Result;
+                return operations.UpdateAsync(parameters).Result;
             }
             catch (AggregateException ex)
             {
@@ -222,21 +214,22 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// Redeploys a specific website deployment.
+        /// Updates a setting.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
-        /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// <param name='parameters'>
+        /// The setting value.
         /// </param>
         /// <returns>
-        /// The deployment information operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<DeploymentUpdateResponse> ReployAsync(this IDeploymentOperations operations, string deploymentId)
+        public static Task<OperationResponse> UpdateAsync(this ISettingsOperations operations, SettingsUpdateParameters parameters)
         {
-            return operations.ReployAsync(deploymentId, CancellationToken.None);
+            return operations.UpdateAsync(parameters, CancellationToken.None);
         }
     }
 }
