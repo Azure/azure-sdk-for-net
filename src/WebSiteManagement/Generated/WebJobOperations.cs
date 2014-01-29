@@ -68,8 +68,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Delete a continuous job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='recursive'>
         /// Removing the specified directory and all its files and
@@ -82,12 +82,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteContinuousAsync(string jobId, bool recursive, CancellationToken cancellationToken)
+        public async Task<OperationResponse> DeleteContinuousAsync(string jobName, bool recursive, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -97,13 +97,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("recursive", recursive);
                 Tracing.Enter(invocationId, this, "DeleteContinuousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "vfs/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, "vfs/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "?";
             url = url + "version=2";
             url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
@@ -182,8 +182,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Delete a triggered job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='recursive'>
         /// Removing the specified directory and all its files and
@@ -196,12 +196,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteTriggeredAsync(string jobId, bool recursive, CancellationToken cancellationToken)
+        public async Task<OperationResponse> DeleteTriggeredAsync(string jobName, bool recursive, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -211,13 +211,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("recursive", recursive);
                 Tracing.Enter(invocationId, this, "DeleteTriggeredAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "vfs/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, "vfs/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "?";
             url = url + "version=2";
             url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
@@ -296,8 +296,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -305,12 +305,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        public async Task<WebJobGetResponse> GetAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<WebJobGetResponse> GetAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -320,12 +320,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/").ToString() + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/").ToString() + jobName + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -540,8 +540,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Get a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The deployment identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -549,12 +549,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        public async Task<WebJobGetResponse> GetContinuousAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<WebJobGetResponse> GetContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -564,12 +564,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 Tracing.Enter(invocationId, this, "GetContinuousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -784,8 +784,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Get a web job run.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='jobRunId'>
         /// The job run identifier.
@@ -796,12 +796,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The Get Web Job Run operation response.
         /// </returns>
-        public async Task<WebJobGetRunResponse> GetRunAsync(string jobId, string jobRunId, CancellationToken cancellationToken)
+        public async Task<WebJobGetRunResponse> GetRunAsync(string jobName, string jobRunId, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             if (jobRunId == null)
             {
@@ -815,13 +815,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("jobRunId", jobRunId);
                 Tracing.Enter(invocationId, this, "GetRunAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobId + "/history/" + jobRunId + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/history/" + jobRunId + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -856,7 +856,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -866,7 +866,74 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     // Create Result
                     WebJobGetRunResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobGetRunResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        WebJobRun jobRunInstance = new WebJobRun();
+                        result.JobRun = jobRunInstance;
+                        
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = (string)idValue;
+                            jobRunInstance.Id = idInstance;
+                        }
+                        
+                        JToken statusValue = responseDoc["status"];
+                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                        {
+                            string statusInstance = (string)statusValue;
+                            jobRunInstance.Status = statusInstance;
+                        }
+                        
+                        JToken startTimeValue = responseDoc["start_time"];
+                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                        {
+                            DateTime startTimeInstance = (DateTime)startTimeValue;
+                            jobRunInstance.StartTime = startTimeInstance;
+                        }
+                        
+                        JToken endTimeValue = responseDoc["end_time"];
+                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                        {
+                            DateTime endTimeInstance = (DateTime)endTimeValue;
+                            jobRunInstance.EndTime = endTimeInstance;
+                        }
+                        
+                        JToken durationValue = responseDoc["duration"];
+                        if (durationValue != null && durationValue.Type != JTokenType.Null)
+                        {
+                            TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                            jobRunInstance.Duration = durationInstance;
+                        }
+                        
+                        JToken outputUrlValue = responseDoc["output_url"];
+                        if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
+                        {
+                            Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                            jobRunInstance.OutputUrl = outputUrlInstance;
+                        }
+                        
+                        JToken errorUrlValue = responseDoc["error_url"];
+                        if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
+                        {
+                            Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                            jobRunInstance.ErrorUrl = errorUrlInstance;
+                        }
+                        
+                        JToken urlValue = responseDoc["url"];
+                        if (urlValue != null && urlValue.Type != JTokenType.Null)
+                        {
+                            Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                            jobRunInstance.Url = urlInstance;
+                        }
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -899,8 +966,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Get a triggered web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The deployment identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -908,12 +975,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        public async Task<WebJobGetResponse> GetTriggeredAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<WebJobGetResponse> GetTriggeredAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -923,12 +990,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 Tracing.Enter(invocationId, this, "GetTriggeredAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -1747,64 +1814,64 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobRunsArray = (JArray)responseDoc;
-                        if (jobRunsArray != null && jobRunsArray.Type != JTokenType.Null)
+                        JArray runsArray = (JArray)responseDoc["runs"];
+                        if (runsArray != null && runsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobRunsValue in jobRunsArray)
+                            foreach (JToken runsValue in runsArray)
                             {
                                 WebJobRun webJobRunInstance = new WebJobRun();
                                 result.JobRuns.Add(webJobRunInstance);
                                 
-                                JToken idValue = jobRunsValue["id"];
+                                JToken idValue = runsValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
                                     string idInstance = (string)idValue;
                                     webJobRunInstance.Id = idInstance;
                                 }
                                 
-                                JToken statusValue = jobRunsValue["status"];
+                                JToken statusValue = runsValue["status"];
                                 if (statusValue != null && statusValue.Type != JTokenType.Null)
                                 {
                                     string statusInstance = (string)statusValue;
                                     webJobRunInstance.Status = statusInstance;
                                 }
                                 
-                                JToken startTimeValue = jobRunsValue["start_time"];
+                                JToken startTimeValue = runsValue["start_time"];
                                 if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime startTimeInstance = (DateTime)startTimeValue;
                                     webJobRunInstance.StartTime = startTimeInstance;
                                 }
                                 
-                                JToken endTimeValue = jobRunsValue["end_time"];
+                                JToken endTimeValue = runsValue["end_time"];
                                 if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime endTimeInstance = (DateTime)endTimeValue;
                                     webJobRunInstance.EndTime = endTimeInstance;
                                 }
                                 
-                                JToken durationValue = jobRunsValue["duration"];
+                                JToken durationValue = runsValue["duration"];
                                 if (durationValue != null && durationValue.Type != JTokenType.Null)
                                 {
                                     TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
                                     webJobRunInstance.Duration = durationInstance;
                                 }
                                 
-                                JToken outputUrlValue = jobRunsValue["output_url"];
+                                JToken outputUrlValue = runsValue["output_url"];
                                 if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                                 {
                                     Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
                                     webJobRunInstance.OutputUrl = outputUrlInstance;
                                 }
                                 
-                                JToken errorUrlValue = jobRunsValue["error_url"];
+                                JToken errorUrlValue = runsValue["error_url"];
                                 if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                                 {
                                     Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
                                     webJobRunInstance.ErrorUrl = errorUrlInstance;
                                 }
                                 
-                                JToken urlValue = jobRunsValue["url"];
+                                JToken urlValue = runsValue["url"];
                                 if (urlValue != null && urlValue.Type != JTokenType.Null)
                                 {
                                     Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
@@ -2101,8 +2168,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Run a triggered web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2111,12 +2178,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RunTriggeredAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<OperationResponse> RunTriggeredAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -2126,12 +2193,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 Tracing.Enter(invocationId, this, "RunTriggeredAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobId + "/run?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/run?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2210,8 +2277,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// If a continuous job is set as singleton it'll run only on a single
         /// instance opposed to running on all instances.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='isSingleton'>
         /// Boolean value indicating if the job is singleton or not.
@@ -2223,12 +2290,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> SetSingletonAsync(string jobId, bool isSingleton, CancellationToken cancellationToken)
+        public async Task<OperationResponse> SetSingletonAsync(string jobName, bool isSingleton, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -2238,13 +2305,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("isSingleton", isSingleton);
                 Tracing.Enter(invocationId, this, "SetSingletonAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobId + "/singleton?isSingleton=" + isSingleton + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/singleton?isSingleton=" + isSingleton + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2322,8 +2389,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Start a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2332,12 +2399,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StartContinousAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<OperationResponse> StartContinousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -2347,12 +2414,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 Tracing.Enter(invocationId, this, "StartContinousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobId + "/start?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/start?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2430,8 +2497,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Stop a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2440,12 +2507,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StopContinousAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<OperationResponse> StopContinousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -2455,12 +2522,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 Tracing.Enter(invocationId, this, "StopContinousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobId + "/stop?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/stop?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2538,8 +2605,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Upload a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='jobContent'>
         /// The job content.
@@ -2551,12 +2618,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UploadContinuousAsync(string jobId, Stream jobContent, CancellationToken cancellationToken)
+        public async Task<OperationResponse> UploadContinuousAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             if (jobContent == null)
             {
@@ -2570,13 +2637,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("jobContent", jobContent);
                 Tracing.Enter(invocationId, this, "UploadContinuousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobId + "/?";
+            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2659,8 +2726,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Upload a triggered web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='jobContent'>
         /// The job content.
@@ -2672,12 +2739,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UploadTriggeredAsync(string jobId, Stream jobContent, CancellationToken cancellationToken)
+        public async Task<OperationResponse> UploadTriggeredAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             if (jobContent == null)
             {
@@ -2691,13 +2758,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("jobContent", jobContent);
                 Tracing.Enter(invocationId, this, "UploadTriggeredAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobId + "/?";
+            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
