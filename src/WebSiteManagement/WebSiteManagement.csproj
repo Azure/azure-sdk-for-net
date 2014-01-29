@@ -75,6 +75,7 @@
     <Compile Include="Generated\Models\WebSiteGetRepositoryResponse.cs" />
     <Compile Include="Generated\Models\WebSiteGetResponse.cs" />
     <Compile Include="Generated\Models\WebSiteGetUsageMetricsResponse.cs" />
+    <Compile Include="Generated\Models\WebSiteIsHostnameAvailableResponse.cs" />
     <Compile Include="Generated\Models\WebSiteListParameters.cs" />
     <Compile Include="Generated\Models\WebSiteMode.cs" />
     <Compile Include="Generated\Models\WebSiteOperationStatus.cs" />
