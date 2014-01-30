@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "vfs/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "?";
+            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "?";
             url = url + "version=2";
             url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
@@ -217,7 +217,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "vfs/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "?";
+            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "?";
             url = url + "version=2";
             url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
@@ -2311,8 +2311,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/singleton?isSingleton=" + isSingleton + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/singleton?";
+            url = url + "isSingleton=" + Uri.EscapeUriString(isSingleton.ToString().ToLower());
+            url = url + "&version=2";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2399,7 +2400,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StartContinousAsync(string jobName, CancellationToken cancellationToken)
+        public async Task<OperationResponse> StartContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2415,11 +2416,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
-                Tracing.Enter(invocationId, this, "StartContinousAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "StartContinuousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/start?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/start/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2507,7 +2508,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StopContinousAsync(string jobName, CancellationToken cancellationToken)
+        public async Task<OperationResponse> StopContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2523,11 +2524,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
-                Tracing.Enter(invocationId, this, "StopContinousAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "StopContinuousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/stop?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/stop/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2764,7 +2765,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "?";
+            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "/?";
             url = url + "version=2";
             
             // Create HTTP transport objects

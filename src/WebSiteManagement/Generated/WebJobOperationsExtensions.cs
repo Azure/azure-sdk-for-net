@@ -693,11 +693,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse StartContinous(this IWebJobOperations operations, string jobName)
+        public static OperationResponse StartContinuous(this IWebJobOperations operations, string jobName)
         {
             try
             {
-                return operations.StartContinousAsync(jobName).Result;
+                return operations.StartContinuousAsync(jobName).Result;
             }
             catch (AggregateException ex)
             {
@@ -726,9 +726,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> StartContinousAsync(this IWebJobOperations operations, string jobName)
+        public static Task<OperationResponse> StartContinuousAsync(this IWebJobOperations operations, string jobName)
         {
-            return operations.StartContinousAsync(jobName, CancellationToken.None);
+            return operations.StartContinuousAsync(jobName, CancellationToken.None);
         }
         
         /// <summary>
@@ -745,11 +745,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse StopContinous(this IWebJobOperations operations, string jobName)
+        public static OperationResponse StopContinuous(this IWebJobOperations operations, string jobName)
         {
             try
             {
-                return operations.StopContinousAsync(jobName).Result;
+                return operations.StopContinuousAsync(jobName).Result;
             }
             catch (AggregateException ex)
             {
@@ -778,9 +778,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> StopContinousAsync(this IWebJobOperations operations, string jobName)
+        public static Task<OperationResponse> StopContinuousAsync(this IWebJobOperations operations, string jobName)
         {
-            return operations.StopContinousAsync(jobName, CancellationToken.None);
+            return operations.StopContinuousAsync(jobName, CancellationToken.None);
         }
         
         /// <summary>
