@@ -237,7 +237,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> StartContinousAsync(string jobName, CancellationToken cancellationToken);
+        Task<OperationResponse> StartContinuousAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Stop a continuous web job.
@@ -252,7 +252,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> StopContinousAsync(string jobName, CancellationToken cancellationToken);
+        Task<OperationResponse> StopContinuousAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Upload a continuous web job.
