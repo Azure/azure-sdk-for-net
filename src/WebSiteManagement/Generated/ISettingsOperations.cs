@@ -23,72 +23,69 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
-    /// Operations for managing the repositories.
+    /// Operations for managing the settings.
     /// </summary>
-    public partial interface IDeploymentOperations
+    public partial interface ISettingsOperations
     {
         /// <summary>
-        /// Gets a deployment for a website.
+        /// Gets a setting.
         /// </summary>
-        /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// <param name='settingId'>
+        /// The setting identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The deployment information operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<DeploymentGetResponse> GetAsync(string deploymentId, CancellationToken cancellationToken);
+        Task<OperationResponse> DeleteAsync(string settingId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// List the deployments for a website.
+        /// Gets a setting.
+        /// </summary>
+        /// <param name='settingId'>
+        /// The setting identifier.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get setting operation response.
+        /// </returns>
+        Task<SettingsGetResponse> GetAsync(string settingId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Lists the settings.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list settings operation response.
+        /// </returns>
+        Task<SettingsListResponse> ListAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates a setting.
         /// </summary>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// The setting value.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The list of deployments operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<DeploymentListResponse> ListAsync(DeploymentListParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// List the logs for a deployment for a website.
-        /// </summary>
-        /// <param name='deploymentId'>
-        /// The deployment identifier.
-        /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The list of deployments operation response.
-        /// </returns>
-        Task<DeploymentListLogsResponse> ListLogsAsync(string deploymentId, DeploymentListParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Redeploys a specific website deployment.
-        /// </summary>
-        /// <param name='deploymentId'>
-        /// The deployment identifier.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The deployment information operation response.
-        /// </returns>
-        Task<DeploymentUpdateResponse> ReployAsync(string deploymentId, CancellationToken cancellationToken);
+        Task<OperationResponse> UpdateAsync(SettingsUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

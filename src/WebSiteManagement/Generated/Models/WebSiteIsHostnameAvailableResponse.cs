@@ -22,30 +22,30 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
+namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Web Job Run operation response.
+    /// The Is Hostname Available operation response.
     /// </summary>
-    public partial class WebJobGetRunResponse : OperationResponse
+    public partial class WebSiteIsHostnameAvailableResponse : OperationResponse
     {
-        private WebJobRun _jobRun;
+        private bool _isAvailable;
         
         /// <summary>
-        /// The web job run.
+        /// Indicates if the site name is available.
         /// </summary>
-        public WebJobRun JobRun
+        public bool IsAvailable
         {
-            get { return this._jobRun; }
-            set { this._jobRun = value; }
+            get { return this._isAvailable; }
+            set { this._isAvailable = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobGetRunResponse class.
+        /// Initializes a new instance of the
+        /// WebSiteIsHostnameAvailableResponse class.
         /// </summary>
-        public WebJobGetRunResponse()
+        public WebSiteIsHostnameAvailableResponse()
         {
         }
     }

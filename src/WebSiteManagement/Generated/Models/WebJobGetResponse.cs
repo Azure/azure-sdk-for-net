@@ -33,6 +33,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
     {
         private WebJob _webJob;
         
+        /// <summary>
+        /// The web job.
+        /// </summary>
         public WebJob WebJob
         {
             get { return this._webJob; }

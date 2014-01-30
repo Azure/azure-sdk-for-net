@@ -21,32 +21,36 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
+using Microsoft.WindowsAzure.Common;
+using Microsoft.WindowsAzure.WebSitesExtensions;
 
-namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
+namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
-    /// The Get Web Job Run operation response.
+    /// Operations for managing the diagnostics settings.
     /// </summary>
-    public partial class WebJobGetRunResponse : OperationResponse
+    internal partial class DiagnosticOperations : IServiceOperations<WebSiteExtensionsClient>, IDiagnosticOperations
     {
-        private WebJobRun _jobRun;
-        
         /// <summary>
-        /// The web job run.
+        /// Initializes a new instance of the DiagnosticOperations class.
         /// </summary>
-        public WebJobRun JobRun
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal DiagnosticOperations(WebSiteExtensionsClient client)
         {
-            get { return this._jobRun; }
-            set { this._jobRun = value; }
+            this._client = client;
         }
         
+        private WebSiteExtensionsClient _client;
+        
         /// <summary>
-        /// Initializes a new instance of the WebJobGetRunResponse class.
+        /// Gets a reference to the
+        /// Microsoft.WindowsAzure.WebSitesExtensions.WebSiteExtensionsClient.
         /// </summary>
-        public WebJobGetRunResponse()
+        public WebSiteExtensionsClient Client
         {
+            get { return this._client; }
         }
     }
 }

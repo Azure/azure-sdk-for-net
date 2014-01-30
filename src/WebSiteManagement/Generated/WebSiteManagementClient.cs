@@ -236,7 +236,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.BaseUri + "/" + this.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + siteName + "/operations/" + operationId;
+            string url = new Uri(this.BaseUri, "/").ToString() + this.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + siteName + "/operations/" + operationId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -538,7 +538,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.BaseUri + "/" + this.Credentials.SubscriptionId + "/services?&action=register";
+            string url = new Uri(this.BaseUri, "/").ToString() + this.Credentials.SubscriptionId + "/services?&action=register";
             url = url + "service=website";
             
             // Create HTTP transport objects
@@ -639,7 +639,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.BaseUri + "/" + this.Credentials.SubscriptionId + "/services?&action=unregister";
+            string url = new Uri(this.BaseUri, "/").ToString() + this.Credentials.SubscriptionId + "/services?&action=unregister";
             url = url + "service=website";
             
             // Create HTTP transport objects

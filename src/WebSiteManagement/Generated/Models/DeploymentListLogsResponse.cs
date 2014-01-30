@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
@@ -27,26 +28,43 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Get Web Job Run operation response.
+    /// The list of deployments operation response.
     /// </summary>
-    public partial class WebJobGetRunResponse : OperationResponse
+    public partial class DeploymentListLogsResponse : OperationResponse, IEnumerable<Deployment>
     {
-        private WebJobRun _jobRun;
+        private IList<Deployment> _deployments;
         
         /// <summary>
-        /// The web job run.
+        /// The list of deployments.
         /// </summary>
-        public WebJobRun JobRun
+        public IList<Deployment> Deployments
         {
-            get { return this._jobRun; }
-            set { this._jobRun = value; }
+            get { return this._deployments; }
+            set { this._deployments = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobGetRunResponse class.
+        /// Initializes a new instance of the DeploymentListLogsResponse class.
         /// </summary>
-        public WebJobGetRunResponse()
+        public DeploymentListLogsResponse()
         {
+            this._deployments = new List<Deployment>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Deployments.
+        /// </summary>
+        public IEnumerator<Deployment> GetEnumerator()
+        {
+            return this.Deployments.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Deployments.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

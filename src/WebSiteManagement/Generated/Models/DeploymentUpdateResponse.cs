@@ -27,25 +27,25 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Get Web Job Run operation response.
+    /// The deployment information operation response.
     /// </summary>
-    public partial class WebJobGetRunResponse : OperationResponse
+    public partial class DeploymentUpdateResponse : OperationResponse
     {
-        private WebJobRun _jobRun;
+        private Deployment _deployment;
         
         /// <summary>
-        /// The web job run.
+        /// The deployment information.
         /// </summary>
-        public WebJobRun JobRun
+        public Deployment Deployment
         {
-            get { return this._jobRun; }
-            set { this._jobRun = value; }
+            get { return this._deployment; }
+            set { this._deployment = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobGetRunResponse class.
+        /// Initializes a new instance of the DeploymentUpdateResponse class.
         /// </summary>
-        public WebJobGetRunResponse()
+        public DeploymentUpdateResponse()
         {
         }
     }

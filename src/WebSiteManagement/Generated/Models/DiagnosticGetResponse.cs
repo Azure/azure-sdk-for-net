@@ -20,33 +20,34 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Get Web Job Run operation response.
+    /// The get diagnostic settings operation response.
     /// </summary>
-    public partial class WebJobGetRunResponse : OperationResponse
+    public partial class DiagnosticGetResponse : OperationResponse
     {
-        private WebJobRun _jobRun;
+        private IDictionary<string, string> _settings;
         
         /// <summary>
-        /// The web job run.
+        /// The diagnostics setting information.
         /// </summary>
-        public WebJobRun JobRun
+        public IDictionary<string, string> Settings
         {
-            get { return this._jobRun; }
-            set { this._jobRun = value; }
+            get { return this._settings; }
+            set { this._settings = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobGetRunResponse class.
+        /// Initializes a new instance of the DiagnosticGetResponse class.
         /// </summary>
-        public WebJobGetRunResponse()
+        public DiagnosticGetResponse()
         {
+            this._settings = new Dictionary<string, string>();
         }
     }
 }

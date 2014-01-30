@@ -25,6 +25,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.WebSitesExtensions;
+using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
@@ -73,6 +74,36 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             get { return this._deployment; }
         }
         
+        private IDiagnosticOperations _diagnostics;
+        
+        /// <summary>
+        /// Operations for managing the diagnostics settings.
+        /// </summary>
+        public virtual IDiagnosticOperations Diagnostics
+        {
+            get { return this._diagnostics; }
+        }
+        
+        private IRepositoryOperations _repository;
+        
+        /// <summary>
+        /// Operations for managing the repository.
+        /// </summary>
+        public virtual IRepositoryOperations Repository
+        {
+            get { return this._repository; }
+        }
+        
+        private ISettingsOperations _settings;
+        
+        /// <summary>
+        /// Operations for managing the settings.
+        /// </summary>
+        public virtual ISettingsOperations Settings
+        {
+            get { return this._settings; }
+        }
+        
         private IWebJobOperations _webJobs;
         
         /// <summary>
@@ -90,6 +121,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             : base()
         {
             this._deployment = new DeploymentOperations(this);
+            this._diagnostics = new DiagnosticOperations(this);
+            this._repository = new RepositoryOperations(this);
+            this._settings = new SettingsOperations(this);
             this._webJobs = new WebJobOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
@@ -153,6 +187,50 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Parse enum values for type WebJobType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static WebJobType ParseWebJobType(string value)
+        {
+            if (value == "triggered")
+            {
+                return WebJobType.Triggered;
+            }
+            if (value == "continuous")
+            {
+                return WebJobType.Continuous;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type WebJobType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string WebJobTypeToString(WebJobType value)
+        {
+            if (value == WebJobType.Triggered)
+            {
+                return "triggered";
+            }
+            if (value == WebJobType.Continuous)
+            {
+                return "continuous";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
     }
 }

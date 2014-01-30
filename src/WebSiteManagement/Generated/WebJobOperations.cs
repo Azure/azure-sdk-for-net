@@ -22,9 +22,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
@@ -64,13 +66,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// TBD.
+        /// Delete a continuous job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='recursive'>
-        /// The recursive flag.
+        /// Removing the specified directory and all its files and
+        /// subdirectories. The value must be set to true.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -79,16 +82,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteContinuousAsync(string jobId, string recursive, CancellationToken cancellationToken)
+        public async Task<OperationResponse> DeleteContinuousAsync(string jobName, bool recursive, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
-            }
-            if (recursive == null)
-            {
-                throw new ArgumentNullException("recursive");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -98,15 +97,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("recursive", recursive);
                 Tracing.Enter(invocationId, this, "DeleteContinuousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "jobs/continuous/" + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "?";
             url = url + "version=2";
-            url = url + "&recursive=" + Uri.EscapeUriString(recursive);
+            url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -181,13 +180,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// TBD.
+        /// Delete a triggered job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='recursive'>
-        /// The recursive flag.
+        /// Removing the specified directory and all its files and
+        /// subdirectories. The value must be set to true.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -196,16 +196,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteTriggeredAsync(string jobId, string recursive, CancellationToken cancellationToken)
+        public async Task<OperationResponse> DeleteTriggeredAsync(string jobName, bool recursive, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
-            }
-            if (recursive == null)
-            {
-                throw new ArgumentNullException("recursive");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -215,15 +211,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("recursive", recursive);
                 Tracing.Enter(invocationId, this, "DeleteTriggeredAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "jobs/triggered/" + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "?";
             url = url + "version=2";
-            url = url + "&recursive=" + Uri.EscapeUriString(recursive);
+            url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -268,920 +264,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     // Create Result
                     OperationResponse result = null;
                     result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The get Web Job Operation Response.
-        /// </returns>
-        public async Task<WebJobGetResponse> GetAsync(string jobId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (jobId == null)
-            {
-                throw new ArgumentNullException("jobId");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "jobs/" + jobId + "?";
-            url = url + "version=2";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebJobGetResponse result = null;
-                    result = new WebJobGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name='jobId'>
-        /// The deployment identifier.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The get Web Job Operation Response.
-        /// </returns>
-        public async Task<WebJobGetResponse> GetContinuousAsync(string jobId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (jobId == null)
-            {
-                throw new ArgumentNullException("jobId");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
-                Tracing.Enter(invocationId, this, "GetContinuousAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "jobs/continuous/" + jobId + "?";
-            url = url + "version=2";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebJobGetResponse result = null;
-                    result = new WebJobGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
-        /// </param>
-        /// <param name='jobRunId'>
-        /// The job run identifier.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get Web Job Run operation response.
-        /// </returns>
-        public async Task<WebJobGetRunResponse> GetRunAsync(string jobId, string jobRunId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (jobId == null)
-            {
-                throw new ArgumentNullException("jobId");
-            }
-            if (jobRunId == null)
-            {
-                throw new ArgumentNullException("jobRunId");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
-                tracingParameters.Add("jobRunId", jobRunId);
-                Tracing.Enter(invocationId, this, "GetRunAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "jobs/triggered/" + jobId + "/history/" + jobRunId + "?";
-            url = url + "version=2";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebJobGetRunResponse result = null;
-                    result = new WebJobGetRunResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name='jobId'>
-        /// The deployment identifier.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The get Web Job Operation Response.
-        /// </returns>
-        public async Task<WebJobGetResponse> GetTriggeredAsync(string jobId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (jobId == null)
-            {
-                throw new ArgumentNullException("jobId");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
-                Tracing.Enter(invocationId, this, "GetTriggeredAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "jobs/triggered/" + jobId + "?";
-            url = url + "version=2";
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebJobGetResponse result = null;
-                    result = new WebJobGetResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name='parameters'>
-        /// Additional parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The list of jobs operation response.
-        /// </returns>
-        public async Task<WebJobListResponse> ListAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "jobs?";
-            url = url + "version=2";
-            if (parameters != null && parameters.Top != null)
-            {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
-            }
-            if (parameters != null && parameters.OrderBy != null)
-            {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebJobListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebJobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        JArray jobsArray = (JArray)responseDoc;
-                        if (jobsArray != null)
-                        {
-                            foreach (JToken jobsValue in jobsArray)
-                            {
-                                WebJob webJobInstance = new WebJob();
-                                result.Jobs.Add(webJobInstance);
-                                
-                                JToken nameValue = jobsValue["name"];
-                                if (nameValue != null)
-                                {
-                                    string nameInstance = (string)nameValue;
-                                    webJobInstance.Name = nameInstance;
-                                }
-                                
-                                JToken runCommandValue = jobsValue["runCommand"];
-                                if (runCommandValue != null)
-                                {
-                                    string runCommandInstance = (string)runCommandValue;
-                                    webJobInstance.RunCommand = runCommandInstance;
-                                }
-                                
-                                JToken typeValue = jobsValue["type"];
-                                if (typeValue != null)
-                                {
-                                    string typeInstance = (string)typeValue;
-                                    webJobInstance.Type = typeInstance;
-                                }
-                                
-                                JToken urlValue = jobsValue["url"];
-                                if (urlValue != null)
-                                {
-                                    // how
-                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
-                                    webJobInstance.Url = urlInstance;
-                                }
-                                
-                                JToken historyUrlValue = jobsValue["history_url"];
-                                if (historyUrlValue != null)
-                                {
-                                    string historyUrlInstance = (string)historyUrlValue;
-                                    webJobInstance.HistoryUrl = historyUrlInstance;
-                                }
-                                
-                                JToken extraInfoUrlValue = jobsValue["extra_info_url"];
-                                if (extraInfoUrlValue != null)
-                                {
-                                    string extraInfoUrlInstance = (string)extraInfoUrlValue;
-                                    webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
-                                }
-                                
-                                JToken latestRunValue = jobsValue["latest_run"];
-                                if (latestRunValue != null)
-                                {
-                                    WebJobRun latestRunInstance = new WebJobRun();
-                                    webJobInstance.LatestRun = latestRunInstance;
-                                    
-                                    JToken idValue = latestRunValue["id"];
-                                    if (idValue != null)
-                                    {
-                                        string idInstance = (string)idValue;
-                                        latestRunInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken statusValue = latestRunValue["status"];
-                                    if (statusValue != null)
-                                    {
-                                        string statusInstance = (string)statusValue;
-                                        latestRunInstance.Status = statusInstance;
-                                    }
-                                    
-                                    JToken startTimeValue = latestRunValue["start_time"];
-                                    if (startTimeValue != null)
-                                    {
-                                        DateTime startTimeInstance = (DateTime)startTimeValue;
-                                        latestRunInstance.StartTime = startTimeInstance;
-                                    }
-                                    
-                                    JToken endTimeValue = latestRunValue["end_time"];
-                                    if (endTimeValue != null)
-                                    {
-                                        DateTime endTimeInstance = (DateTime)endTimeValue;
-                                        latestRunInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    JToken durationValue = latestRunValue["duration"];
-                                    if (durationValue != null)
-                                    {
-                                        // how
-                                        TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
-                                        latestRunInstance.Duration = durationInstance;
-                                    }
-                                    
-                                    JToken outputUrlValue = latestRunValue["output_url"];
-                                    if (outputUrlValue != null)
-                                    {
-                                        // how
-                                        Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
-                                        latestRunInstance.OutputUrl = outputUrlInstance;
-                                    }
-                                    
-                                    JToken errorUrlValue = latestRunValue["error_url"];
-                                    if (errorUrlValue != null)
-                                    {
-                                        // how
-                                        Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
-                                        latestRunInstance.ErrorUrl = errorUrlInstance;
-                                    }
-                                    
-                                    JToken urlValue2 = latestRunValue["url"];
-                                    if (urlValue2 != null)
-                                    {
-                                        // how
-                                        Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
-                                        latestRunInstance.Url = urlInstance2;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name='parameters'>
-        /// Additional parameters.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The list of jobs operation response.
-        /// </returns>
-        public async Task<WebJobListResponse> ListContinuousAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListContinuousAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "jobs/continuous?";
-            url = url + "version=2";
-            if (parameters != null && parameters.Top != null)
-            {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
-            }
-            if (parameters != null && parameters.OrderBy != null)
-            {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    WebJobListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebJobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        JArray jobsArray = (JArray)responseDoc;
-                        if (jobsArray != null)
-                        {
-                            foreach (JToken jobsValue in jobsArray)
-                            {
-                                WebJob webJobInstance = new WebJob();
-                                result.Jobs.Add(webJobInstance);
-                                
-                                JToken nameValue = jobsValue["name"];
-                                if (nameValue != null)
-                                {
-                                    string nameInstance = (string)nameValue;
-                                    webJobInstance.Name = nameInstance;
-                                }
-                                
-                                JToken runCommandValue = jobsValue["runCommand"];
-                                if (runCommandValue != null)
-                                {
-                                    string runCommandInstance = (string)runCommandValue;
-                                    webJobInstance.RunCommand = runCommandInstance;
-                                }
-                                
-                                JToken typeValue = jobsValue["type"];
-                                if (typeValue != null)
-                                {
-                                    string typeInstance = (string)typeValue;
-                                    webJobInstance.Type = typeInstance;
-                                }
-                                
-                                JToken urlValue = jobsValue["url"];
-                                if (urlValue != null)
-                                {
-                                    // how
-                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
-                                    webJobInstance.Url = urlInstance;
-                                }
-                                
-                                JToken historyUrlValue = jobsValue["history_url"];
-                                if (historyUrlValue != null)
-                                {
-                                    string historyUrlInstance = (string)historyUrlValue;
-                                    webJobInstance.HistoryUrl = historyUrlInstance;
-                                }
-                                
-                                JToken extraInfoUrlValue = jobsValue["extra_info_url"];
-                                if (extraInfoUrlValue != null)
-                                {
-                                    string extraInfoUrlInstance = (string)extraInfoUrlValue;
-                                    webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
-                                }
-                                
-                                JToken latestRunValue = jobsValue["latest_run"];
-                                if (latestRunValue != null)
-                                {
-                                    WebJobRun latestRunInstance = new WebJobRun();
-                                    webJobInstance.LatestRun = latestRunInstance;
-                                    
-                                    JToken idValue = latestRunValue["id"];
-                                    if (idValue != null)
-                                    {
-                                        string idInstance = (string)idValue;
-                                        latestRunInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken statusValue = latestRunValue["status"];
-                                    if (statusValue != null)
-                                    {
-                                        string statusInstance = (string)statusValue;
-                                        latestRunInstance.Status = statusInstance;
-                                    }
-                                    
-                                    JToken startTimeValue = latestRunValue["start_time"];
-                                    if (startTimeValue != null)
-                                    {
-                                        DateTime startTimeInstance = (DateTime)startTimeValue;
-                                        latestRunInstance.StartTime = startTimeInstance;
-                                    }
-                                    
-                                    JToken endTimeValue = latestRunValue["end_time"];
-                                    if (endTimeValue != null)
-                                    {
-                                        DateTime endTimeInstance = (DateTime)endTimeValue;
-                                        latestRunInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    JToken durationValue = latestRunValue["duration"];
-                                    if (durationValue != null)
-                                    {
-                                        // how
-                                        TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
-                                        latestRunInstance.Duration = durationInstance;
-                                    }
-                                    
-                                    JToken outputUrlValue = latestRunValue["output_url"];
-                                    if (outputUrlValue != null)
-                                    {
-                                        // how
-                                        Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
-                                        latestRunInstance.OutputUrl = outputUrlInstance;
-                                    }
-                                    
-                                    JToken errorUrlValue = latestRunValue["error_url"];
-                                    if (errorUrlValue != null)
-                                    {
-                                        // how
-                                        Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
-                                        latestRunInstance.ErrorUrl = errorUrlInstance;
-                                    }
-                                    
-                                    JToken urlValue2 = latestRunValue["url"];
-                                    if (urlValue2 != null)
-                                    {
-                                        // how
-                                        Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
-                                        latestRunInstance.Url = urlInstance2;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1217,6 +299,1430 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <param name='jobName'>
         /// The job name.
         /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get Web Job Operation Response.
+        /// </returns>
+        public async Task<WebJobGetResponse> GetAsync(string jobName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (jobName == null)
+            {
+                throw new ArgumentNullException("jobName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobName", jobName);
+                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/jobs/").ToString() + jobName + "?";
+            url = url + "version=2";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebJobGetResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebJobGetResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        WebJob webJobInstance = new WebJob();
+                        result.WebJob = webJobInstance;
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = (string)nameValue;
+                            webJobInstance.Name = nameInstance;
+                        }
+                        
+                        JToken runCommandValue = responseDoc["run_command"];
+                        if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
+                        {
+                            string runCommandInstance = (string)runCommandValue;
+                            webJobInstance.RunCommand = runCommandInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                            webJobInstance.Type = typeInstance;
+                        }
+                        
+                        JToken urlValue = responseDoc["url"];
+                        if (urlValue != null && urlValue.Type != JTokenType.Null)
+                        {
+                            Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                            webJobInstance.Url = urlInstance;
+                        }
+                        
+                        JToken historyUrlValue = responseDoc["history_url"];
+                        if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
+                        {
+                            string historyUrlInstance = (string)historyUrlValue;
+                            webJobInstance.HistoryUrl = historyUrlInstance;
+                        }
+                        
+                        JToken extraInfoUrlValue = responseDoc["extra_info_url"];
+                        if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
+                        {
+                            string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                            webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
+                        }
+                        
+                        JToken latestRunValue = responseDoc["latest_run"];
+                        if (latestRunValue != null && latestRunValue.Type != JTokenType.Null)
+                        {
+                            WebJobRun latestRunInstance = new WebJobRun();
+                            webJobInstance.LatestRun = latestRunInstance;
+                            
+                            JToken idValue = latestRunValue["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = (string)idValue;
+                                latestRunInstance.Id = idInstance;
+                            }
+                            
+                            JToken statusValue = latestRunValue["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = (string)statusValue;
+                                latestRunInstance.Status = statusInstance;
+                            }
+                            
+                            JToken startTimeValue = latestRunValue["start_time"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = (DateTime)startTimeValue;
+                                latestRunInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken endTimeValue = latestRunValue["end_time"];
+                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime endTimeInstance = (DateTime)endTimeValue;
+                                latestRunInstance.EndTime = endTimeInstance;
+                            }
+                            
+                            JToken durationValue = latestRunValue["duration"];
+                            if (durationValue != null && durationValue.Type != JTokenType.Null)
+                            {
+                                TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                latestRunInstance.Duration = durationInstance;
+                            }
+                            
+                            JToken outputUrlValue = latestRunValue["output_url"];
+                            if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
+                            {
+                                Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                latestRunInstance.OutputUrl = outputUrlInstance;
+                            }
+                            
+                            JToken errorUrlValue = latestRunValue["error_url"];
+                            if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
+                            {
+                                Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                latestRunInstance.ErrorUrl = errorUrlInstance;
+                            }
+                            
+                            JToken urlValue2 = latestRunValue["url"];
+                            if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                            {
+                                Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                latestRunInstance.Url = urlInstance2;
+                            }
+                        }
+                        
+                        JToken statusValue2 = responseDoc["status"];
+                        if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                        {
+                            string statusInstance2 = (string)statusValue2;
+                            webJobInstance.Status = statusInstance2;
+                        }
+                        
+                        JToken detailedStatusValue = responseDoc["detailed_status"];
+                        if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
+                        {
+                            string detailedStatusInstance = (string)detailedStatusValue;
+                            webJobInstance.DetailedStatus = detailedStatusInstance;
+                        }
+                        
+                        JToken logUrlValue = responseDoc["log_url"];
+                        if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
+                        {
+                            string logUrlInstance = (string)logUrlValue;
+                            webJobInstance.LogUrl = logUrlInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get a continuous web job.
+        /// </summary>
+        /// <param name='jobName'>
+        /// The job name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get Web Job Operation Response.
+        /// </returns>
+        public async Task<WebJobGetResponse> GetContinuousAsync(string jobName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (jobName == null)
+            {
+                throw new ArgumentNullException("jobName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobName", jobName);
+                Tracing.Enter(invocationId, this, "GetContinuousAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "?";
+            url = url + "version=2";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebJobGetResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebJobGetResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        WebJob webJobInstance = new WebJob();
+                        result.WebJob = webJobInstance;
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = (string)nameValue;
+                            webJobInstance.Name = nameInstance;
+                        }
+                        
+                        JToken runCommandValue = responseDoc["run_command"];
+                        if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
+                        {
+                            string runCommandInstance = (string)runCommandValue;
+                            webJobInstance.RunCommand = runCommandInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                            webJobInstance.Type = typeInstance;
+                        }
+                        
+                        JToken urlValue = responseDoc["url"];
+                        if (urlValue != null && urlValue.Type != JTokenType.Null)
+                        {
+                            Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                            webJobInstance.Url = urlInstance;
+                        }
+                        
+                        JToken historyUrlValue = responseDoc["history_url"];
+                        if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
+                        {
+                            string historyUrlInstance = (string)historyUrlValue;
+                            webJobInstance.HistoryUrl = historyUrlInstance;
+                        }
+                        
+                        JToken extraInfoUrlValue = responseDoc["extra_info_url"];
+                        if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
+                        {
+                            string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                            webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
+                        }
+                        
+                        JToken latestRunValue = responseDoc["latest_run"];
+                        if (latestRunValue != null && latestRunValue.Type != JTokenType.Null)
+                        {
+                            WebJobRun latestRunInstance = new WebJobRun();
+                            webJobInstance.LatestRun = latestRunInstance;
+                            
+                            JToken idValue = latestRunValue["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = (string)idValue;
+                                latestRunInstance.Id = idInstance;
+                            }
+                            
+                            JToken statusValue = latestRunValue["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = (string)statusValue;
+                                latestRunInstance.Status = statusInstance;
+                            }
+                            
+                            JToken startTimeValue = latestRunValue["start_time"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = (DateTime)startTimeValue;
+                                latestRunInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken endTimeValue = latestRunValue["end_time"];
+                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime endTimeInstance = (DateTime)endTimeValue;
+                                latestRunInstance.EndTime = endTimeInstance;
+                            }
+                            
+                            JToken durationValue = latestRunValue["duration"];
+                            if (durationValue != null && durationValue.Type != JTokenType.Null)
+                            {
+                                TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                latestRunInstance.Duration = durationInstance;
+                            }
+                            
+                            JToken outputUrlValue = latestRunValue["output_url"];
+                            if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
+                            {
+                                Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                latestRunInstance.OutputUrl = outputUrlInstance;
+                            }
+                            
+                            JToken errorUrlValue = latestRunValue["error_url"];
+                            if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
+                            {
+                                Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                latestRunInstance.ErrorUrl = errorUrlInstance;
+                            }
+                            
+                            JToken urlValue2 = latestRunValue["url"];
+                            if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                            {
+                                Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                latestRunInstance.Url = urlInstance2;
+                            }
+                        }
+                        
+                        JToken statusValue2 = responseDoc["status"];
+                        if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                        {
+                            string statusInstance2 = (string)statusValue2;
+                            webJobInstance.Status = statusInstance2;
+                        }
+                        
+                        JToken detailedStatusValue = responseDoc["detailed_status"];
+                        if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
+                        {
+                            string detailedStatusInstance = (string)detailedStatusValue;
+                            webJobInstance.DetailedStatus = detailedStatusInstance;
+                        }
+                        
+                        JToken logUrlValue = responseDoc["log_url"];
+                        if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
+                        {
+                            string logUrlInstance = (string)logUrlValue;
+                            webJobInstance.LogUrl = logUrlInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get a web job run.
+        /// </summary>
+        /// <param name='jobName'>
+        /// The job name.
+        /// </param>
+        /// <param name='jobRunId'>
+        /// The job run identifier.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Job Run operation response.
+        /// </returns>
+        public async Task<WebJobGetRunResponse> GetRunAsync(string jobName, string jobRunId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (jobName == null)
+            {
+                throw new ArgumentNullException("jobName");
+            }
+            if (jobRunId == null)
+            {
+                throw new ArgumentNullException("jobRunId");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobName", jobName);
+                tracingParameters.Add("jobRunId", jobRunId);
+                Tracing.Enter(invocationId, this, "GetRunAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/history/" + jobRunId + "?";
+            url = url + "version=2";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebJobGetRunResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebJobGetRunResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        WebJobRun jobRunInstance = new WebJobRun();
+                        result.JobRun = jobRunInstance;
+                        
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = (string)idValue;
+                            jobRunInstance.Id = idInstance;
+                        }
+                        
+                        JToken statusValue = responseDoc["status"];
+                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                        {
+                            string statusInstance = (string)statusValue;
+                            jobRunInstance.Status = statusInstance;
+                        }
+                        
+                        JToken startTimeValue = responseDoc["start_time"];
+                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                        {
+                            DateTime startTimeInstance = (DateTime)startTimeValue;
+                            jobRunInstance.StartTime = startTimeInstance;
+                        }
+                        
+                        JToken endTimeValue = responseDoc["end_time"];
+                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                        {
+                            DateTime endTimeInstance = (DateTime)endTimeValue;
+                            jobRunInstance.EndTime = endTimeInstance;
+                        }
+                        
+                        JToken durationValue = responseDoc["duration"];
+                        if (durationValue != null && durationValue.Type != JTokenType.Null)
+                        {
+                            TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                            jobRunInstance.Duration = durationInstance;
+                        }
+                        
+                        JToken outputUrlValue = responseDoc["output_url"];
+                        if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
+                        {
+                            Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                            jobRunInstance.OutputUrl = outputUrlInstance;
+                        }
+                        
+                        JToken errorUrlValue = responseDoc["error_url"];
+                        if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
+                        {
+                            Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                            jobRunInstance.ErrorUrl = errorUrlInstance;
+                        }
+                        
+                        JToken urlValue = responseDoc["url"];
+                        if (urlValue != null && urlValue.Type != JTokenType.Null)
+                        {
+                            Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                            jobRunInstance.Url = urlInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get a triggered web job.
+        /// </summary>
+        /// <param name='jobName'>
+        /// The job name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get Web Job Operation Response.
+        /// </returns>
+        public async Task<WebJobGetResponse> GetTriggeredAsync(string jobName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (jobName == null)
+            {
+                throw new ArgumentNullException("jobName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobName", jobName);
+                Tracing.Enter(invocationId, this, "GetTriggeredAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "?";
+            url = url + "version=2";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebJobGetResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebJobGetResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        WebJob webJobInstance = new WebJob();
+                        result.WebJob = webJobInstance;
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = (string)nameValue;
+                            webJobInstance.Name = nameInstance;
+                        }
+                        
+                        JToken runCommandValue = responseDoc["run_command"];
+                        if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
+                        {
+                            string runCommandInstance = (string)runCommandValue;
+                            webJobInstance.RunCommand = runCommandInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                            webJobInstance.Type = typeInstance;
+                        }
+                        
+                        JToken urlValue = responseDoc["url"];
+                        if (urlValue != null && urlValue.Type != JTokenType.Null)
+                        {
+                            Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                            webJobInstance.Url = urlInstance;
+                        }
+                        
+                        JToken historyUrlValue = responseDoc["history_url"];
+                        if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
+                        {
+                            string historyUrlInstance = (string)historyUrlValue;
+                            webJobInstance.HistoryUrl = historyUrlInstance;
+                        }
+                        
+                        JToken extraInfoUrlValue = responseDoc["extra_info_url"];
+                        if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
+                        {
+                            string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                            webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
+                        }
+                        
+                        JToken latestRunValue = responseDoc["latest_run"];
+                        if (latestRunValue != null && latestRunValue.Type != JTokenType.Null)
+                        {
+                            WebJobRun latestRunInstance = new WebJobRun();
+                            webJobInstance.LatestRun = latestRunInstance;
+                            
+                            JToken idValue = latestRunValue["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = (string)idValue;
+                                latestRunInstance.Id = idInstance;
+                            }
+                            
+                            JToken statusValue = latestRunValue["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = (string)statusValue;
+                                latestRunInstance.Status = statusInstance;
+                            }
+                            
+                            JToken startTimeValue = latestRunValue["start_time"];
+                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime startTimeInstance = (DateTime)startTimeValue;
+                                latestRunInstance.StartTime = startTimeInstance;
+                            }
+                            
+                            JToken endTimeValue = latestRunValue["end_time"];
+                            if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime endTimeInstance = (DateTime)endTimeValue;
+                                latestRunInstance.EndTime = endTimeInstance;
+                            }
+                            
+                            JToken durationValue = latestRunValue["duration"];
+                            if (durationValue != null && durationValue.Type != JTokenType.Null)
+                            {
+                                TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                latestRunInstance.Duration = durationInstance;
+                            }
+                            
+                            JToken outputUrlValue = latestRunValue["output_url"];
+                            if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
+                            {
+                                Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                latestRunInstance.OutputUrl = outputUrlInstance;
+                            }
+                            
+                            JToken errorUrlValue = latestRunValue["error_url"];
+                            if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
+                            {
+                                Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                latestRunInstance.ErrorUrl = errorUrlInstance;
+                            }
+                            
+                            JToken urlValue2 = latestRunValue["url"];
+                            if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                            {
+                                Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                latestRunInstance.Url = urlInstance2;
+                            }
+                        }
+                        
+                        JToken statusValue2 = responseDoc["status"];
+                        if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                        {
+                            string statusInstance2 = (string)statusValue2;
+                            webJobInstance.Status = statusInstance2;
+                        }
+                        
+                        JToken detailedStatusValue = responseDoc["detailed_status"];
+                        if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
+                        {
+                            string detailedStatusInstance = (string)detailedStatusValue;
+                            webJobInstance.DetailedStatus = detailedStatusInstance;
+                        }
+                        
+                        JToken logUrlValue = responseDoc["log_url"];
+                        if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
+                        {
+                            string logUrlInstance = (string)logUrlValue;
+                            webJobInstance.LogUrl = logUrlInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// List the web jobs.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Additional parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of jobs operation response.
+        /// </returns>
+        public async Task<WebJobListResponse> ListAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/jobs").ToString() + "?";
+            url = url + "version=2";
+            if (parameters != null && parameters.Top != null)
+            {
+                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
+            }
+            if (parameters != null && parameters.OrderBy != null)
+            {
+                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
+            }
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebJobListResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebJobListResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JArray jobsArray = (JArray)responseDoc;
+                        if (jobsArray != null && jobsArray.Type != JTokenType.Null)
+                        {
+                            foreach (JToken jobsValue in jobsArray)
+                            {
+                                WebJob webJobInstance = new WebJob();
+                                result.Jobs.Add(webJobInstance);
+                                
+                                JToken nameValue = jobsValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                {
+                                    string nameInstance = (string)nameValue;
+                                    webJobInstance.Name = nameInstance;
+                                }
+                                
+                                JToken runCommandValue = jobsValue["run_command"];
+                                if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
+                                {
+                                    string runCommandInstance = (string)runCommandValue;
+                                    webJobInstance.RunCommand = runCommandInstance;
+                                }
+                                
+                                JToken typeValue = jobsValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                                    webJobInstance.Type = typeInstance;
+                                }
+                                
+                                JToken urlValue = jobsValue["url"];
+                                if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                {
+                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                                    webJobInstance.Url = urlInstance;
+                                }
+                                
+                                JToken historyUrlValue = jobsValue["history_url"];
+                                if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
+                                {
+                                    string historyUrlInstance = (string)historyUrlValue;
+                                    webJobInstance.HistoryUrl = historyUrlInstance;
+                                }
+                                
+                                JToken extraInfoUrlValue = jobsValue["extra_info_url"];
+                                if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
+                                {
+                                    string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                                    webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
+                                }
+                                
+                                JToken latestRunValue = jobsValue["latest_run"];
+                                if (latestRunValue != null && latestRunValue.Type != JTokenType.Null)
+                                {
+                                    WebJobRun latestRunInstance = new WebJobRun();
+                                    webJobInstance.LatestRun = latestRunInstance;
+                                    
+                                    JToken idValue = latestRunValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = (string)idValue;
+                                        latestRunInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken statusValue = latestRunValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = (string)statusValue;
+                                        latestRunInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = latestRunValue["start_time"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = (DateTime)startTimeValue;
+                                        latestRunInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = latestRunValue["end_time"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                        latestRunInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken durationValue = latestRunValue["duration"];
+                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                        latestRunInstance.Duration = durationInstance;
+                                    }
+                                    
+                                    JToken outputUrlValue = latestRunValue["output_url"];
+                                    if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
+                                    {
+                                        Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                        latestRunInstance.OutputUrl = outputUrlInstance;
+                                    }
+                                    
+                                    JToken errorUrlValue = latestRunValue["error_url"];
+                                    if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
+                                    {
+                                        Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                        latestRunInstance.ErrorUrl = errorUrlInstance;
+                                    }
+                                    
+                                    JToken urlValue2 = latestRunValue["url"];
+                                    if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                        latestRunInstance.Url = urlInstance2;
+                                    }
+                                }
+                                
+                                JToken statusValue2 = jobsValue["status"];
+                                if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                {
+                                    string statusInstance2 = (string)statusValue2;
+                                    webJobInstance.Status = statusInstance2;
+                                }
+                                
+                                JToken detailedStatusValue = jobsValue["detailed_status"];
+                                if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
+                                {
+                                    string detailedStatusInstance = (string)detailedStatusValue;
+                                    webJobInstance.DetailedStatus = detailedStatusInstance;
+                                }
+                                
+                                JToken logUrlValue = jobsValue["log_url"];
+                                if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
+                                {
+                                    string logUrlInstance = (string)logUrlValue;
+                                    webJobInstance.LogUrl = logUrlInstance;
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// List the continuous web jobs.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Additional parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of jobs operation response.
+        /// </returns>
+        public async Task<WebJobListResponse> ListContinuousAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "ListContinuousAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous").ToString() + "?";
+            url = url + "version=2";
+            if (parameters != null && parameters.Top != null)
+            {
+                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
+            }
+            if (parameters != null && parameters.OrderBy != null)
+            {
+                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
+            }
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebJobListResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebJobListResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JArray jobsArray = (JArray)responseDoc;
+                        if (jobsArray != null && jobsArray.Type != JTokenType.Null)
+                        {
+                            foreach (JToken jobsValue in jobsArray)
+                            {
+                                WebJob webJobInstance = new WebJob();
+                                result.Jobs.Add(webJobInstance);
+                                
+                                JToken nameValue = jobsValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                {
+                                    string nameInstance = (string)nameValue;
+                                    webJobInstance.Name = nameInstance;
+                                }
+                                
+                                JToken runCommandValue = jobsValue["run_command"];
+                                if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
+                                {
+                                    string runCommandInstance = (string)runCommandValue;
+                                    webJobInstance.RunCommand = runCommandInstance;
+                                }
+                                
+                                JToken typeValue = jobsValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                                    webJobInstance.Type = typeInstance;
+                                }
+                                
+                                JToken urlValue = jobsValue["url"];
+                                if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                {
+                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                                    webJobInstance.Url = urlInstance;
+                                }
+                                
+                                JToken historyUrlValue = jobsValue["history_url"];
+                                if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
+                                {
+                                    string historyUrlInstance = (string)historyUrlValue;
+                                    webJobInstance.HistoryUrl = historyUrlInstance;
+                                }
+                                
+                                JToken extraInfoUrlValue = jobsValue["extra_info_url"];
+                                if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
+                                {
+                                    string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                                    webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
+                                }
+                                
+                                JToken latestRunValue = jobsValue["latest_run"];
+                                if (latestRunValue != null && latestRunValue.Type != JTokenType.Null)
+                                {
+                                    WebJobRun latestRunInstance = new WebJobRun();
+                                    webJobInstance.LatestRun = latestRunInstance;
+                                    
+                                    JToken idValue = latestRunValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = (string)idValue;
+                                        latestRunInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken statusValue = latestRunValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = (string)statusValue;
+                                        latestRunInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken startTimeValue = latestRunValue["start_time"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = (DateTime)startTimeValue;
+                                        latestRunInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken endTimeValue = latestRunValue["end_time"];
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                        latestRunInstance.EndTime = endTimeInstance;
+                                    }
+                                    
+                                    JToken durationValue = latestRunValue["duration"];
+                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                        latestRunInstance.Duration = durationInstance;
+                                    }
+                                    
+                                    JToken outputUrlValue = latestRunValue["output_url"];
+                                    if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
+                                    {
+                                        Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                        latestRunInstance.OutputUrl = outputUrlInstance;
+                                    }
+                                    
+                                    JToken errorUrlValue = latestRunValue["error_url"];
+                                    if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
+                                    {
+                                        Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                        latestRunInstance.ErrorUrl = errorUrlInstance;
+                                    }
+                                    
+                                    JToken urlValue2 = latestRunValue["url"];
+                                    if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
+                                    {
+                                        Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                        latestRunInstance.Url = urlInstance2;
+                                    }
+                                }
+                                
+                                JToken statusValue2 = jobsValue["status"];
+                                if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                {
+                                    string statusInstance2 = (string)statusValue2;
+                                    webJobInstance.Status = statusInstance2;
+                                }
+                                
+                                JToken detailedStatusValue = jobsValue["detailed_status"];
+                                if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
+                                {
+                                    string detailedStatusInstance = (string)detailedStatusValue;
+                                    webJobInstance.DetailedStatus = detailedStatusInstance;
+                                }
+                                
+                                JToken logUrlValue = jobsValue["log_url"];
+                                if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
+                                {
+                                    string logUrlInstance = (string)logUrlValue;
+                                    webJobInstance.LogUrl = logUrlInstance;
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// List the web job runs.
+        /// </summary>
+        /// <param name='jobName'>
+        /// The job name.
+        /// </param>
         /// <param name='parameters'>
         /// Additional parameters.
         /// </param>
@@ -1247,7 +1753,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "jobs/triggered/" + jobName + "/history?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/history?";
             url = url + "version=2";
             if (parameters != null && parameters.Top != null)
             {
@@ -1306,72 +1812,68 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     result = new WebJobRunListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobRunsArray = (JArray)responseDoc;
-                        if (jobRunsArray != null)
+                        JArray runsArray = (JArray)responseDoc["runs"];
+                        if (runsArray != null && runsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobRunsValue in jobRunsArray)
+                            foreach (JToken runsValue in runsArray)
                             {
                                 WebJobRun webJobRunInstance = new WebJobRun();
                                 result.JobRuns.Add(webJobRunInstance);
                                 
-                                JToken idValue = jobRunsValue["id"];
-                                if (idValue != null)
+                                JToken idValue = runsValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
                                     string idInstance = (string)idValue;
                                     webJobRunInstance.Id = idInstance;
                                 }
                                 
-                                JToken statusValue = jobRunsValue["status"];
-                                if (statusValue != null)
+                                JToken statusValue = runsValue["status"];
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
                                 {
                                     string statusInstance = (string)statusValue;
                                     webJobRunInstance.Status = statusInstance;
                                 }
                                 
-                                JToken startTimeValue = jobRunsValue["start_time"];
-                                if (startTimeValue != null)
+                                JToken startTimeValue = runsValue["start_time"];
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime startTimeInstance = (DateTime)startTimeValue;
                                     webJobRunInstance.StartTime = startTimeInstance;
                                 }
                                 
-                                JToken endTimeValue = jobRunsValue["end_time"];
-                                if (endTimeValue != null)
+                                JToken endTimeValue = runsValue["end_time"];
+                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime endTimeInstance = (DateTime)endTimeValue;
                                     webJobRunInstance.EndTime = endTimeInstance;
                                 }
                                 
-                                JToken durationValue = jobRunsValue["duration"];
-                                if (durationValue != null)
+                                JToken durationValue = runsValue["duration"];
+                                if (durationValue != null && durationValue.Type != JTokenType.Null)
                                 {
-                                    // how
                                     TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
                                     webJobRunInstance.Duration = durationInstance;
                                 }
                                 
-                                JToken outputUrlValue = jobRunsValue["output_url"];
-                                if (outputUrlValue != null)
+                                JToken outputUrlValue = runsValue["output_url"];
+                                if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                                 {
-                                    // how
                                     Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
                                     webJobRunInstance.OutputUrl = outputUrlInstance;
                                 }
                                 
-                                JToken errorUrlValue = jobRunsValue["error_url"];
-                                if (errorUrlValue != null)
+                                JToken errorUrlValue = runsValue["error_url"];
+                                if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                                 {
-                                    // how
                                     Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
                                     webJobRunInstance.ErrorUrl = errorUrlInstance;
                                 }
                                 
-                                JToken urlValue = jobRunsValue["url"];
-                                if (urlValue != null)
+                                JToken urlValue = runsValue["url"];
+                                if (urlValue != null && urlValue.Type != JTokenType.Null)
                                 {
-                                    // how
                                     Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
                                     webJobRunInstance.Url = urlInstance;
                                 }
@@ -1409,7 +1911,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// TBD.
+        /// List the triggered web jobs.
         /// </summary>
         /// <param name='parameters'>
         /// Additional parameters.
@@ -1436,7 +1938,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "jobs/triggered?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered").ToString() + "?";
             url = url + "version=2";
             if (parameters != null && parameters.Top != null)
             {
@@ -1495,10 +1997,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     result = new WebJobListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         JArray jobsArray = (JArray)responseDoc;
-                        if (jobsArray != null)
+                        if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
                             foreach (JToken jobsValue in jobsArray)
                             {
@@ -1506,113 +2008,129 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 result.Jobs.Add(webJobInstance);
                                 
                                 JToken nameValue = jobsValue["name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = (string)nameValue;
                                     webJobInstance.Name = nameInstance;
                                 }
                                 
-                                JToken runCommandValue = jobsValue["runCommand"];
-                                if (runCommandValue != null)
+                                JToken runCommandValue = jobsValue["run_command"];
+                                if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
                                 {
                                     string runCommandInstance = (string)runCommandValue;
                                     webJobInstance.RunCommand = runCommandInstance;
                                 }
                                 
                                 JToken typeValue = jobsValue["type"];
-                                if (typeValue != null)
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    string typeInstance = (string)typeValue;
+                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
                                     webJobInstance.Type = typeInstance;
                                 }
                                 
                                 JToken urlValue = jobsValue["url"];
-                                if (urlValue != null)
+                                if (urlValue != null && urlValue.Type != JTokenType.Null)
                                 {
-                                    // how
                                     Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
                                     webJobInstance.Url = urlInstance;
                                 }
                                 
                                 JToken historyUrlValue = jobsValue["history_url"];
-                                if (historyUrlValue != null)
+                                if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
                                 {
                                     string historyUrlInstance = (string)historyUrlValue;
                                     webJobInstance.HistoryUrl = historyUrlInstance;
                                 }
                                 
                                 JToken extraInfoUrlValue = jobsValue["extra_info_url"];
-                                if (extraInfoUrlValue != null)
+                                if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
                                 {
                                     string extraInfoUrlInstance = (string)extraInfoUrlValue;
                                     webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
                                 }
                                 
                                 JToken latestRunValue = jobsValue["latest_run"];
-                                if (latestRunValue != null)
+                                if (latestRunValue != null && latestRunValue.Type != JTokenType.Null)
                                 {
                                     WebJobRun latestRunInstance = new WebJobRun();
                                     webJobInstance.LatestRun = latestRunInstance;
                                     
                                     JToken idValue = latestRunValue["id"];
-                                    if (idValue != null)
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
                                         string idInstance = (string)idValue;
                                         latestRunInstance.Id = idInstance;
                                     }
                                     
                                     JToken statusValue = latestRunValue["status"];
-                                    if (statusValue != null)
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
                                         string statusInstance = (string)statusValue;
                                         latestRunInstance.Status = statusInstance;
                                     }
                                     
                                     JToken startTimeValue = latestRunValue["start_time"];
-                                    if (startTimeValue != null)
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
                                         DateTime startTimeInstance = (DateTime)startTimeValue;
                                         latestRunInstance.StartTime = startTimeInstance;
                                     }
                                     
                                     JToken endTimeValue = latestRunValue["end_time"];
-                                    if (endTimeValue != null)
+                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                     {
                                         DateTime endTimeInstance = (DateTime)endTimeValue;
                                         latestRunInstance.EndTime = endTimeInstance;
                                     }
                                     
                                     JToken durationValue = latestRunValue["duration"];
-                                    if (durationValue != null)
+                                    if (durationValue != null && durationValue.Type != JTokenType.Null)
                                     {
-                                        // how
                                         TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
                                         latestRunInstance.Duration = durationInstance;
                                     }
                                     
                                     JToken outputUrlValue = latestRunValue["output_url"];
-                                    if (outputUrlValue != null)
+                                    if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                                     {
-                                        // how
                                         Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
                                         latestRunInstance.OutputUrl = outputUrlInstance;
                                     }
                                     
                                     JToken errorUrlValue = latestRunValue["error_url"];
-                                    if (errorUrlValue != null)
+                                    if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                                     {
-                                        // how
                                         Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
                                         latestRunInstance.ErrorUrl = errorUrlInstance;
                                     }
                                     
                                     JToken urlValue2 = latestRunValue["url"];
-                                    if (urlValue2 != null)
+                                    if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
                                     {
-                                        // how
                                         Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
                                         latestRunInstance.Url = urlInstance2;
                                     }
+                                }
+                                
+                                JToken statusValue2 = jobsValue["status"];
+                                if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
+                                {
+                                    string statusInstance2 = (string)statusValue2;
+                                    webJobInstance.Status = statusInstance2;
+                                }
+                                
+                                JToken detailedStatusValue = jobsValue["detailed_status"];
+                                if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
+                                {
+                                    string detailedStatusInstance = (string)detailedStatusValue;
+                                    webJobInstance.DetailedStatus = detailedStatusInstance;
+                                }
+                                
+                                JToken logUrlValue = jobsValue["log_url"];
+                                if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
+                                {
+                                    string logUrlInstance = (string)logUrlValue;
+                                    webJobInstance.LogUrl = logUrlInstance;
                                 }
                             }
                         }
@@ -1648,10 +2166,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// TBD.
+        /// Run a triggered web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1660,12 +2178,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RunTriggeredAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<OperationResponse> RunTriggeredAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -1675,12 +2193,234 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("jobName", jobName);
                 Tracing.Enter(invocationId, this, "RunTriggeredAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "jobs/triggered/" + jobId + "/run?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/run?";
+            url = url + "version=2";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// If a continuous job is set as singleton it'll run only on a single
+        /// instance opposed to running on all instances.
+        /// </summary>
+        /// <param name='jobName'>
+        /// The job name.
+        /// </param>
+        /// <param name='isSingleton'>
+        /// Boolean value indicating if the job is singleton or not.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> SetSingletonAsync(string jobName, bool isSingleton, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (jobName == null)
+            {
+                throw new ArgumentNullException("jobName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobName", jobName);
+                tracingParameters.Add("isSingleton", isSingleton);
+                Tracing.Enter(invocationId, this, "SetSingletonAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/singleton/?";
+            url = url + "isSingleton=" + Uri.EscapeUriString(isSingleton.ToString().ToLower());
+            url = url + "&version=2";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Start a continuous web job.
+        /// </summary>
+        /// <param name='jobName'>
+        /// The job name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> StartContinuousAsync(string jobName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (jobName == null)
+            {
+                throw new ArgumentNullException("jobName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobName", jobName);
+                Tracing.Enter(invocationId, this, "StartContinuousAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/start/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -1756,10 +2496,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// TBD.
+        /// Stop a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1768,12 +2508,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StartContinousAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<OperationResponse> StopContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
             }
             
             // Tracing
@@ -1783,12 +2523,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
-                Tracing.Enter(invocationId, this, "StartContinousAsync", tracingParameters);
+                tracingParameters.Add("jobName", jobName);
+                Tracing.Enter(invocationId, this, "StopContinuousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "jobs/continuous/" + jobId + "/start?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/stop/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -1864,10 +2604,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// TBD.
+        /// Upload a continuous web job.
         /// </summary>
-        /// <param name='jobId'>
-        /// The job identifier.
+        /// <param name='jobName'>
+        /// The job name.
+        /// </param>
+        /// <param name='jobContent'>
+        /// The job content.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1876,12 +2619,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StopContinousAsync(string jobId, CancellationToken cancellationToken)
+        public async Task<OperationResponse> UploadContinuousAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
         {
             // Validate
-            if (jobId == null)
+            if (jobName == null)
             {
-                throw new ArgumentNullException("jobId");
+                throw new ArgumentNullException("jobName");
+            }
+            if (jobContent == null)
+            {
+                throw new ArgumentNullException("jobContent");
             }
             
             // Tracing
@@ -1891,12 +2638,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("jobId", jobId);
-                Tracing.Enter(invocationId, this, "StopContinousAsync", tracingParameters);
+                tracingParameters.Add("jobName", jobName);
+                tracingParameters.Add("jobContent", jobContent);
+                Tracing.Enter(invocationId, this, "UploadContinuousAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "jobs/continuous/" + jobId + "/stop?";
+            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -1904,7 +2652,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
+                httpRequest.Method = HttpMethod.Put;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -1912,6 +2660,132 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                Stream requestContent = jobContent;
+                httpRequest.Content = new StreamContent(requestContent);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Upload a triggered web job.
+        /// </summary>
+        /// <param name='jobName'>
+        /// The job name.
+        /// </param>
+        /// <param name='jobContent'>
+        /// The job content.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> UploadTriggeredAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (jobName == null)
+            {
+                throw new ArgumentNullException("jobName");
+            }
+            if (jobContent == null)
+            {
+                throw new ArgumentNullException("jobContent");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobName", jobName);
+                tracingParameters.Add("jobContent", jobContent);
+                Tracing.Enter(invocationId, this, "UploadTriggeredAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "/?";
+            url = url + "version=2";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                Stream requestContent = jobContent;
+                httpRequest.Content = new StreamContent(requestContent);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

@@ -22,30 +22,29 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Get Web Job Run operation response.
+    /// The get setting operation response.
     /// </summary>
-    public partial class WebJobGetRunResponse : OperationResponse
+    public partial class SettingsGetResponse : OperationResponse
     {
-        private WebJobRun _jobRun;
+        private string _value;
         
         /// <summary>
-        /// The web job run.
+        /// The setting value.
         /// </summary>
-        public WebJobRun JobRun
+        public string Value
         {
-            get { return this._jobRun; }
-            set { this._jobRun = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobGetRunResponse class.
+        /// Initializes a new instance of the SettingsGetResponse class.
         /// </summary>
-        public WebJobGetRunResponse()
+        public SettingsGetResponse()
         {
         }
     }

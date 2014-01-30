@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// <summary>
     /// TBD.
     /// </summary>
-    public partial interface IWebSiteExtensionsClient
+    public partial interface IWebSiteExtensionsClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all kudu requests.
@@ -59,6 +59,30 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Operations for managing the repositories.
         /// </summary>
         IDeploymentOperations Deployment
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing the diagnostics settings.
+        /// </summary>
+        IDiagnosticOperations Diagnostics
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing the repository.
+        /// </summary>
+        IRepositoryOperations Repository
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing the settings.
+        /// </summary>
+        ISettingsOperations Settings
         {
             get; 
         }
