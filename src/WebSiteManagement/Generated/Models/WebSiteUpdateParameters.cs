@@ -150,13 +150,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._sslCertificates = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteState? _state;
+        private string _state;
         
         /// <summary>
         /// A string that describes the state of the web site. Possible values
-        /// are Stopped or Running.
+        /// include Stopped, Running or QuotaExceeded.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteState? State
+        public string State
         {
             get { return this._state; }
             set { this._state = value; }
