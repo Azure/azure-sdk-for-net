@@ -231,13 +231,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._sslCertificates = value; }
         }
         
-        private WebSiteState _state;
+        private string _state;
         
         /// <summary>
         /// A string that describes the state of the web site. Possible values
         /// are Stopped or Running.
         /// </summary>
-        public WebSiteState State
+        public string State
         {
             get { return this._state; }
             set { this._state = value; }

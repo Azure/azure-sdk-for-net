@@ -1030,7 +1030,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement stateElement = siteElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null)
                         {
-                            WebSiteState stateInstance = (WebSiteState)Enum.Parse(typeof(WebSiteState), stateElement.Value, false);
+                            string stateInstance = stateElement.Value;
                             webSiteInstance.State = stateInstance;
                         }
                         
@@ -2137,7 +2137,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement stateElement = siteElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null)
                         {
-                            WebSiteState stateInstance = (WebSiteState)Enum.Parse(typeof(WebSiteState), stateElement.Value, false);
+                            string stateInstance = stateElement.Value;
                             webSiteInstance.State = stateInstance;
                         }
                         
@@ -4077,7 +4077,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 if (parameters.State != null)
                 {
                     XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                    stateElement.Value = parameters.State.ToString();
+                    stateElement.Value = parameters.State;
                     siteElement.Add(stateElement);
                 }
                 
@@ -4564,7 +4564,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement stateElement2 = siteElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement2 != null)
                         {
-                            WebSiteState stateInstance = (WebSiteState)Enum.Parse(typeof(WebSiteState), stateElement2.Value, false);
+                            string stateInstance = stateElement2.Value;
                             webSiteInstance.State = stateInstance;
                         }
                         

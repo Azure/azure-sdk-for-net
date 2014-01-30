@@ -1578,7 +1578,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement stateElement = sitesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                             if (stateElement != null)
                             {
-                                WebSiteState stateInstance = (WebSiteState)Enum.Parse(typeof(WebSiteState), stateElement.Value, false);
+                                string stateInstance = stateElement.Value;
                                 siteInstance.State = stateInstance;
                             }
                             
