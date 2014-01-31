@@ -241,7 +241,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = this.BaseUri + "/" + this.Credentials.SubscriptionId + "/operations/" + requestId;
+            string url = new Uri(this.BaseUri, "/").ToString() + this.Credentials.SubscriptionId + "/operations/" + requestId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -394,7 +394,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = this.BaseUri + "/" + this.Credentials.SubscriptionId + "/services/servicebus/regions";
+            string url = new Uri(this.BaseUri, "/").ToString() + this.Credentials.SubscriptionId + "/services/servicebus/regions";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

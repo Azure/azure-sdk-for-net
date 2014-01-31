@@ -139,7 +139,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -306,7 +306,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + resourceProviderNamespace + "/" + resourceProviderType + "/" + resourceProviderName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + resourceProviderNamespace + "/" + resourceProviderType + "/" + resourceProviderName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -669,7 +669,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

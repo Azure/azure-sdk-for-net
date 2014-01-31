@@ -156,7 +156,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -238,27 +238,27 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     result = new MediaServicesAccountCreateResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         MediaServicesCreatedAccount accountInstance = new MediaServicesCreatedAccount();
                         result.Account = accountInstance;
                         
                         JToken accountIdValue = responseDoc["AccountId"];
-                        if (accountIdValue != null)
+                        if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
                         {
                             string accountIdInstance = (string)accountIdValue;
                             accountInstance.AccountId = accountIdInstance;
                         }
                         
                         JToken accountNameValue = responseDoc["AccountName"];
-                        if (accountNameValue != null)
+                        if (accountNameValue != null && accountNameValue.Type != JTokenType.Null)
                         {
                             string accountNameInstance = (string)accountNameValue;
                             accountInstance.AccountName = accountNameInstance;
                         }
                         
                         JToken subscriptionValue = responseDoc["Subscription"];
-                        if (subscriptionValue != null)
+                        if (subscriptionValue != null && subscriptionValue.Type != JTokenType.Null)
                         {
                             string subscriptionInstance = (string)subscriptionValue;
                             accountInstance.SubscriptionId = subscriptionInstance;
@@ -330,7 +330,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -440,7 +440,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -491,40 +491,40 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     result = new MediaServicesAccountGetResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         MediaServicesAccount accountInstance = new MediaServicesAccount();
                         result.Account = accountInstance;
                         
                         JToken accountNameValue = responseDoc["AccountName"];
-                        if (accountNameValue != null)
+                        if (accountNameValue != null && accountNameValue.Type != JTokenType.Null)
                         {
                             string accountNameInstance = (string)accountNameValue;
                             accountInstance.AccountName = accountNameInstance;
                         }
                         
                         JToken accountKeyValue = responseDoc["AccountKey"];
-                        if (accountKeyValue != null)
+                        if (accountKeyValue != null && accountKeyValue.Type != JTokenType.Null)
                         {
                             string accountKeyInstance = (string)accountKeyValue;
                             accountInstance.AccountKey = accountKeyInstance;
                         }
                         
                         JToken accountKeysValue = responseDoc["AccountKeys"];
-                        if (accountKeysValue != null)
+                        if (accountKeysValue != null && accountKeysValue.Type != JTokenType.Null)
                         {
                             MediaServicesAccount.AccountKeys accountKeysInstance = new MediaServicesAccount.AccountKeys();
                             accountInstance.StorageAccountKeys = accountKeysInstance;
                             
                             JToken primaryValue = accountKeysValue["Primary"];
-                            if (primaryValue != null)
+                            if (primaryValue != null && primaryValue.Type != JTokenType.Null)
                             {
                                 string primaryInstance = (string)primaryValue;
                                 accountKeysInstance.Primary = primaryInstance;
                             }
                             
                             JToken secondaryValue = accountKeysValue["Secondary"];
-                            if (secondaryValue != null)
+                            if (secondaryValue != null && secondaryValue.Type != JTokenType.Null)
                             {
                                 string secondaryInstance = (string)secondaryValue;
                                 accountKeysInstance.Secondary = secondaryInstance;
@@ -532,14 +532,14 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                         }
                         
                         JToken accountRegionValue = responseDoc["AccountRegion"];
-                        if (accountRegionValue != null)
+                        if (accountRegionValue != null && accountRegionValue.Type != JTokenType.Null)
                         {
                             string accountRegionInstance = (string)accountRegionValue;
                             accountInstance.AccountRegion = accountRegionInstance;
                         }
                         
                         JToken storageAccountNameValue = responseDoc["StorageAccountName"];
-                        if (storageAccountNameValue != null)
+                        if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
                         {
                             string storageAccountNameInstance = (string)storageAccountNameValue;
                             accountInstance.StorageAccountName = storageAccountNameInstance;
@@ -603,7 +603,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -776,7 +776,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName + "/AccountKeys/" + keyType + "/Regenerate";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName + "/AccountKeys/" + keyType + "/Regenerate";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

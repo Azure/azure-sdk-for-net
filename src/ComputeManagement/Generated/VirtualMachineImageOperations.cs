@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -477,7 +477,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -591,7 +591,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -842,7 +842,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1112,7 +1112,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
