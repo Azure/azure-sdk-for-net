@@ -229,7 +229,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/extensions";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/extensions";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -394,7 +394,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "?comp=media";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "?comp=media";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -515,7 +515,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/extensions/" + extensionId;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/extensions/" + extensionId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -626,7 +626,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/operations/isavailable/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/operations/isavailable/" + serviceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -778,7 +778,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -950,7 +950,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1260,7 +1260,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1464,7 +1464,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "?embed-detail=true";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "?embed-detail=true";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2720,7 +2720,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/extensions/" + extensionId;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/extensions/" + extensionId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2880,7 +2880,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3081,7 +3081,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/extensions";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/extensions";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3270,7 +3270,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/extensions";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/extensions";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3455,7 +3455,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/extensions/" + providerNamespace + "/" + extensionType;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/extensions/" + providerNamespace + "/" + extensionType;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3662,7 +3662,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

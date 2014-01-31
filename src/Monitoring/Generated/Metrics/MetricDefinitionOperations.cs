@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricdefinitions/query?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricdefinitions/query?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
             if (metricNamespace != null)
             {
@@ -164,13 +164,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     result = new MetricDefinitionListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
                         result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
                         
                         JArray valueArray = (JArray)responseDoc["Value"];
-                        if (valueArray != null)
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
                             foreach (JToken valueValue in valueArray)
                             {
@@ -178,49 +178,49 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                 metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
                                 
                                 JToken nameValue = valueValue["Name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = (string)nameValue;
                                     metricDefinitionInstance.Name = nameInstance;
                                 }
                                 
                                 JToken namespaceValue = valueValue["Namespace"];
-                                if (namespaceValue != null)
+                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                 {
                                     string namespaceInstance = (string)namespaceValue;
                                     metricDefinitionInstance.Namespace = namespaceInstance;
                                 }
                                 
                                 JToken resourceIdSuffixValue = valueValue["ResourceIdSuffix"];
-                                if (resourceIdSuffixValue != null)
+                                if (resourceIdSuffixValue != null && resourceIdSuffixValue.Type != JTokenType.Null)
                                 {
                                     string resourceIdSuffixInstance = (string)resourceIdSuffixValue;
                                     metricDefinitionInstance.ResourceIdSuffix = resourceIdSuffixInstance;
                                 }
                                 
                                 JToken displayNameValue = valueValue["DisplayName"];
-                                if (displayNameValue != null)
+                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                                 {
                                     string displayNameInstance = (string)displayNameValue;
                                     metricDefinitionInstance.DisplayName = displayNameInstance;
                                 }
                                 
                                 JToken unitValue = valueValue["Unit"];
-                                if (unitValue != null)
+                                if (unitValue != null && unitValue.Type != JTokenType.Null)
                                 {
                                     string unitInstance = (string)unitValue;
                                     metricDefinitionInstance.Unit = unitInstance;
                                 }
                                 
                                 JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
-                                if (primaryAggregationValue != null)
+                                if (primaryAggregationValue != null && primaryAggregationValue.Type != JTokenType.Null)
                                 {
                                     string primaryAggregationInstance = (string)primaryAggregationValue;
                                     metricDefinitionInstance.PrimaryAggregation = primaryAggregationInstance;
                                 }
                                 
                                 JArray metricAvailabilitiesArray = (JArray)valueValue["MetricAvailabilities"];
-                                if (metricAvailabilitiesArray != null)
+                                if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
                                 {
                                     foreach (JToken metricAvailabilitiesValue in metricAvailabilitiesArray)
                                     {
@@ -228,14 +228,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                         metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
                                         
                                         JToken timeGrainValue = metricAvailabilitiesValue["TimeGrain"];
-                                        if (timeGrainValue != null)
+                                        if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                         {
                                             TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
                                             metricAvailabilityInstance.TimeGrain = timeGrainInstance;
                                         }
                                         
                                         JToken retentionValue = metricAvailabilitiesValue["Retention"];
-                                        if (retentionValue != null)
+                                        if (retentionValue != null && retentionValue.Type != JTokenType.Null)
                                         {
                                             TimeSpan retentionInstance = TypeConversion.From8601TimeSpan((string)retentionValue);
                                             metricAvailabilityInstance.Retention = retentionInstance;
@@ -244,14 +244,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                 }
                                 
                                 JToken minimumAlertableTimeWindowValue = valueValue["MinimumAlertableTimeWindow"];
-                                if (minimumAlertableTimeWindowValue != null)
+                                if (minimumAlertableTimeWindowValue != null && minimumAlertableTimeWindowValue.Type != JTokenType.Null)
                                 {
                                     TimeSpan minimumAlertableTimeWindowInstance = TypeConversion.From8601TimeSpan((string)minimumAlertableTimeWindowValue);
                                     metricDefinitionInstance.MinimumAlertableTimeWindow = minimumAlertableTimeWindowInstance;
                                 }
                                 
                                 JToken isAlertableValue = valueValue["IsAlertable"];
-                                if (isAlertableValue != null)
+                                if (isAlertableValue != null && isAlertableValue.Type != JTokenType.Null)
                                 {
                                     bool isAlertableInstance = (bool)isAlertableValue;
                                     metricDefinitionInstance.IsAlertable = isAlertableInstance;

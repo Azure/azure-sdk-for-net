@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Subscriptions
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions";
+            string url = new Uri(this.Client.BaseUri, "/subscriptions").ToString();
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

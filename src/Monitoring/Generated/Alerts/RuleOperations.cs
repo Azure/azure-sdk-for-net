@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + parameters.Rule.Id;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + parameters.Rule.Id;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -305,7 +305,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -410,7 +410,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -462,41 +462,41 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     result = new RuleGetResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         Rule ruleInstance = new Rule();
                         result.Rule = ruleInstance;
                         
                         JToken idValue = responseDoc["Id"];
-                        if (idValue != null)
+                        if (idValue != null && idValue.Type != JTokenType.Null)
                         {
                             string idInstance = (string)idValue;
                             ruleInstance.Id = idInstance;
                         }
                         
                         JToken nameValue = responseDoc["Name"];
-                        if (nameValue != null)
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = (string)nameValue;
                             ruleInstance.Name = nameInstance;
                         }
                         
                         JToken descriptionValue = responseDoc["Description"];
-                        if (descriptionValue != null)
+                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                         {
                             string descriptionInstance = (string)descriptionValue;
                             ruleInstance.Description = descriptionInstance;
                         }
                         
                         JToken isEnabledValue = responseDoc["IsEnabled"];
-                        if (isEnabledValue != null)
+                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
                         {
                             bool isEnabledInstance = (bool)isEnabledValue;
                             ruleInstance.IsEnabled = isEnabledInstance;
                         }
                         
                         JToken conditionValue = responseDoc["Condition"];
-                        if (conditionValue != null)
+                        if (conditionValue != null && conditionValue.Type != JTokenType.Null)
                         {
                             string typeName = (string)conditionValue["odata.type"];
                             if (typeName == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition")
@@ -504,7 +504,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 ThresholdRuleCondition thresholdRuleConditionInstance = new ThresholdRuleCondition();
                                 
                                 JToken dataSourceValue = conditionValue["DataSource"];
-                                if (dataSourceValue != null)
+                                if (dataSourceValue != null && dataSourceValue.Type != JTokenType.Null)
                                 {
                                     string typeName2 = (string)dataSourceValue["odata.type"];
                                     if (typeName2 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource")
@@ -512,21 +512,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                         RuleMetricDataSource ruleMetricDataSourceInstance = new RuleMetricDataSource();
                                         
                                         JToken resourceIdValue = dataSourceValue["ResourceId"];
-                                        if (resourceIdValue != null)
+                                        if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                         {
                                             string resourceIdInstance = (string)resourceIdValue;
                                             ruleMetricDataSourceInstance.ResourceId = resourceIdInstance;
                                         }
                                         
                                         JToken metricNamespaceValue = dataSourceValue["MetricNamespace"];
-                                        if (metricNamespaceValue != null)
+                                        if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
                                         {
                                             string metricNamespaceInstance = (string)metricNamespaceValue;
                                             ruleMetricDataSourceInstance.MetricNamespace = metricNamespaceInstance;
                                         }
                                         
                                         JToken metricNameValue = dataSourceValue["MetricName"];
-                                        if (metricNameValue != null)
+                                        if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
                                         {
                                             string metricNameInstance = (string)metricNameValue;
                                             ruleMetricDataSourceInstance.MetricName = metricNameInstance;
@@ -536,21 +536,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 }
                                 
                                 JToken operatorValue = conditionValue["Operator"];
-                                if (operatorValue != null)
+                                if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                 {
                                     ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, false);
                                     thresholdRuleConditionInstance.Operator = operatorInstance;
                                 }
                                 
                                 JToken thresholdValue = conditionValue["Threshold"];
-                                if (thresholdValue != null)
+                                if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
                                 {
                                     double thresholdInstance = (double)thresholdValue;
                                     thresholdRuleConditionInstance.Threshold = thresholdInstance;
                                 }
                                 
                                 JToken windowSizeValue = conditionValue["WindowSize"];
-                                if (windowSizeValue != null)
+                                if (windowSizeValue != null && windowSizeValue.Type != JTokenType.Null)
                                 {
                                     TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan((string)windowSizeValue);
                                     thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
@@ -560,7 +560,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         }
                         
                         JArray actionsArray = (JArray)responseDoc["Actions"];
-                        if (actionsArray != null)
+                        if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                         {
                             foreach (JToken actionsValue in actionsArray)
                             {
@@ -570,14 +570,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
                                     
                                     JToken sendToServiceOwnersValue = actionsValue["SendToServiceOwners"];
-                                    if (sendToServiceOwnersValue != null)
+                                    if (sendToServiceOwnersValue != null && sendToServiceOwnersValue.Type != JTokenType.Null)
                                     {
                                         bool sendToServiceOwnersInstance = (bool)sendToServiceOwnersValue;
                                         ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
                                     }
                                     
                                     JArray customEmailsArray = (JArray)actionsValue["CustomEmails"];
-                                    if (customEmailsArray != null)
+                                    if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                     {
                                         foreach (JToken customEmailsValue in customEmailsArray)
                                         {
@@ -590,7 +590,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         }
                         
                         JToken lastUpdatedTimeValue = responseDoc["LastUpdatedTime"];
-                        if (lastUpdatedTimeValue != null)
+                        if (lastUpdatedTimeValue != null && lastUpdatedTimeValue.Type != JTokenType.Null)
                         {
                             DateTime lastUpdatedTimeInstance = (DateTime)lastUpdatedTimeValue;
                             ruleInstance.LastUpdatedTime = lastUpdatedTimeInstance;
@@ -650,7 +650,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -702,10 +702,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     result = new RuleListResponse();
                     JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         JArray valueArray = (JArray)responseDoc["Value"];
-                        if (valueArray != null)
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
                             foreach (JToken valueValue in valueArray)
                             {
@@ -713,35 +713,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 result.Value.Add(ruleInstance);
                                 
                                 JToken idValue = valueValue["Id"];
-                                if (idValue != null)
+                                if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
                                     string idInstance = (string)idValue;
                                     ruleInstance.Id = idInstance;
                                 }
                                 
                                 JToken nameValue = valueValue["Name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = (string)nameValue;
                                     ruleInstance.Name = nameInstance;
                                 }
                                 
                                 JToken descriptionValue = valueValue["Description"];
-                                if (descriptionValue != null)
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                 {
                                     string descriptionInstance = (string)descriptionValue;
                                     ruleInstance.Description = descriptionInstance;
                                 }
                                 
                                 JToken isEnabledValue = valueValue["IsEnabled"];
-                                if (isEnabledValue != null)
+                                if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
                                 {
                                     bool isEnabledInstance = (bool)isEnabledValue;
                                     ruleInstance.IsEnabled = isEnabledInstance;
                                 }
                                 
                                 JToken conditionValue = valueValue["Condition"];
-                                if (conditionValue != null)
+                                if (conditionValue != null && conditionValue.Type != JTokenType.Null)
                                 {
                                     string typeName = (string)conditionValue["odata.type"];
                                     if (typeName == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition")
@@ -749,7 +749,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                         ThresholdRuleCondition thresholdRuleConditionInstance = new ThresholdRuleCondition();
                                         
                                         JToken dataSourceValue = conditionValue["DataSource"];
-                                        if (dataSourceValue != null)
+                                        if (dataSourceValue != null && dataSourceValue.Type != JTokenType.Null)
                                         {
                                             string typeName2 = (string)dataSourceValue["odata.type"];
                                             if (typeName2 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource")
@@ -757,21 +757,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                                 RuleMetricDataSource ruleMetricDataSourceInstance = new RuleMetricDataSource();
                                                 
                                                 JToken resourceIdValue = dataSourceValue["ResourceId"];
-                                                if (resourceIdValue != null)
+                                                if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                                 {
                                                     string resourceIdInstance = (string)resourceIdValue;
                                                     ruleMetricDataSourceInstance.ResourceId = resourceIdInstance;
                                                 }
                                                 
                                                 JToken metricNamespaceValue = dataSourceValue["MetricNamespace"];
-                                                if (metricNamespaceValue != null)
+                                                if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
                                                 {
                                                     string metricNamespaceInstance = (string)metricNamespaceValue;
                                                     ruleMetricDataSourceInstance.MetricNamespace = metricNamespaceInstance;
                                                 }
                                                 
                                                 JToken metricNameValue = dataSourceValue["MetricName"];
-                                                if (metricNameValue != null)
+                                                if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
                                                 {
                                                     string metricNameInstance = (string)metricNameValue;
                                                     ruleMetricDataSourceInstance.MetricName = metricNameInstance;
@@ -781,21 +781,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                         }
                                         
                                         JToken operatorValue = conditionValue["Operator"];
-                                        if (operatorValue != null)
+                                        if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                         {
                                             ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, false);
                                             thresholdRuleConditionInstance.Operator = operatorInstance;
                                         }
                                         
                                         JToken thresholdValue = conditionValue["Threshold"];
-                                        if (thresholdValue != null)
+                                        if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
                                         {
                                             double thresholdInstance = (double)thresholdValue;
                                             thresholdRuleConditionInstance.Threshold = thresholdInstance;
                                         }
                                         
                                         JToken windowSizeValue = conditionValue["WindowSize"];
-                                        if (windowSizeValue != null)
+                                        if (windowSizeValue != null && windowSizeValue.Type != JTokenType.Null)
                                         {
                                             TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan((string)windowSizeValue);
                                             thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
@@ -805,7 +805,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 }
                                 
                                 JArray actionsArray = (JArray)valueValue["Actions"];
-                                if (actionsArray != null)
+                                if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                                 {
                                     foreach (JToken actionsValue in actionsArray)
                                     {
@@ -815,14 +815,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                             RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
                                             
                                             JToken sendToServiceOwnersValue = actionsValue["SendToServiceOwners"];
-                                            if (sendToServiceOwnersValue != null)
+                                            if (sendToServiceOwnersValue != null && sendToServiceOwnersValue.Type != JTokenType.Null)
                                             {
                                                 bool sendToServiceOwnersInstance = (bool)sendToServiceOwnersValue;
                                                 ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
                                             }
                                             
                                             JArray customEmailsArray = (JArray)actionsValue["CustomEmails"];
-                                            if (customEmailsArray != null)
+                                            if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                             {
                                                 foreach (JToken customEmailsValue in customEmailsArray)
                                                 {
@@ -835,7 +835,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 }
                                 
                                 JToken lastUpdatedTimeValue = valueValue["LastUpdatedTime"];
-                                if (lastUpdatedTimeValue != null)
+                                if (lastUpdatedTimeValue != null && lastUpdatedTimeValue.Type != JTokenType.Null)
                                 {
                                     DateTime lastUpdatedTimeInstance = (DateTime)lastUpdatedTimeValue;
                                     ruleInstance.LastUpdatedTime = lastUpdatedTimeInstance;

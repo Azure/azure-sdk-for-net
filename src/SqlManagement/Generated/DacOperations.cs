@@ -135,7 +135,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Export";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Export";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Status?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Status?";
             url = url + "servername=" + Uri.EscapeUriString(fullyQualifiedServerName);
             url = url + "&username=" + Uri.EscapeUriString(username);
             url = url + "&password=" + Uri.EscapeUriString(password);
@@ -577,7 +577,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Import";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Import";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

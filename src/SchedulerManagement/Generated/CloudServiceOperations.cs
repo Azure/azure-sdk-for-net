@@ -126,7 +126,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName;
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/CloudServices/" + cloudServiceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -264,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName;
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/CloudServices/" + cloudServiceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -565,7 +565,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName;
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/CloudServices/" + cloudServiceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -761,7 +761,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/CloudServices";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/CloudServices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

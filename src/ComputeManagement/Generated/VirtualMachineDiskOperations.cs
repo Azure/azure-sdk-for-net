@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -290,7 +290,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -463,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -822,7 +822,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -956,7 +956,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1118,7 +1118,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1327,7 +1327,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1584,7 +1584,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1754,7 +1754,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/operatingsystems";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/operatingsystems";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -264,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/operatingsystemfamilies";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/operatingsystemfamilies";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

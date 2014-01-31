@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "?op=ResetPassword";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "?op=ResetPassword";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -250,7 +250,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -394,7 +394,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -496,7 +496,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

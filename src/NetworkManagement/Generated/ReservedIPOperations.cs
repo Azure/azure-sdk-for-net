@@ -102,7 +102,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -257,7 +257,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -553,7 +553,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -725,7 +725,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
