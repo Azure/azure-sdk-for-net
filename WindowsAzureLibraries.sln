@@ -78,7 +78,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WindowsStore", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WindowsStore.Test", "src\Common.WindowsStore.Test\Common.WindowsStore.Test.csproj", "{6B9F0F97-9B59-4623-BF3E-AE0026FB083D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressRouteManagement", "src\ExpressRouteManagement\ExpressRouteManagement.csproj", "{F3C850A1-D315-44FC-AD77-54758B62E824}"
+Project("{E3A2BBFA-8C46-47C2-949A-4A034AE0342F}") = "ExpressRouteManagement", "src\ExpressRouteManagement\ExpressRouteManagement.csproj", "{F3C850A1-D315-44FC-AD77-54758B62E824}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

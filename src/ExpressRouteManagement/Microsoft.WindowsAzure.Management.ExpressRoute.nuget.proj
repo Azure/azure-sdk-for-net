@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <!--
-    Microsoft.WindowsAzure.Management.Compute
+    Microsoft.WindowsAzure.Management.ExpressRoute
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.ExpressRoute">
-      <PackageVersion>0.9.10-preview</PackageVersion>
+      <PackageVersion>0.1.0-preview</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
