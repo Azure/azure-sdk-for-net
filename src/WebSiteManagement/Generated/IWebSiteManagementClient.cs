@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx for
     /// more information)
     /// </summary>
-    public partial interface IWebSiteManagementClient
+    public partial interface IWebSiteManagementClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all Service Management requests.

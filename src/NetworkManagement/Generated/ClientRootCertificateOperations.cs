@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -130,8 +130,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = null;
-                requestContent = parameters.Certificate;
+                string requestContent = parameters.Certificate;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
                 
@@ -253,7 +252,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -389,7 +388,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -505,7 +504,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

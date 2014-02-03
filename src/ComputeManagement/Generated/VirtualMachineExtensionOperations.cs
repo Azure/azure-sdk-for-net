@@ -97,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/resourceextensions";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/resourceextensions";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -290,7 +290,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/resourceextensions/" + publisherName + "/" + extensionName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/resourceextensions/" + publisherName + "/" + extensionName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

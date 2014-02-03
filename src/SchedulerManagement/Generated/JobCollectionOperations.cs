@@ -114,7 +114,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -303,7 +303,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -434,7 +434,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -633,7 +633,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/?";
             url = url + "op=checknameavailability";
             url = url + "&resourceName=" + Uri.EscapeUriString(jobCollectionName);
             
@@ -965,7 +965,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/~/JobCollections/" + jobCollectionName;
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + cloudServiceName + "/resources/scheduler/~/JobCollections/" + jobCollectionName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -30,6 +30,17 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
     /// </summary>
     public partial class WebJob
     {
+        private string _detailedStatus;
+        
+        /// <summary>
+        /// The job details status.
+        /// </summary>
+        public string DetailedStatus
+        {
+            get { return this._detailedStatus; }
+            set { this._detailedStatus = value; }
+        }
+        
         private string _extraInfoUrl;
         
         /// <summary>
@@ -63,6 +74,17 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
             set { this._latestRun = value; }
         }
         
+        private string _logUrl;
+        
+        /// <summary>
+        /// The job log url.
+        /// </summary>
+        public string LogUrl
+        {
+            get { return this._logUrl; }
+            set { this._logUrl = value; }
+        }
+        
         private string _name;
         
         /// <summary>
@@ -85,12 +107,23 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
             set { this._runCommand = value; }
         }
         
-        private string _type;
+        private string _status;
+        
+        /// <summary>
+        /// The job status.
+        /// </summary>
+        public string Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
+        private WebJobType _type;
         
         /// <summary>
         /// The type.
         /// </summary>
-        public string Type
+        public WebJobType Type
         {
             get { return this._type; }
             set { this._type = value; }

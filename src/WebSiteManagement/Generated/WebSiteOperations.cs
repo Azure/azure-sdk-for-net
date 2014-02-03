@@ -118,7 +118,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/slots?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/slots?";
             url = url + "Command=swap";
             url = url + "&targetSlot=" + Uri.EscapeUriString(slotName);
             
@@ -464,7 +464,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1030,7 +1030,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement stateElement = siteElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null)
                         {
-                            WebSiteState stateInstance = (WebSiteState)Enum.Parse(typeof(WebSiteState), stateElement.Value, false);
+                            string stateInstance = stateElement.Value;
                             webSiteInstance.State = stateInstance;
                         }
                         
@@ -1126,7 +1126,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1255,7 +1255,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
             url = url + "deleteEmptyServerFarm=" + Uri.EscapeUriString(parameters.DeleteEmptyServerFarm.ToString().ToLower());
             url = url + "&deleteMetrics=" + Uri.EscapeUriString(parameters.DeleteMetrics.ToString().ToLower());
             url = url + "&deleteAllSlots=" + Uri.EscapeUriString(parameters.DeleteAllSlots.ToString().ToLower());
@@ -1380,7 +1380,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1515,7 +1515,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/newpassword";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/newpassword";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1637,7 +1637,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
             if (parameters != null && parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
             {
                 url = url + "propertiesToInclude=" + Uri.EscapeUriString(string.Join(",", parameters.PropertiesToInclude));
@@ -2137,7 +2137,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement stateElement = siteElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null)
                         {
-                            WebSiteState stateInstance = (WebSiteState)Enum.Parse(typeof(WebSiteState), stateElement.Value, false);
+                            string stateInstance = stateElement.Value;
                             webSiteInstance.State = stateInstance;
                         }
                         
@@ -2229,7 +2229,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2594,7 +2594,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/metrics?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/metrics?";
             if (parameters.MetricNames != null && parameters.MetricNames.Count > 0)
             {
                 url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
@@ -2875,7 +2875,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/publishxml";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/publishxml";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3121,7 +3121,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3253,7 +3253,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/usages";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/usages";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3410,6 +3410,126 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
+        /// Determines if a hostname is available
+        /// </summary>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Is Hostname Available operation response.
+        /// </returns>
+        public async Task<WebSiteIsHostnameAvailableResponse> IsHostnameAvailableAsync(string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "IsHostnameAvailableAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?";
+            url = url + "ishostnameavailable=" + Uri.EscapeUriString(webSiteName);
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteIsHostnameAvailableResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebSiteIsHostnameAvailableResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement booleanElement = responseDoc.Element(XName.Get("boolean", ""));
+                    if (booleanElement != null)
+                    {
+                        bool booleanInstance = bool.Parse(booleanElement.Value);
+                        result.IsAvailable = booleanInstance;
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// You can restart a web site by issuing an HTTP POST request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
         /// for more information)
@@ -3452,7 +3572,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/restart";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/restart";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3594,9 +3714,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     if (result.Errors != null && result.Errors.Count > 0)
                     {
-                        CloudException ex = new CloudException(result.Errors[0].Code + " : " + result.Errors[0].Message);
-                        ex.ErrorCode = result.Errors[0].Code;
-                        ex.ErrorMessage = result.Errors[0].Message;
+                        CloudException ex = new CloudException(result.Errors.ElementAtOrDefault(0).Code + " : " + result.Errors.ElementAtOrDefault(0).Message);
+                        ex.ErrorCode = result.Errors.ElementAtOrDefault(0).Code;
+                        ex.ErrorMessage = result.Errors.ElementAtOrDefault(0).Message;
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -3671,7 +3791,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository?action=sync";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository?action=sync";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3797,7 +3917,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3957,7 +4077,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 if (parameters.State != null)
                 {
                     XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                    stateElement.Value = parameters.State.ToString();
+                    stateElement.Value = parameters.State;
                     siteElement.Add(stateElement);
                 }
                 
@@ -4444,7 +4564,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement stateElement2 = siteElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement2 != null)
                         {
-                            WebSiteState stateInstance = (WebSiteState)Enum.Parse(typeof(WebSiteState), stateElement2.Value, false);
+                            string stateInstance = stateElement2.Value;
                             webSiteInstance.State = stateInstance;
                         }
                         
@@ -4545,7 +4665,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

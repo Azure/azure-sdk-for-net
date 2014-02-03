@@ -105,7 +105,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databaseoperations/" + operationGuid;
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/services/sqlservers/servers/" + serverName + "/databaseoperations/" + operationGuid;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -343,7 +343,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databaseoperations?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/services/sqlservers/servers/" + serverName + "/databaseoperations?";
             url = url + "databaseName=" + Uri.EscapeUriString(databaseName);
             
             // Create HTTP transport objects
@@ -579,7 +579,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databaseoperations?contentview=generic";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/services/sqlservers/servers/" + serverName + "/databaseoperations?contentview=generic";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

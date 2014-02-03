@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "?";
             url = url + "op=checkavailability";
             url = url + "&address=" + Uri.EscapeUriString(ipAddress);
             
