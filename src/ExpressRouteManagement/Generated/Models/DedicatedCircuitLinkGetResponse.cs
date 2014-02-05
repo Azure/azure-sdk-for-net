@@ -31,27 +31,15 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class DedicatedCircuitLinkGetResponse : OperationResponse
     {
-        private DedicatedCircuitLinkState _state;
+        private AzureDedicatedCircuitLink _dedicatedCircuitLink;
         
         /// <summary>
-        /// State of the dedicated circuit link. Values can be NotProvisioned,
-        /// Provisioning, Provisioned, Deprovisioning, or ProvisioningError.
+        /// Details of the requested dedicated circuit link.
         /// </summary>
-        public DedicatedCircuitLinkState State
+        public AzureDedicatedCircuitLink DedicatedCircuitLink
         {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private string _vnetName;
-        
-        /// <summary>
-        /// The name of the Vnet that is linked.
-        /// </summary>
-        public string VnetName
-        {
-            get { return this._vnetName; }
-            set { this._vnetName = value; }
+            get { return this._dedicatedCircuitLink; }
+            set { this._dedicatedCircuitLink = value; }
         }
         
         /// <summary>

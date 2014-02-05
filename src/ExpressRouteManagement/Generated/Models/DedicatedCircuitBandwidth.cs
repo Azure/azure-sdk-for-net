@@ -21,31 +21,37 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
-    /// <summary>
-    /// The Get Dedicated Circuit operation response.
-    /// </summary>
-    public partial class DedicatedCircuitGetResponse : OperationResponse
+    public partial class DedicatedCircuitBandwidth
     {
-        private AzureDedicatedCircuit _dedicatedCircuit;
+        private uint _bandwidth;
         
         /// <summary>
-        /// Details of the requested dedicated circuit.
+        /// Bandwidth of the dedicated circuit in Mbps.
         /// </summary>
-        public AzureDedicatedCircuit DedicatedCircuit
+        public uint Bandwidth
         {
-            get { return this._dedicatedCircuit; }
-            set { this._dedicatedCircuit = value; }
+            get { return this._bandwidth; }
+            set { this._bandwidth = value; }
+        }
+        
+        private string _label;
+        
+        /// <summary>
+        /// Label associated with the bandwidth.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DedicatedCircuitGetResponse class.
+        /// Initializes a new instance of the DedicatedCircuitBandwidth class.
         /// </summary>
-        public DedicatedCircuitGetResponse()
+        public DedicatedCircuitBandwidth()
         {
         }
     }

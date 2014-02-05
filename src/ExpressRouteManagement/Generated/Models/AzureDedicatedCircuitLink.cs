@@ -21,31 +21,42 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The Get Dedicated Circuit operation response.
+    /// Describes a Dedicated Circuit Link.
     /// </summary>
-    public partial class DedicatedCircuitGetResponse : OperationResponse
+    public partial class AzureDedicatedCircuitLink
     {
-        private AzureDedicatedCircuit _dedicatedCircuit;
+        private DedicatedCircuitLinkState _state;
         
         /// <summary>
-        /// Details of the requested dedicated circuit.
+        /// State of the dedicated circuit link. Values can be NotProvisioned,
+        /// Provisioning, Provisioned, Deprovisioning, or ProvisioningError.
         /// </summary>
-        public AzureDedicatedCircuit DedicatedCircuit
+        public DedicatedCircuitLinkState State
         {
-            get { return this._dedicatedCircuit; }
-            set { this._dedicatedCircuit = value; }
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
+        private string _vnetName;
+        
+        /// <summary>
+        /// The name of the Vnet that is linked.
+        /// </summary>
+        public string VnetName
+        {
+            get { return this._vnetName; }
+            set { this._vnetName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DedicatedCircuitGetResponse class.
+        /// Initializes a new instance of the AzureDedicatedCircuitLink class.
         /// </summary>
-        public DedicatedCircuitGetResponse()
+        public AzureDedicatedCircuitLink()
         {
         }
     }

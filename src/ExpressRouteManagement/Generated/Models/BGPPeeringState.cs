@@ -21,32 +21,16 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The Get Dedicated Circuit operation response.
+    /// The state of the BGP Peering.
     /// </summary>
-    public partial class DedicatedCircuitGetResponse : OperationResponse
+    public enum BGPPeeringState
     {
-        private AzureDedicatedCircuit _dedicatedCircuit;
+        Disabled = 0,
         
-        /// <summary>
-        /// Details of the requested dedicated circuit.
-        /// </summary>
-        public AzureDedicatedCircuit DedicatedCircuit
-        {
-            get { return this._dedicatedCircuit; }
-            set { this._dedicatedCircuit = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the DedicatedCircuitGetResponse class.
-        /// </summary>
-        public DedicatedCircuitGetResponse()
-        {
-        }
+        Enabled = 1,
     }
 }
