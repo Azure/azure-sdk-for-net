@@ -115,7 +115,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 
                 // Serialize Request
                 string requestContent = null;
-                JToken requestDoc = null;
+                JToken requestDoc = new JObject();
                 
                 if (parameters.Rule != null)
                 {

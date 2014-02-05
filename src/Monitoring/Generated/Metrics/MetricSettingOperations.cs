@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 
                 // Serialize Request
                 string requestContent = null;
-                JToken requestDoc = null;
+                JToken requestDoc = new JObject();
                 
                 JObject metricSettingValue = new JObject();
                 requestDoc = metricSettingValue;
