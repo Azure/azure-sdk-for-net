@@ -30,11 +30,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The List Dedicated Circuit Service Provider operation response.
     /// </summary>
-    public partial class DedicatedCircuitServiceProviderListResponse : OperationResponse, IEnumerable<DedicatedCircuitServiceProviderListResponse.DedicatedCircuitServiceProvider>
+    public partial class DedicatedCircuitServiceProviderListResponse : OperationResponse, IEnumerable<AzureDedicatedCircuitServiceProvider>
     {
-        private IList<DedicatedCircuitServiceProviderListResponse.DedicatedCircuitServiceProvider> _dedicatedCircuitServiceProviders;
+        private IList<AzureDedicatedCircuitServiceProvider> _dedicatedCircuitServiceProviders;
         
-        public IList<DedicatedCircuitServiceProviderListResponse.DedicatedCircuitServiceProvider> DedicatedCircuitServiceProviders
+        public IList<AzureDedicatedCircuitServiceProvider> DedicatedCircuitServiceProviders
         {
             get { return this._dedicatedCircuitServiceProviders; }
             set { this._dedicatedCircuitServiceProviders = value; }
@@ -46,13 +46,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitServiceProviderListResponse()
         {
-            this._dedicatedCircuitServiceProviders = new List<DedicatedCircuitServiceProviderListResponse.DedicatedCircuitServiceProvider>();
+            this._dedicatedCircuitServiceProviders = new List<AzureDedicatedCircuitServiceProvider>();
         }
         
         /// <summary>
         /// Gets the sequence of DedicatedCircuitServiceProviders.
         /// </summary>
-        public IEnumerator<DedicatedCircuitServiceProviderListResponse.DedicatedCircuitServiceProvider> GetEnumerator()
+        public IEnumerator<AzureDedicatedCircuitServiceProvider> GetEnumerator()
         {
             return this.DedicatedCircuitServiceProviders.GetEnumerator();
         }
@@ -63,96 +63,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-        
-        public partial class DedicatedCircuitBandwidth
-        {
-            private uint _bandwidth;
-            
-            /// <summary>
-            /// Bandwidth of the dedicated circuit in Mbps.
-            /// </summary>
-            public uint Bandwidth
-            {
-                get { return this._bandwidth; }
-                set { this._bandwidth = value; }
-            }
-            
-            private string _label;
-            
-            /// <summary>
-            /// Label associated with the bandwidth.
-            /// </summary>
-            public string Label
-            {
-                get { return this._label; }
-                set { this._label = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the DedicatedCircuitBandwidth
-            /// class.
-            /// </summary>
-            public DedicatedCircuitBandwidth()
-            {
-            }
-        }
-        
-        public partial class DedicatedCircuitServiceProvider
-        {
-            private IList<DedicatedCircuitServiceProviderListResponse.DedicatedCircuitBandwidth> _dedicatedCircuitBandwidths;
-            
-            /// <summary>
-            /// Bandwidths available to create dedicated circuits.
-            /// </summary>
-            public IList<DedicatedCircuitServiceProviderListResponse.DedicatedCircuitBandwidth> DedicatedCircuitBandwidths
-            {
-                get { return this._dedicatedCircuitBandwidths; }
-                set { this._dedicatedCircuitBandwidths = value; }
-            }
-            
-            private string _dedicatedCircuitLocations;
-            
-            /// <summary>
-            /// Locations available for peering with Azure.
-            /// </summary>
-            public string DedicatedCircuitLocations
-            {
-                get { return this._dedicatedCircuitLocations; }
-                set { this._dedicatedCircuitLocations = value; }
-            }
-            
-            private string _name;
-            
-            /// <summary>
-            /// Name of the dedicated circuit service provider.
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private string _type;
-            
-            /// <summary>
-            /// Type of the dedicated circuit service provider. Can be IXP or
-            /// Telco.
-            /// </summary>
-            public string Type
-            {
-                get { return this._type; }
-                set { this._type = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the
-            /// DedicatedCircuitServiceProvider class.
-            /// </summary>
-            public DedicatedCircuitServiceProvider()
-            {
-                this._dedicatedCircuitBandwidths = new List<DedicatedCircuitServiceProviderListResponse.DedicatedCircuitBandwidth>();
-            }
         }
     }
 }

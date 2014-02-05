@@ -30,11 +30,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The List Dedicated Circuit Link operation response.
     /// </summary>
-    public partial class DedicatedCircuitLinkListResponse : OperationResponse, IEnumerable<DedicatedCircuitLinkListResponse.DedicatedCircuitLink>
+    public partial class DedicatedCircuitLinkListResponse : OperationResponse, IEnumerable<AzureDedicatedCircuitLink>
     {
-        private IList<DedicatedCircuitLinkListResponse.DedicatedCircuitLink> _dedicatedCircuitLinks;
+        private IList<AzureDedicatedCircuitLink> _dedicatedCircuitLinks;
         
-        public IList<DedicatedCircuitLinkListResponse.DedicatedCircuitLink> DedicatedCircuitLinks
+        public IList<AzureDedicatedCircuitLink> DedicatedCircuitLinks
         {
             get { return this._dedicatedCircuitLinks; }
             set { this._dedicatedCircuitLinks = value; }
@@ -46,13 +46,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitLinkListResponse()
         {
-            this._dedicatedCircuitLinks = new List<DedicatedCircuitLinkListResponse.DedicatedCircuitLink>();
+            this._dedicatedCircuitLinks = new List<AzureDedicatedCircuitLink>();
         }
         
         /// <summary>
         /// Gets the sequence of DedicatedCircuitLinks.
         /// </summary>
-        public IEnumerator<DedicatedCircuitLinkListResponse.DedicatedCircuitLink> GetEnumerator()
+        public IEnumerator<AzureDedicatedCircuitLink> GetEnumerator()
         {
             return this.DedicatedCircuitLinks.GetEnumerator();
         }
@@ -63,40 +63,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-        
-        public partial class DedicatedCircuitLink
-        {
-            private DedicatedCircuitLinkState _state;
-            
-            /// <summary>
-            /// State of the dedicated circuit link. Values can be
-            /// NotProvisioned, Provisioning, Provisioned, Deprovisioning, or
-            /// ProvisioningError.
-            /// </summary>
-            public DedicatedCircuitLinkState State
-            {
-                get { return this._state; }
-                set { this._state = value; }
-            }
-            
-            private string _vnetName;
-            
-            /// <summary>
-            /// The name of the Vnet that is linked.
-            /// </summary>
-            public string VnetName
-            {
-                get { return this._vnetName; }
-                set { this._vnetName = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the DedicatedCircuitLink class.
-            /// </summary>
-            public DedicatedCircuitLink()
-            {
-            }
         }
     }
 }

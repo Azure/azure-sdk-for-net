@@ -30,11 +30,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The List Dedicated Circuit operation response.
     /// </summary>
-    public partial class DedicatedCircuitListResponse : OperationResponse, IEnumerable<DedicatedCircuitListResponse.DedicatedCircuit>
+    public partial class DedicatedCircuitListResponse : OperationResponse, IEnumerable<AzureDedicatedCircuit>
     {
-        private IList<DedicatedCircuitListResponse.DedicatedCircuit> _dedicatedCircuits;
+        private IList<AzureDedicatedCircuit> _dedicatedCircuits;
         
-        public IList<DedicatedCircuitListResponse.DedicatedCircuit> DedicatedCircuits
+        public IList<AzureDedicatedCircuit> DedicatedCircuits
         {
             get { return this._dedicatedCircuits; }
             set { this._dedicatedCircuits = value; }
@@ -46,13 +46,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitListResponse()
         {
-            this._dedicatedCircuits = new List<DedicatedCircuitListResponse.DedicatedCircuit>();
+            this._dedicatedCircuits = new List<AzureDedicatedCircuit>();
         }
         
         /// <summary>
         /// Gets the sequence of DedicatedCircuits.
         /// </summary>
-        public IEnumerator<DedicatedCircuitListResponse.DedicatedCircuit> GetEnumerator()
+        public IEnumerator<AzureDedicatedCircuit> GetEnumerator()
         {
             return this.DedicatedCircuits.GetEnumerator();
         }
@@ -63,95 +63,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-        
-        public partial class DedicatedCircuit
-        {
-            private uint _bandwidth;
-            
-            /// <summary>
-            /// Specifies the bandwidth that is assigned to the circuit.
-            /// </summary>
-            public uint Bandwidth
-            {
-                get { return this._bandwidth; }
-                set { this._bandwidth = value; }
-            }
-            
-            private string _circuitName;
-            
-            /// <summary>
-            /// Specifies the name of the circuit.
-            /// </summary>
-            public string CircuitName
-            {
-                get { return this._circuitName; }
-                set { this._circuitName = value; }
-            }
-            
-            private string _location;
-            
-            /// <summary>
-            /// Specifies the peering location of the circuit.
-            /// </summary>
-            public string Location
-            {
-                get { return this._location; }
-                set { this._location = value; }
-            }
-            
-            private string _serviceKey;
-            
-            /// <summary>
-            /// A value that uniquely identifies the circuit.
-            /// </summary>
-            public string ServiceKey
-            {
-                get { return this._serviceKey; }
-                set { this._serviceKey = value; }
-            }
-            
-            private string _serviceProviderName;
-            
-            /// <summary>
-            /// Specifies the name of the dedicated circuit service provider.
-            /// </summary>
-            public string ServiceProviderName
-            {
-                get { return this._serviceProviderName; }
-                set { this._serviceProviderName = value; }
-            }
-            
-            private string _serviceProviderProvisioningState;
-            
-            /// <summary>
-            /// Specifies the provisioning state of the circuit. Values are
-            /// NotProvisioned, Provisioning, Provisioned, or DeProvisioning.
-            /// </summary>
-            public string ServiceProviderProvisioningState
-            {
-                get { return this._serviceProviderProvisioningState; }
-                set { this._serviceProviderProvisioningState = value; }
-            }
-            
-            private string _status;
-            
-            /// <summary>
-            /// The current status of the circuit. Values are Disabled,
-            /// Disabliing, Enabled, Enabling.
-            /// </summary>
-            public string Status
-            {
-                get { return this._status; }
-                set { this._status = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the DedicatedCircuit class.
-            /// </summary>
-            public DedicatedCircuit()
-            {
-            }
         }
     }
 }

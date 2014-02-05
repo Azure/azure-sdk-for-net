@@ -21,32 +21,20 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The Get Dedicated Circuit operation response.
+    /// The provisioning state of the service provider
     /// </summary>
-    public partial class DedicatedCircuitGetResponse : OperationResponse
+    public enum ProviderProvisioningState
     {
-        private AzureDedicatedCircuit _dedicatedCircuit;
+        NotProvisioned = 0,
         
-        /// <summary>
-        /// Details of the requested dedicated circuit.
-        /// </summary>
-        public AzureDedicatedCircuit DedicatedCircuit
-        {
-            get { return this._dedicatedCircuit; }
-            set { this._dedicatedCircuit = value; }
-        }
+        Provisioning = 1,
         
-        /// <summary>
-        /// Initializes a new instance of the DedicatedCircuitGetResponse class.
-        /// </summary>
-        public DedicatedCircuitGetResponse()
-        {
-        }
+        Provisioned = 2,
+        
+        Deprovisioning = 3,
     }
 }

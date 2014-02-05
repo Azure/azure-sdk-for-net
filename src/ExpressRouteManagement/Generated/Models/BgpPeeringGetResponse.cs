@@ -22,6 +22,7 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
@@ -30,97 +31,15 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class BgpPeeringGetResponse : OperationResponse
     {
-        private uint _azureAsn;
+        private AzureBgpPeering _bgpPeering;
         
         /// <summary>
-        /// Specifies the numeric identifier of the public autonomous system
-        /// (AS) in which the device of Windows Azure is configured.
+        /// Details for the requested Bgp Peering.
         /// </summary>
-        public uint AzureAsn
+        public AzureBgpPeering BgpPeering
         {
-            get { return this._azureAsn; }
-            set { this._azureAsn = value; }
-        }
-        
-        private uint _peerAsn;
-        
-        /// <summary>
-        /// Specifies the numeric identifier of the public autonomous system
-        /// (AS) in which the device of the service provider is configured.
-        /// </summary>
-        public uint PeerAsn
-        {
-            get { return this._peerAsn; }
-            set { this._peerAsn = value; }
-        }
-        
-        private string _primaryAzurePort;
-        
-        /// <summary>
-        /// Specifies the name of the primary port.
-        /// </summary>
-        public string PrimaryAzurePort
-        {
-            get { return this._primaryAzurePort; }
-            set { this._primaryAzurePort = value; }
-        }
-        
-        private string _primaryPeerSubnet;
-        
-        /// <summary>
-        /// Specifies the subnet addresses of the interface to be used for
-        /// establishing the BGP session on the primary port.
-        /// </summary>
-        public string PrimaryPeerSubnet
-        {
-            get { return this._primaryPeerSubnet; }
-            set { this._primaryPeerSubnet = value; }
-        }
-        
-        private string _secondaryAzurePort;
-        
-        /// <summary>
-        /// Specifies the name of the secondary port.
-        /// </summary>
-        public string SecondaryAzurePort
-        {
-            get { return this._secondaryAzurePort; }
-            set { this._secondaryAzurePort = value; }
-        }
-        
-        private string _secondaryPeerSubnet;
-        
-        /// <summary>
-        /// Specifies the subnet addresses of the interface to be used for
-        /// establishing the BGP session on the secondary port.
-        /// </summary>
-        public string SecondaryPeerSubnet
-        {
-            get { return this._secondaryPeerSubnet; }
-            set { this._secondaryPeerSubnet = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// The current state of the BGP session. Possible values are Disabled,
-        /// Enabled.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private uint _vlanId;
-        
-        /// <summary>
-        /// Specifies the identifier that is used to identify the customer.
-        /// </summary>
-        public uint VlanId
-        {
-            get { return this._vlanId; }
-            set { this._vlanId = value; }
+            get { return this._bgpPeering; }
+            set { this._bgpPeering = value; }
         }
         
         /// <summary>
