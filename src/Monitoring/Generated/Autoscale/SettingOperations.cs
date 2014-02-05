@@ -124,12 +124,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 
                 // Serialize Request
                 string requestContent = null;
-                JToken requestDoc = null;
+                JToken requestDoc = new JObject();
                 
                 if (parameters.Setting != null)
                 {
                     JObject settingValue = new JObject();
-                    requestDoc = new JObject();
                     requestDoc["Setting"] = settingValue;
                     
                     if (parameters.Setting.Profiles != null)

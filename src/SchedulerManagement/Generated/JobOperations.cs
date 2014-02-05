@@ -183,7 +183,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 
                 // Serialize Request
                 string requestContent = null;
-                JToken requestDoc = null;
+                JToken requestDoc = new JObject();
                 
                 JObject jobCreateParametersValue = new JObject();
                 requestDoc = jobCreateParametersValue;
@@ -985,7 +985,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 
                 // Serialize Request
                 string requestContent = null;
-                JToken requestDoc = null;
+                JToken requestDoc = new JObject();
                 
                 JObject jobCreateOrUpdateParametersValue = new JObject();
                 requestDoc = jobCreateOrUpdateParametersValue;
@@ -3755,7 +3755,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 
                 // Serialize Request
                 string requestContent = null;
-                JToken requestDoc = null;
+                JToken requestDoc = new JObject();
                 
                 JObject jobCollectionJobsUpdateStateParametersValue = new JObject();
                 requestDoc = jobCollectionJobsUpdateStateParametersValue;
@@ -4286,7 +4286,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 
                 // Serialize Request
                 string requestContent = null;
-                JToken requestDoc = null;
+                JToken requestDoc = new JObject();
                 
                 JObject jobUpdateStateParametersValue = new JObject();
                 requestDoc = jobUpdateStateParametersValue;
