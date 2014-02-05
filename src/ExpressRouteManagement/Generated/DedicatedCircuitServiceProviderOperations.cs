@@ -142,7 +142,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     {
                         foreach (XElement dedicatedCircuitServiceProvidersElement in dedicatedCircuitServiceProvidersSequenceElement.Elements(XName.Get("DedicatedCircuitServiceProvider", "http://schemas.microsoft.com/windowsazure")))
                         {
-                            DedicatedCircuitServiceProviderListResponse.DedicatedCircuitServiceProvider dedicatedCircuitServiceProviderInstance = new DedicatedCircuitServiceProviderListResponse.DedicatedCircuitServiceProvider();
+                            AzureDedicatedCircuitServiceProvider dedicatedCircuitServiceProviderInstance = new AzureDedicatedCircuitServiceProvider();
                             result.DedicatedCircuitServiceProviders.Add(dedicatedCircuitServiceProviderInstance);
                             
                             XElement nameElement = dedicatedCircuitServiceProvidersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
@@ -171,7 +171,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             {
                                 foreach (XElement dedicatedCircuitBandwidthsElement in dedicatedCircuitBandwidthsSequenceElement.Elements(XName.Get("DedicatedCircuitBandwidth", "http://schemas.microsoft.com/windowsazure")))
                                 {
-                                    DedicatedCircuitServiceProviderListResponse.DedicatedCircuitBandwidth dedicatedCircuitBandwidthInstance = new DedicatedCircuitServiceProviderListResponse.DedicatedCircuitBandwidth();
+                                    DedicatedCircuitBandwidth dedicatedCircuitBandwidthInstance = new DedicatedCircuitBandwidth();
                                     dedicatedCircuitServiceProviderInstance.DedicatedCircuitBandwidths.Add(dedicatedCircuitBandwidthInstance);
                                     
                                     XElement bandwidthElement = dedicatedCircuitBandwidthsElement.Element(XName.Get("Bandwidth", "http://schemas.microsoft.com/windowsazure"));

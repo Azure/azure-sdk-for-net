@@ -409,18 +409,21 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XElement dedicatedCircuitLinkElement = responseDoc.Element(XName.Get("DedicatedCircuitLink", "http://schemas.microsoft.com/windowsazure"));
                     if (dedicatedCircuitLinkElement != null)
                     {
+                        AzureDedicatedCircuitLink dedicatedCircuitLinkInstance = new AzureDedicatedCircuitLink();
+                        result.DedicatedCircuitLink = dedicatedCircuitLinkInstance;
+                        
                         XElement stateElement = dedicatedCircuitLinkElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null)
                         {
                             DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, false);
-                            result.State = stateInstance;
+                            dedicatedCircuitLinkInstance.State = stateInstance;
                         }
                         
                         XElement vnetNameElement = dedicatedCircuitLinkElement.Element(XName.Get("VnetName", "http://schemas.microsoft.com/windowsazure"));
                         if (vnetNameElement != null)
                         {
                             string vnetNameInstance = vnetNameElement.Value;
-                            result.VnetName = vnetNameInstance;
+                            dedicatedCircuitLinkInstance.VnetName = vnetNameInstance;
                         }
                     }
                     
@@ -536,7 +539,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     {
                         foreach (XElement dedicatedCircuitLinksElement in dedicatedCircuitLinksSequenceElement.Elements(XName.Get("DedicatedCircuitLink", "http://schemas.microsoft.com/windowsazure")))
                         {
-                            DedicatedCircuitLinkListResponse.DedicatedCircuitLink dedicatedCircuitLinkInstance = new DedicatedCircuitLinkListResponse.DedicatedCircuitLink();
+                            AzureDedicatedCircuitLink dedicatedCircuitLinkInstance = new AzureDedicatedCircuitLink();
                             result.DedicatedCircuitLinks.Add(dedicatedCircuitLinkInstance);
                             
                             XElement stateElement = dedicatedCircuitLinksElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
