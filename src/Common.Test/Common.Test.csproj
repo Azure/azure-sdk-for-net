@@ -68,6 +68,7 @@
     <Compile Include="Fakes\FakeServiceClientWithCredentials.cs" />
     <Compile Include="Fakes\FakeServiceClient.cs" />
     <Compile Include="Fakes\RecordedDelegatingHandler.cs" />
+    <Compile Include="Internals\UriHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokenCloudCredentialsTest.cs" />
     <Compile Include="ServiceClientTest.cs" />
