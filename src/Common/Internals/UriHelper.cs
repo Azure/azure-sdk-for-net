@@ -43,7 +43,8 @@ namespace Microsoft.WindowsAzure.Common.Internals
                 // Skip the first character if it is '/' and the last
                 // character in the url is also '/'
                 if (url.Length > 0 && 
-                    url[url.Length - 1] == '/' && part[0] == '/')
+                    url[url.Length - 1] == '/' && 
+                    part[0] == '/')
                 {
                     url.Append(part.Substring(1));
                 }

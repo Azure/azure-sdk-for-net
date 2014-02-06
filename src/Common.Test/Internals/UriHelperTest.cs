@@ -34,6 +34,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         [InlineData("foo/", new[] { "foo/" })]
         [InlineData("/foo/", new[] { "/foo/" })]
         [InlineData("/foo", new[] { "/foo" })]
+        [InlineData("/foo/bar/baz", new [] { "/foo", "/bar/", "/baz" })]
         [InlineData("http://foo/bar?p", new[] { "http://", "/foo/bar", "?p" })]
         [InlineData(null, null)]
         public void VerifyConcatenate(string expected, string[] parts)
