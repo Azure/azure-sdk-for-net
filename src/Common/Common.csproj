@@ -40,6 +40,7 @@
     <Compile Include="Configuration\JsonSettingsFormat.cs" />
     <Compile Include="Internals\IndisposableDelegatingHandler.cs" />
     <Compile Include="Internals\TypeConversion.cs" />
+    <Compile Include="Internals\UriHelper.cs" />
     <Compile Include="Models\OperationResponse.cs" />
     <Compile Include="Models\Patchable.cs" />
     <Compile Include="Platform\ICloudCredentialsProvider.cs" />
