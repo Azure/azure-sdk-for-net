@@ -30,6 +30,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         [InlineData("foo/bar/", new[] { "foo/", "bar/" })]
         [InlineData("foo/bar", new[] { "foo/", "/bar" })]
         [InlineData("foobar", new[] { "foo", "bar" })]
+        [InlineData("foobar", new[] { "foo", null, "bar", null, "" })]
         [InlineData("", new[] { "" })]
         [InlineData("foo/", new[] { "foo/" })]
         [InlineData("/foo/", new[] { "/foo/" })]
