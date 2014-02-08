@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Common.Internals
             var url = new StringBuilder();
             foreach (var part in parts)
             {
-                if (part.Length == 0)
+                if (string.IsNullOrEmpty(part))
                 {
                     continue;
                 }
