@@ -113,6 +113,25 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._type = value; }
         }
         
+        private string _version;
+        
+        /// <summary>
+        /// Optional. Specifies the version of the extension. If this element
+        /// is not specified or an asterisk (*) is used as the value, the
+        /// latest version of the extension is used. If the value is specified
+        /// with a major version number and an asterisk as the minor version
+        /// number (X.*), the latest minor version of the specified major
+        /// version is selected. If a major version number and a minor version
+        /// number are specified (X.Y), the specific extension version is
+        /// selected. If a version is specified, an auto-upgrade is performed
+        /// on the role instance.
+        /// </summary>
+        public string Version
+        {
+            get { return this._version; }
+            set { this._version = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// HostedServiceAddExtensionParameters class.

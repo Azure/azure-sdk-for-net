@@ -72,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._hostCaching = value; }
         }
         
-        private double _logicalDiskSizeInGB;
+        private int _logicalDiskSizeInGB;
         
         /// <summary>
         /// Optional. Specifies the size, in GB, of an empty disk to be
@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// property.  Windows Azure creates the empty disk based on size
         /// preference and attaches the newly created disk to the Role.
         /// </summary>
-        public double LogicalDiskSizeInGB
+        public int LogicalDiskSizeInGB
         {
             get { return this._logicalDiskSizeInGB; }
             set { this._logicalDiskSizeInGB = value; }

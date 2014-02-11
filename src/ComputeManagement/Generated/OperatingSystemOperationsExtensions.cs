@@ -26,12 +26,14 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure.Management.Compute
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Operations for determining the version of the Windows Azure Guest
-    /// Operating System on which your service is running.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/ff684169.aspx for
+    /// The Service Management API provides programmatic access to much of the
+    /// functionality available through the Management Portal. The Service
+    /// Management API is a REST API. All API operations are performed over
+    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class OperatingSystemOperationsExtensions
