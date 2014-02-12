@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460812.aspx for
     /// more information)
     /// </summary>
-    internal partial class HostedServiceOperations : IServiceOperations<ComputeManagementClient>, IHostedServiceOperations
+    internal partial class HostedServiceOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations
     {
         /// <summary>
         /// Initializes a new instance of the HostedServiceOperations class.
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> AddExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> AddExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -195,7 +195,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginAddingExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginAddingExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -296,6 +296,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     extensionElement.Add(privateConfigurationElement);
                 }
                 
+                if (parameters.Version != null)
+                {
+                    XElement versionElement = new XElement(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
+                    versionElement.Value = parameters.Version;
+                    extensionElement.Add(versionElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
@@ -374,7 +381,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingAllAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAllAsync(string serviceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -489,7 +496,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -605,7 +612,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Check Hosted Service Name Availability operation response.
         /// </returns>
-        public async Task<HostedServiceCheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceCheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -740,7 +747,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateAsync(HostedServiceCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateAsync(HostedServiceCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -930,7 +937,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string serviceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1048,7 +1055,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> DeleteAllAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> DeleteAllAsync(string serviceName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -1148,7 +1155,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> DeleteExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> DeleteExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -1240,7 +1247,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Hosted Service operation response.
         /// </returns>
-        public async Task<HostedServiceGetResponse> GetAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceGetResponse> GetAsync(string serviceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1444,7 +1451,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The detailed Get Hosted Service operation response.
         /// </returns>
-        public async Task<HostedServiceGetDetailedResponse> GetDetailedAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceGetDetailedResponse> GetDetailedAsync(string serviceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2241,13 +2248,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     resourceExtensionReferenceInstance.Version = versionInstance;
                                                 }
                                                 
-                                                XElement stateElement = resourceExtensionReferencesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                                if (stateElement != null && string.IsNullOrEmpty(stateElement.Value) == false)
-                                                {
-                                                    ResourceExtensionReferenceState stateInstance = (ResourceExtensionReferenceState)Enum.Parse(typeof(ResourceExtensionReferenceState), stateElement.Value, false);
-                                                    resourceExtensionReferenceInstance.State = stateInstance;
-                                                }
-                                                
                                                 XElement resourceExtensionParameterValuesSequenceElement = resourceExtensionReferencesElement.Element(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
                                                 if (resourceExtensionParameterValuesSequenceElement != null)
                                                 {
@@ -2277,6 +2277,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                             resourceExtensionParameterValueInstance.Type = typeInstance;
                                                         }
                                                     }
+                                                }
+                                                
+                                                XElement stateElement = resourceExtensionReferencesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                                if (stateElement != null && string.IsNullOrEmpty(stateElement.Value) == false)
+                                                {
+                                                    ResourceExtensionReferenceState stateInstance = (ResourceExtensionReferenceState)Enum.Parse(typeof(ResourceExtensionReferenceState), stateElement.Value, false);
+                                                    resourceExtensionReferenceInstance.State = stateInstance;
                                                 }
                                             }
                                         }
@@ -2436,7 +2443,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement rollbackAllowedElement = deploymentsElement.Element(XName.Get("RollbackAllowed", "http://schemas.microsoft.com/windowsazure"));
                                 if (rollbackAllowedElement != null)
                                 {
-                                    string rollbackAllowedInstance = rollbackAllowedElement.Value;
+                                    bool rollbackAllowedInstance = bool.Parse(rollbackAllowedElement.Value);
                                     deploymentInstance.RollbackAllowed = rollbackAllowedInstance;
                                 }
                                 
@@ -2694,7 +2701,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Extension operation response.
         /// </returns>
-        public async Task<HostedServiceGetExtensionResponse> GetExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceGetExtensionResponse> GetExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2865,7 +2872,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Hosted Service operation response.
         /// </returns>
-        public async Task<HostedServiceListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -3066,7 +3073,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Available Extensions operation response.
         /// </returns>
-        public async Task<HostedServiceListAvailableExtensionsResponse> ListAvailableExtensionsAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceListAvailableExtensionsResponse> ListAvailableExtensionsAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -3249,7 +3256,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Extensions operation response.
         /// </returns>
-        public async Task<HostedServiceListExtensionsResponse> ListExtensionsAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceListExtensionsResponse> ListExtensionsAsync(string serviceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -3430,7 +3437,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Available Extensions operation response.
         /// </returns>
-        public async Task<HostedServiceListAvailableExtensionsResponse> ListExtensionVersionsAsync(string providerNamespace, string extensionType, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceListAvailableExtensionsResponse> ListExtensionVersionsAsync(string providerNamespace, string extensionType, CancellationToken cancellationToken)
         {
             // Validate
             if (providerNamespace == null)
@@ -3627,7 +3634,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string serviceName, HostedServiceUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateAsync(string serviceName, HostedServiceUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)

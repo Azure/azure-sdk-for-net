@@ -210,14 +210,14 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._roles = value; }
             }
             
-            private string _rollbackAllowed;
+            private bool _rollbackAllowed;
             
             /// <summary>
             /// Indicates whether the Rollback Update Or Upgrade operation is
             /// allowed at this time. True if the operation is allowed;
             /// otherwise false.
             /// </summary>
-            public string RollbackAllowed
+            public bool RollbackAllowed
             {
                 get { return this._rollbackAllowed; }
                 set { this._rollbackAllowed = value; }

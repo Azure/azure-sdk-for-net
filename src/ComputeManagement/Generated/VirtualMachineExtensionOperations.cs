@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157206.aspx for
     /// more information)
     /// </summary>
-    internal partial class VirtualMachineExtensionOperations : IServiceOperations<ComputeManagementClient>, IVirtualMachineExtensionOperations
+    internal partial class VirtualMachineExtensionOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IVirtualMachineExtensionOperations
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineExtensionOperations
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Resource Extensions operation response.
         /// </returns>
-        public async Task<VirtualMachineExtensionListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineExtensionListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -265,7 +265,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Resource Extensions operation response.
         /// </returns>
-        public async Task<VirtualMachineExtensionListResponse> ListVersionsAsync(string publisherName, string extensionName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineExtensionListResponse> ListVersionsAsync(string publisherName, string extensionName, CancellationToken cancellationToken)
         {
             // Validate
             if (publisherName == null)
