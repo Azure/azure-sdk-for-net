@@ -93,12 +93,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._location = value; }
         }
         
-        private double _logicalSizeInGB;
+        private int _logicalSizeInGB;
         
         /// <summary>
         /// The size, in GB, of the disk.
         /// </summary>
-        public double LogicalSizeInGB
+        public int LogicalSizeInGB
         {
             get { return this._logicalSizeInGB; }
             set { this._logicalSizeInGB = value; }
