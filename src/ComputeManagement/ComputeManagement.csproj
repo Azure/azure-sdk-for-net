@@ -171,7 +171,6 @@
   <ItemGroup>
     <Content Include="hydra.xml" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
