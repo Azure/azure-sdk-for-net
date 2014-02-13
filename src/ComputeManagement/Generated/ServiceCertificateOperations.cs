@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee795178.aspx for
     /// more information)
     /// </summary>
-    internal partial class ServiceCertificateOperations : IServiceOperations<ComputeManagementClient>, IServiceCertificateOperations
+    internal partial class ServiceCertificateOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServiceCertificateOperations
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginCreatingAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/certificates";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/certificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -240,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -273,7 +273,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + parameters.ServiceName + "/certificates/" + parameters.ThumbprintAlgorithm + "-" + parameters.Thumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + parameters.ServiceName + "/certificates/" + parameters.ThumbprintAlgorithm + "-" + parameters.Thumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -377,7 +377,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> CreateAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> CreateAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -477,7 +477,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> DeleteAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> DeleteAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -566,7 +566,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Service Certificate operation response.
         /// </returns>
-        public async Task<ServiceCertificateGetResponse> GetAsync(ServiceCertificateGetParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ServiceCertificateGetResponse> GetAsync(ServiceCertificateGetParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -599,7 +599,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + parameters.ServiceName + "/certificates/" + parameters.ThumbprintAlgorithm + "-" + parameters.Thumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + parameters.ServiceName + "/certificates/" + parameters.ThumbprintAlgorithm + "-" + parameters.Thumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -705,7 +705,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Service Certificates operation response.
         /// </returns>
-        public async Task<ServiceCertificateListResponse> ListAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ServiceCertificateListResponse> ListAsync(string serviceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -726,7 +726,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/certificates";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/certificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

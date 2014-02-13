@@ -105,7 +105,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/serviceobjectives/" + serviceObjectiveId;
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/services/sqlservers/servers/" + serverName + "/serviceobjectives/" + serviceObjectiveId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -366,7 +366,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/serviceobjectives";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/services/sqlservers/servers/" + serverName + "/serviceobjectives";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

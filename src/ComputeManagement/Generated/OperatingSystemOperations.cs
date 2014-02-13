@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ff684169.aspx for
     /// more information)
     /// </summary>
-    internal partial class OperatingSystemOperations : IServiceOperations<ComputeManagementClient>, IOperatingSystemOperations
+    internal partial class OperatingSystemOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IOperatingSystemOperations
     {
         /// <summary>
         /// Initializes a new instance of the OperatingSystemOperations class.
@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Operating Systems operation response.
         /// </returns>
-        public async Task<OperatingSystemListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.OperatingSystemListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/operatingsystems";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/operatingsystems";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -249,7 +249,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Operating System Families operation response.
         /// </returns>
-        public async Task<OperatingSystemListFamiliesResponse> ListFamiliesAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.OperatingSystemListFamiliesResponse> ListFamiliesAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -264,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/operatingsystemfamilies";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/operatingsystemfamilies";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

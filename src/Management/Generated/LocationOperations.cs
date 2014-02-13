@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/locations";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/locations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

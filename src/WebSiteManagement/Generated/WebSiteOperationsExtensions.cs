@@ -861,6 +861,56 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
+        /// Determines if a hostname is available
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The Is Hostname Available operation response.
+        /// </returns>
+        public static WebSiteIsHostnameAvailableResponse IsHostnameAvailable(this IWebSiteOperations operations, string webSiteName)
+        {
+            try
+            {
+                return operations.IsHostnameAvailableAsync(webSiteName).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Determines if a hostname is available
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The Is Hostname Available operation response.
+        /// </returns>
+        public static Task<WebSiteIsHostnameAvailableResponse> IsHostnameAvailableAsync(this IWebSiteOperations operations, string webSiteName)
+        {
+            return operations.IsHostnameAvailableAsync(webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// You can restart a web site by issuing an HTTP POST request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
         /// for more information)

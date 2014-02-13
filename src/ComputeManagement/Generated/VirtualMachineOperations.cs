@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157206.aspx for
     /// more information)
     /// </summary>
-    internal partial class VirtualMachineOperations : IServiceOperations<ComputeManagementClient>, IVirtualMachineOperations
+    internal partial class VirtualMachineOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineOperations class.
@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginCapturingAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginCapturingAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -230,7 +230,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -756,7 +756,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginCreatingAsync(string serviceName, string deploymentName, VirtualMachineCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingAsync(string serviceName, string deploymentName, VirtualMachineCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -879,7 +879,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1350,13 +1350,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             resourceExtensionReferenceElement.Add(versionElement);
                         }
                         
-                        if (resourceExtensionReferencesItem.State != null)
-                        {
-                            XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            stateElement.Value = resourceExtensionReferencesItem.State.ToString();
-                            resourceExtensionReferenceElement.Add(stateElement);
-                        }
-                        
                         if (resourceExtensionReferencesItem.ResourceExtensionParameterValues != null)
                         {
                             XElement resourceExtensionParameterValuesSequenceElement = new XElement(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
@@ -1387,6 +1380,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                             resourceExtensionReferenceElement.Add(resourceExtensionParameterValuesSequenceElement);
+                        }
+                        
+                        if (resourceExtensionReferencesItem.State != null)
+                        {
+                            XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            stateElement.Value = resourceExtensionReferencesItem.State.ToString();
+                            resourceExtensionReferenceElement.Add(stateElement);
                         }
                     }
                     persistentVMRoleElement.Add(resourceExtensionReferencesSequenceElement);
@@ -1592,7 +1592,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginCreatingDeploymentAsync(string serviceName, VirtualMachineCreateDeploymentParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingDeploymentAsync(string serviceName, VirtualMachineCreateDeploymentParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1728,7 +1728,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2223,13 +2223,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 resourceExtensionReferenceElement.Add(versionElement);
                             }
                             
-                            if (resourceExtensionReferencesItem.State != null)
-                            {
-                                XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                stateElement.Value = resourceExtensionReferencesItem.State.ToString();
-                                resourceExtensionReferenceElement.Add(stateElement);
-                            }
-                            
                             if (resourceExtensionReferencesItem.ResourceExtensionParameterValues != null)
                             {
                                 XElement resourceExtensionParameterValuesSequenceElement = new XElement(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
@@ -2260,6 +2253,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     }
                                 }
                                 resourceExtensionReferenceElement.Add(resourceExtensionParameterValuesSequenceElement);
+                            }
+                            
+                            if (resourceExtensionReferencesItem.State != null)
+                            {
+                                XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                stateElement.Value = resourceExtensionReferencesItem.State.ToString();
+                                resourceExtensionReferenceElement.Add(stateElement);
                             }
                         }
                         roleElement.Add(resourceExtensionReferencesSequenceElement);
@@ -2533,7 +2533,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingAsync(string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2564,7 +2564,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -2665,7 +2665,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginRestartingAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginRestartingAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2695,7 +2695,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2713,8 +2713,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = null;
-                requestContent = "<RestartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>RestartRoleOperation</OperationType></RestartRoleOperation>";
+                string requestContent = "<RestartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>RestartRoleOperation</OperationType></RestartRoleOperation>";
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
                 
@@ -2801,7 +2800,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginShutdownAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginShutdownAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2836,7 +2835,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2951,7 +2950,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginShuttingDownRolesAsync(string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginShuttingDownRolesAsync(string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2981,7 +2980,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/Roles/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/Roles/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3111,7 +3110,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginStartingAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginStartingAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -3141,7 +3140,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3159,8 +3158,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = null;
-                requestContent = "<StartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>StartRoleOperation</OperationType></StartRoleOperation>";
+                string requestContent = "<StartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>StartRoleOperation</OperationType></StartRoleOperation>";
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
                 
@@ -3242,7 +3240,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginStartingRolesAsync(string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginStartingRolesAsync(string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -3272,7 +3270,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/Roles/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/Roles/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3399,7 +3397,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginUpdatingAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginUpdatingAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -3531,7 +3529,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4002,13 +4000,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             resourceExtensionReferenceElement.Add(versionElement);
                         }
                         
-                        if (resourceExtensionReferencesItem.State != null)
-                        {
-                            XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            stateElement.Value = resourceExtensionReferencesItem.State.ToString();
-                            resourceExtensionReferenceElement.Add(stateElement);
-                        }
-                        
                         if (resourceExtensionReferencesItem.ResourceExtensionParameterValues != null)
                         {
                             XElement resourceExtensionParameterValuesSequenceElement = new XElement(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
@@ -4039,6 +4030,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                             resourceExtensionReferenceElement.Add(resourceExtensionParameterValuesSequenceElement);
+                        }
+                        
+                        if (resourceExtensionReferencesItem.State != null)
+                        {
+                            XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            stateElement.Value = resourceExtensionReferencesItem.State.ToString();
+                            resourceExtensionReferenceElement.Add(stateElement);
                         }
                     }
                     persistentVMRoleElement.Add(resourceExtensionReferencesSequenceElement);
@@ -4238,7 +4236,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginUpdatingLoadBalancedEndpointSetAsync(string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginUpdatingLoadBalancedEndpointSetAsync(string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -4278,7 +4276,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?comp=UpdateLbSet";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?comp=UpdateLbSet";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4536,7 +4534,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> CaptureAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> CaptureAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4652,7 +4650,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> CreateAsync(string serviceName, string deploymentName, VirtualMachineCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> CreateAsync(string serviceName, string deploymentName, VirtualMachineCreateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4760,7 +4758,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> CreateDeploymentAsync(string serviceName, VirtualMachineCreateDeploymentParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> CreateDeploymentAsync(string serviceName, VirtualMachineCreateDeploymentParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4867,7 +4865,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> DeleteAsync(string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> DeleteAsync(string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4964,7 +4962,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Virtual Machine operation response.
         /// </returns>
-        public async Task<VirtualMachineGetResponse> GetAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineGetResponse> GetAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -4994,7 +4992,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -5670,7 +5668,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Download RDP file operation response.
         /// </returns>
-        public async Task<VirtualMachineGetRemoteDesktopFileResponse> GetRemoteDesktopFileAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineGetRemoteDesktopFileResponse> GetRemoteDesktopFileAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -5700,7 +5698,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/ModelFile?FileType=RDP";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/ModelFile?FileType=RDP";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -5809,7 +5807,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> RestartAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> RestartAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -5916,7 +5914,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> ShutdownAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> ShutdownAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6020,7 +6018,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> ShutdownRolesAsync(string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> ShutdownRolesAsync(string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6123,7 +6121,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> StartAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> StartAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6225,7 +6223,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> StartRolesAsync(string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> StartRolesAsync(string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6332,7 +6330,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> UpdateAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> UpdateAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6438,7 +6436,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> UpdateLoadBalancedEndpointSetAsync(string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> UpdateLoadBalancedEndpointSetAsync(string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

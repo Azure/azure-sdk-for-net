@@ -14,6 +14,10 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
+  <PropertyGroup>
+    <_DiagnosticsTracingPackageName>Microsoft.Diagnostics.Tracing.TraceEvent.1.0.5</_DiagnosticsTracingPackageName>
+    <_DiagnosticsTracingTargets>..\..\packages\$(_DiagnosticsTracingPackageName)\tools\Microsoft.Diagnostics.Tracing.TraceEvent.targets</_DiagnosticsTracingTargets>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -33,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Diagnostics.Tracing.TraceEvent">
-      <HintPath>..\..\packages\Microsoft.Diagnostics.Tracing.TraceEvent.1.0.2-rc\lib\net40\Microsoft.Diagnostics.Tracing.TraceEvent.dll</HintPath>
+      <HintPath>..\..\packages\$(_DiagnosticsTracingPackageName)\lib\net40\Microsoft.Diagnostics.Tracing.TraceEvent.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.165\lib\net45\Microsoft.Threading.Tasks.dll</HintPath>
@@ -99,5 +103,5 @@
     <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
-  <Import Project="..\..\packages\Microsoft.Diagnostics.Tracing.TraceEvent.1.0.2-rc\tools\Microsoft.Diagnostics.Tracing.TraceEvent.targets" />
+  <Import Project="$(_DiagnosticsTracingTargets)" Condition="Exists('$(_DiagnosticsTracingTargets)')"/>
 </Project>

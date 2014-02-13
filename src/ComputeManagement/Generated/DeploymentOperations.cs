@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460812.aspx for
     /// more information)
     /// </summary>
-    internal partial class DeploymentOperations : IServiceOperations<ComputeManagementClient>, IDeploymentOperations
+    internal partial class DeploymentOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations
     {
         /// <summary>
         /// Initializes a new instance of the DeploymentOperations class.
@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginChangingConfigurationByNameAsync(string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginChangingConfigurationByNameAsync(string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=config";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=config";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -369,7 +369,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginChangingConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginChangingConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -437,7 +437,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=config";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=config";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -637,7 +637,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginCreatingAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -721,7 +721,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -933,7 +933,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingByNameAsync(string serviceName, string deploymentName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingByNameAsync(string serviceName, string deploymentName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -959,7 +959,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -1061,7 +1061,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1082,7 +1082,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1184,7 +1184,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginRebootingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginRebootingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1214,7 +1214,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + roleInstanceName + "?comp=reboot";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + roleInstanceName + "?comp=reboot";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1316,7 +1316,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginRebootingRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginRebootingRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1342,7 +1342,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/roleinstances/" + roleInstanceName + "?comp=reboot";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/roleinstances/" + roleInstanceName + "?comp=reboot";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1444,7 +1444,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginReimagingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginReimagingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1474,7 +1474,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + roleInstanceName + "?comp=reimage";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + roleInstanceName + "?comp=reimage";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1576,7 +1576,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginReimagingRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginReimagingRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1602,7 +1602,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/roleinstances/" + roleInstanceName + "?comp=reimage";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/roleinstances/" + roleInstanceName + "?comp=reimage";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1701,7 +1701,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginSwappingAsync(string serviceName, DeploymentSwapParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginSwappingAsync(string serviceName, DeploymentSwapParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1731,7 +1731,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1855,7 +1855,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginUpdatingStatusByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginUpdatingStatusByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1886,7 +1886,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=status";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=status";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2003,7 +2003,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginUpdatingStatusByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginUpdatingStatusByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2030,7 +2030,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=status";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=status";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2169,7 +2169,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginUpgradingByNameAsync(string serviceName, string deploymentName, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginUpgradingByNameAsync(string serviceName, string deploymentName, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2253,7 +2253,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=upgrade";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=upgrade";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2484,7 +2484,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginUpgradingBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginUpgradingBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2564,7 +2564,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=upgrade";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=upgrade";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2795,7 +2795,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginWalkingUpgradeDomainByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginWalkingUpgradeDomainByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2825,7 +2825,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?comp=walkupgradedomain";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?comp=walkupgradedomain";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2964,7 +2964,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginWalkingUpgradeDomainByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginWalkingUpgradeDomainByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -2990,7 +2990,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=walkupgradedomain";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=walkupgradedomain";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3115,7 +3115,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> ChangeConfigurationByNameAsync(string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> ChangeConfigurationByNameAsync(string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -3225,7 +3225,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> ChangeConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> ChangeConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -3334,7 +3334,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> CreateAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> CreateAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -3443,7 +3443,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> DeleteByNameAsync(string serviceName, string deploymentName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> DeleteByNameAsync(string serviceName, string deploymentName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -3548,7 +3548,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> DeleteBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> DeleteBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -3640,7 +3640,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A deployment that exists in the cloud service.
         /// </returns>
-        public async Task<DeploymentGetResponse> GetByNameAsync(string serviceName, string deploymentName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.DeploymentGetResponse> GetByNameAsync(string serviceName, string deploymentName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -3665,7 +3665,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4434,13 +4434,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             resourceExtensionReferenceInstance.Version = versionInstance;
                                         }
                                         
-                                        XElement stateElement = resourceExtensionReferencesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                        if (stateElement != null && string.IsNullOrEmpty(stateElement.Value) == false)
-                                        {
-                                            ResourceExtensionReferenceState stateInstance = (ResourceExtensionReferenceState)Enum.Parse(typeof(ResourceExtensionReferenceState), stateElement.Value, false);
-                                            resourceExtensionReferenceInstance.State = stateInstance;
-                                        }
-                                        
                                         XElement resourceExtensionParameterValuesSequenceElement = resourceExtensionReferencesElement.Element(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
                                         if (resourceExtensionParameterValuesSequenceElement != null)
                                         {
@@ -4470,6 +4463,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     resourceExtensionParameterValueInstance.Type = typeInstance;
                                                 }
                                             }
+                                        }
+                                        
+                                        XElement stateElement = resourceExtensionReferencesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                        if (stateElement != null && string.IsNullOrEmpty(stateElement.Value) == false)
+                                        {
+                                            ResourceExtensionReferenceState stateInstance = (ResourceExtensionReferenceState)Enum.Parse(typeof(ResourceExtensionReferenceState), stateElement.Value, false);
+                                            resourceExtensionReferenceInstance.State = stateInstance;
                                         }
                                     }
                                 }
@@ -4629,7 +4629,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement rollbackAllowedElement = deploymentElement.Element(XName.Get("RollbackAllowed", "http://schemas.microsoft.com/windowsazure"));
                         if (rollbackAllowedElement != null)
                         {
-                            string rollbackAllowedInstance = rollbackAllowedElement.Value;
+                            bool rollbackAllowedInstance = bool.Parse(rollbackAllowedElement.Value);
                             result.RollbackAllowed = rollbackAllowedInstance;
                         }
                         
@@ -4868,7 +4868,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A deployment that exists in the cloud service.
         /// </returns>
-        public async Task<DeploymentGetResponse> GetBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.DeploymentGetResponse> GetBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -4889,7 +4889,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -5658,13 +5658,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             resourceExtensionReferenceInstance.Version = versionInstance;
                                         }
                                         
-                                        XElement stateElement = resourceExtensionReferencesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                        if (stateElement != null && string.IsNullOrEmpty(stateElement.Value) == false)
-                                        {
-                                            ResourceExtensionReferenceState stateInstance = (ResourceExtensionReferenceState)Enum.Parse(typeof(ResourceExtensionReferenceState), stateElement.Value, false);
-                                            resourceExtensionReferenceInstance.State = stateInstance;
-                                        }
-                                        
                                         XElement resourceExtensionParameterValuesSequenceElement = resourceExtensionReferencesElement.Element(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
                                         if (resourceExtensionParameterValuesSequenceElement != null)
                                         {
@@ -5694,6 +5687,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     resourceExtensionParameterValueInstance.Type = typeInstance;
                                                 }
                                             }
+                                        }
+                                        
+                                        XElement stateElement = resourceExtensionReferencesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                        if (stateElement != null && string.IsNullOrEmpty(stateElement.Value) == false)
+                                        {
+                                            ResourceExtensionReferenceState stateInstance = (ResourceExtensionReferenceState)Enum.Parse(typeof(ResourceExtensionReferenceState), stateElement.Value, false);
+                                            resourceExtensionReferenceInstance.State = stateInstance;
                                         }
                                     }
                                 }
@@ -5853,7 +5853,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement rollbackAllowedElement = deploymentElement.Element(XName.Get("RollbackAllowed", "http://schemas.microsoft.com/windowsazure"));
                         if (rollbackAllowedElement != null)
                         {
-                            string rollbackAllowedInstance = rollbackAllowedElement.Value;
+                            bool rollbackAllowedInstance = bool.Parse(rollbackAllowedElement.Value);
                             result.RollbackAllowed = rollbackAllowedInstance;
                         }
                         
@@ -6102,7 +6102,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> GetPackageByNameAsync(string serviceName, string deploymentName, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> GetPackageByNameAsync(string serviceName, string deploymentName, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -6136,7 +6136,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/package?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/package?";
             url = url + "containerUri=" + Uri.EscapeUriString(parameters.ContainerUri.ToString()) + " +";
             if (parameters.OverwriteExisting != null)
             {
@@ -6244,7 +6244,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> GetPackageBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> GetPackageBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -6274,7 +6274,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/package?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/package?";
             url = url + "containerUri=" + Uri.EscapeUriString(parameters.ContainerUri.ToString()) + " +";
             if (parameters.OverwriteExisting != null)
             {
@@ -6388,7 +6388,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> RebootRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> RebootRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6497,7 +6497,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> RebootRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> RebootRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6606,7 +6606,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> ReimageRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> ReimageRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6715,7 +6715,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> ReimageRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> ReimageRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6818,7 +6818,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RollbackUpdateOrUpgradeByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RollbackUpdateOrUpgradeByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -6849,7 +6849,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=rollback";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=rollback";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -6971,7 +6971,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RollbackUpdateOrUpgradeByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RollbackUpdateOrUpgradeByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -6998,7 +6998,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=rollback";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/?comp=rollback";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -7049,7 +7049,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
@@ -7123,7 +7123,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> SwapAsync(string serviceName, DeploymentSwapParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> SwapAsync(string serviceName, DeploymentSwapParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -7231,7 +7231,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> UpdateStatusByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> UpdateStatusByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -7340,7 +7340,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> UpdateStatusByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> UpdateStatusByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -7471,7 +7471,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> UpgradeByNameAsync(string serviceName, string deploymentName, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> UpgradeByNameAsync(string serviceName, string deploymentName, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -7602,7 +7602,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> UpgradeBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> UpgradeBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -7733,7 +7733,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> WalkUpgradeDomainByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> WalkUpgradeDomainByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -7864,7 +7864,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> WalkUpgradeDomainByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> WalkUpgradeDomainByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

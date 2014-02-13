@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157175.aspx for
     /// more information)
     /// </summary>
-    internal partial class VirtualMachineImageOperations : IServiceOperations<ComputeManagementClient>, IVirtualMachineImageOperations
+    internal partial class VirtualMachineImageOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineImageOperations
@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public async Task<VirtualMachineImageCreateResponse> CreateAsync(VirtualMachineImageCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineImageCreateResponse> CreateAsync(VirtualMachineImageCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -456,7 +456,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string imageName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string imageName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -477,7 +477,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -571,7 +571,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine image associated with your subscription.
         /// </returns>
-        public async Task<VirtualMachineImageGetResponse> GetAsync(string imageName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineImageGetResponse> GetAsync(string imageName, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -591,7 +591,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -827,7 +827,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List OS Images operation response.
         /// </returns>
-        public async Task<VirtualMachineImageListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineImageListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -842,7 +842,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1083,7 +1083,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public async Task<VirtualMachineImageUpdateResponse> UpdateAsync(string imageName, VirtualMachineImageUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineImageUpdateResponse> UpdateAsync(string imageName, VirtualMachineImageUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -1112,7 +1112,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

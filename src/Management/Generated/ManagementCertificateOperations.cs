@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/certificates";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/certificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -256,7 +256,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/certificates/" + thumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/certificates/" + thumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -370,7 +370,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/certificates/" + thumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/certificates/" + thumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -513,7 +513,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/certificates";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/certificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

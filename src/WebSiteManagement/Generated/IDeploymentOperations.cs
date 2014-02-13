@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     public partial interface IDeploymentOperations
     {
         /// <summary>
-        /// TBD.
+        /// Gets a deployment for a website.
         /// </summary>
         /// <param name='deploymentId'>
         /// The deployment identifier.
@@ -59,5 +59,36 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// The list of deployments operation response.
         /// </returns>
         Task<DeploymentListResponse> ListAsync(DeploymentListParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// List the logs for a deployment for a website.
+        /// </summary>
+        /// <param name='deploymentId'>
+        /// The deployment identifier.
+        /// </param>
+        /// <param name='parameters'>
+        /// Additional parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list of deployments operation response.
+        /// </returns>
+        Task<DeploymentListLogsResponse> ListLogsAsync(string deploymentId, DeploymentListParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Redeploys a specific website deployment.
+        /// </summary>
+        /// <param name='deploymentId'>
+        /// The deployment identifier.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The deployment information operation response.
+        /// </returns>
+        Task<DeploymentUpdateResponse> ReployAsync(string deploymentId, CancellationToken cancellationToken);
     }
 }

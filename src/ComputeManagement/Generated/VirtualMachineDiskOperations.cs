@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157188.aspx for
     /// more information)
     /// </summary>
-    internal partial class VirtualMachineDiskOperations : IServiceOperations<ComputeManagementClient>, IVirtualMachineDiskOperations
+    internal partial class VirtualMachineDiskOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineDiskOperations
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -251,7 +251,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDiskCreateDataDiskParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDiskCreateDataDiskParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -290,7 +290,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -431,7 +431,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public async Task<VirtualMachineDiskCreateDiskResponse> CreateDiskAsync(VirtualMachineDiskCreateDiskParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskCreateDiskResponse> CreateDiskAsync(VirtualMachineDiskCreateDiskParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -463,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -578,7 +578,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement logicalDiskSizeInGBElement = diskElement2.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
                         if (logicalDiskSizeInGBElement != null)
                         {
-                            double logicalDiskSizeInGBInstance = double.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                            int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                             result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
                         }
                         
@@ -704,7 +704,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> DeleteDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> DeleteDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -801,7 +801,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteDiskAsync(string diskName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteDiskAsync(string diskName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (diskName == null)
@@ -822,7 +822,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -925,7 +925,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Data Disk operation response.
         /// </returns>
-        public async Task<VirtualMachineDiskGetDataDiskResponse> GetDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskGetDataDiskResponse> GetDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -956,7 +956,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1041,7 +1041,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement logicalDiskSizeInGBElement = dataVirtualHardDiskElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
                         if (logicalDiskSizeInGBElement != null)
                         {
-                            double logicalDiskSizeInGBInstance = double.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                            int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                             result.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance;
                         }
                         
@@ -1098,7 +1098,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public async Task<VirtualMachineDiskGetDiskResponse> GetDiskAsync(string diskName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskGetDiskResponse> GetDiskAsync(string diskName, CancellationToken cancellationToken)
         {
             // Validate
             if (diskName == null)
@@ -1118,7 +1118,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1196,7 +1196,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement logicalDiskSizeInGBElement = diskElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
                         if (logicalDiskSizeInGBElement != null)
                         {
-                            double logicalDiskSizeInGBInstance = double.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                            int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                             result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
                         }
                         
@@ -1312,7 +1312,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Disks operation response.
         /// </returns>
-        public async Task<VirtualMachineDiskListResponse> ListDisksAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskListResponse> ListDisksAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1327,7 +1327,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1410,7 +1410,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement logicalDiskSizeInGBElement = disksElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
                             if (logicalDiskSizeInGBElement != null)
                             {
-                                double logicalDiskSizeInGBInstance = double.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                                 diskInstance.LogicalSizeInGB = logicalDiskSizeInGBInstance;
                             }
                             
@@ -1544,7 +1544,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDiskUpdateDataDiskParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDiskUpdateDataDiskParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1584,7 +1584,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + roleName + "/DataDisks/" + logicalUnitNumber;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1721,7 +1721,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public async Task<VirtualMachineDiskUpdateDiskResponse> UpdateDiskAsync(string diskName, VirtualMachineDiskUpdateDiskParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskUpdateDiskResponse> UpdateDiskAsync(string diskName, VirtualMachineDiskUpdateDiskParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (diskName == null)
@@ -1754,7 +1754,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1879,7 +1879,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement logicalDiskSizeInGBElement = diskElement2.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
                         if (logicalDiskSizeInGBElement != null)
                         {
-                            double logicalDiskSizeInGBInstance = double.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                            int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                             result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
                         }
                         

@@ -22,15 +22,12 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.WebSites.Models
+namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
-    /// The state of the website.
+    /// Operations for managing the diagnostics settings.
     /// </summary>
-    public enum WebSiteState
+    public static partial class DiagnosticOperationsExtensions
     {
-        Stopped = 0,
-        
-        Running = 1,
     }
 }

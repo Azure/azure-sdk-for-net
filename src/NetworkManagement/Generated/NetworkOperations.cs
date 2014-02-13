@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/media";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/media";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -119,8 +119,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
                 // Serialize Request
-                string requestContent = null;
-                requestContent = parameters.Configuration;
+                string requestContent = parameters.Configuration;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 
@@ -209,7 +208,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/media";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/media";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -316,7 +315,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/networking/virtualnetwork";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/virtualnetwork";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

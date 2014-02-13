@@ -121,3 +121,6 @@ packages
 
 # Specification DLLs
 *.Specification.dll
+
+# Generated readme.txt files #
+src/*/readme.txt

@@ -141,7 +141,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -324,7 +324,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices/operations/isavailable/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/operations/isavailable/" + serviceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -563,7 +563,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -673,7 +673,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -928,7 +928,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName + "/keys";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName + "/keys";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1064,7 +1064,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1320,7 +1320,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + parameters.ServiceName + "/keys?action=regenerate";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + parameters.ServiceName + "/keys?action=regenerate";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1509,7 +1509,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

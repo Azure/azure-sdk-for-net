@@ -27,12 +27,14 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure.Management.Compute
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The Service Management API includes operations for managing the
-    /// deployments beneath your subscription.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460812.aspx for
+    /// The Service Management API provides programmatic access to much of the
+    /// functionality available through the Management Portal. The Service
+    /// Management API is a REST API. All API operations are performed over
+    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class DeploymentOperationsExtensions

@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public partial class ComputeManagementClient : ServiceClient<ComputeManagementClient>, IComputeManagementClient
+    public partial class ComputeManagementClient : ServiceClient<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IComputeManagementClient
     {
         private Uri _baseUri;
         
@@ -275,7 +275,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ComputeOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)
@@ -295,7 +295,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = this.BaseUri + "/" + this.Credentials.SubscriptionId + "/operations/" + requestId;
+            string url = new Uri(this.BaseUri, "/").ToString() + this.Credentials.SubscriptionId + "/operations/" + requestId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
