@@ -14,15 +14,42 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Microsoft.WindowsAzure.Common.OData
 {
+    /// <summary>
+    /// Parameter attribute used with OData filters.
+    /// </summary>
     public class FilterParameterAttribute : Attribute
     {
+        /// <summary>
+        /// Property name to use in the filter.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Format of the value.
+        /// </summary>
         public string Format { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FilterParameterAttribute"/> class.
+        /// </summary>
+        /// <param name="name">Property name to use in the filter.</param>
+        public FilterParameterAttribute(string name)
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FilterParameterAttribute"/> class.
+        /// </summary>
+        /// <param name="name">Property name to use in the filter.</param>
+        /// <param name="format">Format of the value.</param>
+        public FilterParameterAttribute(string name, string format)
+        {
+            Name = name;
+            Format = format;
+        }
     }
 }

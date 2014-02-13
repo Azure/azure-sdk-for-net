@@ -14,10 +14,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+using System.Linq.Expressions;
 
 namespace Microsoft.WindowsAzure.Common.OData
 {
@@ -27,39 +24,16 @@ namespace Microsoft.WindowsAzure.Common.OData
     public class FilterString
     {
         /// <summary>
-        /// Generates an OData filter from a specified class combining properties
-        /// via AND operator. Properties set as null will be omitted.
+        /// Generates an OData filter from a specified Linq expression.
         /// </summary>
         /// <typeparam name="T">Filter type</typeparam>
         /// <param name="filter">Entity to use for filter generation</param>
         /// <returns></returns>
-        public static string Generate<T>(T filter)
+        public static string Generate<T>(Expression<Func<T, bool>> filter)
         {
-            var filterBuilder = new List<string>();
-            var properties = typeof (T).GetProperties();
-            foreach (var property in properties)
-            {
-                var nameAttribute = GetPropertyName(property);
-                var value = property.GetValue(filter, null);
-                if (value != null)
-                {
-                    filterBuilder.Add(string.Format("{0} eq {1}"))
-                }
-            }
-            return "";
-        }
-
-        private static string GetPropertyName(PropertyInfo property)
-        {
-            foreach (var attribute in property.GetCustomAttributes(true))
-            {
-                var parameterAttribute = attribute as FilterParameterAttribute;
-                if (parameterAttribute != null && !string.IsNullOrEmpty(parameterAttribute.Name))
-                {
-                    return parameterAttribute.Name;
-                }
-            }
-            return property.Name;
+            UrlExpressionVisitor visitor = new UrlExpressionVisitor();
+            visitor.Visit(filter);
+            return visitor.ToString();
         }
     }
 }
