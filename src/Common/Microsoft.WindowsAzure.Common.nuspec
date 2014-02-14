@@ -41,6 +41,10 @@ Supported Portable Library Platforms:
         <reference file="Microsoft.WindowsAzure.Common.dll" />
         <reference file="Microsoft.WindowsAzure.Common.WindowsStore.dll" />
       </group>
+	  <group targetFramework="wp80">
+        <reference file="Microsoft.WindowsAzure.Common.dll" />
+        <reference file="Microsoft.WindowsAzure.Common.WindowsPhone.dll" />
+      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common.Dependencies" version="__VERSION_Microsoft.WindowsAzure.Common.Dependencies__" />
@@ -75,5 +79,12 @@ Supported Portable Library Platforms:
     <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.dll" target="lib\windows8" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.xml" target="lib\windows8" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.pdb" target="lib\windows8" />
+	
+	<file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\wp80" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.pdb" target="lib\wp80" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.xml" target="lib\wp80" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone.dll" target="lib\wp80" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone.xml" target="lib\wp80" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone.pdb" target="lib\wp80" />
   </files>
 </package>
