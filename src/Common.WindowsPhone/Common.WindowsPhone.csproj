@@ -9,7 +9,6 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.WindowsAzure.Common</RootNamespace>
     <AssemblyName>Microsoft.WindowsAzure.Common.WindowsPhone</AssemblyName>
