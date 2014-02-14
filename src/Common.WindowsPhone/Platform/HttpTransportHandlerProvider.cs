@@ -22,9 +22,6 @@ namespace Microsoft.WindowsAzure.Common.Platform
         public HttpMessageHandler CreateHttpTransportHandler()
         {
             var httpHandler = new HttpClientHandler();
-            // When ClientCertificateOptions is set to Automatic, HttpClient will use all certificates with
-            // EKU 1.3.6.1.5.5.7.3.2 and CERT_DIGITAL_SIGNATURE_KEY_USAGE from current user MY store
-            httpHandler.ClientCertificateOptions = ClientCertificateOption.Automatic;
             return httpHandler;
         }
     }
