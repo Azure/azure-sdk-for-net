@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <WindowsAzureLibraryProfileSet>wp8</WindowsAzureLibraryProfileSet>
+    <WindowsAzureLibraryProfileSet>wp80</WindowsAzureLibraryProfileSet>
     <ProjectGuid>{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <ProductVersion>10.0.20506</ProductVersion>
