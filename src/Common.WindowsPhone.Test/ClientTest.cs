@@ -13,24 +13,22 @@
 // limitations under the License.
 //
 
-using Microsoft.Phone.Controls;
-using System.Threading;
-using Microsoft.VisualStudio.TestPlatform.Core;
-using vstest_executionengine_platformbridge;
-using Microsoft.VisualStudio.TestPlatform.TestExecutor;
+using System;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Management.WebSites;
 
 namespace Common.Phone.Test
 {
-    public partial class MainPage : PhoneApplicationPage
+    [TestClass]
+    public class PhoneTests
     {
-        // Constructor
-        public MainPage()
+        [TestMethod]
+        public void TestClientInitialization()
         {
-            InitializeComponent();
-
-            var wrapper = new TestExecutorServiceWrapper();
-            new Thread(new ServiceMain((param0, param1) => wrapper.SendMessage((ContractName)param0, param1)).Run).Start();
-
+            var tokenCredentials = new TokenCloudCredentials("123", "abc");
+            var fakeClient = new WebSiteManagementClient(tokenCredentials);
+            Assert.IsNotNull(fakeClient);
         }
     }
 }
