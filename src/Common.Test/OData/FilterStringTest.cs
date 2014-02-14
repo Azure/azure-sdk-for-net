@@ -34,6 +34,13 @@ namespace Microsoft.WindowsAzure.Common.Test.OData
         }
 
         [Fact]
+        public void ParenthesisAreIgnoredInExpression()
+        {
+            var result = FilterString.Generate<Param1>(p => p.Foo == "bar" && (p.Foo == "foo" || p.Val < 20));
+            Assert.Equal("foo eq 'bar' and foo eq 'foo' or Val lt 20", result);
+        }
+
+        [Fact]
         public void VerifyDeepPropertiesInODataFilter()
         {
             var param = new InputParam2
