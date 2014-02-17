@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Common.Platform
         /// </summary>
         public void RegisterDefaultCloudCredentialsProviders()
         {
-            CloudConfiguration.RegisterCloudCredentialsProvider(new CertificateCloudCredentialsProvider());
+            CloudConfiguration.RegisterCloudCredentialsProvider(new TokenCloudCredentialsProvider());
         }
 
         public string GetSetting(string name)

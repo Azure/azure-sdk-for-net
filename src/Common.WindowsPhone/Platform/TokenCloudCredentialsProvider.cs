@@ -21,7 +21,7 @@ namespace Microsoft.WindowsAzure.Common.Platform
     /// <summary>
     /// Cloud credentials provider for .NET Framework clients.
     /// </summary>
-    internal class CertificateCloudCredentialsProvider
+    internal class TokenCloudCredentialsProvider
         : ICloudCredentialsProvider
     {
         /// <summary>
@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Common.Platform
         /// provided settings.</returns>
         public CloudCredentials CreateCredentials(IDictionary<string, object> settings)
         {
-            return CertificateCloudCredentials.Create(settings);
+            return TokenCloudCredentials.Create(settings);
         }
     }
 }

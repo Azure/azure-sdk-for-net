@@ -43,11 +43,10 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>    
+  </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <Compile Include="CertificateCloudCredentials.cs" />
-    <Compile Include="Platform\CertificateCloudCredentialsProvider.cs" />
+    <Compile Include="Platform\TokenCloudCredentialsProvider.cs" />
     <Compile Include="Platform\CloudConfigurationProvider.cs" />
     <Compile Include="Platform\HttpTransportHandlerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
