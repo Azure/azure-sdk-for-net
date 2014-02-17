@@ -27,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConnectionStringSettingsFormat.cs" />
+    <Compile Include="Credentials\AnonymousCloudCredentials.cs" />
     <Compile Include="Credentials\BasicAuthenticationCloudCredentials.cs" />
     <Compile Include="Credentials\TokenCloudCredentials.cs" />
     <Compile Include="Credentials\SubscriptionCloudCredentials.cs" />
@@ -43,6 +44,9 @@
     <Compile Include="Internals\UriHelper.cs" />
     <Compile Include="Models\OperationResponse.cs" />
     <Compile Include="Models\Patchable.cs" />
+    <Compile Include="OData\FilterParameterAttribute.cs" />
+    <Compile Include="OData\FilterString.cs" />
+    <Compile Include="OData\UrlExpressionVisitor.cs" />
     <Compile Include="Platform\ICloudCredentialsProvider.cs" />
     <Compile Include="Platform\ICryptographyProvider.cs" />
     <Compile Include="Tracing\CloudTracing.cs" />
