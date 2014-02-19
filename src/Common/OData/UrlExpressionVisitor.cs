@@ -193,6 +193,7 @@ namespace Microsoft.WindowsAzure.Common.OData
                 if (val is DateTime && string.IsNullOrEmpty(format))
                 {
                     format = DefaultDateTimeFormat;
+                    val = ((DateTime) val).ToUniversalTime();
                 }
 
                 string formattedString;

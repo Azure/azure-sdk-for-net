@@ -106,8 +106,17 @@ namespace Microsoft.WindowsAzure.Common.Test.OData
         [Fact]
         public void DefaultDateTimeProducesProperStringInODataFilter()
         {
-            var result = FilterString.Generate<Param1>(p => p.Date2 == new DateTime(2012, 5, 1, 11, 5, 1));
+            var result = FilterString.Generate<Param1>(p => p.Date2 == new DateTime(2012, 5, 1, 11, 5, 1, DateTimeKind.Utc));
             Assert.Equal("Date2 eq '2012-05-01T11:05:01Z'", result);
+        }
+
+        [Fact]
+        public void DateTimeIsConvertedToUtc()
+        {
+            var localDate = new DateTime(2012, 5, 1, 11, 5, 1, DateTimeKind.Local);
+            var utcDate = localDate.ToUniversalTime();
+            var result = FilterString.Generate<Param1>(p => p.Date2 == localDate);
+            Assert.Equal("Date2 eq '" + utcDate.ToString("yyyy-MM-ddTHH:mm:ssZ") + "'", result);
         }
     }
 
