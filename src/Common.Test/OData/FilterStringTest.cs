@@ -29,8 +29,8 @@ namespace Microsoft.WindowsAzure.Common.Test.OData
 
             var result = FilterString.Generate<Param1>(p => p.Foo == "foo" || p.Val < 20 || p.Foo == "bar" && p.Val == null &&
                 p.Date > new DateTime(2004, 11, 5) && p.Date < date && p.Values.Contains("x"));
-            Assert.Equal("foo eq 'foo' or Val lt 20 or foo eq 'bar' and Val eq null and d gt '2004-11-05T00:00:00Z' " +
-                "and d lt '2013-11-05T00:00:00Z' and vals/any(c: c eq 'x')", result);
+            Assert.Equal("foo eq 'foo' or Val lt 20 or foo eq 'bar' and Val eq null and d gt '2004-11-05T08:00:00Z' " +
+                "and d lt '2013-11-05T08:00:00Z' and vals/any(c: c eq 'x')", result);
         }
 
         [Fact]
