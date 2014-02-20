@@ -75,6 +75,48 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
+        /// Create a CloudException from a failed response.
+        /// </summary>
+        /// <param name="request">The HTTP request.</param>
+        /// <param name="requestContent">The HTTP request content.</param>
+        /// <param name="response">The HTTP response.</param>
+        /// <param name="responseContent">The HTTP response content.</param>
+        /// <param name="defaultTo">The content type to default to if none of the types matches.</param>
+        /// <param name="innerException">Optional inner exception.</param>
+        /// <returns>A CloudException representing the failure.</returns>
+        public static CloudException Create(
+            HttpRequestMessage request,
+            string requestContent,
+            HttpResponseMessage response,
+            string responseContent,
+            CloudExceptionType defaultTo,
+            Exception innerException = null)
+        {
+            if (response.Content != null && response.Content.Headers.ContentType != null)
+            {
+                if (response.Content.Headers.ContentType.MediaType.Equals("application/json") ||
+                    response.Content.Headers.ContentType.MediaType.Equals("text/json"))
+                {
+                    return CreateFromJson(request, requestContent, response, responseContent, innerException);
+                } 
+                else if (response.Content.Headers.ContentType.MediaType.Equals("application/xml") ||
+                       response.Content.Headers.ContentType.MediaType.Equals("text/xml"))
+                {
+                    return CreateFromXml(request, requestContent, response, responseContent, innerException);
+                }
+            }
+
+            if (defaultTo == CloudExceptionType.Json)
+            {
+                return CreateFromJson(request, requestContent, response, responseContent, innerException);
+            }
+            else
+            {
+                return CreateFromXml(request, requestContent, response, responseContent, innerException);
+            }
+        }
+ 
+        /// <summary>
         /// Create a CloudException from a failed response sending XML content.
         /// </summary>
         /// <param name="request">The HTTP request.</param>
