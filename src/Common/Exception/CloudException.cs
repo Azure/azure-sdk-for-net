@@ -115,7 +115,7 @@ namespace Microsoft.WindowsAzure
                 return CreateFromXml(request, requestContent, response, responseContent, innerException);
             }
         }
- 
+
         /// <summary>
         /// Create a CloudException from a failed response sending XML content.
         /// </summary>
