@@ -190,9 +190,13 @@ namespace Microsoft.WindowsAzure.Common.OData
             else
             {
                 var format = GetPropertyFormat(_currentProperty);
-                if (val is DateTime && string.IsNullOrEmpty(format))
+                if (val is DateTime)
                 {
-                    format = DefaultDateTimeFormat;
+                    if (string.IsNullOrEmpty(format))
+                    {
+                        format = DefaultDateTimeFormat;
+                    }
+                    val = ((DateTime) val).ToUniversalTime();
                 }
 
                 string formattedString;
