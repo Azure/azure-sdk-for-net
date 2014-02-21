@@ -38,7 +38,7 @@ using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler
 {
-    internal partial class JobCollectionOperations : IServiceOperations<SchedulerManagementClient>, IJobCollectionOperations
+    internal partial class JobCollectionOperations : IServiceOperations<SchedulerManagementClient>, Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations
     {
         /// <summary>
         /// Initializes a new instance of the JobCollectionOperations class.
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Create Job Collection operation response.
         /// </returns>
-        public async Task<JobCollectionCreateResponse> BeginCreatingAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.JobCollectionCreateResponse> BeginCreatingAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -396,7 +396,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Update Job Collection operation response.
         /// </returns>
-        public async Task<JobCollectionUpdateResponse> BeginUpdatingAsync(string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.JobCollectionUpdateResponse> BeginUpdatingAsync(string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -604,7 +604,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Check Name Availability operation response.
         /// </returns>
-        public async Task<JobCollectionCheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.JobCollectionCheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -752,7 +752,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<SchedulerOperationStatusResponse> CreateAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.SchedulerOperationStatusResponse> CreateAsync(string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters, CancellationToken cancellationToken)
         {
             SchedulerManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -851,7 +851,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<SchedulerOperationStatusResponse> DeleteAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.SchedulerOperationStatusResponse> DeleteAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
         {
             SchedulerManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -940,7 +940,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Get Job Collection operation response.
         /// </returns>
-        public async Task<JobCollectionGetResponse> GetAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.JobCollectionGetResponse> GetAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -1215,7 +1215,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<SchedulerOperationStatusResponse> UpdateAsync(string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.SchedulerOperationStatusResponse> UpdateAsync(string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters, CancellationToken cancellationToken)
         {
             SchedulerManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

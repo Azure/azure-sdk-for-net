@@ -36,7 +36,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
 {
-    internal partial class MetricValueOperations : IServiceOperations<MetricsClient>, IMetricValueOperations
+    internal partial class MetricValueOperations : IServiceOperations<MetricsClient>, Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricValueOperations
     {
         /// <summary>
         /// Initializes a new instance of the MetricValueOperations class.
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// <returns>
         /// The List Metric values operation response.
         /// </returns>
-        public async Task<MetricValueListResponse> ListAsync(string resourceId, IList<string> metricNames, string metricNamespace, TimeSpan timeGrain, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.MetricValueListResponse> ListAsync(string resourceId, IList<string> metricNames, string metricNamespace, TimeSpan timeGrain, DateTime startTime, DateTime endTime, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -187,10 +187,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         MetricValueSetCollection metricValueSetCollectionInstance = new MetricValueSetCollection();
                         result.MetricValueSetCollection = metricValueSetCollectionInstance;
                         
-                        JArray valueArray = (JArray)responseDoc["Value"];
+                        JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in (JArray)valueArray)
                             {
                                 MetricValueSet metricValueSetInstance = new MetricValueSet();
                                 metricValueSetCollectionInstance.Value.Add(metricValueSetInstance);
@@ -251,10 +251,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                     metricValueSetInstance.EndTime = endTimeInstance;
                                 }
                                 
-                                JArray metricValuesArray = (JArray)valueValue["MetricValues"];
+                                JToken metricValuesArray = valueValue["MetricValues"];
                                 if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken metricValuesValue in metricValuesArray)
+                                    foreach (JToken metricValuesValue in (JArray)metricValuesArray)
                                     {
                                         MetricValue metricValueInstance = new MetricValue();
                                         metricValueSetInstance.MetricValues.Add(metricValueInstance);

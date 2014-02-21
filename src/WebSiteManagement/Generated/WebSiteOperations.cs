@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// <summary>
     /// Operations for managing the web sites in a web space.
     /// </summary>
-    internal partial class WebSiteOperations : IServiceOperations<WebSiteManagementClient>, IWebSiteOperations
+    internal partial class WebSiteOperations : IServiceOperations<WebSiteManagementClient>, Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations
     {
         /// <summary>
         /// Initializes a new instance of the WebSiteOperations class.
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// operation itself.  If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public async Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -416,7 +416,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Create Web Space operation response.
         /// </returns>
-        public async Task<WebSiteCreateResponse> CreateAsync(string webSpaceName, WebSiteCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteCreateResponse> CreateAsync(string webSpaceName, WebSiteCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -569,7 +569,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1101,7 +1101,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -1225,7 +1225,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -1355,7 +1355,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Delete Web Site Repository operation response.
         /// </returns>
-        public async Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -1490,7 +1490,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> GeneratePasswordAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> GeneratePasswordAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -1611,7 +1611,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Web Site Details operation response.
         /// </returns>
-        public async Task<WebSiteGetResponse> GetAsync(string webSpaceName, string webSiteName, WebSiteGetParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetResponse> GetAsync(string webSpaceName, string webSiteName, WebSiteGetParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -2204,7 +2204,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Web Site Configuration operation response.
         /// </returns>
-        public async Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetConfigurationResponse> GetConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -2564,7 +2564,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Web Site Historical Usage Metrics operation response.
         /// </returns>
-        public async Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -2850,7 +2850,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Web Site Publish Profile operation response.
         /// </returns>
-        public async Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -3096,7 +3096,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Web Site Repository operation response.
         /// </returns>
-        public async Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -3228,7 +3228,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Web Site Usage Metrics operation response.
         /// </returns>
-        public async Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -3421,7 +3421,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Is Hostname Available operation response.
         /// </returns>
-        public async Task<WebSiteIsHostnameAvailableResponse> IsHostnameAvailableAsync(string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteIsHostnameAvailableResponse> IsHostnameAvailableAsync(string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSiteName == null)
@@ -3493,7 +3493,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     result = new WebSiteIsHostnameAvailableResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement booleanElement = responseDoc.Element(XName.Get("boolean", ""));
+                    XElement booleanElement = responseDoc.Element(XName.Get("boolean", "http://schemas.microsoft.com/2003/10/Serialization/"));
                     if (booleanElement != null)
                     {
                         bool booleanInstance = bool.Parse(booleanElement.Value);
@@ -3547,7 +3547,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -3670,7 +3670,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// operation itself.  If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public async Task<WebSiteOperationStatusResponse> SwapSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> SwapSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken)
         {
             WebSiteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -3693,6 +3693,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 cancellationToken.ThrowIfCancellationRequested();
                 WebSiteOperationStatusResponse response = await client.WebSites.BeginSwapingSlotsAsync(webSpaceName, webSiteName, slotName, cancellationToken).ConfigureAwait(false);
+                if (response.Status == WebSiteOperationStatus.Succeeded)
+                {
+                    return response;
+                }
                 cancellationToken.ThrowIfCancellationRequested();
                 WebSiteOperationStatusResponse result = await client.GetOperationStatusAsync(webSpaceName, webSiteName, response.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -3766,7 +3770,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> SyncRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> SyncRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -3887,7 +3891,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Update Web Site operation response.
         /// </returns>
-        public async Task<WebSiteUpdateResponse> UpdateAsync(string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteUpdateResponse> UpdateAsync(string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -4103,7 +4107,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -4635,7 +4639,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateConfigurationAsync(string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateConfigurationAsync(string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -4945,7 +4949,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715271.aspx for
     /// more information)
     /// </summary>
-    internal partial class ServerOperations : IServiceOperations<SqlManagementClient>, IServerOperations
+    internal partial class ServerOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IServerOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServerOperations class.
@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> ChangeAdministratorPasswordAsync(string serverName, ServerChangeAdministratorPasswordParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> ChangeAdministratorPasswordAsync(string serverName, ServerChangeAdministratorPasswordParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// The response returned from the Create Server operation.
         /// </returns>
-        public async Task<ServerCreateResponse> CreateAsync(ServerCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.ServerCreateResponse> CreateAsync(ServerCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -374,7 +374,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string serverName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -481,7 +481,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// The response structure for the Server List operation.
         /// </returns>
-        public async Task<ServerListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.ServerListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             

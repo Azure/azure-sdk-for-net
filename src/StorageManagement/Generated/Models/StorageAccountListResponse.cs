@@ -30,34 +30,34 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// <summary>
     /// The List Storage Accounts operation response.
     /// </summary>
-    public partial class StorageServiceListResponse : OperationResponse, IEnumerable<StorageServiceListResponse.StorageService>
+    public partial class StorageAccountListResponse : OperationResponse, IEnumerable<StorageAccountListResponse.StorageAccount>
     {
-        private IList<StorageServiceListResponse.StorageService> _storageServices;
+        private IList<StorageAccountListResponse.StorageAccount> _storageAccounts;
         
-        public IList<StorageServiceListResponse.StorageService> StorageServices
+        public IList<StorageAccountListResponse.StorageAccount> StorageAccounts
         {
-            get { return this._storageServices; }
-            set { this._storageServices = value; }
+            get { return this._storageAccounts; }
+            set { this._storageAccounts = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the StorageServiceListResponse class.
+        /// Initializes a new instance of the StorageAccountListResponse class.
         /// </summary>
-        public StorageServiceListResponse()
+        public StorageAccountListResponse()
         {
-            this._storageServices = new List<StorageServiceListResponse.StorageService>();
+            this._storageAccounts = new List<StorageAccountListResponse.StorageAccount>();
         }
         
         /// <summary>
-        /// Gets the sequence of StorageServices.
+        /// Gets the sequence of StorageAccounts.
         /// </summary>
-        public IEnumerator<StorageServiceListResponse.StorageService> GetEnumerator()
+        public IEnumerator<StorageAccountListResponse.StorageAccount> GetEnumerator()
         {
-            return this.StorageServices.GetEnumerator();
+            return this.StorageAccounts.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of StorageServices.
+        /// Gets the sequence of StorageAccounts.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// <summary>
         /// A Storage Service associated with your subscription.
         /// </summary>
-        public partial class StorageService
+        public partial class StorageAccount
         {
             private IDictionary<string, string> _extendedProperties;
             
@@ -91,18 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
                 set { this._extendedProperties = value; }
             }
             
-            private StorageServiceProperties _properties;
-            
-            /// <summary>
-            /// Details about the storage account.
-            /// </summary>
-            public StorageServiceProperties Properties
-            {
-                get { return this._properties; }
-                set { this._properties = value; }
-            }
-            
-            private string _serviceName;
+            private string _name;
             
             /// <summary>
             /// The name of the storage account. This name is the DNS prefix
@@ -112,10 +101,21 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             /// calling:
             /// http://MyStorageAccount.blob.core.windows.net/mycontainer/
             /// </summary>
-            public string ServiceName
+            public string Name
             {
-                get { return this._serviceName; }
-                set { this._serviceName = value; }
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
+            private StorageAccountProperties _properties;
+            
+            /// <summary>
+            /// Details about the storage account.
+            /// </summary>
+            public StorageAccountProperties Properties
+            {
+                get { return this._properties; }
+                set { this._properties = value; }
             }
             
             private Uri _uri;
@@ -132,9 +132,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             }
             
             /// <summary>
-            /// Initializes a new instance of the StorageService class.
+            /// Initializes a new instance of the StorageAccount class.
             /// </summary>
-            public StorageService()
+            public StorageAccount()
             {
                 this._extendedProperties = new Dictionary<string, string>();
             }

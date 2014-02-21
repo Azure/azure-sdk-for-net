@@ -27,11 +27,15 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
-namespace Microsoft.WindowsAzure.Management.WebSites
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Operations for managing the server farm in a web space.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx for
+    /// The Windows Azure Web Sites management API provides a RESTful set of
+    /// web services that interact with Windows Azure Web Sites service to
+    /// manage your web sites. The API has entities that capture the
+    /// relationship between an end user and the Windows Azure Web Sites
+    /// service.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx for
     /// more information)
     /// </summary>
     public static partial class ServerFarmOperationsExtensions

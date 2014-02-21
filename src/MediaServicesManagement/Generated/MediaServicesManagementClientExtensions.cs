@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.MediaServices
+namespace Microsoft.WindowsAzure
 {
     public static partial class MediaServicesManagementClientExtensions
     {

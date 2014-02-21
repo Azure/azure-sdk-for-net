@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441299.aspx for
     /// more information)
     /// </summary>
-    internal partial class LocationOperations : IServiceOperations<ManagementClient>, ILocationOperations
+    internal partial class LocationOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.ILocationOperations
     {
         /// <summary>
         /// Initializes a new instance of the LocationOperations class.
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Locations operation response.
         /// </returns>
-        public async Task<LocationsListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.LocationsListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             

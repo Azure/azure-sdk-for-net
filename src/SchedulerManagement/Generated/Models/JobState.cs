@@ -24,14 +24,29 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
+    /// <summary>
+    /// State of a job.
+    /// </summary>
     public enum JobState
     {
+        /// <summary>
+        /// An enabled job that is scheduled for future execution.
+        /// </summary>
         Enabled = 0,
         
+        /// <summary>
+        /// A disabled job does not have any future execution scheduled.
+        /// </summary>
         Disabled = 1,
         
+        /// <summary>
+        /// A faulted job is one whose final execution attempt failed.
+        /// </summary>
         Faulted = 2,
         
+        /// <summary>
+        /// A completed job is one whose final execution attempt succeeded.
+        /// </summary>
         Completed = 3,
     }
 }

@@ -36,7 +36,7 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    internal partial class DedicatedCircuitServiceProviderOperations : IServiceOperations<ExpressRouteManagementClient>, IDedicatedCircuitServiceProviderOperations
+    internal partial class DedicatedCircuitServiceProviderOperations : IServiceOperations<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitServiceProviderOperations
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The List Dedicated Circuit Service Provider operation response.
         /// </returns>
-        public async Task<DedicatedCircuitServiceProviderListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitServiceProviderListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             

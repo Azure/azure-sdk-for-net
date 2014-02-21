@@ -32,6 +32,9 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     {
         private JobState _state;
         
+        /// <summary>
+        /// New state to update to: 'enabled' or 'disabled'.
+        /// </summary>
         public JobState State
         {
             get { return this._state; }

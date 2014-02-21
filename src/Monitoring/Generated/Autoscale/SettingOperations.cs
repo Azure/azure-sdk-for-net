@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
     /// <summary>
     /// Operations for managing the autoscale settings.
     /// </summary>
-    internal partial class SettingOperations : IServiceOperations<AutoscaleClient>, ISettingOperations
+    internal partial class SettingOperations : IServiceOperations<AutoscaleClient>, Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations
     {
         /// <summary>
         /// Initializes a new instance of the SettingOperations class.
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateOrUpdateAsync(string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateOrUpdateAsync(string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -369,7 +369,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string resourceId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string resourceId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -476,7 +476,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AutoscaleSettingGetResponse> GetAsync(string resourceId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models.AutoscaleSettingGetResponse> GetAsync(string resourceId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -554,10 +554,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                         AutoscaleSetting settingInstance = new AutoscaleSetting();
                         result.Setting = settingInstance;
                         
-                        JArray profilesArray = (JArray)responseDoc["Profiles"];
+                        JToken profilesArray = responseDoc["Profiles"];
                         if (profilesArray != null && profilesArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken profilesValue in profilesArray)
+                            foreach (JToken profilesValue in (JArray)profilesArray)
                             {
                                 AutoscaleProfile autoscaleProfileInstance = new AutoscaleProfile();
                                 settingInstance.Profiles.Add(autoscaleProfileInstance);
@@ -597,10 +597,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     }
                                 }
                                 
-                                JArray rulesArray = (JArray)profilesValue["Rules"];
+                                JToken rulesArray = profilesValue["Rules"];
                                 if (rulesArray != null && rulesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken rulesValue in rulesArray)
+                                    foreach (JToken rulesValue in (JArray)rulesArray)
                                     {
                                         ScaleRule scaleRuleInstance = new ScaleRule();
                                         autoscaleProfileInstance.Rules.Add(scaleRuleInstance);
@@ -766,28 +766,28 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             scheduleInstance.TimeZone = timeZoneInstance2;
                                         }
                                         
-                                        JArray daysArray = (JArray)scheduleValue["Days"];
+                                        JToken daysArray = scheduleValue["Days"];
                                         if (daysArray != null && daysArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken daysValue in daysArray)
+                                            foreach (JToken daysValue in (JArray)daysArray)
                                             {
                                                 scheduleInstance.Days.Add((string)daysValue);
                                             }
                                         }
                                         
-                                        JArray hoursArray = (JArray)scheduleValue["Hours"];
+                                        JToken hoursArray = scheduleValue["Hours"];
                                         if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken hoursValue in hoursArray)
+                                            foreach (JToken hoursValue in (JArray)hoursArray)
                                             {
                                                 scheduleInstance.Hours.Add((int)hoursValue);
                                             }
                                         }
                                         
-                                        JArray minutesArray = (JArray)scheduleValue["Minutes"];
+                                        JToken minutesArray = scheduleValue["Minutes"];
                                         if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken minutesValue in minutesArray)
+                                            foreach (JToken minutesValue in (JArray)minutesArray)
                                             {
                                                 scheduleInstance.Minutes.Add((int)minutesValue);
                                             }

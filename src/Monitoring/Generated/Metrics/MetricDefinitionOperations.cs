@@ -35,7 +35,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
 {
-    internal partial class MetricDefinitionOperations : IServiceOperations<MetricsClient>, IMetricDefinitionOperations
+    internal partial class MetricDefinitionOperations : IServiceOperations<MetricsClient>, Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricDefinitionOperations
     {
         /// <summary>
         /// Initializes a new instance of the MetricDefinitionOperations class.
@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// <returns>
         /// The List Metric Definitions operation response.
         /// </returns>
-        public async Task<MetricDefinitionListResponse> ListAsync(string resourceId, IList<string> metricNames, string metricNamespace, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.MetricDefinitionListResponse> ListAsync(string resourceId, IList<string> metricNames, string metricNamespace, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -169,10 +169,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
                         result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
                         
-                        JArray valueArray = (JArray)responseDoc["Value"];
+                        JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in (JArray)valueArray)
                             {
                                 MetricDefinition metricDefinitionInstance = new MetricDefinition();
                                 metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
@@ -219,10 +219,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                     metricDefinitionInstance.PrimaryAggregation = primaryAggregationInstance;
                                 }
                                 
-                                JArray metricAvailabilitiesArray = (JArray)valueValue["MetricAvailabilities"];
+                                JToken metricAvailabilitiesArray = valueValue["MetricAvailabilities"];
                                 if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken metricAvailabilitiesValue in metricAvailabilitiesArray)
+                                    foreach (JToken metricAvailabilitiesValue in (JArray)metricAvailabilitiesArray)
                                     {
                                         MetricAvailability metricAvailabilityInstance = new MetricAvailability();
                                         metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);

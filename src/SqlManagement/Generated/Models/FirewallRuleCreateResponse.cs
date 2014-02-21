@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 using System.Net;
-using Microsoft.WindowsAzure.Management.Sql;
+using Microsoft.WindowsAzure;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {

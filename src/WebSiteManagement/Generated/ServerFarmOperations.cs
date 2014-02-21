@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx for
     /// more information)
     /// </summary>
-    internal partial class ServerFarmOperations : IServiceOperations<WebSiteManagementClient>, IServerFarmOperations
+    internal partial class ServerFarmOperations : IServiceOperations<WebSiteManagementClient>, Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServerFarmOperations class.
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Create Server Farm operation response.
         /// </returns>
-        public async Task<ServerFarmCreateResponse> CreateAsync(string webSpaceName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmCreateResponse> CreateAsync(string webSpaceName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -196,7 +196,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -310,7 +310,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string webSpaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string webSpaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -430,7 +430,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Server Farm operation response.
         /// </returns>
-        public async Task<ServerFarmGetResponse> GetAsync(string webSpaceName, string serverFarmName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmGetResponse> GetAsync(string webSpaceName, string serverFarmName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -603,7 +603,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The List Server Farm operation response.
         /// </returns>
-        public async Task<ServerFarmListResponse> ListAsync(string webSpaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmListResponse> ListAsync(string webSpaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -780,7 +780,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Update Server Farm operation response.
         /// </returns>
-        public async Task<ServerFarmUpdateResponse> UpdateAsync(string webSpaceName, ServerFarmUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmUpdateResponse> UpdateAsync(string webSpaceName, ServerFarmUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -884,7 +884,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

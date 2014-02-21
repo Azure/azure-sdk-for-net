@@ -55,7 +55,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private RetryType _retryType;
         
         /// <summary>
-        /// The Retry Type of the Retry Policy. Can be either  Fixed or None.
+        /// The Retry Type of the Retry Policy. Can be either 'fixed' or
+        /// 'none'.
         /// </summary>
         public RetryType RetryType
         {

@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// <summary>
     /// The status of the storage account at the time the operation was called.
     /// </summary>
-    public enum StorageServiceStatus
+    public enum StorageAccountStatus
     {
         /// <summary>
         /// The Storage Account had been created.

@@ -66,12 +66,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._hostCaching = value; }
         }
         
-        private double _logicalDiskSizeInGB;
+        private int _logicalDiskSizeInGB;
         
         /// <summary>
         /// The size, in GB, of the data disk.
         /// </summary>
-        public double LogicalDiskSizeInGB
+        public int LogicalDiskSizeInGB
         {
             get { return this._logicalDiskSizeInGB; }
             set { this._logicalDiskSizeInGB = value; }

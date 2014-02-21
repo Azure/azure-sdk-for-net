@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobQueueMessage _queueMessage;
         
         /// <summary>
-        /// Queue and message for a queue message action type.
+        /// Queue and content for a queue message action type.
         /// </summary>
         public JobQueueMessage QueueMessage
         {

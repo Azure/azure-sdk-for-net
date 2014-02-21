@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management
     /// The Service Management API includes operations for listing the
     /// available role sizes for VMs in your subscription.
     /// </summary>
-    internal partial class RoleSizeOperations : IServiceOperations<ManagementClient>, IRoleSizeOperations
+    internal partial class RoleSizeOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.IRoleSizeOperations
     {
         /// <summary>
         /// Initializes a new instance of the RoleSizeOperations class.
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Role Sizes operation response.
         /// </returns>
-        public async Task<RoleSizeListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.RoleSizeListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             

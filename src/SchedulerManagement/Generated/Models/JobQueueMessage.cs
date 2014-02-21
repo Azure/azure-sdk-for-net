@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// Queue and message for a queue message action type.
+    /// Queue and content for a queue message action type.
     /// </summary>
     public partial class JobQueueMessage
     {
         private string _message;
         
         /// <summary>
-        /// Message to send to the queue.
+        /// Content of the message to send to the queue.
         /// </summary>
         public string Message
         {

@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.ServiceBus;
+using Microsoft.WindowsAzure;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
 {

@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// <summary>
     /// Operations for managing the repositories.
     /// </summary>
-    internal partial class DeploymentOperations : IServiceOperations<WebSiteExtensionsClient>, IDeploymentOperations
+    internal partial class DeploymentOperations : IServiceOperations<WebSiteExtensionsClient>, Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations
     {
         /// <summary>
         /// Initializes a new instance of the DeploymentOperations class.
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The deployment information operation response.
         /// </returns>
-        public async Task<DeploymentGetResponse> GetAsync(string deploymentId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.DeploymentGetResponse> GetAsync(string deploymentId, CancellationToken cancellationToken)
         {
             // Validate
             if (deploymentId == null)
@@ -325,7 +325,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list of deployments operation response.
         /// </returns>
-        public async Task<DeploymentListResponse> ListAsync(DeploymentListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.DeploymentListResponse> ListAsync(DeploymentListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -402,10 +402,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray deploymentsArray = (JArray)responseDoc;
+                        JToken deploymentsArray = responseDoc;
                         if (deploymentsArray != null && deploymentsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken deploymentsValue in deploymentsArray)
+                            foreach (JToken deploymentsValue in (JArray)deploymentsArray)
                             {
                                 Deployment deploymentInstance = new Deployment();
                                 result.Deployments.Add(deploymentInstance);
@@ -590,7 +590,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list of deployments operation response.
         /// </returns>
-        public async Task<DeploymentListLogsResponse> ListLogsAsync(string deploymentId, DeploymentListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.DeploymentListLogsResponse> ListLogsAsync(string deploymentId, DeploymentListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (deploymentId == null)
@@ -672,10 +672,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray deploymentsArray = (JArray)responseDoc;
+                        JToken deploymentsArray = responseDoc;
                         if (deploymentsArray != null && deploymentsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken deploymentsValue in deploymentsArray)
+                            foreach (JToken deploymentsValue in (JArray)deploymentsArray)
                             {
                                 Deployment deploymentInstance = new Deployment();
                                 result.Deployments.Add(deploymentInstance);
@@ -857,7 +857,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The deployment information operation response.
         /// </returns>
-        public async Task<DeploymentUpdateResponse> ReployAsync(string deploymentId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.DeploymentUpdateResponse> ReployAsync(string deploymentId, CancellationToken cancellationToken)
         {
             // Validate
             if (deploymentId == null)

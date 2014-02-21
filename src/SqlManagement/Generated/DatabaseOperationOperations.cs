@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// The SQL Database Management API includes operations for get/stop SQL
     /// Databases' operations for a subscription.
     /// </summary>
-    internal partial class DatabaseOperationOperations : IServiceOperations<SqlManagementClient>, IDatabaseOperationOperations
+    internal partial class DatabaseOperationOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations
     {
         /// <summary>
         /// Initializes a new instance of the DatabaseOperationOperations class.
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Response containing the database operation for a given operation
         /// Guid.
         /// </returns>
-        public async Task<DatabaseOperationGetResponse> GetAsync(string serverName, string operationGuid, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseOperationGetResponse> GetAsync(string serverName, string operationGuid, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -318,7 +318,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Response containing the list of database operations for a given
         /// server or database.
         /// </returns>
-        public async Task<DatabaseOperationListResponse> ListByDatabaseAsync(string serverName, string databaseName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseOperationListResponse> ListByDatabaseAsync(string serverName, string databaseName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -559,7 +559,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Response containing the list of database operations for a given
         /// server or database.
         /// </returns>
-        public async Task<DatabaseOperationListResponse> ListByServerAsync(string serverName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseOperationListResponse> ListByServerAsync(string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)

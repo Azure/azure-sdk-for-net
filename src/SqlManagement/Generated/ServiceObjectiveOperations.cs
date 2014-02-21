@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// The SQL Database Management API includes operations for getting Service
     /// Objective for a subscription.
     /// </summary>
-    internal partial class ServiceObjectiveOperations : IServiceOperations<SqlManagementClient>, IServiceObjectiveOperations
+    internal partial class ServiceObjectiveOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServiceObjectiveOperations class.
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Response containing the service objective for a given server and
         /// service objective Id.
         /// </returns>
-        public async Task<ServiceObjectiveGetResponse> GetAsync(string serverName, string serviceObjectiveId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.ServiceObjectiveGetResponse> GetAsync(string serverName, string serviceObjectiveId, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -346,7 +346,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Response containing the list of service objective for a given
         /// server.
         /// </returns>
-        public async Task<ServiceObjectiveListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.ServiceObjectiveListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)

@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure.Management.Compute
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the

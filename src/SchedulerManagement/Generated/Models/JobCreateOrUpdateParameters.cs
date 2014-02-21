@@ -26,7 +26,8 @@ using Microsoft.WindowsAzure.Scheduler.Models;
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create or Update Job operation.
+    /// Parameters specifying the job definition for a CreateOrUpdate Job
+    /// operation.
     /// </summary>
     public partial class JobCreateOrUpdateParameters
     {

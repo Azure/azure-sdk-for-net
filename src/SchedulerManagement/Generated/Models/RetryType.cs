@@ -25,12 +25,19 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// The type of Retry Policy
+    /// The type of Retry Policy applied to failed execution attempts.
     /// </summary>
     public enum RetryType
     {
+        /// <summary>
+        /// Do not retry following a failed execution attempt.
+        /// </summary>
         None = 0,
         
+        /// <summary>
+        /// Retry up to a fixed number of times following failed execution
+        /// attempts.
+        /// </summary>
         Fixed = 1,
     }
 }

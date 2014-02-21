@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
-namespace Microsoft.WindowsAzure.Management.ServiceBus
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The Service Bus Management API is a REST API for managing Service Bus

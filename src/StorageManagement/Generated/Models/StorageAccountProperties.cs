@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// <summary>
     /// Details about a storage account.
     /// </summary>
-    public partial class StorageServiceProperties
+    public partial class StorageAccountProperties
     {
         private string _affinityGroup;
         
@@ -147,13 +147,13 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._location = value; }
         }
         
-        private StorageServiceStatus _status;
+        private StorageAccountStatus _status;
         
         /// <summary>
         /// The status of the storage account at the time the operation was
         /// called.
         /// </summary>
-        public StorageServiceStatus Status
+        public StorageAccountStatus Status
         {
             get { return this._status; }
             set { this._status = value; }
@@ -182,9 +182,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the StorageServiceProperties class.
+        /// Initializes a new instance of the StorageAccountProperties class.
         /// </summary>
-        public StorageServiceProperties()
+        public StorageAccountProperties()
         {
             this._endpoints = new List<Uri>();
         }

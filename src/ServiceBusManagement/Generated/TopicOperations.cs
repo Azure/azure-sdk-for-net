@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     /// The Service Bus Management API includes operations for managing Service
     /// Bus topics for a namespace.
     /// </summary>
-    internal partial class TopicOperations : IServiceOperations<ServiceBusManagementClient>, ITopicOperations
+    internal partial class TopicOperations : IServiceOperations<ServiceBusManagementClient>, Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations
     {
         /// <summary>
         /// Initializes a new instance of the TopicOperations class.
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular topic.
         /// </returns>
-        public async Task<ServiceBusTopicResponse> CreateAsync(string namespaceName, ServiceBusTopic topic, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusTopicResponse> CreateAsync(string namespaceName, ServiceBusTopic topic, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -616,7 +616,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular topic.
         /// </returns>
-        public async Task<ServiceBusTopicResponse> GetAsync(string namespaceName, string topicName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusTopicResponse> GetAsync(string namespaceName, string topicName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -943,7 +943,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// The set of connection details for a service bus entity.
         /// </returns>
-        public async Task<ServiceBusConnectionDetailsResponse> GetConnectionDetailsAsync(string namespaceName, string topicName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusConnectionDetailsResponse> GetConnectionDetailsAsync(string namespaceName, string topicName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1114,7 +1114,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a list of topics.
         /// </returns>
-        public async Task<ServiceBusTopicsResponse> ListAsync(string namespaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusTopicsResponse> ListAsync(string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1446,7 +1446,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular topic.
         /// </returns>
-        public async Task<ServiceBusTopicResponse> UpdateAsync(string namespaceName, ServiceBusTopic topic, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusTopicResponse> UpdateAsync(string namespaceName, ServiceBusTopic topic, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)

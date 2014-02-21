@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// <summary>
     /// The Get Storage Account Properties operation response.
     /// </summary>
-    public partial class StorageServiceGetResponse : OperationResponse
+    public partial class StorageAccountGetResponse : OperationResponse
     {
         private IList<string> _capabilities;
         
@@ -67,18 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._extendedProperties = value; }
         }
         
-        private StorageServiceProperties _properties;
-        
-        /// <summary>
-        /// Details about the storage account.
-        /// </summary>
-        public StorageServiceProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private string _serviceName;
+        private string _name;
         
         /// <summary>
         /// The name of the storage account. This name is the DNS prefix name
@@ -87,10 +76,21 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// could access the blob containers by calling:
         /// http://MyStorageAccount.blob.core.windows.net/mycontainer/
         /// </summary>
-        public string ServiceName
+        public string Name
         {
-            get { return this._serviceName; }
-            set { this._serviceName = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private StorageAccountProperties _properties;
+        
+        /// <summary>
+        /// Details about the storage account.
+        /// </summary>
+        public StorageAccountProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         private Uri _uri;
@@ -106,9 +106,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the StorageServiceGetResponse class.
+        /// Initializes a new instance of the StorageAccountGetResponse class.
         /// </summary>
-        public StorageServiceGetResponse()
+        public StorageAccountGetResponse()
         {
             this._capabilities = new List<string>();
             this._extendedProperties = new Dictionary<string, string>();
