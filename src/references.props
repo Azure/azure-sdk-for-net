@@ -18,4 +18,5 @@
   <Import Project="references.net40.props" />
   <Import Project="references.net45.props" />
   <Import Project="references.windows8.props" />
+  <Import Project="references.wp80.props" />
 </Project>
