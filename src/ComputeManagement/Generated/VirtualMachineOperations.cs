@@ -1375,7 +1375,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 if (resourceExtensionParameterValuesItem.Type != null)
                                 {
                                     XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                    typeElement.Value = resourceExtensionParameterValuesItem.Type.ToString();
+                                    typeElement.Value = resourceExtensionParameterValuesItem.Type;
                                     resourceExtensionParameterValueElement.Add(typeElement);
                                 }
                             }
@@ -1385,7 +1385,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         if (resourceExtensionReferencesItem.State != null)
                         {
                             XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            stateElement.Value = resourceExtensionReferencesItem.State.ToString();
+                            stateElement.Value = resourceExtensionReferencesItem.State;
                             resourceExtensionReferenceElement.Add(stateElement);
                         }
                     }
@@ -2248,7 +2248,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     if (resourceExtensionParameterValuesItem.Type != null)
                                     {
                                         XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                        typeElement.Value = resourceExtensionParameterValuesItem.Type.ToString();
+                                        typeElement.Value = resourceExtensionParameterValuesItem.Type;
                                         resourceExtensionParameterValueElement.Add(typeElement);
                                     }
                                 }
@@ -2258,7 +2258,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             if (resourceExtensionReferencesItem.State != null)
                             {
                                 XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                stateElement.Value = resourceExtensionReferencesItem.State.ToString();
+                                stateElement.Value = resourceExtensionReferencesItem.State;
                                 resourceExtensionReferenceElement.Add(stateElement);
                             }
                         }
@@ -4025,7 +4025,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 if (resourceExtensionParameterValuesItem.Type != null)
                                 {
                                     XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                    typeElement.Value = resourceExtensionParameterValuesItem.Type.ToString();
+                                    typeElement.Value = resourceExtensionParameterValuesItem.Type;
                                     resourceExtensionParameterValueElement.Add(typeElement);
                                 }
                             }
@@ -4035,7 +4035,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         if (resourceExtensionReferencesItem.State != null)
                         {
                             XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            stateElement.Value = resourceExtensionReferencesItem.State.ToString();
+                            stateElement.Value = resourceExtensionReferencesItem.State;
                             resourceExtensionReferenceElement.Add(stateElement);
                         }
                     }
