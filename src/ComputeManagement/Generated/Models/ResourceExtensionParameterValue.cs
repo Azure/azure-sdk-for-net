@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -41,14 +40,14 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._key = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionParameterValueType? _type;
+        private string _type;
         
         /// <summary>
         /// If this value is set to Private, the parameter will not be returned
         /// by Get Deployment. You can only specify one public parameter and
         /// one private parameter for a maximum of two parameters.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionParameterValueType? Type
+        public string Type
         {
             get { return this._type; }
             set { this._type = value; }

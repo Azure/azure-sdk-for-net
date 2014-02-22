@@ -81,13 +81,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._resourceExtensionParameterValues = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionReferenceState? _state;
+        private string _state;
         
         /// <summary>
         /// Optional. Specifies the state of the resource extension.Possible
         /// values are: Enable | Disable. The default value is Enable.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionReferenceState? State
+        public string State
         {
             get { return this._state; }
             set { this._state = value; }
