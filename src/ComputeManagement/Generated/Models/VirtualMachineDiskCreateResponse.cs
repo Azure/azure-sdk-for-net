@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// A virtual machine disk associated with your subscription.
     /// </summary>
-    public partial class VirtualMachineDiskCreateDiskResponse : OperationResponse
+    public partial class VirtualMachineDiskCreateResponse : OperationResponse
     {
         private string _affinityGroup;
         
@@ -144,24 +144,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._sourceImageName = value; }
         }
         
-        private VirtualMachineDiskCreateDiskResponse.VirtualMachineDiskUsageDetails _usageDetails;
+        private VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails _usageDetails;
         
         /// <summary>
         /// Contains properties that specify a virtual machine that currently
         /// using the disk. A disk cannot be deleted as long as it is attached
         /// to a virtual machine.
         /// </summary>
-        public VirtualMachineDiskCreateDiskResponse.VirtualMachineDiskUsageDetails UsageDetails
+        public VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails UsageDetails
         {
             get { return this._usageDetails; }
             set { this._usageDetails = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// VirtualMachineDiskCreateDiskResponse class.
+        /// Initializes a new instance of the VirtualMachineDiskCreateResponse
+        /// class.
         /// </summary>
-        public VirtualMachineDiskCreateDiskResponse()
+        public VirtualMachineDiskCreateResponse()
         {
         }
         

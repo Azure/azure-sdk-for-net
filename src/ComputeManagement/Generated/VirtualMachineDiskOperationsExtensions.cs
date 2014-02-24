@@ -166,7 +166,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse CreateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDiskCreateDataDiskParameters parameters)
+        public static OperationResponse CreateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
         {
             try
             {
@@ -228,7 +228,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDiskCreateDataDiskParameters parameters)
+        public static Task<OperationResponse> CreateDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
         {
             return operations.CreateDataDiskAsync(serviceName, deploymentName, roleName, parameters, CancellationToken.None);
         }
@@ -249,7 +249,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public static VirtualMachineDiskCreateDiskResponse CreateDisk(this IVirtualMachineDiskOperations operations, VirtualMachineDiskCreateDiskParameters parameters)
+        public static VirtualMachineDiskCreateResponse CreateDisk(this IVirtualMachineDiskOperations operations, VirtualMachineDiskCreateParameters parameters)
         {
             try
             {
@@ -284,7 +284,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public static Task<VirtualMachineDiskCreateDiskResponse> CreateDiskAsync(this IVirtualMachineDiskOperations operations, VirtualMachineDiskCreateDiskParameters parameters)
+        public static Task<VirtualMachineDiskCreateResponse> CreateDiskAsync(this IVirtualMachineDiskOperations operations, VirtualMachineDiskCreateParameters parameters)
         {
             return operations.CreateDiskAsync(parameters, CancellationToken.None);
         }
@@ -397,7 +397,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
@@ -408,11 +408,11 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse DeleteDisk(this IVirtualMachineDiskOperations operations, string diskName, bool deleteFromStorage)
+        public static OperationResponse DeleteDisk(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
         {
             try
             {
-                return operations.DeleteDiskAsync(diskName, deleteFromStorage).Result;
+                return operations.DeleteDiskAsync(name, deleteFromStorage).Result;
             }
             catch (AggregateException ex)
             {
@@ -437,7 +437,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
@@ -448,9 +448,9 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteDiskAsync(this IVirtualMachineDiskOperations operations, string diskName, bool deleteFromStorage)
+        public static Task<OperationResponse> DeleteDiskAsync(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
         {
-            return operations.DeleteDiskAsync(diskName, deleteFromStorage, CancellationToken.None);
+            return operations.DeleteDiskAsync(name, deleteFromStorage, CancellationToken.None);
         }
         
         /// <summary>
@@ -478,7 +478,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Get Data Disk operation response.
         /// </returns>
-        public static VirtualMachineDiskGetDataDiskResponse GetDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber)
+        public static VirtualMachineDataDiskGetResponse GetDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber)
         {
             try
             {
@@ -522,7 +522,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Get Data Disk operation response.
         /// </returns>
-        public static Task<VirtualMachineDiskGetDataDiskResponse> GetDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber)
+        public static Task<VirtualMachineDataDiskGetResponse> GetDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber)
         {
             return operations.GetDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, CancellationToken.None);
         }
@@ -538,17 +538,17 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk.
         /// </param>
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public static VirtualMachineDiskGetDiskResponse GetDisk(this IVirtualMachineDiskOperations operations, string diskName)
+        public static VirtualMachineDiskGetResponse GetDisk(this IVirtualMachineDiskOperations operations, string name)
         {
             try
             {
-                return operations.GetDiskAsync(diskName).Result;
+                return operations.GetDiskAsync(name).Result;
             }
             catch (AggregateException ex)
             {
@@ -574,15 +574,15 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk.
         /// </param>
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public static Task<VirtualMachineDiskGetDiskResponse> GetDiskAsync(this IVirtualMachineDiskOperations operations, string diskName)
+        public static Task<VirtualMachineDiskGetResponse> GetDiskAsync(this IVirtualMachineDiskOperations operations, string name)
         {
-            return operations.GetDiskAsync(diskName, CancellationToken.None);
+            return operations.GetDiskAsync(name, CancellationToken.None);
         }
         
         /// <summary>
@@ -665,7 +665,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDiskUpdateDataDiskParameters parameters)
+        public static OperationResponse UpdateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
         {
             try
             {
@@ -714,7 +714,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDiskUpdateDataDiskParameters parameters)
+        public static Task<OperationResponse> UpdateDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
         {
             return operations.UpdateDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, parameters, CancellationToken.None);
         }
@@ -729,7 +729,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk being updated.
         /// </param>
         /// <param name='parameters'>
@@ -738,11 +738,11 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public static VirtualMachineDiskUpdateDiskResponse UpdateDisk(this IVirtualMachineDiskOperations operations, string diskName, VirtualMachineDiskUpdateDiskParameters parameters)
+        public static VirtualMachineDiskUpdateResponse UpdateDisk(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
         {
             try
             {
-                return operations.UpdateDiskAsync(diskName, parameters).Result;
+                return operations.UpdateDiskAsync(name, parameters).Result;
             }
             catch (AggregateException ex)
             {
@@ -767,7 +767,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk being updated.
         /// </param>
         /// <param name='parameters'>
@@ -776,9 +776,9 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public static Task<VirtualMachineDiskUpdateDiskResponse> UpdateDiskAsync(this IVirtualMachineDiskOperations operations, string diskName, VirtualMachineDiskUpdateDiskParameters parameters)
+        public static Task<VirtualMachineDiskUpdateResponse> UpdateDiskAsync(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
         {
-            return operations.UpdateDiskAsync(diskName, parameters, CancellationToken.None);
+            return operations.UpdateDiskAsync(name, parameters, CancellationToken.None);
         }
     }
 }

@@ -251,7 +251,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDiskCreateDataDiskParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -318,17 +318,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 hostCachingElement.Value = parameters.HostCaching.ToString();
                 dataVirtualHardDiskElement.Add(hostCachingElement);
                 
-                if (parameters.DiskLabel != null)
+                if (parameters.Label != null)
                 {
                     XElement diskLabelElement = new XElement(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
-                    diskLabelElement.Value = parameters.DiskLabel;
+                    diskLabelElement.Value = parameters.Label;
                     dataVirtualHardDiskElement.Add(diskLabelElement);
                 }
                 
-                if (parameters.DiskName != null)
+                if (parameters.Name != null)
                 {
                     XElement diskNameElement = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                    diskNameElement.Value = parameters.DiskName;
+                    diskNameElement.Value = parameters.Name;
                     dataVirtualHardDiskElement.Add(diskNameElement);
                 }
                 
@@ -431,7 +431,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskCreateDiskResponse> CreateDiskAsync(VirtualMachineDiskCreateDiskParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskCreateResponse> CreateDiskAsync(VirtualMachineDiskCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -537,11 +537,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineDiskCreateDiskResponse result = null;
+                    VirtualMachineDiskCreateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineDiskCreateDiskResponse();
+                    result = new VirtualMachineDiskCreateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement diskElement2 = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
@@ -606,7 +606,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement attachedToElement = diskElement2.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
                         if (attachedToElement != null)
                         {
-                            VirtualMachineDiskCreateDiskResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskCreateDiskResponse.VirtualMachineDiskUsageDetails();
+                            VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails();
                             result.UsageDetails = attachedToInstance;
                             
                             XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
@@ -787,7 +787,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157200.aspx
         /// for more information)
         /// </summary>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
@@ -801,12 +801,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteDiskAsync(string diskName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteDiskAsync(string name, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
-            if (diskName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException("diskName");
+                throw new ArgumentNullException("name");
             }
             
             // Tracing
@@ -816,13 +816,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("diskName", diskName);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("deleteFromStorage", deleteFromStorage);
                 Tracing.Enter(invocationId, this, "DeleteDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + name + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -925,7 +925,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Data Disk operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskGetDataDiskResponse> GetDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDataDiskGetResponse> GetDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1000,11 +1000,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineDiskGetDataDiskResponse result = null;
+                    VirtualMachineDataDiskGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineDiskGetDataDiskResponse();
+                    result = new VirtualMachineDataDiskGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dataVirtualHardDiskElement = responseDoc.Element(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure"));
@@ -1021,14 +1021,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         if (diskLabelElement != null)
                         {
                             string diskLabelInstance = diskLabelElement.Value;
-                            result.DiskLabel = diskLabelInstance;
+                            result.Label = diskLabelInstance;
                         }
                         
                         XElement diskNameElement = dataVirtualHardDiskElement.Element(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
                         if (diskNameElement != null)
                         {
                             string diskNameInstance = diskNameElement.Value;
-                            result.DiskName = diskNameInstance;
+                            result.Name = diskNameInstance;
                         }
                         
                         XElement lunElement = dataVirtualHardDiskElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
@@ -1089,7 +1089,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
         /// for more information)
         /// </summary>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1098,12 +1098,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskGetDiskResponse> GetDiskAsync(string diskName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskGetResponse> GetDiskAsync(string name, CancellationToken cancellationToken)
         {
             // Validate
-            if (diskName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException("diskName");
+                throw new ArgumentNullException("name");
             }
             
             // Tracing
@@ -1113,12 +1113,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("diskName", diskName);
+                tracingParameters.Add("name", name);
                 Tracing.Enter(invocationId, this, "GetDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + name;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1162,11 +1162,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineDiskGetDiskResponse result = null;
+                    VirtualMachineDiskGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineDiskGetDiskResponse();
+                    result = new VirtualMachineDiskGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement diskElement = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
@@ -1231,7 +1231,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement attachedToElement = diskElement.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
                         if (attachedToElement != null)
                         {
-                            VirtualMachineDiskGetDiskResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskGetDiskResponse.VirtualMachineDiskUsageDetails();
+                            VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails();
                             result.UsageDetails = attachedToInstance;
                             
                             XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
@@ -1544,7 +1544,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDiskUpdateDataDiskParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -1612,17 +1612,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 hostCachingElement.Value = parameters.HostCaching.ToString();
                 dataVirtualHardDiskElement.Add(hostCachingElement);
                 
-                if (parameters.DiskLabel != null)
+                if (parameters.Label != null)
                 {
                     XElement diskLabelElement = new XElement(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
-                    diskLabelElement.Value = parameters.DiskLabel;
+                    diskLabelElement.Value = parameters.Label;
                     dataVirtualHardDiskElement.Add(diskLabelElement);
                 }
                 
-                if (parameters.DiskName != null)
+                if (parameters.Name != null)
                 {
                     XElement diskNameElement = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                    diskNameElement.Value = parameters.DiskName;
+                    diskNameElement.Value = parameters.Name;
                     dataVirtualHardDiskElement.Add(diskNameElement);
                 }
                 
@@ -1709,7 +1709,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
         /// for more information)
         /// </summary>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk being updated.
         /// </param>
         /// <param name='parameters'>
@@ -1721,12 +1721,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskUpdateDiskResponse> UpdateDiskAsync(string diskName, VirtualMachineDiskUpdateDiskParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskUpdateResponse> UpdateDiskAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (diskName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException("diskName");
+                throw new ArgumentNullException("name");
             }
             if (parameters == null)
             {
@@ -1748,13 +1748,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("diskName", diskName);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "UpdateDiskAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + diskName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/disks/" + name;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1838,11 +1838,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineDiskUpdateDiskResponse result = null;
+                    VirtualMachineDiskUpdateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineDiskUpdateDiskResponse();
+                    result = new VirtualMachineDiskUpdateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement diskElement2 = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));

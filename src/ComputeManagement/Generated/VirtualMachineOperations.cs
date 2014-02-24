@@ -1414,10 +1414,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             dataVirtualHardDiskElement.Add(diskLabelElement);
                         }
                         
-                        if (dataVirtualHardDisksItem.DiskName != null)
+                        if (dataVirtualHardDisksItem.Name != null)
                         {
                             XElement diskNameElement = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                            diskNameElement.Value = dataVirtualHardDisksItem.DiskName;
+                            diskNameElement.Value = dataVirtualHardDisksItem.Name;
                             dataVirtualHardDiskElement.Add(diskNameElement);
                         }
                         
@@ -1454,17 +1454,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         oSVirtualHardDiskElement.Add(hostCachingElement2);
                     }
                     
-                    if (parameters.OSVirtualHardDisk.DiskLabel != null)
+                    if (parameters.OSVirtualHardDisk.Label != null)
                     {
                         XElement diskLabelElement2 = new XElement(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
-                        diskLabelElement2.Value = parameters.OSVirtualHardDisk.DiskLabel;
+                        diskLabelElement2.Value = parameters.OSVirtualHardDisk.Label;
                         oSVirtualHardDiskElement.Add(diskLabelElement2);
                     }
                     
-                    if (parameters.OSVirtualHardDisk.DiskName != null)
+                    if (parameters.OSVirtualHardDisk.Name != null)
                     {
                         XElement diskNameElement2 = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                        diskNameElement2.Value = parameters.OSVirtualHardDisk.DiskName;
+                        diskNameElement2.Value = parameters.OSVirtualHardDisk.Name;
                         oSVirtualHardDiskElement.Add(diskNameElement2);
                     }
                     
@@ -2294,10 +2294,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 dataVirtualHardDiskElement.Add(diskLabelElement);
                             }
                             
-                            if (dataVirtualHardDisksItem.DiskName != null)
+                            if (dataVirtualHardDisksItem.Name != null)
                             {
                                 XElement diskNameElement = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                                diskNameElement.Value = dataVirtualHardDisksItem.DiskName;
+                                diskNameElement.Value = dataVirtualHardDisksItem.Name;
                                 dataVirtualHardDiskElement.Add(diskNameElement);
                             }
                             
@@ -2341,17 +2341,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             oSVirtualHardDiskElement.Add(hostCachingElement2);
                         }
                         
-                        if (roleListItem.OSVirtualHardDisk.DiskLabel != null)
+                        if (roleListItem.OSVirtualHardDisk.Label != null)
                         {
                             XElement diskLabelElement2 = new XElement(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
-                            diskLabelElement2.Value = roleListItem.OSVirtualHardDisk.DiskLabel;
+                            diskLabelElement2.Value = roleListItem.OSVirtualHardDisk.Label;
                             oSVirtualHardDiskElement.Add(diskLabelElement2);
                         }
                         
-                        if (roleListItem.OSVirtualHardDisk.DiskName != null)
+                        if (roleListItem.OSVirtualHardDisk.Name != null)
                         {
                             XElement diskNameElement2 = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                            diskNameElement2.Value = roleListItem.OSVirtualHardDisk.DiskName;
+                            diskNameElement2.Value = roleListItem.OSVirtualHardDisk.Name;
                             oSVirtualHardDiskElement.Add(diskNameElement2);
                         }
                         
@@ -4064,10 +4064,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             dataVirtualHardDiskElement.Add(diskLabelElement);
                         }
                         
-                        if (dataVirtualHardDisksItem.DiskName != null)
+                        if (dataVirtualHardDisksItem.Name != null)
                         {
                             XElement diskNameElement = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                            diskNameElement.Value = dataVirtualHardDisksItem.DiskName;
+                            diskNameElement.Value = dataVirtualHardDisksItem.Name;
                             dataVirtualHardDiskElement.Add(diskNameElement);
                         }
                         
@@ -4102,17 +4102,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     oSVirtualHardDiskElement.Add(hostCachingElement2);
                 }
                 
-                if (parameters.OSVirtualHardDisk.DiskLabel != null)
+                if (parameters.OSVirtualHardDisk.Label != null)
                 {
                     XElement diskLabelElement2 = new XElement(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
-                    diskLabelElement2.Value = parameters.OSVirtualHardDisk.DiskLabel;
+                    diskLabelElement2.Value = parameters.OSVirtualHardDisk.Label;
                     oSVirtualHardDiskElement.Add(diskLabelElement2);
                 }
                 
-                if (parameters.OSVirtualHardDisk.DiskName != null)
+                if (parameters.OSVirtualHardDisk.Name != null)
                 {
                     XElement diskNameElement2 = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                    diskNameElement2.Value = parameters.OSVirtualHardDisk.DiskName;
+                    diskNameElement2.Value = parameters.OSVirtualHardDisk.Name;
                     oSVirtualHardDiskElement.Add(diskNameElement2);
                 }
                 
@@ -5541,7 +5541,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 if (diskNameElement != null)
                                 {
                                     string diskNameInstance = diskNameElement.Value;
-                                    dataVirtualHardDiskInstance.DiskName = diskNameInstance;
+                                    dataVirtualHardDiskInstance.Name = diskNameInstance;
                                 }
                                 
                                 XElement lunElement = dataVirtualHardDisksElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
@@ -5584,14 +5584,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             if (diskLabelElement2 != null)
                             {
                                 string diskLabelInstance2 = diskLabelElement2.Value;
-                                oSVirtualHardDiskInstance.DiskLabel = diskLabelInstance2;
+                                oSVirtualHardDiskInstance.Label = diskLabelInstance2;
                             }
                             
                             XElement diskNameElement2 = oSVirtualHardDiskElement.Element(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
                             if (diskNameElement2 != null)
                             {
                                 string diskNameInstance2 = diskNameElement2.Value;
-                                oSVirtualHardDiskInstance.DiskName = diskNameInstance2;
+                                oSVirtualHardDiskInstance.Name = diskNameInstance2;
                             }
                             
                             XElement mediaLinkElement2 = oSVirtualHardDiskElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
