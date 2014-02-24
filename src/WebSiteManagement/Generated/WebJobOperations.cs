@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// <summary>
     /// Operations for managing the jobs.
     /// </summary>
-    internal partial class WebJobOperations : IServiceOperations<WebSiteExtensionsClient>, IWebJobOperations
+    internal partial class WebJobOperations : IServiceOperations<WebSiteExtensionsClient>, Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations
     {
         /// <summary>
         /// Initializes a new instance of the WebJobOperations class.
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteContinuousAsync(string jobName, bool recursive, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteContinuousAsync(string jobName, bool recursive, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -196,7 +196,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteTriggeredAsync(string jobName, bool recursive, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteTriggeredAsync(string jobName, bool recursive, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -305,7 +305,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        public async Task<WebJobGetResponse> GetAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobGetResponse> GetAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -549,7 +549,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        public async Task<WebJobGetResponse> GetContinuousAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobGetResponse> GetContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -796,7 +796,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The Get Web Job Run operation response.
         /// </returns>
-        public async Task<WebJobGetRunResponse> GetRunAsync(string jobName, string jobRunId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobGetRunResponse> GetRunAsync(string jobName, string jobRunId, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -975,7 +975,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        public async Task<WebJobGetResponse> GetTriggeredAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobGetResponse> GetTriggeredAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -1219,7 +1219,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list of jobs operation response.
         /// </returns>
-        public async Task<WebJobListResponse> ListAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobListResponse> ListAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1296,10 +1296,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobsArray = (JArray)responseDoc;
+                        JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in jobsArray)
+                            foreach (JToken jobsValue in (JArray)jobsArray)
                             {
                                 WebJob webJobInstance = new WebJob();
                                 result.Jobs.Add(webJobInstance);
@@ -1474,7 +1474,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list of jobs operation response.
         /// </returns>
-        public async Task<WebJobListResponse> ListContinuousAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobListResponse> ListContinuousAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1551,10 +1551,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobsArray = (JArray)responseDoc;
+                        JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in jobsArray)
+                            foreach (JToken jobsValue in (JArray)jobsArray)
                             {
                                 WebJob webJobInstance = new WebJob();
                                 result.Jobs.Add(webJobInstance);
@@ -1732,7 +1732,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The Web Job run list operation response.
         /// </returns>
-        public async Task<WebJobRunListResponse> ListRunsAsync(string jobName, WebJobRunListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobRunListResponse> ListRunsAsync(string jobName, WebJobRunListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -1814,10 +1814,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray runsArray = (JArray)responseDoc["runs"];
+                        JToken runsArray = responseDoc["runs"];
                         if (runsArray != null && runsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken runsValue in runsArray)
+                            foreach (JToken runsValue in (JArray)runsArray)
                             {
                                 WebJobRun webJobRunInstance = new WebJobRun();
                                 result.JobRuns.Add(webJobRunInstance);
@@ -1922,7 +1922,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list of jobs operation response.
         /// </returns>
-        public async Task<WebJobListResponse> ListTriggeredAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobListResponse> ListTriggeredAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1999,10 +1999,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobsArray = (JArray)responseDoc;
+                        JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in jobsArray)
+                            foreach (JToken jobsValue in (JArray)jobsArray)
                             {
                                 WebJob webJobInstance = new WebJob();
                                 result.Jobs.Add(webJobInstance);
@@ -2178,7 +2178,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RunTriggeredAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RunTriggeredAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2290,7 +2290,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> SetSingletonAsync(string jobName, bool isSingleton, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> SetSingletonAsync(string jobName, bool isSingleton, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2400,7 +2400,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StartContinuousAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> StartContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2508,7 +2508,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StopContinuousAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> StopContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2619,7 +2619,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UploadContinuousAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UploadContinuousAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2740,7 +2740,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UploadTriggeredAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UploadTriggeredAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)

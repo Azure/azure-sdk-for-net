@@ -27,11 +27,8 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Monitoring.Autoscale;
 using Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models;
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
+namespace Microsoft.WindowsAzure
 {
-    /// <summary>
-    /// Operations for managing the autoscale settings.
-    /// </summary>
     public static partial class SettingOperationsExtensions
     {
         /// <param name='operations'>

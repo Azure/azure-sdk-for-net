@@ -37,7 +37,7 @@ using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler
 {
-    public partial class CloudServiceManagementClient : ServiceClient<CloudServiceManagementClient>, ICloudServiceManagementClient
+    public partial class CloudServiceManagementClient : ServiceClient<CloudServiceManagementClient>, Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceManagementClient
     {
         private Uri _baseUri;
         
@@ -157,7 +157,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> EntitleResourceAsync(EntitleResourceParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> EntitleResourceAsync(EntitleResourceParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -309,7 +309,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<CloudServiceOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.CloudServiceOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)

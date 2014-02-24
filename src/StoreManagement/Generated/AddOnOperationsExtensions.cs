@@ -26,11 +26,11 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Store;
 using Microsoft.WindowsAzure.Management.Store.Models;
 
-namespace Microsoft.WindowsAzure.Management.Store
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Provides REST operations for working with Store add-ins from the
-    /// Windows Azure store service.
+    /// The Windows Azure Store API is a REST API for managing Windows Azure
+    /// Store add-ins.
     /// </summary>
     public static partial class AddOnOperationsExtensions
     {

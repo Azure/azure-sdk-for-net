@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Subscriptions;
 using Microsoft.WindowsAzure.Subscriptions.Models;
 
-namespace Microsoft.WindowsAzure.Subscriptions
+namespace Microsoft.WindowsAzure
 {
     public static partial class SubscriptionOperationsExtensions
     {

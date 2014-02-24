@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// The SQL Database Management API includes operations for managing SQL
     /// Databases for a subscription.
     /// </summary>
-    internal partial class DatabaseOperations : IServiceOperations<SqlManagementClient>, IDatabaseOperations
+    internal partial class DatabaseOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations
     {
         /// <summary>
         /// Initializes a new instance of the DatabaseOperations class.
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<DatabaseCreateResponse> CreateAsync(string serverName, DatabaseCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseCreateResponse> CreateAsync(string serverName, DatabaseCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -374,7 +374,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string serverName, string databaseName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string serverName, string databaseName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -490,7 +490,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<DatabaseGetResponse> GetAsync(string serverName, string databaseName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseGetResponse> GetAsync(string serverName, string databaseName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -730,7 +730,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Response containing the list of databases for a given server.
         /// </returns>
-        public async Task<DatabaseListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -978,7 +978,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<DatabaseUpdateResponse> UpdateAsync(string serverName, string databaseName, DatabaseUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseUpdateResponse> UpdateAsync(string serverName, string databaseName, DatabaseUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)

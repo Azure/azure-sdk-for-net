@@ -4,7 +4,7 @@
   <OutputDirectory>Generated</OutputDirectory>
 
   <Specification>
-    <Type>Microsoft.WindowsAzure.Management.VirtualNetworks.VirtualNetworkManagementClient</Type>
+    <Type>Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient</Type>
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>

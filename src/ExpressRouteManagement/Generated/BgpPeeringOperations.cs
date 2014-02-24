@@ -38,7 +38,7 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    internal partial class BgpPeeringOperations : IServiceOperations<ExpressRouteManagementClient>, IBgpPeeringOperations
+    internal partial class BgpPeeringOperations : IServiceOperations<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations
     {
         /// <summary>
         /// Initializes a new instance of the BgpPeeringOperations class.
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -410,7 +410,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -603,7 +603,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public async Task<BgpPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.BgpPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -787,7 +787,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public async Task<BgpPeeringGetResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.BgpPeeringGetResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -868,7 +868,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -938,7 +938,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public async Task<BgpPeeringGetResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.BgpPeeringGetResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

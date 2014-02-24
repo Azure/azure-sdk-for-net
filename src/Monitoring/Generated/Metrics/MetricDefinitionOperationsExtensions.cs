@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
+namespace Microsoft.WindowsAzure
 {
     public static partial class MetricDefinitionOperationsExtensions
     {

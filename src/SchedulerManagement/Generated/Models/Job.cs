@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Scheduler.Models;
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// A scheduler job.
+    /// The definition of a Windows Azure Scheduler job.
     /// </summary>
     public partial class Job
     {

@@ -22,10 +22,11 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.WebSitesExtensions
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Operations for managing the diagnostics settings.
+    /// The websites extensions client manages the web sites deployments, web
+    /// jobs and other extensions.
     /// </summary>
     public static partial class DiagnosticOperationsExtensions
     {

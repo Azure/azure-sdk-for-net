@@ -27,19 +27,19 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Scheduler;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
-namespace Microsoft.WindowsAzure.Scheduler
+namespace Microsoft.WindowsAzure
 {
     public static partial class JobOperationsExtensions
     {
         /// <summary>
-        /// If the user wants the server to create the job id then he can use a
-        /// POST request to the jobs resource.
+        /// Creates a new Job, allowing the service to generate a job id. Use
+        /// CreateOrUpdate if a user-chosen job id is required.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Job operation.
+        /// Parameters specifying the job definition for a Create Job operation.
         /// </param>
         /// <returns>
         /// The Create Job operation response.
@@ -64,14 +64,14 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// If the user wants the server to create the job id then he can use a
-        /// POST request to the jobs resource.
+        /// Creates a new Job, allowing the service to generate a job id. Use
+        /// CreateOrUpdate if a user-chosen job id is required.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Job operation.
+        /// Parameters specifying the job definition for a Create Job operation.
         /// </param>
         /// <returns>
         /// The Create Job operation response.
@@ -82,11 +82,8 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Jobs can be created or updated with a PUT operation to a job's
-        /// address. The resource name is the ID of the job. Doing a PUT
-        /// operation on a jobId that already exists will completely overwrite
-        /// the existing job. Putting an existing job (replace) will reset
-        /// internal execution counters.
+        /// Creates a new Job with a user-provided job id, or updates an
+        /// existing job, replacing its definition with that specified.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -95,10 +92,11 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// Id of the job to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the job operation.
+        /// Parameters specifying the job definition for a CreateOrUpdate Job
+        /// operation.
         /// </param>
         /// <returns>
-        /// The Update Job operation response.
+        /// The CreateOrUpdate Job operation response.
         /// </returns>
         public static JobCreateOrUpdateResponse CreateOrUpdate(this IJobOperations operations, string jobId, JobCreateOrUpdateParameters parameters)
         {
@@ -120,11 +118,8 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Jobs can be created or updated with a PUT operation to a job's
-        /// address. The resource name is the ID of the job. Doing a PUT
-        /// operation on a jobId that already exists will completely overwrite
-        /// the existing job. Putting an existing job (replace) will reset
-        /// internal execution counters.
+        /// Creates a new Job with a user-provided job id, or updates an
+        /// existing job, replacing its definition with that specified.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -133,10 +128,11 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// Id of the job to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the job operation.
+        /// Parameters specifying the job definition for a CreateOrUpdate Job
+        /// operation.
         /// </param>
         /// <returns>
-        /// The Update Job operation response.
+        /// The CreateOrUpdate Job operation response.
         /// </returns>
         public static Task<JobCreateOrUpdateResponse> CreateOrUpdateAsync(this IJobOperations operations, string jobId, JobCreateOrUpdateParameters parameters)
         {
@@ -194,8 +190,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// The status of an individual job can be access by a GET call to a
-        /// job's address, jobId.
+        /// Get the definition and status of a job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -226,8 +221,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// The status of an individual job can be access by a GET call to a
-        /// job's address, jobId.
+        /// Get the definition and status of a job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -244,7 +238,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Job history tracks the updates and executions of a job.
+        /// Get the execution history of a Job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -278,7 +272,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Job history tracks the updates and executions of a job.
+        /// Get the execution history of a Job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -298,7 +292,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Job history tracks the updates and executions of a job.
+        /// Get the execution history of a Job with a filter on the job Status.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -332,7 +326,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Job history tracks the updates and executions of a job.
+        /// Get the execution history of a Job with a filter on the job Status.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -352,7 +346,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Fetch all jobs in a job collection.
+        /// Get the list of all jobs in a job collection.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -383,7 +377,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Fetch all jobs in a job collection.
+        /// Get the list of all jobs in a job collection.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -400,7 +394,8 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Fetch jobs in a job collection via a filter.
+        /// Get the list of jobs in a job collection matching a filter on job
+        /// state.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -431,7 +426,8 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Fetch jobs in a job collection via a filter.
+        /// Get the list of jobs in a job collection matching a filter on job
+        /// state.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -448,10 +444,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Job collections can be updated through a simple PATCH operation.
-        /// The format of the request is the same as that for creating a job,
-        /// though if a field is unspecified we will carry forward the current
-        /// value.
+        /// Update the state of all jobs in a job collections.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -482,10 +475,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Job collections can be updated through a simple PATCH operation.
-        /// The format of the request is the same as that for creating a job,
-        /// though if a field is unspecified we will carry forward the current
-        /// value.
+        /// Update the state of all jobs in a job collections.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -502,10 +492,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Jobs can be updated through a simple PATCH operation to a job's
-        /// address. The format of the request is the same as that for
-        /// creating a job, though if a field is unspecified we will carry
-        /// forward the current value.
+        /// Update the state of a job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
@@ -539,10 +526,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Jobs can be updated through a simple PATCH operation to a job's
-        /// address. The format of the request is the same as that for
-        /// creating a job, though if a field is unspecified we will carry
-        /// forward the current value.
+        /// Update the state of a job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.

@@ -27,10 +27,11 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure.WebSitesExtensions
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Operations for managing the settings.
+    /// The websites extensions client manages the web sites deployments, web
+    /// jobs and other extensions.
     /// </summary>
     public static partial class SettingsOperationsExtensions
     {

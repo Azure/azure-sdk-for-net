@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     /// The Service Bus Management API includes operations for managing Service
     /// Bus relays.
     /// </summary>
-    internal partial class RelayOperations : IServiceOperations<ServiceBusManagementClient>, IRelayOperations
+    internal partial class RelayOperations : IServiceOperations<ServiceBusManagementClient>, Microsoft.WindowsAzure.Management.ServiceBus.IRelayOperations
     {
         /// <summary>
         /// Initializes a new instance of the RelayOperations class.
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// The set of connection details for a service bus entity.
         /// </returns>
-        public async Task<ServiceBusConnectionDetailsResponse> GetConnectionDetailsAsync(string namespaceName, string relayName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusConnectionDetailsResponse> GetConnectionDetailsAsync(string namespaceName, string relayName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)

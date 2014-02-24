@@ -27,7 +27,8 @@ using Microsoft.WindowsAzure.WebSitesExtensions;
 namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
-    /// TBD.
+    /// The websites extensions client manages the web sites deployments, web
+    /// jobs and other extensions.
     /// </summary>
     public partial interface IWebSiteExtensionsClient : IDisposable
     {

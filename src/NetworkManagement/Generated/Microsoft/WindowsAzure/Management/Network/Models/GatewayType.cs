@@ -22,31 +22,12 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Storage.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    /// <summary>
-    /// The status of the storage account at the time the operation was called.
-    /// </summary>
-    public enum StorageServiceStatus
+    public enum GatewayType
     {
-        /// <summary>
-        /// The Storage Account had been created.
-        /// </summary>
-        Created = 0,
+        StaticRouting = 0,
         
-        /// <summary>
-        /// The Storage Account is being created.
-        /// </summary>
-        Creating = 1,
-        
-        /// <summary>
-        /// The DNS name for the storage account is being propagated.
-        /// </summary>
-        ResolvingDns = 2,
-        
-        /// <summary>
-        /// The Storage Account is being deleted.
-        /// </summary>
-        Deleting = 3,
+        DynamicRouting = 1,
     }
 }

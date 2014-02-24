@@ -22,14 +22,13 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// A virtual machine disk associated with your subscription.
     /// </summary>
-    public partial class VirtualMachineDiskGetDiskResponse : OperationResponse
+    public partial class VirtualMachineDiskUpdateResponse : OperationResponse
     {
         private string _affinityGroup;
         
@@ -45,22 +44,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._affinityGroup = value; }
         }
         
-        private bool? _isCorrupted;
-        
-        /// <summary>
-        /// Specifies thether the disk is known to be corrupt.
-        /// </summary>
-        public bool? IsCorrupted
-        {
-            get { return this._isCorrupted; }
-            set { this._isCorrupted = value; }
-        }
-        
         private bool? _isPremium;
         
         /// <summary>
-        /// Specifies whether or not the disk contains a premium virtual
-        /// machine image.
+        /// Specifies whether the comtained image is a premium image
         /// </summary>
         public bool? IsPremium
         {
@@ -71,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// The friendly name of the disk.
+        /// The friendly name of the disk
         /// </summary>
         public string Label
         {
@@ -131,100 +118,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._name = value; }
         }
         
-        private string _operatingSystemType;
+        private string _operatingSystem;
         
         /// <summary>
-        /// The operating system type of the OS image.  Possible Values are:
-        /// Linux, Windows, NULL.
+        /// The Operating System type for the disk.
         /// </summary>
-        public string OperatingSystemType
+        public string OperatingSystem
         {
-            get { return this._operatingSystemType; }
-            set { this._operatingSystemType = value; }
-        }
-        
-        private string _sourceImageName;
-        
-        /// <summary>
-        /// The name of the OS Image from which the disk was created. This
-        /// property is populated automatically when a disk is created from an
-        /// OS image by calling the Add Role, Create Deployment, or Provision
-        /// Disk operations.
-        /// </summary>
-        public string SourceImageName
-        {
-            get { return this._sourceImageName; }
-            set { this._sourceImageName = value; }
-        }
-        
-        private VirtualMachineDiskGetDiskResponse.VirtualMachineDiskUsageDetails _usageDetails;
-        
-        /// <summary>
-        /// Contains properties that specify a virtual machine that currently
-        /// using the disk. A disk cannot be deleted as long as it is attached
-        /// to a virtual machine.
-        /// </summary>
-        public VirtualMachineDiskGetDiskResponse.VirtualMachineDiskUsageDetails UsageDetails
-        {
-            get { return this._usageDetails; }
-            set { this._usageDetails = value; }
+            get { return this._operatingSystem; }
+            set { this._operatingSystem = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineDiskGetDiskResponse
+        /// Initializes a new instance of the VirtualMachineDiskUpdateResponse
         /// class.
         /// </summary>
-        public VirtualMachineDiskGetDiskResponse()
+        public VirtualMachineDiskUpdateResponse()
         {
-        }
-        
-        /// <summary>
-        /// Contains properties that specify a virtual machine that currently
-        /// using the disk. A disk cannot be deleted as long as it is attached
-        /// to a virtual machine.
-        /// </summary>
-        public partial class VirtualMachineDiskUsageDetails
-        {
-            private string _deploymentName;
-            
-            /// <summary>
-            /// The deployment in which the disk is being used.
-            /// </summary>
-            public string DeploymentName
-            {
-                get { return this._deploymentName; }
-                set { this._deploymentName = value; }
-            }
-            
-            private string _hostedServiceName;
-            
-            /// <summary>
-            /// The hosted service in which the disk is being used.
-            /// </summary>
-            public string HostedServiceName
-            {
-                get { return this._hostedServiceName; }
-                set { this._hostedServiceName = value; }
-            }
-            
-            private string _roleName;
-            
-            /// <summary>
-            /// The virtual machine that the disk is attached to.
-            /// </summary>
-            public string RoleName
-            {
-                get { return this._roleName; }
-                set { this._roleName = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the
-            /// VirtualMachineDiskUsageDetails class.
-            /// </summary>
-            public VirtualMachineDiskUsageDetails()
-            {
-            }
         }
     }
 }

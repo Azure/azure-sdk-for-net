@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// <summary>
     /// Operations for managing web spaces beneath your subscription.
     /// </summary>
-    internal partial class WebSpaceOperations : IServiceOperations<WebSiteManagementClient>, IWebSpaceOperations
+    internal partial class WebSpaceOperations : IServiceOperations<WebSiteManagementClient>, Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations
     {
         /// <summary>
         /// Initializes a new instance of the WebSpaceOperations class.
@@ -83,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Create Publishing User operation response.
         /// </returns>
-        public async Task<WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(string username, string password, WebSpacesCreatePublishingUserParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesCreatePublishingUserResponse> CreatePublishingUserAsync(string username, string password, WebSpacesCreatePublishingUserParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (username == null)
@@ -269,7 +269,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Web Space Details operation response.
         /// </returns>
-        public async Task<WebSpacesGetResponse> GetAsync(string webSpaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesGetResponse> GetAsync(string webSpaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -470,7 +470,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get DNS Suffix operation response.
         /// </returns>
-        public async Task<WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesGetDnsSuffixResponse> GetDnsSuffixAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -583,7 +583,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The List Web Spaces operation response.
         /// </returns>
-        public async Task<WebSpacesListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -785,7 +785,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get DNS Suffix operation response.
         /// </returns>
-        public async Task<WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -929,7 +929,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The List Publishing Users operation response.
         /// </returns>
-        public async Task<WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListPublishingUsersResponse> ListPublishingUsersAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1055,7 +1055,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The List Web Sites operation response.
         /// </returns>
-        public async Task<WebSpacesListWebSitesResponse> ListWebSitesAsync(string webSpaceName, WebSiteListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListWebSitesResponse> ListWebSitesAsync(string webSpaceName, WebSiteListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)

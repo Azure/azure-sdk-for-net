@@ -36,7 +36,7 @@ using Microsoft.WindowsAzure.Subscriptions.Models;
 
 namespace Microsoft.WindowsAzure.Subscriptions
 {
-    internal partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
+    internal partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, Microsoft.WindowsAzure.Subscriptions.ISubscriptionOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionOperations class.
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Subscriptions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<SubscriptionListOperationResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Subscriptions.Models.SubscriptionListOperationResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             

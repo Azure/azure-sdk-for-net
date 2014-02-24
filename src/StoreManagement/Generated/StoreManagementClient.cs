@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.Management.Store
     /// The Windows Azure Store API is a REST API for managing Windows Azure
     /// Store add-ins.
     /// </summary>
-    public partial class StoreManagementClient : ServiceClient<StoreManagementClient>, IStoreManagementClient
+    public partial class StoreManagementClient : ServiceClient<StoreManagementClient>, Microsoft.WindowsAzure.Management.Store.IStoreManagementClient
     {
         private Uri _baseUri;
         
@@ -183,7 +183,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<AddOnOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.AddOnOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)

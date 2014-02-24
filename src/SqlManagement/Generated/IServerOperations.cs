@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Management.Sql;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql

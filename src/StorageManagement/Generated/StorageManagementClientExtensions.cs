@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Storage;
 using Microsoft.WindowsAzure.Management.Storage.Models;
 
-namespace Microsoft.WindowsAzure.Management.Storage
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the

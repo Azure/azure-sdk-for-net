@@ -4507,7 +4507,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         if (diskNameElement != null)
                                         {
                                             string diskNameInstance = diskNameElement.Value;
-                                            dataVirtualHardDiskInstance.DiskName = diskNameInstance;
+                                            dataVirtualHardDiskInstance.Name = diskNameInstance;
                                         }
                                         
                                         XElement lunElement = dataVirtualHardDisksElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
@@ -4557,14 +4557,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     if (diskLabelElement2 != null)
                                     {
                                         string diskLabelInstance2 = diskLabelElement2.Value;
-                                        oSVirtualHardDiskInstance.DiskLabel = diskLabelInstance2;
+                                        oSVirtualHardDiskInstance.Label = diskLabelInstance2;
                                     }
                                     
                                     XElement diskNameElement2 = oSVirtualHardDiskElement.Element(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
                                     if (diskNameElement2 != null)
                                     {
                                         string diskNameInstance2 = diskNameElement2.Value;
-                                        oSVirtualHardDiskInstance.DiskName = diskNameInstance2;
+                                        oSVirtualHardDiskInstance.Name = diskNameInstance2;
                                     }
                                     
                                     XElement mediaLinkElement2 = oSVirtualHardDiskElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
@@ -5731,7 +5731,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         if (diskNameElement != null)
                                         {
                                             string diskNameInstance = diskNameElement.Value;
-                                            dataVirtualHardDiskInstance.DiskName = diskNameInstance;
+                                            dataVirtualHardDiskInstance.Name = diskNameInstance;
                                         }
                                         
                                         XElement lunElement = dataVirtualHardDisksElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
@@ -5781,14 +5781,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     if (diskLabelElement2 != null)
                                     {
                                         string diskLabelInstance2 = diskLabelElement2.Value;
-                                        oSVirtualHardDiskInstance.DiskLabel = diskLabelInstance2;
+                                        oSVirtualHardDiskInstance.Label = diskLabelInstance2;
                                     }
                                     
                                     XElement diskNameElement2 = oSVirtualHardDiskElement.Element(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
                                     if (diskNameElement2 != null)
                                     {
                                         string diskNameInstance2 = diskNameElement2.Value;
-                                        oSVirtualHardDiskInstance.DiskName = diskNameInstance2;
+                                        oSVirtualHardDiskInstance.Name = diskNameInstance2;
                                     }
                                     
                                     XElement mediaLinkElement2 = oSVirtualHardDiskElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));

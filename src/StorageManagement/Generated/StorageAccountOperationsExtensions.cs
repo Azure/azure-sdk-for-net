@@ -27,12 +27,14 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Storage;
 using Microsoft.WindowsAzure.Management.Storage.Models;
 
-namespace Microsoft.WindowsAzure.Management.Storage
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The Service Management API includes operations for managing the storage
-    /// accounts beneath your subscription.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460790.aspx for
+    /// The Service Management API provides programmatic access to much of the
+    /// functionality available through the Management Portal. The Service
+    /// Management API is a REST API. All API operations are performed over
+    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class StorageAccountOperationsExtensions
@@ -105,17 +107,17 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The desired storage account name to check for availability.
         /// </param>
         /// <returns>
         /// The response to a storage account check name availability request.
         /// </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailability(this IStorageAccountOperations operations, string serviceName)
+        public static CheckNameAvailabilityResponse CheckNameAvailability(this IStorageAccountOperations operations, string accountName)
         {
             try
             {
-                return operations.CheckNameAvailabilityAsync(serviceName).Result;
+                return operations.CheckNameAvailabilityAsync(accountName).Result;
             }
             catch (AggregateException ex)
             {
@@ -140,15 +142,15 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The desired storage account name to check for availability.
         /// </param>
         /// <returns>
         /// The response to a storage account check name availability request.
         /// </returns>
-        public static Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IStorageAccountOperations operations, string serviceName)
+        public static Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IStorageAccountOperations operations, string accountName)
         {
-            return operations.CheckNameAvailabilityAsync(serviceName, CancellationToken.None);
+            return operations.CheckNameAvailabilityAsync(accountName, CancellationToken.None);
         }
         
         /// <summary>
@@ -233,18 +235,18 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The name of the storage account.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IStorageAccountOperations operations, string serviceName)
+        public static OperationResponse Delete(this IStorageAccountOperations operations, string accountName)
         {
             try
             {
-                return operations.DeleteAsync(serviceName).Result;
+                return operations.DeleteAsync(accountName).Result;
             }
             catch (AggregateException ex)
             {
@@ -269,16 +271,16 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The name of the storage account.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IStorageAccountOperations operations, string serviceName)
+        public static Task<OperationResponse> DeleteAsync(this IStorageAccountOperations operations, string accountName)
         {
-            return operations.DeleteAsync(serviceName, CancellationToken.None);
+            return operations.DeleteAsync(accountName, CancellationToken.None);
         }
         
         /// <summary>
@@ -291,17 +293,17 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// Name of the storage account to get.
         /// </param>
         /// <returns>
         /// The Get Storage Account Properties operation response.
         /// </returns>
-        public static StorageServiceGetResponse Get(this IStorageAccountOperations operations, string serviceName)
+        public static StorageAccountGetResponse Get(this IStorageAccountOperations operations, string accountName)
         {
             try
             {
-                return operations.GetAsync(serviceName).Result;
+                return operations.GetAsync(accountName).Result;
             }
             catch (AggregateException ex)
             {
@@ -326,15 +328,15 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// Name of the storage account to get.
         /// </param>
         /// <returns>
         /// The Get Storage Account Properties operation response.
         /// </returns>
-        public static Task<StorageServiceGetResponse> GetAsync(this IStorageAccountOperations operations, string serviceName)
+        public static Task<StorageAccountGetResponse> GetAsync(this IStorageAccountOperations operations, string accountName)
         {
-            return operations.GetAsync(serviceName, CancellationToken.None);
+            return operations.GetAsync(accountName, CancellationToken.None);
         }
         
         /// <summary>
@@ -347,17 +349,17 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The name of the desired storage account.
         /// </param>
         /// <returns>
         /// The primary and secondary access keys for a storage account.
         /// </returns>
-        public static StorageAccountGetKeysResponse GetKeys(this IStorageAccountOperations operations, string serviceName)
+        public static StorageAccountGetKeysResponse GetKeys(this IStorageAccountOperations operations, string accountName)
         {
             try
             {
-                return operations.GetKeysAsync(serviceName).Result;
+                return operations.GetKeysAsync(accountName).Result;
             }
             catch (AggregateException ex)
             {
@@ -382,15 +384,15 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The name of the desired storage account.
         /// </param>
         /// <returns>
         /// The primary and secondary access keys for a storage account.
         /// </returns>
-        public static Task<StorageAccountGetKeysResponse> GetKeysAsync(this IStorageAccountOperations operations, string serviceName)
+        public static Task<StorageAccountGetKeysResponse> GetKeysAsync(this IStorageAccountOperations operations, string accountName)
         {
-            return operations.GetKeysAsync(serviceName, CancellationToken.None);
+            return operations.GetKeysAsync(accountName, CancellationToken.None);
         }
         
         /// <summary>
@@ -406,7 +408,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The List Storage Accounts operation response.
         /// </returns>
-        public static StorageServiceListResponse List(this IStorageAccountOperations operations)
+        public static StorageAccountListResponse List(this IStorageAccountOperations operations)
         {
             try
             {
@@ -438,7 +440,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The List Storage Accounts operation response.
         /// </returns>
-        public static Task<StorageServiceListResponse> ListAsync(this IStorageAccountOperations operations)
+        public static Task<StorageAccountListResponse> ListAsync(this IStorageAccountOperations operations)
         {
             return operations.ListAsync(CancellationToken.None);
         }
@@ -510,7 +512,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// Name of the storage account to update.
         /// </param>
         /// <param name='parameters'>
@@ -520,11 +522,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this IStorageAccountOperations operations, string serviceName, StorageAccountUpdateParameters parameters)
+        public static OperationResponse Update(this IStorageAccountOperations operations, string accountName, StorageAccountUpdateParameters parameters)
         {
             try
             {
-                return operations.UpdateAsync(serviceName, parameters).Result;
+                return operations.UpdateAsync(accountName, parameters).Result;
             }
             catch (AggregateException ex)
             {
@@ -550,7 +552,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// Name of the storage account to update.
         /// </param>
         /// <param name='parameters'>
@@ -560,9 +562,9 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IStorageAccountOperations operations, string serviceName, StorageAccountUpdateParameters parameters)
+        public static Task<OperationResponse> UpdateAsync(this IStorageAccountOperations operations, string accountName, StorageAccountUpdateParameters parameters)
         {
-            return operations.UpdateAsync(serviceName, parameters, CancellationToken.None);
+            return operations.UpdateAsync(accountName, parameters, CancellationToken.None);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public partial class StorageManagementClient : ServiceClient<StorageManagementClient>, IStorageManagementClient
+    public partial class StorageManagementClient : ServiceClient<StorageManagementClient>, Microsoft.WindowsAzure.Management.Storage.IStorageManagementClient
     {
         private Uri _baseUri;
         
@@ -177,7 +177,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<StorageOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Storage.Models.StorageOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)

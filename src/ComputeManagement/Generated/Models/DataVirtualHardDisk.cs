@@ -42,18 +42,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._diskLabel = value; }
         }
         
-        private string _diskName;
-        
-        /// <summary>
-        /// Specifies the name of the VHD to use to create thedata disk for the
-        /// virtual machine.
-        /// </summary>
-        public string DiskName
-        {
-            get { return this._diskName; }
-            set { this._diskName = value; }
-        }
-        
         private Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? _hostCaching;
         
         /// <summary>
@@ -105,6 +93,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._mediaLink; }
             set { this._mediaLink = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Specifies the name of the VHD to use to create thedata disk for the
+        /// virtual machine.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>

@@ -38,7 +38,7 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    internal partial class DedicatedCircuitOperations : IServiceOperations<ExpressRouteManagementClient>, IDedicatedCircuitOperations
+    internal partial class DedicatedCircuitOperations : IServiceOperations<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations
     {
         /// <summary>
         /// Initializes a new instance of the DedicatedCircuitOperations class.
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginNewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginNewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -239,7 +239,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -363,7 +363,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Dedicated Circuit operation response.
         /// </returns>
-        public async Task<DedicatedCircuitGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -529,7 +529,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The List Dedicated Circuit operation response.
         /// </returns>
-        public async Task<DedicatedCircuitListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -695,7 +695,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Dedicated Circuit operation response.
         /// </returns>
-        public async Task<DedicatedCircuitGetResponse> NewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitGetResponse> NewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -772,7 +772,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

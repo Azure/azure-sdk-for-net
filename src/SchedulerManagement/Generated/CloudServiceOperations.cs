@@ -37,7 +37,7 @@ using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler
 {
-    internal partial class CloudServiceOperations : IServiceOperations<CloudServiceManagementClient>, ICloudServiceOperations
+    internal partial class CloudServiceOperations : IServiceOperations<CloudServiceManagementClient>, Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations
     {
         /// <summary>
         /// Initializes a new instance of the CloudServiceOperations class.
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginCreatingAsync(string cloudServiceName, CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingAsync(string cloudServiceName, CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -244,7 +244,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingAsync(string cloudServiceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string cloudServiceName, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -362,7 +362,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<CloudServiceOperationStatusResponse> CreateAsync(string cloudServiceName, CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.CloudServiceOperationStatusResponse> CreateAsync(string cloudServiceName, CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
         {
             CloudServiceManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -456,7 +456,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<CloudServiceOperationStatusResponse> DeleteAsync(string cloudServiceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.CloudServiceOperationStatusResponse> DeleteAsync(string cloudServiceName, CancellationToken cancellationToken)
         {
             CloudServiceManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -541,7 +541,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// Information about a retrieved Cloud Service.
         /// </returns>
-        public async Task<CloudServiceGetResponse> GetAsync(string cloudServiceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.CloudServiceGetResponse> GetAsync(string cloudServiceName, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -746,7 +746,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The response structure for the Cloud Service List operation.
         /// </returns>
-        public async Task<CloudServiceListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.CloudServiceListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             

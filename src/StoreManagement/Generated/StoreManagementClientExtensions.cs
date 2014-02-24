@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Store;
 using Microsoft.WindowsAzure.Management.Store.Models;
 
-namespace Microsoft.WindowsAzure.Management.Store
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The Windows Azure Store API is a REST API for managing Windows Azure

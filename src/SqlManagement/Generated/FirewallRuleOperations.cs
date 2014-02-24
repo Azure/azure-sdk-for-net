@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715276.aspx for
     /// more information)
     /// </summary>
-    internal partial class FirewallRuleOperations : IServiceOperations<SqlManagementClient>, IFirewallRuleOperations
+    internal partial class FirewallRuleOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations
     {
         /// <summary>
         /// Initializes a new instance of the FirewallRuleOperations class.
@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<FirewallRuleCreateResponse> CreateAsync(string serverName, FirewallRuleCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleCreateResponse> CreateAsync(string serverName, FirewallRuleCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -290,7 +290,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string serverName, string ruleName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string serverName, string ruleName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -406,7 +406,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<FirewallRuleListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -567,7 +567,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<FirewallRuleUpdateResponse> UpdateAsync(string serverName, string ruleName, FirewallRuleUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleUpdateResponse> UpdateAsync(string serverName, string ruleName, FirewallRuleUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
