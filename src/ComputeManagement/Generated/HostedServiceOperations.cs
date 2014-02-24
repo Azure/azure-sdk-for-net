@@ -2271,18 +2271,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                         }
                                                         
                                                         XElement typeElement = resourceExtensionParameterValuesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                                        if (typeElement != null && string.IsNullOrEmpty(typeElement.Value) == false)
+                                                        if (typeElement != null)
                                                         {
-                                                            ResourceExtensionParameterValueType typeInstance = (ResourceExtensionParameterValueType)Enum.Parse(typeof(ResourceExtensionParameterValueType), typeElement.Value, false);
+                                                            string typeInstance = typeElement.Value;
                                                             resourceExtensionParameterValueInstance.Type = typeInstance;
                                                         }
                                                     }
                                                 }
                                                 
                                                 XElement stateElement = resourceExtensionReferencesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                                if (stateElement != null && string.IsNullOrEmpty(stateElement.Value) == false)
+                                                if (stateElement != null)
                                                 {
-                                                    ResourceExtensionReferenceState stateInstance = (ResourceExtensionReferenceState)Enum.Parse(typeof(ResourceExtensionReferenceState), stateElement.Value, false);
+                                                    string stateInstance = stateElement.Value;
                                                     resourceExtensionReferenceInstance.State = stateInstance;
                                                 }
                                             }
