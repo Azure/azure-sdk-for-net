@@ -26,14 +26,14 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// Request for a http or https action type.
+    /// Request for an http or https action type.
     /// </summary>
     public partial class JobHttpRequest
     {
         private string _body;
         
         /// <summary>
-        /// HTTP request body.
+        /// Request body.
         /// </summary>
         public string Body
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IDictionary<string, string> _headers;
         
         /// <summary>
-        /// pair of strings representing header name value pairs.
+        /// Header name value pairs to supply with the http/https action.
         /// </summary>
         public IDictionary<string, string> Headers
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _method;
         
         /// <summary>
-        /// http method e.g. GET, PUT, POST, DELETE.
+        /// Http method e.g. GET, PUT, POST, DELETE.
         /// </summary>
         public string Method
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private Uri _uri;
         
         /// <summary>
-        /// uri of the endpoint to invoke.
+        /// Uri of the endpoint to invoke.
         /// </summary>
         public Uri Uri
         {

@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public partial class ExpressRouteManagementClient : ServiceClient<ExpressRouteManagementClient>, IExpressRouteManagementClient
+    public partial class ExpressRouteManagementClient : ServiceClient<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IExpressRouteManagementClient
     {
         private Uri _baseUri;
         
@@ -189,7 +189,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
         {
             // Validate
             if (operationId == null)

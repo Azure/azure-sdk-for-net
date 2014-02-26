@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDiskCreateDataDiskParameters parameters, CancellationToken cancellationToken);
+        Task<OperationResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Add Disk operation adds a disk to the user image repository.
@@ -126,7 +126,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        Task<VirtualMachineDiskCreateDiskResponse> CreateDiskAsync(VirtualMachineDiskCreateDiskParameters parameters, CancellationToken cancellationToken);
+        Task<VirtualMachineDiskCreateResponse> CreateDiskAsync(VirtualMachineDiskCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Data Disk operation removes the specified data disk from
@@ -172,7 +172,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157200.aspx
         /// for more information)
         /// </summary>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
@@ -186,7 +186,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteDiskAsync(string diskName, bool deleteFromStorage, CancellationToken cancellationToken);
+        Task<OperationResponse> DeleteDiskAsync(string name, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Data Disk operation retrieves the specified data disk from
@@ -212,7 +212,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Data Disk operation response.
         /// </returns>
-        Task<VirtualMachineDiskGetDataDiskResponse> GetDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, CancellationToken cancellationToken);
+        Task<VirtualMachineDataDiskGetResponse> GetDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Disk operation retrieves a disk from the user image
@@ -221,7 +221,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
         /// for more information)
         /// </summary>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk.
         /// </param>
         /// <param name='cancellationToken'>
@@ -230,7 +230,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        Task<VirtualMachineDiskGetDiskResponse> GetDiskAsync(string diskName, CancellationToken cancellationToken);
+        Task<VirtualMachineDiskGetResponse> GetDiskAsync(string name, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Disks operation retrieves a list of the disks in your
@@ -275,7 +275,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDiskUpdateDataDiskParameters parameters, CancellationToken cancellationToken);
+        Task<OperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Add Disk operation adds a disk to the user image repository.
@@ -283,7 +283,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
         /// for more information)
         /// </summary>
-        /// <param name='diskName'>
+        /// <param name='name'>
         /// The name of the disk being updated.
         /// </param>
         /// <param name='parameters'>
@@ -295,6 +295,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine disk associated with your subscription.
         /// </returns>
-        Task<VirtualMachineDiskUpdateDiskResponse> UpdateDiskAsync(string diskName, VirtualMachineDiskUpdateDiskParameters parameters, CancellationToken cancellationToken);
+        Task<VirtualMachineDiskUpdateResponse> UpdateDiskAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

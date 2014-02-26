@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715315.aspx for
     /// more information)
     /// </summary>
-    internal partial class SubscriptionOperations : IServiceOperations<ManagementClient>, ISubscriptionOperations
+    internal partial class SubscriptionOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.ISubscriptionOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionOperations class.
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The Get Subscription operation response.
         /// </returns>
-        public async Task<SubscriptionGetResponse> GetAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.SubscriptionGetResponse> GetAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -311,7 +311,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Subscription Operations operation response.
         /// </returns>
-        public async Task<SubscriptionListOperationsResponse> ListOperationsAsync(SubscriptionListOperationsParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.SubscriptionListOperationsResponse> ListOperationsAsync(SubscriptionListOperationsParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -547,7 +547,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RegisterResourceAsync(string resourceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RegisterResourceAsync(string resourceName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceName == null)
@@ -567,8 +567,9 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services?&action=register";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services?";
             url = url + "service=" + Uri.EscapeUriString(resourceName);
+            url = url + "&action=register";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -656,7 +657,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UnregisterResourceAsync(string resourceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UnregisterResourceAsync(string resourceName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceName == null)
@@ -676,8 +677,9 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services?&action=unregister";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services?";
             url = url + "service=" + Uri.EscapeUriString(resourceName);
+            url = url + "&action=unregister";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

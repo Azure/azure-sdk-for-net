@@ -27,7 +27,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Scheduler;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
-namespace Microsoft.WindowsAzure.Management.Scheduler
+namespace Microsoft.WindowsAzure
 {
     public static partial class CloudServiceOperationsExtensions
     {

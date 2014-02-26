@@ -35,7 +35,7 @@ using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler
 {
-    public partial class SchedulerManagementClient : ServiceClient<SchedulerManagementClient>, ISchedulerManagementClient
+    public partial class SchedulerManagementClient : ServiceClient<SchedulerManagementClient>, Microsoft.WindowsAzure.Management.Scheduler.ISchedulerManagementClient
     {
         private Uri _baseUri;
         
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<SchedulerOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.SchedulerOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)
@@ -286,7 +286,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Resource Provider Get Properties operation response.
         /// </returns>
-        public async Task<ResourceProviderGetPropertiesResponse> GetResourceProviderPropertiesAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.ResourceProviderGetPropertiesResponse> GetResourceProviderPropertiesAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -403,7 +403,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RegisterResourceProviderAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RegisterResourceProviderAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -418,8 +418,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/services?&action=register";
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/services?";
             url = url + "service=scheduler.JobCollections";
+            url = url + "&action=register";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -504,7 +505,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UnregisterResourceProviderAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UnregisterResourceProviderAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -519,8 +520,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/services?&action=unregister";
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/services?";
             url = url + "service=scheduler.JobCollections";
+            url = url + "&action=unregister";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

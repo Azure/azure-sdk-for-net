@@ -26,38 +26,10 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Virtual Machine Data Disk operation.
+    /// Parameters supplied to the Update Virtual Machine Data Disk operation.
     /// </summary>
-    public partial class VirtualMachineDiskCreateDataDiskParameters
+    public partial class VirtualMachineDataDiskUpdateParameters
     {
-        private string _diskLabel;
-        
-        /// <summary>
-        /// Optional. Specifies the description of the data disk. When you
-        /// attach a disk, either by directly referencing a media using the
-        /// MediaLink element or specifying the target disk size, you can use
-        /// the DiskLabel element to customize the name property of the target
-        /// data disk.
-        /// </summary>
-        public string DiskLabel
-        {
-            get { return this._diskLabel; }
-            set { this._diskLabel = value; }
-        }
-        
-        private string _diskName;
-        
-        /// <summary>
-        /// Optional. Specifies the name of the disk. Windows Azure uses the
-        /// specified disk to create the data disk for the machine and
-        /// populates this field with the disk name.
-        /// </summary>
-        public string DiskName
-        {
-            get { return this._diskName; }
-            set { this._diskName = value; }
-        }
-        
         private VirtualHardDiskHostCaching _hostCaching;
         
         /// <summary>
@@ -70,6 +42,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._hostCaching; }
             set { this._hostCaching = value; }
+        }
+        
+        private string _label;
+        
+        /// <summary>
+        /// Optional. Specifies the description of the data disk. When you
+        /// attach a disk, either by directly referencing a media using the
+        /// MediaLink element or specifying the target disk size, you can use
+        /// the DiskLabel element to customize the name property of the target
+        /// data disk.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
         }
         
         private int _logicalDiskSizeInGB;
@@ -116,23 +103,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._mediaLinkUri = value; }
         }
         
-        private Uri _sourceMediaLinkUri;
+        private string _name;
         
         /// <summary>
-        /// Optional. Specifies the location of a blob in account storage which
-        /// is mounted as a data disk when the virtual machine is created.
+        /// Optional. Specifies the name of the disk. Windows Azure uses the
+        /// specified disk to create the data disk for the machine and
+        /// populates this field with the disk name.
         /// </summary>
-        public Uri SourceMediaLinkUri
+        public string Name
         {
-            get { return this._sourceMediaLinkUri; }
-            set { this._sourceMediaLinkUri = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineDiskCreateDataDiskParameters class.
+        /// VirtualMachineDataDiskUpdateParameters class.
         /// </summary>
-        public VirtualMachineDiskCreateDataDiskParameters()
+        public VirtualMachineDataDiskUpdateParameters()
         {
         }
     }

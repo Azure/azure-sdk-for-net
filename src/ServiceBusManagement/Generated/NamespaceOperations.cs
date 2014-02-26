@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     /// The Service Bus Management API includes operations for managing Service
     /// Bus namespaces.
     /// </summary>
-    internal partial class NamespaceOperations : IServiceOperations<ServiceBusManagementClient>, INamespaceOperations
+    internal partial class NamespaceOperations : IServiceOperations<ServiceBusManagementClient>, Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations
     {
         /// <summary>
         /// Initializes a new instance of the NamespaceOperations class.
@@ -83,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// The response to a query for the availability status of a namespace
         /// name.
         /// </returns>
-        public async Task<CheckNamespaceAvailabilityResponse> CheckAvailabilityAsync(string namespaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.CheckNamespaceAvailabilityResponse> CheckAvailabilityAsync(string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -229,7 +229,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// The response to a request for a particular namespace.
         /// </returns>
-        public async Task<ServiceBusNamespaceResponse> CreateAsync(string namespaceName, string region, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusNamespaceResponse> CreateAsync(string namespaceName, string region, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -447,7 +447,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular authorization rule.
         /// </returns>
-        public async Task<ServiceBusAuthorizationRuleResponse> CreateAuthorizationRuleAsync(string namespaceName, ServiceBusSharedAccessAuthorizationRule rule, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusAuthorizationRuleResponse> CreateAuthorizationRuleAsync(string namespaceName, ServiceBusSharedAccessAuthorizationRule rule, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -724,7 +724,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string namespaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -837,7 +837,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAuthorizationRuleAsync(string namespaceName, string ruleName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAuthorizationRuleAsync(string namespaceName, string ruleName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -951,7 +951,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// The response to a request for a particular namespace.
         /// </returns>
-        public async Task<ServiceBusNamespaceResponse> GetAsync(string namespaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusNamespaceResponse> GetAsync(string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1139,7 +1139,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular authorization rule.
         /// </returns>
-        public async Task<ServiceBusAuthorizationRuleResponse> GetAuthorizationRuleAsync(string namespaceName, string entityName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusAuthorizationRuleResponse> GetAuthorizationRuleAsync(string namespaceName, string entityName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1341,7 +1341,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a list of namespaces.
         /// </returns>
-        public async Task<ServiceBusNamespaceDescriptionResponse> GetNamespaceDescriptionAsync(string namespaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusNamespaceDescriptionResponse> GetNamespaceDescriptionAsync(string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1511,7 +1511,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// The response to the request for a listing of namespaces.
         /// </returns>
-        public async Task<ServiceBusNamespacesResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusNamespacesResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1697,7 +1697,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a list of authorization rules.
         /// </returns>
-        public async Task<ServiceBusAuthorizationRulesResponse> ListAuthorizationRulesAsync(string namespaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusAuthorizationRulesResponse> ListAuthorizationRulesAsync(string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1900,7 +1900,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular authorization rule.
         /// </returns>
-        public async Task<ServiceBusAuthorizationRuleResponse> UpdateAuthorizationRuleAsync(string namespaceName, ServiceBusSharedAccessAuthorizationRule rule, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusAuthorizationRuleResponse> UpdateAuthorizationRuleAsync(string namespaceName, ServiceBusSharedAccessAuthorizationRule rule, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)

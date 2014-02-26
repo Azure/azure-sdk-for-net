@@ -25,10 +25,23 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Virtual Disk Image operation.
+    /// Parameters supplied to the Update Virtual Disk Image operation.
     /// </summary>
-    public partial class VirtualMachineDiskCreateDiskParameters
+    public partial class VirtualMachineDiskUpdateParameters
     {
+        private bool? _hasOperatingSystem;
+        
+        /// <summary>
+        /// Optional.  Specifies whether the disk contains an operation system.
+        /// Note: Only a disk with an operating system installed can be
+        /// mounted as OS Drive.
+        /// </summary>
+        public bool? HasOperatingSystem
+        {
+            get { return this._hasOperatingSystem; }
+            set { this._hasOperatingSystem = value; }
+        }
+        
         private string _label;
         
         /// <summary>
@@ -43,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// Required. Specifies the location of the blob in Windows Azure
+        /// Optional. Specifies the location of the blob in Windows Azure
         /// storage. The blob location must belong to a storage account in the
         /// subscription specified by the SubscriptionId value in the
         /// operation call.  Example:
@@ -71,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _operatingSystemType;
         
         /// <summary>
-        /// Required. The operating system type of the disk. Possible values
+        /// Optional. The operating system type of the disk. Possible values
         /// are: Linux, Windows.
         /// </summary>
         public string OperatingSystemType
@@ -82,9 +95,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineDiskCreateDiskParameters class.
+        /// VirtualMachineDiskUpdateParameters class.
         /// </summary>
-        public VirtualMachineDiskCreateDiskParameters()
+        public VirtualMachineDiskUpdateParameters()
         {
         }
     }

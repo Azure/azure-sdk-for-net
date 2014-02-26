@@ -29,30 +29,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The Get Data Disk operation response.
     /// </summary>
-    public partial class VirtualMachineDiskGetDataDiskResponse : OperationResponse
+    public partial class VirtualMachineDataDiskGetResponse : OperationResponse
     {
-        private string _diskLabel;
-        
-        /// <summary>
-        /// The description of the data disk.
-        /// </summary>
-        public string DiskLabel
-        {
-            get { return this._diskLabel; }
-            set { this._diskLabel = value; }
-        }
-        
-        private string _diskName;
-        
-        /// <summary>
-        /// The name of the data disk.
-        /// </summary>
-        public string DiskName
-        {
-            get { return this._diskName; }
-            set { this._diskName = value; }
-        }
-        
         private VirtualHardDiskHostCaching _hostCaching;
         
         /// <summary>
@@ -64,6 +42,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._hostCaching; }
             set { this._hostCaching = value; }
+        }
+        
+        private string _label;
+        
+        /// <summary>
+        /// The description of the data disk.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
         }
         
         private int _logicalDiskSizeInGB;
@@ -103,11 +92,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._mediaLinkUri = value; }
         }
         
+        private string _name;
+        
         /// <summary>
-        /// Initializes a new instance of the
-        /// VirtualMachineDiskGetDataDiskResponse class.
+        /// The name of the data disk.
         /// </summary>
-        public VirtualMachineDiskGetDataDiskResponse()
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the VirtualMachineDataDiskGetResponse
+        /// class.
+        /// </summary>
+        public VirtualMachineDataDiskGetResponse()
         {
         }
     }

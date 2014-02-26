@@ -26,14 +26,15 @@ using Microsoft.WindowsAzure.Scheduler.Models;
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// Action to invoke for the job error.
+    /// Action to invoke following the failure of all of the retries of a job
+    /// occurrence.
     /// </summary>
     public partial class JobErrorAction
     {
         private JobQueueMessage _queueMessage;
         
         /// <summary>
-        /// Queue and message for a queue message action type.
+        /// Queue and content for a queue message action type.
         /// </summary>
         public JobQueueMessage QueueMessage
         {

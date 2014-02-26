@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780776.aspx for
     /// more information)
     /// </summary>
-    public partial class ServiceBusManagementClient : ServiceClient<ServiceBusManagementClient>, IServiceBusManagementClient
+    public partial class ServiceBusManagementClient : ServiceClient<ServiceBusManagementClient>, Microsoft.WindowsAzure.Management.ServiceBus.IServiceBusManagementClient
     {
         private Uri _baseUri;
         
@@ -221,7 +221,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ServiceBusOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)
@@ -379,7 +379,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a list of regions.
         /// </returns>
-        public async Task<ServiceBusRegionsResponse> GetServiceBusRegionsAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusRegionsResponse> GetServiceBusRegionsAsync(CancellationToken cancellationToken)
         {
             // Validate
             

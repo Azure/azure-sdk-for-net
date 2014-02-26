@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     /// The Service Bus Management API includes operations for managing Service
     /// Bus queues.
     /// </summary>
-    internal partial class QueueOperations : IServiceOperations<ServiceBusManagementClient>, IQueueOperations
+    internal partial class QueueOperations : IServiceOperations<ServiceBusManagementClient>, Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations
     {
         /// <summary>
         /// Initializes a new instance of the QueueOperations class.
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular queue.
         /// </returns>
-        public async Task<ServiceBusQueueResponse> CreateAsync(string namespaceName, ServiceBusQueue queue, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusQueueResponse> CreateAsync(string namespaceName, ServiceBusQueueCreateParameters queue, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -96,6 +96,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             if (queue == null)
             {
                 throw new ArgumentNullException("queue");
+            }
+            if (queue.Name == null)
+            {
+                throw new ArgumentNullException("queue.Name");
             }
             
             // Tracing
@@ -183,10 +187,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     duplicateDetectionHistoryTimeWindowElement.Value = queue.DuplicateDetectionHistoryTimeWindow;
                     queueDescriptionElement.Add(duplicateDetectionHistoryTimeWindowElement);
                 }
-                
-                XElement maxDeliveryCountElement = new XElement(XName.Get("MaxDeliveryCount", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                maxDeliveryCountElement.Value = queue.MaxDeliveryCount.ToString();
-                queueDescriptionElement.Add(maxDeliveryCountElement);
                 
                 XElement enableBatchedOperationsElement = new XElement(XName.Get("EnableBatchedOperations", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                 enableBatchedOperationsElement.Value = queue.EnableBatchedOperations.ToString().ToLower();
@@ -280,18 +280,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     statusElement.Value = queue.Status;
                     queueDescriptionElement.Add(statusElement);
                 }
-                
-                XElement createdAtElement = new XElement(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                createdAtElement.Value = queue.CreatedAt.ToString();
-                queueDescriptionElement.Add(createdAtElement);
-                
-                XElement updatedAtElement = new XElement(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                updatedAtElement.Value = queue.UpdatedAt.ToString();
-                queueDescriptionElement.Add(updatedAtElement);
-                
-                XElement accessedAtElement = new XElement(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                accessedAtElement.Value = queue.AccessedAt.ToString();
-                queueDescriptionElement.Add(accessedAtElement);
                 
                 XElement supportOrderingElement = new XElement(XName.Get("SupportOrdering", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                 supportOrderingElement.Value = queue.SupportOrdering.ToString().ToLower();
@@ -441,10 +429,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     queueDescriptionInstance.DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindowInstance;
                                 }
                                 
-                                XElement maxDeliveryCountElement2 = queueDescriptionElement2.Element(XName.Get("MaxDeliveryCount", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                if (maxDeliveryCountElement2 != null)
+                                XElement maxDeliveryCountElement = queueDescriptionElement2.Element(XName.Get("MaxDeliveryCount", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (maxDeliveryCountElement != null)
                                 {
-                                    int maxDeliveryCountInstance = int.Parse(maxDeliveryCountElement2.Value, CultureInfo.InvariantCulture);
+                                    int maxDeliveryCountInstance = int.Parse(maxDeliveryCountElement.Value, CultureInfo.InvariantCulture);
                                     queueDescriptionInstance.MaxDeliveryCount = maxDeliveryCountInstance;
                                 }
                                 
@@ -551,24 +539,24 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     queueDescriptionInstance.Status = statusInstance;
                                 }
                                 
-                                XElement createdAtElement2 = queueDescriptionElement2.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                if (createdAtElement2 != null)
+                                XElement createdAtElement = queueDescriptionElement2.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (createdAtElement != null)
                                 {
-                                    DateTime createdAtInstance = DateTime.Parse(createdAtElement2.Value, CultureInfo.InvariantCulture);
+                                    DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture);
                                     queueDescriptionInstance.CreatedAt = createdAtInstance;
                                 }
                                 
-                                XElement updatedAtElement2 = queueDescriptionElement2.Element(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                if (updatedAtElement2 != null)
+                                XElement updatedAtElement = queueDescriptionElement2.Element(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (updatedAtElement != null)
                                 {
-                                    DateTime updatedAtInstance = DateTime.Parse(updatedAtElement2.Value, CultureInfo.InvariantCulture);
+                                    DateTime updatedAtInstance = DateTime.Parse(updatedAtElement.Value, CultureInfo.InvariantCulture);
                                     queueDescriptionInstance.UpdatedAt = updatedAtInstance;
                                 }
                                 
-                                XElement accessedAtElement2 = queueDescriptionElement2.Element(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                if (accessedAtElement2 != null)
+                                XElement accessedAtElement = queueDescriptionElement2.Element(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (accessedAtElement != null)
                                 {
-                                    DateTime accessedAtInstance = DateTime.Parse(accessedAtElement2.Value, CultureInfo.InvariantCulture);
+                                    DateTime accessedAtInstance = DateTime.Parse(accessedAtElement.Value, CultureInfo.InvariantCulture);
                                     queueDescriptionInstance.AccessedAt = accessedAtInstance;
                                 }
                                 
@@ -687,7 +675,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular queue.
         /// </returns>
-        public async Task<ServiceBusQueueResponse> GetAsync(string namespaceName, string queueName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusQueueResponse> GetAsync(string namespaceName, string queueName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1070,7 +1058,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// The set of connection details for a service bus entity.
         /// </returns>
-        public async Task<ServiceBusConnectionDetailsResponse> GetConnectionDetailsAsync(string namespaceName, string queueName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusConnectionDetailsResponse> GetConnectionDetailsAsync(string namespaceName, string queueName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1244,7 +1232,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a list of queues.
         /// </returns>
-        public async Task<ServiceBusQueuesResponse> ListAsync(string namespaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusQueuesResponse> ListAsync(string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1633,7 +1621,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular queue.
         /// </returns>
-        public async Task<ServiceBusQueueResponse> UpdateAsync(string namespaceName, ServiceBusQueue queue, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusQueueResponse> UpdateAsync(string namespaceName, ServiceBusQueue queue, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -1732,10 +1720,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     queueDescriptionElement.Add(duplicateDetectionHistoryTimeWindowElement);
                 }
                 
-                XElement maxDeliveryCountElement = new XElement(XName.Get("MaxDeliveryCount", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                maxDeliveryCountElement.Value = queue.MaxDeliveryCount.ToString();
-                queueDescriptionElement.Add(maxDeliveryCountElement);
-                
                 XElement enableBatchedOperationsElement = new XElement(XName.Get("EnableBatchedOperations", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                 enableBatchedOperationsElement.Value = queue.EnableBatchedOperations.ToString().ToLower();
                 queueDescriptionElement.Add(enableBatchedOperationsElement);
@@ -1828,18 +1812,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     statusElement.Value = queue.Status;
                     queueDescriptionElement.Add(statusElement);
                 }
-                
-                XElement createdAtElement = new XElement(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                createdAtElement.Value = queue.CreatedAt.ToString();
-                queueDescriptionElement.Add(createdAtElement);
-                
-                XElement updatedAtElement = new XElement(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                updatedAtElement.Value = queue.UpdatedAt.ToString();
-                queueDescriptionElement.Add(updatedAtElement);
-                
-                XElement accessedAtElement = new XElement(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                accessedAtElement.Value = queue.AccessedAt.ToString();
-                queueDescriptionElement.Add(accessedAtElement);
                 
                 XElement supportOrderingElement = new XElement(XName.Get("SupportOrdering", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                 supportOrderingElement.Value = queue.SupportOrdering.ToString().ToLower();
@@ -1989,10 +1961,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     queueDescriptionInstance.DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindowInstance;
                                 }
                                 
-                                XElement maxDeliveryCountElement2 = queueDescriptionElement2.Element(XName.Get("MaxDeliveryCount", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                if (maxDeliveryCountElement2 != null)
+                                XElement maxDeliveryCountElement = queueDescriptionElement2.Element(XName.Get("MaxDeliveryCount", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (maxDeliveryCountElement != null)
                                 {
-                                    int maxDeliveryCountInstance = int.Parse(maxDeliveryCountElement2.Value, CultureInfo.InvariantCulture);
+                                    int maxDeliveryCountInstance = int.Parse(maxDeliveryCountElement.Value, CultureInfo.InvariantCulture);
                                     queueDescriptionInstance.MaxDeliveryCount = maxDeliveryCountInstance;
                                 }
                                 
@@ -2099,24 +2071,24 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     queueDescriptionInstance.Status = statusInstance;
                                 }
                                 
-                                XElement createdAtElement2 = queueDescriptionElement2.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                if (createdAtElement2 != null)
+                                XElement createdAtElement = queueDescriptionElement2.Element(XName.Get("CreatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (createdAtElement != null)
                                 {
-                                    DateTime createdAtInstance = DateTime.Parse(createdAtElement2.Value, CultureInfo.InvariantCulture);
+                                    DateTime createdAtInstance = DateTime.Parse(createdAtElement.Value, CultureInfo.InvariantCulture);
                                     queueDescriptionInstance.CreatedAt = createdAtInstance;
                                 }
                                 
-                                XElement updatedAtElement2 = queueDescriptionElement2.Element(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                if (updatedAtElement2 != null)
+                                XElement updatedAtElement = queueDescriptionElement2.Element(XName.Get("UpdatedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (updatedAtElement != null)
                                 {
-                                    DateTime updatedAtInstance = DateTime.Parse(updatedAtElement2.Value, CultureInfo.InvariantCulture);
+                                    DateTime updatedAtInstance = DateTime.Parse(updatedAtElement.Value, CultureInfo.InvariantCulture);
                                     queueDescriptionInstance.UpdatedAt = updatedAtInstance;
                                 }
                                 
-                                XElement accessedAtElement2 = queueDescriptionElement2.Element(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                if (accessedAtElement2 != null)
+                                XElement accessedAtElement = queueDescriptionElement2.Element(XName.Get("AccessedAt", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (accessedAtElement != null)
                                 {
-                                    DateTime accessedAtInstance = DateTime.Parse(accessedAtElement2.Value, CultureInfo.InvariantCulture);
+                                    DateTime accessedAtInstance = DateTime.Parse(accessedAtElement.Value, CultureInfo.InvariantCulture);
                                     queueDescriptionInstance.AccessedAt = accessedAtInstance;
                                 }
                                 

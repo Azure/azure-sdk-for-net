@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Store
     /// Provides REST operations for working with Store add-ins from the
     /// Windows Azure store service.
     /// </summary>
-    internal partial class AddOnOperations : IServiceOperations<StoreManagementClient>, IAddOnOperations
+    internal partial class AddOnOperations : IServiceOperations<StoreManagementClient>, Microsoft.WindowsAzure.Management.Store.IAddOnOperations
     {
         /// <summary>
         /// Initializes a new instance of the AddOnOperations class.
@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<AddOnOperationStatusResponse> BeginCreatingAsync(string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.AddOnOperationStatusResponse> BeginCreatingAsync(string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -271,7 +271,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<AddOnOperationStatusResponse> BeginDeletingAsync(string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.AddOnOperationStatusResponse> BeginDeletingAsync(string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)
@@ -412,7 +412,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<AddOnOperationStatusResponse> CreateAsync(string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.AddOnOperationStatusResponse> CreateAsync(string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters, CancellationToken cancellationToken)
         {
             StoreManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -436,6 +436,10 @@ namespace Microsoft.WindowsAzure.Management.Store
                 
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse response = await client.AddOns.BeginCreatingAsync(cloudServiceName, resourceName, addOnName, parameters, cancellationToken).ConfigureAwait(false);
+                if (response.Status == OperationStatus.Succeeded)
+                {
+                    return response;
+                }
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -519,7 +523,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<AddOnOperationStatusResponse> DeleteAsync(string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.AddOnOperationStatusResponse> DeleteAsync(string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName, CancellationToken cancellationToken)
         {
             StoreManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -543,6 +547,10 @@ namespace Microsoft.WindowsAzure.Management.Store
                 
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse response = await client.AddOns.BeginDeletingAsync(cloudServiceName, resourceProviderNamespace, resourceProviderType, resourceProviderName, cancellationToken).ConfigureAwait(false);
+                if (response.Status == OperationStatus.Succeeded)
+                {
+                    return response;
+                }
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -626,7 +634,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<AddOnOperationStatusResponse> UpdateAsync(string cloudServiceName, string resourceName, string addOnName, AddOnUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.AddOnOperationStatusResponse> UpdateAsync(string cloudServiceName, string resourceName, string addOnName, AddOnUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (cloudServiceName == null)

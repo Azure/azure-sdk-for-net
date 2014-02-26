@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public partial class ManagementClient : ServiceClient<ManagementClient>, IManagementClient
+    public partial class ManagementClient : ServiceClient<ManagementClient>, Microsoft.WindowsAzure.Management.IManagementClient
     {
         private Uri _baseUri;
         
@@ -233,7 +233,7 @@ namespace Microsoft.WindowsAzure.Management
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)

@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// <summary>
     /// Operations for managing the repository.
     /// </summary>
-    internal partial class RepositoryOperations : IServiceOperations<WebSiteExtensionsClient>, IRepositoryOperations
+    internal partial class RepositoryOperations : IServiceOperations<WebSiteExtensionsClient>, Microsoft.WindowsAzure.WebSitesExtensions.IRepositoryOperations
     {
         /// <summary>
         /// Initializes a new instance of the RepositoryOperations class.
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -170,7 +170,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get diagnostic settings operation response.
         /// </returns>
-        public async Task<DiagnosticGetResponse> GetSettingsAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.DiagnosticGetResponse> GetSettingsAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -273,7 +273,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(IDictionary<string, string> settings, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateAsync(IDictionary<string, string> settings, CancellationToken cancellationToken)
         {
             // Validate
             if (settings == null)

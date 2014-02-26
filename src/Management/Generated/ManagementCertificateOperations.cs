@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154124.aspx for
     /// more information)
     /// </summary>
-    internal partial class ManagementCertificateOperations : IServiceOperations<ManagementClient>, IManagementCertificateOperations
+    internal partial class ManagementCertificateOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.IManagementCertificateOperations
     {
         /// <summary>
         /// Initializes a new instance of the ManagementCertificateOperations
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateAsync(ManagementCertificateCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateAsync(ManagementCertificateCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -236,7 +236,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string thumbprint, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string thumbprint, CancellationToken cancellationToken)
         {
             // Validate
             if (thumbprint == null)
@@ -350,7 +350,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The Get Management Certificate operation response.
         /// </returns>
-        public async Task<ManagementCertificateGetResponse> GetAsync(string thumbprint, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.ManagementCertificateGetResponse> GetAsync(string thumbprint, CancellationToken cancellationToken)
         {
             // Validate
             if (thumbprint == null)
@@ -498,7 +498,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Management Certificates operation response.
         /// </returns>
-        public async Task<ManagementCertificateListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.ManagementCertificateListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             

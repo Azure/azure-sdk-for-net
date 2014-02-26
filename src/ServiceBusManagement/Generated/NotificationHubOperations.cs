@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     /// The Service Bus Management API includes operations for managing Service
     /// Bus notification hubs.
     /// </summary>
-    internal partial class NotificationHubOperations : IServiceOperations<ServiceBusManagementClient>, INotificationHubOperations
+    internal partial class NotificationHubOperations : IServiceOperations<ServiceBusManagementClient>, Microsoft.WindowsAzure.Management.ServiceBus.INotificationHubOperations
     {
         /// <summary>
         /// Initializes a new instance of the NotificationHubOperations class.
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<ServiceBusNotificationHubResponse> GetAsync(string namespaceName, string notificationHubName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusNotificationHubResponse> GetAsync(string namespaceName, string notificationHubName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -295,7 +295,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// The set of connection details for a service bus entity.
         /// </returns>
-        public async Task<ServiceBusConnectionDetailsResponse> GetConnectionDetailsAsync(string namespaceName, string notificationHubName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusConnectionDetailsResponse> GetConnectionDetailsAsync(string namespaceName, string notificationHubName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)
@@ -464,7 +464,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<ServiceBusNotificationHubsResponse> ListAsync(string namespaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusNotificationHubsResponse> ListAsync(string namespaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (namespaceName == null)

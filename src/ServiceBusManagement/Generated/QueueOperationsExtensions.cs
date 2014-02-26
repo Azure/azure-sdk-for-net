@@ -26,11 +26,13 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
-namespace Microsoft.WindowsAzure.Management.ServiceBus
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The Service Bus Management API includes operations for managing Service
-    /// Bus queues.
+    /// The Service Bus Management API is a REST API for managing Service Bus
+    /// queues, topics, rules and subscriptions.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780776.aspx for
+    /// more information)
     /// </summary>
     public static partial class QueueOperationsExtensions
     {
@@ -55,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular queue.
         /// </returns>
-        public static ServiceBusQueueResponse Create(this IQueueOperations operations, string namespaceName, ServiceBusQueue queue)
+        public static ServiceBusQueueResponse Create(this IQueueOperations operations, string namespaceName, ServiceBusQueueCreateParameters queue)
         {
             try
             {
@@ -95,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular queue.
         /// </returns>
-        public static Task<ServiceBusQueueResponse> CreateAsync(this IQueueOperations operations, string namespaceName, ServiceBusQueue queue)
+        public static Task<ServiceBusQueueResponse> CreateAsync(this IQueueOperations operations, string namespaceName, ServiceBusQueueCreateParameters queue)
         {
             return operations.CreateAsync(namespaceName, queue, CancellationToken.None);
         }

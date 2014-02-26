@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460790.aspx for
     /// more information)
     /// </summary>
-    internal partial class StorageAccountOperations : IServiceOperations<StorageManagementClient>, IStorageAccountOperations
+    internal partial class StorageAccountOperations : IServiceOperations<StorageManagementClient>, Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations
     {
         /// <summary>
         /// Initializes a new instance of the StorageAccountOperations class.
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginCreatingAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -103,26 +103,26 @@ namespace Microsoft.WindowsAzure.Management.Storage
             {
                 throw new ArgumentOutOfRangeException("parameters.Label");
             }
-            if (parameters.ServiceName == null)
+            if (parameters.Name == null)
             {
-                throw new ArgumentNullException("parameters.ServiceName");
+                throw new ArgumentNullException("parameters.Name");
             }
-            if (parameters.ServiceName.Length < 3)
+            if (parameters.Name.Length < 3)
             {
-                throw new ArgumentOutOfRangeException("parameters.ServiceName");
+                throw new ArgumentOutOfRangeException("parameters.Name");
             }
-            if (parameters.ServiceName.Length > 24)
+            if (parameters.Name.Length > 24)
             {
-                throw new ArgumentOutOfRangeException("parameters.ServiceName");
+                throw new ArgumentOutOfRangeException("parameters.Name");
             }
-            foreach (char serviceNameChar in parameters.ServiceName)
+            foreach (char nameChar in parameters.Name)
             {
-                if (char.IsLower(serviceNameChar) == false && char.IsDigit(serviceNameChar) == false)
+                if (char.IsLower(nameChar) == false && char.IsDigit(nameChar) == false)
                 {
-                    throw new ArgumentOutOfRangeException("parameters.ServiceName");
+                    throw new ArgumentOutOfRangeException("parameters.Name");
                 }
             }
-            // TODO: Validate parameters.ServiceName is a valid DNS name.
+            // TODO: Validate parameters.Name is a valid DNS name.
             int locationCount = (parameters.AffinityGroup != null ? 1 : 0) + (parameters.Location != null ? 1 : 0);
             if (locationCount != 1)
             {
@@ -166,7 +166,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 requestDoc.Add(createStorageServiceInputElement);
                 
                 XElement serviceNameElement = new XElement(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
-                serviceNameElement.Value = parameters.ServiceName;
+                serviceNameElement.Value = parameters.Name;
                 createStorageServiceInputElement.Add(serviceNameElement);
                 
                 XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
@@ -295,7 +295,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The desired storage account name to check for availability.
         /// </param>
         /// <param name='cancellationToken'>
@@ -304,12 +304,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The response to a storage account check name availability request.
         /// </returns>
-        public async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Storage.Models.CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string accountName, CancellationToken cancellationToken)
         {
             // Validate
-            if (serviceName == null)
+            if (accountName == null)
             {
-                throw new ArgumentNullException("serviceName");
+                throw new ArgumentNullException("accountName");
             }
             
             // Tracing
@@ -319,12 +319,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("accountName", accountName);
                 Tracing.Enter(invocationId, this, "CheckNameAvailabilityAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/operations/isavailable/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/operations/isavailable/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -454,7 +454,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<StorageOperationStatusResponse> CreateAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Storage.Models.StorageOperationStatusResponse> CreateAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken)
         {
             StorageManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -533,7 +533,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264517.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The name of the storage account.
         /// </param>
         /// <param name='cancellationToken'>
@@ -543,12 +543,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken)
         {
             // Validate
-            if (serviceName == null)
+            if (accountName == null)
             {
-                throw new ArgumentNullException("serviceName");
+                throw new ArgumentNullException("accountName");
             }
             
             // Tracing
@@ -558,12 +558,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("accountName", accountName);
                 Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -644,7 +644,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460802.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// Name of the storage account to get.
         /// </param>
         /// <param name='cancellationToken'>
@@ -653,12 +653,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The Get Storage Account Properties operation response.
         /// </returns>
-        public async Task<StorageServiceGetResponse> GetAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Storage.Models.StorageAccountGetResponse> GetAsync(string accountName, CancellationToken cancellationToken)
         {
             // Validate
-            if (serviceName == null)
+            if (accountName == null)
             {
-                throw new ArgumentNullException("serviceName");
+                throw new ArgumentNullException("accountName");
             }
             
             // Tracing
@@ -668,12 +668,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("accountName", accountName);
                 Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -717,11 +717,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    StorageServiceGetResponse result = null;
+                    StorageAccountGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new StorageServiceGetResponse();
+                    result = new StorageAccountGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServiceElement = responseDoc.Element(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure"));
@@ -738,13 +738,13 @@ namespace Microsoft.WindowsAzure.Management.Storage
                         if (serviceNameElement != null)
                         {
                             string serviceNameInstance = serviceNameElement.Value;
-                            result.ServiceName = serviceNameInstance;
+                            result.Name = serviceNameInstance;
                         }
                         
                         XElement storageServicePropertiesElement = storageServiceElement.Element(XName.Get("StorageServiceProperties", "http://schemas.microsoft.com/windowsazure"));
                         if (storageServicePropertiesElement != null)
                         {
-                            StorageServiceProperties storageServicePropertiesInstance = new StorageServiceProperties();
+                            StorageAccountProperties storageServicePropertiesInstance = new StorageAccountProperties();
                             result.Properties = storageServicePropertiesInstance;
                             
                             XElement descriptionElement = storageServicePropertiesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
@@ -787,7 +787,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             XElement statusElement = storageServicePropertiesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                             if (statusElement != null)
                             {
-                                StorageServiceStatus statusInstance = (StorageServiceStatus)Enum.Parse(typeof(StorageServiceStatus), statusElement.Value, false);
+                                StorageAccountStatus statusInstance = (StorageAccountStatus)Enum.Parse(typeof(StorageAccountStatus), statusElement.Value, false);
                                 storageServicePropertiesInstance.Status = statusInstance;
                             }
                             
@@ -899,7 +899,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460785.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The name of the desired storage account.
         /// </param>
         /// <param name='cancellationToken'>
@@ -908,12 +908,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The primary and secondary access keys for a storage account.
         /// </returns>
-        public async Task<StorageAccountGetKeysResponse> GetKeysAsync(string serviceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Storage.Models.StorageAccountGetKeysResponse> GetKeysAsync(string accountName, CancellationToken cancellationToken)
         {
             // Validate
-            if (serviceName == null)
+            if (accountName == null)
             {
-                throw new ArgumentNullException("serviceName");
+                throw new ArgumentNullException("accountName");
             }
             
             // Tracing
@@ -923,12 +923,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("accountName", accountName);
                 Tracing.Enter(invocationId, this, "GetKeysAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName + "/keys";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName + "/keys";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1049,7 +1049,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The List Storage Accounts operation response.
         /// </returns>
-        public async Task<StorageServiceListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Storage.Models.StorageAccountListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1108,40 +1108,40 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     }
                     
                     // Create Result
-                    StorageServiceListResponse result = null;
+                    StorageAccountListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new StorageServiceListResponse();
+                    result = new StorageAccountListResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServicesSequenceElement = responseDoc.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
                     if (storageServicesSequenceElement != null)
                     {
-                        foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure")))
+                        foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageAccount", "http://schemas.microsoft.com/windowsazure")))
                         {
-                            StorageServiceListResponse.StorageService storageServiceInstance = new StorageServiceListResponse.StorageService();
-                            result.StorageServices.Add(storageServiceInstance);
+                            StorageAccountListResponse.StorageAccount storageAccountInstance = new StorageAccountListResponse.StorageAccount();
+                            result.StorageAccounts.Add(storageAccountInstance);
                             
                             XElement urlElement = storageServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
                             if (urlElement != null)
                             {
                                 Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
-                                storageServiceInstance.Uri = urlInstance;
+                                storageAccountInstance.Uri = urlInstance;
                             }
                             
                             XElement serviceNameElement = storageServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
                             if (serviceNameElement != null)
                             {
                                 string serviceNameInstance = serviceNameElement.Value;
-                                storageServiceInstance.ServiceName = serviceNameInstance;
+                                storageAccountInstance.Name = serviceNameInstance;
                             }
                             
                             XElement storageServicePropertiesElement = storageServicesElement.Element(XName.Get("StorageServiceProperties", "http://schemas.microsoft.com/windowsazure"));
                             if (storageServicePropertiesElement != null)
                             {
-                                StorageServiceProperties storageServicePropertiesInstance = new StorageServiceProperties();
-                                storageServiceInstance.Properties = storageServicePropertiesInstance;
+                                StorageAccountProperties storageServicePropertiesInstance = new StorageAccountProperties();
+                                storageAccountInstance.Properties = storageServicePropertiesInstance;
                                 
                                 XElement descriptionElement = storageServicePropertiesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
                                 if (descriptionElement != null)
@@ -1183,7 +1183,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 XElement statusElement = storageServicePropertiesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                                 if (statusElement != null)
                                 {
-                                    StorageServiceStatus statusInstance = (StorageServiceStatus)Enum.Parse(typeof(StorageServiceStatus), statusElement.Value, false);
+                                    StorageAccountStatus statusInstance = (StorageAccountStatus)Enum.Parse(typeof(StorageAccountStatus), statusElement.Value, false);
                                     storageServicePropertiesInstance.Status = statusInstance;
                                 }
                                 
@@ -1246,7 +1246,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 {
                                     string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
                                     string extendedPropertiesValue = extendedPropertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                    storageServiceInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
+                                    storageAccountInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                 }
                             }
                         }
@@ -1296,16 +1296,16 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The primary and secondary access keys for a storage account.
         /// </returns>
-        public async Task<StorageAccountRegenerateKeysResponse> RegenerateKeysAsync(StorageAccountRegenerateKeysParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Storage.Models.StorageAccountRegenerateKeysResponse> RegenerateKeysAsync(StorageAccountRegenerateKeysParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.ServiceName == null)
+            if (parameters.Name == null)
             {
-                throw new ArgumentNullException("parameters.ServiceName");
+                throw new ArgumentNullException("parameters.Name");
             }
             
             // Tracing
@@ -1320,7 +1320,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + parameters.ServiceName + "/keys?action=regenerate";
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + parameters.Name + "/keys?action=regenerate";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1451,7 +1451,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264516.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// Name of the storage account to update.
         /// </param>
         /// <param name='parameters'>
@@ -1464,29 +1464,29 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string serviceName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateAsync(string accountName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (serviceName == null)
+            if (accountName == null)
             {
-                throw new ArgumentNullException("serviceName");
+                throw new ArgumentNullException("accountName");
             }
-            if (serviceName.Length < 3)
+            if (accountName.Length < 3)
             {
-                throw new ArgumentOutOfRangeException("serviceName");
+                throw new ArgumentOutOfRangeException("accountName");
             }
-            if (serviceName.Length > 24)
+            if (accountName.Length > 24)
             {
-                throw new ArgumentOutOfRangeException("serviceName");
+                throw new ArgumentOutOfRangeException("accountName");
             }
-            foreach (char serviceNameChar in serviceName)
+            foreach (char accountNameChar in accountName)
             {
-                if (char.IsLower(serviceNameChar) == false && char.IsDigit(serviceNameChar) == false)
+                if (char.IsLower(accountNameChar) == false && char.IsDigit(accountNameChar) == false)
                 {
-                    throw new ArgumentOutOfRangeException("serviceName");
+                    throw new ArgumentOutOfRangeException("accountName");
                 }
             }
-            // TODO: Validate serviceName is a valid DNS name.
+            // TODO: Validate accountName is a valid DNS name.
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
@@ -1503,13 +1503,13 @@ namespace Microsoft.WindowsAzure.Management.Storage
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + serviceName;
+            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// Includes operations for importing and exporting SQL Databases into and
     /// out of Windows Azure blob storage.
     /// </summary>
-    internal partial class DacOperations : IServiceOperations<SqlManagementClient>, IDacOperations
+    internal partial class DacOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IDacOperations
     {
         /// <summary>
         /// Initializes a new instance of the DacOperations class.
@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Response for an DAC Import/Export request.
         /// </returns>
-        public async Task<DacImportExportResponse> ExportAsync(string serverName, DacExportParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DacImportExportResponse> ExportAsync(string serverName, DacExportParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -299,7 +299,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// The response structure for the DAC GetStatus operation.
         /// </returns>
-        public async Task<DacGetStatusResponse> GetStatusAsync(string serverName, string fullyQualifiedServerName, string username, string password, string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DacGetStatusResponse> GetStatusAsync(string serverName, string fullyQualifiedServerName, string username, string password, string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -523,7 +523,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Response for an DAC Import/Export request.
         /// </returns>
-        public async Task<DacImportExportResponse> ImportAsync(string serverName, DacImportParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DacImportExportResponse> ImportAsync(string serverName, DacImportParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)

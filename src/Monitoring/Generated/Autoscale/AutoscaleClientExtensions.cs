@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
+namespace Microsoft.WindowsAzure
 {
     public static partial class AutoscaleClientExtensions
     {

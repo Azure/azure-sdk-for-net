@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 using System.Net;
-using Microsoft.WindowsAzure.Management.ServiceBus;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models

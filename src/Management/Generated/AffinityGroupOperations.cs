@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management
     /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460798.aspx
     /// for more information)
     /// </summary>
-    internal partial class AffinityGroupOperations : IServiceOperations<ManagementClient>, IAffinityGroupOperations
+    internal partial class AffinityGroupOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.IAffinityGroupOperations
     {
         /// <summary>
         /// Initializes a new instance of the AffinityGroupOperations class.
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateAsync(AffinityGroupCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateAsync(AffinityGroupCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -243,7 +243,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string affinityGroupName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string affinityGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (affinityGroupName == null)
@@ -354,7 +354,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The Get Affinity Group operation response.
         /// </returns>
-        public async Task<AffinityGroupGetResponse> GetAsync(string affinityGroupName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.AffinityGroupGetResponse> GetAsync(string affinityGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (affinityGroupName == null)
@@ -555,7 +555,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Affinity Groups operation response.
         /// </returns>
-        public async Task<AffinityGroupListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.AffinityGroupListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -717,7 +717,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string affinityGroupName, AffinityGroupUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateAsync(string affinityGroupName, AffinityGroupUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (affinityGroupName == null)

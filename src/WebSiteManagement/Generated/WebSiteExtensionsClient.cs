@@ -30,7 +30,8 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
-    /// TBD.
+    /// The websites extensions client manages the web sites deployments, web
+    /// jobs and other extensions.
     /// </summary>
     public partial class WebSiteExtensionsClient : ServiceClient<WebSiteExtensionsClient>, IWebSiteExtensionsClient
     {

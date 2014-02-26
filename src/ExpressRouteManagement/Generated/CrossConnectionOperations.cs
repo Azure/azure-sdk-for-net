@@ -38,7 +38,7 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    internal partial class CrossConnectionOperations : IServiceOperations<ExpressRouteManagementClient>, ICrossConnectionOperations
+    internal partial class CrossConnectionOperations : IServiceOperations<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations
     {
         /// <summary>
         /// Initializes a new instance of the CrossConnectionOperations class.
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -205,7 +205,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, CrossConnectionUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, CrossConnectionUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -361,7 +361,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Cross Connection Operation Response.
         /// </returns>
-        public async Task<CrossConnectionGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.CrossConnectionGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -517,7 +517,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The List Cross Connection operation response.
         /// </returns>
-        public async Task<CrossConnectionListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.CrossConnectionListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -677,7 +677,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Cross Connection Operation Response.
         /// </returns>
-        public async Task<CrossConnectionGetResponse> NewAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.CrossConnectionGetResponse> NewAsync(string serviceKey, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -750,7 +750,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Cross Connection Operation Response.
         /// </returns>
-        public async Task<CrossConnectionGetResponse> UpdateAsync(string serviceKey, CrossConnectionUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.CrossConnectionGetResponse> UpdateAsync(string serviceKey, CrossConnectionUpdateParameters parameters, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
