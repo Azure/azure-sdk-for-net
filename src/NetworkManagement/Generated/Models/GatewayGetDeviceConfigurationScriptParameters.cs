@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// The vendor, platform, and os family ofthe requested device

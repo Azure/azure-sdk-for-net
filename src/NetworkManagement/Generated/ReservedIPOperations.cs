@@ -32,12 +32,12 @@ using System.Xml.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class ReservedIPOperations : IServiceOperations<VirtualNetworkManagementClient>, IReservedIPOperations
+    internal partial class ReservedIPOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IReservedIPOperations
     {
         /// <summary>
         /// Initializes a new instance of the ReservedIPOperations class.
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
         /// </summary>
         public VirtualNetworkManagementClient Client
         {
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<VirtualNetworkOperationStatusResponse> BeginCreatingAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.VirtualNetworkOperationStatusResponse> BeginCreatingAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -237,7 +237,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginDeletingAsync(string ipName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string ipName, CancellationToken cancellationToken)
         {
             // Validate
             if (ipName == null)
@@ -353,7 +353,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<VirtualNetworkOperationStatusResponse> CreateAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.VirtualNetworkOperationStatusResponse> CreateAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken)
         {
             VirtualNetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -374,6 +374,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 
                 cancellationToken.ThrowIfCancellationRequested();
                 VirtualNetworkOperationStatusResponse response = await client.ReservedIPs.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
+                if (response.Status == OperationStatus.Succeeded)
+                {
+                    return response;
+                }
                 cancellationToken.ThrowIfCancellationRequested();
                 VirtualNetworkOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -447,7 +451,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<VirtualNetworkOperationStatusResponse> DeleteAsync(string ipName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.VirtualNetworkOperationStatusResponse> DeleteAsync(string ipName, CancellationToken cancellationToken)
         {
             VirtualNetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -533,7 +537,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// Preview Only. A reserved IP associated with your subscription.
         /// </returns>
-        public async Task<NetworkReservedIPGetResponse> GetAsync(string ipName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkReservedIPGetResponse> GetAsync(string ipName, CancellationToken cancellationToken)
         {
             // Validate
             if (ipName == null)
@@ -710,7 +714,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// Preview Only. The response structure for the Server List operation
         /// </returns>
-        public async Task<NetworkReservedIPListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkReservedIPListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             

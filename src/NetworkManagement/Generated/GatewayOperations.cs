@@ -33,12 +33,12 @@ using System.Xml.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class GatewayOperations : IServiceOperations<VirtualNetworkManagementClient>, IGatewayOperations
+    internal partial class GatewayOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IGatewayOperations
     {
         /// <summary>
         /// Initializes a new instance of the GatewayOperations class.
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
         /// </summary>
         public VirtualNetworkManagementClient Client
         {
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -248,7 +248,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<GatewayOperationResponse> BeginCreatingAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginCreatingAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -395,7 +395,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<GatewayOperationResponse> BeginDeletingAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginDeletingAsync(string virtualNetworkName, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -523,7 +523,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<GatewayOperationResponse> BeginFailoverAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginFailoverAsync(string virtualNetworkName, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -664,7 +664,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -831,7 +831,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<GatewayGetOperationStatusResponse> ConnectDisconnectOrTestAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> ConnectDisconnectOrTestAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
         {
             VirtualNetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -932,7 +932,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<GatewayGetOperationStatusResponse> CreateAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> CreateAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
         {
             VirtualNetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -1029,7 +1029,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<GatewayGetOperationStatusResponse> DeleteAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> DeleteAsync(string virtualNetworkName, CancellationToken cancellationToken)
         {
             VirtualNetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -1126,7 +1126,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<GatewayGetOperationStatusResponse> FailoverAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> FailoverAsync(string virtualNetworkName, CancellationToken cancellationToken)
         {
             VirtualNetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -1218,7 +1218,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<GatewayOperationResponse> GenerateVpnClientPackageAsync(string virtualNetworkName, GatewayGenerateVpnClientPackageParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> GenerateVpnClientPackageAsync(string virtualNetworkName, GatewayGenerateVpnClientPackageParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -1366,7 +1366,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<GatewayGetResponse> GetAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetResponse> GetAsync(string virtualNetworkName, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -1546,7 +1546,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// The configuration script returned from the get device configuration
         /// script request.
         /// </returns>
-        public async Task<GatewayGetDeviceConfigurationScriptResponse> GetDeviceConfigurationScriptAsync(string virtualNetworkName, GatewayGetDeviceConfigurationScriptParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetDeviceConfigurationScriptResponse> GetDeviceConfigurationScriptAsync(string virtualNetworkName, GatewayGetDeviceConfigurationScriptParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -1686,7 +1686,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<GatewayGetOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
         {
             // Validate
             if (operationId == null)
@@ -1852,7 +1852,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// The response to the get shared key request.
         /// </returns>
-        public async Task<GatewayGetSharedKeyResponse> GetSharedKeyAsync(string virtualNetworkName, string localNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetSharedKeyResponse> GetSharedKeyAsync(string virtualNetworkName, string localNetworkName, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -1984,7 +1984,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// The response to a ListConnections request to a Virtual Network
         /// Gateway.
         /// </returns>
-        public async Task<GatewayListConnectionsResponse> ListConnectionsAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayListConnectionsResponse> ListConnectionsAsync(string virtualNetworkName, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -2186,7 +2186,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// The respoonse to the get supported platform configuration request.
         /// </returns>
-        public async Task<GatewayListSupportedDevicesResponse> ListSupportedDevicesAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayListSupportedDevicesResponse> ListSupportedDevicesAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -2368,7 +2368,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<GatewayGetOperationStatusResponse> ResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> ResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
         {
             VirtualNetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

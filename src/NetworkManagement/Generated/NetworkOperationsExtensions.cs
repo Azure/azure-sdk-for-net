@@ -24,11 +24,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure
 {
+    /// <summary>
+    /// The Service Management API includes operations for managing the virtual
+    /// networks your subscription.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
+    /// more information)
+    /// </summary>
     public static partial class NetworkOperationsExtensions
     {
         /// <summary>
@@ -39,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
         /// The updated network configuration.
@@ -75,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
         /// The updated network configuration.
@@ -97,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <returns>
         /// The Get Network Configuration operation response.
@@ -129,7 +135,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <returns>
         /// The Get Network Configuration operation response.
@@ -147,7 +153,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <returns>
         /// The response structure for the Server List operation.
@@ -179,7 +185,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <returns>
         /// The response structure for the Server List operation.
@@ -197,7 +203,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
         /// The updated network configuration.
@@ -240,7 +246,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.INetworkOperations.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
         /// The updated network configuration.

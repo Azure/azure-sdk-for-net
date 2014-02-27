@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// Standard states for Virtual Network Gateway Provisioning Events.
