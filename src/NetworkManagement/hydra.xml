@@ -9,7 +9,7 @@
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
       <OutputDirectory></OutputDirectory>
-      <BaseNamespace>microsoft.windowsazure.management.virtualnetworks</BaseNamespace>
+      <BaseNamespace>microsoft.windowsazure.management.network</BaseNamespace>
       <Split>Namespace</Split>
     </Platform>
   </Specification>

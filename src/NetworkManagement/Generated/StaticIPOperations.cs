@@ -30,12 +30,12 @@ using System.Xml.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class StaticIPOperations : IServiceOperations<VirtualNetworkManagementClient>, IStaticIPOperations
+    internal partial class StaticIPOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IStaticIPOperations
     {
         /// <summary>
         /// Initializes a new instance of the StaticIPOperations class.
@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
         /// </summary>
         public VirtualNetworkManagementClient Client
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A response that indicates the availability of a static IP address,
         /// and if not, provide a list of suggestions.
         /// </returns>
-        public async Task<NetworkStaticIPAvailabilityResponse> CheckAsync(string virtualNetworkName, string ipAddress, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkStaticIPAvailabilityResponse> CheckAsync(string virtualNetworkName, string ipAddress, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)

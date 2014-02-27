@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// The configuration script returned from the get device configuration

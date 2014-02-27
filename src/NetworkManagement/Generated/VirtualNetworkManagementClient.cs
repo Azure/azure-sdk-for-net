@@ -30,10 +30,10 @@ using System.Xml.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
-    public partial class VirtualNetworkManagementClient : ServiceClient<VirtualNetworkManagementClient>, IVirtualNetworkManagementClient
+    public partial class VirtualNetworkManagementClient : ServiceClient<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IVirtualNetworkManagementClient
     {
         private Uri _baseUri;
         
@@ -204,7 +204,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<VirtualNetworkOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.VirtualNetworkOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)

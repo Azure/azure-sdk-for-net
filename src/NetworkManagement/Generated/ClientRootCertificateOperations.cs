@@ -33,12 +33,12 @@ using System.Xml.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class ClientRootCertificateOperations : IServiceOperations<VirtualNetworkManagementClient>, IClientRootCertificateOperations
+    internal partial class ClientRootCertificateOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations
     {
         /// <summary>
         /// Initializes a new instance of the ClientRootCertificateOperations
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
         /// </summary>
         public VirtualNetworkManagementClient Client
         {
@@ -83,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<GatewayOperationResponse> CreateAsync(string virtualNetworkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> CreateAsync(string virtualNetworkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -227,7 +227,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<GatewayOperationResponse> DeleteAsync(string virtualNetworkName, string certificateThumbprint, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> DeleteAsync(string virtualNetworkName, string certificateThumbprint, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -363,7 +363,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<ClientRootCertificateGetResponse> GetAsync(string virtualNetworkName, string certificateThumbprint, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.ClientRootCertificateGetResponse> GetAsync(string virtualNetworkName, string certificateThumbprint, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -484,7 +484,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// The response to the list client root certificates request.
         /// </returns>
-        public async Task<ClientRootCertificateListResponse> ListAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.ClientRootCertificateListResponse> ListAsync(string virtualNetworkName, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)

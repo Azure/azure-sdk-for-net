@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// Specifies the operation to perform on the connection. Can be set to
