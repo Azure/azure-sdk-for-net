@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// The response to the get shared key request.

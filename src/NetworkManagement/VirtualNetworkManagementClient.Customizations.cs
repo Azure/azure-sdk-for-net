@@ -22,7 +22,7 @@ namespace Microsoft.WindowsAzure
     using System.Net.Http;
     using Microsoft.WindowsAzure.Common;
     using Microsoft.WindowsAzure.Common.Internals;
-    using Microsoft.WindowsAzure.Management.VirtualNetworks;
+    using Microsoft.WindowsAzure.Management.Network;
 
 
     public static class VirtualNetworkManagementDiscoveryExtensions
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure
     }
 }
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
     using System;
     using System.Collections.Generic;
@@ -53,7 +53,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
     using System.Net.Http;
     using Microsoft.WindowsAzure.Common;
     using Microsoft.WindowsAzure.Common.Internals;
-    using Microsoft.WindowsAzure.Management.VirtualNetworks;
 
     public partial class VirtualNetworkManagementClient
     {

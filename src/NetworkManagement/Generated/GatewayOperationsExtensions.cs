@@ -23,11 +23,17 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure
 {
+    /// <summary>
+    /// The Service Management API includes operations for managing the virtual
+    /// networks your subscription.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
+    /// more information)
+    /// </summary>
     public static partial class GatewayOperationsExtensions
     {
         /// <summary>
@@ -40,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -84,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -112,7 +118,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -151,7 +157,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -176,7 +182,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network.
@@ -212,7 +218,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network.
@@ -235,7 +241,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network in Azure.
@@ -272,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network in Azure.
@@ -296,7 +302,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -341,7 +347,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -372,7 +378,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -423,7 +429,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -458,7 +464,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -504,7 +510,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -536,7 +542,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network.
@@ -579,7 +585,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network.
@@ -609,7 +615,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network in Azure.
@@ -653,7 +659,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network in Azure.
@@ -682,7 +688,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -721,7 +727,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -747,7 +753,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -784,7 +790,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -807,7 +813,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -847,7 +853,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -872,7 +878,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='operationId'>
         /// The id  of the virtualnetwork operation.
@@ -915,7 +921,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='operationId'>
         /// The id  of the virtualnetwork operation.
@@ -946,7 +952,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -986,7 +992,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -1010,7 +1016,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -1046,7 +1052,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -1069,7 +1075,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <returns>
         /// The respoonse to the get supported platform configuration request.
@@ -1102,7 +1108,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <returns>
         /// The respoonse to the get supported platform configuration request.
@@ -1122,7 +1128,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.
@@ -1174,7 +1180,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IGatewayOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
         /// </param>
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network for this gateway.

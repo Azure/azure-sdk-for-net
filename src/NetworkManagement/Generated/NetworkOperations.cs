@@ -32,12 +32,12 @@ using System.Xml.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class NetworkOperations : IServiceOperations<VirtualNetworkManagementClient>, INetworkOperations
+    internal partial class NetworkOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.INetworkOperations
     {
         /// <summary>
         /// Initializes a new instance of the NetworkOperations class.
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
         /// </summary>
         public VirtualNetworkManagementClient Client
         {
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -193,7 +193,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// The Get Network Configuration operation response.
         /// </returns>
-        public async Task<NetworkGetConfigurationResponse> GetConfigurationAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkGetConfigurationResponse> GetConfigurationAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -300,7 +300,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// The response structure for the Server List operation.
         /// </returns>
-        public async Task<NetworkListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -618,7 +618,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<VirtualNetworkOperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.VirtualNetworkOperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             VirtualNetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
