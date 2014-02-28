@@ -681,7 +681,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                 {
                                     foreach (XElement outputItemsElement in outputItemsSequenceElement.Elements(XName.Get("OutputItem", "http://schemas.microsoft.com/windowsazure")))
                                     {
-                                        string outputItemsKey = outputItemsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        string outputItemsKey = outputItemsElement.Element(XName.Get("Key", "http://schemas.microsoft.com/windowsazure")).Value;
                                         string outputItemsValue = outputItemsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
                                         resourceInstance.OutputItems.Add(outputItemsKey, outputItemsValue);
                                     }
