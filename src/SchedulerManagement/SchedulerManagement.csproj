@@ -109,7 +109,6 @@
   <ItemGroup>
     <Content Include="CloudServices.hydra.xml" />
     <Content Include="hydra.xml" />
-    <Content Include="readme.txt" />
     <Content Include="Scheduler.hydra.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
@@ -132,6 +131,6 @@
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Scheduler.Specification.1.0.5168.17834-prerelease\tools\Microsoft.WindowsAzure.Management.Scheduler.Specification.dll" DestinationFolder="." />
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementCloudServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.CloudServices.Specification.1.0.5172.17066-prerelease\tools\Microsoft.WindowsAzure.Management.CloudServices.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.CloudServices.Specification.1.0.5172.24998-prerelease\tools\Microsoft.WindowsAzure.Management.CloudServices.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
