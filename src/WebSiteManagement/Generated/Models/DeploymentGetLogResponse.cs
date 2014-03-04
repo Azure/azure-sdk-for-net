@@ -22,27 +22,30 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.Storage.Models;
+using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure.Management.Storage.Models
+namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Get Storage Account Properties operation response.
+    /// The get log for a deployments operation response.
     /// </summary>
-    public partial class StorageAccountGetResponse : OperationResponse
+    public partial class DeploymentGetLogResponse : OperationResponse
     {
-        private StorageAccount _storageAccount;
+        private DeploymentLog _log;
         
-        public StorageAccount StorageAccount
+        /// <summary>
+        /// The deployment log information.
+        /// </summary>
+        public DeploymentLog Log
         {
-            get { return this._storageAccount; }
-            set { this._storageAccount = value; }
+            get { return this._log; }
+            set { this._log = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the StorageAccountGetResponse class.
+        /// Initializes a new instance of the DeploymentGetLogResponse class.
         /// </summary>
-        public StorageAccountGetResponse()
+        public DeploymentGetLogResponse()
         {
         }
     }

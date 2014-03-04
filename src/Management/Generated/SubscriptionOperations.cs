@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -331,7 +331,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/operations?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/operations?";
             url = url + "&StartTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             url = url + "&EndTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
             if (parameters.ObjectIdFilter != null)
@@ -567,7 +567,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services?";
             url = url + "service=" + Uri.EscapeUriString(resourceName);
             url = url + "&action=register";
             
@@ -677,7 +677,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services?";
             url = url + "service=" + Uri.EscapeUriString(resourceName);
             url = url + "&action=unregister";
             

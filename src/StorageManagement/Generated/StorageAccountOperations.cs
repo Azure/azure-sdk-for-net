@@ -141,7 +141,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/storageservices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -324,7 +324,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/operations/isavailable/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/storageservices/operations/isavailable/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -563,7 +563,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -673,7 +673,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -727,25 +727,28 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     XElement storageServiceElement = responseDoc.Element(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure"));
                     if (storageServiceElement != null)
                     {
+                        StorageAccount storageServiceInstance = new StorageAccount();
+                        result.StorageAccount = storageServiceInstance;
+                        
                         XElement urlElement = storageServiceElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
                         if (urlElement != null)
                         {
                             Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
-                            result.Uri = urlInstance;
+                            storageServiceInstance.Uri = urlInstance;
                         }
                         
                         XElement serviceNameElement = storageServiceElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
                         if (serviceNameElement != null)
                         {
                             string serviceNameInstance = serviceNameElement.Value;
-                            result.Name = serviceNameInstance;
+                            storageServiceInstance.Name = serviceNameInstance;
                         }
                         
                         XElement storageServicePropertiesElement = storageServiceElement.Element(XName.Get("StorageServiceProperties", "http://schemas.microsoft.com/windowsazure"));
                         if (storageServicePropertiesElement != null)
                         {
                             StorageAccountProperties storageServicePropertiesInstance = new StorageAccountProperties();
-                            result.Properties = storageServicePropertiesInstance;
+                            storageServiceInstance.Properties = storageServicePropertiesInstance;
                             
                             XElement descriptionElement = storageServicePropertiesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
                             if (descriptionElement != null)
@@ -850,16 +853,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             {
                                 string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
                                 string extendedPropertiesValue = extendedPropertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                result.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
-                            }
-                        }
-                        
-                        XElement capabilitiesSequenceElement = storageServiceElement.Element(XName.Get("Capabilities", "http://schemas.microsoft.com/windowsazure"));
-                        if (capabilitiesSequenceElement != null)
-                        {
-                            foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                result.Capabilities.Add(capabilitiesElement.Value);
+                                storageServiceInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                             }
                         }
                     }
@@ -928,7 +922,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName + "/keys";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName + "/keys";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1064,7 +1058,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/storageservices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1118,30 +1112,30 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     XElement storageServicesSequenceElement = responseDoc.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
                     if (storageServicesSequenceElement != null)
                     {
-                        foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageAccount", "http://schemas.microsoft.com/windowsazure")))
+                        foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure")))
                         {
-                            StorageAccountListResponse.StorageAccount storageAccountInstance = new StorageAccountListResponse.StorageAccount();
-                            result.StorageAccounts.Add(storageAccountInstance);
+                            StorageAccount storageServiceInstance = new StorageAccount();
+                            result.StorageAccounts.Add(storageServiceInstance);
                             
                             XElement urlElement = storageServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
                             if (urlElement != null)
                             {
                                 Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
-                                storageAccountInstance.Uri = urlInstance;
+                                storageServiceInstance.Uri = urlInstance;
                             }
                             
                             XElement serviceNameElement = storageServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
                             if (serviceNameElement != null)
                             {
                                 string serviceNameInstance = serviceNameElement.Value;
-                                storageAccountInstance.Name = serviceNameInstance;
+                                storageServiceInstance.Name = serviceNameInstance;
                             }
                             
                             XElement storageServicePropertiesElement = storageServicesElement.Element(XName.Get("StorageServiceProperties", "http://schemas.microsoft.com/windowsazure"));
                             if (storageServicePropertiesElement != null)
                             {
                                 StorageAccountProperties storageServicePropertiesInstance = new StorageAccountProperties();
-                                storageAccountInstance.Properties = storageServicePropertiesInstance;
+                                storageServiceInstance.Properties = storageServicePropertiesInstance;
                                 
                                 XElement descriptionElement = storageServicePropertiesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
                                 if (descriptionElement != null)
@@ -1246,7 +1240,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 {
                                     string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
                                     string extendedPropertiesValue = extendedPropertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
-                                    storageAccountInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
+                                    storageServiceInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                 }
                             }
                         }
@@ -1320,7 +1314,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + parameters.Name + "/keys?action=regenerate";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + parameters.Name + "/keys?action=regenerate";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1509,7 +1503,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/storageservices/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -115,7 +115,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/queues/" + queue.Name + "/";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/queues/" + queue.Name + "/";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -700,7 +700,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/Queues/" + queueName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/Queues/" + queueName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1083,7 +1083,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/Queues/" + queueName + "/ConnectionDetails";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/Queues/" + queueName + "/ConnectionDetails";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1252,7 +1252,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/Queues";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/Queues";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1646,7 +1646,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/queues/" + queue.Name + "/";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/queues/" + queue.Name + "/";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

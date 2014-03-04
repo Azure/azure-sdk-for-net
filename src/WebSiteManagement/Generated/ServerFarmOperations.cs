@@ -117,7 +117,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -330,7 +330,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -455,7 +455,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/" + serverFarmName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/" + serverFarmName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -623,7 +623,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -805,7 +805,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

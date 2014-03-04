@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/media";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/media";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -208,7 +208,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/media";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/media";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -315,7 +315,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/virtualnetwork";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/virtualnetwork";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

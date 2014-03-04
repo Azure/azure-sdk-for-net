@@ -122,7 +122,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/affinitygroups";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/affinitygroups";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -263,7 +263,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -374,7 +374,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -570,7 +570,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/affinitygroups";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/affinitygroups";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -754,7 +754,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

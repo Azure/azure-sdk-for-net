@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/images";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -150,7 +150,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 oSImageElement.Add(labelElement);
                 
                 XElement mediaLinkElement = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                mediaLinkElement.Value = parameters.MediaLinkUri.ToString();
+                mediaLinkElement.Value = parameters.MediaLinkUri.AbsoluteUri;
                 oSImageElement.Add(mediaLinkElement);
                 
                 XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
@@ -200,14 +200,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.PrivacyUri != null)
                 {
                     XElement privacyUriElement = new XElement(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
-                    privacyUriElement.Value = parameters.PrivacyUri.ToString();
+                    privacyUriElement.Value = parameters.PrivacyUri.AbsoluteUri;
                     oSImageElement.Add(privacyUriElement);
                 }
                 
                 if (parameters.IconUri != null)
                 {
                     XElement iconUriElement = new XElement(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
-                    iconUriElement.Value = parameters.IconUri.ToString();
+                    iconUriElement.Value = parameters.IconUri.AbsoluteUri;
                     oSImageElement.Add(iconUriElement);
                 }
                 
@@ -221,7 +221,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.SmallIconUri != null)
                 {
                     XElement smallIconUriElement = new XElement(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                    smallIconUriElement.Value = parameters.SmallIconUri.ToString();
+                    smallIconUriElement.Value = parameters.SmallIconUri.AbsoluteUri;
                     oSImageElement.Add(smallIconUriElement);
                 }
                 
@@ -477,7 +477,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -591,7 +591,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -842,7 +842,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/images";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1112,7 +1112,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1175,14 +1175,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.PrivacyUri != null)
                 {
                     XElement privacyUriElement = new XElement(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
-                    privacyUriElement.Value = parameters.PrivacyUri.ToString();
+                    privacyUriElement.Value = parameters.PrivacyUri.AbsoluteUri;
                     oSImageElement.Add(privacyUriElement);
                 }
                 
                 if (parameters.IconUri != null)
                 {
                     XElement iconUriElement = new XElement(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
-                    iconUriElement.Value = parameters.IconUri.ToString();
+                    iconUriElement.Value = parameters.IconUri.AbsoluteUri;
                     oSImageElement.Add(iconUriElement);
                 }
                 
@@ -1196,7 +1196,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.SmallIconUri != null)
                 {
                     XElement smallIconUriElement = new XElement(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                    smallIconUriElement.Value = parameters.SmallIconUri.ToString();
+                    smallIconUriElement.Value = parameters.SmallIconUri.AbsoluteUri;
                     oSImageElement.Add(smallIconUriElement);
                 }
                 

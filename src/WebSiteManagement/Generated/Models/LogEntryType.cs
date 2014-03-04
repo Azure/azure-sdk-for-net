@@ -21,29 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.Storage.Models;
 
-namespace Microsoft.WindowsAzure.Management.Storage.Models
+namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Get Storage Account Properties operation response.
+    /// The log entry type.
     /// </summary>
-    public partial class StorageAccountGetResponse : OperationResponse
+    public enum LogEntryType
     {
-        private StorageAccount _storageAccount;
+        Message = 0,
         
-        public StorageAccount StorageAccount
-        {
-            get { return this._storageAccount; }
-            set { this._storageAccount = value; }
-        }
+        Warning = 1,
         
-        /// <summary>
-        /// Initializes a new instance of the StorageAccountGetResponse class.
-        /// </summary>
-        public StorageAccountGetResponse()
-        {
-        }
+        Error = 2,
     }
 }

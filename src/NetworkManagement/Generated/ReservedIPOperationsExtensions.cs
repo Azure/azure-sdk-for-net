@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Parameters supplied to create a network reserved IP.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -209,7 +209,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Parameters supplied to create a network reserved IP.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

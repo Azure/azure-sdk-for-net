@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/scm").ToString() + "?";
+            string url = new Uri(this.Client.BaseUri, "/scm").AbsoluteUri + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/diagnostics/settings/").ToString() + "?";
+            string url = new Uri(this.Client.BaseUri, "/diagnostics/settings/").AbsoluteUri + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -293,7 +293,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/diagnostics/settings/").ToString() + "?";
+            string url = new Uri(this.Client.BaseUri, "/diagnostics/settings/").AbsoluteUri + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects

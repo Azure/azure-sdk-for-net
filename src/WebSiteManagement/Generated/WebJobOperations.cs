@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "?";
+            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/continuous/").AbsoluteUri + jobName + "?";
             url = url + "version=2";
             url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
@@ -217,7 +217,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "?";
+            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/triggered/").AbsoluteUri + jobName + "?";
             url = url + "version=2";
             url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
@@ -325,7 +325,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/").ToString() + jobName + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/").AbsoluteUri + jobName + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -569,7 +569,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").AbsoluteUri + jobName + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -821,7 +821,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/history/" + jobRunId + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").AbsoluteUri + jobName + "/history/" + jobRunId + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -995,7 +995,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").AbsoluteUri + jobName + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -1235,7 +1235,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs").ToString() + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs").AbsoluteUri + "?";
             url = url + "version=2";
             if (parameters != null && parameters.Top != null)
             {
@@ -1490,7 +1490,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous").ToString() + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous").AbsoluteUri + "?";
             url = url + "version=2";
             if (parameters != null && parameters.Top != null)
             {
@@ -1753,7 +1753,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/history?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").AbsoluteUri + jobName + "/history?";
             url = url + "version=2";
             if (parameters != null && parameters.Top != null)
             {
@@ -1938,7 +1938,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered").ToString() + "?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered").AbsoluteUri + "?";
             url = url + "version=2";
             if (parameters != null && parameters.Top != null)
             {
@@ -2198,7 +2198,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/run?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").AbsoluteUri + jobName + "/run?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2311,7 +2311,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/singleton/?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").AbsoluteUri + jobName + "/singleton/?";
             url = url + "isSingleton=" + Uri.EscapeUriString(isSingleton.ToString().ToLower());
             url = url + "&version=2";
             
@@ -2420,7 +2420,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/start/?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").AbsoluteUri + jobName + "/start/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2528,7 +2528,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/stop/?";
+            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").AbsoluteUri + jobName + "/stop/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2644,7 +2644,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "/?";
+            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/continuous/").AbsoluteUri + jobName + "/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -2765,7 +2765,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "/?";
+            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/triggered/").AbsoluteUri + jobName + "/?";
             url = url + "version=2";
             
             // Create HTTP transport objects
