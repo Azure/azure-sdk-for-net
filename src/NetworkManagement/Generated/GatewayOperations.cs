@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkSiteName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkSiteName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -273,7 +273,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -415,7 +415,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -543,7 +543,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -694,7 +694,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1243,7 +1243,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/vpnclientpackage";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/vpnclientpackage";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1386,7 +1386,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1571,7 +1571,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/vpndeviceconfigurationscript?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/vpndeviceconfigurationscript?";
             if (parameters.Vendor != null)
             {
                 url = url + "vendor=" + Uri.EscapeUriString(parameters.Vendor);
@@ -1706,7 +1706,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/operation/" + operationId;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/operation/" + operationId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1877,7 +1877,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2004,7 +2004,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connections";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connections";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2201,7 +2201,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/supporteddevices";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/supporteddevices";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

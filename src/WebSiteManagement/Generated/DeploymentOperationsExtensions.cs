@@ -85,6 +85,62 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Gets a deployment log for a website.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// </param>
+        /// <param name='deploymentId'>
+        /// The deployment identifier.
+        /// </param>
+        /// <param name='deploymentLogId'>
+        /// The deployment log identifier.
+        /// </param>
+        /// <returns>
+        /// The get log for a deployments operation response.
+        /// </returns>
+        public static DeploymentGetLogResponse GetLog(this IDeploymentOperations operations, string deploymentId, string deploymentLogId)
+        {
+            try
+            {
+                return operations.GetLogAsync(deploymentId, deploymentLogId).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets a deployment log for a website.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// </param>
+        /// <param name='deploymentId'>
+        /// The deployment identifier.
+        /// </param>
+        /// <param name='deploymentLogId'>
+        /// The deployment log identifier.
+        /// </param>
+        /// <returns>
+        /// The get log for a deployments operation response.
+        /// </returns>
+        public static Task<DeploymentGetLogResponse> GetLogAsync(this IDeploymentOperations operations, string deploymentId, string deploymentLogId)
+        {
+            return operations.GetLogAsync(deploymentId, deploymentLogId, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// List the deployments for a website.
         /// </summary>
         /// <param name='operations'>
@@ -203,11 +259,11 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The deployment information operation response.
         /// </returns>
-        public static DeploymentUpdateResponse Reploy(this IDeploymentOperations operations, string deploymentId)
+        public static DeploymentUpdateResponse Redeploy(this IDeploymentOperations operations, string deploymentId)
         {
             try
             {
-                return operations.ReployAsync(deploymentId).Result;
+                return operations.RedeployAsync(deploymentId).Result;
             }
             catch (AggregateException ex)
             {
@@ -235,9 +291,9 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The deployment information operation response.
         /// </returns>
-        public static Task<DeploymentUpdateResponse> ReployAsync(this IDeploymentOperations operations, string deploymentId)
+        public static Task<DeploymentUpdateResponse> RedeployAsync(this IDeploymentOperations operations, string deploymentId)
         {
-            return operations.ReployAsync(deploymentId, CancellationToken.None);
+            return operations.RedeployAsync(deploymentId, CancellationToken.None);
         }
     }
 }

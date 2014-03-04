@@ -209,7 +209,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, "/").ToString() + this.Credentials.SubscriptionId + "/services/networking/operation/" + operationId;
+            string url = new Uri(this.BaseUri, "/").AbsoluteUri + this.Credentials.SubscriptionId + "/services/networking/operation/" + operationId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

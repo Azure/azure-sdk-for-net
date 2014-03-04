@@ -30,17 +30,17 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
     /// <summary>
     /// The list of deployments operation response.
     /// </summary>
-    public partial class DeploymentListLogsResponse : OperationResponse, IEnumerable<Deployment>
+    public partial class DeploymentListLogsResponse : OperationResponse, IEnumerable<DeploymentLog>
     {
-        private IList<Deployment> _deployments;
+        private IList<DeploymentLog> _logs;
         
         /// <summary>
-        /// The list of deployments.
+        /// The list of logs.
         /// </summary>
-        public IList<Deployment> Deployments
+        public IList<DeploymentLog> Logs
         {
-            get { return this._deployments; }
-            set { this._deployments = value; }
+            get { return this._logs; }
+            set { this._logs = value; }
         }
         
         /// <summary>
@@ -48,19 +48,19 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public DeploymentListLogsResponse()
         {
-            this._deployments = new List<Deployment>();
+            this._logs = new List<DeploymentLog>();
         }
         
         /// <summary>
-        /// Gets the sequence of Deployments.
+        /// Gets the sequence of Logs.
         /// </summary>
-        public IEnumerator<Deployment> GetEnumerator()
+        public IEnumerator<DeploymentLog> GetEnumerator()
         {
-            return this.Deployments.GetEnumerator();
+            return this.Logs.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of Deployments.
+        /// Gets the sequence of Logs.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

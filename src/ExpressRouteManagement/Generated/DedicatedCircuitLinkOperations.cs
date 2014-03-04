@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -226,7 +226,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -355,7 +355,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -483,7 +483,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

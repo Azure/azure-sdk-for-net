@@ -20,33 +20,33 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The settings update operation response.
+    /// The get log for a deployments operation response.
     /// </summary>
-    public partial class SettingsUpdateParameters
+    public partial class DeploymentGetLogResponse : OperationResponse
     {
-        private IDictionary<string, string> _settings;
+        private DeploymentLog _log;
         
         /// <summary>
-        /// The setting values.
+        /// The deployment log information.
         /// </summary>
-        public IDictionary<string, string> Settings
+        public DeploymentLog Log
         {
-            get { return this._settings; }
-            set { this._settings = value; }
+            get { return this._log; }
+            set { this._log = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SettingsUpdateParameters class.
+        /// Initializes a new instance of the DeploymentGetLogResponse class.
         /// </summary>
-        public SettingsUpdateParameters()
+        public DeploymentGetLogResponse()
         {
-            this._settings = new Dictionary<string, string>();
         }
     }
 }

@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricvalues/query?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricvalues/query?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
             if (metricNamespace != null)
             {

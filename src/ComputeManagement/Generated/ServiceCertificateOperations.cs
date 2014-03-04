@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/certificates";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/certificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -273,7 +273,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + parameters.ServiceName + "/certificates/" + parameters.ThumbprintAlgorithm + "-" + parameters.Thumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + parameters.ServiceName + "/certificates/" + parameters.ThumbprintAlgorithm + "-" + parameters.Thumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -599,7 +599,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + parameters.ServiceName + "/certificates/" + parameters.ThumbprintAlgorithm + "-" + parameters.Thumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + parameters.ServiceName + "/certificates/" + parameters.ThumbprintAlgorithm + "-" + parameters.Thumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -726,7 +726,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/certificates";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/certificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

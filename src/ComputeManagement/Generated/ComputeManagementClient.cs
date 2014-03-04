@@ -295,7 +295,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, "/").ToString() + this.Credentials.SubscriptionId + "/operations/" + requestId;
+            string url = new Uri(this.BaseUri, "/").AbsoluteUri + this.Credentials.SubscriptionId + "/operations/" + requestId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

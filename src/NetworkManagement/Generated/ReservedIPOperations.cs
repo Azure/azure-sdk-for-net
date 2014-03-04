@@ -102,7 +102,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -257,7 +257,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -337,7 +337,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// the subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Parameters supplied to create a network reserved IP.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -557,7 +557,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips/" + ipName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -729,7 +729,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/reservedips";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
             
             // Create HTTP transport objects
@@ -389,7 +389,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
             
             // Create HTTP transport objects
@@ -496,7 +496,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
             
             // Create HTTP transport objects

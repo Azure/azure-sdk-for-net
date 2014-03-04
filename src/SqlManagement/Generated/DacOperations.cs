@@ -135,7 +135,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Export";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Export";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -171,7 +171,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         blobCredentialsElement.Add(typeAttribute);
                         
                         XElement uriElement = new XElement(XName.Get("Uri", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                        uriElement.Value = parameters.BlobCredentials.Uri.ToString();
+                        uriElement.Value = parameters.BlobCredentials.Uri.AbsoluteUri;
                         blobCredentialsElement.Add(uriElement);
                         
                         XElement storageAccessKeyElement = new XElement(XName.Get("StorageAccessKey", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Status?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Status?";
             url = url + "servername=" + Uri.EscapeUriString(fullyQualifiedServerName);
             url = url + "&username=" + Uri.EscapeUriString(username);
             url = url + "&password=" + Uri.EscapeUriString(password);
@@ -577,7 +577,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Import";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Import";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -620,7 +620,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         blobCredentialsElement.Add(typeAttribute);
                         
                         XElement uriElement = new XElement(XName.Get("Uri", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                        uriElement.Value = parameters.BlobCredentials.Uri.ToString();
+                        uriElement.Value = parameters.BlobCredentials.Uri.AbsoluteUri;
                         blobCredentialsElement.Add(uriElement);
                         
                         XElement storageAccessKeyElement = new XElement(XName.Get("StorageAccessKey", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));

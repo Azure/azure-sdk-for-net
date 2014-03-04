@@ -65,14 +65,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             get { return this._siteName; }
         }
         
-        private IDeploymentOperations _deployment;
+        private IDeploymentOperations _deployments;
         
         /// <summary>
         /// Operations for managing the repositories.
         /// </summary>
-        public virtual IDeploymentOperations Deployment
+        public virtual IDeploymentOperations Deployments
         {
-            get { return this._deployment; }
+            get { return this._deployments; }
         }
         
         private IDiagnosticOperations _diagnostics;
@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         private WebSiteExtensionsClient()
             : base()
         {
-            this._deployment = new DeploymentOperations(this);
+            this._deployments = new DeploymentOperations(this);
             this._diagnostics = new DiagnosticOperations(this);
             this._repository = new RepositoryOperations(this);
             this._settings = new SettingsOperations(this);

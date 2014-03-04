@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// the subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Parameters supplied to create a network reserved IP.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

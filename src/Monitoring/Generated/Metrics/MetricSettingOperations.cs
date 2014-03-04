@@ -108,7 +108,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -193,7 +193,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             
                             if (endpointsItem.Url != null)
                             {
-                                endpointConfigValue["Url"] = endpointsItem.Url.ToString();
+                                endpointConfigValue["Url"] = endpointsItem.Url.AbsoluteUri;
                             }
                         }
                         valueValue["Endpoints"] = endpointsArray;
@@ -303,7 +303,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
             url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace);
             

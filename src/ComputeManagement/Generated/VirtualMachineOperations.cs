@@ -230,7 +230,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -879,7 +879,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1435,7 +1435,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         if (dataVirtualHardDisksItem.MediaLink != null)
                         {
                             XElement mediaLinkElement = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                            mediaLinkElement.Value = dataVirtualHardDisksItem.MediaLink.ToString();
+                            mediaLinkElement.Value = dataVirtualHardDisksItem.MediaLink.AbsoluteUri;
                             dataVirtualHardDiskElement.Add(mediaLinkElement);
                         }
                     }
@@ -1471,7 +1471,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (parameters.OSVirtualHardDisk.MediaLink != null)
                     {
                         XElement mediaLinkElement2 = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        mediaLinkElement2.Value = parameters.OSVirtualHardDisk.MediaLink.ToString();
+                        mediaLinkElement2.Value = parameters.OSVirtualHardDisk.MediaLink.AbsoluteUri;
                         oSVirtualHardDiskElement.Add(mediaLinkElement2);
                     }
                     
@@ -1728,7 +1728,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2315,7 +2315,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             if (dataVirtualHardDisksItem.MediaLink != null)
                             {
                                 XElement mediaLinkElement = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                                mediaLinkElement.Value = dataVirtualHardDisksItem.MediaLink.ToString();
+                                mediaLinkElement.Value = dataVirtualHardDisksItem.MediaLink.AbsoluteUri;
                                 dataVirtualHardDiskElement.Add(mediaLinkElement);
                             }
                         }
@@ -2358,7 +2358,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         if (roleListItem.OSVirtualHardDisk.MediaLink != null)
                         {
                             XElement mediaLinkElement2 = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                            mediaLinkElement2.Value = roleListItem.OSVirtualHardDisk.MediaLink.ToString();
+                            mediaLinkElement2.Value = roleListItem.OSVirtualHardDisk.MediaLink.AbsoluteUri;
                             oSVirtualHardDiskElement.Add(mediaLinkElement2);
                         }
                         
@@ -2564,7 +2564,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -2695,7 +2695,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2835,7 +2835,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2980,7 +2980,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/Roles/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/Roles/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3140,7 +3140,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3270,7 +3270,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/Roles/Operations";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/Roles/Operations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3529,7 +3529,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4085,7 +4085,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         if (dataVirtualHardDisksItem.MediaLink != null)
                         {
                             XElement mediaLinkElement = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                            mediaLinkElement.Value = dataVirtualHardDisksItem.MediaLink.ToString();
+                            mediaLinkElement.Value = dataVirtualHardDisksItem.MediaLink.AbsoluteUri;
                             dataVirtualHardDiskElement.Add(mediaLinkElement);
                         }
                     }
@@ -4119,7 +4119,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.OSVirtualHardDisk.MediaLink != null)
                 {
                     XElement mediaLinkElement2 = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                    mediaLinkElement2.Value = parameters.OSVirtualHardDisk.MediaLink.ToString();
+                    mediaLinkElement2.Value = parameters.OSVirtualHardDisk.MediaLink.AbsoluteUri;
                     oSVirtualHardDiskElement.Add(mediaLinkElement2);
                 }
                 
@@ -4276,7 +4276,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?comp=UpdateLbSet";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "?comp=UpdateLbSet";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4992,7 +4992,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roles/" + virtualMachineName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -5698,7 +5698,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/ModelFile?FileType=RDP";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + virtualMachineName + "/ModelFile?FileType=RDP";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

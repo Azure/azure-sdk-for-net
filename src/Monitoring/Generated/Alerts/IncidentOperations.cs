@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertincidents/" + incidentId;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertincidents/" + incidentId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertincidents?$filter=IsActive eq true";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertincidents?$filter=IsActive eq true";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -396,7 +396,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId + "/alertincidents?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId + "/alertincidents?";
             url = url + "$filter=IsActive eq " + Uri.EscapeUriString(isActive.ToString().ToLower());
             
             // Create HTTP transport objects

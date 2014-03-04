@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/settings/").ToString() + settingId + "?";
+            string url = new Uri(this.Client.BaseUri, "/settings/").AbsoluteUri + settingId + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -205,7 +205,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/settings/").ToString() + settingId + "?";
+            string url = new Uri(this.Client.BaseUri, "/settings/").AbsoluteUri + settingId + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -315,7 +315,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/settings").ToString() + "?";
+            string url = new Uri(this.Client.BaseUri, "/settings").AbsoluteUri + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
@@ -442,7 +442,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/settings").ToString() + "?";
+            string url = new Uri(this.Client.BaseUri, "/settings").AbsoluteUri + "?";
             url = url + "version=2";
             
             // Create HTTP transport objects
