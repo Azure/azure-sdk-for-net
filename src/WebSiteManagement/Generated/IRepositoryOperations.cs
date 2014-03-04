@@ -20,12 +20,10 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
@@ -45,31 +43,5 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// request ID.
         /// </returns>
         Task<OperationResponse> DeleteAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Get diagnostics settings.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The get diagnostic settings operation response.
-        /// </returns>
-        Task<DiagnosticGetResponse> GetSettingsAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Update diagnostics settings.
-        /// </summary>
-        /// <param name='settings'>
-        /// The diagnostics setting information new values.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> UpdateAsync(IDictionary<string, string> settings, CancellationToken cancellationToken);
     }
 }

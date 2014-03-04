@@ -21,6 +21,11 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.WebSitesExtensions;
+using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure
 {
@@ -30,5 +35,100 @@ namespace Microsoft.WindowsAzure
     /// </summary>
     public static partial class DiagnosticOperationsExtensions
     {
+        /// <summary>
+        /// Get diagnostics settings.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.WebSitesExtensions.IDiagnosticOperations.
+        /// </param>
+        /// <returns>
+        /// The get diagnostic settings operation response.
+        /// </returns>
+        public static DiagnosticGetResponse GetSettings(this IDiagnosticOperations operations)
+        {
+            try
+            {
+                return operations.GetSettingsAsync().Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get diagnostics settings.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.WebSitesExtensions.IDiagnosticOperations.
+        /// </param>
+        /// <returns>
+        /// The get diagnostic settings operation response.
+        /// </returns>
+        public static Task<DiagnosticGetResponse> GetSettingsAsync(this IDiagnosticOperations operations)
+        {
+            return operations.GetSettingsAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update diagnostics settings.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.WebSitesExtensions.IDiagnosticOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// The diagnostics setting information new values.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse UpdateSettings(this IDiagnosticOperations operations, DiagnosticUpdateParameters parameters)
+        {
+            try
+            {
+                return operations.UpdateSettingsAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Update diagnostics settings.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.WebSitesExtensions.IDiagnosticOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// The diagnostics setting information new values.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateSettingsAsync(this IDiagnosticOperations operations, DiagnosticUpdateParameters parameters)
+        {
+            return operations.UpdateSettingsAsync(parameters, CancellationToken.None);
+        }
     }
 }
