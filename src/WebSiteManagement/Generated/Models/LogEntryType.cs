@@ -20,33 +20,19 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The settings update operation response.
+    /// The log entry type.
     /// </summary>
-    public partial class SettingsUpdateParameters
+    public enum LogEntryType
     {
-        private IDictionary<string, string> _settings;
+        Message = 0,
         
-        /// <summary>
-        /// The setting values.
-        /// </summary>
-        public IDictionary<string, string> Settings
-        {
-            get { return this._settings; }
-            set { this._settings = value; }
-        }
+        Warning = 1,
         
-        /// <summary>
-        /// Initializes a new instance of the SettingsUpdateParameters class.
-        /// </summary>
-        public SettingsUpdateParameters()
-        {
-            this._settings = new Dictionary<string, string>();
-        }
+        Error = 2,
     }
 }

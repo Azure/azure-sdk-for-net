@@ -139,7 +139,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -306,7 +306,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + resourceProviderNamespace + "/" + resourceProviderType + "/" + resourceProviderName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + resourceProviderNamespace + "/" + resourceProviderType + "/" + resourceProviderName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -436,14 +436,14 @@ namespace Microsoft.WindowsAzure.Management.Store
                 
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse response = await client.AddOns.BeginCreatingAsync(cloudServiceName, resourceName, addOnName, parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
+                if (response.Status == StoreOperationStatus.Succeeded)
                 {
                     return response;
                 }
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != StoreOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -457,7 +457,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != StoreOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -547,14 +547,14 @@ namespace Microsoft.WindowsAzure.Management.Store
                 
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse response = await client.AddOns.BeginDeletingAsync(cloudServiceName, resourceProviderNamespace, resourceProviderType, resourceProviderName, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
+                if (response.Status == StoreOperationStatus.Succeeded)
                 {
                     return response;
                 }
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != StoreOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -568,7 +568,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != StoreOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -677,7 +677,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

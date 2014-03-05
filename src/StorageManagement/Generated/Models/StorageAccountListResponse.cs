@@ -30,11 +30,11 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// <summary>
     /// The List Storage Accounts operation response.
     /// </summary>
-    public partial class StorageAccountListResponse : OperationResponse, IEnumerable<StorageAccountListResponse.StorageAccount>
+    public partial class StorageAccountListResponse : OperationResponse, IEnumerable<StorageAccount>
     {
-        private IList<StorageAccountListResponse.StorageAccount> _storageAccounts;
+        private IList<StorageAccount> _storageAccounts;
         
-        public IList<StorageAccountListResponse.StorageAccount> StorageAccounts
+        public IList<StorageAccount> StorageAccounts
         {
             get { return this._storageAccounts; }
             set { this._storageAccounts = value; }
@@ -45,13 +45,13 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountListResponse()
         {
-            this._storageAccounts = new List<StorageAccountListResponse.StorageAccount>();
+            this._storageAccounts = new List<StorageAccount>();
         }
         
         /// <summary>
         /// Gets the sequence of StorageAccounts.
         /// </summary>
-        public IEnumerator<StorageAccountListResponse.StorageAccount> GetEnumerator()
+        public IEnumerator<StorageAccount> GetEnumerator()
         {
             return this.StorageAccounts.GetEnumerator();
         }
@@ -62,82 +62,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// A Storage Service associated with your subscription.
-        /// </summary>
-        public partial class StorageAccount
-        {
-            private IDictionary<string, string> _extendedProperties;
-            
-            /// <summary>
-            /// Optional. Represents the name of an extended storage account
-            /// property. Each extended property must have both a defined name
-            /// and value. You can have a maximum of 50 extended property
-            /// name/value pairs.  The maximum length of the Name element is
-            /// 64 characters, only alphanumeric characters and underscores
-            /// are valid in the Name, and the name must start with a letter.
-            /// Attempting to use other characters, starting the Name with a
-            /// non-letter character, or entering a name that is identical to
-            /// that of another extended property owned by the same storage
-            /// account, will result in a status code 400 (Bad Request) error.
-            /// Each extended property value has a maximum length of 255
-            /// characters.
-            /// </summary>
-            public IDictionary<string, string> ExtendedProperties
-            {
-                get { return this._extendedProperties; }
-                set { this._extendedProperties = value; }
-            }
-            
-            private string _name;
-            
-            /// <summary>
-            /// The name of the storage account. This name is the DNS prefix
-            /// name and can be used to access blobs, queues, and tables in
-            /// the storage account.  For example, if the service name is
-            /// MyStorageAccount you could access the blob containers by
-            /// calling:
-            /// http://MyStorageAccount.blob.core.windows.net/mycontainer/
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private StorageAccountProperties _properties;
-            
-            /// <summary>
-            /// Details about the storage account.
-            /// </summary>
-            public StorageAccountProperties Properties
-            {
-                get { return this._properties; }
-                set { this._properties = value; }
-            }
-            
-            private Uri _uri;
-            
-            /// <summary>
-            /// The Service Management API request URI used to perform Get
-            /// Storage Account Properties requests against the storage
-            /// account.
-            /// </summary>
-            public Uri Uri
-            {
-                get { return this._uri; }
-                set { this._uri = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the StorageAccount class.
-            /// </summary>
-            public StorageAccount()
-            {
-                this._extendedProperties = new Dictionary<string, string>();
-            }
         }
     }
 }

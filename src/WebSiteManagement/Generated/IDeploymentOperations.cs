@@ -47,6 +47,23 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         Task<DeploymentGetResponse> GetAsync(string deploymentId, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets a deployment log for a website.
+        /// </summary>
+        /// <param name='deploymentId'>
+        /// The deployment identifier.
+        /// </param>
+        /// <param name='deploymentLogId'>
+        /// The deployment log identifier.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The get log for a deployments operation response.
+        /// </returns>
+        Task<DeploymentGetLogResponse> GetLogAsync(string deploymentId, string deploymentLogId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// List the deployments for a website.
         /// </summary>
         /// <param name='parameters'>
@@ -89,6 +106,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The deployment information operation response.
         /// </returns>
-        Task<DeploymentUpdateResponse> ReployAsync(string deploymentId, CancellationToken cancellationToken);
+        Task<DeploymentUpdateResponse> RedeployAsync(string deploymentId, CancellationToken cancellationToken);
     }
 }

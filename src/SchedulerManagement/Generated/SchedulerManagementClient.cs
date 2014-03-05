@@ -150,7 +150,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/operations/" + requestId;
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/operations/" + requestId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -301,7 +301,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/resourceproviders/scheduler/Properties?";
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/resourceproviders/scheduler/Properties?";
             url = url + "resourceType=JobCollections";
             
             // Create HTTP transport objects
@@ -418,7 +418,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/services?";
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/services?";
             url = url + "service=scheduler.JobCollections";
             url = url + "&action=register";
             
@@ -520,7 +520,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/services?";
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/services?";
             url = url + "service=scheduler.JobCollections";
             url = url + "&action=unregister";
             

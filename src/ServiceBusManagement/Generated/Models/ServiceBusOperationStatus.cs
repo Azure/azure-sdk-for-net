@@ -22,12 +22,12 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Network.Models
+namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
 {
     /// <summary>
     /// The status of the asynchronous request.
     /// </summary>
-    public enum OperationStatus
+    public enum ServiceBusOperationStatus
     {
         /// <summary>
         /// The asynchronous request is in progress.

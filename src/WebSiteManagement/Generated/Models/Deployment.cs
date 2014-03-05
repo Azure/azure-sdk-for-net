@@ -26,14 +26,14 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// Describes a website.
+    /// Describes a deployment.
     /// </summary>
     public partial class Deployment
     {
         private bool _active;
         
         /// <summary>
-        /// TBD.
+        /// Indicates if the deployment is active.
         /// </summary>
         public bool Active
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _author;
         
         /// <summary>
-        /// TBD.
+        /// The author.
         /// </summary>
         public string Author
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _authorEmail;
         
         /// <summary>
-        /// TBD.
+        /// The author's email.
         /// </summary>
         public string AuthorEmail
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private bool _complete;
         
         /// <summary>
-        /// TBD.
+        /// Indicates if the deployment is complete.
         /// </summary>
         public bool Complete
         {
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _deployer;
         
         /// <summary>
-        /// TBD.
+        /// The deployer.
         /// </summary>
         public string Deployer
         {
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private DateTime _endTime;
         
         /// <summary>
-        /// TBD.
+        /// The end time.
         /// </summary>
         public DateTime EndTime
         {
@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _id;
         
         /// <summary>
-        /// TBD.
+        /// The identifier.
         /// </summary>
         public string Id
         {
@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private bool _isReadOnly;
         
         /// <summary>
-        /// TBD.
+        /// Indicates if the deployment is read only.
         /// </summary>
         public bool IsReadOnly
         {
@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private bool _isTemp;
         
         /// <summary>
-        /// TBD.
+        /// Indicates if the deployment is temporary.
         /// </summary>
         public bool IsTemp
         {
@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private DateTime _lastSuccessEndTime;
         
         /// <summary>
-        /// TBD.
+        /// The last success end time.
         /// </summary>
         public DateTime LastSuccessEndTime
         {
@@ -143,7 +143,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private Uri _logUrl;
         
         /// <summary>
-        /// TBD.
+        /// The deployment log URL.
         /// </summary>
         public Uri LogUrl
         {
@@ -154,7 +154,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _message;
         
         /// <summary>
-        /// TBD.
+        /// The message.
         /// </summary>
         public string Message
         {
@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _progress;
         
         /// <summary>
-        /// TBD.
+        /// The progress.
         /// </summary>
         public string Progress
         {
@@ -176,7 +176,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private DateTime _receivedTime;
         
         /// <summary>
-        /// TBD.
+        /// The received time.
         /// </summary>
         public DateTime ReceivedTime
         {
@@ -187,7 +187,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _siteName;
         
         /// <summary>
-        /// TBD.
+        /// The deployment site name.
         /// </summary>
         public string SiteName
         {
@@ -198,7 +198,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// TBD.
+        /// The start time.
         /// </summary>
         public DateTime StartTime
         {
@@ -209,7 +209,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private DeployStatus _status;
         
         /// <summary>
-        /// TBD.
+        /// The status.
         /// </summary>
         public DeployStatus Status
         {
@@ -220,7 +220,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _statusText;
         
         /// <summary>
-        /// TBD.
+        /// The status text.
         /// </summary>
         public string StatusText
         {
@@ -231,7 +231,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private Uri _url;
         
         /// <summary>
-        /// TBD.
+        /// The deployment URL.
         /// </summary>
         public Uri Url
         {

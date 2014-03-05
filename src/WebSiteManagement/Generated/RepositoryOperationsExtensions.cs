@@ -20,13 +20,11 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure
 {
@@ -80,102 +78,6 @@ namespace Microsoft.WindowsAzure
         public static Task<OperationResponse> DeleteAsync(this IRepositoryOperations operations)
         {
             return operations.DeleteAsync(CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Get diagnostics settings.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IRepositoryOperations.
-        /// </param>
-        /// <returns>
-        /// The get diagnostic settings operation response.
-        /// </returns>
-        public static DiagnosticGetResponse GetSettings(this IRepositoryOperations operations)
-        {
-            try
-            {
-                return operations.GetSettingsAsync().Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Get diagnostics settings.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IRepositoryOperations.
-        /// </param>
-        /// <returns>
-        /// The get diagnostic settings operation response.
-        /// </returns>
-        public static Task<DiagnosticGetResponse> GetSettingsAsync(this IRepositoryOperations operations)
-        {
-            return operations.GetSettingsAsync(CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Update diagnostics settings.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IRepositoryOperations.
-        /// </param>
-        /// <param name='settings'>
-        /// The diagnostics setting information new values.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse Update(this IRepositoryOperations operations, IDictionary<string, string> settings)
-        {
-            try
-            {
-                return operations.UpdateAsync(settings).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Update diagnostics settings.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.WebSitesExtensions.IRepositoryOperations.
-        /// </param>
-        /// <param name='settings'>
-        /// The diagnostics setting information new values.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IRepositoryOperations operations, IDictionary<string, string> settings)
-        {
-            return operations.UpdateAsync(settings, CancellationToken.None);
         }
     }
 }

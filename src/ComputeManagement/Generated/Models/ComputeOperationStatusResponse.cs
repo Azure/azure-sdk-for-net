@@ -75,12 +75,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._id = value; }
         }
         
-        private OperationStatus _status;
+        private ComputeOperationStatus _status;
         
         /// <summary>
         /// The status of the asynchronous request.
         /// </summary>
-        public OperationStatus Status
+        public ComputeOperationStatus Status
         {
             get { return this._status; }
             set { this._status = value; }

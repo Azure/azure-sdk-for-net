@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Net;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.Storage.Models;
+using Microsoft.WindowsAzure.Management.Models;
 
-namespace Microsoft.WindowsAzure.Management.Storage.Models
+namespace Microsoft.WindowsAzure.Management.Models
 {
     /// <summary>
     /// The response body contains the status of the specified asynchronous
@@ -37,16 +37,16 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// failed, the response body includes the HTTP status code for the failed
     /// request, and also includes error information regarding the failure.
     /// </summary>
-    public partial class StorageOperationStatusResponse : OperationResponse
+    public partial class ManagementOperationStatusResponse : OperationResponse
     {
-        private StorageOperationStatusResponse.ErrorDetails _error;
+        private ManagementOperationStatusResponse.ErrorDetails _error;
         
         /// <summary>
         /// If the asynchronous operation failed, the response body includes
         /// the HTTP status code for the failed request, and also includes
         /// error information regarding the failure.
         /// </summary>
-        public StorageOperationStatusResponse.ErrorDetails Error
+        public ManagementOperationStatusResponse.ErrorDetails Error
         {
             get { return this._error; }
             set { this._error = value; }
@@ -75,22 +75,22 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._id = value; }
         }
         
-        private StorageOperationStatus _status;
+        private ManagementOperationStatus _status;
         
         /// <summary>
         /// The status of the asynchronous request.
         /// </summary>
-        public StorageOperationStatus Status
+        public ManagementOperationStatus Status
         {
             get { return this._status; }
             set { this._status = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the StorageOperationStatusResponse
+        /// Initializes a new instance of the ManagementOperationStatusResponse
         /// class.
         /// </summary>
-        public StorageOperationStatusResponse()
+        public ManagementOperationStatusResponse()
         {
         }
         

@@ -156,7 +156,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                 accountCreationRequestElement.Add(accountNameElement);
                 
                 XElement blobStorageEndpointUriElement = new XElement(XName.Get("BlobStorageEndpointUri", "http://schemas.datacontract.org/2004/07/Microsoft.Cloud.Media.Management.ResourceProvider.Models"));
-                blobStorageEndpointUriElement.Value = parameters.BlobStorageEndpointUri.ToString();
+                blobStorageEndpointUriElement.Value = parameters.BlobStorageEndpointUri.AbsoluteUri;
                 accountCreationRequestElement.Add(blobStorageEndpointUriElement);
                 
                 XElement regionElement = new XElement(XName.Get("Region", "http://schemas.datacontract.org/2004/07/Microsoft.Cloud.Media.Management.ResourceProvider.Models"));
@@ -330,7 +330,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -440,7 +440,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -603,7 +603,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -776,7 +776,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName + "/AccountKeys/" + keyType + "/Regenerate";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName + "/AccountKeys/" + keyType + "/Regenerate";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

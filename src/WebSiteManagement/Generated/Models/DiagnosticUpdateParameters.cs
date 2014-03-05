@@ -26,9 +26,9 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The settings update operation response.
+    /// The diagnostic settings update operation response.
     /// </summary>
-    public partial class SettingsUpdateParameters
+    public partial class DiagnosticUpdateParameters
     {
         private IDictionary<string, string> _settings;
         
@@ -42,9 +42,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the SettingsUpdateParameters class.
+        /// Initializes a new instance of the DiagnosticUpdateParameters class.
         /// </summary>
-        public SettingsUpdateParameters()
+        public DiagnosticUpdateParameters()
         {
             this._settings = new Dictionary<string, string>();
         }

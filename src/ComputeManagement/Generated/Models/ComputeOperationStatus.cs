@@ -20,33 +20,28 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
+namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The settings update operation response.
+    /// The status of the asynchronous request.
     /// </summary>
-    public partial class SettingsUpdateParameters
+    public enum ComputeOperationStatus
     {
-        private IDictionary<string, string> _settings;
+        /// <summary>
+        /// The asynchronous request is in progress.
+        /// </summary>
+        InProgress = 0,
         
         /// <summary>
-        /// The setting values.
+        /// The asynchronous request succeeded.
         /// </summary>
-        public IDictionary<string, string> Settings
-        {
-            get { return this._settings; }
-            set { this._settings = value; }
-        }
+        Succeeded = 1,
         
         /// <summary>
-        /// Initializes a new instance of the SettingsUpdateParameters class.
+        /// The asynchronous request failed.
         /// </summary>
-        public SettingsUpdateParameters()
-        {
-            this._settings = new Dictionary<string, string>();
-        }
+        Failed = 2,
     }
 }

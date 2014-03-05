@@ -21,79 +21,75 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions;
+using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure.WebSitesExtensions
+namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The websites extensions client manages the web sites deployments, web
-    /// jobs and other extensions.
+    /// Describes a deployment log.
     /// </summary>
-    public partial interface IWebSiteExtensionsClient : IDisposable
+    public partial class DeploymentLog
     {
+        private string _detailsUrl;
+        
         /// <summary>
-        /// The URI used as the base for all kudu requests.
+        /// The details URL.
         /// </summary>
-        Uri BaseUri
+        public string DetailsUrl
         {
-            get; 
+            get { return this._detailsUrl; }
+            set { this._detailsUrl = value; }
+        }
+        
+        private string _id;
+        
+        /// <summary>
+        /// The identifier.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private DateTime _logTime;
+        
+        /// <summary>
+        /// The log time stamp.
+        /// </summary>
+        public DateTime LogTime
+        {
+            get { return this._logTime; }
+            set { this._logTime = value; }
+        }
+        
+        private string _message;
+        
+        /// <summary>
+        /// The deployment message.
+        /// </summary>
+        public string Message
+        {
+            get { return this._message; }
+            set { this._message = value; }
+        }
+        
+        private LogEntryType _type;
+        
+        /// <summary>
+        /// The type.
+        /// </summary>
+        public LogEntryType Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// TBD.
+        /// Initializes a new instance of the DeploymentLog class.
         /// </summary>
-        BasicAuthenticationCloudCredentials Credentials
+        public DeploymentLog()
         {
-            get; 
-        }
-        
-        /// <summary>
-        /// The site name.
-        /// </summary>
-        string SiteName
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing the repositories.
-        /// </summary>
-        IDeploymentOperations Deployments
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing the diagnostics settings.
-        /// </summary>
-        IDiagnosticOperations Diagnostics
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing the repository.
-        /// </summary>
-        IRepositoryOperations Repository
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing the settings.
-        /// </summary>
-        ISettingsOperations Settings
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing the jobs.
-        /// </summary>
-        IWebJobOperations WebJobs
-        {
-            get; 
         }
     }
 }

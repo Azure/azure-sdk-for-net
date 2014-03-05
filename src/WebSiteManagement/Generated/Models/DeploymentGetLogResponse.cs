@@ -21,27 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure.Management.Store.Models
+namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The status of the asynchronous request.
+    /// The get log for a deployments operation response.
     /// </summary>
-    public enum OperationStatus
+    public partial class DeploymentGetLogResponse : OperationResponse
     {
-        /// <summary>
-        /// The asynchronous request is in progress.
-        /// </summary>
-        InProgress = 0,
+        private DeploymentLog _log;
         
         /// <summary>
-        /// The asynchronous request succeeded.
+        /// The deployment log information.
         /// </summary>
-        Succeeded = 1,
+        public DeploymentLog Log
+        {
+            get { return this._log; }
+            set { this._log = value; }
+        }
         
         /// <summary>
-        /// The asynchronous request failed.
+        /// Initializes a new instance of the DeploymentGetLogResponse class.
         /// </summary>
-        Failed = 2,
+        public DeploymentGetLogResponse()
+        {
+        }
     }
 }

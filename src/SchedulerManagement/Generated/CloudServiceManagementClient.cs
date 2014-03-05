@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/EntitleResource";
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/EntitleResource";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -329,7 +329,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/operations/" + requestId;
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/operations/" + requestId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
