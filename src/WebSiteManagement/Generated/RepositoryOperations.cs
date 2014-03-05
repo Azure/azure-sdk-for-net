@@ -85,8 +85,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/scm").AbsoluteUri + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/scm").AbsoluteUri;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

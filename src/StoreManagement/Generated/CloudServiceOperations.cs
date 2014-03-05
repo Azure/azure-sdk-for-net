@@ -267,14 +267,14 @@ namespace Microsoft.WindowsAzure.Management.Store
                 
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse response = await client.CloudServices.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
+                if (response.Status == StoreOperationStatus.Succeeded)
                 {
                     return response;
                 }
                 cancellationToken.ThrowIfCancellationRequested();
                 AddOnOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != StoreOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != StoreOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {

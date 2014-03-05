@@ -75,12 +75,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
             set { this._id = value; }
         }
         
-        private OperationStatus _status;
+        private ServiceBusOperationStatus _status;
         
         /// <summary>
         /// The status of the asynchronous request.
         /// </summary>
-        public OperationStatus Status
+        public ServiceBusOperationStatus Status
         {
             get { return this._status; }
             set { this._status = value; }
