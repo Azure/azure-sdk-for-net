@@ -359,7 +359,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null)
                         {
-                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, false);
+                            ComputeOperationStatus statusInstance = (ComputeOperationStatus)Enum.Parse(typeof(ComputeOperationStatus), statusElement.Value, false);
                             result.Status = statusInstance;
                         }
                         

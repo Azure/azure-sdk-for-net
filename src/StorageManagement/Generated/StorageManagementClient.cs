@@ -261,7 +261,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null)
                         {
-                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, false);
+                            StorageOperationStatus statusInstance = (StorageOperationStatus)Enum.Parse(typeof(StorageOperationStatus), statusElement.Value, false);
                             result.Status = statusInstance;
                         }
                         

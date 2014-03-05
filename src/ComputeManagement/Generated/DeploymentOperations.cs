@@ -3141,7 +3141,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3155,7 +3155,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -3251,7 +3251,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3265,7 +3265,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -3360,7 +3360,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3374,7 +3374,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -3469,7 +3469,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3483,7 +3483,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -3573,7 +3573,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -3587,7 +3587,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -6414,7 +6414,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6428,7 +6428,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -6523,7 +6523,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6537,7 +6537,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -6632,7 +6632,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6646,7 +6646,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -6741,7 +6741,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6755,7 +6755,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -7148,7 +7148,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7162,7 +7162,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -7257,7 +7257,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7271,7 +7271,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -7366,7 +7366,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7380,7 +7380,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -7497,7 +7497,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7511,7 +7511,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -7628,7 +7628,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7642,7 +7642,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -7759,7 +7759,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7773,7 +7773,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -7890,7 +7890,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != ComputeOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -7904,7 +7904,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != ComputeOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {

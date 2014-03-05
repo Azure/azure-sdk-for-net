@@ -94,8 +94,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/deployments/").AbsoluteUri + deploymentId + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -353,8 +352,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/deployments/").AbsoluteUri + deploymentId + "/log/" + deploymentLogId + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId + "/log/" + deploymentLogId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -502,8 +500,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/deployments/").AbsoluteUri + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri;
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -772,8 +769,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/deployments/").AbsoluteUri + deploymentId + "/log?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId + "/log";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -940,8 +936,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/deployments/").AbsoluteUri + deploymentId + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

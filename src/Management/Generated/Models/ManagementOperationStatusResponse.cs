@@ -37,16 +37,16 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// failed, the response body includes the HTTP status code for the failed
     /// request, and also includes error information regarding the failure.
     /// </summary>
-    public partial class OperationStatusResponse : OperationResponse
+    public partial class ManagementOperationStatusResponse : OperationResponse
     {
-        private OperationStatusResponse.ErrorDetails _error;
+        private ManagementOperationStatusResponse.ErrorDetails _error;
         
         /// <summary>
         /// If the asynchronous operation failed, the response body includes
         /// the HTTP status code for the failed request, and also includes
         /// error information regarding the failure.
         /// </summary>
-        public OperationStatusResponse.ErrorDetails Error
+        public ManagementOperationStatusResponse.ErrorDetails Error
         {
             get { return this._error; }
             set { this._error = value; }
@@ -75,21 +75,22 @@ namespace Microsoft.WindowsAzure.Management.Models
             set { this._id = value; }
         }
         
-        private OperationStatus _status;
+        private ManagementOperationStatus _status;
         
         /// <summary>
         /// The status of the asynchronous request.
         /// </summary>
-        public OperationStatus Status
+        public ManagementOperationStatus Status
         {
             get { return this._status; }
             set { this._status = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the OperationStatusResponse class.
+        /// Initializes a new instance of the ManagementOperationStatusResponse
+        /// class.
         /// </summary>
-        public OperationStatusResponse()
+        public ManagementOperationStatusResponse()
         {
         }
         

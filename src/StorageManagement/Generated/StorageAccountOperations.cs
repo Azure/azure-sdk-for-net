@@ -478,7 +478,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 cancellationToken.ThrowIfCancellationRequested();
                 StorageOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != OperationStatus.InProgress) == false)
+                while ((result.Status != StorageOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -492,7 +492,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != OperationStatus.Succeeded)
+                if (result.Status != StorageOperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {

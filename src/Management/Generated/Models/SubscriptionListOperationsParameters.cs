@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             set { this._objectIdFilter = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.Models.OperationStatus? _operationStatus;
+        private Microsoft.WindowsAzure.Management.Models.ManagementOperationStatus? _operationStatus;
         
         /// <summary>
         /// Optional. Returns subscription operations only for thespecified
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// operations for an object with a specific resultstatus. If no
         /// result status is specified, a filter is not applied.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.Models.OperationStatus? OperationStatus
+        public Microsoft.WindowsAzure.Management.Models.ManagementOperationStatus? OperationStatus
         {
             get { return this._operationStatus; }
             set { this._operationStatus = value; }

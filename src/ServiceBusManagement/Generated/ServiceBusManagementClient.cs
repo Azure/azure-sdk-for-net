@@ -305,7 +305,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null)
                         {
-                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, false);
+                            ServiceBusOperationStatus statusInstance = (ServiceBusOperationStatus)Enum.Parse(typeof(ServiceBusOperationStatus), statusElement.Value, false);
                             result.Status = statusInstance;
                         }
                         

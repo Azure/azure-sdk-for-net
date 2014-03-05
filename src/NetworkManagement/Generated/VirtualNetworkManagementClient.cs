@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null)
                         {
-                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, false);
+                            NetworkOperationStatus statusInstance = (NetworkOperationStatus)Enum.Parse(typeof(NetworkOperationStatus), statusElement.Value, false);
                             result.Status = statusInstance;
                         }
                         

@@ -89,15 +89,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/diagnostics/settings/").AbsoluteUri + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/diagnostics/settings/").AbsoluteUri;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
@@ -216,8 +215,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/diagnostics/settings/").AbsoluteUri + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/diagnostics/settings/").AbsoluteUri;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

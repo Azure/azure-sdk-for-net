@@ -142,6 +142,6 @@ namespace Microsoft.WindowsAzure.Management
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken);
+        Task<ManagementOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken);
     }
 }
