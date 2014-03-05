@@ -57,7 +57,6 @@
     <Compile Include="Generated\Models\NetworkReservedIPListResponse.cs" />
     <Compile Include="Generated\Models\NetworkSetConfigurationParameters.cs" />
     <Compile Include="Generated\Models\NetworkStaticIPAvailabilityResponse.cs" />
-    <Compile Include="Generated\Models\OperationStatus.cs" />
     <Compile Include="Generated\Models\ReservedIPState.cs" />
     <Compile Include="Generated\Models\VirtualNetworkOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\VirtualNetworkState.cs" />

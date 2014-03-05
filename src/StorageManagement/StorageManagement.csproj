@@ -20,7 +20,6 @@
     <Compile Include="Generated\Models\CheckNameAvailabilityResponse.cs" />
     <Compile Include="Generated\Models\GeoRegionNames.cs" />
     <Compile Include="Generated\Models\GeoRegionStatus.cs" />
-    <Compile Include="Generated\Models\OperationStatus.cs" />
     <Compile Include="Generated\Models\StorageAccount.cs" />
     <Compile Include="Generated\Models\StorageAccountCreateParameters.cs" />
     <Compile Include="Generated\Models\StorageAccountGetKeysResponse.cs" />

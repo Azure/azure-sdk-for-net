@@ -27,7 +27,6 @@
     <Compile Include="Generated\Models\AddOnUpdateParameters.cs" />
     <Compile Include="Generated\Models\CloudServiceCreateParameters.cs" />
     <Compile Include="Generated\Models\CloudServiceListResponse.cs" />
-    <Compile Include="Generated\Models\OperationStatus.cs" />
     <Compile Include="Generated\Models\StoreOperationStatus.cs" />
     <Compile Include="Generated\StoreManagementClient.cs" />
     <Compile Include="Generated\StoreManagementClientExtensions.cs" />

@@ -81,7 +81,6 @@
     <Compile Include="Generated\Models\OperatingSystemFamilies.cs" />
     <Compile Include="Generated\Models\OperatingSystemListFamiliesResponse.cs" />
     <Compile Include="Generated\Models\OperatingSystemListResponse.cs" />
-    <Compile Include="Generated\Models\OperationStatus.cs" />
     <Compile Include="Generated\Models\OSVirtualHardDisk.cs" />
     <Compile Include="Generated\Models\PersistentVMDowntime.cs" />
     <Compile Include="Generated\Models\PostCaptureAction.cs" />

@@ -25,7 +25,6 @@
     <Compile Include="Generated\Models\CheckNamespaceAvailabilityResponse.cs" />
     <Compile Include="Generated\Models\CountDetails.cs" />
     <Compile Include="Generated\Models\NamespaceDescription.cs" />
-    <Compile Include="Generated\Models\OperationStatus.cs" />
     <Compile Include="Generated\Models\ServiceBusAuthorizationRuleResponse.cs" />
     <Compile Include="Generated\Models\ServiceBusAuthorizationRulesResponse.cs" />
     <Compile Include="Generated\Models\ServiceBusConnectionDetail.cs" />
