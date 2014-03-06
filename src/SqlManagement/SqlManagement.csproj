@@ -125,4 +125,7 @@
   <Target Name="CopyMicrosoftWindowsAzureManagementSqlSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Sql.Specification.1.0.5177.11021-prerelease\tools\Microsoft.WindowsAzure.Management.Sql.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementSqlSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Sql.Specification.1.0.5178.8561-prerelease\tools\Microsoft.WindowsAzure.Management.Sql.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

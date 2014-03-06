@@ -118,4 +118,7 @@
   <Target Name="CopyMicrosoftWindowsAzureManagementExpressRouteSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.ExpressRoute.Specification.1.0.5177.11003-prerelease\tools\Microsoft.WindowsAzure.Management.ExpressRoute.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementExpressRouteSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.ExpressRoute.Specification.1.0.5178.8539-prerelease\tools\Microsoft.WindowsAzure.Management.ExpressRoute.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

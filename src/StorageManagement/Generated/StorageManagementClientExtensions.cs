@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Storage;
-using Microsoft.WindowsAzure.Management.Storage.Models;
 
 namespace Microsoft.WindowsAzure
 {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static StorageOperationStatusResponse GetOperationStatus(this IStorageManagementClient operations, string requestId)
+        public static OperationStatusResponse GetOperationStatus(this IStorageManagementClient operations, string requestId)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<StorageOperationStatusResponse> GetOperationStatusAsync(this IStorageManagementClient operations, string requestId)
+        public static Task<OperationStatusResponse> GetOperationStatusAsync(this IStorageManagementClient operations, string requestId)
         {
             return operations.GetOperationStatusAsync(requestId, CancellationToken.None);
         }

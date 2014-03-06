@@ -704,7 +704,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> DeleteDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -730,9 +730,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachineDisks.BeginDeletingDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, deleteFromStorage, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -746,7 +746,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {

@@ -618,7 +618,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> ChangeConfigurationByNameAsync(string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> ChangeConfigurationByNameAsync(string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Change Deployment Configuration operation initiates a change to
@@ -655,7 +655,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> ChangeConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> ChangeConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Deployment operation uploads a new service package and
@@ -691,7 +691,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> CreateAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> CreateAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Deployment operation deletes the specified deployment.
@@ -727,7 +727,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> DeleteByNameAsync(string serviceName, string deploymentName, bool deleteFromStorage, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> DeleteByNameAsync(string serviceName, string deploymentName, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Deployment operation deletes the specified deployment.
@@ -759,7 +759,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> DeleteBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> DeleteBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Deployment operation returns configuration information,
@@ -895,7 +895,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> RebootRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> RebootRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Reboot Role Instance operation requests a reboot of a role
@@ -931,7 +931,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> RebootRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> RebootRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Reimage Role Instance operation requests a reimage of a role
@@ -967,7 +967,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> ReimageRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> ReimageRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Reimage Role Instance operation requests a reimage of a role
@@ -1003,7 +1003,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> ReimageRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> ReimageRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Rollback Update Or Upgrade operation cancels an in-progress
@@ -1096,7 +1096,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> SwapAsync(string serviceName, DeploymentSwapParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> SwapAsync(string serviceName, DeploymentSwapParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Update Deployment Status operation initiates a change in the
@@ -1132,7 +1132,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> UpdateStatusByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> UpdateStatusByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Update Deployment Status operation initiates a change in the
@@ -1168,7 +1168,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> UpdateStatusByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> UpdateStatusByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Upgrade Deployment operation initiates an update of role
@@ -1226,7 +1226,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> UpgradeByNameAsync(string serviceName, string deploymentName, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> UpgradeByNameAsync(string serviceName, string deploymentName, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Upgrade Deployment operation initiates an update of role
@@ -1284,7 +1284,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> UpgradeBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> UpgradeBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Walk Upgrade Domain operation specifies an update domain in
@@ -1342,7 +1342,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> WalkUpgradeDomainByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> WalkUpgradeDomainByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Walk Upgrade Domain operation specifies an update domain in
@@ -1400,6 +1400,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> WalkUpgradeDomainByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> WalkUpgradeDomainByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken);
     }
 }

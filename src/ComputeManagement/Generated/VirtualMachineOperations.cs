@@ -4534,7 +4534,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> CaptureAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> CaptureAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4559,9 +4559,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginCapturingAsync(serviceName, deploymentName, virtualMachineName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4575,7 +4575,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -4650,7 +4650,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> CreateAsync(string serviceName, string deploymentName, VirtualMachineCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(string serviceName, string deploymentName, VirtualMachineCreateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4674,9 +4674,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginCreatingAsync(serviceName, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4690,7 +4690,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -4758,7 +4758,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> CreateDeploymentAsync(string serviceName, VirtualMachineCreateDeploymentParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateDeploymentAsync(string serviceName, VirtualMachineCreateDeploymentParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4781,9 +4781,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginCreatingDeploymentAsync(serviceName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4797,7 +4797,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -4865,7 +4865,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> DeleteAsync(string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4890,9 +4890,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginDeletingAsync(serviceName, deploymentName, virtualMachineName, deleteFromStorage, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -4906,7 +4906,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -5807,7 +5807,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> RestartAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> RestartAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -5831,9 +5831,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginRestartingAsync(serviceName, deploymentName, virtualMachineName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5847,7 +5847,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -5914,7 +5914,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> ShutdownAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> ShutdownAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -5939,9 +5939,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginShutdownAsync(serviceName, deploymentName, virtualMachineName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -5955,7 +5955,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -6018,7 +6018,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> ShutdownRolesAsync(string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> ShutdownRolesAsync(string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6042,9 +6042,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginShuttingDownRolesAsync(serviceName, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6058,7 +6058,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -6121,7 +6121,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> StartAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> StartAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6145,9 +6145,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginStartingAsync(serviceName, deploymentName, virtualMachineName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6161,7 +6161,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -6223,7 +6223,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> StartRolesAsync(string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> StartRolesAsync(string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6247,9 +6247,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginStartingRolesAsync(serviceName, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6263,7 +6263,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -6330,7 +6330,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> UpdateAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> UpdateAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6355,9 +6355,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginUpdatingAsync(serviceName, deploymentName, virtualMachineName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6371,7 +6371,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {
@@ -6436,7 +6436,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ComputeOperationStatusResponse> UpdateLoadBalancedEndpointSetAsync(string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> UpdateLoadBalancedEndpointSetAsync(string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6460,9 +6460,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.VirtualMachines.BeginUpdatingLoadBalancedEndpointSetAsync(serviceName, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ComputeOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != ComputeOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -6476,7 +6476,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != ComputeOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {

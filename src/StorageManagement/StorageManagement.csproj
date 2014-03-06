@@ -31,8 +31,6 @@
     <Compile Include="Generated\Models\StorageAccountStatus.cs" />
     <Compile Include="Generated\Models\StorageAccountUpdateParameters.cs" />
     <Compile Include="Generated\Models\StorageKeyType.cs" />
-    <Compile Include="Generated\Models\StorageOperationStatus.cs" />
-    <Compile Include="Generated\Models\StorageOperationStatusResponse.cs" />
     <Compile Include="Generated\StorageAccountOperations.cs" />
     <Compile Include="Generated\StorageAccountOperationsExtensions.cs" />
     <Compile Include="Generated\StorageManagementClient.cs" />
@@ -110,5 +108,11 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementStorageSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Storage.Specification.1.0.5177.11022-prerelease\tools\Microsoft.WindowsAzure.Management.Storage.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementStorageSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Storage.Specification.1.0.5178.8561-prerelease\tools\Microsoft.WindowsAzure.Management.Storage.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementStorageSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Storage.Specification.1.0.5178.9499-prerelease\tools\Microsoft.WindowsAzure.Management.Storage.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>

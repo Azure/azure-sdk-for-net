@@ -23,11 +23,9 @@
     <Compile Include="Generated\ICloudServiceOperations.cs" />
     <Compile Include="Generated\IStoreManagementClient.cs" />
     <Compile Include="Generated\Models\AddOnCreateParameters.cs" />
-    <Compile Include="Generated\Models\AddOnOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\AddOnUpdateParameters.cs" />
     <Compile Include="Generated\Models\CloudServiceCreateParameters.cs" />
     <Compile Include="Generated\Models\CloudServiceListResponse.cs" />
-    <Compile Include="Generated\Models\StoreOperationStatus.cs" />
     <Compile Include="Generated\StoreManagementClient.cs" />
     <Compile Include="Generated\StoreManagementClientExtensions.cs" />
     <Compile Include="Store.Customizations.cs" />
@@ -104,5 +102,8 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementStoreSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Store.Specification.1.0.5177.11023-prerelease\tools\Microsoft.WindowsAzure.Management.Store.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementStoreSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Store.Specification.1.0.5178.8563-prerelease\tools\Microsoft.WindowsAzure.Management.Store.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>

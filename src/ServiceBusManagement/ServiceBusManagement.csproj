@@ -37,8 +37,6 @@
     <Compile Include="Generated\Models\ServiceBusNotificationHub.cs" />
     <Compile Include="Generated\Models\ServiceBusNotificationHubResponse.cs" />
     <Compile Include="Generated\Models\ServiceBusNotificationHubsResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusOperationStatus.cs" />
-    <Compile Include="Generated\Models\ServiceBusOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\ServiceBusQueue.cs" />
     <Compile Include="Generated\Models\ServiceBusQueueCreateParameters.cs" />
     <Compile Include="Generated\Models\ServiceBusQueueResponse.cs" />
@@ -131,5 +129,8 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementServiceBusSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.ServiceBus.Specification.1.0.5177.11015-prerelease\tools\Microsoft.WindowsAzure.Management.ServiceBus.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementServiceBusSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.ServiceBus.Specification.1.0.5178.8555-prerelease\tools\Microsoft.WindowsAzure.Management.ServiceBus.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>

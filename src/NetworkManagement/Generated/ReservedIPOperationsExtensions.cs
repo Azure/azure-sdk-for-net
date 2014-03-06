@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static VirtualNetworkOperationStatusResponse BeginCreating(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        public static OperationStatusResponse BeginCreating(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<VirtualNetworkOperationStatusResponse> BeginCreatingAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        public static Task<OperationStatusResponse> BeginCreatingAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(parameters, CancellationToken.None);
         }
@@ -181,7 +181,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static VirtualNetworkOperationStatusResponse Create(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        public static OperationStatusResponse Create(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
         {
             try
             {
@@ -222,7 +222,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<VirtualNetworkOperationStatusResponse> CreateAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        public static Task<OperationStatusResponse> CreateAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
         {
             return operations.CreateAsync(parameters, CancellationToken.None);
         }
@@ -249,7 +249,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static VirtualNetworkOperationStatusResponse Delete(this IReservedIPOperations operations, string ipName)
+        public static OperationStatusResponse Delete(this IReservedIPOperations operations, string ipName)
         {
             try
             {
@@ -290,7 +290,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<VirtualNetworkOperationStatusResponse> DeleteAsync(this IReservedIPOperations operations, string ipName)
+        public static Task<OperationStatusResponse> DeleteAsync(this IReservedIPOperations operations, string ipName)
         {
             return operations.DeleteAsync(ipName, CancellationToken.None);
         }

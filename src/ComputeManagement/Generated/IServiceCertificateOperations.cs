@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> CreateAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> CreateAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Service Certificate operation deletes a service
@@ -138,7 +138,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> DeleteAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> DeleteAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Service Certificate operation returns the public data for

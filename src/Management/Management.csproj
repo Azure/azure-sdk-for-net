@@ -48,8 +48,6 @@
     <Compile Include="Generated\Models\ManagementCertificateCreateParameters.cs" />
     <Compile Include="Generated\Models\ManagementCertificateGetResponse.cs" />
     <Compile Include="Generated\Models\ManagementCertificateListResponse.cs" />
-    <Compile Include="Generated\Models\ManagementOperationStatus.cs" />
-    <Compile Include="Generated\Models\ManagementOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\RoleSizeListResponse.cs" />
     <Compile Include="Generated\Models\SubscriptionGetResponse.cs" />
     <Compile Include="Generated\Models\SubscriptionListOperationsParameters.cs" />
@@ -159,5 +157,11 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Specification.1.0.5177.11884-prerelease\tools\Microsoft.WindowsAzure.Management.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Specification.1.0.5178.8541-prerelease\tools\Microsoft.WindowsAzure.Management.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureSubscriptionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Subscriptions.Specification.1.0.5178.8564-prerelease\tools\Microsoft.WindowsAzure.Subscriptions.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>

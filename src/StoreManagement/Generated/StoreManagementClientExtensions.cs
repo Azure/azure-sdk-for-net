@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Store;
-using Microsoft.WindowsAzure.Management.Store.Models;
 
 namespace Microsoft.WindowsAzure
 {
@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static AddOnOperationStatusResponse GetOperationStatus(this IStoreManagementClient operations, string requestId)
+        public static OperationStatusResponse GetOperationStatus(this IStoreManagementClient operations, string requestId)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<AddOnOperationStatusResponse> GetOperationStatusAsync(this IStoreManagementClient operations, string requestId)
+        public static Task<OperationStatusResponse> GetOperationStatusAsync(this IStoreManagementClient operations, string requestId)
         {
             return operations.GetOperationStatusAsync(requestId, CancellationToken.None);
         }

@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
@@ -63,7 +64,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ServiceBusOperationStatusResponse GetOperationStatus(this IServiceBusManagementClient operations, string requestId)
+        public static OperationStatusResponse GetOperationStatus(this IServiceBusManagementClient operations, string requestId)
         {
             try
             {
@@ -109,7 +110,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ServiceBusOperationStatusResponse> GetOperationStatusAsync(this IServiceBusManagementClient operations, string requestId)
+        public static Task<OperationStatusResponse> GetOperationStatusAsync(this IServiceBusManagementClient operations, string requestId)
         {
             return operations.GetOperationStatusAsync(requestId, CancellationToken.None);
         }
