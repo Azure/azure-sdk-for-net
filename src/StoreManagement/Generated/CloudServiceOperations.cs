@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.AddOnOperationStatusResponse> BeginCreatingAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginCreatingAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -194,8 +194,8 @@ namespace Microsoft.WindowsAzure.Management.Store
                     }
                     
                     // Create Result
-                    AddOnOperationStatusResponse result = null;
-                    result = new AddOnOperationStatusResponse();
+                    OperationStatusResponse result = null;
+                    result = new OperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -246,7 +246,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.AddOnOperationStatusResponse> CreateAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
         {
             StoreManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -266,15 +266,15 @@ namespace Microsoft.WindowsAzure.Management.Store
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                AddOnOperationStatusResponse response = await client.CloudServices.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == StoreOperationStatus.Succeeded)
+                OperationStatusResponse response = await client.CloudServices.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
+                if (response.Status == OperationStatus.Succeeded)
                 {
                     return response;
                 }
                 cancellationToken.ThrowIfCancellationRequested();
-                AddOnOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != StoreOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != StoreOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {

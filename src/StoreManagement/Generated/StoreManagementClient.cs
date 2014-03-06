@@ -31,7 +31,6 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Store;
-using Microsoft.WindowsAzure.Management.Store.Models;
 
 namespace Microsoft.WindowsAzure.Management.Store
 {
@@ -183,7 +182,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Store.Models.AddOnOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)
@@ -247,11 +246,11 @@ namespace Microsoft.WindowsAzure.Management.Store
                     }
                     
                     // Create Result
-                    AddOnOperationStatusResponse result = null;
+                    OperationStatusResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new AddOnOperationStatusResponse();
+                    result = new OperationStatusResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
@@ -267,7 +266,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null)
                         {
-                            StoreOperationStatus statusInstance = (StoreOperationStatus)Enum.Parse(typeof(StoreOperationStatus), statusElement.Value, false);
+                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, false);
                             result.Status = statusInstance;
                         }
                         
@@ -281,7 +280,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                         XElement errorElement = operationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
                         if (errorElement != null)
                         {
-                            AddOnOperationStatusResponse.ErrorDetails errorInstance = new AddOnOperationStatusResponse.ErrorDetails();
+                            OperationStatusResponse.ErrorDetails errorInstance = new OperationStatusResponse.ErrorDetails();
                             result.Error = errorInstance;
                             
                             XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));

@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Network;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure
 {
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static VirtualNetworkOperationStatusResponse GetOperationStatus(this IVirtualNetworkManagementClient operations, string requestId)
+        public static OperationStatusResponse GetOperationStatus(this IVirtualNetworkManagementClient operations, string requestId)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<VirtualNetworkOperationStatusResponse> GetOperationStatusAsync(this IVirtualNetworkManagementClient operations, string requestId)
+        public static Task<OperationStatusResponse> GetOperationStatusAsync(this IVirtualNetworkManagementClient operations, string requestId)
         {
             return operations.GetOperationStatusAsync(requestId, CancellationToken.None);
         }

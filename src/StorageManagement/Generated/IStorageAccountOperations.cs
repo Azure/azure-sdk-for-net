@@ -94,7 +94,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<StorageOperationStatusResponse> CreateAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> CreateAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Storage Account operation deletes the specifiedstorage

@@ -1521,7 +1521,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse ChangeConfigurationByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
+        public static OperationStatusResponse ChangeConfigurationByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
         {
             try
             {
@@ -1576,7 +1576,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> ChangeConfigurationByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
+        public static Task<OperationStatusResponse> ChangeConfigurationByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
         {
             return operations.ChangeConfigurationByNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -1617,7 +1617,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse ChangeConfigurationBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
+        public static OperationStatusResponse ChangeConfigurationBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
             try
             {
@@ -1672,7 +1672,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> ChangeConfigurationBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
+        public static Task<OperationStatusResponse> ChangeConfigurationBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
             return operations.ChangeConfigurationBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -1712,7 +1712,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Create(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
+        public static OperationStatusResponse Create(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
         {
             try
             {
@@ -1766,7 +1766,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> CreateAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
+        public static Task<OperationStatusResponse> CreateAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
         {
             return operations.CreateAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -1806,7 +1806,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse DeleteByName(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
+        public static OperationStatusResponse DeleteByName(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
         {
             try
             {
@@ -1860,7 +1860,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> DeleteByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
+        public static Task<OperationStatusResponse> DeleteByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
         {
             return operations.DeleteByNameAsync(serviceName, deploymentName, deleteFromStorage, CancellationToken.None);
         }
@@ -1896,7 +1896,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse DeleteBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
+        public static OperationStatusResponse DeleteBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
             try
             {
@@ -1946,7 +1946,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> DeleteBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
+        public static Task<OperationStatusResponse> DeleteBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
             return operations.DeleteBySlotAsync(serviceName, deploymentSlot, CancellationToken.None);
         }
@@ -2274,7 +2274,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse RebootRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
+        public static OperationStatusResponse RebootRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
             try
             {
@@ -2328,7 +2328,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> RebootRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
+        public static Task<OperationStatusResponse> RebootRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
             return operations.RebootRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, CancellationToken.None);
         }
@@ -2368,7 +2368,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse RebootRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
+        public static OperationStatusResponse RebootRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
             try
             {
@@ -2422,7 +2422,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> RebootRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
+        public static Task<OperationStatusResponse> RebootRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
             return operations.RebootRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, CancellationToken.None);
         }
@@ -2462,7 +2462,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse ReimageRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
+        public static OperationStatusResponse ReimageRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
             try
             {
@@ -2516,7 +2516,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> ReimageRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
+        public static Task<OperationStatusResponse> ReimageRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
             return operations.ReimageRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, CancellationToken.None);
         }
@@ -2556,7 +2556,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse ReimageRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
+        public static OperationStatusResponse ReimageRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
             try
             {
@@ -2610,7 +2610,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> ReimageRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
+        public static Task<OperationStatusResponse> ReimageRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
             return operations.ReimageRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, CancellationToken.None);
         }
@@ -2811,7 +2811,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Swap(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
+        public static OperationStatusResponse Swap(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
         {
             try
             {
@@ -2862,7 +2862,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> SwapAsync(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
+        public static Task<OperationStatusResponse> SwapAsync(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
         {
             return operations.SwapAsync(serviceName, parameters, CancellationToken.None);
         }
@@ -2902,7 +2902,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse UpdateStatusByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
+        public static OperationStatusResponse UpdateStatusByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
         {
             try
             {
@@ -2956,7 +2956,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> UpdateStatusByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
+        public static Task<OperationStatusResponse> UpdateStatusByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
         {
             return operations.UpdateStatusByDeploymentNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -2996,7 +2996,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse UpdateStatusByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
+        public static OperationStatusResponse UpdateStatusByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
         {
             try
             {
@@ -3050,7 +3050,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> UpdateStatusByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
+        public static Task<OperationStatusResponse> UpdateStatusByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
         {
             return operations.UpdateStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -3112,7 +3112,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse UpgradeByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
+        public static OperationStatusResponse UpgradeByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
         {
             try
             {
@@ -3188,7 +3188,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> UpgradeByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
+        public static Task<OperationStatusResponse> UpgradeByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
         {
             return operations.UpgradeByNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -3250,7 +3250,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse UpgradeBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
+        public static OperationStatusResponse UpgradeBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
             try
             {
@@ -3326,7 +3326,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> UpgradeBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
+        public static Task<OperationStatusResponse> UpgradeBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
             return operations.UpgradeBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -3388,7 +3388,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse WalkUpgradeDomainByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
+        public static OperationStatusResponse WalkUpgradeDomainByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
         {
             try
             {
@@ -3464,7 +3464,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> WalkUpgradeDomainByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
+        public static Task<OperationStatusResponse> WalkUpgradeDomainByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
         {
             return operations.WalkUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -3526,7 +3526,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse WalkUpgradeDomainByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
+        public static OperationStatusResponse WalkUpgradeDomainByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
         {
             try
             {
@@ -3602,7 +3602,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> WalkUpgradeDomainByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
+        public static Task<OperationStatusResponse> WalkUpgradeDomainByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
         {
             return operations.WalkUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
