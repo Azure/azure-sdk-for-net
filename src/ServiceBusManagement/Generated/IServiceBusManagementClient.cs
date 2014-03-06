@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ServiceBusOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Retrieves the list of regions that support the creation and

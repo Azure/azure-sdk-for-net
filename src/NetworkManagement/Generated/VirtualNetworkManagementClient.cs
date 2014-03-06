@@ -204,7 +204,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.VirtualNetworkOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)
@@ -268,11 +268,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    VirtualNetworkOperationStatusResponse result = null;
+                    OperationStatusResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualNetworkOperationStatusResponse();
+                    result = new OperationStatusResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null)
                         {
-                            NetworkOperationStatus statusInstance = (NetworkOperationStatus)Enum.Parse(typeof(NetworkOperationStatus), statusElement.Value, false);
+                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, false);
                             result.Status = statusInstance;
                         }
                         
@@ -302,7 +302,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement errorElement = operationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
                         if (errorElement != null)
                         {
-                            VirtualNetworkOperationStatusResponse.ErrorDetails errorInstance = new VirtualNetworkOperationStatusResponse.ErrorDetails();
+                            OperationStatusResponse.ErrorDetails errorInstance = new OperationStatusResponse.ErrorDetails();
                             result.Error = errorInstance;
                             
                             XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));

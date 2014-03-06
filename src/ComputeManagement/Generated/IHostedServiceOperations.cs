@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> AddExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> AddExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Add Extension operation adds an available extension to your
@@ -209,7 +209,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> DeleteAllAsync(string serviceName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> DeleteAllAsync(string serviceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Extension operation deletes the specified extension from
@@ -238,7 +238,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<ComputeOperationStatusResponse> DeleteExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> DeleteExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Hosted Service Properties operation retrieves system

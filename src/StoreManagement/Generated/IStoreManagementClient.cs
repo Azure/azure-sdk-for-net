@@ -25,7 +25,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Store;
-using Microsoft.WindowsAzure.Management.Store.Models;
 
 namespace Microsoft.WindowsAzure.Management.Store
 {
@@ -101,6 +100,6 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<AddOnOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken);
     }
 }

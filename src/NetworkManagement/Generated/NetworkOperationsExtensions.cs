@@ -219,7 +219,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static VirtualNetworkOperationStatusResponse SetConfiguration(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
+        public static OperationStatusResponse SetConfiguration(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
         {
             try
             {
@@ -262,7 +262,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<VirtualNetworkOperationStatusResponse> SetConfigurationAsync(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
+        public static Task<OperationStatusResponse> SetConfigurationAsync(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
         {
             return operations.SetConfigurationAsync(parameters, CancellationToken.None);
         }

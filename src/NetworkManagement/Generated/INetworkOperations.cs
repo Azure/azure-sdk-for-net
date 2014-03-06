@@ -99,6 +99,6 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<VirtualNetworkOperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken);
     }
 }

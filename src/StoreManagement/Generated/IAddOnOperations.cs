@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Store.Models;
 
 namespace Microsoft.WindowsAzure.Management.Store
@@ -64,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<AddOnOperationStatusResponse> BeginCreatingAsync(string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> BeginCreatingAsync(string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Store Item operation deletes Windows Azure Store entries
@@ -97,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<AddOnOperationStatusResponse> BeginDeletingAsync(string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> BeginDeletingAsync(string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Store Item operation creates Windows Azure Store entries
@@ -130,7 +131,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<AddOnOperationStatusResponse> CreateAsync(string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> CreateAsync(string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Store Item operation deletes Windows Azure Storeentries
@@ -163,7 +164,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<AddOnOperationStatusResponse> DeleteAsync(string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> DeleteAsync(string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Update Store Item operation creates Windows Azure Store entries
@@ -196,6 +197,6 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<AddOnOperationStatusResponse> UpdateAsync(string cloudServiceName, string resourceName, string addOnName, AddOnUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> UpdateAsync(string cloudServiceName, string resourceName, string addOnName, AddOnUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

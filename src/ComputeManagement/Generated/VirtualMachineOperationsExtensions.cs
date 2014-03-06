@@ -916,7 +916,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Capture(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        public static OperationStatusResponse Capture(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
         {
             try
             {
@@ -976,7 +976,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> CaptureAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        public static Task<OperationStatusResponse> CaptureAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
         {
             return operations.CaptureAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }
@@ -1022,7 +1022,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Create(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
+        public static OperationStatusResponse Create(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
         {
             try
             {
@@ -1082,7 +1082,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> CreateAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
+        public static Task<OperationStatusResponse> CreateAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
         {
             return operations.CreateAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -1121,7 +1121,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse CreateDeployment(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
+        public static OperationStatusResponse CreateDeployment(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
         {
             try
             {
@@ -1174,7 +1174,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> CreateDeploymentAsync(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
+        public static Task<OperationStatusResponse> CreateDeploymentAsync(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
         {
             return operations.CreateDeploymentAsync(serviceName, parameters, CancellationToken.None);
         }
@@ -1213,7 +1213,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Delete(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
+        public static OperationStatusResponse Delete(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
         {
             try
             {
@@ -1266,7 +1266,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> DeleteAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
+        public static Task<OperationStatusResponse> DeleteAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
         {
             return operations.DeleteAsync(serviceName, deploymentName, virtualMachineName, deleteFromStorage, CancellationToken.None);
         }
@@ -1439,7 +1439,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Restart(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        public static OperationStatusResponse Restart(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
             try
             {
@@ -1488,7 +1488,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> RestartAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        public static Task<OperationStatusResponse> RestartAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
             return operations.RestartAsync(serviceName, deploymentName, virtualMachineName, CancellationToken.None);
         }
@@ -1526,7 +1526,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Shutdown(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
+        public static OperationStatusResponse Shutdown(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
         {
             try
             {
@@ -1578,7 +1578,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> ShutdownAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
+        public static Task<OperationStatusResponse> ShutdownAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
         {
             return operations.ShutdownAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }
@@ -1612,7 +1612,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse ShutdownRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
+        public static OperationStatusResponse ShutdownRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
         {
             try
             {
@@ -1660,7 +1660,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> ShutdownRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
+        public static Task<OperationStatusResponse> ShutdownRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
         {
             return operations.ShutdownRolesAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -1694,7 +1694,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Start(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        public static OperationStatusResponse Start(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
             try
             {
@@ -1742,7 +1742,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> StartAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        public static Task<OperationStatusResponse> StartAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
             return operations.StartAsync(serviceName, deploymentName, virtualMachineName, CancellationToken.None);
         }
@@ -1775,7 +1775,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse StartRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
+        public static OperationStatusResponse StartRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
         {
             try
             {
@@ -1822,7 +1822,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> StartRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
+        public static Task<OperationStatusResponse> StartRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
         {
             return operations.StartRolesAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -1860,7 +1860,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Update(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
+        public static OperationStatusResponse Update(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
         {
             try
             {
@@ -1912,7 +1912,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> UpdateAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
+        public static Task<OperationStatusResponse> UpdateAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
         {
             return operations.UpdateAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }
@@ -1948,7 +1948,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse UpdateLoadBalancedEndpointSet(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
+        public static OperationStatusResponse UpdateLoadBalancedEndpointSet(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
         {
             try
             {
@@ -1998,7 +1998,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> UpdateLoadBalancedEndpointSetAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
+        public static Task<OperationStatusResponse> UpdateLoadBalancedEndpointSetAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
         {
             return operations.UpdateLoadBalancedEndpointSetAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }

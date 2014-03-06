@@ -177,7 +177,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static StorageOperationStatusResponse Create(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
+        public static OperationStatusResponse Create(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
             try
             {
@@ -220,7 +220,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<StorageOperationStatusResponse> CreateAsync(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
+        public static Task<OperationStatusResponse> CreateAsync(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
             return operations.CreateAsync(parameters, CancellationToken.None);
         }

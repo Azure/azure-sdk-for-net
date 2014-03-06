@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Store;
 using Microsoft.WindowsAzure.Management.Store.Models;
 
@@ -56,7 +57,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static AddOnOperationStatusResponse BeginCreating(this ICloudServiceOperations operations, CloudServiceCreateParameters parameters)
+        public static OperationStatusResponse BeginCreating(this ICloudServiceOperations operations, CloudServiceCreateParameters parameters)
         {
             try
             {
@@ -97,7 +98,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<AddOnOperationStatusResponse> BeginCreatingAsync(this ICloudServiceOperations operations, CloudServiceCreateParameters parameters)
+        public static Task<OperationStatusResponse> BeginCreatingAsync(this ICloudServiceOperations operations, CloudServiceCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(parameters, CancellationToken.None);
         }
@@ -124,7 +125,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static AddOnOperationStatusResponse Create(this ICloudServiceOperations operations, CloudServiceCreateParameters parameters)
+        public static OperationStatusResponse Create(this ICloudServiceOperations operations, CloudServiceCreateParameters parameters)
         {
             try
             {
@@ -165,7 +166,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<AddOnOperationStatusResponse> CreateAsync(this ICloudServiceOperations operations, CloudServiceCreateParameters parameters)
+        public static Task<OperationStatusResponse> CreateAsync(this ICloudServiceOperations operations, CloudServiceCreateParameters parameters)
         {
             return operations.CreateAsync(parameters, CancellationToken.None);
         }

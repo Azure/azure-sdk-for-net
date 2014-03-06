@@ -618,7 +618,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.VirtualNetworkOperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             VirtualNetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -640,9 +640,9 @@ namespace Microsoft.WindowsAzure.Management.Network
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.Networks.BeginSettingConfigurationAsync(parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                VirtualNetworkOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
-                while ((result.Status != NetworkOperationStatus.InProgress) == false)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
@@ -656,7 +656,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     Tracing.Exit(invocationId, result);
                 }
                 
-                if (result.Status != NetworkOperationStatus.Succeeded)
+                if (result.Status != OperationStatus.Succeeded)
                 {
                     if (result.Error != null)
                     {

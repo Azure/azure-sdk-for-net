@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse AddExtension(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
+        public static OperationStatusResponse AddExtension(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> AddExtensionAsync(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
+        public static Task<OperationStatusResponse> AddExtensionAsync(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
         {
             return operations.AddExtensionAsync(serviceName, parameters, CancellationToken.None);
         }
@@ -517,7 +517,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse DeleteAll(this IHostedServiceOperations operations, string serviceName)
+        public static OperationStatusResponse DeleteAll(this IHostedServiceOperations operations, string serviceName)
         {
             try
             {
@@ -560,7 +560,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> DeleteAllAsync(this IHostedServiceOperations operations, string serviceName)
+        public static Task<OperationStatusResponse> DeleteAllAsync(this IHostedServiceOperations operations, string serviceName)
         {
             return operations.DeleteAllAsync(serviceName, CancellationToken.None);
         }
@@ -593,7 +593,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse DeleteExtension(this IHostedServiceOperations operations, string serviceName, string extensionId)
+        public static OperationStatusResponse DeleteExtension(this IHostedServiceOperations operations, string serviceName, string extensionId)
         {
             try
             {
@@ -640,7 +640,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> DeleteExtensionAsync(this IHostedServiceOperations operations, string serviceName, string extensionId)
+        public static Task<OperationStatusResponse> DeleteExtensionAsync(this IHostedServiceOperations operations, string serviceName, string extensionId)
         {
             return operations.DeleteExtensionAsync(serviceName, extensionId, CancellationToken.None);
         }

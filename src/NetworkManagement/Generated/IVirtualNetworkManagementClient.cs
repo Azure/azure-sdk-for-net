@@ -25,7 +25,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Network;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
@@ -110,6 +109,6 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<VirtualNetworkOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken);
     }
 }
