@@ -59,36 +59,6 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="$(SolutionDir)\src\library.targets" />
   <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5091.22023-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5105.17775-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5122.29102-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5129.24418-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5136.29171-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5143.32084-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5165.17521-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5165.23240-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5168.17829-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5175.21952-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5176.20273-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
   </Target>
   <Import Project="GenerateCode.props" />

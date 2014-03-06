@@ -37,7 +37,7 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class ReservedIPOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IReservedIPOperations
+    internal partial class ReservedIPOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IReservedIPOperations
     {
         /// <summary>
         /// Initializes a new instance of the ReservedIPOperations class.
@@ -45,18 +45,18 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ReservedIPOperations(VirtualNetworkManagementClient client)
+        internal ReservedIPOperations(NetworkManagementClient client)
         {
             this._client = client;
         }
         
-        private VirtualNetworkManagementClient _client;
+        private NetworkManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.NetworkManagementClient.
         /// </summary>
-        public VirtualNetworkManagementClient Client
+        public NetworkManagementClient Client
         {
             get { return this._client; }
         }
@@ -355,7 +355,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </returns>
         public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken)
         {
-            VirtualNetworkManagementClient client = this.Client;
+            NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -453,7 +453,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </returns>
         public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(string ipName, CancellationToken cancellationToken)
         {
-            VirtualNetworkManagementClient client = this.Client;
+            NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)

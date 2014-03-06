@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -57,11 +57,11 @@ namespace Microsoft.WindowsAzure
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static GatewayOperationResponse Create(this IClientRootCertificateOperations operations, string virtualNetworkName, ClientRootCertificateCreateParameters parameters)
+        public static GatewayOperationResponse Create(this IClientRootCertificateOperations operations, string networkName, ClientRootCertificateCreateParameters parameters)
         {
             try
             {
-                return operations.CreateAsync(virtualNetworkName, parameters).Result;
+                return operations.CreateAsync(networkName, parameters).Result;
             }
             catch (AggregateException ex)
             {
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -97,9 +97,9 @@ namespace Microsoft.WindowsAzure
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<GatewayOperationResponse> CreateAsync(this IClientRootCertificateOperations operations, string virtualNetworkName, ClientRootCertificateCreateParameters parameters)
+        public static Task<GatewayOperationResponse> CreateAsync(this IClientRootCertificateOperations operations, string networkName, ClientRootCertificateCreateParameters parameters)
         {
-            return operations.CreateAsync(virtualNetworkName, parameters, CancellationToken.None);
+            return operations.CreateAsync(networkName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
@@ -122,11 +122,11 @@ namespace Microsoft.WindowsAzure
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static GatewayOperationResponse Delete(this IClientRootCertificateOperations operations, string virtualNetworkName, string certificateThumbprint)
+        public static GatewayOperationResponse Delete(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)
         {
             try
             {
-                return operations.DeleteAsync(virtualNetworkName, certificateThumbprint).Result;
+                return operations.DeleteAsync(networkName, certificateThumbprint).Result;
             }
             catch (AggregateException ex)
             {
@@ -151,7 +151,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
@@ -161,9 +161,9 @@ namespace Microsoft.WindowsAzure
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<GatewayOperationResponse> DeleteAsync(this IClientRootCertificateOperations operations, string virtualNetworkName, string certificateThumbprint)
+        public static Task<GatewayOperationResponse> DeleteAsync(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)
         {
-            return operations.DeleteAsync(virtualNetworkName, certificateThumbprint, CancellationToken.None);
+            return operations.DeleteAsync(networkName, certificateThumbprint, CancellationToken.None);
         }
         
         /// <summary>
@@ -177,7 +177,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
@@ -187,11 +187,11 @@ namespace Microsoft.WindowsAzure
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static ClientRootCertificateGetResponse Get(this IClientRootCertificateOperations operations, string virtualNetworkName, string certificateThumbprint)
+        public static ClientRootCertificateGetResponse Get(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)
         {
             try
             {
-                return operations.GetAsync(virtualNetworkName, certificateThumbprint).Result;
+                return operations.GetAsync(networkName, certificateThumbprint).Result;
             }
             catch (AggregateException ex)
             {
@@ -217,7 +217,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
@@ -227,9 +227,9 @@ namespace Microsoft.WindowsAzure
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<ClientRootCertificateGetResponse> GetAsync(this IClientRootCertificateOperations operations, string virtualNetworkName, string certificateThumbprint)
+        public static Task<ClientRootCertificateGetResponse> GetAsync(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)
         {
-            return operations.GetAsync(virtualNetworkName, certificateThumbprint, CancellationToken.None);
+            return operations.GetAsync(networkName, certificateThumbprint, CancellationToken.None);
         }
         
         /// <summary>
@@ -243,17 +243,17 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
         /// The response to the list client root certificates request.
         /// </returns>
-        public static ClientRootCertificateListResponse List(this IClientRootCertificateOperations operations, string virtualNetworkName)
+        public static ClientRootCertificateListResponse List(this IClientRootCertificateOperations operations, string networkName)
         {
             try
             {
-                return operations.ListAsync(virtualNetworkName).Result;
+                return operations.ListAsync(networkName).Result;
             }
             catch (AggregateException ex)
             {
@@ -279,15 +279,15 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
         /// The response to the list client root certificates request.
         /// </returns>
-        public static Task<ClientRootCertificateListResponse> ListAsync(this IClientRootCertificateOperations operations, string virtualNetworkName)
+        public static Task<ClientRootCertificateListResponse> ListAsync(this IClientRootCertificateOperations operations, string networkName)
         {
-            return operations.ListAsync(virtualNetworkName, CancellationToken.None);
+            return operations.ListAsync(networkName, CancellationToken.None);
         }
     }
 }

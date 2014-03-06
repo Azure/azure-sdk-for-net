@@ -38,7 +38,7 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class ClientRootCertificateOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations
+    internal partial class ClientRootCertificateOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations
     {
         /// <summary>
         /// Initializes a new instance of the ClientRootCertificateOperations
@@ -47,18 +47,18 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ClientRootCertificateOperations(VirtualNetworkManagementClient client)
+        internal ClientRootCertificateOperations(NetworkManagementClient client)
         {
             this._client = client;
         }
         
-        private VirtualNetworkManagementClient _client;
+        private NetworkManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.NetworkManagementClient.
         /// </summary>
-        public VirtualNetworkManagementClient Client
+        public NetworkManagementClient Client
         {
             get { return this._client; }
         }
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -83,12 +83,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> CreateAsync(string virtualNetworkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> CreateAsync(string networkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (parameters == null)
             {
@@ -106,13 +106,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/clientrootcertificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -214,7 +214,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205128.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
@@ -227,12 +227,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> DeleteAsync(string virtualNetworkName, string certificateThumbprint, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> DeleteAsync(string networkName, string certificateThumbprint, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (certificateThumbprint == null)
             {
@@ -246,13 +246,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("certificateThumbprint", certificateThumbprint);
                 Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -350,7 +350,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205127.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
@@ -363,12 +363,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.ClientRootCertificateGetResponse> GetAsync(string virtualNetworkName, string certificateThumbprint, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.ClientRootCertificateGetResponse> GetAsync(string networkName, string certificateThumbprint, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (certificateThumbprint == null)
             {
@@ -382,13 +382,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("certificateThumbprint", certificateThumbprint);
                 Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -475,7 +475,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205130.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='cancellationToken'>
@@ -484,12 +484,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <returns>
         /// The response to the list client root certificates request.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.ClientRootCertificateListResponse> ListAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.ClientRootCertificateListResponse> ListAsync(string networkName, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             
             // Tracing
@@ -499,12 +499,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/clientrootcertificates";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/clientrootcertificates";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
