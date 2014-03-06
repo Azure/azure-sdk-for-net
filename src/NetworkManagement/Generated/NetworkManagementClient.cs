@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Network
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
-    public partial class VirtualNetworkManagementClient : ServiceClient<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IVirtualNetworkManagementClient
+    public partial class NetworkManagementClient : ServiceClient<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.INetworkManagementClient
     {
         private Uri _baseUri;
         
@@ -105,10 +105,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkManagementClient
-        /// class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
-        private VirtualNetworkManagementClient()
+        private NetworkManagementClient()
             : base()
         {
             this._clientRootCertificates = new ClientRootCertificateOperations(this);
@@ -120,8 +119,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkManagementClient
-        /// class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// When you create a Windows Azure subscription, it is uniquely
@@ -135,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <param name='baseUri'>
         /// The URI used as the base for all SQL requests.
         /// </param>
-        public VirtualNetworkManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
+        public NetworkManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (credentials == null)
@@ -153,8 +151,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkManagementClient
-        /// class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// When you create a Windows Azure subscription, it is uniquely
@@ -165,7 +162,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// a request made to the service is secure.  No anonymous requests
         /// are allowed.
         /// </param>
-        public VirtualNetworkManagementClient(SubscriptionCloudCredentials credentials)
+        public NetworkManagementClient(SubscriptionCloudCredentials credentials)
             : this()
         {
             if (credentials == null)

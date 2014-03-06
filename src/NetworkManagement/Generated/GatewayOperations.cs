@@ -38,7 +38,7 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class GatewayOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IGatewayOperations
+    internal partial class GatewayOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IGatewayOperations
     {
         /// <summary>
         /// Initializes a new instance of the GatewayOperations class.
@@ -46,18 +46,18 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal GatewayOperations(VirtualNetworkManagementClient client)
+        internal GatewayOperations(NetworkManagementClient client)
         {
             this._client = client;
         }
         
-        private VirtualNetworkManagementClient _client;
+        private NetworkManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.NetworkManagementClient.
         /// </summary>
-        public VirtualNetworkManagementClient Client
+        public NetworkManagementClient Client
         {
             get { return this._client; }
         }
@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154107.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkSiteName'>
@@ -86,12 +86,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(string networkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (localNetworkSiteName == null)
             {
@@ -109,14 +109,14 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("localNetworkSiteName", localNetworkSiteName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "BeginConnectDisconnectOrTestingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkSiteName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/connection/" + localNetworkSiteName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -235,7 +235,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -248,12 +248,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginCreatingAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginCreatingAsync(string networkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (parameters == null)
             {
@@ -267,13 +267,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -385,7 +385,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network.
         /// </param>
         /// <param name='cancellationToken'>
@@ -395,12 +395,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginDeletingAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginDeletingAsync(string networkName, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             
             // Tracing
@@ -410,12 +410,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -513,7 +513,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network in Azure.
         /// </param>
         /// <param name='cancellationToken'>
@@ -523,12 +523,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginFailoverAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginFailoverAsync(string networkName, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             
             // Tracing
@@ -538,12 +538,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 Tracing.Enter(invocationId, this, "BeginFailoverAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -647,7 +647,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
@@ -664,12 +664,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> BeginResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (localNetworkName == null)
             {
@@ -687,14 +687,14 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("localNetworkName", localNetworkName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "BeginResetSharedKeyAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -808,7 +808,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154107.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkSiteName'>
@@ -831,16 +831,16 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> ConnectDisconnectOrTestAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> ConnectDisconnectOrTestAsync(string networkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken)
         {
-            VirtualNetworkManagementClient client = this.Client;
+            NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("localNetworkSiteName", localNetworkSiteName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "ConnectDisconnectOrTestAsync", tracingParameters);
@@ -853,7 +853,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse response = await client.Gateways.BeginConnectDisconnectOrTestingAsync(virtualNetworkName, localNetworkSiteName, parameters, cancellationToken).ConfigureAwait(false);
+                GatewayOperationResponse response = await client.Gateways.BeginConnectDisconnectOrTestingAsync(networkName, localNetworkSiteName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -912,7 +912,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -932,16 +932,16 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> CreateAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> CreateAsync(string networkName, GatewayCreateParameters parameters, CancellationToken cancellationToken)
         {
-            VirtualNetworkManagementClient client = this.Client;
+            NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
@@ -953,7 +953,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse response = await client.Gateways.BeginCreatingAsync(virtualNetworkName, parameters, cancellationToken).ConfigureAwait(false);
+                GatewayOperationResponse response = await client.Gateways.BeginCreatingAsync(networkName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -1012,7 +1012,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1029,16 +1029,16 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> DeleteAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> DeleteAsync(string networkName, CancellationToken cancellationToken)
         {
-            VirtualNetworkManagementClient client = this.Client;
+            NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             try
@@ -1049,7 +1049,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse response = await client.Gateways.BeginDeletingAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+                GatewayOperationResponse response = await client.Gateways.BeginDeletingAsync(networkName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -1109,7 +1109,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network in Azure.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1126,16 +1126,16 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> FailoverAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> FailoverAsync(string networkName, CancellationToken cancellationToken)
         {
-            VirtualNetworkManagementClient client = this.Client;
+            NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 Tracing.Enter(invocationId, this, "FailoverAsync", tracingParameters);
             }
             try
@@ -1146,7 +1146,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse response = await client.Gateways.BeginFailoverAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+                GatewayOperationResponse response = await client.Gateways.BeginFailoverAsync(networkName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -1205,7 +1205,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205126.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -1218,12 +1218,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> GenerateVpnClientPackageAsync(string virtualNetworkName, GatewayGenerateVpnClientPackageParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> GenerateVpnClientPackageAsync(string networkName, GatewayGenerateVpnClientPackageParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (parameters == null)
             {
@@ -1237,13 +1237,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "GenerateVpnClientPackageAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/vpnclientpackage";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/vpnclientpackage";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1356,7 +1356,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154109.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1366,12 +1366,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetResponse> GetAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetResponse> GetAsync(string networkName, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             
             // Tracing
@@ -1381,12 +1381,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1533,7 +1533,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154115.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -1546,12 +1546,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The configuration script returned from the get device configuration
         /// script request.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetDeviceConfigurationScriptResponse> GetDeviceConfigurationScriptAsync(string virtualNetworkName, GatewayGetDeviceConfigurationScriptParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetDeviceConfigurationScriptResponse> GetDeviceConfigurationScriptAsync(string networkName, GatewayGetDeviceConfigurationScriptParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (parameters == null)
             {
@@ -1565,13 +1565,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "GetDeviceConfigurationScriptAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/vpndeviceconfigurationscript?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/vpndeviceconfigurationscript?";
             if (parameters.Vendor != null)
             {
                 url = url + "vendor=" + Uri.EscapeUriString(parameters.Vendor);
@@ -1670,7 +1670,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// for more information)
         /// </summary>
         /// <param name='operationId'>
-        /// The id  of the virtualnetwork operation.
+        /// The id  of the network operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1840,7 +1840,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154122.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
@@ -1852,12 +1852,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <returns>
         /// The response to the get shared key request.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetSharedKeyResponse> GetSharedKeyAsync(string virtualNetworkName, string localNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetSharedKeyResponse> GetSharedKeyAsync(string networkName, string localNetworkName, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (localNetworkName == null)
             {
@@ -1871,13 +1871,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("localNetworkName", localNetworkName);
                 Tracing.Enter(invocationId, this, "GetSharedKeyAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1974,7 +1974,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154120.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1984,12 +1984,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response to a ListConnections request to a Virtual Network
         /// Gateway.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayListConnectionsResponse> ListConnectionsAsync(string virtualNetworkName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayListConnectionsResponse> ListConnectionsAsync(string networkName, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             
             // Tracing
@@ -1999,12 +1999,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 Tracing.Enter(invocationId, this, "ListConnectionsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "/gateway/connections";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/connections";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2344,7 +2344,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
@@ -2368,16 +2368,16 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> ResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayGetOperationStatusResponse> ResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken)
         {
-            VirtualNetworkManagementClient client = this.Client;
+            NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("localNetworkName", localNetworkName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "ResetSharedKeyAsync", tracingParameters);
@@ -2390,7 +2390,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                GatewayOperationResponse response = await client.Gateways.BeginResetSharedKeyAsync(virtualNetworkName, localNetworkName, parameters, cancellationToken).ConfigureAwait(false);
+                GatewayOperationResponse response = await client.Gateways.BeginResetSharedKeyAsync(networkName, localNetworkName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 GatewayGetOperationStatusResponse result = await client.Gateways.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;

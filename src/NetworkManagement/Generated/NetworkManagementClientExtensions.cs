@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
-    public static partial class VirtualNetworkManagementClientExtensions
+    public static partial class NetworkManagementClientExtensions
     {
         /// <summary>
         /// The Get Operation Status operation returns the status of
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Network.IVirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkManagementClient.
         /// </param>
         /// <param name='requestId'>
         /// The request ID for the request you wish to track. The request ID is
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static OperationStatusResponse GetOperationStatus(this IVirtualNetworkManagementClient operations, string requestId)
+        public static OperationStatusResponse GetOperationStatus(this INetworkManagementClient operations, string requestId)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Network.IVirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.INetworkManagementClient.
         /// </param>
         /// <param name='requestId'>
         /// The request ID for the request you wish to track. The request ID is
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> GetOperationStatusAsync(this IVirtualNetworkManagementClient operations, string requestId)
+        public static Task<OperationStatusResponse> GetOperationStatusAsync(this INetworkManagementClient operations, string requestId)
         {
             return operations.GetOperationStatusAsync(requestId, CancellationToken.None);
         }

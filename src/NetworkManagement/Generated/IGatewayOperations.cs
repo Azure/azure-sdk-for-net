@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154107.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkSiteName'>
@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken);
+        Task<GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(string networkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Virtual network Gateway operation creates a new network
@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayOperationResponse> BeginCreatingAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
+        Task<GatewayOperationResponse> BeginCreatingAsync(string networkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Virtual network Gateway operation deletes a network
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network.
         /// </param>
         /// <param name='cancellationToken'>
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayOperationResponse> BeginDeletingAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        Task<GatewayOperationResponse> BeginDeletingAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Failover Virtual network Gateway operation causes a network
@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network in Azure.
         /// </param>
         /// <param name='cancellationToken'>
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayOperationResponse> BeginFailoverAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        Task<GatewayOperationResponse> BeginFailoverAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Reset Virtual network Gateway shared key operation resets the
@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
@@ -138,7 +138,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
+        Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// To connect to, disconnect from, or test your connection to a local
@@ -148,7 +148,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154107.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkSiteName'>
@@ -171,7 +171,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<GatewayGetOperationStatusResponse> ConnectDisconnectOrTestAsync(string virtualNetworkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken);
+        Task<GatewayGetOperationStatusResponse> ConnectDisconnectOrTestAsync(string networkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Virtual network Gateway operation creates a new network
@@ -179,7 +179,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -199,7 +199,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<GatewayGetOperationStatusResponse> CreateAsync(string virtualNetworkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
+        Task<GatewayGetOperationStatusResponse> CreateAsync(string networkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Virtual network Gateway operation deletes a network
@@ -207,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network.
         /// </param>
         /// <param name='cancellationToken'>
@@ -224,7 +224,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<GatewayGetOperationStatusResponse> DeleteAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        Task<GatewayGetOperationStatusResponse> DeleteAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Failover Virtual network Gateway operation causes a network
@@ -233,7 +233,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network in Azure.
         /// </param>
         /// <param name='cancellationToken'>
@@ -250,7 +250,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<GatewayGetOperationStatusResponse> FailoverAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        Task<GatewayGetOperationStatusResponse> FailoverAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Generate VPN Client Package creates a VPN client package for
@@ -258,7 +258,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205126.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -271,7 +271,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayOperationResponse> GenerateVpnClientPackageAsync(string virtualNetworkName, GatewayGenerateVpnClientPackageParameters parameters, CancellationToken cancellationToken);
+        Task<GatewayOperationResponse> GenerateVpnClientPackageAsync(string networkName, GatewayGenerateVpnClientPackageParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Virtual network Gateway operation gets information on the
@@ -280,7 +280,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154109.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='cancellationToken'>
@@ -290,7 +290,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayGetResponse> GetAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        Task<GatewayGetResponse> GetAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Device Configuration Script operation returns a script that
@@ -299,7 +299,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154115.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -312,7 +312,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The configuration script returned from the get device configuration
         /// script request.
         /// </returns>
-        Task<GatewayGetDeviceConfigurationScriptResponse> GetDeviceConfigurationScriptAsync(string virtualNetworkName, GatewayGetDeviceConfigurationScriptParameters parameters, CancellationToken cancellationToken);
+        Task<GatewayGetDeviceConfigurationScriptResponse> GetDeviceConfigurationScriptAsync(string networkName, GatewayGetDeviceConfigurationScriptParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Virtual network Gateway operation status gets information
@@ -321,7 +321,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// for more information)
         /// </summary>
         /// <param name='operationId'>
-        /// The id  of the virtualnetwork operation.
+        /// The id  of the network operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -347,7 +347,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154122.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
@@ -359,7 +359,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <returns>
         /// The response to the get shared key request.
         /// </returns>
-        Task<GatewayGetSharedKeyResponse> GetSharedKeyAsync(string virtualNetworkName, string localNetworkName, CancellationToken cancellationToken);
+        Task<GatewayGetSharedKeyResponse> GetSharedKeyAsync(string networkName, string localNetworkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Connections operation returns a list of the local network
@@ -367,7 +367,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154120.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='cancellationToken'>
@@ -377,7 +377,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response to a ListConnections request to a Virtual Network
         /// Gateway.
         /// </returns>
-        Task<GatewayListConnectionsResponse> ListConnectionsAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        Task<GatewayListConnectionsResponse> ListConnectionsAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Virtual Network Gateway Supported Devices operation lists
@@ -402,7 +402,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='localNetworkName'>
@@ -426,6 +426,6 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<GatewayGetOperationStatusResponse> ResetSharedKeyAsync(string virtualNetworkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
+        Task<GatewayGetOperationStatusResponse> ResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
     }
 }

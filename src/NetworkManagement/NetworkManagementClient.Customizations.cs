@@ -24,22 +24,21 @@ namespace Microsoft.WindowsAzure
     using Microsoft.WindowsAzure.Common.Internals;
     using Microsoft.WindowsAzure.Management.Network;
 
-
-    public static class VirtualNetworkManagementDiscoveryExtensions
+    public static class NetworkManagementDiscoveryExtensions
     {
-        public static VirtualNetworkManagementClient CreateVirtualNetworkManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
+        public static NetworkManagementClient CreateVirtualNetworkManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
         {
-            return new VirtualNetworkManagementClient(credentials);
+            return new NetworkManagementClient(credentials);
         }
 
-        public static VirtualNetworkManagementClient CreateVirtualNetworkManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public static NetworkManagementClient CreateVirtualNetworkManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
         {
-            return new VirtualNetworkManagementClient(credentials, baseUri);
+            return new NetworkManagementClient(credentials, baseUri);
         }
 
-        public static VirtualNetworkManagementClient CreateVirtualNetworkManagementClient(this CloudClients clients)
+        public static NetworkManagementClient CreateVirtualNetworkManagementClient(this CloudClients clients)
         {
-            return ConfigurationHelper.CreateFromSettings<VirtualNetworkManagementClient>(VirtualNetworkManagementClient.Create);
+            return ConfigurationHelper.CreateFromSettings<NetworkManagementClient>(NetworkManagementClient.Create);
         }
     }
 }
@@ -54,9 +53,9 @@ namespace Microsoft.WindowsAzure.Management.Network
     using Microsoft.WindowsAzure.Common;
     using Microsoft.WindowsAzure.Common.Internals;
 
-    public partial class VirtualNetworkManagementClient
+    public partial class NetworkManagementClient
     {
-        public static VirtualNetworkManagementClient Create(IDictionary<string, object> settings)
+        public static NetworkManagementClient Create(IDictionary<string, object> settings)
         {
             if (settings == null)
             {
@@ -72,10 +71,10 @@ namespace Microsoft.WindowsAzure.Management.Network
                 new VirtualNetworkManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<VirtualNetworkManagementClient> client)
+        protected override void Clone(ServiceClient<NetworkManagementClient> client)
         {
             base.Clone(client);
-            VirtualNetworkManagementClient management = client as VirtualNetworkManagementClient;
+            NetworkManagementClient management = client as NetworkManagementClient;
             if (management != null)
             {
                 management._credentials = Credentials;
@@ -84,9 +83,9 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
         }
 
-        public VirtualNetworkManagementClient WithHandler(DelegatingHandler handler)
+        public NetworkManagementClient WithHandler(DelegatingHandler handler)
         {
-            return (VirtualNetworkManagementClient)WithHandler(new VirtualNetworkManagementClient(), handler);
+            return (NetworkManagementClient)WithHandler(new NetworkManagementClient(), handler);
         }
     }
 }

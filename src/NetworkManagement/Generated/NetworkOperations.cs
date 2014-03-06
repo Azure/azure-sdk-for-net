@@ -37,7 +37,7 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class NetworkOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.INetworkOperations
+    internal partial class NetworkOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.INetworkOperations
     {
         /// <summary>
         /// Initializes a new instance of the NetworkOperations class.
@@ -45,18 +45,18 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal NetworkOperations(VirtualNetworkManagementClient client)
+        internal NetworkOperations(NetworkManagementClient client)
         {
             this._client = client;
         }
         
-        private VirtualNetworkManagementClient _client;
+        private NetworkManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.NetworkManagementClient.
         /// </summary>
-        public VirtualNetworkManagementClient Client
+        public NetworkManagementClient Client
         {
             get { return this._client; }
         }
@@ -539,7 +539,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                                 XElement typeElement = connectionsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
                                                 if (typeElement != null)
                                                 {
-                                                    LocalNetworkConnectionType typeInstance = VirtualNetworkManagementClient.ParseLocalNetworkConnectionType(typeElement.Value);
+                                                    LocalNetworkConnectionType typeInstance = NetworkManagementClient.ParseLocalNetworkConnectionType(typeElement.Value);
                                                     connectionInstance.Type = typeInstance;
                                                 }
                                             }
@@ -620,7 +620,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </returns>
         public async System.Threading.Tasks.Task<OperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
         {
-            VirtualNetworkManagementClient client = this.Client;
+            NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)

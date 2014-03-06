@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Network
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
-    public partial interface IVirtualNetworkManagementClient : IDisposable
+    public partial interface INetworkManagementClient : IDisposable
     {
         /// <summary>
         /// The URI used as the base for all SQL requests.
