@@ -67,8 +67,8 @@ namespace Microsoft.WindowsAzure.Management.Network
             Uri baseUri = ConfigurationHelper.GetUri(settings, "BaseUri", false);
 
             return baseUri != null ?
-                new VirtualNetworkManagementClient(credentials, baseUri) :
-                new VirtualNetworkManagementClient(credentials);
+                new NetworkManagementClient(credentials, baseUri) :
+                new NetworkManagementClient(credentials);
         }
 
         protected override void Clone(ServiceClient<NetworkManagementClient> client)
