@@ -75,31 +75,6 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
-        /// Convert the CloudException into a helpful string.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            // Get the original exception message (including the InnerException)
-            StringBuilder text = new StringBuilder();
-            text.AppendLine(base.ToString());
-            text.AppendLine();
-
-            // Tack on the request/response
-            if (Request != null)
-            {
-                text.AppendHttpRequest(Request);
-            }
-            text.AppendLine();
-            if (Response != null)
-            {
-                text.AppendHttpResponse(Response);
-            }
-
-            return text.ToString();
-        }
-
-        /// <summary>
         /// Create a CloudException from a failed response.
         /// </summary>
         /// <param name="request">The HTTP request.</param>
