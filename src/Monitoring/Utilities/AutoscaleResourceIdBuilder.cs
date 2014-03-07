@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
                 throw new ArgumentException("serverFarmName");
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "/webspaces/{0}/serverFarm/{1}", webspaceName, serverFarmName);
+            return string.Format(CultureInfo.InvariantCulture, "/webspaces/{0}/serverfarms/{1}", webspaceName, serverFarmName);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
                 throw new ArgumentException("availabilitySetName");
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "/virtualmachines/{0}/availabilitySet/{1}", virtualMachineName, availabilitySetName);
+            return string.Format(CultureInfo.InvariantCulture, "/virtualmachines/{0}/availabilitysets/{1}", virtualMachineName, availabilitySetName);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
 
             return string.Format(
                 CultureInfo.InvariantCulture, 
-                "/hostedservices/{0}/deploymentslot/{1}/role/{2}",
+                "/hostedservices/{0}/deploymentslots/{1}/roles/{2}",
                 cloudServiceName,
                 isProductionSlot ? "Production" : "Staging",
                 roleName);
