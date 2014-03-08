@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{856A1D19-C3BF-439A-BEBF-E822A332BC12}"
@@ -82,10 +84,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WindowsPhone.Test", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WindowsPhone", "src\Common.WindowsPhone\Common.WindowsPhone.csproj", "{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualNetworkManagement", "src\VirtualNetworkManagement\VirtualNetworkManagement.csproj", "{D971A78D-44C6-4E55-B9DA-1E227E4B79BE}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = WindowsAzureLibraries.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -185,6 +186,10 @@ Global
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D971A78D-44C6-4E55-B9DA-1E227E4B79BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D971A78D-44C6-4E55-B9DA-1E227E4B79BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D971A78D-44C6-4E55-B9DA-1E227E4B79BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D971A78D-44C6-4E55-B9DA-1E227E4B79BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -209,10 +214,14 @@ Global
 		{65C1AFA4-9F6A-4105-B28C-AA1B95C17494} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{F3C850A1-D315-44FC-AD77-54758B62E824} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{D971A78D-44C6-4E55-B9DA-1E227E4B79BE} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{B2FAA0E6-2643-4011-8CFE-BA28BDFFC7E7} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
 		{CB18ACEB-2825-4884-91FA-05C31AC779FE} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
 		{6B9F0F97-9B59-4623-BF3E-AE0026FB083D} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
 		{A29208BB-0449-4385-8FDB-621CF1270A81} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = WindowsAzureLibraries.vsmdi
 	EndGlobalSection
 EndGlobal

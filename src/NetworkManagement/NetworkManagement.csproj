@@ -8,8 +8,8 @@
     <ProjectGuid>{7F032828-B8EC-4716-8BC4-AF2FA703B24B}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.Management.VirtualNetworks</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.Management.VirtualNetworks</AssemblyName>
+    <RootNamespace>Microsoft.WindowsAzure.Management.Network</RootNamespace>
+    <AssemblyName>Microsoft.WindowsAzure.Management.Network</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -72,7 +72,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="GenerateCode.props" />
-    <None Include="Microsoft.WindowsAzure.Management.VirtualNetworks.nuspec" />
+    <None Include="Microsoft.WindowsAzure.Management.NetworkManagement.nuspec" />
     <None Include="Microsoft.WindowsAzure.Management.NetworkManagement.nuget.proj" />
     <None Include="packages.config" />
   </ItemGroup>
