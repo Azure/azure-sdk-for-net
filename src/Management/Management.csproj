@@ -58,6 +58,7 @@
     <Compile Include="Generated\RoleSizeOperationsExtensions.cs" />
     <Compile Include="Generated\SubscriptionOperations.cs" />
     <Compile Include="Generated\SubscriptionOperationsExtensions.cs" />
+    <Compile Include="SubscriptionClient.Customization.cs" />
     <Compile Include="ManagementClient.Customization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
