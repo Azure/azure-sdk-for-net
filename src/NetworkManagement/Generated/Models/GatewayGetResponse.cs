@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using System.Net;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 

@@ -432,11 +432,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// </returns>
         internal static CertificateFormat ParseCertificateFormat(string value)
         {
-            if (value == "pfx")
+            if ("pfx".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return CertificateFormat.Pfx;
             }
-            if (value == "cer")
+            if ("cer".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return CertificateFormat.Cer;
             }
@@ -476,15 +476,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// </returns>
         internal static HostingResources ParseHostingResources(string value)
         {
-            if (value == "WebRole")
+            if ("WebRole".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HostingResources.WebRole;
             }
-            if (value == "WorkerRole")
+            if ("WorkerRole".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HostingResources.WorkerRole;
             }
-            if (value == "WebRole|WorkerRole")
+            if ("WebRole|WorkerRole".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HostingResources.WebOrWorkerRole;
             }
@@ -528,11 +528,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// </returns>
         internal static LoadBalancerProbeTransportProtocol ParseLoadBalancerProbeTransportProtocol(string value)
         {
-            if (value == "tcp")
+            if ("tcp".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return LoadBalancerProbeTransportProtocol.Tcp;
             }
-            if (value == "http")
+            if ("http".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return LoadBalancerProbeTransportProtocol.Http;
             }
