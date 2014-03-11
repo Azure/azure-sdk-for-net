@@ -353,11 +353,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// </returns>
         internal static BgpPeeringAccessType ParseBgpPeeringAccessType(string value)
         {
-            if (value == "private")
+            if ("private".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return BgpPeeringAccessType.Private;
             }
-            if (value == "public")
+            if ("public".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return BgpPeeringAccessType.Public;
             }
@@ -397,11 +397,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// </returns>
         internal static UpdateCrossConnectionOperation ParseUpdateCrossConnectionOperation(string value)
         {
-            if (value == "NotifyCrossConnectionProvisioned")
+            if ("NotifyCrossConnectionProvisioned".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return UpdateCrossConnectionOperation.NotifyCrossConnectionProvisioned;
             }
-            if (value == "NotifyCrossConnectionNotProvisioned")
+            if ("NotifyCrossConnectionNotProvisioned".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return UpdateCrossConnectionOperation.NotifyCrossConnectionNotProvisioned;
             }

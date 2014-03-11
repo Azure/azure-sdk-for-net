@@ -358,11 +358,11 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </returns>
         internal static LocalNetworkConnectionType ParseLocalNetworkConnectionType(string value)
         {
-            if (value == "IPsec")
+            if ("IPsec".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return LocalNetworkConnectionType.IPSecurity;
             }
-            if (value == "Dedicated")
+            if ("Dedicated".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return LocalNetworkConnectionType.Dedicated;
             }
