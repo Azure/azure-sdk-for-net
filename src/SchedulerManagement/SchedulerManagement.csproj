@@ -109,7 +109,6 @@
   <ItemGroup>
     <Content Include="CloudServices.hydra.xml" />
     <Content Include="hydra.xml" />
-    <Content Include="readme.txt" />
     <Content Include="Scheduler.hydra.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />

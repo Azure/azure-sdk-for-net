@@ -166,7 +166,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="hydra.xml" />
-    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
