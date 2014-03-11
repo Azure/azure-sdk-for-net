@@ -2607,6 +2607,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 url = url + "&EndTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
             }
+            if (!string.IsNullOrEmpty(parameters.TimeGrain))
+            {
+                url = url + "&TimeGrain=" + Uri.EscapeUriString(parameters.TimeGrain);
+            }
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
