@@ -16,29 +16,29 @@
 using Microsoft.WindowsAzure.Common;
 using System.Net.Http;
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
+namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
 {
-    public partial class MetricsClient
+    public partial class AutoscaleClient
     {
         /// <summary>
-        /// Get an instance of the MetricClient class that uses the handler while initiating web requests.
+        /// Get an instance of the AlertsClient class that uses the handler while initiating web requests.
         /// </summary>
         /// <param name="handler">the handler</param>
-        public override MetricsClient WithHandler(DelegatingHandler handler)
+        public override AutoscaleClient WithHandler(DelegatingHandler handler)
         {
-            return WithHandler(new MetricsClient(), handler);
+            return WithHandler(new AutoscaleClient(), handler);
         }
 
-        protected override void Clone(ServiceClient<MetricsClient> client)
+        protected override void Clone(ServiceClient<AutoscaleClient> client)
         {
             base.Clone(client);
 
-            MetricsClient metricsClient = client as MetricsClient;
-            if (metricsClient != null)
+            AutoscaleClient autoscaleClient = client as AutoscaleClient;
+            if (autoscaleClient != null)
             {
-                metricsClient._credentials = Credentials;
-                metricsClient._baseUri = BaseUri;
-                metricsClient.Credentials.InitializeServiceClient(metricsClient);
+                autoscaleClient._credentials = Credentials;
+                autoscaleClient._baseUri = BaseUri;
+                autoscaleClient.Credentials.InitializeServiceClient(autoscaleClient);
             }
         }
     }

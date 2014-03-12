@@ -83,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
         }
 
-        public NetworkManagementClient WithHandler(DelegatingHandler handler)
+        public override NetworkManagementClient WithHandler(DelegatingHandler handler)
         {
             return (NetworkManagementClient)WithHandler(new NetworkManagementClient(), handler);
         }

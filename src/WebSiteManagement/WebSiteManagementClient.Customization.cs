@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
         }
 
-        public WebSiteManagementClient WithHandler(DelegatingHandler handler)
+        public override WebSiteManagementClient WithHandler(DelegatingHandler handler)
         {
             return (WebSiteManagementClient)WithHandler(new WebSiteManagementClient(), handler);
         }

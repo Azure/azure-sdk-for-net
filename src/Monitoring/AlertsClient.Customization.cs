@@ -16,29 +16,29 @@
 using Microsoft.WindowsAzure.Common;
 using System.Net.Http;
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
+namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
 {
-    public partial class MetricsClient
+    public partial class AlertsClient
     {
         /// <summary>
-        /// Get an instance of the MetricClient class that uses the handler while initiating web requests.
+        /// Get an instance of the AlertsClient class that uses the handler while initiating web requests.
         /// </summary>
         /// <param name="handler">the handler</param>
-        public override MetricsClient WithHandler(DelegatingHandler handler)
+        public override AlertsClient WithHandler(DelegatingHandler handler)
         {
-            return WithHandler(new MetricsClient(), handler);
+            return WithHandler(new AlertsClient(), handler);
         }
 
-        protected override void Clone(ServiceClient<MetricsClient> client)
+        protected override void Clone(ServiceClient<AlertsClient> client)
         {
             base.Clone(client);
 
-            MetricsClient metricsClient = client as MetricsClient;
-            if (metricsClient != null)
+            AlertsClient alertsClient = client as AlertsClient;
+            if (alertsClient != null)
             {
-                metricsClient._credentials = Credentials;
-                metricsClient._baseUri = BaseUri;
-                metricsClient.Credentials.InitializeServiceClient(metricsClient);
+                alertsClient._credentials = Credentials;
+                alertsClient._baseUri = BaseUri;
+                alertsClient.Credentials.InitializeServiceClient(alertsClient);
             }
         }
     }

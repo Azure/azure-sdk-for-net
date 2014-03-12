@@ -56,6 +56,15 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
             var cancellationToken = new CancellationToken();
             cancellationToken.ThrowIfCancellationRequested();
             return await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-        }     
+        }
+
+        /// <summary>
+        /// Get an instance of the FakeServiceClient class that uses the handler while initiating web requests.
+        /// </summary>
+        /// <param name="handler">the handler</param>
+        public override FakeServiceClient WithHandler(DelegatingHandler handler)
+        {
+            return WithHandler(new FakeServiceClient(), handler);
+        }
     }
 }

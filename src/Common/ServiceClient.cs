@@ -224,8 +224,28 @@ namespace Microsoft.WindowsAzure.Common
             // Clone the HttpClient with our new handler
             newClient.HttpClient = new HttpClient(handler, false);
             Clone(newClient);
-            
+
             return (T)newClient;
         }
-    }    
+
+        public abstract T WithHandler(DelegatingHandler handler);
+
+        public T WithHandlers(IEnumerable<DelegatingHandler> handlers)
+        {
+            T currentClient = (T)this;
+
+            foreach (DelegatingHandler handler in handlers)
+            {
+                T newClient = currentClient.WithHandler(handler);
+                if (currentClient != this)
+                {
+                    currentClient.Dispose();
+                }
+
+                currentClient = newClient;
+            }
+
+            return currentClient;
+        }
+    }
 }

@@ -40,6 +40,38 @@ namespace Microsoft.WindowsAzure.Common.Test
         }
 
         [Fact]
+        public void ClientAddHandlersToPipelineAddSingleHandler()
+        {
+            var fakeClient = new FakeServiceClient(new WebRequestHandler());
+            var result1 = fakeClient.DoStuff();
+            Assert.Equal(HttpStatusCode.OK, result1.Result.StatusCode);
+
+            fakeClient = fakeClient.WithHandlers(new[] {
+                new BadResponseDelegatingHandler()
+            });
+
+            var result2 = fakeClient.DoStuff();
+            Assert.Equal(HttpStatusCode.InternalServerError, result2.Result.StatusCode);
+        }
+
+        [Fact]
+        public void ClientAddHandlersToPipelineAddMultipleHandler()
+        {
+            var fakeClient = new FakeServiceClient(new WebRequestHandler());
+            var result1 = fakeClient.DoStuff();
+            Assert.Equal(HttpStatusCode.OK, result1.Result.StatusCode);
+
+            fakeClient = fakeClient.WithHandlers(new DelegatingHandler[] {
+                new BadResponseDelegatingHandler(),
+                new AddHeaderResponseDelegatingHandler("foo", "bar"),
+            });
+
+            var result2 = fakeClient.DoStuff();
+            Assert.Equal(result2.Result.Headers.GetValues("foo").FirstOrDefault(), "bar");
+            Assert.Equal(HttpStatusCode.InternalServerError, result2.Result.StatusCode);
+        }
+
+        [Fact]
         public void RetryHandlerRetriesWith500Errors()
         {
             var fakeClient = new FakeServiceClient(new FakeHttpHandler());

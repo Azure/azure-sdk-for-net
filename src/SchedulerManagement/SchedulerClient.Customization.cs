@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
         }
 
-        public SchedulerClient WithHandler(DelegatingHandler handler)
+        public override SchedulerClient WithHandler(DelegatingHandler handler)
         {
             return (SchedulerClient)WithHandler(new SchedulerClient(), handler);
         }
