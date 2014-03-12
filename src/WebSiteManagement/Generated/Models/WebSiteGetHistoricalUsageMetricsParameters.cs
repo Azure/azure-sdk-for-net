@@ -66,6 +66,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             get { return this._startTime; }
             set { this._startTime = value; }
         }
+
+        private string _timeGrain;
+
+        /// <summary>
+        /// The aggregation interval of metrics that are returned.
+        /// </summary>
+        public string TimeGrain
+        {
+            get { return this._timeGrain; }
+            set { this._timeGrain = value; }
+        }
         
         /// <summary>
         /// Initializes a new instance of the
