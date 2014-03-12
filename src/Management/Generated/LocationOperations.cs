@@ -145,7 +145,7 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement locationsSequenceElement = responseDoc.Element(XName.Get("Locations", "http://schemas.microsoft.com/windowsazure"));
-                    if (locationsSequenceElement != null)
+                    if (locationsSequenceElement != null && locationsSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement locationsElement in locationsSequenceElement.Elements(XName.Get("Location", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -153,21 +153,21 @@ namespace Microsoft.WindowsAzure.Management
                             result.Locations.Add(locationInstance);
                             
                             XElement nameElement = locationsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 locationInstance.Name = nameInstance;
                             }
                             
                             XElement displayNameElement = locationsElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
-                            if (displayNameElement != null)
+                            if (displayNameElement != null && displayNameElement.IsEmpty == false)
                             {
                                 string displayNameInstance = displayNameElement.Value;
                                 locationInstance.DisplayName = displayNameInstance;
                             }
                             
                             XElement availableServicesSequenceElement = locationsElement.Element(XName.Get("AvailableServices", "http://schemas.microsoft.com/windowsazure"));
-                            if (availableServicesSequenceElement != null)
+                            if (availableServicesSequenceElement != null && availableServicesSequenceElement.IsEmpty == false)
                             {
                                 foreach (XElement availableServicesElement in availableServicesSequenceElement.Elements(XName.Get("AvailableService", "http://schemas.microsoft.com/windowsazure")))
                                 {

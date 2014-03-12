@@ -651,10 +651,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement certificateElement = responseDoc.Element(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure"));
-                    if (certificateElement != null)
+                    if (certificateElement != null && certificateElement.IsEmpty == false)
                     {
                         XElement dataElement = certificateElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
-                        if (dataElement != null)
+                        if (dataElement != null && dataElement.IsEmpty == false)
                         {
                             byte[] dataInstance = Convert.FromBase64String(dataElement.Value);
                             result.Data = dataInstance;
@@ -778,7 +778,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement certificatesSequenceElement = responseDoc.Element(XName.Get("Certificates", "http://schemas.microsoft.com/windowsazure"));
-                    if (certificatesSequenceElement != null)
+                    if (certificatesSequenceElement != null && certificatesSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement certificatesElement in certificatesSequenceElement.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -786,28 +786,28 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             result.Certificates.Add(certificateInstance);
                             
                             XElement certificateUrlElement = certificatesElement.Element(XName.Get("CertificateUrl", "http://schemas.microsoft.com/windowsazure"));
-                            if (certificateUrlElement != null)
+                            if (certificateUrlElement != null && certificateUrlElement.IsEmpty == false)
                             {
                                 Uri certificateUrlInstance = TypeConversion.TryParseUri(certificateUrlElement.Value);
                                 certificateInstance.CertificateUri = certificateUrlInstance;
                             }
                             
                             XElement thumbprintElement = certificatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintElement != null)
+                            if (thumbprintElement != null && thumbprintElement.IsEmpty == false)
                             {
                                 string thumbprintInstance = thumbprintElement.Value;
                                 certificateInstance.Thumbprint = thumbprintInstance;
                             }
                             
                             XElement thumbprintAlgorithmElement = certificatesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintAlgorithmElement != null)
+                            if (thumbprintAlgorithmElement != null && thumbprintAlgorithmElement.IsEmpty == false)
                             {
                                 string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
                                 certificateInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
                             }
                             
                             XElement dataElement = certificatesElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
-                            if (dataElement != null)
+                            if (dataElement != null && dataElement.IsEmpty == false)
                             {
                                 byte[] dataInstance = Convert.FromBase64String(dataElement.Value);
                                 certificateInstance.Data = dataInstance;

@@ -655,7 +655,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourcesSequenceElement != null)
+                    if (serviceResourcesSequenceElement != null && serviceResourcesSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -663,42 +663,42 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                             result.Accounts.Add(serviceResourceInstance);
                             
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 serviceResourceInstance.Name = nameInstance;
                             }
                             
                             XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
+                            if (typeElement != null && typeElement.IsEmpty == false)
                             {
                                 string typeInstance = typeElement.Value;
                                 serviceResourceInstance.Type = typeInstance;
                             }
                             
                             XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
+                            if (stateElement != null && stateElement.IsEmpty == false)
                             {
                                 string stateInstance = stateElement.Value;
                                 serviceResourceInstance.State = stateInstance;
                             }
                             
                             XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null)
+                            if (selfLinkElement != null && selfLinkElement.IsEmpty == false)
                             {
                                 Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
                                 serviceResourceInstance.Uri = selfLinkInstance;
                             }
                             
                             XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (parentLinkElement != null)
+                            if (parentLinkElement != null && parentLinkElement.IsEmpty == false)
                             {
                                 Uri parentLinkInstance = TypeConversion.TryParseUri(parentLinkElement.Value);
                                 serviceResourceInstance.ParentUri = parentLinkInstance;
                             }
                             
                             XElement accountIdElement = serviceResourcesElement.Element(XName.Get("AccountId", "http://schemas.microsoft.com/windowsazure"));
-                            if (accountIdElement != null)
+                            if (accountIdElement != null && accountIdElement.IsEmpty == false)
                             {
                                 string accountIdInstance = accountIdElement.Value;
                                 serviceResourceInstance.AccountId = accountIdInstance;

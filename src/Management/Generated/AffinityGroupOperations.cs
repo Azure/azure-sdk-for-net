@@ -426,38 +426,38 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement affinityGroupElement = responseDoc.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                    if (affinityGroupElement != null)
+                    if (affinityGroupElement != null && affinityGroupElement.IsEmpty == false)
                     {
                         XElement nameElement = affinityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
+                        if (nameElement != null && nameElement.IsEmpty == false)
                         {
                             string nameInstance = nameElement.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement labelElement = affinityGroupElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
+                        if (labelElement != null && labelElement.IsEmpty == false)
                         {
                             string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
                             result.Label = labelInstance;
                         }
                         
                         XElement descriptionElement = affinityGroupElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                        if (descriptionElement != null)
+                        if (descriptionElement != null && descriptionElement.IsEmpty == false)
                         {
                             string descriptionInstance = descriptionElement.Value;
                             result.Description = descriptionInstance;
                         }
                         
                         XElement locationElement = affinityGroupElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
+                        if (locationElement != null && locationElement.IsEmpty == false)
                         {
                             string locationInstance = locationElement.Value;
                             result.Location = locationInstance;
                         }
                         
                         XElement hostedServicesSequenceElement = affinityGroupElement.Element(XName.Get("HostedServices", "http://schemas.microsoft.com/windowsazure"));
-                        if (hostedServicesSequenceElement != null)
+                        if (hostedServicesSequenceElement != null && hostedServicesSequenceElement.IsEmpty == false)
                         {
                             foreach (XElement hostedServicesElement in hostedServicesSequenceElement.Elements(XName.Get("HostedService", "http://schemas.microsoft.com/windowsazure")))
                             {
@@ -465,14 +465,14 @@ namespace Microsoft.WindowsAzure.Management
                                 result.HostedServices.Add(hostedServiceInstance);
                                 
                                 XElement urlElement = hostedServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
-                                if (urlElement != null)
+                                if (urlElement != null && urlElement.IsEmpty == false)
                                 {
                                     Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
                                     hostedServiceInstance.Uri = urlInstance;
                                 }
                                 
                                 XElement serviceNameElement = hostedServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
-                                if (serviceNameElement != null)
+                                if (serviceNameElement != null && serviceNameElement.IsEmpty == false)
                                 {
                                     string serviceNameInstance = serviceNameElement.Value;
                                     hostedServiceInstance.ServiceName = serviceNameInstance;
@@ -481,7 +481,7 @@ namespace Microsoft.WindowsAzure.Management
                         }
                         
                         XElement storageServicesSequenceElement = affinityGroupElement.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
-                        if (storageServicesSequenceElement != null)
+                        if (storageServicesSequenceElement != null && storageServicesSequenceElement.IsEmpty == false)
                         {
                             foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure")))
                             {
@@ -489,14 +489,14 @@ namespace Microsoft.WindowsAzure.Management
                                 result.StorageServices.Add(storageServiceInstance);
                                 
                                 XElement urlElement2 = storageServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
-                                if (urlElement2 != null)
+                                if (urlElement2 != null && urlElement2.IsEmpty == false)
                                 {
                                     Uri urlInstance2 = TypeConversion.TryParseUri(urlElement2.Value);
                                     storageServiceInstance.Uri = urlInstance2;
                                 }
                                 
                                 XElement serviceNameElement2 = storageServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
-                                if (serviceNameElement2 != null)
+                                if (serviceNameElement2 != null && serviceNameElement2.IsEmpty == false)
                                 {
                                     string serviceNameInstance2 = serviceNameElement2.Value;
                                     storageServiceInstance.ServiceName = serviceNameInstance2;
@@ -505,7 +505,7 @@ namespace Microsoft.WindowsAzure.Management
                         }
                         
                         XElement capabilitiesSequenceElement = affinityGroupElement.Element(XName.Get("Capabilities", "http://schemas.microsoft.com/windowsazure"));
-                        if (capabilitiesSequenceElement != null)
+                        if (capabilitiesSequenceElement != null && capabilitiesSequenceElement.IsEmpty == false)
                         {
                             foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
                             {
@@ -622,7 +622,7 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement affinityGroupsSequenceElement = responseDoc.Element(XName.Get("AffinityGroups", "http://schemas.microsoft.com/windowsazure"));
-                    if (affinityGroupsSequenceElement != null)
+                    if (affinityGroupsSequenceElement != null && affinityGroupsSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement affinityGroupsElement in affinityGroupsSequenceElement.Elements(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -630,35 +630,35 @@ namespace Microsoft.WindowsAzure.Management
                             result.AffinityGroups.Add(affinityGroupInstance);
                             
                             XElement nameElement = affinityGroupsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 affinityGroupInstance.Name = nameInstance;
                             }
                             
                             XElement labelElement = affinityGroupsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
+                            if (labelElement != null && labelElement.IsEmpty == false)
                             {
                                 string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
                                 affinityGroupInstance.Label = labelInstance;
                             }
                             
                             XElement descriptionElement = affinityGroupsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null)
+                            if (descriptionElement != null && descriptionElement.IsEmpty == false)
                             {
                                 string descriptionInstance = descriptionElement.Value;
                                 affinityGroupInstance.Description = descriptionInstance;
                             }
                             
                             XElement locationElement = affinityGroupsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null)
+                            if (locationElement != null && locationElement.IsEmpty == false)
                             {
                                 string locationInstance = locationElement.Value;
                                 affinityGroupInstance.Location = locationInstance;
                             }
                             
                             XElement capabilitiesSequenceElement = affinityGroupsElement.Element(XName.Get("Capabilities", "http://schemas.microsoft.com/windowsazure"));
-                            if (capabilitiesSequenceElement != null)
+                            if (capabilitiesSequenceElement != null && capabilitiesSequenceElement.IsEmpty == false)
                             {
                                 foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
                                 {
