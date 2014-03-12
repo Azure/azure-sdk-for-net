@@ -159,7 +159,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken statusValue = responseDoc["status"];
                         if (statusValue != null && statusValue.Type != JTokenType.Null)
                         {
-                            DeployStatus statusInstance = (DeployStatus)Enum.Parse(typeof(DeployStatus), (string)statusValue, false);
+                            DeployStatus statusInstance = (DeployStatus)Enum.Parse(typeof(DeployStatus), (string)statusValue, true);
                             deploymentInstance.Status = statusInstance;
                         }
                         
@@ -431,7 +431,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken typeValue = responseDoc["type"];
                         if (typeValue != null && typeValue.Type != JTokenType.Null)
                         {
-                            LogEntryType typeInstance = (LogEntryType)Enum.Parse(typeof(LogEntryType), (string)typeValue, false);
+                            LogEntryType typeInstance = (LogEntryType)Enum.Parse(typeof(LogEntryType), (string)typeValue, true);
                             logInstance.Type = typeInstance;
                         }
                         
@@ -578,7 +578,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken statusValue = deploymentsValue["status"];
                                 if (statusValue != null && statusValue.Type != JTokenType.Null)
                                 {
-                                    DeployStatus statusInstance = (DeployStatus)Enum.Parse(typeof(DeployStatus), (string)statusValue, false);
+                                    DeployStatus statusInstance = (DeployStatus)Enum.Parse(typeof(DeployStatus), (string)statusValue, true);
                                     deploymentInstance.Status = statusInstance;
                                 }
                                 
@@ -861,7 +861,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken typeValue = logsValue["type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    LogEntryType typeInstance = (LogEntryType)Enum.Parse(typeof(LogEntryType), (string)typeValue, false);
+                                    LogEntryType typeInstance = (LogEntryType)Enum.Parse(typeof(LogEntryType), (string)typeValue, true);
                                     deploymentLogInstance.Type = typeInstance;
                                 }
                                 
@@ -1001,7 +1001,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken statusValue = responseDoc["status"];
                         if (statusValue != null && statusValue.Type != JTokenType.Null)
                         {
-                            DeployStatus statusInstance = (DeployStatus)Enum.Parse(typeof(DeployStatus), (string)statusValue, false);
+                            DeployStatus statusInstance = (DeployStatus)Enum.Parse(typeof(DeployStatus), (string)statusValue, true);
                             deploymentInstance.Status = statusInstance;
                         }
                         

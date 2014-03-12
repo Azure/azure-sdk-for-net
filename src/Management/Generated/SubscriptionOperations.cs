@@ -144,122 +144,122 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement subscriptionElement = responseDoc.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
-                    if (subscriptionElement != null)
+                    if (subscriptionElement != null && subscriptionElement.IsEmpty == false)
                     {
                         XElement subscriptionIDElement = subscriptionElement.Element(XName.Get("SubscriptionID", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionIDElement != null)
+                        if (subscriptionIDElement != null && subscriptionIDElement.IsEmpty == false)
                         {
                             string subscriptionIDInstance = subscriptionIDElement.Value;
                             result.SubscriptionID = subscriptionIDInstance;
                         }
                         
                         XElement subscriptionNameElement = subscriptionElement.Element(XName.Get("SubscriptionName", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionNameElement != null)
+                        if (subscriptionNameElement != null && subscriptionNameElement.IsEmpty == false)
                         {
                             string subscriptionNameInstance = subscriptionNameElement.Value;
                             result.SubscriptionName = subscriptionNameInstance;
                         }
                         
                         XElement subscriptionStatusElement = subscriptionElement.Element(XName.Get("SubscriptionStatus", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionStatusElement != null)
+                        if (subscriptionStatusElement != null && subscriptionStatusElement.IsEmpty == false)
                         {
-                            SubscriptionStatus subscriptionStatusInstance = (SubscriptionStatus)Enum.Parse(typeof(SubscriptionStatus), subscriptionStatusElement.Value, false);
+                            SubscriptionStatus subscriptionStatusInstance = (SubscriptionStatus)Enum.Parse(typeof(SubscriptionStatus), subscriptionStatusElement.Value, true);
                             result.SubscriptionStatus = subscriptionStatusInstance;
                         }
                         
                         XElement accountAdminLiveEmailIdElement = subscriptionElement.Element(XName.Get("AccountAdminLiveEmailId", "http://schemas.microsoft.com/windowsazure"));
-                        if (accountAdminLiveEmailIdElement != null)
+                        if (accountAdminLiveEmailIdElement != null && accountAdminLiveEmailIdElement.IsEmpty == false)
                         {
                             string accountAdminLiveEmailIdInstance = accountAdminLiveEmailIdElement.Value;
                             result.AccountAdminLiveEmailId = accountAdminLiveEmailIdInstance;
                         }
                         
                         XElement serviceAdminLiveEmailIdElement = subscriptionElement.Element(XName.Get("ServiceAdminLiveEmailId", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceAdminLiveEmailIdElement != null)
+                        if (serviceAdminLiveEmailIdElement != null && serviceAdminLiveEmailIdElement.IsEmpty == false)
                         {
                             string serviceAdminLiveEmailIdInstance = serviceAdminLiveEmailIdElement.Value;
                             result.ServiceAdminLiveEmailId = serviceAdminLiveEmailIdInstance;
                         }
                         
                         XElement maxCoreCountElement = subscriptionElement.Element(XName.Get("MaxCoreCount", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxCoreCountElement != null)
+                        if (maxCoreCountElement != null && maxCoreCountElement.IsEmpty == false)
                         {
                             int maxCoreCountInstance = int.Parse(maxCoreCountElement.Value, CultureInfo.InvariantCulture);
                             result.MaximumCoreCount = maxCoreCountInstance;
                         }
                         
                         XElement maxStorageAccountsElement = subscriptionElement.Element(XName.Get("MaxStorageAccounts", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxStorageAccountsElement != null)
+                        if (maxStorageAccountsElement != null && maxStorageAccountsElement.IsEmpty == false)
                         {
                             int maxStorageAccountsInstance = int.Parse(maxStorageAccountsElement.Value, CultureInfo.InvariantCulture);
                             result.MaximumStorageAccounts = maxStorageAccountsInstance;
                         }
                         
                         XElement maxHostedServicesElement = subscriptionElement.Element(XName.Get("MaxHostedServices", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxHostedServicesElement != null)
+                        if (maxHostedServicesElement != null && maxHostedServicesElement.IsEmpty == false)
                         {
                             int maxHostedServicesInstance = int.Parse(maxHostedServicesElement.Value, CultureInfo.InvariantCulture);
                             result.MaximumHostedServices = maxHostedServicesInstance;
                         }
                         
                         XElement currentCoreCountElement = subscriptionElement.Element(XName.Get("CurrentCoreCount", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentCoreCountElement != null)
+                        if (currentCoreCountElement != null && currentCoreCountElement.IsEmpty == false)
                         {
                             int currentCoreCountInstance = int.Parse(currentCoreCountElement.Value, CultureInfo.InvariantCulture);
                             result.CurrentCoreCount = currentCoreCountInstance;
                         }
                         
                         XElement currentStorageAccountsElement = subscriptionElement.Element(XName.Get("CurrentStorageAccounts", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentStorageAccountsElement != null)
+                        if (currentStorageAccountsElement != null && currentStorageAccountsElement.IsEmpty == false)
                         {
                             int currentStorageAccountsInstance = int.Parse(currentStorageAccountsElement.Value, CultureInfo.InvariantCulture);
                             result.CurrentStorageAccounts = currentStorageAccountsInstance;
                         }
                         
                         XElement currentHostedServicesElement = subscriptionElement.Element(XName.Get("CurrentHostedServices", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentHostedServicesElement != null)
+                        if (currentHostedServicesElement != null && currentHostedServicesElement.IsEmpty == false)
                         {
                             int currentHostedServicesInstance = int.Parse(currentHostedServicesElement.Value, CultureInfo.InvariantCulture);
                             result.CurrentHostedServices = currentHostedServicesInstance;
                         }
                         
                         XElement maxVirtualNetworkSitesElement = subscriptionElement.Element(XName.Get("MaxVirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxVirtualNetworkSitesElement != null)
+                        if (maxVirtualNetworkSitesElement != null && maxVirtualNetworkSitesElement.IsEmpty == false)
                         {
                             int maxVirtualNetworkSitesInstance = int.Parse(maxVirtualNetworkSitesElement.Value, CultureInfo.InvariantCulture);
                             result.MaximumVirtualNetworkSites = maxVirtualNetworkSitesInstance;
                         }
                         
                         XElement currentVirtualNetworkSitesElement = subscriptionElement.Element(XName.Get("CurrentVirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentVirtualNetworkSitesElement != null)
+                        if (currentVirtualNetworkSitesElement != null && currentVirtualNetworkSitesElement.IsEmpty == false)
                         {
                             int currentVirtualNetworkSitesInstance = int.Parse(currentVirtualNetworkSitesElement.Value, CultureInfo.InvariantCulture);
                             result.CurrentVirtualNetworkSites = currentVirtualNetworkSitesInstance;
                         }
                         
                         XElement maxLocalNetworkSitesElement = subscriptionElement.Element(XName.Get("MaxLocalNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxLocalNetworkSitesElement != null)
+                        if (maxLocalNetworkSitesElement != null && maxLocalNetworkSitesElement.IsEmpty == false)
                         {
                             int maxLocalNetworkSitesInstance = int.Parse(maxLocalNetworkSitesElement.Value, CultureInfo.InvariantCulture);
                             result.MaximumLocalNetworkSites = maxLocalNetworkSitesInstance;
                         }
                         
                         XElement maxDnsServersElement = subscriptionElement.Element(XName.Get("MaxDnsServers", "http://schemas.microsoft.com/windowsazure"));
-                        if (maxDnsServersElement != null)
+                        if (maxDnsServersElement != null && maxDnsServersElement.IsEmpty == false)
                         {
                             int maxDnsServersInstance = int.Parse(maxDnsServersElement.Value, CultureInfo.InvariantCulture);
                             result.MaximumDnsServers = maxDnsServersInstance;
                         }
                         
                         XElement currentLocalNetworkSitesElement = subscriptionElement.Element(XName.Get("CurrentLocalNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentLocalNetworkSitesElement != null)
+                        if (currentLocalNetworkSitesElement != null && currentLocalNetworkSitesElement.IsEmpty == false)
                         {
                             int currentLocalNetworkSitesInstance = int.Parse(currentLocalNetworkSitesElement.Value, CultureInfo.InvariantCulture);
                             result.CurrentLocalNetworkSites = currentLocalNetworkSitesInstance;
                         }
                         
                         XElement currentDnsServersElement = subscriptionElement.Element(XName.Get("CurrentDnsServers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentDnsServersElement != null)
+                        if (currentDnsServersElement != null && currentDnsServersElement.IsEmpty == false)
                         {
                             int currentDnsServersInstance = int.Parse(currentDnsServersElement.Value, CultureInfo.InvariantCulture);
                             result.CurrentDnsServers = currentDnsServersInstance;
@@ -397,17 +397,17 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement subscriptionOperationCollectionElement = responseDoc.Element(XName.Get("SubscriptionOperationCollection", "http://schemas.microsoft.com/windowsazure"));
-                    if (subscriptionOperationCollectionElement != null)
+                    if (subscriptionOperationCollectionElement != null && subscriptionOperationCollectionElement.IsEmpty == false)
                     {
                         XElement continuationTokenElement = subscriptionOperationCollectionElement.Element(XName.Get("ContinuationToken", "http://schemas.microsoft.com/windowsazure"));
-                        if (continuationTokenElement != null)
+                        if (continuationTokenElement != null && continuationTokenElement.IsEmpty == false)
                         {
                             string continuationTokenInstance = continuationTokenElement.Value;
                             result.ContinuationToken = continuationTokenInstance;
                         }
                         
                         XElement subscriptionOperationsSequenceElement = subscriptionOperationCollectionElement.Element(XName.Get("SubscriptionOperations", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionOperationsSequenceElement != null)
+                        if (subscriptionOperationsSequenceElement != null && subscriptionOperationsSequenceElement.IsEmpty == false)
                         {
                             foreach (XElement subscriptionOperationsElement in subscriptionOperationsSequenceElement.Elements(XName.Get("SubscriptionOperation", "http://schemas.microsoft.com/windowsazure")))
                             {
@@ -415,28 +415,28 @@ namespace Microsoft.WindowsAzure.Management
                                 result.SubscriptionOperations.Add(subscriptionOperationInstance);
                                 
                                 XElement operationIdElement = subscriptionOperationsElement.Element(XName.Get("OperationId", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationIdElement != null)
+                                if (operationIdElement != null && operationIdElement.IsEmpty == false)
                                 {
                                     string operationIdInstance = operationIdElement.Value;
                                     subscriptionOperationInstance.OperationId = operationIdInstance;
                                 }
                                 
                                 XElement operationObjectIdElement = subscriptionOperationsElement.Element(XName.Get("OperationObjectId", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationObjectIdElement != null)
+                                if (operationObjectIdElement != null && operationObjectIdElement.IsEmpty == false)
                                 {
                                     string operationObjectIdInstance = operationObjectIdElement.Value;
                                     subscriptionOperationInstance.OperationObjectId = operationObjectIdInstance;
                                 }
                                 
                                 XElement operationNameElement = subscriptionOperationsElement.Element(XName.Get("OperationName", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationNameElement != null)
+                                if (operationNameElement != null && operationNameElement.IsEmpty == false)
                                 {
                                     string operationNameInstance = operationNameElement.Value;
                                     subscriptionOperationInstance.OperationName = operationNameInstance;
                                 }
                                 
                                 XElement operationParametersSequenceElement = subscriptionOperationsElement.Element(XName.Get("OperationParameters", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationParametersSequenceElement != null)
+                                if (operationParametersSequenceElement != null && operationParametersSequenceElement.IsEmpty == false)
                                 {
                                     foreach (XElement operationParametersElement in operationParametersSequenceElement.Elements(XName.Get("OperationParameter", "http://schemas.microsoft.com/windowsazure")))
                                     {
@@ -447,34 +447,34 @@ namespace Microsoft.WindowsAzure.Management
                                 }
                                 
                                 XElement operationCallerElement = subscriptionOperationsElement.Element(XName.Get("OperationCaller", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationCallerElement != null)
+                                if (operationCallerElement != null && operationCallerElement.IsEmpty == false)
                                 {
                                     SubscriptionListOperationsResponse.OperationCallerDetails operationCallerInstance = new SubscriptionListOperationsResponse.OperationCallerDetails();
                                     subscriptionOperationInstance.OperationCaller = operationCallerInstance;
                                     
                                     XElement usedServiceManagementApiElement = operationCallerElement.Element(XName.Get("UsedServiceManagementApi", "http://schemas.microsoft.com/windowsazure"));
-                                    if (usedServiceManagementApiElement != null)
+                                    if (usedServiceManagementApiElement != null && usedServiceManagementApiElement.IsEmpty == false)
                                     {
                                         bool usedServiceManagementApiInstance = bool.Parse(usedServiceManagementApiElement.Value);
                                         operationCallerInstance.UsedServiceManagementApi = usedServiceManagementApiInstance;
                                     }
                                     
                                     XElement userEmailAddressElement = operationCallerElement.Element(XName.Get("UserEmailAddress", "http://schemas.microsoft.com/windowsazure"));
-                                    if (userEmailAddressElement != null)
+                                    if (userEmailAddressElement != null && userEmailAddressElement.IsEmpty == false)
                                     {
                                         string userEmailAddressInstance = userEmailAddressElement.Value;
                                         operationCallerInstance.UserEmailAddress = userEmailAddressInstance;
                                     }
                                     
                                     XElement subscriptionCertificateThumbprintElement = operationCallerElement.Element(XName.Get("SubscriptionCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                    if (subscriptionCertificateThumbprintElement != null)
+                                    if (subscriptionCertificateThumbprintElement != null && subscriptionCertificateThumbprintElement.IsEmpty == false)
                                     {
                                         string subscriptionCertificateThumbprintInstance = subscriptionCertificateThumbprintElement.Value;
                                         operationCallerInstance.SubscriptionCertificateThumbprint = subscriptionCertificateThumbprintInstance;
                                     }
                                     
                                     XElement clientIPElement = operationCallerElement.Element(XName.Get("ClientIP", "http://schemas.microsoft.com/windowsazure"));
-                                    if (clientIPElement != null)
+                                    if (clientIPElement != null && clientIPElement.IsEmpty == false)
                                     {
                                         string clientIPInstance = clientIPElement.Value;
                                         operationCallerInstance.ClientIPAddress = clientIPInstance;
@@ -482,21 +482,21 @@ namespace Microsoft.WindowsAzure.Management
                                 }
                                 
                                 XElement operationStatusElement = subscriptionOperationsElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationStatusElement != null)
+                                if (operationStatusElement != null && operationStatusElement.IsEmpty == false)
                                 {
                                     string operationStatusInstance = operationStatusElement.Value;
                                     subscriptionOperationInstance.OperationStatus = operationStatusInstance;
                                 }
                                 
                                 XElement operationStartedTimeElement = subscriptionOperationsElement.Element(XName.Get("OperationStartedTime", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationStartedTimeElement != null)
+                                if (operationStartedTimeElement != null && operationStartedTimeElement.IsEmpty == false)
                                 {
                                     DateTime operationStartedTimeInstance = DateTime.Parse(operationStartedTimeElement.Value, CultureInfo.InvariantCulture);
                                     subscriptionOperationInstance.OperationStartedTime = operationStartedTimeInstance;
                                 }
                                 
                                 XElement operationCompletedTimeElement = subscriptionOperationsElement.Element(XName.Get("OperationCompletedTime", "http://schemas.microsoft.com/windowsazure"));
-                                if (operationCompletedTimeElement != null)
+                                if (operationCompletedTimeElement != null && operationCompletedTimeElement.IsEmpty == false)
                                 {
                                     DateTime operationCompletedTimeInstance = DateTime.Parse(operationCompletedTimeElement.Value, CultureInfo.InvariantCulture);
                                     subscriptionOperationInstance.OperationCompletedTime = operationCompletedTimeInstance;

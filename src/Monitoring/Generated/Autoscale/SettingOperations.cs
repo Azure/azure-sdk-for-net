@@ -642,7 +642,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken statisticValue = metricTriggerValue["Statistic"];
                                             if (statisticValue != null && statisticValue.Type != JTokenType.Null)
                                             {
-                                                MetricStatisticType statisticInstance = (MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), (string)statisticValue, false);
+                                                MetricStatisticType statisticInstance = (MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), (string)statisticValue, true);
                                                 metricTriggerInstance.Statistic = statisticInstance;
                                             }
                                             
@@ -656,14 +656,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken timeAggregationValue = metricTriggerValue["TimeAggregation"];
                                             if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
                                             {
-                                                TimeAggregationType timeAggregationInstance = (TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), (string)timeAggregationValue, false);
+                                                TimeAggregationType timeAggregationInstance = (TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), (string)timeAggregationValue, true);
                                                 metricTriggerInstance.TimeAggregation = timeAggregationInstance;
                                             }
                                             
                                             JToken operatorValue = metricTriggerValue["Operator"];
                                             if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                             {
-                                                ComparisonOperationType operatorInstance = (ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), (string)operatorValue, false);
+                                                ComparisonOperationType operatorInstance = (ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), (string)operatorValue, true);
                                                 metricTriggerInstance.Operator = operatorInstance;
                                             }
                                             
@@ -684,14 +684,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken directionValue = scaleActionValue["Direction"];
                                             if (directionValue != null && directionValue.Type != JTokenType.Null)
                                             {
-                                                ScaleDirection directionInstance = (ScaleDirection)Enum.Parse(typeof(ScaleDirection), (string)directionValue, false);
+                                                ScaleDirection directionInstance = (ScaleDirection)Enum.Parse(typeof(ScaleDirection), (string)directionValue, true);
                                                 scaleActionInstance.Direction = directionInstance;
                                             }
                                             
                                             JToken typeValue = scaleActionValue["Type"];
                                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                                             {
-                                                ScaleType typeInstance = (ScaleType)Enum.Parse(typeof(ScaleType), (string)typeValue, false);
+                                                ScaleType typeInstance = (ScaleType)Enum.Parse(typeof(ScaleType), (string)typeValue, true);
                                                 scaleActionInstance.Type = typeInstance;
                                             }
                                             
@@ -749,7 +749,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     JToken frequencyValue = recurrenceValue["Frequency"];
                                     if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
                                     {
-                                        RecurrenceFrequency frequencyInstance = (RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), (string)frequencyValue, false);
+                                        RecurrenceFrequency frequencyInstance = (RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), (string)frequencyValue, true);
                                         recurrenceInstance.Frequency = frequencyInstance;
                                     }
                                     

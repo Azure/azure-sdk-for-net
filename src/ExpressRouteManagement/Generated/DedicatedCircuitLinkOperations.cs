@@ -148,10 +148,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
+                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -278,10 +278,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
+                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -407,20 +407,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dedicatedCircuitLinkElement = responseDoc.Element(XName.Get("DedicatedCircuitLink", "http://schemas.microsoft.com/windowsazure"));
-                    if (dedicatedCircuitLinkElement != null)
+                    if (dedicatedCircuitLinkElement != null && dedicatedCircuitLinkElement.IsEmpty == false)
                     {
                         AzureDedicatedCircuitLink dedicatedCircuitLinkInstance = new AzureDedicatedCircuitLink();
                         result.DedicatedCircuitLink = dedicatedCircuitLinkInstance;
                         
                         XElement stateElement = dedicatedCircuitLinkElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
+                        if (stateElement != null && stateElement.IsEmpty == false)
                         {
-                            DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, false);
+                            DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true);
                             dedicatedCircuitLinkInstance.State = stateInstance;
                         }
                         
                         XElement vnetNameElement = dedicatedCircuitLinkElement.Element(XName.Get("VnetName", "http://schemas.microsoft.com/windowsazure"));
-                        if (vnetNameElement != null)
+                        if (vnetNameElement != null && vnetNameElement.IsEmpty == false)
                         {
                             string vnetNameInstance = vnetNameElement.Value;
                             dedicatedCircuitLinkInstance.VnetName = vnetNameInstance;
@@ -535,7 +535,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dedicatedCircuitLinksSequenceElement = responseDoc.Element(XName.Get("DedicatedCircuitLinks", "http://schemas.microsoft.com/windowsazure"));
-                    if (dedicatedCircuitLinksSequenceElement != null)
+                    if (dedicatedCircuitLinksSequenceElement != null && dedicatedCircuitLinksSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement dedicatedCircuitLinksElement in dedicatedCircuitLinksSequenceElement.Elements(XName.Get("DedicatedCircuitLink", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -543,14 +543,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             result.DedicatedCircuitLinks.Add(dedicatedCircuitLinkInstance);
                             
                             XElement stateElement = dedicatedCircuitLinksElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
+                            if (stateElement != null && stateElement.IsEmpty == false)
                             {
-                                DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, false);
+                                DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true);
                                 dedicatedCircuitLinkInstance.State = stateInstance;
                             }
                             
                             XElement vnetNameElement = dedicatedCircuitLinksElement.Element(XName.Get("VnetName", "http://schemas.microsoft.com/windowsazure"));
-                            if (vnetNameElement != null)
+                            if (vnetNameElement != null && vnetNameElement.IsEmpty == false)
                             {
                                 string vnetNameInstance = vnetNameElement.Value;
                                 dedicatedCircuitLinkInstance.VnetName = vnetNameInstance;

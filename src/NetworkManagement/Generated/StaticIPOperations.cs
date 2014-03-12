@@ -155,17 +155,17 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement addressAvailabilityResponseElement = responseDoc.Element(XName.Get("AddressAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (addressAvailabilityResponseElement != null)
+                    if (addressAvailabilityResponseElement != null && addressAvailabilityResponseElement.IsEmpty == false)
                     {
                         XElement isAvailableElement = addressAvailabilityResponseElement.Element(XName.Get("IsAvailable", "http://schemas.microsoft.com/windowsazure"));
-                        if (isAvailableElement != null)
+                        if (isAvailableElement != null && isAvailableElement.IsEmpty == false)
                         {
                             bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
                             result.IsAvailable = isAvailableInstance;
                         }
                         
                         XElement availableAddressesSequenceElement = addressAvailabilityResponseElement.Element(XName.Get("AvailableAddresses", "http://schemas.microsoft.com/windowsazure"));
-                        if (availableAddressesSequenceElement != null)
+                        if (availableAddressesSequenceElement != null && availableAddressesSequenceElement.IsEmpty == false)
                         {
                             foreach (XElement availableAddressesElement in availableAddressesSequenceElement.Elements(XName.Get("AvailableAddress", "http://schemas.microsoft.com/windowsazure")))
                             {

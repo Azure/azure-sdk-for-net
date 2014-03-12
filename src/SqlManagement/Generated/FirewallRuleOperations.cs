@@ -203,38 +203,38 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement2 != null)
+                    if (serviceResourceElement2 != null && serviceResourceElement2.IsEmpty == false)
                     {
                         XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
+                        if (nameElement2 != null && nameElement2.IsEmpty == false)
                         {
                             string nameInstance = nameElement2.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
+                        if (typeElement != null && typeElement.IsEmpty == false)
                         {
                             string typeInstance = typeElement.Value;
                             result.Type = typeInstance;
                         }
                         
                         XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
+                        if (stateElement != null && stateElement.IsEmpty == false)
                         {
                             string stateInstance = stateElement.Value;
                             result.State = stateInstance;
                         }
                         
                         XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement2 != null)
+                        if (startIPAddressElement2 != null && startIPAddressElement2.IsEmpty == false)
                         {
                             string startIPAddressInstance = startIPAddressElement2.Value;
                             result.StartIPAddress = startIPAddressInstance;
                         }
                         
                         XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement2 != null)
+                        if (endIPAddressElement2 != null && endIPAddressElement2.IsEmpty == false)
                         {
                             string endIPAddressInstance = endIPAddressElement2.Value;
                             result.EndIPAddress = endIPAddressInstance;
@@ -478,7 +478,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourcesSequenceElement != null)
+                    if (serviceResourcesSequenceElement != null && serviceResourcesSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -486,28 +486,28 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             result.FirewallRules.Add(serviceResourceInstance);
                             
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 serviceResourceInstance.Name = nameInstance;
                             }
                             
                             XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
+                            if (typeElement != null && typeElement.IsEmpty == false)
                             {
                                 string typeInstance = typeElement.Value;
                                 serviceResourceInstance.Type = typeInstance;
                             }
                             
                             XElement startIPAddressElement = serviceResourcesElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (startIPAddressElement != null)
+                            if (startIPAddressElement != null && startIPAddressElement.IsEmpty == false)
                             {
                                 string startIPAddressInstance = startIPAddressElement.Value;
                                 serviceResourceInstance.StartIPAddress = startIPAddressInstance;
                             }
                             
                             XElement endIPAddressElement = serviceResourcesElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (endIPAddressElement != null)
+                            if (endIPAddressElement != null && endIPAddressElement.IsEmpty == false)
                             {
                                 string endIPAddressInstance = endIPAddressElement.Value;
                                 serviceResourceInstance.EndIPAddress = endIPAddressInstance;
@@ -684,38 +684,38 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement2 != null)
+                    if (serviceResourceElement2 != null && serviceResourceElement2.IsEmpty == false)
                     {
                         XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
+                        if (nameElement2 != null && nameElement2.IsEmpty == false)
                         {
                             string nameInstance = nameElement2.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
+                        if (typeElement != null && typeElement.IsEmpty == false)
                         {
                             string typeInstance = typeElement.Value;
                             result.Type = typeInstance;
                         }
                         
                         XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
+                        if (stateElement != null && stateElement.IsEmpty == false)
                         {
                             string stateInstance = stateElement.Value;
                             result.State = stateInstance;
                         }
                         
                         XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement2 != null)
+                        if (startIPAddressElement2 != null && startIPAddressElement2.IsEmpty == false)
                         {
                             string startIPAddressInstance = startIPAddressElement2.Value;
                             result.StartIPAddress = startIPAddressInstance;
                         }
                         
                         XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement2 != null)
+                        if (endIPAddressElement2 != null && endIPAddressElement2.IsEmpty == false)
                         {
                             string endIPAddressInstance = endIPAddressElement2.Value;
                             result.EndIPAddress = endIPAddressInstance;

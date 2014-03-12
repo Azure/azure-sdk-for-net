@@ -545,86 +545,86 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement diskElement2 = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
-                    if (diskElement2 != null)
+                    if (diskElement2 != null && diskElement2.IsEmpty == false)
                     {
                         XElement osElement2 = diskElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement2 != null)
+                        if (osElement2 != null && osElement2.IsEmpty == false)
                         {
                             string osInstance = osElement2.Value;
                             result.OperatingSystem = osInstance;
                         }
                         
                         XElement labelElement2 = diskElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement2 != null)
+                        if (labelElement2 != null && labelElement2.IsEmpty == false)
                         {
                             string labelInstance = labelElement2.Value;
                             result.Label = labelInstance;
                         }
                         
                         XElement affinityGroupElement = diskElement2.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
+                        if (affinityGroupElement != null && affinityGroupElement.IsEmpty == false)
                         {
                             string affinityGroupInstance = affinityGroupElement.Value;
                             result.AffinityGroup = affinityGroupInstance;
                         }
                         
                         XElement locationElement = diskElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
+                        if (locationElement != null && locationElement.IsEmpty == false)
                         {
                             string locationInstance = locationElement.Value;
                             result.Location = locationInstance;
                         }
                         
                         XElement logicalDiskSizeInGBElement = diskElement2.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalDiskSizeInGBElement != null)
+                        if (logicalDiskSizeInGBElement != null && logicalDiskSizeInGBElement.IsEmpty == false)
                         {
                             int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                             result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
                         }
                         
                         XElement mediaLinkElement2 = diskElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement2 != null)
+                        if (mediaLinkElement2 != null && mediaLinkElement2.IsEmpty == false)
                         {
                             Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement2.Value);
                             result.MediaLinkUri = mediaLinkInstance;
                         }
                         
                         XElement nameElement2 = diskElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
+                        if (nameElement2 != null && nameElement2.IsEmpty == false)
                         {
                             string nameInstance = nameElement2.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement sourceImageNameElement = diskElement2.Element(XName.Get("SourceImageName", "http://schemas.microsoft.com/windowsazure"));
-                        if (sourceImageNameElement != null)
+                        if (sourceImageNameElement != null && sourceImageNameElement.IsEmpty == false)
                         {
                             string sourceImageNameInstance = sourceImageNameElement.Value;
                             result.SourceImageName = sourceImageNameInstance;
                         }
                         
                         XElement attachedToElement = diskElement2.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
-                        if (attachedToElement != null)
+                        if (attachedToElement != null && attachedToElement.IsEmpty == false)
                         {
                             VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails();
                             result.UsageDetails = attachedToInstance;
                             
                             XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
-                            if (hostedServiceNameElement != null)
+                            if (hostedServiceNameElement != null && hostedServiceNameElement.IsEmpty == false)
                             {
                                 string hostedServiceNameInstance = hostedServiceNameElement.Value;
                                 attachedToInstance.HostedServiceName = hostedServiceNameInstance;
                             }
                             
                             XElement deploymentNameElement = attachedToElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
-                            if (deploymentNameElement != null)
+                            if (deploymentNameElement != null && deploymentNameElement.IsEmpty == false)
                             {
                                 string deploymentNameInstance = deploymentNameElement.Value;
                                 attachedToInstance.DeploymentName = deploymentNameInstance;
                             }
                             
                             XElement roleNameElement = attachedToElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
-                            if (roleNameElement != null)
+                            if (roleNameElement != null && roleNameElement.IsEmpty == false)
                             {
                                 string roleNameInstance = roleNameElement.Value;
                                 attachedToInstance.RoleName = roleNameInstance;
@@ -632,7 +632,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         }
                         
                         XElement isPremiumElement = diskElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
+                        if (isPremiumElement != null && isPremiumElement.IsEmpty == false && string.IsNullOrEmpty(isPremiumElement.Value) == false)
                         {
                             bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
                             result.IsPremium = isPremiumInstance;
@@ -1008,45 +1008,45 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dataVirtualHardDiskElement = responseDoc.Element(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure"));
-                    if (dataVirtualHardDiskElement != null)
+                    if (dataVirtualHardDiskElement != null && dataVirtualHardDiskElement.IsEmpty == false)
                     {
                         XElement hostCachingElement = dataVirtualHardDiskElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
-                        if (hostCachingElement != null)
+                        if (hostCachingElement != null && hostCachingElement.IsEmpty == false)
                         {
-                            VirtualHardDiskHostCaching hostCachingInstance = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, false);
+                            VirtualHardDiskHostCaching hostCachingInstance = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true);
                             result.HostCaching = hostCachingInstance;
                         }
                         
                         XElement diskLabelElement = dataVirtualHardDiskElement.Element(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
-                        if (diskLabelElement != null)
+                        if (diskLabelElement != null && diskLabelElement.IsEmpty == false)
                         {
                             string diskLabelInstance = diskLabelElement.Value;
                             result.Label = diskLabelInstance;
                         }
                         
                         XElement diskNameElement = dataVirtualHardDiskElement.Element(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                        if (diskNameElement != null)
+                        if (diskNameElement != null && diskNameElement.IsEmpty == false)
                         {
                             string diskNameInstance = diskNameElement.Value;
                             result.Name = diskNameInstance;
                         }
                         
                         XElement lunElement = dataVirtualHardDiskElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
-                        if (lunElement != null && string.IsNullOrEmpty(lunElement.Value) == false)
+                        if (lunElement != null && lunElement.IsEmpty == false && string.IsNullOrEmpty(lunElement.Value) == false)
                         {
                             int lunInstance = int.Parse(lunElement.Value, CultureInfo.InvariantCulture);
                             result.LogicalUnitNumber = lunInstance;
                         }
                         
                         XElement logicalDiskSizeInGBElement = dataVirtualHardDiskElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalDiskSizeInGBElement != null)
+                        if (logicalDiskSizeInGBElement != null && logicalDiskSizeInGBElement.IsEmpty == false)
                         {
                             int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                             result.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance;
                         }
                         
                         XElement mediaLinkElement = dataVirtualHardDiskElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement != null)
+                        if (mediaLinkElement != null && mediaLinkElement.IsEmpty == false)
                         {
                             Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
                             result.MediaLinkUri = mediaLinkInstance;
@@ -1170,86 +1170,86 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement diskElement = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
-                    if (diskElement != null)
+                    if (diskElement != null && diskElement.IsEmpty == false)
                     {
                         XElement affinityGroupElement = diskElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
+                        if (affinityGroupElement != null && affinityGroupElement.IsEmpty == false)
                         {
                             string affinityGroupInstance = affinityGroupElement.Value;
                             result.AffinityGroup = affinityGroupInstance;
                         }
                         
                         XElement locationElement = diskElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
+                        if (locationElement != null && locationElement.IsEmpty == false)
                         {
                             string locationInstance = locationElement.Value;
                             result.Location = locationInstance;
                         }
                         
                         XElement labelElement = diskElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
+                        if (labelElement != null && labelElement.IsEmpty == false)
                         {
                             string labelInstance = labelElement.Value;
                             result.Label = labelInstance;
                         }
                         
                         XElement logicalDiskSizeInGBElement = diskElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalDiskSizeInGBElement != null)
+                        if (logicalDiskSizeInGBElement != null && logicalDiskSizeInGBElement.IsEmpty == false)
                         {
                             int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                             result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
                         }
                         
                         XElement mediaLinkElement = diskElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement != null)
+                        if (mediaLinkElement != null && mediaLinkElement.IsEmpty == false)
                         {
                             Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
                             result.MediaLinkUri = mediaLinkInstance;
                         }
                         
                         XElement nameElement = diskElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
+                        if (nameElement != null && nameElement.IsEmpty == false)
                         {
                             string nameInstance = nameElement.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement osElement = diskElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement != null)
+                        if (osElement != null && osElement.IsEmpty == false)
                         {
                             string osInstance = osElement.Value;
                             result.OperatingSystemType = osInstance;
                         }
                         
                         XElement sourceImageNameElement = diskElement.Element(XName.Get("SourceImageName", "http://schemas.microsoft.com/windowsazure"));
-                        if (sourceImageNameElement != null)
+                        if (sourceImageNameElement != null && sourceImageNameElement.IsEmpty == false)
                         {
                             string sourceImageNameInstance = sourceImageNameElement.Value;
                             result.SourceImageName = sourceImageNameInstance;
                         }
                         
                         XElement attachedToElement = diskElement.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
-                        if (attachedToElement != null)
+                        if (attachedToElement != null && attachedToElement.IsEmpty == false)
                         {
                             VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails();
                             result.UsageDetails = attachedToInstance;
                             
                             XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
-                            if (hostedServiceNameElement != null)
+                            if (hostedServiceNameElement != null && hostedServiceNameElement.IsEmpty == false)
                             {
                                 string hostedServiceNameInstance = hostedServiceNameElement.Value;
                                 attachedToInstance.HostedServiceName = hostedServiceNameInstance;
                             }
                             
                             XElement deploymentNameElement = attachedToElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
-                            if (deploymentNameElement != null)
+                            if (deploymentNameElement != null && deploymentNameElement.IsEmpty == false)
                             {
                                 string deploymentNameInstance = deploymentNameElement.Value;
                                 attachedToInstance.DeploymentName = deploymentNameInstance;
                             }
                             
                             XElement roleNameElement = attachedToElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
-                            if (roleNameElement != null)
+                            if (roleNameElement != null && roleNameElement.IsEmpty == false)
                             {
                                 string roleNameInstance = roleNameElement.Value;
                                 attachedToInstance.RoleName = roleNameInstance;
@@ -1257,14 +1257,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         }
                         
                         XElement isCorruptedElement = diskElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
-                        if (isCorruptedElement != null && string.IsNullOrEmpty(isCorruptedElement.Value) == false)
+                        if (isCorruptedElement != null && isCorruptedElement.IsEmpty == false && string.IsNullOrEmpty(isCorruptedElement.Value) == false)
                         {
                             bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
                             result.IsCorrupted = isCorruptedInstance;
                         }
                         
                         XElement isPremiumElement = diskElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
+                        if (isPremiumElement != null && isPremiumElement.IsEmpty == false && string.IsNullOrEmpty(isPremiumElement.Value) == false)
                         {
                             bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
                             result.IsPremium = isPremiumInstance;
@@ -1379,7 +1379,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement disksSequenceElement = responseDoc.Element(XName.Get("Disks", "http://schemas.microsoft.com/windowsazure"));
-                    if (disksSequenceElement != null)
+                    if (disksSequenceElement != null && disksSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement disksElement in disksSequenceElement.Elements(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -1387,83 +1387,83 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             result.Disks.Add(diskInstance);
                             
                             XElement affinityGroupElement = disksElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                            if (affinityGroupElement != null)
+                            if (affinityGroupElement != null && affinityGroupElement.IsEmpty == false)
                             {
                                 string affinityGroupInstance = affinityGroupElement.Value;
                                 diskInstance.AffinityGroup = affinityGroupInstance;
                             }
                             
                             XElement locationElement = disksElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null)
+                            if (locationElement != null && locationElement.IsEmpty == false)
                             {
                                 string locationInstance = locationElement.Value;
                                 diskInstance.Location = locationInstance;
                             }
                             
                             XElement labelElement = disksElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
+                            if (labelElement != null && labelElement.IsEmpty == false)
                             {
                                 string labelInstance = labelElement.Value;
                                 diskInstance.Label = labelInstance;
                             }
                             
                             XElement logicalDiskSizeInGBElement = disksElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                            if (logicalDiskSizeInGBElement != null)
+                            if (logicalDiskSizeInGBElement != null && logicalDiskSizeInGBElement.IsEmpty == false)
                             {
                                 int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                                 diskInstance.LogicalSizeInGB = logicalDiskSizeInGBInstance;
                             }
                             
                             XElement mediaLinkElement = disksElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (mediaLinkElement != null)
+                            if (mediaLinkElement != null && mediaLinkElement.IsEmpty == false)
                             {
                                 Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
                                 diskInstance.MediaLinkUri = mediaLinkInstance;
                             }
                             
                             XElement nameElement = disksElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 diskInstance.Name = nameInstance;
                             }
                             
                             XElement osElement = disksElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                            if (osElement != null)
+                            if (osElement != null && osElement.IsEmpty == false)
                             {
                                 string osInstance = osElement.Value;
                                 diskInstance.OperatingSystemType = osInstance;
                             }
                             
                             XElement sourceImageNameElement = disksElement.Element(XName.Get("SourceImageName", "http://schemas.microsoft.com/windowsazure"));
-                            if (sourceImageNameElement != null)
+                            if (sourceImageNameElement != null && sourceImageNameElement.IsEmpty == false)
                             {
                                 string sourceImageNameInstance = sourceImageNameElement.Value;
                                 diskInstance.SourceImageName = sourceImageNameInstance;
                             }
                             
                             XElement attachedToElement = disksElement.Element(XName.Get("AttachedTo", "http://schemas.microsoft.com/windowsazure"));
-                            if (attachedToElement != null)
+                            if (attachedToElement != null && attachedToElement.IsEmpty == false)
                             {
                                 VirtualMachineDiskListResponse.VirtualMachineDiskUsageDetails attachedToInstance = new VirtualMachineDiskListResponse.VirtualMachineDiskUsageDetails();
                                 diskInstance.UsageDetails = attachedToInstance;
                                 
                                 XElement hostedServiceNameElement = attachedToElement.Element(XName.Get("HostedServiceName", "http://schemas.microsoft.com/windowsazure"));
-                                if (hostedServiceNameElement != null)
+                                if (hostedServiceNameElement != null && hostedServiceNameElement.IsEmpty == false)
                                 {
                                     string hostedServiceNameInstance = hostedServiceNameElement.Value;
                                     attachedToInstance.HostedServiceName = hostedServiceNameInstance;
                                 }
                                 
                                 XElement deploymentNameElement = attachedToElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
-                                if (deploymentNameElement != null)
+                                if (deploymentNameElement != null && deploymentNameElement.IsEmpty == false)
                                 {
                                     string deploymentNameInstance = deploymentNameElement.Value;
                                     attachedToInstance.DeploymentName = deploymentNameInstance;
                                 }
                                 
                                 XElement roleNameElement = attachedToElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
-                                if (roleNameElement != null)
+                                if (roleNameElement != null && roleNameElement.IsEmpty == false)
                                 {
                                     string roleNameInstance = roleNameElement.Value;
                                     attachedToInstance.RoleName = roleNameInstance;
@@ -1471,14 +1471,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                             
                             XElement isCorruptedElement = disksElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
-                            if (isCorruptedElement != null && string.IsNullOrEmpty(isCorruptedElement.Value) == false)
+                            if (isCorruptedElement != null && isCorruptedElement.IsEmpty == false && string.IsNullOrEmpty(isCorruptedElement.Value) == false)
                             {
                                 bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
                                 diskInstance.IsCorrupted = isCorruptedInstance;
                             }
                             
                             XElement isPremiumElement = disksElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                            if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
+                            if (isPremiumElement != null && isPremiumElement.IsEmpty == false && string.IsNullOrEmpty(isPremiumElement.Value) == false)
                             {
                                 bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
                                 diskInstance.IsPremium = isPremiumInstance;
@@ -1846,59 +1846,59 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement diskElement2 = responseDoc.Element(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
-                    if (diskElement2 != null)
+                    if (diskElement2 != null && diskElement2.IsEmpty == false)
                     {
                         XElement osElement2 = diskElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement2 != null)
+                        if (osElement2 != null && osElement2.IsEmpty == false)
                         {
                             string osInstance = osElement2.Value;
                             result.OperatingSystem = osInstance;
                         }
                         
                         XElement labelElement2 = diskElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement2 != null)
+                        if (labelElement2 != null && labelElement2.IsEmpty == false)
                         {
                             string labelInstance = labelElement2.Value;
                             result.Label = labelInstance;
                         }
                         
                         XElement affinityGroupElement = diskElement2.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
+                        if (affinityGroupElement != null && affinityGroupElement.IsEmpty == false)
                         {
                             string affinityGroupInstance = affinityGroupElement.Value;
                             result.AffinityGroup = affinityGroupInstance;
                         }
                         
                         XElement locationElement = diskElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
+                        if (locationElement != null && locationElement.IsEmpty == false)
                         {
                             string locationInstance = locationElement.Value;
                             result.Location = locationInstance;
                         }
                         
                         XElement logicalDiskSizeInGBElement = diskElement2.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalDiskSizeInGBElement != null)
+                        if (logicalDiskSizeInGBElement != null && logicalDiskSizeInGBElement.IsEmpty == false)
                         {
                             int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                             result.LogicalSizeInGB = logicalDiskSizeInGBInstance;
                         }
                         
                         XElement mediaLinkElement2 = diskElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement2 != null)
+                        if (mediaLinkElement2 != null && mediaLinkElement2.IsEmpty == false)
                         {
                             Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement2.Value);
                             result.MediaLinkUri = mediaLinkInstance;
                         }
                         
                         XElement nameElement2 = diskElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
+                        if (nameElement2 != null && nameElement2.IsEmpty == false)
                         {
                             string nameInstance = nameElement2.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement isPremiumElement = diskElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
+                        if (isPremiumElement != null && isPremiumElement.IsEmpty == false && string.IsNullOrEmpty(isPremiumElement.Value) == false)
                         {
                             bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
                             result.IsPremium = isPremiumInstance;

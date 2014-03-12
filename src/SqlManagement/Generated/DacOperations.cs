@@ -241,7 +241,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement guidElement = responseDoc.Element(XName.Get("guid", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (guidElement != null)
+                    if (guidElement != null && guidElement.IsEmpty == false)
                     {
                         result.Guid = guidElement.Value;
                     }
@@ -395,9 +395,9 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement arrayOfStatusInfoElement = responseDoc.Element(XName.Get("ArrayOfStatusInfo", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                    if (arrayOfStatusInfoElement != null)
+                    if (arrayOfStatusInfoElement != null && arrayOfStatusInfoElement.IsEmpty == false)
                     {
-                        if (arrayOfStatusInfoElement != null)
+                        if (arrayOfStatusInfoElement != null && arrayOfStatusInfoElement.IsEmpty == false)
                         {
                             foreach (XElement statusInfoElement in arrayOfStatusInfoElement.Elements(XName.Get("StatusInfo", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes")))
                             {
@@ -405,21 +405,21 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                 result.StatusInfoList.Add(statusInfoInstance);
                                 
                                 XElement blobUriElement = statusInfoElement.Element(XName.Get("BlobUri", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                                if (blobUriElement != null)
+                                if (blobUriElement != null && blobUriElement.IsEmpty == false)
                                 {
                                     Uri blobUriInstance = TypeConversion.TryParseUri(blobUriElement.Value);
                                     statusInfoInstance.BlobUri = blobUriInstance;
                                 }
                                 
                                 XElement databaseNameElement = statusInfoElement.Element(XName.Get("DatabaseName", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                                if (databaseNameElement != null)
+                                if (databaseNameElement != null && databaseNameElement.IsEmpty == false)
                                 {
                                     string databaseNameInstance = databaseNameElement.Value;
                                     statusInfoInstance.DatabaseName = databaseNameInstance;
                                 }
                                 
                                 XElement errorMessageElement = statusInfoElement.Element(XName.Get("ErrorMessage", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                                if (errorMessageElement != null)
+                                if (errorMessageElement != null && errorMessageElement.IsEmpty == false)
                                 {
                                     bool isNil = false;
                                     XAttribute nilAttribute = errorMessageElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -435,42 +435,42 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                 }
                                 
                                 XElement lastModifiedTimeElement = statusInfoElement.Element(XName.Get("LastModifiedTime", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                                if (lastModifiedTimeElement != null)
+                                if (lastModifiedTimeElement != null && lastModifiedTimeElement.IsEmpty == false)
                                 {
                                     DateTime lastModifiedTimeInstance = DateTime.Parse(lastModifiedTimeElement.Value, CultureInfo.InvariantCulture);
                                     statusInfoInstance.LastModifiedTime = lastModifiedTimeInstance;
                                 }
                                 
                                 XElement queuedTimeElement = statusInfoElement.Element(XName.Get("QueuedTime", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                                if (queuedTimeElement != null)
+                                if (queuedTimeElement != null && queuedTimeElement.IsEmpty == false)
                                 {
                                     DateTime queuedTimeInstance = DateTime.Parse(queuedTimeElement.Value, CultureInfo.InvariantCulture);
                                     statusInfoInstance.QueuedTime = queuedTimeInstance;
                                 }
                                 
                                 XElement requestIdElement = statusInfoElement.Element(XName.Get("RequestId", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                                if (requestIdElement != null)
+                                if (requestIdElement != null && requestIdElement.IsEmpty == false)
                                 {
                                     string requestIdInstance = requestIdElement.Value;
                                     statusInfoInstance.RequestId = requestIdInstance;
                                 }
                                 
                                 XElement requestTypeElement = statusInfoElement.Element(XName.Get("RequestType", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                                if (requestTypeElement != null)
+                                if (requestTypeElement != null && requestTypeElement.IsEmpty == false)
                                 {
                                     string requestTypeInstance = requestTypeElement.Value;
                                     statusInfoInstance.RequestType = requestTypeInstance;
                                 }
                                 
                                 XElement serverNameElement = statusInfoElement.Element(XName.Get("ServerName", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                                if (serverNameElement != null)
+                                if (serverNameElement != null && serverNameElement.IsEmpty == false)
                                 {
                                     string serverNameInstance = serverNameElement.Value;
                                     statusInfoInstance.ServerName = serverNameInstance;
                                 }
                                 
                                 XElement statusElement = statusInfoElement.Element(XName.Get("Status", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
-                                if (statusElement != null)
+                                if (statusElement != null && statusElement.IsEmpty == false)
                                 {
                                     string statusInstance = statusElement.Value;
                                     statusInfoInstance.Status = statusInstance;
@@ -694,7 +694,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement guidElement = responseDoc.Element(XName.Get("guid", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (guidElement != null)
+                    if (guidElement != null && guidElement.IsEmpty == false)
                     {
                         result.Guid = guidElement.Value;
                     }

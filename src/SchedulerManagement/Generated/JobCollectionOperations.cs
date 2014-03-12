@@ -687,10 +687,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement resourceNameAvailabilityResponseElement = responseDoc.Element(XName.Get("ResourceNameAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (resourceNameAvailabilityResponseElement != null)
+                    if (resourceNameAvailabilityResponseElement != null && resourceNameAvailabilityResponseElement.IsEmpty == false)
                     {
                         XElement isAvailableElement = resourceNameAvailabilityResponseElement.Element(XName.Get("IsAvailable", "http://schemas.microsoft.com/windowsazure"));
-                        if (isAvailableElement != null)
+                        if (isAvailableElement != null && isAvailableElement.IsEmpty == false)
                         {
                             bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
                             result.IsAvailable = isAvailableInstance;
@@ -1017,98 +1017,98 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement resourceElement = responseDoc.Element(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure"));
-                    if (resourceElement != null)
+                    if (resourceElement != null && resourceElement.IsEmpty == false)
                     {
                         XElement nameElement = resourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
+                        if (nameElement != null && nameElement.IsEmpty == false)
                         {
                             string nameInstance = nameElement.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement eTagElement = resourceElement.Element(XName.Get("ETag", "http://schemas.microsoft.com/windowsazure"));
-                        if (eTagElement != null)
+                        if (eTagElement != null && eTagElement.IsEmpty == false)
                         {
                             string eTagInstance = eTagElement.Value;
                             result.ETag = eTagInstance;
                         }
                         
                         XElement stateElement = resourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
+                        if (stateElement != null && stateElement.IsEmpty == false)
                         {
-                            JobCollectionState stateInstance = (JobCollectionState)Enum.Parse(typeof(JobCollectionState), stateElement.Value, false);
+                            JobCollectionState stateInstance = (JobCollectionState)Enum.Parse(typeof(JobCollectionState), stateElement.Value, true);
                             result.State = stateInstance;
                         }
                         
                         XElement schemaVersionElement = resourceElement.Element(XName.Get("SchemaVersion", "http://schemas.microsoft.com/windowsazure"));
-                        if (schemaVersionElement != null)
+                        if (schemaVersionElement != null && schemaVersionElement.IsEmpty == false)
                         {
                             string schemaVersionInstance = schemaVersionElement.Value;
                             result.SchemaVersion = schemaVersionInstance;
                         }
                         
                         XElement planElement = resourceElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                        if (planElement != null)
+                        if (planElement != null && planElement.IsEmpty == false)
                         {
                             string planInstance = planElement.Value;
                             result.Plan = planInstance;
                         }
                         
                         XElement promotionCodeElement = resourceElement.Element(XName.Get("PromotionCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (promotionCodeElement != null)
+                        if (promotionCodeElement != null && promotionCodeElement.IsEmpty == false)
                         {
                             string promotionCodeInstance = promotionCodeElement.Value;
                             result.PromotionCode = promotionCodeInstance;
                         }
                         
                         XElement intrinsicSettingsElement = resourceElement.Element(XName.Get("IntrinsicSettings", "http://schemas.microsoft.com/windowsazure"));
-                        if (intrinsicSettingsElement != null)
+                        if (intrinsicSettingsElement != null && intrinsicSettingsElement.IsEmpty == false)
                         {
                             JobCollectionIntrinsicSettings intrinsicSettingsInstance = new JobCollectionIntrinsicSettings();
                             result.IntrinsicSettings = intrinsicSettingsInstance;
                             
                             XElement planElement2 = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                            if (planElement2 != null)
+                            if (planElement2 != null && planElement2.IsEmpty == false)
                             {
-                                JobCollectionPlan planInstance2 = (JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement2.Value, false);
+                                JobCollectionPlan planInstance2 = (JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement2.Value, true);
                                 intrinsicSettingsInstance.Plan = planInstance2;
                             }
                             
                             XElement quotaElement = intrinsicSettingsElement.Element(XName.Get("Quota", "http://schemas.microsoft.com/windowsazure"));
-                            if (quotaElement != null)
+                            if (quotaElement != null && quotaElement.IsEmpty == false)
                             {
                                 JobCollectionQuota quotaInstance = new JobCollectionQuota();
                                 intrinsicSettingsInstance.Quota = quotaInstance;
                                 
                                 XElement maxJobCountElement = quotaElement.Element(XName.Get("MaxJobCount", "http://schemas.microsoft.com/windowsazure"));
-                                if (maxJobCountElement != null && string.IsNullOrEmpty(maxJobCountElement.Value) == false)
+                                if (maxJobCountElement != null && maxJobCountElement.IsEmpty == false && string.IsNullOrEmpty(maxJobCountElement.Value) == false)
                                 {
                                     int maxJobCountInstance = int.Parse(maxJobCountElement.Value, CultureInfo.InvariantCulture);
                                     quotaInstance.MaxJobCount = maxJobCountInstance;
                                 }
                                 
                                 XElement maxJobOccurrenceElement = quotaElement.Element(XName.Get("MaxJobOccurrence", "http://schemas.microsoft.com/windowsazure"));
-                                if (maxJobOccurrenceElement != null && string.IsNullOrEmpty(maxJobOccurrenceElement.Value) == false)
+                                if (maxJobOccurrenceElement != null && maxJobOccurrenceElement.IsEmpty == false && string.IsNullOrEmpty(maxJobOccurrenceElement.Value) == false)
                                 {
                                     int maxJobOccurrenceInstance = int.Parse(maxJobOccurrenceElement.Value, CultureInfo.InvariantCulture);
                                     quotaInstance.MaxJobOccurrence = maxJobOccurrenceInstance;
                                 }
                                 
                                 XElement maxRecurrenceElement = quotaElement.Element(XName.Get("MaxRecurrence", "http://schemas.microsoft.com/windowsazure"));
-                                if (maxRecurrenceElement != null)
+                                if (maxRecurrenceElement != null && maxRecurrenceElement.IsEmpty == false)
                                 {
                                     JobCollectionMaxRecurrence maxRecurrenceInstance = new JobCollectionMaxRecurrence();
                                     quotaInstance.MaxRecurrence = maxRecurrenceInstance;
                                     
                                     XElement frequencyElement = maxRecurrenceElement.Element(XName.Get("Frequency", "http://schemas.microsoft.com/windowsazure"));
-                                    if (frequencyElement != null)
+                                    if (frequencyElement != null && frequencyElement.IsEmpty == false)
                                     {
-                                        JobCollectionRecurrenceFrequency frequencyInstance = (JobCollectionRecurrenceFrequency)Enum.Parse(typeof(JobCollectionRecurrenceFrequency), frequencyElement.Value, false);
+                                        JobCollectionRecurrenceFrequency frequencyInstance = (JobCollectionRecurrenceFrequency)Enum.Parse(typeof(JobCollectionRecurrenceFrequency), frequencyElement.Value, true);
                                         maxRecurrenceInstance.Frequency = frequencyInstance;
                                     }
                                     
                                     XElement intervalElement = maxRecurrenceElement.Element(XName.Get("Interval", "http://schemas.microsoft.com/windowsazure"));
-                                    if (intervalElement != null)
+                                    if (intervalElement != null && intervalElement.IsEmpty == false)
                                     {
                                         int intervalInstance = int.Parse(intervalElement.Value, CultureInfo.InvariantCulture);
                                         maxRecurrenceInstance.Interval = intervalInstance;
@@ -1118,33 +1118,33 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         }
                         
                         XElement labelElement = resourceElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
+                        if (labelElement != null && labelElement.IsEmpty == false)
                         {
                             string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
                             result.Label = labelInstance;
                         }
                         
                         XElement operationStatusElement = resourceElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
-                        if (operationStatusElement != null)
+                        if (operationStatusElement != null && operationStatusElement.IsEmpty == false)
                         {
                             JobCollectionGetResponse.OperationStatus operationStatusInstance = new JobCollectionGetResponse.OperationStatus();
                             result.LastOperationStatus = operationStatusInstance;
                             
                             XElement errorElement = operationStatusElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorElement != null)
+                            if (errorElement != null && errorElement.IsEmpty == false)
                             {
                                 JobCollectionGetResponse.OperationStatusResponseDetails errorInstance = new JobCollectionGetResponse.OperationStatusResponseDetails();
                                 operationStatusInstance.ResponseDetails = errorInstance;
                                 
                                 XElement httpCodeElement = errorElement.Element(XName.Get("HttpCode", "http://schemas.microsoft.com/windowsazure"));
-                                if (httpCodeElement != null)
+                                if (httpCodeElement != null && httpCodeElement.IsEmpty == false)
                                 {
-                                    HttpStatusCode httpCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpCodeElement.Value, false);
+                                    HttpStatusCode httpCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpCodeElement.Value, true);
                                     errorInstance.StatusCode = httpCodeInstance;
                                 }
                                 
                                 XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                                if (messageElement != null)
+                                if (messageElement != null && messageElement.IsEmpty == false)
                                 {
                                     string messageInstance = messageElement.Value;
                                     errorInstance.Message = messageInstance;
@@ -1152,9 +1152,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             }
                             
                             XElement resultElement = operationStatusElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
-                            if (resultElement != null)
+                            if (resultElement != null && resultElement.IsEmpty == false)
                             {
-                                SchedulerOperationStatus resultInstance = (SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), resultElement.Value, false);
+                                SchedulerOperationStatus resultInstance = (SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), resultElement.Value, true);
                                 operationStatusInstance.Status = resultInstance;
                             }
                         }
