@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _timeGrain;
 
         /// <summary>
-        /// The interval which the metrics are returned.
+        /// The aggregation interval of metrics that are returned.
         /// </summary>
         public string TimeGrain
         {
