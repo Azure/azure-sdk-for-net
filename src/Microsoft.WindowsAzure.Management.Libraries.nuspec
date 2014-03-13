@@ -33,6 +33,7 @@ Management operations require the X509Certificate2 type that is not present in t
     <tags>windowsazureofficial management cloud libraries "windows azure management"</tags>
     <dependencies>
       <group>
+        <dependency id="Microsoft.WindowsAzure.Common" version="0.9.1-preview" />
         <dependency id="Microsoft.WindowsAzure.Management" version="__VERSION_Microsoft.WindowsAzure.Management__" />
         <dependency id="Microsoft.WindowsAzure.Management.Compute" version="__VERSION_Microsoft.WindowsAzure.Management.Compute__" />
         <dependency id="Microsoft.WindowsAzure.Management.ServiceBus" version="__VERSION_Microsoft.WindowsAzure.Management.ServiceBus__" />
