@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
         }
 
-        public MediaServicesManagementClient WithHandler(DelegatingHandler handler)
+        public override MediaServicesManagementClient WithHandler(DelegatingHandler handler)
         {
             return (MediaServicesManagementClient)WithHandler(new MediaServicesManagementClient(), handler);
         }

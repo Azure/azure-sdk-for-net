@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Subscriptions
             }
         }
 
-        public SubscriptionClient WithHandler(DelegatingHandler handler)            
+        public override SubscriptionClient WithHandler(DelegatingHandler handler)
         {
             return (SubscriptionClient)WithHandler(new SubscriptionClient(), handler);
         }

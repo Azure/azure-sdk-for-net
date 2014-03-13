@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management
             }
         }
 
-        public ManagementClient WithHandler(DelegatingHandler handler)            
+        public override ManagementClient WithHandler(DelegatingHandler handler)
         {
             return (ManagementClient)WithHandler(new ManagementClient(), handler);
         }

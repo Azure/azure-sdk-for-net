@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
         }
 
-        public SqlManagementClient WithHandler(DelegatingHandler handler)            
+        public override SqlManagementClient WithHandler(DelegatingHandler handler)            
         {
             return (SqlManagementClient)WithHandler(new SqlManagementClient(), handler);
         }

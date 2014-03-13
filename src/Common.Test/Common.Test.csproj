@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloudExceptionTest.cs" />
+    <Compile Include="Fakes\AddHeaderResponseDelegatingHandler.cs" />
     <Compile Include="Fakes\BadResponseDelegatingHandler.cs" />
     <Compile Include="Fakes\FakeHttpHandler.cs" />
     <Compile Include="Fakes\FakeServiceClientWithCredentials.cs" />

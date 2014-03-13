@@ -15,6 +15,7 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
+    <Compile Include="AutoscaleClient.Customization.cs" />
     <Compile Include="Generated\Alerts\AlertsClient.cs" />
     <Compile Include="Generated\Alerts\AlertsClientExtensions.cs" />
     <Compile Include="Generated\Alerts\IAlertsClient.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Generated\Metrics\Models\NameConfig.cs" />
     <Compile Include="Generated\Models\EndpointMonitoringLocation.cs" />
     <Compile Include="Generated\Models\MetricNamespace.cs" />
+    <Compile Include="AlertsClient.Customization.cs" />
     <Compile Include="MetricClient.Customization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AutoscaleMetricSourceBuilder.cs" />

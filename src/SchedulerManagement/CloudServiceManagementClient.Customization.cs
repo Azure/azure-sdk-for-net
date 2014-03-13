@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
         }
 
-        public CloudServiceManagementClient WithHandler(DelegatingHandler handler)
+        public override CloudServiceManagementClient WithHandler(DelegatingHandler handler)
         {
             return (CloudServiceManagementClient)WithHandler(new CloudServiceManagementClient(), handler);
         }
