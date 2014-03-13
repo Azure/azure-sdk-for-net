@@ -325,7 +325,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serverNameElement = responseDoc.Element(XName.Get("ServerName", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                    if (serverNameElement != null)
+                    if (serverNameElement != null && serverNameElement.IsEmpty == false)
                     {
                         result.ServerName = serverNameElement.Value;
                     }
@@ -548,7 +548,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serversSequenceElement = responseDoc.Element(XName.Get("Servers", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                    if (serversSequenceElement != null)
+                    if (serversSequenceElement != null && serversSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement serversElement in serversSequenceElement.Elements(XName.Get("Server", "http://schemas.microsoft.com/sqlazure/2010/12/")))
                         {
@@ -556,28 +556,28 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             result.Servers.Add(serverInstance);
                             
                             XElement nameElement = serversElement.Element(XName.Get("Name", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 serverInstance.Name = nameInstance;
                             }
                             
                             XElement administratorLoginElement = serversElement.Element(XName.Get("AdministratorLogin", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (administratorLoginElement != null)
+                            if (administratorLoginElement != null && administratorLoginElement.IsEmpty == false)
                             {
                                 string administratorLoginInstance = administratorLoginElement.Value;
                                 serverInstance.AdministratorUserName = administratorLoginInstance;
                             }
                             
                             XElement locationElement = serversElement.Element(XName.Get("Location", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (locationElement != null)
+                            if (locationElement != null && locationElement.IsEmpty == false)
                             {
                                 string locationInstance = locationElement.Value;
                                 serverInstance.Location = locationInstance;
                             }
                             
                             XElement featuresSequenceElement = serversElement.Element(XName.Get("Features", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (featuresSequenceElement != null)
+                            if (featuresSequenceElement != null && featuresSequenceElement.IsEmpty == false)
                             {
                                 foreach (XElement featuresElement in featuresSequenceElement.Elements(XName.Get("Feature", "http://schemas.microsoft.com/sqlazure/2010/12/")))
                                 {

@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Network
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
-    public partial class VirtualNetworkManagementClient : ServiceClient<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IVirtualNetworkManagementClient
+    public partial class NetworkManagementClient : ServiceClient<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.INetworkManagementClient
     {
         private Uri _baseUri;
         
@@ -105,10 +105,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkManagementClient
-        /// class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
-        private VirtualNetworkManagementClient()
+        private NetworkManagementClient()
             : base()
         {
             this._clientRootCertificates = new ClientRootCertificateOperations(this);
@@ -120,8 +119,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkManagementClient
-        /// class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// When you create a Windows Azure subscription, it is uniquely
@@ -135,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <param name='baseUri'>
         /// The URI used as the base for all SQL requests.
         /// </param>
-        public VirtualNetworkManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
+        public NetworkManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (credentials == null)
@@ -153,8 +151,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkManagementClient
-        /// class.
+        /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// When you create a Windows Azure subscription, it is uniquely
@@ -165,7 +162,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// a request made to the service is secure.  No anonymous requests
         /// are allowed.
         /// </param>
-        public VirtualNetworkManagementClient(SubscriptionCloudCredentials credentials)
+        public NetworkManagementClient(SubscriptionCloudCredentials credentials)
             : this()
         {
             if (credentials == null)
@@ -276,44 +273,44 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
-                    if (operationElement != null)
+                    if (operationElement != null && operationElement.IsEmpty == false)
                     {
                         XElement idElement = operationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.Id = idInstance;
                         }
                         
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
+                        if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, false);
+                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, true);
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpStatusCodeElement != null)
+                        if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
                         {
-                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, false);
+                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true);
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         
                         XElement errorElement = operationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null)
+                        if (errorElement != null && errorElement.IsEmpty == false)
                         {
                             OperationStatusResponse.ErrorDetails errorInstance = new OperationStatusResponse.ErrorDetails();
                             result.Error = errorInstance;
                             
                             XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                            if (codeElement != null)
+                            if (codeElement != null && codeElement.IsEmpty == false)
                             {
                                 string codeInstance = codeElement.Value;
                                 errorInstance.Code = codeInstance;
                             }
                             
                             XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                            if (messageElement != null)
+                            if (messageElement != null && messageElement.IsEmpty == false)
                             {
                                 string messageInstance = messageElement.Value;
                                 errorInstance.Message = messageInstance;
@@ -361,11 +358,11 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </returns>
         internal static LocalNetworkConnectionType ParseLocalNetworkConnectionType(string value)
         {
-            if (value == "IPsec")
+            if ("IPsec".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return LocalNetworkConnectionType.IPSecurity;
             }
-            if (value == "Dedicated")
+            if ("Dedicated".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return LocalNetworkConnectionType.Dedicated;
             }

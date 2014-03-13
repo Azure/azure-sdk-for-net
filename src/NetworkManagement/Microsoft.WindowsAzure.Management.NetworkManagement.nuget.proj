@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <!--
-    Microsoft.WindowsAzure.Management.VirtualNetworks
+    Microsoft.WindowsAzure.Management.Network
     -->
-    <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.VirtualNetworks">
-      <PackageVersion>0.9.5-preview</PackageVersion>
+    <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Network">
+      <PackageVersion>0.9.6-preview</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

@@ -293,44 +293,44 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
-                    if (operationElement != null)
+                    if (operationElement != null && operationElement.IsEmpty == false)
                     {
                         XElement idElement = operationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.Id = idInstance;
                         }
                         
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
+                        if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, false);
+                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, true);
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpStatusCodeElement != null)
+                        if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
                         {
-                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, false);
+                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true);
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         
                         XElement errorElement = operationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null)
+                        if (errorElement != null && errorElement.IsEmpty == false)
                         {
                             OperationStatusResponse.ErrorDetails errorInstance = new OperationStatusResponse.ErrorDetails();
                             result.Error = errorInstance;
                             
                             XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                            if (codeElement != null)
+                            if (codeElement != null && codeElement.IsEmpty == false)
                             {
                                 string codeInstance = codeElement.Value;
                                 errorInstance.Code = codeInstance;
                             }
                             
                             XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                            if (messageElement != null)
+                            if (messageElement != null && messageElement.IsEmpty == false)
                             {
                                 string messageInstance = messageElement.Value;
                                 errorInstance.Message = messageInstance;
@@ -447,9 +447,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement feedElement = responseDoc.Element(XName.Get("feed", "http://www.w3.org/2005/Atom"));
-                    if (feedElement != null)
+                    if (feedElement != null && feedElement.IsEmpty == false)
                     {
-                        if (feedElement != null)
+                        if (feedElement != null && feedElement.IsEmpty == false)
                         {
                             foreach (XElement entriesElement in feedElement.Elements(XName.Get("entry", "http://www.w3.org/2005/Atom")))
                             {
@@ -457,20 +457,20 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 result.Regions.Add(entryInstance);
                                 
                                 XElement contentElement = entriesElement.Element(XName.Get("content", "http://www.w3.org/2005/Atom"));
-                                if (contentElement != null)
+                                if (contentElement != null && contentElement.IsEmpty == false)
                                 {
                                     XElement regionCodeDescriptionElement = contentElement.Element(XName.Get("RegionCodeDescription", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                    if (regionCodeDescriptionElement != null)
+                                    if (regionCodeDescriptionElement != null && regionCodeDescriptionElement.IsEmpty == false)
                                     {
                                         XElement codeElement = regionCodeDescriptionElement.Element(XName.Get("Code", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                        if (codeElement != null)
+                                        if (codeElement != null && codeElement.IsEmpty == false)
                                         {
                                             string codeInstance = codeElement.Value;
                                             entryInstance.Code = codeInstance;
                                         }
                                         
                                         XElement fullNameElement = regionCodeDescriptionElement.Element(XName.Get("FullName", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                        if (fullNameElement != null)
+                                        if (fullNameElement != null && fullNameElement.IsEmpty == false)
                                         {
                                             string fullNameInstance = fullNameElement.Value;
                                             entryInstance.FullName = fullNameInstance;

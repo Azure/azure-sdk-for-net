@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
         }
 
-        public StoreManagementClient WithHandler(DelegatingHandler handler)            
+        public override StoreManagementClient WithHandler(DelegatingHandler handler)            
         {
             return (StoreManagementClient)WithHandler(new StoreManagementClient(), handler);
         }

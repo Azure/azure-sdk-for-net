@@ -201,11 +201,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// </returns>
         internal static WebJobType ParseWebJobType(string value)
         {
-            if (value == "triggered")
+            if ("triggered".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return WebJobType.Triggered;
             }
-            if (value == "continuous")
+            if ("continuous".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return WebJobType.Continuous;
             }

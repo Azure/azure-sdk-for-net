@@ -347,44 +347,44 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
-                    if (operationElement != null)
+                    if (operationElement != null && operationElement.IsEmpty == false)
                     {
                         XElement idElement = operationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.Id = idInstance;
                         }
                         
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
+                        if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, false);
+                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, true);
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpStatusCodeElement != null)
+                        if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
                         {
-                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, false);
+                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true);
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         
                         XElement errorElement = operationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null)
+                        if (errorElement != null && errorElement.IsEmpty == false)
                         {
                             OperationStatusResponse.ErrorDetails errorInstance = new OperationStatusResponse.ErrorDetails();
                             result.Error = errorInstance;
                             
                             XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                            if (codeElement != null)
+                            if (codeElement != null && codeElement.IsEmpty == false)
                             {
                                 string codeInstance = codeElement.Value;
                                 errorInstance.Code = codeInstance;
                             }
                             
                             XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                            if (messageElement != null)
+                            if (messageElement != null && messageElement.IsEmpty == false)
                             {
                                 string messageInstance = messageElement.Value;
                                 errorInstance.Message = messageInstance;
@@ -432,11 +432,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// </returns>
         internal static CertificateFormat ParseCertificateFormat(string value)
         {
-            if (value == "pfx")
+            if ("pfx".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return CertificateFormat.Pfx;
             }
-            if (value == "cer")
+            if ("cer".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return CertificateFormat.Cer;
             }
@@ -476,15 +476,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// </returns>
         internal static HostingResources ParseHostingResources(string value)
         {
-            if (value == "WebRole")
+            if ("WebRole".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HostingResources.WebRole;
             }
-            if (value == "WorkerRole")
+            if ("WorkerRole".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HostingResources.WorkerRole;
             }
-            if (value == "WebRole|WorkerRole")
+            if ("WebRole|WorkerRole".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HostingResources.WebOrWorkerRole;
             }
@@ -528,11 +528,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// </returns>
         internal static LoadBalancerProbeTransportProtocol ParseLoadBalancerProbeTransportProtocol(string value)
         {
-            if (value == "tcp")
+            if ("tcp".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return LoadBalancerProbeTransportProtocol.Tcp;
             }
-            if (value == "http")
+            if ("http".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return LoadBalancerProbeTransportProtocol.Http;
             }

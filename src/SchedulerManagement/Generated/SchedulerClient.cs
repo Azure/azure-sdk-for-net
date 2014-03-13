@@ -142,15 +142,15 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static JobActionType ParseJobActionType(string value)
         {
-            if (value == "http")
+            if ("http".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobActionType.Http;
             }
-            if (value == "https")
+            if ("https".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobActionType.Https;
             }
-            if (value == "storageQueue")
+            if ("storageQueue".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobActionType.StorageQueue;
             }
@@ -194,11 +194,11 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static JobHistoryActionName ParseJobHistoryActionName(string value)
         {
-            if (value == "MainAction")
+            if ("MainAction".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobHistoryActionName.MainAction;
             }
-            if (value == "ErrorAction")
+            if ("ErrorAction".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobHistoryActionName.ErrorAction;
             }
@@ -238,11 +238,11 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static JobHistoryStatus ParseJobHistoryStatus(string value)
         {
-            if (value == "completed")
+            if ("completed".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobHistoryStatus.Completed;
             }
-            if (value == "failed")
+            if ("failed".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobHistoryStatus.Failed;
             }
@@ -282,27 +282,27 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static JobRecurrenceFrequency ParseJobRecurrenceFrequency(string value)
         {
-            if (value == "minute")
+            if ("minute".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobRecurrenceFrequency.Minute;
             }
-            if (value == "hour")
+            if ("hour".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobRecurrenceFrequency.Hour;
             }
-            if (value == "day")
+            if ("day".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobRecurrenceFrequency.Day;
             }
-            if (value == "week")
+            if ("week".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobRecurrenceFrequency.Week;
             }
-            if (value == "month")
+            if ("month".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobRecurrenceFrequency.Month;
             }
-            if (value == "year")
+            if ("year".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobRecurrenceFrequency.Year;
             }
@@ -358,31 +358,31 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static JobScheduleDay ParseJobScheduleDay(string value)
         {
-            if (value == "monday")
+            if ("monday".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobScheduleDay.Monday;
             }
-            if (value == "tuesday")
+            if ("tuesday".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobScheduleDay.Tuesday;
             }
-            if (value == "wednesday")
+            if ("wednesday".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobScheduleDay.Wednesday;
             }
-            if (value == "thursday")
+            if ("thursday".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobScheduleDay.Thursday;
             }
-            if (value == "friday")
+            if ("friday".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobScheduleDay.Friday;
             }
-            if (value == "saturday")
+            if ("saturday".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobScheduleDay.Saturday;
             }
-            if (value == "sunday")
+            if ("sunday".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobScheduleDay.Sunday;
             }
@@ -442,19 +442,19 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static JobState ParseJobState(string value)
         {
-            if (value == "enabled")
+            if ("enabled".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobState.Enabled;
             }
-            if (value == "disabled")
+            if ("disabled".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobState.Disabled;
             }
-            if (value == "faulted")
+            if ("faulted".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobState.Faulted;
             }
-            if (value == "completed")
+            if ("completed".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return JobState.Completed;
             }
@@ -502,11 +502,11 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static RetryType ParseRetryType(string value)
         {
-            if (value == "none")
+            if ("none".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return RetryType.None;
             }
-            if (value == "fixed")
+            if ("fixed".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return RetryType.Fixed;
             }

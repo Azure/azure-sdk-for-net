@@ -538,7 +538,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 JToken operatorValue = conditionValue["Operator"];
                                 if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                 {
-                                    ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, false);
+                                    ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, true);
                                     thresholdRuleConditionInstance.Operator = operatorInstance;
                                 }
                                 
@@ -783,7 +783,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                         JToken operatorValue = conditionValue["Operator"];
                                         if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                         {
-                                            ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, false);
+                                            ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, true);
                                             thresholdRuleConditionInstance.Operator = operatorInstance;
                                         }
                                         

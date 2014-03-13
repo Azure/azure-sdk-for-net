@@ -35,7 +35,7 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class StaticIPOperations : IServiceOperations<VirtualNetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IStaticIPOperations
+    internal partial class StaticIPOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IStaticIPOperations
     {
         /// <summary>
         /// Initializes a new instance of the StaticIPOperations class.
@@ -43,18 +43,18 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal StaticIPOperations(VirtualNetworkManagementClient client)
+        internal StaticIPOperations(NetworkManagementClient client)
         {
             this._client = client;
         }
         
-        private VirtualNetworkManagementClient _client;
+        private NetworkManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.Network.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.NetworkManagementClient.
         /// </summary>
-        public VirtualNetworkManagementClient Client
+        public NetworkManagementClient Client
         {
             get { return this._client; }
         }
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The Check Static IP operation retrieves the details for the
         /// availability of static IP addresses for the given virtual network.
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network.
         /// </param>
         /// <param name='ipAddress'>
@@ -76,12 +76,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A response that indicates the availability of a static IP address,
         /// and if not, provide a list of suggestions.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkStaticIPAvailabilityResponse> CheckAsync(string virtualNetworkName, string ipAddress, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkStaticIPAvailabilityResponse> CheckAsync(string networkName, string ipAddress, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (networkName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("networkName");
             }
             if (ipAddress == null)
             {
@@ -95,13 +95,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("networkName", networkName);
                 tracingParameters.Add("ipAddress", ipAddress);
                 Tracing.Enter(invocationId, this, "CheckAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + virtualNetworkName + "?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "?";
             url = url + "op=checkavailability";
             url = url + "&address=" + Uri.EscapeUriString(ipAddress);
             
@@ -155,17 +155,17 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement addressAvailabilityResponseElement = responseDoc.Element(XName.Get("AddressAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (addressAvailabilityResponseElement != null)
+                    if (addressAvailabilityResponseElement != null && addressAvailabilityResponseElement.IsEmpty == false)
                     {
                         XElement isAvailableElement = addressAvailabilityResponseElement.Element(XName.Get("IsAvailable", "http://schemas.microsoft.com/windowsazure"));
-                        if (isAvailableElement != null)
+                        if (isAvailableElement != null && isAvailableElement.IsEmpty == false)
                         {
                             bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
                             result.IsAvailable = isAvailableInstance;
                         }
                         
                         XElement availableAddressesSequenceElement = addressAvailabilityResponseElement.Element(XName.Get("AvailableAddresses", "http://schemas.microsoft.com/windowsazure"));
-                        if (availableAddressesSequenceElement != null)
+                        if (availableAddressesSequenceElement != null && availableAddressesSequenceElement.IsEmpty == false)
                         {
                             foreach (XElement availableAddressesElement in availableAddressesSequenceElement.Elements(XName.Get("AvailableAddress", "http://schemas.microsoft.com/windowsazure")))
                             {

@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
         }
 
-        public ComputeManagementClient WithHandler(DelegatingHandler handler)
+        public override ComputeManagementClient WithHandler(DelegatingHandler handler)
         {
             return (ComputeManagementClient)WithHandler(new ComputeManagementClient(), handler);
         }

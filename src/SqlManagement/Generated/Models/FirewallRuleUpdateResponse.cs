@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using System.Net;
 using Microsoft.WindowsAzure;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
