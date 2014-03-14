@@ -26,11 +26,8 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
+namespace Microsoft.WindowsAzure
 {
-    /// <summary>
-    /// Operations for managing the alert incidents.
-    /// </summary>
     public static partial class IncidentOperationsExtensions
     {
         /// <param name='operations'>

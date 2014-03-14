@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
         }
 
-        public ExpressRouteManagementClient WithHandler(DelegatingHandler handler)
+        public override ExpressRouteManagementClient WithHandler(DelegatingHandler handler)
         {
             return (ExpressRouteManagementClient)WithHandler(new ExpressRouteManagementClient(), handler);
         }

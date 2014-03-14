@@ -35,7 +35,7 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    internal partial class DedicatedCircuitLinkOperations : IServiceOperations<ExpressRouteManagementClient>, IDedicatedCircuitLinkOperations
+    internal partial class DedicatedCircuitLinkOperations : IServiceOperations<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations
     {
         /// <summary>
         /// Initializes a new instance of the DedicatedCircuitLinkOperations
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -148,10 +148,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
+                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -201,7 +201,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -226,7 +226,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -278,10 +278,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
+                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -330,7 +330,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Dedicated Circuit Link operation response.
         /// </returns>
-        public async Task<DedicatedCircuitLinkGetResponse> GetAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitLinkGetResponse> GetAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -355,7 +355,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets/" + vnetName + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -407,20 +407,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dedicatedCircuitLinkElement = responseDoc.Element(XName.Get("DedicatedCircuitLink", "http://schemas.microsoft.com/windowsazure"));
-                    if (dedicatedCircuitLinkElement != null)
+                    if (dedicatedCircuitLinkElement != null && dedicatedCircuitLinkElement.IsEmpty == false)
                     {
                         AzureDedicatedCircuitLink dedicatedCircuitLinkInstance = new AzureDedicatedCircuitLink();
                         result.DedicatedCircuitLink = dedicatedCircuitLinkInstance;
                         
                         XElement stateElement = dedicatedCircuitLinkElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
+                        if (stateElement != null && stateElement.IsEmpty == false)
                         {
-                            DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, false);
+                            DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true);
                             dedicatedCircuitLinkInstance.State = stateInstance;
                         }
                         
                         XElement vnetNameElement = dedicatedCircuitLinkElement.Element(XName.Get("VnetName", "http://schemas.microsoft.com/windowsazure"));
-                        if (vnetNameElement != null)
+                        if (vnetNameElement != null && vnetNameElement.IsEmpty == false)
                         {
                             string vnetNameInstance = vnetNameElement.Value;
                             dedicatedCircuitLinkInstance.VnetName = vnetNameInstance;
@@ -467,7 +467,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The List Dedicated Circuit Link operation response.
         /// </returns>
-        public async Task<DedicatedCircuitLinkListResponse> ListAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitLinkListResponse> ListAsync(string serviceKey, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -483,7 +483,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/vnets?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -535,7 +535,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dedicatedCircuitLinksSequenceElement = responseDoc.Element(XName.Get("DedicatedCircuitLinks", "http://schemas.microsoft.com/windowsazure"));
-                    if (dedicatedCircuitLinksSequenceElement != null)
+                    if (dedicatedCircuitLinksSequenceElement != null && dedicatedCircuitLinksSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement dedicatedCircuitLinksElement in dedicatedCircuitLinksSequenceElement.Elements(XName.Get("DedicatedCircuitLink", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -543,14 +543,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             result.DedicatedCircuitLinks.Add(dedicatedCircuitLinkInstance);
                             
                             XElement stateElement = dedicatedCircuitLinksElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
+                            if (stateElement != null && stateElement.IsEmpty == false)
                             {
-                                DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, false);
+                                DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true);
                                 dedicatedCircuitLinkInstance.State = stateInstance;
                             }
                             
                             XElement vnetNameElement = dedicatedCircuitLinksElement.Element(XName.Get("VnetName", "http://schemas.microsoft.com/windowsazure"));
-                            if (vnetNameElement != null)
+                            if (vnetNameElement != null && vnetNameElement.IsEmpty == false)
                             {
                                 string vnetNameInstance = vnetNameElement.Value;
                                 dedicatedCircuitLinkInstance.VnetName = vnetNameInstance;
@@ -597,7 +597,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Dedicated Circuit Link operation response.
         /// </returns>
-        public async Task<DedicatedCircuitLinkGetResponse> NewAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitLinkGetResponse> NewAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -675,7 +675,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

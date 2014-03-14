@@ -30,7 +30,8 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
-    /// TBD.
+    /// The websites extensions client manages the web sites deployments, web
+    /// jobs and other extensions.
     /// </summary>
     public partial class WebSiteExtensionsClient : ServiceClient<WebSiteExtensionsClient>, IWebSiteExtensionsClient
     {
@@ -64,14 +65,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             get { return this._siteName; }
         }
         
-        private IDeploymentOperations _deployment;
+        private IDeploymentOperations _deployments;
         
         /// <summary>
         /// Operations for managing the repositories.
         /// </summary>
-        public virtual IDeploymentOperations Deployment
+        public virtual IDeploymentOperations Deployments
         {
-            get { return this._deployment; }
+            get { return this._deployments; }
         }
         
         private IDiagnosticOperations _diagnostics;
@@ -120,7 +121,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         private WebSiteExtensionsClient()
             : base()
         {
-            this._deployment = new DeploymentOperations(this);
+            this._deployments = new DeploymentOperations(this);
             this._diagnostics = new DiagnosticOperations(this);
             this._repository = new RepositoryOperations(this);
             this._settings = new SettingsOperations(this);
@@ -200,11 +201,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// </returns>
         internal static WebJobType ParseWebJobType(string value)
         {
-            if (value == "triggered")
+            if ("triggered".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return WebJobType.Triggered;
             }
-            if (value == "continuous")
+            if ("continuous".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return WebJobType.Continuous;
             }

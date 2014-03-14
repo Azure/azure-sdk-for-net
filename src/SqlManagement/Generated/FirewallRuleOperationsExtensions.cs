@@ -23,19 +23,17 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Sql;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
-namespace Microsoft.WindowsAzure.Management.Sql
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The Windows Azure SQL Database Management API includes operations for
-    /// managing the server-level firewall rules for SQL Database servers.You
-    /// cannot manage the database-level firewall rules using the Windows
-    /// Azure SQL Database Management API; they can only be managed by running
-    /// the  Transact-SQL statements against the master or individual user
-    /// databases.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715276.aspx for
+    /// The SQL Database Management API is a REST API for managing SQL Database
+    /// servers and the firewall rules associated with SQL Database servers.
+    /// (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
     /// more information)
     /// </summary>
     public static partial class FirewallRuleOperationsExtensions

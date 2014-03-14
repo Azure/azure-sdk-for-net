@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public partial class ExpressRouteManagementClient : ServiceClient<ExpressRouteManagementClient>, IExpressRouteManagementClient
+    public partial class ExpressRouteManagementClient : ServiceClient<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IExpressRouteManagementClient
     {
         private Uri _baseUri;
         
@@ -189,7 +189,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
         {
             // Validate
             if (operationId == null)
@@ -209,7 +209,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, "/").ToString() + this.Credentials.SubscriptionId + "/services/networking/operation/" + operationId;
+            string url = new Uri(this.BaseUri, "/").AbsoluteUri + this.Credentials.SubscriptionId + "/services/networking/operation/" + operationId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -261,51 +261,51 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationElement = responseDoc.Element(XName.Get("GatewayOperation", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationElement != null)
+                    if (gatewayOperationElement != null && gatewayOperationElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.Id = idInstance;
                         }
                         
                         XElement statusElement = gatewayOperationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
+                        if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            ExpressRouteOperationStatus statusInstance = (ExpressRouteOperationStatus)Enum.Parse(typeof(ExpressRouteOperationStatus), statusElement.Value, false);
+                            ExpressRouteOperationStatus statusInstance = (ExpressRouteOperationStatus)Enum.Parse(typeof(ExpressRouteOperationStatus), statusElement.Value, true);
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = gatewayOperationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpStatusCodeElement != null)
+                        if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
                         {
-                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, false);
+                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true);
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         
                         XElement dataElement = gatewayOperationElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
-                        if (dataElement != null)
+                        if (dataElement != null && dataElement.IsEmpty == false)
                         {
                             string dataInstance = dataElement.Value;
                             result.Data = dataInstance;
                         }
                         
                         XElement errorElement = gatewayOperationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null)
+                        if (errorElement != null && errorElement.IsEmpty == false)
                         {
                             ExpressRouteOperationStatusResponse.ErrorDetails errorInstance = new ExpressRouteOperationStatusResponse.ErrorDetails();
                             result.Error = errorInstance;
                             
                             XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                            if (codeElement != null)
+                            if (codeElement != null && codeElement.IsEmpty == false)
                             {
                                 string codeInstance = codeElement.Value;
                                 errorInstance.Code = codeInstance;
                             }
                             
                             XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                            if (messageElement != null)
+                            if (messageElement != null && messageElement.IsEmpty == false)
                             {
                                 string messageInstance = messageElement.Value;
                                 errorInstance.Message = messageInstance;
@@ -353,11 +353,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// </returns>
         internal static BgpPeeringAccessType ParseBgpPeeringAccessType(string value)
         {
-            if (value == "private")
+            if ("private".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return BgpPeeringAccessType.Private;
             }
-            if (value == "public")
+            if ("public".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return BgpPeeringAccessType.Public;
             }
@@ -397,11 +397,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// </returns>
         internal static UpdateCrossConnectionOperation ParseUpdateCrossConnectionOperation(string value)
         {
-            if (value == "NotifyCrossConnectionProvisioned")
+            if ("NotifyCrossConnectionProvisioned".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return UpdateCrossConnectionOperation.NotifyCrossConnectionProvisioned;
             }
-            if (value == "NotifyCrossConnectionNotProvisioned")
+            if ("NotifyCrossConnectionNotProvisioned".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return UpdateCrossConnectionOperation.NotifyCrossConnectionNotProvisioned;
             }

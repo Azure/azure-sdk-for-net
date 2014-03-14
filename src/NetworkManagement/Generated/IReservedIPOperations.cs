@@ -24,9 +24,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
     public partial interface IReservedIPOperations
     {
@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<VirtualNetworkOperationStatusResponse> BeginCreatingAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> BeginCreatingAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Preview Only. The Delete Reserved IP operation removes a reserved
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// the subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Parameters supplied to create a network reserved IP.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<VirtualNetworkOperationStatusResponse> CreateAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> CreateAsync(NetworkReservedIPCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Reserved IP operation removes a reserved IP from your
@@ -113,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<VirtualNetworkOperationStatusResponse> DeleteAsync(string ipName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> DeleteAsync(string ipName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Preview Only. The Get Reserved IP operation retrieves the details

@@ -38,7 +38,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
 {
-    internal partial class MetricSettingOperations : IServiceOperations<MetricsClient>, IMetricSettingOperations
+    internal partial class MetricSettingOperations : IServiceOperations<MetricsClient>, Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations
     {
         /// <summary>
         /// Initializes a new instance of the MetricSettingOperations class.
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateOrUpdateAsync(MetricSettingsPutParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateOrUpdateAsync(MetricSettingsPutParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -108,7 +108,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -193,7 +193,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             
                             if (endpointsItem.Url != null)
                             {
-                                endpointConfigValue["Url"] = endpointsItem.Url.ToString();
+                                endpointConfigValue["Url"] = endpointsItem.Url.AbsoluteUri;
                             }
                         }
                         valueValue["Endpoints"] = endpointsArray;
@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// <returns>
         /// The list metric settings operation response.
         /// </returns>
-        public async Task<MetricSettingListResponse> ListAsync(string resourceId, string metricNamespace, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.MetricSettingListResponse> ListAsync(string resourceId, string metricNamespace, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -303,7 +303,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
             url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace);
             
@@ -362,10 +362,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         MetricSettingCollection metricSettingCollectionInstance = new MetricSettingCollection();
                         result.MetricSettingCollection = metricSettingCollectionInstance;
                         
-                        JArray valueArray = (JArray)responseDoc["Value"];
+                        JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in (JArray)valueArray)
                             {
                                 MetricSetting metricSettingInstance = new MetricSetting();
                                 metricSettingCollectionInstance.Value.Add(metricSettingInstance);
@@ -392,10 +392,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                     {
                                         AvailabilityMetricSettingValue availabilityMetricSettingValueInstance = new AvailabilityMetricSettingValue();
                                         
-                                        JArray availableLocationsArray = (JArray)valueValue2["AvailableLocations"];
+                                        JToken availableLocationsArray = valueValue2["AvailableLocations"];
                                         if (availableLocationsArray != null && availableLocationsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken availableLocationsValue in availableLocationsArray)
+                                            foreach (JToken availableLocationsValue in (JArray)availableLocationsArray)
                                             {
                                                 NameConfig nameConfigInstance = new NameConfig();
                                                 availabilityMetricSettingValueInstance.AvailableLocations.Add(nameConfigInstance);
@@ -416,10 +416,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                             }
                                         }
                                         
-                                        JArray endpointsArray = (JArray)valueValue2["Endpoints"];
+                                        JToken endpointsArray = valueValue2["Endpoints"];
                                         if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken endpointsValue in endpointsArray)
+                                            foreach (JToken endpointsValue in (JArray)endpointsArray)
                                             {
                                                 EndpointConfig endpointConfigInstance = new EndpointConfig();
                                                 availabilityMetricSettingValueInstance.Endpoints.Add(endpointConfigInstance);

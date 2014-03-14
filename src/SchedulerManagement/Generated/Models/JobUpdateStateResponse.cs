@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private Job _job;
         
         /// <summary>
-        /// The updated job.
+        /// The definition of the updated job.
         /// </summary>
         public Job Job
         {

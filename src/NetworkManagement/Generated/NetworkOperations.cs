@@ -32,12 +32,12 @@ using System.Xml.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
-    internal partial class NetworkOperations : IServiceOperations<VirtualNetworkManagementClient>, INetworkOperations
+    internal partial class NetworkOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.INetworkOperations
     {
         /// <summary>
         /// Initializes a new instance of the NetworkOperations class.
@@ -45,18 +45,18 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal NetworkOperations(VirtualNetworkManagementClient client)
+        internal NetworkOperations(NetworkManagementClient client)
         {
             this._client = client;
         }
         
-        private VirtualNetworkManagementClient _client;
+        private NetworkManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.VirtualNetworkManagementClient.
+        /// Microsoft.WindowsAzure.Management.Network.NetworkManagementClient.
         /// </summary>
-        public VirtualNetworkManagementClient Client
+        public NetworkManagementClient Client
         {
             get { return this._client; }
         }
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/media";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/media";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -193,7 +193,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// The Get Network Configuration operation response.
         /// </returns>
-        public async Task<NetworkGetConfigurationResponse> GetConfigurationAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkGetConfigurationResponse> GetConfigurationAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -208,7 +208,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/media";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/media";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -300,7 +300,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// The response structure for the Server List operation.
         /// </returns>
-        public async Task<NetworkListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -315,7 +315,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/virtualnetwork";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/virtualnetwork";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -367,7 +367,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement virtualNetworkSitesSequenceElement = responseDoc.Element(XName.Get("VirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
-                    if (virtualNetworkSitesSequenceElement != null)
+                    if (virtualNetworkSitesSequenceElement != null && virtualNetworkSitesSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement virtualNetworkSitesElement in virtualNetworkSitesSequenceElement.Elements(XName.Get("VirtualNetworkSite", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -375,48 +375,48 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                             result.VirtualNetworkSites.Add(virtualNetworkSiteInstance);
                             
                             XElement nameElement = virtualNetworkSitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 virtualNetworkSiteInstance.Name = nameInstance;
                             }
                             
                             XElement labelElement = virtualNetworkSitesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
+                            if (labelElement != null && labelElement.IsEmpty == false)
                             {
                                 string labelInstance = labelElement.Value;
                                 virtualNetworkSiteInstance.Label = labelInstance;
                             }
                             
                             XElement idElement = virtualNetworkSitesElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                            if (idElement != null)
+                            if (idElement != null && idElement.IsEmpty == false)
                             {
                                 string idInstance = idElement.Value;
                                 virtualNetworkSiteInstance.Id = idInstance;
                             }
                             
                             XElement affinityGroupElement = virtualNetworkSitesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                            if (affinityGroupElement != null)
+                            if (affinityGroupElement != null && affinityGroupElement.IsEmpty == false)
                             {
                                 string affinityGroupInstance = affinityGroupElement.Value;
                                 virtualNetworkSiteInstance.AffinityGroup = affinityGroupInstance;
                             }
                             
                             XElement stateElement = virtualNetworkSitesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
+                            if (stateElement != null && stateElement.IsEmpty == false)
                             {
                                 string stateInstance = stateElement.Value;
                                 virtualNetworkSiteInstance.State = stateInstance;
                             }
                             
                             XElement addressSpaceElement = virtualNetworkSitesElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/windowsazure"));
-                            if (addressSpaceElement != null)
+                            if (addressSpaceElement != null && addressSpaceElement.IsEmpty == false)
                             {
                                 NetworkListResponse.AddressSpace addressSpaceInstance = new NetworkListResponse.AddressSpace();
                                 virtualNetworkSiteInstance.AddressSpace = addressSpaceInstance;
                                 
                                 XElement addressPrefixesSequenceElement = addressSpaceElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
-                                if (addressPrefixesSequenceElement != null)
+                                if (addressPrefixesSequenceElement != null && addressPrefixesSequenceElement.IsEmpty == false)
                                 {
                                     foreach (XElement addressPrefixesElement in addressPrefixesSequenceElement.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
                                     {
@@ -426,7 +426,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                             }
                             
                             XElement subnetsSequenceElement = virtualNetworkSitesElement.Element(XName.Get("Subnets", "http://schemas.microsoft.com/windowsazure"));
-                            if (subnetsSequenceElement != null)
+                            if (subnetsSequenceElement != null && subnetsSequenceElement.IsEmpty == false)
                             {
                                 foreach (XElement subnetsElement in subnetsSequenceElement.Elements(XName.Get("Subnet", "http://schemas.microsoft.com/windowsazure")))
                                 {
@@ -434,14 +434,14 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                                     virtualNetworkSiteInstance.Subnets.Add(subnetInstance);
                                     
                                     XElement nameElement2 = subnetsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement2 != null)
+                                    if (nameElement2 != null && nameElement2.IsEmpty == false)
                                     {
                                         string nameInstance2 = nameElement2.Value;
                                         subnetInstance.Name = nameInstance2;
                                     }
                                     
                                     XElement addressPrefixElement = subnetsElement.Element(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure"));
-                                    if (addressPrefixElement != null)
+                                    if (addressPrefixElement != null && addressPrefixElement.IsEmpty == false)
                                     {
                                         string addressPrefixInstance = addressPrefixElement.Value;
                                         subnetInstance.AddressPrefix = addressPrefixInstance;
@@ -450,10 +450,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                             }
                             
                             XElement dnsElement = virtualNetworkSitesElement.Element(XName.Get("Dns", "http://schemas.microsoft.com/windowsazure"));
-                            if (dnsElement != null)
+                            if (dnsElement != null && dnsElement.IsEmpty == false)
                             {
                                 XElement dnsServersSequenceElement = dnsElement.Element(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
-                                if (dnsServersSequenceElement != null)
+                                if (dnsServersSequenceElement != null && dnsServersSequenceElement.IsEmpty == false)
                                 {
                                     foreach (XElement dnsServersElement in dnsServersSequenceElement.Elements(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure")))
                                     {
@@ -461,14 +461,14 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                                         virtualNetworkSiteInstance.DnsServers.Add(dnsServerInstance);
                                         
                                         XElement nameElement3 = dnsServersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                        if (nameElement3 != null)
+                                        if (nameElement3 != null && nameElement3.IsEmpty == false)
                                         {
                                             string nameInstance3 = nameElement3.Value;
                                             dnsServerInstance.Name = nameInstance3;
                                         }
                                         
                                         XElement addressElement = dnsServersElement.Element(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
-                                        if (addressElement != null)
+                                        if (addressElement != null && addressElement.IsEmpty == false)
                                         {
                                             string addressInstance = addressElement.Value;
                                             dnsServerInstance.Address = addressInstance;
@@ -478,20 +478,20 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                             }
                             
                             XElement gatewayElement = virtualNetworkSitesElement.Element(XName.Get("Gateway", "http://schemas.microsoft.com/windowsazure"));
-                            if (gatewayElement != null)
+                            if (gatewayElement != null && gatewayElement.IsEmpty == false)
                             {
                                 NetworkListResponse.Gateway gatewayInstance = new NetworkListResponse.Gateway();
                                 virtualNetworkSiteInstance.Gateway = gatewayInstance;
                                 
                                 XElement profileElement = gatewayElement.Element(XName.Get("Profile", "http://schemas.microsoft.com/windowsazure"));
-                                if (profileElement != null)
+                                if (profileElement != null && profileElement.IsEmpty == false)
                                 {
-                                    GatewayProfile profileInstance = (GatewayProfile)Enum.Parse(typeof(GatewayProfile), profileElement.Value, false);
+                                    GatewayProfile profileInstance = (GatewayProfile)Enum.Parse(typeof(GatewayProfile), profileElement.Value, true);
                                     gatewayInstance.Profile = profileInstance;
                                 }
                                 
                                 XElement sitesSequenceElement = gatewayElement.Element(XName.Get("Sites", "http://schemas.microsoft.com/windowsazure"));
-                                if (sitesSequenceElement != null)
+                                if (sitesSequenceElement != null && sitesSequenceElement.IsEmpty == false)
                                 {
                                     foreach (XElement sitesElement in sitesSequenceElement.Elements(XName.Get("LocalNetworkSite", "http://schemas.microsoft.com/windowsazure")))
                                     {
@@ -499,27 +499,27 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                                         gatewayInstance.Sites.Add(localNetworkSiteInstance);
                                         
                                         XElement nameElement4 = sitesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                        if (nameElement4 != null)
+                                        if (nameElement4 != null && nameElement4.IsEmpty == false)
                                         {
                                             string nameInstance4 = nameElement4.Value;
                                             localNetworkSiteInstance.Name = nameInstance4;
                                         }
                                         
                                         XElement vpnGatewayAddressElement = sitesElement.Element(XName.Get("VpnGatewayAddress", "http://schemas.microsoft.com/windowsazure"));
-                                        if (vpnGatewayAddressElement != null)
+                                        if (vpnGatewayAddressElement != null && vpnGatewayAddressElement.IsEmpty == false)
                                         {
                                             string vpnGatewayAddressInstance = vpnGatewayAddressElement.Value;
                                             localNetworkSiteInstance.VpnGatewayAddress = vpnGatewayAddressInstance;
                                         }
                                         
                                         XElement addressSpaceElement2 = sitesElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/windowsazure"));
-                                        if (addressSpaceElement2 != null)
+                                        if (addressSpaceElement2 != null && addressSpaceElement2.IsEmpty == false)
                                         {
                                             NetworkListResponse.AddressSpace addressSpaceInstance2 = new NetworkListResponse.AddressSpace();
                                             localNetworkSiteInstance.AddressSpace = addressSpaceInstance2;
                                             
                                             XElement addressPrefixesSequenceElement2 = addressSpaceElement2.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
-                                            if (addressPrefixesSequenceElement2 != null)
+                                            if (addressPrefixesSequenceElement2 != null && addressPrefixesSequenceElement2.IsEmpty == false)
                                             {
                                                 foreach (XElement addressPrefixesElement2 in addressPrefixesSequenceElement2.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
                                                 {
@@ -529,7 +529,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                                         }
                                         
                                         XElement connectionsSequenceElement = sitesElement.Element(XName.Get("Connections", "http://schemas.microsoft.com/windowsazure"));
-                                        if (connectionsSequenceElement != null)
+                                        if (connectionsSequenceElement != null && connectionsSequenceElement.IsEmpty == false)
                                         {
                                             foreach (XElement connectionsElement in connectionsSequenceElement.Elements(XName.Get("Connection", "http://schemas.microsoft.com/windowsazure")))
                                             {
@@ -537,9 +537,9 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                                                 localNetworkSiteInstance.Connections.Add(connectionInstance);
                                                 
                                                 XElement typeElement = connectionsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                                if (typeElement != null)
+                                                if (typeElement != null && typeElement.IsEmpty == false)
                                                 {
-                                                    LocalNetworkConnectionType typeInstance = VirtualNetworkManagementClient.ParseLocalNetworkConnectionType(typeElement.Value);
+                                                    LocalNetworkConnectionType typeInstance = NetworkManagementClient.ParseLocalNetworkConnectionType(typeElement.Value);
                                                     connectionInstance.Type = typeInstance;
                                                 }
                                             }
@@ -548,13 +548,13 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                                 }
                                 
                                 XElement vPNClientAddressPoolElement = gatewayElement.Element(XName.Get("VPNClientAddressPool", "http://schemas.microsoft.com/windowsazure"));
-                                if (vPNClientAddressPoolElement != null)
+                                if (vPNClientAddressPoolElement != null && vPNClientAddressPoolElement.IsEmpty == false)
                                 {
                                     NetworkListResponse.VPNClientAddressPool vPNClientAddressPoolInstance = new NetworkListResponse.VPNClientAddressPool();
                                     gatewayInstance.VPNClientAddressPool = vPNClientAddressPoolInstance;
                                     
                                     XElement addressPrefixesSequenceElement3 = vPNClientAddressPoolElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
-                                    if (addressPrefixesSequenceElement3 != null)
+                                    if (addressPrefixesSequenceElement3 != null && addressPrefixesSequenceElement3.IsEmpty == false)
                                     {
                                         foreach (XElement addressPrefixesElement3 in addressPrefixesSequenceElement3.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
                                         {
@@ -618,9 +618,9 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<VirtualNetworkOperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> SetConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken)
         {
-            VirtualNetworkManagementClient client = this.Client;
+            NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -640,7 +640,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.Networks.BeginSettingConfigurationAsync(parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                VirtualNetworkOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {

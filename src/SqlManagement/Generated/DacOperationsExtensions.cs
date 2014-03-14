@@ -26,11 +26,14 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Sql;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
-namespace Microsoft.WindowsAzure.Management.Sql
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Includes operations for importing and exporting SQL Databases into and
-    /// out of Windows Azure blob storage.
+    /// The SQL Database Management API is a REST API for managing SQL Database
+    /// servers and the firewall rules associated with SQL Database servers.
+    /// (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
+    /// more information)
     /// </summary>
     public static partial class DacOperationsExtensions
     {

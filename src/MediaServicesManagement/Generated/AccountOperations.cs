@@ -38,7 +38,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Management.MediaServices
 {
-    internal partial class AccountOperations : IServiceOperations<MediaServicesManagementClient>, IAccountOperations
+    internal partial class AccountOperations : IServiceOperations<MediaServicesManagementClient>, Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations
     {
         /// <summary>
         /// Initializes a new instance of the AccountOperations class.
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// <returns>
         /// The Create Media Services Account operation response.
         /// </returns>
-        public async Task<MediaServicesAccountCreateResponse> CreateAsync(MediaServicesAccountCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.MediaServices.Models.MediaServicesAccountCreateResponse> CreateAsync(MediaServicesAccountCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -156,7 +156,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                 accountCreationRequestElement.Add(accountNameElement);
                 
                 XElement blobStorageEndpointUriElement = new XElement(XName.Get("BlobStorageEndpointUri", "http://schemas.datacontract.org/2004/07/Microsoft.Cloud.Media.Management.ResourceProvider.Models"));
-                blobStorageEndpointUriElement.Value = parameters.BlobStorageEndpointUri.ToString();
+                blobStorageEndpointUriElement.Value = parameters.BlobStorageEndpointUri.AbsoluteUri;
                 accountCreationRequestElement.Add(blobStorageEndpointUriElement);
                 
                 XElement regionElement = new XElement(XName.Get("Region", "http://schemas.datacontract.org/2004/07/Microsoft.Cloud.Media.Management.ResourceProvider.Models"));
@@ -310,7 +310,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken)
         {
             // Validate
             if (accountName == null)
@@ -330,7 +330,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -420,7 +420,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// <returns>
         /// The Get Media Services Account operation response.
         /// </returns>
-        public async Task<MediaServicesAccountGetResponse> GetAsync(string accountName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.MediaServices.Models.MediaServicesAccountGetResponse> GetAsync(string accountName, CancellationToken cancellationToken)
         {
             // Validate
             if (accountName == null)
@@ -440,7 +440,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -588,7 +588,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// <returns>
         /// The List Media Accounts operation response.
         /// </returns>
-        public async Task<MediaServicesAccountListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.MediaServices.Models.MediaServicesAccountListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -603,7 +603,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -655,7 +655,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourcesSequenceElement != null)
+                    if (serviceResourcesSequenceElement != null && serviceResourcesSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -663,42 +663,42 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                             result.Accounts.Add(serviceResourceInstance);
                             
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 serviceResourceInstance.Name = nameInstance;
                             }
                             
                             XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
+                            if (typeElement != null && typeElement.IsEmpty == false)
                             {
                                 string typeInstance = typeElement.Value;
                                 serviceResourceInstance.Type = typeInstance;
                             }
                             
                             XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
+                            if (stateElement != null && stateElement.IsEmpty == false)
                             {
                                 string stateInstance = stateElement.Value;
                                 serviceResourceInstance.State = stateInstance;
                             }
                             
                             XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null)
+                            if (selfLinkElement != null && selfLinkElement.IsEmpty == false)
                             {
                                 Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
                                 serviceResourceInstance.Uri = selfLinkInstance;
                             }
                             
                             XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (parentLinkElement != null)
+                            if (parentLinkElement != null && parentLinkElement.IsEmpty == false)
                             {
                                 Uri parentLinkInstance = TypeConversion.TryParseUri(parentLinkElement.Value);
                                 serviceResourceInstance.ParentUri = parentLinkInstance;
                             }
                             
                             XElement accountIdElement = serviceResourcesElement.Element(XName.Get("AccountId", "http://schemas.microsoft.com/windowsazure"));
-                            if (accountIdElement != null)
+                            if (accountIdElement != null && accountIdElement.IsEmpty == false)
                             {
                                 string accountIdInstance = accountIdElement.Value;
                                 serviceResourceInstance.AccountId = accountIdInstance;
@@ -755,7 +755,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RegenerateKeyAsync(string accountName, MediaServicesKeyType keyType, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RegenerateKeyAsync(string accountName, MediaServicesKeyType keyType, CancellationToken cancellationToken)
         {
             // Validate
             if (accountName == null)
@@ -776,7 +776,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName + "/AccountKeys/" + keyType + "/Regenerate";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName + "/AccountKeys/" + keyType + "/Regenerate";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

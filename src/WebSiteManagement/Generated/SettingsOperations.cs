@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// <summary>
     /// Operations for managing the settings.
     /// </summary>
-    internal partial class SettingsOperations : IServiceOperations<WebSiteExtensionsClient>, ISettingsOperations
+    internal partial class SettingsOperations : IServiceOperations<WebSiteExtensionsClient>, Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations
     {
         /// <summary>
         /// Initializes a new instance of the SettingsOperations class.
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string settingId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string settingId, CancellationToken cancellationToken)
         {
             // Validate
             if (settingId == null)
@@ -98,8 +98,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/settings/").ToString() + settingId + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/settings/").AbsoluteUri + settingId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -185,7 +184,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get setting operation response.
         /// </returns>
-        public async Task<SettingsGetResponse> GetAsync(string settingId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.SettingsGetResponse> GetAsync(string settingId, CancellationToken cancellationToken)
         {
             // Validate
             if (settingId == null)
@@ -205,8 +204,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/settings/").ToString() + settingId + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/settings/").AbsoluteUri + settingId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -300,7 +298,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list settings operation response.
         /// </returns>
-        public async Task<SettingsListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.SettingsListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -315,8 +313,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/settings").ToString() + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/settings").AbsoluteUri;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -422,7 +419,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(SettingsUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateAsync(SettingsUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -442,8 +439,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/settings").ToString() + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/settings").AbsoluteUri;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -24,7 +24,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Get an instance of the MetricClient class that uses the handler while initiating web requests.
         /// </summary>
         /// <param name="handler">the handler</param>
-        public MetricsClient WithHandler(DelegatingHandler handler)
+        public override MetricsClient WithHandler(DelegatingHandler handler)
         {
             return WithHandler(new MetricsClient(), handler);
         }

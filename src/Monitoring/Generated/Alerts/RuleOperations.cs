@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
     /// <summary>
     /// Operations for managing the alert rules.
     /// </summary>
-    internal partial class RuleOperations : IServiceOperations<AlertsClient>, IRuleOperations
+    internal partial class RuleOperations : IServiceOperations<AlertsClient>, Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations
     {
         /// <summary>
         /// Initializes a new instance of the RuleOperations class.
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateOrUpdateAsync(RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateOrUpdateAsync(RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + parameters.Rule.Id;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + parameters.Rule.Id;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -285,7 +285,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string ruleId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string ruleId, CancellationToken cancellationToken)
         {
             // Validate
             if (ruleId == null)
@@ -305,7 +305,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -390,7 +390,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <returns>
         /// The Get Rule operation response.
         /// </returns>
-        public async Task<RuleGetResponse> GetAsync(string ruleId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleGetResponse> GetAsync(string ruleId, CancellationToken cancellationToken)
         {
             // Validate
             if (ruleId == null)
@@ -410,7 +410,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -538,7 +538,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 JToken operatorValue = conditionValue["Operator"];
                                 if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                 {
-                                    ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, false);
+                                    ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, true);
                                     thresholdRuleConditionInstance.Operator = operatorInstance;
                                 }
                                 
@@ -559,10 +559,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                             }
                         }
                         
-                        JArray actionsArray = (JArray)responseDoc["Actions"];
+                        JToken actionsArray = responseDoc["Actions"];
                         if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken actionsValue in actionsArray)
+                            foreach (JToken actionsValue in (JArray)actionsArray)
                             {
                                 string typeName3 = (string)actionsValue["odata.type"];
                                 if (typeName3 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction")
@@ -576,10 +576,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                         ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
                                     }
                                     
-                                    JArray customEmailsArray = (JArray)actionsValue["CustomEmails"];
+                                    JToken customEmailsArray = actionsValue["CustomEmails"];
                                     if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                     {
-                                        foreach (JToken customEmailsValue in customEmailsArray)
+                                        foreach (JToken customEmailsValue in (JArray)customEmailsArray)
                                         {
                                             ruleEmailActionInstance.CustomEmails.Add((string)customEmailsValue);
                                         }
@@ -635,7 +635,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <returns>
         /// The List Rules operation response.
         /// </returns>
-        public async Task<RuleListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -650,7 +650,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -704,10 +704,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray valueArray = (JArray)responseDoc["Value"];
+                        JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in (JArray)valueArray)
                             {
                                 Rule ruleInstance = new Rule();
                                 result.Value.Add(ruleInstance);
@@ -783,7 +783,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                         JToken operatorValue = conditionValue["Operator"];
                                         if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                         {
-                                            ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, false);
+                                            ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, true);
                                             thresholdRuleConditionInstance.Operator = operatorInstance;
                                         }
                                         
@@ -804,10 +804,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     }
                                 }
                                 
-                                JArray actionsArray = (JArray)valueValue["Actions"];
+                                JToken actionsArray = valueValue["Actions"];
                                 if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken actionsValue in actionsArray)
+                                    foreach (JToken actionsValue in (JArray)actionsArray)
                                     {
                                         string typeName3 = (string)actionsValue["odata.type"];
                                         if (typeName3 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction")
@@ -821,10 +821,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                                 ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
                                             }
                                             
-                                            JArray customEmailsArray = (JArray)actionsValue["CustomEmails"];
+                                            JToken customEmailsArray = actionsValue["CustomEmails"];
                                             if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken customEmailsValue in customEmailsArray)
+                                                foreach (JToken customEmailsValue in (JArray)customEmailsArray)
                                                 {
                                                     ruleEmailActionInstance.CustomEmails.Add((string)customEmailsValue);
                                                 }

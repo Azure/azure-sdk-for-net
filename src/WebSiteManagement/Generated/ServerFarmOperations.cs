@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx for
     /// more information)
     /// </summary>
-    internal partial class ServerFarmOperations : IServiceOperations<WebSiteManagementClient>, IServerFarmOperations
+    internal partial class ServerFarmOperations : IServiceOperations<WebSiteManagementClient>, Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServerFarmOperations class.
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Create Server Farm operation response.
         /// </returns>
-        public async Task<ServerFarmCreateResponse> CreateAsync(string webSpaceName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmCreateResponse> CreateAsync(string webSpaceName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -117,7 +117,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -213,47 +213,47 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serverFarmElement2 = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                    if (serverFarmElement2 != null)
+                    if (serverFarmElement2 != null && serverFarmElement2.IsEmpty == false)
                     {
                         XElement currentNumberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentNumberOfWorkersElement2 != null)
+                        if (currentNumberOfWorkersElement2 != null && currentNumberOfWorkersElement2.IsEmpty == false)
                         {
                             int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
                             result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
                         }
                         
                         XElement currentWorkerSizeElement2 = serverFarmElement2.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentWorkerSizeElement2 != null)
+                        if (currentWorkerSizeElement2 != null && currentWorkerSizeElement2.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, false);
+                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, true);
                             result.CurrentWorkerSize = currentWorkerSizeInstance;
                         }
                         
                         XElement nameElement2 = serverFarmElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
+                        if (nameElement2 != null && nameElement2.IsEmpty == false)
                         {
                             string nameInstance = nameElement2.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement numberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (numberOfWorkersElement2 != null)
+                        if (numberOfWorkersElement2 != null && numberOfWorkersElement2.IsEmpty == false)
                         {
                             int numberOfWorkersInstance = int.Parse(numberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
                             result.NumberOfWorkers = numberOfWorkersInstance;
                         }
                         
                         XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (workerSizeElement2 != null)
+                        if (workerSizeElement2 != null && workerSizeElement2.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, false);
+                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, true);
                             result.WorkerSize = workerSizeInstance;
                         }
                         
                         XElement statusElement2 = serverFarmElement2.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement2 != null)
+                        if (statusElement2 != null && statusElement2.IsEmpty == false)
                         {
-                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, false);
+                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, true);
                             result.Status = statusInstance;
                         }
                     }
@@ -310,7 +310,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string webSpaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string webSpaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -330,7 +330,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -430,7 +430,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Get Server Farm operation response.
         /// </returns>
-        public async Task<ServerFarmGetResponse> GetAsync(string webSpaceName, string serverFarmName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmGetResponse> GetAsync(string webSpaceName, string serverFarmName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -455,7 +455,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/" + serverFarmName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/" + serverFarmName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -507,47 +507,47 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serverFarmElement = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                    if (serverFarmElement != null)
+                    if (serverFarmElement != null && serverFarmElement.IsEmpty == false)
                     {
                         XElement currentNumberOfWorkersElement = serverFarmElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentNumberOfWorkersElement != null)
+                        if (currentNumberOfWorkersElement != null && currentNumberOfWorkersElement.IsEmpty == false)
                         {
                             int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
                             result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
                         }
                         
                         XElement currentWorkerSizeElement = serverFarmElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentWorkerSizeElement != null)
+                        if (currentWorkerSizeElement != null && currentWorkerSizeElement.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, false);
+                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, true);
                             result.CurrentWorkerSize = currentWorkerSizeInstance;
                         }
                         
                         XElement nameElement = serverFarmElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
+                        if (nameElement != null && nameElement.IsEmpty == false)
                         {
                             string nameInstance = nameElement.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement numberOfWorkersElement = serverFarmElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (numberOfWorkersElement != null)
+                        if (numberOfWorkersElement != null && numberOfWorkersElement.IsEmpty == false)
                         {
                             int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
                             result.NumberOfWorkers = numberOfWorkersInstance;
                         }
                         
                         XElement workerSizeElement = serverFarmElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (workerSizeElement != null)
+                        if (workerSizeElement != null && workerSizeElement.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, false);
+                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, true);
                             result.WorkerSize = workerSizeInstance;
                         }
                         
                         XElement statusElement = serverFarmElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
+                        if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, false);
+                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, true);
                             result.Status = statusInstance;
                         }
                     }
@@ -603,7 +603,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The List Server Farm operation response.
         /// </returns>
-        public async Task<ServerFarmListResponse> ListAsync(string webSpaceName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmListResponse> ListAsync(string webSpaceName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -623,7 +623,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -675,7 +675,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serverFarmsSequenceElement = responseDoc.Element(XName.Get("ServerFarms", "http://schemas.microsoft.com/windowsazure"));
-                    if (serverFarmsSequenceElement != null)
+                    if (serverFarmsSequenceElement != null && serverFarmsSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement serverFarmsElement in serverFarmsSequenceElement.Elements(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -683,44 +683,44 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             result.ServerFarms.Add(serverFarmInstance);
                             
                             XElement currentNumberOfWorkersElement = serverFarmsElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentNumberOfWorkersElement != null)
+                            if (currentNumberOfWorkersElement != null && currentNumberOfWorkersElement.IsEmpty == false)
                             {
                                 int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
                                 serverFarmInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
                             }
                             
                             XElement currentWorkerSizeElement = serverFarmsElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentWorkerSizeElement != null)
+                            if (currentWorkerSizeElement != null && currentWorkerSizeElement.IsEmpty == false)
                             {
-                                ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, false);
+                                ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, true);
                                 serverFarmInstance.CurrentWorkerSize = currentWorkerSizeInstance;
                             }
                             
                             XElement nameElement = serverFarmsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 serverFarmInstance.Name = nameInstance;
                             }
                             
                             XElement numberOfWorkersElement = serverFarmsElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                            if (numberOfWorkersElement != null)
+                            if (numberOfWorkersElement != null && numberOfWorkersElement.IsEmpty == false)
                             {
                                 int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
                                 serverFarmInstance.NumberOfWorkers = numberOfWorkersInstance;
                             }
                             
                             XElement workerSizeElement = serverFarmsElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (workerSizeElement != null)
+                            if (workerSizeElement != null && workerSizeElement.IsEmpty == false)
                             {
-                                ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, false);
+                                ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, true);
                                 serverFarmInstance.WorkerSize = workerSizeInstance;
                             }
                             
                             XElement statusElement = serverFarmsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusElement != null)
+                            if (statusElement != null && statusElement.IsEmpty == false)
                             {
-                                ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, false);
+                                ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, true);
                                 serverFarmInstance.Status = statusInstance;
                             }
                         }
@@ -780,7 +780,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The Update Server Farm operation response.
         /// </returns>
-        public async Task<ServerFarmUpdateResponse> UpdateAsync(string webSpaceName, ServerFarmUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmUpdateResponse> UpdateAsync(string webSpaceName, ServerFarmUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -805,7 +805,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -901,47 +901,47 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serverFarmElement2 = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                    if (serverFarmElement2 != null)
+                    if (serverFarmElement2 != null && serverFarmElement2.IsEmpty == false)
                     {
                         XElement currentNumberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentNumberOfWorkersElement2 != null)
+                        if (currentNumberOfWorkersElement2 != null && currentNumberOfWorkersElement2.IsEmpty == false)
                         {
                             int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
                             result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
                         }
                         
                         XElement currentWorkerSizeElement2 = serverFarmElement2.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentWorkerSizeElement2 != null)
+                        if (currentWorkerSizeElement2 != null && currentWorkerSizeElement2.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, false);
+                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, true);
                             result.CurrentWorkerSize = currentWorkerSizeInstance;
                         }
                         
                         XElement nameElement2 = serverFarmElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
+                        if (nameElement2 != null && nameElement2.IsEmpty == false)
                         {
                             string nameInstance = nameElement2.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement numberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (numberOfWorkersElement2 != null)
+                        if (numberOfWorkersElement2 != null && numberOfWorkersElement2.IsEmpty == false)
                         {
                             int numberOfWorkersInstance = int.Parse(numberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
                             result.NumberOfWorkers = numberOfWorkersInstance;
                         }
                         
                         XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (workerSizeElement2 != null)
+                        if (workerSizeElement2 != null && workerSizeElement2.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, false);
+                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, true);
                             result.WorkerSize = workerSizeInstance;
                         }
                         
                         XElement statusElement2 = serverFarmElement2.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement2 != null)
+                        if (statusElement2 != null && statusElement2.IsEmpty == false)
                         {
-                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, false);
+                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, true);
                             result.Status = statusInstance;
                         }
                     }

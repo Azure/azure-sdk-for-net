@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// <returns>
         /// A response to a request for a particular queue.
         /// </returns>
-        Task<ServiceBusQueueResponse> CreateAsync(string namespaceName, ServiceBusQueue queue, CancellationToken cancellationToken);
+        Task<ServiceBusQueueResponse> CreateAsync(string namespaceName, ServiceBusQueueCreateParameters queue, CancellationToken cancellationToken);
         
         /// <summary>
         /// The queue description is an XML AtomPub document that defines the

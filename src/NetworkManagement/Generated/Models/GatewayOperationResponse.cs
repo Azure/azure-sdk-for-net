@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// A standard storage response including an HTTP status code and request

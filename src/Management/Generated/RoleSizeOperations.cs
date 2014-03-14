@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management
     /// The Service Management API includes operations for listing the
     /// available role sizes for VMs in your subscription.
     /// </summary>
-    internal partial class RoleSizeOperations : IServiceOperations<ManagementClient>, IRoleSizeOperations
+    internal partial class RoleSizeOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.IRoleSizeOperations
     {
         /// <summary>
         /// Initializes a new instance of the RoleSizeOperations class.
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Role Sizes operation response.
         /// </returns>
-        public async Task<RoleSizeListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.RoleSizeListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -89,7 +89,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/rolesizes";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/rolesizes";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -141,7 +141,7 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement roleSizesSequenceElement = responseDoc.Element(XName.Get("RoleSizes", "http://schemas.microsoft.com/windowsazure"));
-                    if (roleSizesSequenceElement != null)
+                    if (roleSizesSequenceElement != null && roleSizesSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement roleSizesElement in roleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -149,42 +149,42 @@ namespace Microsoft.WindowsAzure.Management
                             result.RoleSizes.Add(roleSizeInstance);
                             
                             XElement nameElement = roleSizesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 roleSizeInstance.Name = nameInstance;
                             }
                             
                             XElement labelElement = roleSizesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
+                            if (labelElement != null && labelElement.IsEmpty == false)
                             {
                                 string labelInstance = labelElement.Value;
                                 roleSizeInstance.Label = labelInstance;
                             }
                             
                             XElement coresElement = roleSizesElement.Element(XName.Get("Cores", "http://schemas.microsoft.com/windowsazure"));
-                            if (coresElement != null)
+                            if (coresElement != null && coresElement.IsEmpty == false)
                             {
                                 int coresInstance = int.Parse(coresElement.Value, CultureInfo.InvariantCulture);
                                 roleSizeInstance.Cores = coresInstance;
                             }
                             
                             XElement memoryInMbElement = roleSizesElement.Element(XName.Get("MemoryInMb", "http://schemas.microsoft.com/windowsazure"));
-                            if (memoryInMbElement != null)
+                            if (memoryInMbElement != null && memoryInMbElement.IsEmpty == false)
                             {
                                 int memoryInMbInstance = int.Parse(memoryInMbElement.Value, CultureInfo.InvariantCulture);
                                 roleSizeInstance.MemoryInMb = memoryInMbInstance;
                             }
                             
                             XElement supportedByWebWorkerRolesElement = roleSizesElement.Element(XName.Get("SupportedByWebWorkerRoles", "http://schemas.microsoft.com/windowsazure"));
-                            if (supportedByWebWorkerRolesElement != null)
+                            if (supportedByWebWorkerRolesElement != null && supportedByWebWorkerRolesElement.IsEmpty == false)
                             {
                                 bool supportedByWebWorkerRolesInstance = bool.Parse(supportedByWebWorkerRolesElement.Value);
                                 roleSizeInstance.SupportedByWebWorkerRoles = supportedByWebWorkerRolesInstance;
                             }
                             
                             XElement supportedByVirtualMachinesElement = roleSizesElement.Element(XName.Get("SupportedByVirtualMachines", "http://schemas.microsoft.com/windowsazure"));
-                            if (supportedByVirtualMachinesElement != null)
+                            if (supportedByVirtualMachinesElement != null && supportedByVirtualMachinesElement.IsEmpty == false)
                             {
                                 bool supportedByVirtualMachinesInstance = bool.Parse(supportedByVirtualMachinesElement.Value);
                                 roleSizeInstance.SupportedByVirtualMachines = supportedByVirtualMachinesInstance;

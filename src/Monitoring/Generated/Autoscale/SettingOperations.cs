@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
     /// <summary>
     /// Operations for managing the autoscale settings.
     /// </summary>
-    internal partial class SettingOperations : IServiceOperations<AutoscaleClient>, ISettingOperations
+    internal partial class SettingOperations : IServiceOperations<AutoscaleClient>, Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations
     {
         /// <summary>
         /// Initializes a new instance of the SettingOperations class.
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> CreateOrUpdateAsync(string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> CreateOrUpdateAsync(string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
             
             // Create HTTP transport objects
@@ -369,7 +369,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string resourceId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string resourceId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -389,7 +389,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
             
             // Create HTTP transport objects
@@ -476,7 +476,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AutoscaleSettingGetResponse> GetAsync(string resourceId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models.AutoscaleSettingGetResponse> GetAsync(string resourceId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -496,7 +496,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
             
             // Create HTTP transport objects
@@ -554,10 +554,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                         AutoscaleSetting settingInstance = new AutoscaleSetting();
                         result.Setting = settingInstance;
                         
-                        JArray profilesArray = (JArray)responseDoc["Profiles"];
+                        JToken profilesArray = responseDoc["Profiles"];
                         if (profilesArray != null && profilesArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken profilesValue in profilesArray)
+                            foreach (JToken profilesValue in (JArray)profilesArray)
                             {
                                 AutoscaleProfile autoscaleProfileInstance = new AutoscaleProfile();
                                 settingInstance.Profiles.Add(autoscaleProfileInstance);
@@ -597,10 +597,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     }
                                 }
                                 
-                                JArray rulesArray = (JArray)profilesValue["Rules"];
+                                JToken rulesArray = profilesValue["Rules"];
                                 if (rulesArray != null && rulesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken rulesValue in rulesArray)
+                                    foreach (JToken rulesValue in (JArray)rulesArray)
                                     {
                                         ScaleRule scaleRuleInstance = new ScaleRule();
                                         autoscaleProfileInstance.Rules.Add(scaleRuleInstance);
@@ -642,7 +642,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken statisticValue = metricTriggerValue["Statistic"];
                                             if (statisticValue != null && statisticValue.Type != JTokenType.Null)
                                             {
-                                                MetricStatisticType statisticInstance = (MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), (string)statisticValue, false);
+                                                MetricStatisticType statisticInstance = (MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), (string)statisticValue, true);
                                                 metricTriggerInstance.Statistic = statisticInstance;
                                             }
                                             
@@ -656,14 +656,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken timeAggregationValue = metricTriggerValue["TimeAggregation"];
                                             if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
                                             {
-                                                TimeAggregationType timeAggregationInstance = (TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), (string)timeAggregationValue, false);
+                                                TimeAggregationType timeAggregationInstance = (TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), (string)timeAggregationValue, true);
                                                 metricTriggerInstance.TimeAggregation = timeAggregationInstance;
                                             }
                                             
                                             JToken operatorValue = metricTriggerValue["Operator"];
                                             if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                             {
-                                                ComparisonOperationType operatorInstance = (ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), (string)operatorValue, false);
+                                                ComparisonOperationType operatorInstance = (ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), (string)operatorValue, true);
                                                 metricTriggerInstance.Operator = operatorInstance;
                                             }
                                             
@@ -684,14 +684,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken directionValue = scaleActionValue["Direction"];
                                             if (directionValue != null && directionValue.Type != JTokenType.Null)
                                             {
-                                                ScaleDirection directionInstance = (ScaleDirection)Enum.Parse(typeof(ScaleDirection), (string)directionValue, false);
+                                                ScaleDirection directionInstance = (ScaleDirection)Enum.Parse(typeof(ScaleDirection), (string)directionValue, true);
                                                 scaleActionInstance.Direction = directionInstance;
                                             }
                                             
                                             JToken typeValue = scaleActionValue["Type"];
                                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                                             {
-                                                ScaleType typeInstance = (ScaleType)Enum.Parse(typeof(ScaleType), (string)typeValue, false);
+                                                ScaleType typeInstance = (ScaleType)Enum.Parse(typeof(ScaleType), (string)typeValue, true);
                                                 scaleActionInstance.Type = typeInstance;
                                             }
                                             
@@ -749,7 +749,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     JToken frequencyValue = recurrenceValue["Frequency"];
                                     if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
                                     {
-                                        RecurrenceFrequency frequencyInstance = (RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), (string)frequencyValue, false);
+                                        RecurrenceFrequency frequencyInstance = (RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), (string)frequencyValue, true);
                                         recurrenceInstance.Frequency = frequencyInstance;
                                     }
                                     
@@ -766,28 +766,28 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             scheduleInstance.TimeZone = timeZoneInstance2;
                                         }
                                         
-                                        JArray daysArray = (JArray)scheduleValue["Days"];
+                                        JToken daysArray = scheduleValue["Days"];
                                         if (daysArray != null && daysArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken daysValue in daysArray)
+                                            foreach (JToken daysValue in (JArray)daysArray)
                                             {
                                                 scheduleInstance.Days.Add((string)daysValue);
                                             }
                                         }
                                         
-                                        JArray hoursArray = (JArray)scheduleValue["Hours"];
+                                        JToken hoursArray = scheduleValue["Hours"];
                                         if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken hoursValue in hoursArray)
+                                            foreach (JToken hoursValue in (JArray)hoursArray)
                                             {
                                                 scheduleInstance.Hours.Add((int)hoursValue);
                                             }
                                         }
                                         
-                                        JArray minutesArray = (JArray)scheduleValue["Minutes"];
+                                        JToken minutesArray = scheduleValue["Minutes"];
                                         if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken minutesValue in minutesArray)
+                                            foreach (JToken minutesValue in (JArray)minutesArray)
                                             {
                                                 scheduleInstance.Minutes.Add((int)minutesValue);
                                             }

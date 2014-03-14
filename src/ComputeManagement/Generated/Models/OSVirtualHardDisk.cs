@@ -31,30 +31,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class OSVirtualHardDisk
     {
-        private string _diskLabel;
-        
-        /// <summary>
-        /// Specifies the friendly name an operating system image in the image
-        /// repository.
-        /// </summary>
-        public string DiskLabel
-        {
-            get { return this._diskLabel; }
-            set { this._diskLabel = value; }
-        }
-        
-        private string _diskName;
-        
-        /// <summary>
-        /// Specifies the name an operating system image in the image
-        /// repository.
-        /// </summary>
-        public string DiskName
-        {
-            get { return this._diskName; }
-            set { this._diskName = value; }
-        }
-        
         private Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? _hostCaching;
         
         /// <summary>
@@ -67,6 +43,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._hostCaching = value; }
         }
         
+        private string _label;
+        
+        /// <summary>
+        /// Specifies the friendly name an operating system image in the image
+        /// repository.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
+        }
+        
         private Uri _mediaLink;
         
         /// <summary>
@@ -77,6 +65,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._mediaLink; }
             set { this._mediaLink = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Specifies the name an operating system image in the image
+        /// repository.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         private string _operatingSystem;

@@ -26,10 +26,11 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure.WebSitesExtensions
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Operations for managing the repositories.
+    /// The websites extensions client manages the web sites deployments, web
+    /// jobs and other extensions.
     /// </summary>
     public static partial class DeploymentOperationsExtensions
     {
@@ -81,6 +82,62 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         public static Task<DeploymentGetResponse> GetAsync(this IDeploymentOperations operations, string deploymentId)
         {
             return operations.GetAsync(deploymentId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets a deployment log for a website.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// </param>
+        /// <param name='deploymentId'>
+        /// The deployment identifier.
+        /// </param>
+        /// <param name='deploymentLogId'>
+        /// The deployment log identifier.
+        /// </param>
+        /// <returns>
+        /// The get log for a deployments operation response.
+        /// </returns>
+        public static DeploymentGetLogResponse GetLog(this IDeploymentOperations operations, string deploymentId, string deploymentLogId)
+        {
+            try
+            {
+                return operations.GetLogAsync(deploymentId, deploymentLogId).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets a deployment log for a website.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
+        /// </param>
+        /// <param name='deploymentId'>
+        /// The deployment identifier.
+        /// </param>
+        /// <param name='deploymentLogId'>
+        /// The deployment log identifier.
+        /// </param>
+        /// <returns>
+        /// The get log for a deployments operation response.
+        /// </returns>
+        public static Task<DeploymentGetLogResponse> GetLogAsync(this IDeploymentOperations operations, string deploymentId, string deploymentLogId)
+        {
+            return operations.GetLogAsync(deploymentId, deploymentLogId, CancellationToken.None);
         }
         
         /// <summary>
@@ -202,11 +259,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The deployment information operation response.
         /// </returns>
-        public static DeploymentUpdateResponse Reploy(this IDeploymentOperations operations, string deploymentId)
+        public static DeploymentUpdateResponse Redeploy(this IDeploymentOperations operations, string deploymentId)
         {
             try
             {
-                return operations.ReployAsync(deploymentId).Result;
+                return operations.RedeployAsync(deploymentId).Result;
             }
             catch (AggregateException ex)
             {
@@ -234,9 +291,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The deployment information operation response.
         /// </returns>
-        public static Task<DeploymentUpdateResponse> ReployAsync(this IDeploymentOperations operations, string deploymentId)
+        public static Task<DeploymentUpdateResponse> RedeployAsync(this IDeploymentOperations operations, string deploymentId)
         {
-            return operations.ReployAsync(deploymentId, CancellationToken.None);
+            return operations.RedeployAsync(deploymentId, CancellationToken.None);
         }
     }
 }

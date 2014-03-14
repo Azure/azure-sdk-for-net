@@ -38,7 +38,7 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    internal partial class BgpPeeringOperations : IServiceOperations<ExpressRouteManagementClient>, IBgpPeeringOperations
+    internal partial class BgpPeeringOperations : IServiceOperations<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations
     {
         /// <summary>
         /// Initializes a new instance of the BgpPeeringOperations class.
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -222,10 +222,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
+                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -299,7 +299,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -351,10 +351,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
+                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -410,7 +410,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -456,7 +456,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -548,10 +548,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
+                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -603,7 +603,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public async Task<BgpPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.BgpPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -624,7 +624,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -676,62 +676,62 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement bgpPeeringElement = responseDoc.Element(XName.Get("BgpPeering", "http://schemas.microsoft.com/windowsazure"));
-                    if (bgpPeeringElement != null)
+                    if (bgpPeeringElement != null && bgpPeeringElement.IsEmpty == false)
                     {
                         AzureBgpPeering bgpPeeringInstance = new AzureBgpPeering();
                         result.BgpPeering = bgpPeeringInstance;
                         
                         XElement azureAsnElement = bgpPeeringElement.Element(XName.Get("AzureAsn", "http://schemas.microsoft.com/windowsazure"));
-                        if (azureAsnElement != null)
+                        if (azureAsnElement != null && azureAsnElement.IsEmpty == false)
                         {
                             uint azureAsnInstance = uint.Parse(azureAsnElement.Value, CultureInfo.InvariantCulture);
                             bgpPeeringInstance.AzureAsn = azureAsnInstance;
                         }
                         
                         XElement peerAsnElement = bgpPeeringElement.Element(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
-                        if (peerAsnElement != null)
+                        if (peerAsnElement != null && peerAsnElement.IsEmpty == false)
                         {
                             uint peerAsnInstance = uint.Parse(peerAsnElement.Value, CultureInfo.InvariantCulture);
                             bgpPeeringInstance.PeerAsn = peerAsnInstance;
                         }
                         
                         XElement primaryAzurePortElement = bgpPeeringElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                        if (primaryAzurePortElement != null)
+                        if (primaryAzurePortElement != null && primaryAzurePortElement.IsEmpty == false)
                         {
                             string primaryAzurePortInstance = primaryAzurePortElement.Value;
                             bgpPeeringInstance.PrimaryAzurePort = primaryAzurePortInstance;
                         }
                         
                         XElement primaryPeerSubnetElement = bgpPeeringElement.Element(XName.Get("PrimaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
-                        if (primaryPeerSubnetElement != null)
+                        if (primaryPeerSubnetElement != null && primaryPeerSubnetElement.IsEmpty == false)
                         {
                             string primaryPeerSubnetInstance = primaryPeerSubnetElement.Value;
                             bgpPeeringInstance.PrimaryPeerSubnet = primaryPeerSubnetInstance;
                         }
                         
                         XElement secondaryAzurePortElement = bgpPeeringElement.Element(XName.Get("SecondaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                        if (secondaryAzurePortElement != null)
+                        if (secondaryAzurePortElement != null && secondaryAzurePortElement.IsEmpty == false)
                         {
                             string secondaryAzurePortInstance = secondaryAzurePortElement.Value;
                             bgpPeeringInstance.SecondaryAzurePort = secondaryAzurePortInstance;
                         }
                         
                         XElement secondaryPeerSubnetElement = bgpPeeringElement.Element(XName.Get("SecondaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
-                        if (secondaryPeerSubnetElement != null)
+                        if (secondaryPeerSubnetElement != null && secondaryPeerSubnetElement.IsEmpty == false)
                         {
                             string secondaryPeerSubnetInstance = secondaryPeerSubnetElement.Value;
                             bgpPeeringInstance.SecondaryPeerSubnet = secondaryPeerSubnetInstance;
                         }
                         
                         XElement stateElement = bgpPeeringElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
+                        if (stateElement != null && stateElement.IsEmpty == false)
                         {
-                            BGPPeeringState stateInstance = (BGPPeeringState)Enum.Parse(typeof(BGPPeeringState), stateElement.Value, false);
+                            BGPPeeringState stateInstance = (BGPPeeringState)Enum.Parse(typeof(BGPPeeringState), stateElement.Value, true);
                             bgpPeeringInstance.State = stateInstance;
                         }
                         
                         XElement vlanIdElement = bgpPeeringElement.Element(XName.Get("VlanId", "http://schemas.microsoft.com/windowsazure"));
-                        if (vlanIdElement != null)
+                        if (vlanIdElement != null && vlanIdElement.IsEmpty == false)
                         {
                             uint vlanIdInstance = uint.Parse(vlanIdElement.Value, CultureInfo.InvariantCulture);
                             bgpPeeringInstance.VlanId = vlanIdInstance;
@@ -787,7 +787,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public async Task<BgpPeeringGetResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.BgpPeeringGetResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -868,7 +868,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -938,7 +938,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public async Task<BgpPeeringGetResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.BgpPeeringGetResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

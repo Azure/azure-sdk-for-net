@@ -108,7 +108,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             {
                 if (this._label == null)
                 {
-                    return this.ServiceName;
+                    return this.Name;
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._location = value; }
         }
         
-        private string _serviceName;
+        private string _name;
         
         /// <summary>
         /// Required. A name for the storage account that is unique within
@@ -142,10 +142,10 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// queues, and tables in the storage account.  For example:
         /// http://ServiceName.blob.core.windows.net/mycontainer/
         /// </summary>
-        public string ServiceName
+        public string Name
         {
-            get { return this._serviceName; }
-            set { this._serviceName = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>

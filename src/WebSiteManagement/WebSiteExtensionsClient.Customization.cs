@@ -61,13 +61,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             string siteName = ConfigurationHelper.GetString(settings, "SiteName", false);
 
             if (baseUri != null && siteName != null)
-	        {
-		        return new WebSiteExtensionsClient(siteName, credentials, baseUri);
-	        }
+            {
+                return new WebSiteExtensionsClient(siteName, credentials, baseUri);
+            }
             else if (siteName != null)
-	        {
+            {
                 return new WebSiteExtensionsClient(siteName, credentials);		 
-	        }
+            }
 
             throw new ArgumentNullException();
         }
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
         }
 
-        public WebSiteExtensionsClient WithHandler(DelegatingHandler handler)
+        public override WebSiteExtensionsClient WithHandler(DelegatingHandler handler)
         {
             return (WebSiteExtensionsClient)WithHandler(new WebSiteExtensionsClient(), handler);
         }

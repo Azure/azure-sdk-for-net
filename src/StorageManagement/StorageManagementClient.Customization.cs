@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
         }
 
-        public StorageManagementClient WithHandler(DelegatingHandler handler)
+        public override StorageManagementClient WithHandler(DelegatingHandler handler)
         {
             return (StorageManagementClient)WithHandler(new StorageManagementClient(), handler);
         }

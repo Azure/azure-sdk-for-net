@@ -41,7 +41,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// <summary>
     /// Operations for managing the jobs.
     /// </summary>
-    internal partial class WebJobOperations : IServiceOperations<WebSiteExtensionsClient>, IWebJobOperations
+    internal partial class WebJobOperations : IServiceOperations<WebSiteExtensionsClient>, Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations
     {
         /// <summary>
         /// Initializes a new instance of the WebJobOperations class.
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteContinuousAsync(string jobName, bool recursive, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteContinuousAsync(string jobName, bool recursive, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -103,9 +103,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "?";
-            url = url + "version=2";
-            url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
+            string url = new Uri(this.Client.BaseUri, "/api/vfs/site/wwwroot/App_Data/jobs/continuous/").AbsoluteUri + jobName + "?";
+            url = url + "recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -196,7 +195,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteTriggeredAsync(string jobName, bool recursive, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteTriggeredAsync(string jobName, bool recursive, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -217,9 +216,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/vfs/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "?";
-            url = url + "version=2";
-            url = url + "&recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
+            string url = new Uri(this.Client.BaseUri, "/api/vfs/site/wwwroot/App_Data/jobs/triggered/").AbsoluteUri + jobName + "?";
+            url = url + "recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -305,7 +303,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        public async Task<WebJobGetResponse> GetAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobGetResponse> GetAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -325,8 +323,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/").ToString() + jobName + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/").AbsoluteUri + jobName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -549,7 +546,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        public async Task<WebJobGetResponse> GetContinuousAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobGetResponse> GetContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -569,8 +566,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous/").AbsoluteUri + jobName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -796,7 +792,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The Get Web Job Run operation response.
         /// </returns>
-        public async Task<WebJobGetRunResponse> GetRunAsync(string jobName, string jobRunId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobGetRunResponse> GetRunAsync(string jobName, string jobRunId, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -821,8 +817,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/history/" + jobRunId + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered/").AbsoluteUri + jobName + "/history/" + jobRunId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -975,7 +970,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get Web Job Operation Response.
         /// </returns>
-        public async Task<WebJobGetResponse> GetTriggeredAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobGetResponse> GetTriggeredAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -995,8 +990,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered/").AbsoluteUri + jobName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1219,7 +1213,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list of jobs operation response.
         /// </returns>
-        public async Task<WebJobListResponse> ListAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobListResponse> ListAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1235,8 +1229,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs").ToString() + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs").AbsoluteUri + "?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -1296,10 +1289,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobsArray = (JArray)responseDoc;
+                        JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in jobsArray)
+                            foreach (JToken jobsValue in (JArray)jobsArray)
                             {
                                 WebJob webJobInstance = new WebJob();
                                 result.Jobs.Add(webJobInstance);
@@ -1474,7 +1467,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list of jobs operation response.
         /// </returns>
-        public async Task<WebJobListResponse> ListContinuousAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobListResponse> ListContinuousAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1490,8 +1483,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous").ToString() + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous").AbsoluteUri + "?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -1551,10 +1543,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobsArray = (JArray)responseDoc;
+                        JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in jobsArray)
+                            foreach (JToken jobsValue in (JArray)jobsArray)
                             {
                                 WebJob webJobInstance = new WebJob();
                                 result.Jobs.Add(webJobInstance);
@@ -1732,7 +1724,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The Web Job run list operation response.
         /// </returns>
-        public async Task<WebJobRunListResponse> ListRunsAsync(string jobName, WebJobRunListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobRunListResponse> ListRunsAsync(string jobName, WebJobRunListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -1753,8 +1745,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/history?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered/").AbsoluteUri + jobName + "/history?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -1814,10 +1805,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray runsArray = (JArray)responseDoc["runs"];
+                        JToken runsArray = responseDoc["runs"];
                         if (runsArray != null && runsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken runsValue in runsArray)
+                            foreach (JToken runsValue in (JArray)runsArray)
                             {
                                 WebJobRun webJobRunInstance = new WebJobRun();
                                 result.JobRuns.Add(webJobRunInstance);
@@ -1922,7 +1913,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list of jobs operation response.
         /// </returns>
-        public async Task<WebJobListResponse> ListTriggeredAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.WebJobListResponse> ListTriggeredAsync(WebJobListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1938,8 +1929,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered").ToString() + "?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered").AbsoluteUri + "?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -1999,10 +1989,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobsArray = (JArray)responseDoc;
+                        JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in jobsArray)
+                            foreach (JToken jobsValue in (JArray)jobsArray)
                             {
                                 WebJob webJobInstance = new WebJob();
                                 result.Jobs.Add(webJobInstance);
@@ -2178,7 +2168,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RunTriggeredAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RunTriggeredAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2198,8 +2188,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/triggered/").ToString() + jobName + "/run?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered/").AbsoluteUri + jobName + "/run";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2290,7 +2279,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> SetSingletonAsync(string jobName, bool isSingleton, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> SetSingletonAsync(string jobName, bool isSingleton, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2311,9 +2300,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/singleton/?";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous/").AbsoluteUri + jobName + "/singleton/?";
             url = url + "isSingleton=" + Uri.EscapeUriString(isSingleton.ToString().ToLower());
-            url = url + "&version=2";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2400,7 +2388,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StartContinuousAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> StartContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2420,8 +2408,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/start/?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous/").AbsoluteUri + jobName + "/start/";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2508,7 +2495,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> StopContinuousAsync(string jobName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> StopContinuousAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2528,8 +2515,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/jobs/continuous/").ToString() + jobName + "/stop/?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous/").AbsoluteUri + jobName + "/stop/";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2619,7 +2605,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UploadContinuousAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UploadContinuousAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2644,8 +2630,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/continuous/").ToString() + jobName + "/?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/zip/site/wwwroot/App_Data/jobs/continuous/").AbsoluteUri + jobName + "/";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2740,7 +2725,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UploadTriggeredAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UploadTriggeredAsync(string jobName, Stream jobContent, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -2765,8 +2750,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/zip/site/wwwroot/App_Data/jobs/triggered/").ToString() + jobName + "/?";
-            url = url + "version=2";
+            string url = new Uri(this.Client.BaseUri, "/api/zip/site/wwwroot/App_Data/jobs/triggered/").AbsoluteUri + jobName + "/";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

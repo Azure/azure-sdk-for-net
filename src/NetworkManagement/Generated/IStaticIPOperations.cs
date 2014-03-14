@@ -21,12 +21,11 @@
 
 using System;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
     public partial interface IStaticIPOperations
     {
@@ -34,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// The Check Static IP operation retrieves the details for the
         /// availability of static IP addresses for the given virtual network.
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network.
         /// </param>
         /// <param name='ipAddress'>
@@ -47,6 +46,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A response that indicates the availability of a static IP address,
         /// and if not, provide a list of suggestions.
         /// </returns>
-        Task<NetworkStaticIPAvailabilityResponse> CheckAsync(string virtualNetworkName, string ipAddress, CancellationToken cancellationToken);
+        Task<NetworkStaticIPAvailabilityResponse> CheckAsync(string networkName, string ipAddress, CancellationToken cancellationToken);
     }
 }

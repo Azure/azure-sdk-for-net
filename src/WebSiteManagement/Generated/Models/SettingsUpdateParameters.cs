@@ -22,14 +22,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
     /// The settings update operation response.
     /// </summary>
-    public partial class SettingsUpdateParameters : OperationResponse
+    public partial class SettingsUpdateParameters
     {
         private IDictionary<string, string> _settings;
         

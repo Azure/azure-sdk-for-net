@@ -203,7 +203,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Create(this IServiceCertificateOperations operations, string serviceName, ServiceCertificateCreateParameters parameters)
+        public static OperationStatusResponse Create(this IServiceCertificateOperations operations, string serviceName, ServiceCertificateCreateParameters parameters)
         {
             try
             {
@@ -252,7 +252,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> CreateAsync(this IServiceCertificateOperations operations, string serviceName, ServiceCertificateCreateParameters parameters)
+        public static Task<OperationStatusResponse> CreateAsync(this IServiceCertificateOperations operations, string serviceName, ServiceCertificateCreateParameters parameters)
         {
             return operations.CreateAsync(serviceName, parameters, CancellationToken.None);
         }
@@ -284,7 +284,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ComputeOperationStatusResponse Delete(this IServiceCertificateOperations operations, ServiceCertificateDeleteParameters parameters)
+        public static OperationStatusResponse Delete(this IServiceCertificateOperations operations, ServiceCertificateDeleteParameters parameters)
         {
             try
             {
@@ -330,7 +330,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ComputeOperationStatusResponse> DeleteAsync(this IServiceCertificateOperations operations, ServiceCertificateDeleteParameters parameters)
+        public static Task<OperationStatusResponse> DeleteAsync(this IServiceCertificateOperations operations, ServiceCertificateDeleteParameters parameters)
         {
             return operations.DeleteAsync(parameters, CancellationToken.None);
         }

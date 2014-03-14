@@ -75,12 +75,12 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._id = value; }
         }
         
-        private OperationStatus _status;
+        private StorageOperationStatus _status;
         
         /// <summary>
         /// The status of the asynchronous request.
         /// </summary>
-        public OperationStatus Status
+        public StorageOperationStatus Status
         {
             get { return this._status; }
             set { this._status = value; }

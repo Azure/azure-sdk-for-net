@@ -21,10 +21,9 @@
 
 using System;
 using System.Linq;
-using System.Net;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// The parameters for the Connect, Disconnect, or Test request

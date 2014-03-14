@@ -38,7 +38,7 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    internal partial class DedicatedCircuitOperations : IServiceOperations<ExpressRouteManagementClient>, IDedicatedCircuitOperations
+    internal partial class DedicatedCircuitOperations : IServiceOperations<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations
     {
         /// <summary>
         /// Initializes a new instance of the DedicatedCircuitOperations class.
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginNewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginNewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -107,7 +107,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -186,10 +186,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
+                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -239,7 +239,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
         /// </returns>
-        public async Task<ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -259,7 +259,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -311,10 +311,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null)
+                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -363,7 +363,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Dedicated Circuit operation response.
         /// </returns>
-        public async Task<DedicatedCircuitGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -383,7 +383,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -435,57 +435,57 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dedicatedCircuitElement = responseDoc.Element(XName.Get("DedicatedCircuit", "http://schemas.microsoft.com/windowsazure"));
-                    if (dedicatedCircuitElement != null)
+                    if (dedicatedCircuitElement != null && dedicatedCircuitElement.IsEmpty == false)
                     {
                         AzureDedicatedCircuit dedicatedCircuitInstance = new AzureDedicatedCircuit();
                         result.DedicatedCircuit = dedicatedCircuitInstance;
                         
                         XElement bandwidthElement = dedicatedCircuitElement.Element(XName.Get("Bandwidth", "http://schemas.microsoft.com/windowsazure"));
-                        if (bandwidthElement != null)
+                        if (bandwidthElement != null && bandwidthElement.IsEmpty == false)
                         {
                             uint bandwidthInstance = uint.Parse(bandwidthElement.Value, CultureInfo.InvariantCulture);
                             dedicatedCircuitInstance.Bandwidth = bandwidthInstance;
                         }
                         
                         XElement circuitNameElement = dedicatedCircuitElement.Element(XName.Get("CircuitName", "http://schemas.microsoft.com/windowsazure"));
-                        if (circuitNameElement != null)
+                        if (circuitNameElement != null && circuitNameElement.IsEmpty == false)
                         {
                             string circuitNameInstance = circuitNameElement.Value;
                             dedicatedCircuitInstance.CircuitName = circuitNameInstance;
                         }
                         
                         XElement locationElement = dedicatedCircuitElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
+                        if (locationElement != null && locationElement.IsEmpty == false)
                         {
                             string locationInstance = locationElement.Value;
                             dedicatedCircuitInstance.Location = locationInstance;
                         }
                         
                         XElement serviceKeyElement = dedicatedCircuitElement.Element(XName.Get("ServiceKey", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceKeyElement != null)
+                        if (serviceKeyElement != null && serviceKeyElement.IsEmpty == false)
                         {
                             string serviceKeyInstance = serviceKeyElement.Value;
                             dedicatedCircuitInstance.ServiceKey = serviceKeyInstance;
                         }
                         
                         XElement serviceProviderNameElement = dedicatedCircuitElement.Element(XName.Get("ServiceProviderName", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceProviderNameElement != null)
+                        if (serviceProviderNameElement != null && serviceProviderNameElement.IsEmpty == false)
                         {
                             string serviceProviderNameInstance = serviceProviderNameElement.Value;
                             dedicatedCircuitInstance.ServiceProviderName = serviceProviderNameInstance;
                         }
                         
                         XElement serviceProviderProvisioningStateElement = dedicatedCircuitElement.Element(XName.Get("ServiceProviderProvisioningState", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceProviderProvisioningStateElement != null)
+                        if (serviceProviderProvisioningStateElement != null && serviceProviderProvisioningStateElement.IsEmpty == false)
                         {
-                            ProviderProvisioningState serviceProviderProvisioningStateInstance = (ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, false);
+                            ProviderProvisioningState serviceProviderProvisioningStateInstance = (ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, true);
                             dedicatedCircuitInstance.ServiceProviderProvisioningState = serviceProviderProvisioningStateInstance;
                         }
                         
                         XElement statusElement = dedicatedCircuitElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
+                        if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            DedicatedCircuitState statusInstance = (DedicatedCircuitState)Enum.Parse(typeof(DedicatedCircuitState), statusElement.Value, false);
+                            DedicatedCircuitState statusInstance = (DedicatedCircuitState)Enum.Parse(typeof(DedicatedCircuitState), statusElement.Value, true);
                             dedicatedCircuitInstance.Status = statusInstance;
                         }
                     }
@@ -529,7 +529,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The List Dedicated Circuit operation response.
         /// </returns>
-        public async Task<DedicatedCircuitListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -544,7 +544,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits?api-version=1.0";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits?api-version=1.0";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -596,7 +596,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dedicatedCircuitsSequenceElement = responseDoc.Element(XName.Get("DedicatedCircuits", "http://schemas.microsoft.com/windowsazure"));
-                    if (dedicatedCircuitsSequenceElement != null)
+                    if (dedicatedCircuitsSequenceElement != null && dedicatedCircuitsSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement dedicatedCircuitsElement in dedicatedCircuitsSequenceElement.Elements(XName.Get("DedicatedCircuit", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -604,51 +604,51 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             result.DedicatedCircuits.Add(dedicatedCircuitInstance);
                             
                             XElement bandwidthElement = dedicatedCircuitsElement.Element(XName.Get("Bandwidth", "http://schemas.microsoft.com/windowsazure"));
-                            if (bandwidthElement != null)
+                            if (bandwidthElement != null && bandwidthElement.IsEmpty == false)
                             {
                                 uint bandwidthInstance = uint.Parse(bandwidthElement.Value, CultureInfo.InvariantCulture);
                                 dedicatedCircuitInstance.Bandwidth = bandwidthInstance;
                             }
                             
                             XElement circuitNameElement = dedicatedCircuitsElement.Element(XName.Get("CircuitName", "http://schemas.microsoft.com/windowsazure"));
-                            if (circuitNameElement != null)
+                            if (circuitNameElement != null && circuitNameElement.IsEmpty == false)
                             {
                                 string circuitNameInstance = circuitNameElement.Value;
                                 dedicatedCircuitInstance.CircuitName = circuitNameInstance;
                             }
                             
                             XElement locationElement = dedicatedCircuitsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null)
+                            if (locationElement != null && locationElement.IsEmpty == false)
                             {
                                 string locationInstance = locationElement.Value;
                                 dedicatedCircuitInstance.Location = locationInstance;
                             }
                             
                             XElement serviceKeyElement = dedicatedCircuitsElement.Element(XName.Get("ServiceKey", "http://schemas.microsoft.com/windowsazure"));
-                            if (serviceKeyElement != null)
+                            if (serviceKeyElement != null && serviceKeyElement.IsEmpty == false)
                             {
                                 string serviceKeyInstance = serviceKeyElement.Value;
                                 dedicatedCircuitInstance.ServiceKey = serviceKeyInstance;
                             }
                             
                             XElement serviceProviderNameElement = dedicatedCircuitsElement.Element(XName.Get("ServiceProviderName", "http://schemas.microsoft.com/windowsazure"));
-                            if (serviceProviderNameElement != null)
+                            if (serviceProviderNameElement != null && serviceProviderNameElement.IsEmpty == false)
                             {
                                 string serviceProviderNameInstance = serviceProviderNameElement.Value;
                                 dedicatedCircuitInstance.ServiceProviderName = serviceProviderNameInstance;
                             }
                             
                             XElement serviceProviderProvisioningStateElement = dedicatedCircuitsElement.Element(XName.Get("ServiceProviderProvisioningState", "http://schemas.microsoft.com/windowsazure"));
-                            if (serviceProviderProvisioningStateElement != null)
+                            if (serviceProviderProvisioningStateElement != null && serviceProviderProvisioningStateElement.IsEmpty == false)
                             {
-                                ProviderProvisioningState serviceProviderProvisioningStateInstance = (ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, false);
+                                ProviderProvisioningState serviceProviderProvisioningStateInstance = (ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, true);
                                 dedicatedCircuitInstance.ServiceProviderProvisioningState = serviceProviderProvisioningStateInstance;
                             }
                             
                             XElement statusElement = dedicatedCircuitsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusElement != null)
+                            if (statusElement != null && statusElement.IsEmpty == false)
                             {
-                                DedicatedCircuitState statusInstance = (DedicatedCircuitState)Enum.Parse(typeof(DedicatedCircuitState), statusElement.Value, false);
+                                DedicatedCircuitState statusInstance = (DedicatedCircuitState)Enum.Parse(typeof(DedicatedCircuitState), statusElement.Value, true);
                                 dedicatedCircuitInstance.Status = statusInstance;
                             }
                         }
@@ -695,7 +695,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Dedicated Circuit operation response.
         /// </returns>
-        public async Task<DedicatedCircuitGetResponse> NewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitGetResponse> NewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -772,7 +772,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, CancellationToken cancellationToken)
         {
             ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

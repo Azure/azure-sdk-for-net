@@ -39,7 +39,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.Scheduler
 {
-    internal partial class JobOperations : IServiceOperations<SchedulerClient>, IJobOperations
+    internal partial class JobOperations : IServiceOperations<SchedulerClient>, Microsoft.WindowsAzure.Scheduler.IJobOperations
     {
         /// <summary>
         /// Initializes a new instance of the JobOperations class.
@@ -64,11 +64,11 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// If the user wants the server to create the job id then he can use a
-        /// POST request to the jobs resource.
+        /// Creates a new Job, allowing the service to generate a job id. Use
+        /// CreateOrUpdate if a user-chosen job id is required.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Job operation.
+        /// Parameters specifying the job definition for a Create Job operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Create Job operation response.
         /// </returns>
-        public async Task<JobCreateResponse> CreateAsync(JobCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCreateResponse> CreateAsync(JobCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -163,7 +163,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
             url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
@@ -228,7 +228,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JObject requestValue = new JObject();
                         errorActionValue["request"] = requestValue;
                         
-                        requestValue["uri"] = parameters.Action.ErrorAction.Request.Uri.ToString();
+                        requestValue["uri"] = parameters.Action.ErrorAction.Request.Uri.AbsoluteUri;
                         
                         requestValue["method"] = parameters.Action.ErrorAction.Request.Method;
                         
@@ -270,7 +270,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     JObject requestValue2 = new JObject();
                     actionValue["request"] = requestValue2;
                     
-                    requestValue2["uri"] = parameters.Action.Request.Uri.ToString();
+                    requestValue2["uri"] = parameters.Action.Request.Uri.AbsoluteUri;
                     
                     requestValue2["method"] = parameters.Action.Request.Method;
                     
@@ -704,55 +704,55 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
                                 recurrenceInstance.Schedule = scheduleInstance;
                                 
-                                JArray minutesArray2 = (JArray)scheduleValue2["minutes"];
+                                JToken minutesArray2 = scheduleValue2["minutes"];
                                 if (minutesArray2 != null && minutesArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken minutesValue in minutesArray2)
+                                    foreach (JToken minutesValue in (JArray)minutesArray2)
                                     {
                                         scheduleInstance.Minutes.Add((int)minutesValue);
                                     }
                                 }
                                 
-                                JArray hoursArray2 = (JArray)scheduleValue2["hours"];
+                                JToken hoursArray2 = scheduleValue2["hours"];
                                 if (hoursArray2 != null && hoursArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken hoursValue in hoursArray2)
+                                    foreach (JToken hoursValue in (JArray)hoursArray2)
                                     {
                                         scheduleInstance.Hours.Add((int)hoursValue);
                                     }
                                 }
                                 
-                                JArray weekDaysArray2 = (JArray)scheduleValue2["weekDays"];
+                                JToken weekDaysArray2 = scheduleValue2["weekDays"];
                                 if (weekDaysArray2 != null && weekDaysArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken weekDaysValue in weekDaysArray2)
+                                    foreach (JToken weekDaysValue in (JArray)weekDaysArray2)
                                     {
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                     }
                                 }
                                 
-                                JArray monthsArray2 = (JArray)scheduleValue2["months"];
+                                JToken monthsArray2 = scheduleValue2["months"];
                                 if (monthsArray2 != null && monthsArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthsValue in monthsArray2)
+                                    foreach (JToken monthsValue in (JArray)monthsArray2)
                                     {
                                         scheduleInstance.Months.Add((int)monthsValue);
                                     }
                                 }
                                 
-                                JArray monthDaysArray2 = (JArray)scheduleValue2["monthDays"];
+                                JToken monthDaysArray2 = scheduleValue2["monthDays"];
                                 if (monthDaysArray2 != null && monthDaysArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthDaysValue in monthDaysArray2)
+                                    foreach (JToken monthDaysValue in (JArray)monthDaysArray2)
                                     {
                                         scheduleInstance.MonthDays.Add((int)monthDaysValue);
                                     }
                                 }
                                 
-                                JArray monthlyOccurrencesArray2 = (JArray)scheduleValue2["monthlyOccurrences"];
+                                JToken monthlyOccurrencesArray2 = scheduleValue2["monthlyOccurrences"];
                                 if (monthlyOccurrencesArray2 != null && monthlyOccurrencesArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray2)
+                                    foreach (JToken monthlyOccurrencesValue in (JArray)monthlyOccurrencesArray2)
                                     {
                                         JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
                                         scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
@@ -855,25 +855,23 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Jobs can be created or updated with a PUT operation to a job's
-        /// address. The resource name is the ID of the job. Doing a PUT
-        /// operation on a jobId that already exists will completely overwrite
-        /// the existing job. Putting an existing job (replace) will reset
-        /// internal execution counters.
+        /// Creates a new Job with a user-provided job id, or updates an
+        /// existing job, replacing its definition with that specified.
         /// </summary>
         /// <param name='jobId'>
         /// Id of the job to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the job operation.
+        /// Parameters specifying the job definition for a CreateOrUpdate Job
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Update Job operation response.
+        /// The CreateOrUpdate Job operation response.
         /// </returns>
-        public async Task<JobCreateOrUpdateResponse> CreateOrUpdateAsync(string jobId, JobCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCreateOrUpdateResponse> CreateOrUpdateAsync(string jobId, JobCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -965,7 +963,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
             url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
@@ -1030,7 +1028,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JObject requestValue = new JObject();
                         errorActionValue["request"] = requestValue;
                         
-                        requestValue["uri"] = parameters.Action.ErrorAction.Request.Uri.ToString();
+                        requestValue["uri"] = parameters.Action.ErrorAction.Request.Uri.AbsoluteUri;
                         
                         requestValue["method"] = parameters.Action.ErrorAction.Request.Method;
                         
@@ -1072,7 +1070,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     JObject requestValue2 = new JObject();
                     actionValue["request"] = requestValue2;
                     
-                    requestValue2["uri"] = parameters.Action.Request.Uri.ToString();
+                    requestValue2["uri"] = parameters.Action.Request.Uri.AbsoluteUri;
                     
                     requestValue2["method"] = parameters.Action.Request.Method;
                     
@@ -1506,55 +1504,55 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
                                 recurrenceInstance.Schedule = scheduleInstance;
                                 
-                                JArray minutesArray2 = (JArray)scheduleValue2["minutes"];
+                                JToken minutesArray2 = scheduleValue2["minutes"];
                                 if (minutesArray2 != null && minutesArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken minutesValue in minutesArray2)
+                                    foreach (JToken minutesValue in (JArray)minutesArray2)
                                     {
                                         scheduleInstance.Minutes.Add((int)minutesValue);
                                     }
                                 }
                                 
-                                JArray hoursArray2 = (JArray)scheduleValue2["hours"];
+                                JToken hoursArray2 = scheduleValue2["hours"];
                                 if (hoursArray2 != null && hoursArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken hoursValue in hoursArray2)
+                                    foreach (JToken hoursValue in (JArray)hoursArray2)
                                     {
                                         scheduleInstance.Hours.Add((int)hoursValue);
                                     }
                                 }
                                 
-                                JArray weekDaysArray2 = (JArray)scheduleValue2["weekDays"];
+                                JToken weekDaysArray2 = scheduleValue2["weekDays"];
                                 if (weekDaysArray2 != null && weekDaysArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken weekDaysValue in weekDaysArray2)
+                                    foreach (JToken weekDaysValue in (JArray)weekDaysArray2)
                                     {
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                     }
                                 }
                                 
-                                JArray monthsArray2 = (JArray)scheduleValue2["months"];
+                                JToken monthsArray2 = scheduleValue2["months"];
                                 if (monthsArray2 != null && monthsArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthsValue in monthsArray2)
+                                    foreach (JToken monthsValue in (JArray)monthsArray2)
                                     {
                                         scheduleInstance.Months.Add((int)monthsValue);
                                     }
                                 }
                                 
-                                JArray monthDaysArray2 = (JArray)scheduleValue2["monthDays"];
+                                JToken monthDaysArray2 = scheduleValue2["monthDays"];
                                 if (monthDaysArray2 != null && monthDaysArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthDaysValue in monthDaysArray2)
+                                    foreach (JToken monthDaysValue in (JArray)monthDaysArray2)
                                     {
                                         scheduleInstance.MonthDays.Add((int)monthDaysValue);
                                     }
                                 }
                                 
-                                JArray monthlyOccurrencesArray2 = (JArray)scheduleValue2["monthlyOccurrences"];
+                                JToken monthlyOccurrencesArray2 = scheduleValue2["monthlyOccurrences"];
                                 if (monthlyOccurrencesArray2 != null && monthlyOccurrencesArray2.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray2)
+                                    foreach (JToken monthlyOccurrencesValue in (JArray)monthlyOccurrencesArray2)
                                     {
                                         JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
                                         scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
@@ -1669,7 +1667,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string jobId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string jobId, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -1689,7 +1687,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
             url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
@@ -1766,8 +1764,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// The status of an individual job can be access by a GET call to a
-        /// job's address, jobId.
+        /// Get the definition and status of a job.
         /// </summary>
         /// <param name='jobId'>
         /// Id of the job to get.
@@ -1778,7 +1775,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Get Job operation response.
         /// </returns>
-        public async Task<JobGetResponse> GetAsync(string jobId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobGetResponse> GetAsync(string jobId, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -1798,7 +1795,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
             url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
@@ -2113,55 +2110,55 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
                                 recurrenceInstance.Schedule = scheduleInstance;
                                 
-                                JArray minutesArray = (JArray)scheduleValue["minutes"];
+                                JToken minutesArray = scheduleValue["minutes"];
                                 if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken minutesValue in minutesArray)
+                                    foreach (JToken minutesValue in (JArray)minutesArray)
                                     {
                                         scheduleInstance.Minutes.Add((int)minutesValue);
                                     }
                                 }
                                 
-                                JArray hoursArray = (JArray)scheduleValue["hours"];
+                                JToken hoursArray = scheduleValue["hours"];
                                 if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken hoursValue in hoursArray)
+                                    foreach (JToken hoursValue in (JArray)hoursArray)
                                     {
                                         scheduleInstance.Hours.Add((int)hoursValue);
                                     }
                                 }
                                 
-                                JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
+                                JToken weekDaysArray = scheduleValue["weekDays"];
                                 if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken weekDaysValue in weekDaysArray)
+                                    foreach (JToken weekDaysValue in (JArray)weekDaysArray)
                                     {
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                     }
                                 }
                                 
-                                JArray monthsArray = (JArray)scheduleValue["months"];
+                                JToken monthsArray = scheduleValue["months"];
                                 if (monthsArray != null && monthsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthsValue in monthsArray)
+                                    foreach (JToken monthsValue in (JArray)monthsArray)
                                     {
                                         scheduleInstance.Months.Add((int)monthsValue);
                                     }
                                 }
                                 
-                                JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
+                                JToken monthDaysArray = scheduleValue["monthDays"];
                                 if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthDaysValue in monthDaysArray)
+                                    foreach (JToken monthDaysValue in (JArray)monthDaysArray)
                                     {
                                         scheduleInstance.MonthDays.Add((int)monthDaysValue);
                                     }
                                 }
                                 
-                                JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
+                                JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
                                 if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
+                                    foreach (JToken monthlyOccurrencesValue in (JArray)monthlyOccurrencesArray)
                                     {
                                         JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
                                         scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
@@ -2264,7 +2261,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Job history tracks the updates and executions of a job.
+        /// Get the execution history of a Job.
         /// </summary>
         /// <param name='jobId'>
         /// Id of the job to get the history of.
@@ -2278,7 +2275,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Get Job History operation response.
         /// </returns>
-        public async Task<JobGetHistoryResponse> GetHistoryAsync(string jobId, JobGetHistoryParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobGetHistoryResponse> GetHistoryAsync(string jobId, JobGetHistoryParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -2303,7 +2300,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
             url = url + "api-version=2013-10-31_Preview";
             url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
             url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.ToString());
@@ -2359,10 +2356,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobHistoryArray = (JArray)responseDoc;
+                        JToken jobHistoryArray = responseDoc;
                         if (jobHistoryArray != null && jobHistoryArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobHistoryValue in jobHistoryArray)
+                            foreach (JToken jobHistoryValue in (JArray)jobHistoryArray)
                             {
                                 JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
                                 result.JobHistory.Add(jobHistoryEntryInstance);
@@ -2470,7 +2467,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Job history tracks the updates and executions of a job.
+        /// Get the execution history of a Job with a filter on the job Status.
         /// </summary>
         /// <param name='jobId'>
         /// Id of the job to get the history of.
@@ -2484,7 +2481,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Get Job History operation response.
         /// </returns>
-        public async Task<JobGetHistoryResponse> GetHistoryWithFilterAsync(string jobId, JobGetHistoryWithFilterParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobGetHistoryResponse> GetHistoryWithFilterAsync(string jobId, JobGetHistoryWithFilterParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -2509,7 +2506,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
             url = url + "api-version=2013-10-31_Preview";
             url = url + "&$filter=status eq " + Uri.EscapeUriString(SchedulerClient.JobHistoryStatusToString(parameters.Status));
             url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
@@ -2566,10 +2563,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobHistoryArray = (JArray)responseDoc;
+                        JToken jobHistoryArray = responseDoc;
                         if (jobHistoryArray != null && jobHistoryArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobHistoryValue in jobHistoryArray)
+                            foreach (JToken jobHistoryValue in (JArray)jobHistoryArray)
                             {
                                 JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
                                 result.JobHistory.Add(jobHistoryEntryInstance);
@@ -2677,7 +2674,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Fetch all jobs in a job collection.
+        /// Get the list of all jobs in a job collection.
         /// </summary>
         /// <param name='parameters'>
         /// Parameters supplied to the List Jobs operation.
@@ -2688,7 +2685,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The List Jobs operation response.
         /// </returns>
-        public async Task<JobListResponse> ListAsync(JobListParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobListResponse> ListAsync(JobListParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -2708,7 +2705,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
             url = url + "api-version=2013-10-31_Preview";
             if (parameters.Skip != null)
             {
@@ -2770,10 +2767,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobsArray = (JArray)responseDoc;
+                        JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in jobsArray)
+                            foreach (JToken jobsValue in (JArray)jobsArray)
                             {
                                 Job jobInstance = new Job();
                                 result.Jobs.Add(jobInstance);
@@ -3036,55 +3033,55 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
                                         recurrenceInstance.Schedule = scheduleInstance;
                                         
-                                        JArray minutesArray = (JArray)scheduleValue["minutes"];
+                                        JToken minutesArray = scheduleValue["minutes"];
                                         if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken minutesValue in minutesArray)
+                                            foreach (JToken minutesValue in (JArray)minutesArray)
                                             {
                                                 scheduleInstance.Minutes.Add((int)minutesValue);
                                             }
                                         }
                                         
-                                        JArray hoursArray = (JArray)scheduleValue["hours"];
+                                        JToken hoursArray = scheduleValue["hours"];
                                         if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken hoursValue in hoursArray)
+                                            foreach (JToken hoursValue in (JArray)hoursArray)
                                             {
                                                 scheduleInstance.Hours.Add((int)hoursValue);
                                             }
                                         }
                                         
-                                        JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
+                                        JToken weekDaysArray = scheduleValue["weekDays"];
                                         if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken weekDaysValue in weekDaysArray)
+                                            foreach (JToken weekDaysValue in (JArray)weekDaysArray)
                                             {
                                                 scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                             }
                                         }
                                         
-                                        JArray monthsArray = (JArray)scheduleValue["months"];
+                                        JToken monthsArray = scheduleValue["months"];
                                         if (monthsArray != null && monthsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken monthsValue in monthsArray)
+                                            foreach (JToken monthsValue in (JArray)monthsArray)
                                             {
                                                 scheduleInstance.Months.Add((int)monthsValue);
                                             }
                                         }
                                         
-                                        JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
+                                        JToken monthDaysArray = scheduleValue["monthDays"];
                                         if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken monthDaysValue in monthDaysArray)
+                                            foreach (JToken monthDaysValue in (JArray)monthDaysArray)
                                             {
                                                 scheduleInstance.MonthDays.Add((int)monthDaysValue);
                                             }
                                         }
                                         
-                                        JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
+                                        JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
                                         if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
+                                            foreach (JToken monthlyOccurrencesValue in (JArray)monthlyOccurrencesArray)
                                             {
                                                 JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
                                                 scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
@@ -3189,7 +3186,8 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Fetch jobs in a job collection via a filter.
+        /// Get the list of jobs in a job collection matching a filter on job
+        /// state.
         /// </summary>
         /// <param name='parameters'>
         /// Parameters supplied to the List Jobs with filter operation.
@@ -3200,7 +3198,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The List Jobs operation response.
         /// </returns>
-        public async Task<JobListResponse> ListWithFilterAsync(JobListWithFilterParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobListResponse> ListWithFilterAsync(JobListWithFilterParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -3220,7 +3218,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
             url = url + "api-version=2013-10-31_Preview";
             url = url + "&$filter=state eq " + Uri.EscapeUriString(SchedulerClient.JobStateToString(parameters.State));
             if (parameters.Skip != null)
@@ -3283,10 +3281,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobsArray = (JArray)responseDoc;
+                        JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in jobsArray)
+                            foreach (JToken jobsValue in (JArray)jobsArray)
                             {
                                 Job jobInstance = new Job();
                                 result.Jobs.Add(jobInstance);
@@ -3549,55 +3547,55 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
                                         recurrenceInstance.Schedule = scheduleInstance;
                                         
-                                        JArray minutesArray = (JArray)scheduleValue["minutes"];
+                                        JToken minutesArray = scheduleValue["minutes"];
                                         if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken minutesValue in minutesArray)
+                                            foreach (JToken minutesValue in (JArray)minutesArray)
                                             {
                                                 scheduleInstance.Minutes.Add((int)minutesValue);
                                             }
                                         }
                                         
-                                        JArray hoursArray = (JArray)scheduleValue["hours"];
+                                        JToken hoursArray = scheduleValue["hours"];
                                         if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken hoursValue in hoursArray)
+                                            foreach (JToken hoursValue in (JArray)hoursArray)
                                             {
                                                 scheduleInstance.Hours.Add((int)hoursValue);
                                             }
                                         }
                                         
-                                        JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
+                                        JToken weekDaysArray = scheduleValue["weekDays"];
                                         if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken weekDaysValue in weekDaysArray)
+                                            foreach (JToken weekDaysValue in (JArray)weekDaysArray)
                                             {
                                                 scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                             }
                                         }
                                         
-                                        JArray monthsArray = (JArray)scheduleValue["months"];
+                                        JToken monthsArray = scheduleValue["months"];
                                         if (monthsArray != null && monthsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken monthsValue in monthsArray)
+                                            foreach (JToken monthsValue in (JArray)monthsArray)
                                             {
                                                 scheduleInstance.Months.Add((int)monthsValue);
                                             }
                                         }
                                         
-                                        JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
+                                        JToken monthDaysArray = scheduleValue["monthDays"];
                                         if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken monthDaysValue in monthDaysArray)
+                                            foreach (JToken monthDaysValue in (JArray)monthDaysArray)
                                             {
                                                 scheduleInstance.MonthDays.Add((int)monthDaysValue);
                                             }
                                         }
                                         
-                                        JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
+                                        JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
                                         if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
+                                            foreach (JToken monthlyOccurrencesValue in (JArray)monthlyOccurrencesArray)
                                             {
                                                 JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
                                                 scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
@@ -3702,10 +3700,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Job collections can be updated through a simple PATCH operation.
-        /// The format of the request is the same as that for creating a job,
-        /// though if a field is unspecified we will carry forward the current
-        /// value.
+        /// Update the state of all jobs in a job collections.
         /// </summary>
         /// <param name='parameters'>
         /// Parameters supplied to the Update Jobs State operation.
@@ -3716,7 +3711,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        public async Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(PatchJobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(PatchJobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -3736,7 +3731,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3805,10 +3800,10 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray jobsArray = (JArray)responseDoc;
+                        JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in jobsArray)
+                            foreach (JToken jobsValue in (JArray)jobsArray)
                             {
                                 Job jobInstance = new Job();
                                 result.Jobs.Add(jobInstance);
@@ -4071,55 +4066,55 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
                                         recurrenceInstance.Schedule = scheduleInstance;
                                         
-                                        JArray minutesArray = (JArray)scheduleValue["minutes"];
+                                        JToken minutesArray = scheduleValue["minutes"];
                                         if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken minutesValue in minutesArray)
+                                            foreach (JToken minutesValue in (JArray)minutesArray)
                                             {
                                                 scheduleInstance.Minutes.Add((int)minutesValue);
                                             }
                                         }
                                         
-                                        JArray hoursArray = (JArray)scheduleValue["hours"];
+                                        JToken hoursArray = scheduleValue["hours"];
                                         if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken hoursValue in hoursArray)
+                                            foreach (JToken hoursValue in (JArray)hoursArray)
                                             {
                                                 scheduleInstance.Hours.Add((int)hoursValue);
                                             }
                                         }
                                         
-                                        JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
+                                        JToken weekDaysArray = scheduleValue["weekDays"];
                                         if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken weekDaysValue in weekDaysArray)
+                                            foreach (JToken weekDaysValue in (JArray)weekDaysArray)
                                             {
                                                 scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                             }
                                         }
                                         
-                                        JArray monthsArray = (JArray)scheduleValue["months"];
+                                        JToken monthsArray = scheduleValue["months"];
                                         if (monthsArray != null && monthsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken monthsValue in monthsArray)
+                                            foreach (JToken monthsValue in (JArray)monthsArray)
                                             {
                                                 scheduleInstance.Months.Add((int)monthsValue);
                                             }
                                         }
                                         
-                                        JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
+                                        JToken monthDaysArray = scheduleValue["monthDays"];
                                         if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken monthDaysValue in monthDaysArray)
+                                            foreach (JToken monthDaysValue in (JArray)monthDaysArray)
                                             {
                                                 scheduleInstance.MonthDays.Add((int)monthDaysValue);
                                             }
                                         }
                                         
-                                        JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
+                                        JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
                                         if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
+                                            foreach (JToken monthlyOccurrencesValue in (JArray)monthlyOccurrencesArray)
                                             {
                                                 JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
                                                 scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);
@@ -4224,10 +4219,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
-        /// Jobs can be updated through a simple PATCH operation to a job's
-        /// address. The format of the request is the same as that for
-        /// creating a job, though if a field is unspecified we will carry
-        /// forward the current value.
+        /// Update the state of a job.
         /// </summary>
         /// <param name='jobId'>
         /// Id of the job to update.
@@ -4241,7 +4233,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Job State operation response.
         /// </returns>
-        public async Task<JobUpdateStateResponse> UpdateStateAsync(string jobId, JobUpdateStateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobUpdateStateResponse> UpdateStateAsync(string jobId, JobUpdateStateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (jobId == null)
@@ -4266,7 +4258,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).ToString() + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
             url = url + "api-version=2013-10-31_Preview";
             
             // Create HTTP transport objects
@@ -4599,55 +4591,55 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JobRecurrenceSchedule scheduleInstance = new JobRecurrenceSchedule();
                                 recurrenceInstance.Schedule = scheduleInstance;
                                 
-                                JArray minutesArray = (JArray)scheduleValue["minutes"];
+                                JToken minutesArray = scheduleValue["minutes"];
                                 if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken minutesValue in minutesArray)
+                                    foreach (JToken minutesValue in (JArray)minutesArray)
                                     {
                                         scheduleInstance.Minutes.Add((int)minutesValue);
                                     }
                                 }
                                 
-                                JArray hoursArray = (JArray)scheduleValue["hours"];
+                                JToken hoursArray = scheduleValue["hours"];
                                 if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken hoursValue in hoursArray)
+                                    foreach (JToken hoursValue in (JArray)hoursArray)
                                     {
                                         scheduleInstance.Hours.Add((int)hoursValue);
                                     }
                                 }
                                 
-                                JArray weekDaysArray = (JArray)scheduleValue["weekDays"];
+                                JToken weekDaysArray = scheduleValue["weekDays"];
                                 if (weekDaysArray != null && weekDaysArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken weekDaysValue in weekDaysArray)
+                                    foreach (JToken weekDaysValue in (JArray)weekDaysArray)
                                     {
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay((string)weekDaysValue));
                                     }
                                 }
                                 
-                                JArray monthsArray = (JArray)scheduleValue["months"];
+                                JToken monthsArray = scheduleValue["months"];
                                 if (monthsArray != null && monthsArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthsValue in monthsArray)
+                                    foreach (JToken monthsValue in (JArray)monthsArray)
                                     {
                                         scheduleInstance.Months.Add((int)monthsValue);
                                     }
                                 }
                                 
-                                JArray monthDaysArray = (JArray)scheduleValue["monthDays"];
+                                JToken monthDaysArray = scheduleValue["monthDays"];
                                 if (monthDaysArray != null && monthDaysArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthDaysValue in monthDaysArray)
+                                    foreach (JToken monthDaysValue in (JArray)monthDaysArray)
                                     {
                                         scheduleInstance.MonthDays.Add((int)monthDaysValue);
                                     }
                                 }
                                 
-                                JArray monthlyOccurrencesArray = (JArray)scheduleValue["monthlyOccurrences"];
+                                JToken monthlyOccurrencesArray = scheduleValue["monthlyOccurrences"];
                                 if (monthlyOccurrencesArray != null && monthlyOccurrencesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken monthlyOccurrencesValue in monthlyOccurrencesArray)
+                                    foreach (JToken monthlyOccurrencesValue in (JArray)monthlyOccurrencesArray)
                                     {
                                         JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
                                         scheduleInstance.MonthlyOccurrences.Add(jobScheduleMonthlyOccurrenceInstance);

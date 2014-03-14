@@ -42,7 +42,39 @@ namespace Microsoft.WindowsAzure.Common.OData
             _generatedUrl.Append(" " + GetUrlName(node.NodeType) + " ");
 
             this.Visit(node.Right);
+
+            _currentProperty = null;
+
             return node;
+        }
+
+        /// <summary>
+        /// Visits binary expression !foo.
+        /// </summary>
+        /// <param name="node">Node to visit.</param>
+        /// <returns>Original node.</returns>
+        protected override Expression VisitUnary(UnaryExpression node)
+        {
+            if (node.NodeType == ExpressionType.Not)
+            {
+                throw new NotSupportedException(
+                    "Unary expressions are not supported. Please use binary expressions (e.g. Property == false) instead.");
+            }
+            else
+            {
+                return base.VisitUnary(node);
+            }
+        }
+
+        /// <summary>
+        /// Visits conditional expression foo == true ? bar : fee. Throws NotSupportedException.
+        /// </summary>
+        /// <param name="node">Node to visit.</param>
+        /// <returns>Throws NotSupportedException.</returns>
+        protected override Expression VisitConditional(ConditionalExpression node)
+        {
+            throw new NotSupportedException(
+                    "Conditional sub-expressions are not supported.");
         }
 
         /// <summary>
@@ -178,6 +210,21 @@ namespace Microsoft.WindowsAzure.Common.OData
         }
 
         /// <summary>
+        /// Appends 'eq true' to Boolean unary operators.
+        /// </summary>
+        private void closeUnaryBooleanOperator()
+        {
+            if (_currentProperty != null)
+            {
+                if (_currentProperty.PropertyType == typeof (bool))
+                {
+                    _generatedUrl.Append(" eq true");
+                    _currentProperty = null;
+                }
+            }
+        }
+
+        /// <summary>
         /// Helper method to print constant.
         /// </summary>
         /// <param name="val">Object to print.</param>
@@ -214,7 +261,7 @@ namespace Microsoft.WindowsAzure.Common.OData
                     val is long ||
                     val is short)
                 {
-                    _generatedUrl.Append(formattedString);
+                    _generatedUrl.Append(formattedString.ToLowerInvariant());
                 }
                 else
                 {
@@ -272,6 +319,7 @@ namespace Microsoft.WindowsAzure.Common.OData
 
         public override string ToString()
         {
+            closeUnaryBooleanOperator();
             return _generatedUrl.ToString();
         }
 
@@ -290,11 +338,13 @@ namespace Microsoft.WindowsAzure.Common.OData
                 case ExpressionType.And:
                 case ExpressionType.AndAlso:
                     // Reset current property
+                    closeUnaryBooleanOperator();
                     _currentProperty = null;
                     return "and";
                 case ExpressionType.Or:
                 case ExpressionType.OrElse:
                     // Reset current property
+                    closeUnaryBooleanOperator();
                     _currentProperty = null;
                     return "or";
                 case ExpressionType.Equal:

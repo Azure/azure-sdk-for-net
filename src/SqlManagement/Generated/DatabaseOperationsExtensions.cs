@@ -23,14 +23,18 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Sql;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
-namespace Microsoft.WindowsAzure.Management.Sql
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for managing SQL
-    /// Databases for a subscription.
+    /// The SQL Database Management API is a REST API for managing SQL Database
+    /// servers and the firewall rules associated with SQL Database servers.
+    /// (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
+    /// more information)
     /// </summary>
     public static partial class DatabaseOperationsExtensions
     {

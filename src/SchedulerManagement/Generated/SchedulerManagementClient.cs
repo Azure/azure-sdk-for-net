@@ -35,7 +35,7 @@ using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler
 {
-    public partial class SchedulerManagementClient : ServiceClient<SchedulerManagementClient>, ISchedulerManagementClient
+    public partial class SchedulerManagementClient : ServiceClient<SchedulerManagementClient>, Microsoft.WindowsAzure.Management.Scheduler.ISchedulerManagementClient
     {
         private Uri _baseUri;
         
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async Task<SchedulerOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.SchedulerOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
             // Validate
             if (requestId == null)
@@ -150,7 +150,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/operations/" + requestId;
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/operations/" + requestId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -202,44 +202,44 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
-                    if (operationElement != null)
+                    if (operationElement != null && operationElement.IsEmpty == false)
                     {
                         XElement idElement = operationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
+                        if (idElement != null && idElement.IsEmpty == false)
                         {
                             string idInstance = idElement.Value;
                             result.Id = idInstance;
                         }
                         
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
+                        if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            SchedulerOperationStatus statusInstance = (SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), statusElement.Value, false);
+                            SchedulerOperationStatus statusInstance = (SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), statusElement.Value, true);
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpStatusCodeElement != null)
+                        if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
                         {
-                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, false);
+                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true);
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         
                         XElement errorElement = operationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null)
+                        if (errorElement != null && errorElement.IsEmpty == false)
                         {
                             SchedulerOperationStatusResponse.ErrorDetails errorInstance = new SchedulerOperationStatusResponse.ErrorDetails();
                             result.Error = errorInstance;
                             
                             XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                            if (codeElement != null)
+                            if (codeElement != null && codeElement.IsEmpty == false)
                             {
                                 string codeInstance = codeElement.Value;
                                 errorInstance.Code = codeInstance;
                             }
                             
                             XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                            if (messageElement != null)
+                            if (messageElement != null && messageElement.IsEmpty == false)
                             {
                                 string messageInstance = messageElement.Value;
                                 errorInstance.Message = messageInstance;
@@ -286,7 +286,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <returns>
         /// The Resource Provider Get Properties operation response.
         /// </returns>
-        public async Task<ResourceProviderGetPropertiesResponse> GetResourceProviderPropertiesAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Scheduler.Models.ResourceProviderGetPropertiesResponse> GetResourceProviderPropertiesAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -301,7 +301,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/resourceproviders/scheduler/Properties?";
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/resourceproviders/scheduler/Properties?";
             url = url + "resourceType=JobCollections";
             
             // Create HTTP transport objects
@@ -354,7 +354,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement resourceProviderPropertiesSequenceElement = responseDoc.Element(XName.Get("ResourceProviderProperties", "http://schemas.microsoft.com/windowsazure"));
-                    if (resourceProviderPropertiesSequenceElement != null)
+                    if (resourceProviderPropertiesSequenceElement != null && resourceProviderPropertiesSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement resourceProviderPropertiesElement in resourceProviderPropertiesSequenceElement.Elements(XName.Get("ResourceProviderProperty", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -403,7 +403,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RegisterResourceProviderAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RegisterResourceProviderAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -418,8 +418,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/services?&action=register";
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/services?";
             url = url + "service=scheduler.JobCollections";
+            url = url + "&action=register";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -504,7 +505,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UnregisterResourceProviderAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> UnregisterResourceProviderAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -519,8 +520,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).ToString() + "/services?&action=unregister";
+            string url = new Uri(this.BaseUri, this.Credentials.SubscriptionId).AbsoluteUri + "/services?";
             url = url + "service=scheduler.JobCollections";
+            url = url + "&action=unregister";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

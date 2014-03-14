@@ -24,11 +24,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.VirtualNetworks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure
 {
+    /// <summary>
+    /// The Service Management API includes operations for managing the virtual
+    /// networks your subscription.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
+    /// more information)
+    /// </summary>
     public static partial class ReservedIPOperationsExtensions
     {
         /// <summary>
@@ -37,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Machine Image operation.
@@ -53,7 +59,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static VirtualNetworkOperationStatusResponse BeginCreating(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        public static OperationStatusResponse BeginCreating(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
         {
             try
             {
@@ -78,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Machine Image operation.
@@ -94,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<VirtualNetworkOperationStatusResponse> BeginCreatingAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        public static Task<OperationStatusResponse> BeginCreatingAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(parameters, CancellationToken.None);
         }
@@ -105,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
         /// The name of the reserved IP.
@@ -139,7 +145,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
         /// The name of the reserved IP.
@@ -159,10 +165,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Parameters supplied to create a network reserved IP.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -175,7 +181,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static VirtualNetworkOperationStatusResponse Create(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        public static OperationStatusResponse Create(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
         {
             try
             {
@@ -200,10 +206,10 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Parameters supplied to create a network reserved IP.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -216,7 +222,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<VirtualNetworkOperationStatusResponse> CreateAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
+        public static Task<OperationStatusResponse> CreateAsync(this IReservedIPOperations operations, NetworkReservedIPCreateParameters parameters)
         {
             return operations.CreateAsync(parameters, CancellationToken.None);
         }
@@ -227,7 +233,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
         /// The name of the reserved IP.
@@ -243,7 +249,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static VirtualNetworkOperationStatusResponse Delete(this IReservedIPOperations operations, string ipName)
+        public static OperationStatusResponse Delete(this IReservedIPOperations operations, string ipName)
         {
             try
             {
@@ -268,7 +274,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
         /// The name of the reserved IP.
@@ -284,7 +290,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<VirtualNetworkOperationStatusResponse> DeleteAsync(this IReservedIPOperations operations, string ipName)
+        public static Task<OperationStatusResponse> DeleteAsync(this IReservedIPOperations operations, string ipName)
         {
             return operations.DeleteAsync(ipName, CancellationToken.None);
         }
@@ -295,7 +301,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
         /// The name of the reserved IP to retrieve.
@@ -328,7 +334,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
         /// The name of the reserved IP to retrieve.
@@ -347,7 +353,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <returns>
         /// Preview Only. The response structure for the Server List operation
@@ -377,7 +383,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.VirtualNetworks.IReservedIPOperations.
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <returns>
         /// Preview Only. The response structure for the Server List operation

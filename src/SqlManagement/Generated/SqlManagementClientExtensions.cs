@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Sql
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The SQL Database Management API is a REST API for managing SQL Database

@@ -25,7 +25,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management;
-using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management
 {

@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441299.aspx for
     /// more information)
     /// </summary>
-    internal partial class LocationOperations : IServiceOperations<ManagementClient>, ILocationOperations
+    internal partial class LocationOperations : IServiceOperations<ManagementClient>, Microsoft.WindowsAzure.Management.ILocationOperations
     {
         /// <summary>
         /// Initializes a new instance of the LocationOperations class.
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management
         /// <returns>
         /// The List Locations operation response.
         /// </returns>
-        public async Task<LocationsListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Models.LocationsListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/locations";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/locations";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -145,7 +145,7 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement locationsSequenceElement = responseDoc.Element(XName.Get("Locations", "http://schemas.microsoft.com/windowsazure"));
-                    if (locationsSequenceElement != null)
+                    if (locationsSequenceElement != null && locationsSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement locationsElement in locationsSequenceElement.Elements(XName.Get("Location", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -153,21 +153,21 @@ namespace Microsoft.WindowsAzure.Management
                             result.Locations.Add(locationInstance);
                             
                             XElement nameElement = locationsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 locationInstance.Name = nameInstance;
                             }
                             
                             XElement displayNameElement = locationsElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
-                            if (displayNameElement != null)
+                            if (displayNameElement != null && displayNameElement.IsEmpty == false)
                             {
                                 string displayNameInstance = displayNameElement.Value;
                                 locationInstance.DisplayName = displayNameInstance;
                             }
                             
                             XElement availableServicesSequenceElement = locationsElement.Element(XName.Get("AvailableServices", "http://schemas.microsoft.com/windowsazure"));
-                            if (availableServicesSequenceElement != null)
+                            if (availableServicesSequenceElement != null && availableServicesSequenceElement.IsEmpty == false)
                             {
                                 foreach (XElement availableServicesElement in availableServicesSequenceElement.Elements(XName.Get("AvailableService", "http://schemas.microsoft.com/windowsazure")))
                                 {

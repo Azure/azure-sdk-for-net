@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure.Scheduler.Models;
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// The Update Job operation response.
+    /// The CreateOrUpdate Job operation response.
     /// </summary>
     public partial class JobCreateOrUpdateResponse : OperationResponse
     {
         private Job _job;
         
         /// <summary>
-        /// The updated job.
+        /// The created or updated job.
         /// </summary>
         public Job Job
         {

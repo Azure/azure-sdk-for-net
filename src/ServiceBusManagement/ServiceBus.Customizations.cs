@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
         }
 
-        public ServiceBusManagementClient WithHandler(DelegatingHandler handler)            
+        public override ServiceBusManagementClient WithHandler(DelegatingHandler handler)            
         {
             return (ServiceBusManagementClient)WithHandler(new ServiceBusManagementClient(), handler);
         }

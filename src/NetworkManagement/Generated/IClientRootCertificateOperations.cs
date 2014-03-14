@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Management.VirtualNetworks.Models;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks
+namespace Microsoft.WindowsAzure.Management.Network
 {
     public partial interface IClientRootCertificateOperations
     {
@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayOperationResponse> CreateAsync(string virtualNetworkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken);
+        Task<GatewayOperationResponse> CreateAsync(string networkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Client Root Certificate operation deletes a previously
@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205128.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<GatewayOperationResponse> DeleteAsync(string virtualNetworkName, string certificateThumbprint, CancellationToken cancellationToken);
+        Task<GatewayOperationResponse> DeleteAsync(string networkName, string certificateThumbprint, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Client Root Certificate operation returns the public
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205127.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// A standard storage response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<ClientRootCertificateGetResponse> GetAsync(string virtualNetworkName, string certificateThumbprint, CancellationToken cancellationToken);
+        Task<ClientRootCertificateGetResponse> GetAsync(string networkName, string certificateThumbprint, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Client Root Certificates operation returns a list of all
@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205130.aspx
         /// for more information)
         /// </summary>
-        /// <param name='virtualNetworkName'>
+        /// <param name='networkName'>
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='cancellationToken'>
@@ -110,6 +110,6 @@ namespace Microsoft.WindowsAzure.Management.VirtualNetworks
         /// <returns>
         /// The response to the list client root certificates request.
         /// </returns>
-        Task<ClientRootCertificateListResponse> ListAsync(string virtualNetworkName, CancellationToken cancellationToken);
+        Task<ClientRootCertificateListResponse> ListAsync(string networkName, CancellationToken cancellationToken);
     }
 }

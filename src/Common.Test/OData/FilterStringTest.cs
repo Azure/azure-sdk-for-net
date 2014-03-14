@@ -41,6 +41,44 @@ namespace Microsoft.WindowsAzure.Common.Test.OData
         }
 
         [Fact]
+        public void NotEqualsIsSupported()
+        {
+            var result = FilterString.Generate<Param1>(p => p.Val != 20);
+            Assert.Equal("Val ne 20", result);
+        }
+
+        [Fact]
+        public void ConditionalOperatorNotSupported()
+        {
+            Assert.Throws<NotSupportedException>(
+                () => FilterString.Generate<Param1>(p => p.Val == (p.Boolean ? 20 : 30)));
+        }
+
+        [Fact]
+        public void NotEqualsUnaryExpressionIsNotSupported()
+        {
+            Assert.Throws<NotSupportedException>(() => FilterString.Generate<Param1>(p => !p.Boolean));
+            Assert.Throws<NotSupportedException>(() => FilterString.Generate<Param1>(p => !(p.Boolean)));
+        }
+
+        [Fact]
+        public void ComplexUnaryOperatorsAreNotSupported()
+        {
+            Assert.Throws<NotSupportedException>(() => FilterString.Generate<Param1>(p => !(p.Boolean || p.Foo == "foo")));
+        }
+
+        [Fact]
+        public void BooleansAreSupported()
+        {
+            var result = FilterString.Generate<Param1>(p => p.Boolean == true);
+            Assert.Equal("Boolean eq true", result);
+            result = FilterString.Generate<Param1>(p => p.Boolean);
+            Assert.Equal("Boolean eq true", result);
+            result = FilterString.Generate<Param1>(p => p.Boolean && p.Foo == "foo");
+            Assert.Equal("Boolean eq true and foo eq 'foo'", result);
+        }
+
+        [Fact]
         public void VerifyDeepPropertiesInODataFilter()
         {
             var param = new InputParam2
@@ -80,6 +118,20 @@ namespace Microsoft.WindowsAzure.Common.Test.OData
             };
             var result = FilterString.Generate<Param1>(p => p.Foo.EndsWith(param.Param.Value));
             Assert.Equal("endswith(foo, 'foo') eq true", result);
+        }
+
+        [Fact]
+        public void UnsupportedMethodThrowsNotSupportedException()
+        {
+            var param = new InputParam2
+            {
+                Param = new InputParam1
+                {
+                    Value = "foo"
+                }
+            };
+            Assert.Throws<NotSupportedException>(
+                () => FilterString.Generate<Param1>(p => p.Foo.Replace(" ", "") == "abc"));
         }
 
         [Fact]
@@ -125,6 +177,7 @@ namespace Microsoft.WindowsAzure.Common.Test.OData
         [FilterParameter("foo")]
         public string Foo { get; set; }
         public int? Val { get; set; }
+        public bool Boolean { get; set; }
         [FilterParameter("d", "yyyy-MM-ddTHH:mm:ssZ")]
         public DateTime Date { get; set; }
         public DateTime Date2 { get; set; }

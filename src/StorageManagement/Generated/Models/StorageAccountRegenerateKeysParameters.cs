@@ -41,15 +41,15 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
             set { this._keyType = value; }
         }
         
-        private string _serviceName;
+        private string _name;
         
         /// <summary>
         /// The name of the desired storage account.
         /// </summary>
-        public string ServiceName
+        public string Name
         {
-            get { return this._serviceName; }
-            set { this._serviceName = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>

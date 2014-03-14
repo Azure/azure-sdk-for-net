@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The desired storage account name to check for availability.
         /// </param>
         /// <param name='cancellationToken'>
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The response to a storage account check name availability request.
         /// </returns>
-        Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string serviceName, CancellationToken cancellationToken);
+        Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(string accountName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Storage Account operation creates a new storage account
@@ -94,7 +94,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        Task<StorageOperationStatusResponse> CreateAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> CreateAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Storage Account operation deletes the specifiedstorage
@@ -102,7 +102,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264517.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The name of the storage account.
         /// </param>
         /// <param name='cancellationToken'>
@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string serviceName, CancellationToken cancellationToken);
+        Task<OperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Storage Account Properties operation returns system
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460802.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// Name of the storage account to get.
         /// </param>
         /// <param name='cancellationToken'>
@@ -129,7 +129,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The Get Storage Account Properties operation response.
         /// </returns>
-        Task<StorageServiceGetResponse> GetAsync(string serviceName, CancellationToken cancellationToken);
+        Task<StorageAccountGetResponse> GetAsync(string accountName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Storage Keys operation returns the primary and secondary
@@ -137,7 +137,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460785.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// The name of the desired storage account.
         /// </param>
         /// <param name='cancellationToken'>
@@ -146,7 +146,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The primary and secondary access keys for a storage account.
         /// </returns>
-        Task<StorageAccountGetKeysResponse> GetKeysAsync(string serviceName, CancellationToken cancellationToken);
+        Task<StorageAccountGetKeysResponse> GetKeysAsync(string accountName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Storage Accounts operation lists the storage accounts
@@ -160,7 +160,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// <returns>
         /// The List Storage Accounts operation response.
         /// </returns>
-        Task<StorageServiceListResponse> ListAsync(CancellationToken cancellationToken);
+        Task<StorageAccountListResponse> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
         /// The Regenerate Keys operation regenerates the primary or secondary
@@ -186,7 +186,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264516.aspx
         /// for more information)
         /// </summary>
-        /// <param name='serviceName'>
+        /// <param name='accountName'>
         /// Name of the storage account to update.
         /// </param>
         /// <param name='parameters'>
@@ -199,6 +199,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string serviceName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationResponse> UpdateAsync(string accountName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

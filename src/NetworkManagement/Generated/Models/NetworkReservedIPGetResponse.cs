@@ -21,10 +21,9 @@
 
 using System;
 using System.Linq;
-using System.Net;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.WindowsAzure.Management.VirtualNetworks.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// Preview Only. A reserved IP associated with your subscription.

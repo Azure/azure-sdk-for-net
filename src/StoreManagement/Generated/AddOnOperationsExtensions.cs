@@ -23,14 +23,15 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Store;
 using Microsoft.WindowsAzure.Management.Store.Models;
 
-namespace Microsoft.WindowsAzure.Management.Store
+namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Provides REST operations for working with Store add-ins from the
-    /// Windows Azure store service.
+    /// The Windows Azure Store API is a REST API for managing Windows Azure
+    /// Store add-ins.
     /// </summary>
     public static partial class AddOnOperationsExtensions
     {
@@ -66,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static AddOnOperationStatusResponse BeginCreating(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
+        public static OperationStatusResponse BeginCreating(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
         {
             try
             {
@@ -117,7 +118,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<AddOnOperationStatusResponse> BeginCreatingAsync(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
+        public static Task<OperationStatusResponse> BeginCreatingAsync(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(cloudServiceName, resourceName, addOnName, parameters, CancellationToken.None);
         }
@@ -154,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static AddOnOperationStatusResponse BeginDeleting(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
+        public static OperationStatusResponse BeginDeleting(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
         {
             try
             {
@@ -205,7 +206,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<AddOnOperationStatusResponse> BeginDeletingAsync(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
+        public static Task<OperationStatusResponse> BeginDeletingAsync(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
         {
             return operations.BeginDeletingAsync(cloudServiceName, resourceProviderNamespace, resourceProviderType, resourceProviderName, CancellationToken.None);
         }
@@ -242,7 +243,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static AddOnOperationStatusResponse Create(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
+        public static OperationStatusResponse Create(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
         {
             try
             {
@@ -293,7 +294,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<AddOnOperationStatusResponse> CreateAsync(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
+        public static Task<OperationStatusResponse> CreateAsync(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
         {
             return operations.CreateAsync(cloudServiceName, resourceName, addOnName, parameters, CancellationToken.None);
         }
@@ -330,7 +331,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static AddOnOperationStatusResponse Delete(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
+        public static OperationStatusResponse Delete(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
         {
             try
             {
@@ -381,7 +382,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<AddOnOperationStatusResponse> DeleteAsync(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
+        public static Task<OperationStatusResponse> DeleteAsync(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
         {
             return operations.DeleteAsync(cloudServiceName, resourceProviderNamespace, resourceProviderType, resourceProviderName, CancellationToken.None);
         }
@@ -418,7 +419,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static AddOnOperationStatusResponse Update(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnUpdateParameters parameters)
+        public static OperationStatusResponse Update(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnUpdateParameters parameters)
         {
             try
             {
@@ -469,7 +470,7 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<AddOnOperationStatusResponse> UpdateAsync(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnUpdateParameters parameters)
+        public static Task<OperationStatusResponse> UpdateAsync(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnUpdateParameters parameters)
         {
             return operations.UpdateAsync(cloudServiceName, resourceName, addOnName, parameters, CancellationToken.None);
         }

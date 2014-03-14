@@ -27,7 +27,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.MediaServices;
 using Microsoft.WindowsAzure.Management.MediaServices.Models;
 
-namespace Microsoft.WindowsAzure.Management.MediaServices
+namespace Microsoft.WindowsAzure
 {
     public static partial class AccountOperationsExtensions
     {

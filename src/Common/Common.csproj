@@ -43,6 +43,8 @@
     <Compile Include="Internals\TypeConversion.cs" />
     <Compile Include="Internals\UriHelper.cs" />
     <Compile Include="Models\OperationResponse.cs" />
+    <Compile Include="Models\OperationStatus.cs" />
+    <Compile Include="Models\OperationStatusResponse.cs" />
     <Compile Include="Models\Patchable.cs" />
     <Compile Include="OData\FilterParameterAttribute.cs" />
     <Compile Include="OData\FilterString.cs" />

@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
     /// <summary>
     /// Operations for managing the alert incidents.
     /// </summary>
-    internal partial class IncidentOperations : IServiceOperations<AlertsClient>, IIncidentOperations
+    internal partial class IncidentOperations : IServiceOperations<AlertsClient>, Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations
     {
         /// <summary>
         /// Initializes a new instance of the IncidentOperations class.
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <returns>
         /// The Get Incident operation response.
         /// </returns>
-        public async Task<IncidentGetResponse> GetAsync(string incidentId, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.IncidentGetResponse> GetAsync(string incidentId, CancellationToken cancellationToken)
         {
             // Validate
             if (incidentId == null)
@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertincidents/" + incidentId;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertincidents/" + incidentId;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -219,7 +219,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <returns>
         /// The List incidents operation response.
         /// </returns>
-        public async Task<IncidentListResponse> ListActiveForSubscriptionAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.IncidentListResponse> ListActiveForSubscriptionAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertincidents?$filter=IsActive eq true";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertincidents?$filter=IsActive eq true";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -288,10 +288,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray valueArray = (JArray)responseDoc["Value"];
+                        JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in (JArray)valueArray)
                             {
                                 Incident incidentInstance = new Incident();
                                 result.Value.Add(incidentInstance);
@@ -375,7 +375,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <returns>
         /// The List incidents operation response.
         /// </returns>
-        public async Task<IncidentListResponse> ListForRuleAsync(string ruleId, bool isActive, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.IncidentListResponse> ListForRuleAsync(string ruleId, bool isActive, CancellationToken cancellationToken)
         {
             // Validate
             if (ruleId == null)
@@ -396,7 +396,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId + "/alertincidents?";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId + "/alertincidents?";
             url = url + "$filter=IsActive eq " + Uri.EscapeUriString(isActive.ToString().ToLower());
             
             // Create HTTP transport objects
@@ -451,10 +451,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JArray valueArray = (JArray)responseDoc["Value"];
+                        JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in (JArray)valueArray)
                             {
                                 Incident incidentInstance = new Incident();
                                 result.Value.Add(incidentInstance);

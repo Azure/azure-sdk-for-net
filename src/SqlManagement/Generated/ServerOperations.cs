@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715271.aspx for
     /// more information)
     /// </summary>
-    internal partial class ServerOperations : IServiceOperations<SqlManagementClient>, IServerOperations
+    internal partial class ServerOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IServerOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServerOperations class.
@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> ChangeAdministratorPasswordAsync(string serverName, ServerChangeAdministratorPasswordParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> ChangeAdministratorPasswordAsync(string serverName, ServerChangeAdministratorPasswordParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "?op=ResetPassword";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "?op=ResetPassword";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// The response returned from the Create Server operation.
         /// </returns>
-        public async Task<ServerCreateResponse> CreateAsync(ServerCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.ServerCreateResponse> CreateAsync(ServerCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -250,7 +250,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -325,7 +325,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serverNameElement = responseDoc.Element(XName.Get("ServerName", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                    if (serverNameElement != null)
+                    if (serverNameElement != null && serverNameElement.IsEmpty == false)
                     {
                         result.ServerName = serverNameElement.Value;
                     }
@@ -374,7 +374,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string serverName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (serverName == null)
@@ -394,7 +394,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName;
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -481,7 +481,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// The response structure for the Server List operation.
         /// </returns>
-        public async Task<ServerListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.ServerListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -496,7 +496,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").ToString() + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers";
+            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -548,7 +548,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serversSequenceElement = responseDoc.Element(XName.Get("Servers", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                    if (serversSequenceElement != null)
+                    if (serversSequenceElement != null && serversSequenceElement.IsEmpty == false)
                     {
                         foreach (XElement serversElement in serversSequenceElement.Elements(XName.Get("Server", "http://schemas.microsoft.com/sqlazure/2010/12/")))
                         {
@@ -556,28 +556,28 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             result.Servers.Add(serverInstance);
                             
                             XElement nameElement = serversElement.Element(XName.Get("Name", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (nameElement != null)
+                            if (nameElement != null && nameElement.IsEmpty == false)
                             {
                                 string nameInstance = nameElement.Value;
                                 serverInstance.Name = nameInstance;
                             }
                             
                             XElement administratorLoginElement = serversElement.Element(XName.Get("AdministratorLogin", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (administratorLoginElement != null)
+                            if (administratorLoginElement != null && administratorLoginElement.IsEmpty == false)
                             {
                                 string administratorLoginInstance = administratorLoginElement.Value;
                                 serverInstance.AdministratorUserName = administratorLoginInstance;
                             }
                             
                             XElement locationElement = serversElement.Element(XName.Get("Location", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (locationElement != null)
+                            if (locationElement != null && locationElement.IsEmpty == false)
                             {
                                 string locationInstance = locationElement.Value;
                                 serverInstance.Location = locationInstance;
                             }
                             
                             XElement featuresSequenceElement = serversElement.Element(XName.Get("Features", "http://schemas.microsoft.com/sqlazure/2010/12/"));
-                            if (featuresSequenceElement != null)
+                            if (featuresSequenceElement != null && featuresSequenceElement.IsEmpty == false)
                             {
                                 foreach (XElement featuresElement in featuresSequenceElement.Elements(XName.Get("Feature", "http://schemas.microsoft.com/sqlazure/2010/12/")))
                                 {
