@@ -295,7 +295,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, "/").AbsoluteUri + this.Credentials.SubscriptionId + "/operations/" + requestId;
+            string baseUrl = this.BaseUri.AbsoluteUri;
+            string url = "/" + this.Credentials.SubscriptionId + "/operations/" + requestId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -461,58 +472,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
             if (value == CertificateFormat.Cer)
             {
                 return "cer";
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Parse enum values for type HostingResources.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static HostingResources ParseHostingResources(string value)
-        {
-            if ("WebRole".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return HostingResources.WebRole;
-            }
-            if ("WorkerRole".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return HostingResources.WorkerRole;
-            }
-            if ("WebRole|WorkerRole".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return HostingResources.WebOrWorkerRole;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type HostingResources to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string HostingResourcesToString(HostingResources value)
-        {
-            if (value == HostingResources.WebRole)
-            {
-                return "WebRole";
-            }
-            if (value == HostingResources.WorkerRole)
-            {
-                return "WorkerRole";
-            }
-            if (value == HostingResources.WebOrWorkerRole)
-            {
-                return "WebRole|WorkerRole";
             }
             throw new ArgumentOutOfRangeException("value");
         }
