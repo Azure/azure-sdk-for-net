@@ -131,6 +131,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._roleSize = value; }
         }
         
+        private string _vMImageName;
+        
+        /// <summary>
+        /// Optional. Name of the VMImage from which this Role is to be
+        /// created. If the OSDisk in the VMImage was Specialized, then no
+        /// WindowsProvisioningConfigurationSet or
+        /// LinuxProvisioningConfigurationSet should be provided. No
+        /// OSVirtualHardDisk or DataVirtualHardDisk should be specified when
+        /// using this argument.
+        /// </summary>
+        public string VMImageName
+        {
+            get { return this._vMImageName; }
+            set { this._vMImageName = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the VirtualMachineCreateParameters
         /// class.

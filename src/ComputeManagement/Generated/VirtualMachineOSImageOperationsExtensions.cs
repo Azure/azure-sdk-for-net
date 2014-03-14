@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public static partial class VirtualMachineImageOperationsExtensions
+    public static partial class VirtualMachineOSImageOperationsExtensions
     {
         /// <summary>
         /// The Add OS Image operation adds an operating system image that is
@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Machine Image operation.
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public static VirtualMachineImageCreateResponse Create(this IVirtualMachineImageOperations operations, VirtualMachineImageCreateParameters parameters)
+        public static VirtualMachineOSImageCreateResponse Create(this IVirtualMachineOSImageOperations operations, VirtualMachineOSImageCreateParameters parameters)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Virtual Machine Image operation.
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public static Task<VirtualMachineImageCreateResponse> CreateAsync(this IVirtualMachineImageOperations operations, VirtualMachineImageCreateParameters parameters)
+        public static Task<VirtualMachineOSImageCreateResponse> CreateAsync(this IVirtualMachineOSImageOperations operations, VirtualMachineOSImageCreateParameters parameters)
         {
             return operations.CreateAsync(parameters, CancellationToken.None);
         }
@@ -105,7 +105,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// The name of the image to delete.
@@ -118,7 +118,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IVirtualMachineImageOperations operations, string imageName, bool deleteFromStorage)
+        public static OperationResponse Delete(this IVirtualMachineOSImageOperations operations, string imageName, bool deleteFromStorage)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// The name of the image to delete.
@@ -158,7 +158,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IVirtualMachineImageOperations operations, string imageName, bool deleteFromStorage)
+        public static Task<OperationResponse> DeleteAsync(this IVirtualMachineOSImageOperations operations, string imageName, bool deleteFromStorage)
         {
             return operations.DeleteAsync(imageName, deleteFromStorage, CancellationToken.None);
         }
@@ -171,7 +171,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// The name of the OS image to retrieve.
@@ -179,7 +179,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// A virtual machine image associated with your subscription.
         /// </returns>
-        public static VirtualMachineImageGetResponse Get(this IVirtualMachineImageOperations operations, string imageName)
+        public static VirtualMachineOSImageGetResponse Get(this IVirtualMachineOSImageOperations operations, string imageName)
         {
             try
             {
@@ -206,7 +206,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// The name of the OS image to retrieve.
@@ -214,7 +214,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// A virtual machine image associated with your subscription.
         /// </returns>
-        public static Task<VirtualMachineImageGetResponse> GetAsync(this IVirtualMachineImageOperations operations, string imageName)
+        public static Task<VirtualMachineOSImageGetResponse> GetAsync(this IVirtualMachineOSImageOperations operations, string imageName)
         {
             return operations.GetAsync(imageName, CancellationToken.None);
         }
@@ -227,12 +227,12 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <returns>
         /// The List OS Images operation response.
         /// </returns>
-        public static VirtualMachineImageListResponse List(this IVirtualMachineImageOperations operations)
+        public static VirtualMachineOSImageListResponse List(this IVirtualMachineOSImageOperations operations)
         {
             try
             {
@@ -259,12 +259,12 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <returns>
         /// The List OS Images operation response.
         /// </returns>
-        public static Task<VirtualMachineImageListResponse> ListAsync(this IVirtualMachineImageOperations operations)
+        public static Task<VirtualMachineOSImageListResponse> ListAsync(this IVirtualMachineOSImageOperations operations)
         {
             return operations.ListAsync(CancellationToken.None);
         }
@@ -277,7 +277,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// The name of the virtual machine image to be updated.
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public static VirtualMachineImageUpdateResponse Update(this IVirtualMachineImageOperations operations, string imageName, VirtualMachineImageUpdateParameters parameters)
+        public static VirtualMachineOSImageUpdateResponse Update(this IVirtualMachineOSImageOperations operations, string imageName, VirtualMachineOSImageUpdateParameters parameters)
         {
             try
             {
@@ -315,7 +315,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
         /// The name of the virtual machine image to be updated.
@@ -326,7 +326,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public static Task<VirtualMachineImageUpdateResponse> UpdateAsync(this IVirtualMachineImageOperations operations, string imageName, VirtualMachineImageUpdateParameters parameters)
+        public static Task<VirtualMachineOSImageUpdateResponse> UpdateAsync(this IVirtualMachineOSImageOperations operations, string imageName, VirtualMachineOSImageUpdateParameters parameters)
         {
             return operations.UpdateAsync(imageName, parameters, CancellationToken.None);
         }

@@ -73,11 +73,11 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCapturing(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        public static OperationResponse BeginCapturingOSImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
             try
             {
-                return operations.BeginCapturingAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return operations.BeginCapturingOSImageAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
             }
             catch (AggregateException ex)
             {
@@ -126,9 +126,79 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCapturingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        public static Task<OperationResponse> BeginCapturingOSImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
-            return operations.BeginCapturingAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
+            return operations.BeginCapturingOSImageAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Begin capturing role as VM template.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// The name of the virtual machine to restart.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginCapturingVMImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
+        {
+            try
+            {
+                return operations.BeginCapturingVMImageAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Begin capturing role as VM template.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// The name of the virtual machine to restart.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginCapturingVMImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
+        {
+            return operations.BeginCapturingVMImageAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -916,11 +986,11 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static OperationStatusResponse Capture(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        public static OperationStatusResponse CaptureOSImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
             try
             {
-                return operations.CaptureAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return operations.CaptureOSImageAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
             }
             catch (AggregateException ex)
             {
@@ -976,9 +1046,93 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> CaptureAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureParameters parameters)
+        public static Task<OperationStatusResponse> CaptureOSImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
-            return operations.CaptureAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
+            return operations.CaptureOSImageAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Capture role as VM template.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// The name of the virtual machine to restart.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse CaptureVMImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
+        {
+            try
+            {
+                return operations.CaptureVMImageAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Capture role as VM template.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment.
+        /// </param>
+        /// <param name='virtualMachineName'>
+        /// The name of the virtual machine to restart.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> CaptureVMImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
+        {
+            return operations.CaptureVMImageAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }
         
         /// <summary>

@@ -25,9 +25,9 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update Virtual Machine Image operation.
+    /// Parameters supplied to the Create Virtual Machine Image operation.
     /// </summary>
-    public partial class VirtualMachineImageUpdateParameters
+    public partial class VirtualMachineOSImageCreateParameters
     {
         private string _description;
         
@@ -93,9 +93,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// Required. Specifies the friendly name of the image to be updated.
-        /// You cannot use this operation to update images provided by the
-        /// Windows Azure platform.
+        /// Required. Specifies the friendly name of the image.
         /// </summary>
         public string Label
         {
@@ -113,6 +111,45 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._language; }
             set { this._language = value; }
+        }
+        
+        private Uri _mediaLinkUri;
+        
+        /// <summary>
+        /// Required. Specifies the location of the blob in Windows Azure
+        /// storage. The blob location must belong to a storage account in the
+        /// subscription specified by the SubscriptionId value in the
+        /// operation call.  Example:
+        /// http://example.blob.core.windows.net/disks/mydisk.vhd
+        /// </summary>
+        public Uri MediaLinkUri
+        {
+            get { return this._mediaLinkUri; }
+            set { this._mediaLinkUri = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Required. Specifies a name that Windows Azure uses to identify the
+        /// image when creating one or more virtual machines.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _operatingSystemType;
+        
+        /// <summary>
+        /// Required. The operating system type of the OS image. Possible
+        /// values are: Linux, Windows.
+        /// </summary>
+        public string OperatingSystemType
+        {
+            get { return this._operatingSystemType; }
+            set { this._operatingSystemType = value; }
         }
         
         private Uri _privacyUri;
@@ -151,6 +188,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._recommendedVMSize = value; }
         }
         
+        private bool _showInGui;
+        
+        /// <summary>
+        /// Specifies whether the image should appear in the image gallery.
+        /// </summary>
+        public bool ShowInGui
+        {
+            get { return this._showInGui; }
+            set { this._showInGui = value; }
+        }
+        
         private Uri _smallIconUri;
         
         /// <summary>
@@ -167,9 +215,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineImageUpdateParameters class.
+        /// VirtualMachineOSImageCreateParameters class.
         /// </summary>
-        public VirtualMachineImageUpdateParameters()
+        public VirtualMachineOSImageCreateParameters()
         {
         }
     }

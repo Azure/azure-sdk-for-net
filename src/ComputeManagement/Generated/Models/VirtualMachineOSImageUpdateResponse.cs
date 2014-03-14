@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// Parameters returned from the Create Virtual Machine Image operation.
     /// </summary>
-    public partial class VirtualMachineImageCreateResponse : OperationResponse
+    public partial class VirtualMachineOSImageUpdateResponse : OperationResponse
     {
         private string _category;
         
@@ -263,10 +263,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineImageCreateResponse
-        /// class.
+        /// Initializes a new instance of the
+        /// VirtualMachineOSImageUpdateResponse class.
         /// </summary>
-        public VirtualMachineImageCreateResponse()
+        public VirtualMachineOSImageUpdateResponse()
         {
         }
     }

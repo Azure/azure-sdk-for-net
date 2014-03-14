@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157175.aspx for
     /// more information)
     /// </summary>
-    public partial interface IVirtualMachineImageOperations
+    public partial interface IVirtualMachineOSImageOperations
     {
         /// <summary>
         /// The Add OS Image operation adds an operating system image that is
@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        Task<VirtualMachineImageCreateResponse> CreateAsync(VirtualMachineImageCreateParameters parameters, CancellationToken cancellationToken);
+        Task<VirtualMachineOSImageCreateResponse> CreateAsync(VirtualMachineOSImageCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete OS Image operation deletes the specified OS image from
@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine image associated with your subscription.
         /// </returns>
-        Task<VirtualMachineImageGetResponse> GetAsync(string imageName, CancellationToken cancellationToken);
+        Task<VirtualMachineOSImageGetResponse> GetAsync(string imageName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List OS Images operation retrieves a list of the operating
@@ -105,7 +105,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List OS Images operation response.
         /// </returns>
-        Task<VirtualMachineImageListResponse> ListAsync(CancellationToken cancellationToken);
+        Task<VirtualMachineOSImageListResponse> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
         /// The Update OS Image operation updates an OS image that in your
@@ -125,6 +125,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        Task<VirtualMachineImageUpdateResponse> UpdateAsync(string imageName, VirtualMachineImageUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<VirtualMachineOSImageUpdateResponse> UpdateAsync(string imageName, VirtualMachineOSImageUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

@@ -127,23 +127,32 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Service Management API includes operations for managing the OS
-        /// images in your subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157175.aspx
-        /// for more information)
-        /// </summary>
-        IVirtualMachineImageOperations VirtualMachineImages
-        {
-            get; 
-        }
-        
-        /// <summary>
         /// The Service Management API includes operations for managing the
         /// virtual machines in your subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157206.aspx
         /// for more information)
         /// </summary>
         IVirtualMachineOperations VirtualMachines
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Service Management API includes operations for managing the OS
+        /// images in your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157175.aspx
+        /// for more information)
+        /// </summary>
+        IVirtualMachineOSImageOperations VirtualMachineOSImages
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Service Management API includes operations for managing the
+        /// virtual machine templates in your subscription.
+        /// </summary>
+        IVirtualMachineVMImageOperations VirtualMachineVMImages
         {
             get; 
         }

@@ -149,19 +149,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
             get { return this._virtualMachineExtensions; }
         }
         
-        private IVirtualMachineImageOperations _virtualMachineImages;
-        
-        /// <summary>
-        /// The Service Management API includes operations for managing the OS
-        /// images in your subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157175.aspx
-        /// for more information)
-        /// </summary>
-        public virtual IVirtualMachineImageOperations VirtualMachineImages
-        {
-            get { return this._virtualMachineImages; }
-        }
-        
         private IVirtualMachineOperations _virtualMachines;
         
         /// <summary>
@@ -173,6 +160,30 @@ namespace Microsoft.WindowsAzure.Management.Compute
         public virtual IVirtualMachineOperations VirtualMachines
         {
             get { return this._virtualMachines; }
+        }
+        
+        private IVirtualMachineOSImageOperations _virtualMachineOSImages;
+        
+        /// <summary>
+        /// The Service Management API includes operations for managing the OS
+        /// images in your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157175.aspx
+        /// for more information)
+        /// </summary>
+        public virtual IVirtualMachineOSImageOperations VirtualMachineOSImages
+        {
+            get { return this._virtualMachineOSImages; }
+        }
+        
+        private IVirtualMachineVMImageOperations _virtualMachineVMImages;
+        
+        /// <summary>
+        /// The Service Management API includes operations for managing the
+        /// virtual machine templates in your subscription.
+        /// </summary>
+        public virtual IVirtualMachineVMImageOperations VirtualMachineVMImages
+        {
+            get { return this._virtualMachineVMImages; }
         }
         
         /// <summary>
@@ -187,8 +198,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
             this._serviceCertificates = new ServiceCertificateOperations(this);
             this._virtualMachineDisks = new VirtualMachineDiskOperations(this);
             this._virtualMachineExtensions = new VirtualMachineExtensionOperations(this);
-            this._virtualMachineImages = new VirtualMachineImageOperations(this);
             this._virtualMachines = new VirtualMachineOperations(this);
+            this._virtualMachineOSImages = new VirtualMachineOSImageOperations(this);
+            this._virtualMachineVMImages = new VirtualMachineVMImageOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -306,7 +318,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -461,58 +473,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
             if (value == CertificateFormat.Cer)
             {
                 return "cer";
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Parse enum values for type HostingResources.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static HostingResources ParseHostingResources(string value)
-        {
-            if ("WebRole".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return HostingResources.WebRole;
-            }
-            if ("WorkerRole".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return HostingResources.WorkerRole;
-            }
-            if ("WebRole|WorkerRole".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return HostingResources.WebOrWorkerRole;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type HostingResources to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string HostingResourcesToString(HostingResources value)
-        {
-            if (value == HostingResources.WebRole)
-            {
-                return "WebRole";
-            }
-            if (value == HostingResources.WorkerRole)
-            {
-                return "WorkerRole";
-            }
-            if (value == HostingResources.WebOrWorkerRole)
-            {
-                return "WebRole|WorkerRole";
             }
             throw new ArgumentOutOfRangeException("value");
         }

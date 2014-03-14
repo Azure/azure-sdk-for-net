@@ -24,12 +24,18 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
-    public enum HostingResources
+    /// <summary>
+    /// The resource extension status, which can be "Installing", "Ready",
+    /// "NotReady", "Unresponsive"
+    /// </summary>
+    public static partial class ResourceExtensionStatusTypes
     {
-        WebRole = 0,
+        public const string Installing = "Installing";
         
-        WorkerRole = 1,
+        public const string Ready = "Ready";
         
-        WebOrWorkerRole = 2,
+        public const string NorReady = "NorReady";
+        
+        public const string Unresponsive = "Unresponsive";
     }
 }

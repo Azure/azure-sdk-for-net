@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// Parameters supplied to the Capture Virtual Machine operation.
     /// </summary>
-    public partial class VirtualMachineCaptureParameters
+    public partial class VirtualMachineCaptureOSImageParameters
     {
         private PostCaptureAction _postCaptureAction;
         
@@ -84,10 +84,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineCaptureParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// VirtualMachineCaptureOSImageParameters class.
         /// </summary>
-        public VirtualMachineCaptureParameters()
+        public VirtualMachineCaptureOSImageParameters()
         {
         }
     }
