@@ -44,16 +44,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157175.aspx for
     /// more information)
     /// </summary>
-    internal partial class VirtualMachineImageOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IVirtualMachineImageOperations
+    internal partial class VirtualMachineOSImageOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineImageOperations
+        /// Initializes a new instance of the VirtualMachineOSImageOperations
         /// class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal VirtualMachineImageOperations(ComputeManagementClient client)
+        internal VirtualMachineOSImageOperations(ComputeManagementClient client)
         {
             this._client = client;
         }
@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineImageCreateResponse> CreateAsync(VirtualMachineImageCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageCreateResponse> CreateAsync(VirtualMachineOSImageCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -263,11 +263,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineImageCreateResponse result = null;
+                    VirtualMachineOSImageCreateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineImageCreateResponse();
+                    result = new VirtualMachineOSImageCreateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement oSImageElement2 = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
@@ -492,7 +492,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -571,7 +571,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine image associated with your subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineImageGetResponse> GetAsync(string imageName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageGetResponse> GetAsync(string imageName, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -602,7 +602,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -635,11 +635,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineImageGetResponse result = null;
+                    VirtualMachineOSImageGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineImageGetResponse();
+                    result = new VirtualMachineOSImageGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement oSImageElement = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
@@ -827,7 +827,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List OS Images operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineImageListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -853,7 +853,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -886,11 +886,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineImageListResponse result = null;
+                    VirtualMachineOSImageListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineImageListResponse();
+                    result = new VirtualMachineOSImageListResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement imagesSequenceElement = responseDoc.Element(XName.Get("Images", "http://schemas.microsoft.com/windowsazure"));
@@ -898,7 +898,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     {
                         foreach (XElement imagesElement in imagesSequenceElement.Elements(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure")))
                         {
-                            VirtualMachineImageListResponse.VirtualMachineImage oSImageInstance = new VirtualMachineImageListResponse.VirtualMachineImage();
+                            VirtualMachineOSImageListResponse.VirtualMachineOSImage oSImageInstance = new VirtualMachineOSImageListResponse.VirtualMachineOSImage();
                             result.Images.Add(oSImageInstance);
                             
                             XElement affinityGroupElement = imagesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
@@ -1083,7 +1083,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineImageUpdateResponse> UpdateAsync(string imageName, VirtualMachineImageUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageUpdateResponse> UpdateAsync(string imageName, VirtualMachineOSImageUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -1123,7 +1123,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1238,11 +1238,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                     
                     // Create Result
-                    VirtualMachineImageUpdateResponse result = null;
+                    VirtualMachineOSImageUpdateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineImageUpdateResponse();
+                    result = new VirtualMachineOSImageUpdateResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement oSImageElement2 = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));

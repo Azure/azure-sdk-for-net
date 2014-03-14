@@ -84,6 +84,49 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._description = value; }
             }
             
+            private Uri _eula;
+            
+            /// <summary>
+            /// URI string pointing to the EULA (End User License Agreement) of
+            /// this version of extension. This is optionally specified by the
+            /// third-party publishing the extension instead of Windows Azure,
+            /// at the time of extension creation or update.
+            /// </summary>
+            public Uri Eula
+            {
+                get { return this._eula; }
+                set { this._eula = value; }
+            }
+            
+            private Uri _homepageUri;
+            
+            /// <summary>
+            /// URI string pointing to the homepage of this version of
+            /// extension. This is optionally specified by the third-party
+            /// publishing the extension instead of Windows Azure, at the time
+            /// of extension creation or update.
+            /// </summary>
+            public Uri HomepageUri
+            {
+                get { return this._homepageUri; }
+                set { this._homepageUri = value; }
+            }
+            
+            private bool _isJsonExtension;
+            
+            /// <summary>
+            /// Boolean property indicating whether the extension accepts JSON
+            /// or XML based configuration. If this property is 'true' then
+            /// the extension accepts JSON based configuration. If this
+            /// property is 'false' the extension accepts XML based
+            /// confihuration.
+            /// </summary>
+            public bool IsJsonExtension
+            {
+                get { return this._isJsonExtension; }
+                set { this._isJsonExtension = value; }
+            }
+            
             private string _label;
             
             /// <summary>
@@ -104,6 +147,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._name; }
                 set { this._name = value; }
+            }
+            
+            private Uri _privacyUri;
+            
+            /// <summary>
+            /// URI string pointing to the privacy document of this version of
+            /// extension. This is optionally specified by the third-party
+            /// publishing the extension instead of Windows Azure, at the time
+            /// of extension creation or update.
+            /// </summary>
+            public Uri PrivacyUri
+            {
+                get { return this._privacyUri; }
+                set { this._privacyUri = value; }
             }
             
             private string _privateConfigurationSchema;
@@ -138,6 +195,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._publisher; }
                 set { this._publisher = value; }
+            }
+            
+            private bool _replicationCompleted;
+            
+            /// <summary>
+            /// Boolean flag indicating whether this version of extension has
+            /// been replicated to all regions or not. If true, then the given
+            /// extension version can be used in creating or updating
+            /// deployments. Otherwise, the given extension version might
+            /// cause failure in creating or updating deployments. The typical
+            /// time is 20 minutes for a newly-registered or newly-updated
+            /// extension to replicate completely by Windows Azure.
+            /// </summary>
+            public bool ReplicationCompleted
+            {
+                get { return this._replicationCompleted; }
+                set { this._replicationCompleted = value; }
             }
             
             private string _sampleConfig;

@@ -25,51 +25,37 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Required. Specifies the key, value, and type of the parameter.
+    /// This object encapsulates localized status message from the Guest Agent.
     /// </summary>
-    public partial class ResourceExtensionParameterValue
+    public partial class FormattedMessage
     {
-        private string _key;
+        private string _language;
         
         /// <summary>
-        /// Key
+        /// Language code. Eg. "en-US"
         /// </summary>
-        public string Key
+        public string Language
         {
-            get { return this._key; }
-            set { this._key = value; }
+            get { return this._language; }
+            set { this._language = value; }
         }
         
-        private string _type;
+        private string _message;
         
         /// <summary>
-        /// Optional. Public | Private. If this value is set to Private, the
-        /// parameter will not be returned by Get Deployment. You can only
-        /// specify one public parameter and one private parameter for a
-        /// maximum of two parameters.
+        /// A string containing message about status of the Guest Agent, or
+        /// Resource Extension.
         /// </summary>
-        public string Type
+        public string Message
         {
-            get { return this._type; }
-            set { this._type = value; }
-        }
-        
-        private string _value;
-        
-        /// <summary>
-        /// Value
-        /// </summary>
-        public string Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._message; }
+            set { this._message = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceExtensionParameterValue
-        /// class.
+        /// Initializes a new instance of the FormattedMessage class.
         /// </summary>
-        public ResourceExtensionParameterValue()
+        public FormattedMessage()
         {
         }
     }

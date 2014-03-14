@@ -25,13 +25,12 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Known values for the operating system type of the OS in a virtual
-    /// machine image.
+    /// The guest agent status, which can be: "Ready" or "NotReady"
     /// </summary>
-    public static partial class VirtualMachineImageOperatingSystemType
+    public static partial class GuestAgentStatusTypes
     {
-        public const string Linux = "Linux";
+        public const string Ready = "Ready";
         
-        public const string Windows = "Windows";
+        public const string NotReady = "NotReady";
     }
 }

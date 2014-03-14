@@ -21,18 +21,46 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Virtual Machine Image operation.
+    /// A virtual machine image associated with your subscription.
     /// </summary>
-    public partial class VirtualMachineImageCreateParameters
+    public partial class VirtualMachineOSImageGetResponse : OperationResponse
     {
+        private string _affinityGroup;
+        
+        /// <summary>
+        /// The affinity in which the media is located. The AffinityGroup value
+        /// is derived from storage account that contains the blob in which
+        /// the media is located. If the storage account does not belong to an
+        /// affinity group the value is NULL and the element is not displayed
+        /// in the response.  This value is NULL for platform images.
+        /// </summary>
+        public string AffinityGroup
+        {
+            get { return this._affinityGroup; }
+            set { this._affinityGroup = value; }
+        }
+        
+        private string _category;
+        
+        /// <summary>
+        /// The repository classification of the image. All user images have
+        /// the category User.
+        /// </summary>
+        public string Category
+        {
+            get { return this._category; }
+            set { this._category = value; }
+        }
+        
         private string _description;
         
         /// <summary>
-        /// Optional. Specifies the description of the OS image.
+        /// Specifies the description of the image.
         /// </summary>
         public string Description
         {
@@ -43,10 +71,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _eula;
         
         /// <summary>
-        /// Optional. Specifies the End User License Agreement that is
-        /// associated with the image. The value for this element is a string,
-        /// but it is recommended that the value be a URL that points to a
-        /// EULA.
+        /// Specifies the End User License Agreement that is associated with
+        /// the image. The value for this element is a string, but it is
+        /// recommended that the value be a URL that points to a EULA.
         /// </summary>
         public string Eula
         {
@@ -57,8 +84,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _iconUri;
         
         /// <summary>
-        /// Optional. Specifies the Uri to the icon that is displayed for the
-        /// image in the Management Portal.
+        /// Provides the URI to the icon for this Operating System Image.
         /// </summary>
         public Uri IconUri
         {
@@ -69,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _imageFamily;
         
         /// <summary>
-        /// Optional. Specifies a value that can be used to group OS images.
+        /// Specifies a value that can be used to group images.
         /// </summary>
         public string ImageFamily
         {
@@ -77,14 +103,15 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._imageFamily = value; }
         }
         
-        private bool _isPremium;
+        private bool? _isPremium;
         
         /// <summary>
-        /// Indicates if the image contains software or associated services
-        /// that will incur charges above the core price for the virtual
-        /// machine.
+        /// Indicates whether the image contains software or associated
+        /// services that will incur charges above the core price for the
+        /// virtual machine. For additional details, see the PricingDetailLink
+        /// element.
         /// </summary>
-        public bool IsPremium
+        public bool? IsPremium
         {
             get { return this._isPremium; }
             set { this._isPremium = value; }
@@ -93,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// Required. Specifies the friendly name of the image.
+        /// An identifier for the image.
         /// </summary>
         public string Label
         {
@@ -113,14 +140,40 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._language = value; }
         }
         
+        private string _location;
+        
+        /// <summary>
+        /// The geo-location in which this media is located. The Location value
+        /// is derived from storage account that contains the blob in which
+        /// the media is located. If the storage account belongs to an
+        /// affinity group the value is NULL.  If the version is set to
+        /// 2012-08-01 or later, the locations are returned for platform
+        /// images; otherwise, this value is NULL for platform images.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private double _logicalSizeInGB;
+        
+        /// <summary>
+        /// The size, in GB, of the image.
+        /// </summary>
+        public double LogicalSizeInGB
+        {
+            get { return this._logicalSizeInGB; }
+            set { this._logicalSizeInGB = value; }
+        }
+        
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// Required. Specifies the location of the blob in Windows Azure
-        /// storage. The blob location must belong to a storage account in the
-        /// subscription specified by the SubscriptionId value in the
-        /// operation call.  Example:
-        /// http://example.blob.core.windows.net/disks/mydisk.vhd
+        /// The location of the blob in Windows Azure storage. The blob
+        /// location belongs to a storage account in the subscription
+        /// specified by the SubscriptionId value in the operation call.
+        /// Example: http://example.blob.core.windows.net/disks/myimage.vhd
         /// </summary>
         public Uri MediaLinkUri
         {
@@ -131,8 +184,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Required. Specifies a name that Windows Azure uses to identify the
-        /// image when creating one or more virtual machines.
+        /// The name of the operating system image. This is the name that is
+        /// used when creating one or more virtual machines using the image.
         /// </summary>
         public string Name
         {
@@ -143,8 +196,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _operatingSystemType;
         
         /// <summary>
-        /// Required. The operating system type of the OS image. Possible
-        /// values are: Linux, Windows.
+        /// The operating system type of the OS image. Possible values are:
+        /// Linux, Windows.
         /// </summary>
         public string OperatingSystemType
         {
@@ -155,8 +208,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _privacyUri;
         
         /// <summary>
-        /// Optional. Specifies the URI that points to a document that contains
-        /// the privacy policy related to the OS image.
+        /// Specifies the URI that points to a document that contains the
+        /// privacy policy related to the image.
         /// </summary>
         public Uri PrivacyUri
         {
@@ -164,16 +217,26 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._privacyUri = value; }
         }
         
-        private System.DateTime? _publishedDate;
+        private DateTime _publishedDate;
         
         /// <summary>
-        /// Optional. Specifies the date when the OS image was added to the
-        /// image repository.
+        /// Specifies the date when the image was added to the image repository.
         /// </summary>
-        public System.DateTime? PublishedDate
+        public DateTime PublishedDate
         {
             get { return this._publishedDate; }
             set { this._publishedDate = value; }
+        }
+        
+        private string _publisherName;
+        
+        /// <summary>
+        /// The name of the publisher of this OS Image in Windows Azure.
+        /// </summary>
+        public string PublisherName
+        {
+            get { return this._publisherName; }
+            set { this._publisherName = value; }
         }
         
         private string _recommendedVMSize;
@@ -188,12 +251,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._recommendedVMSize = value; }
         }
         
-        private bool _showInGui;
+        private bool? _showInGui;
         
         /// <summary>
-        /// Specifies whether the image should appear in the image gallery.
+        /// Indicates whther the image should be shown in the windows azure
+        /// portal.
         /// </summary>
-        public bool ShowInGui
+        public bool? ShowInGui
         {
             get { return this._showInGui; }
             set { this._showInGui = value; }
@@ -214,10 +278,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// VirtualMachineImageCreateParameters class.
+        /// Initializes a new instance of the VirtualMachineOSImageGetResponse
+        /// class.
         /// </summary>
-        public VirtualMachineImageCreateParameters()
+        public VirtualMachineOSImageGetResponse()
         {
         }
     }

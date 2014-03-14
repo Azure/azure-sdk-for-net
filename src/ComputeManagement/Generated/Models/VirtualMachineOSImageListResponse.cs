@@ -30,32 +30,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List OS Images operation response.
     /// </summary>
-    public partial class VirtualMachineImageListResponse : OperationResponse, IEnumerable<VirtualMachineImageListResponse.VirtualMachineImage>
+    public partial class VirtualMachineOSImageListResponse : OperationResponse, IEnumerable<VirtualMachineOSImageListResponse.VirtualMachineOSImage>
     {
-        private IList<VirtualMachineImageListResponse.VirtualMachineImage> _images;
+        private IList<VirtualMachineOSImageListResponse.VirtualMachineOSImage> _images;
         
         /// <summary>
         /// The virtual machine images associated with your subscription.
         /// </summary>
-        public IList<VirtualMachineImageListResponse.VirtualMachineImage> Images
+        public IList<VirtualMachineOSImageListResponse.VirtualMachineOSImage> Images
         {
             get { return this._images; }
             set { this._images = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineImageListResponse
+        /// Initializes a new instance of the VirtualMachineOSImageListResponse
         /// class.
         /// </summary>
-        public VirtualMachineImageListResponse()
+        public VirtualMachineOSImageListResponse()
         {
-            this._images = new List<VirtualMachineImageListResponse.VirtualMachineImage>();
+            this._images = new List<VirtualMachineOSImageListResponse.VirtualMachineOSImage>();
         }
         
         /// <summary>
         /// Gets the sequence of Images.
         /// </summary>
-        public IEnumerator<VirtualMachineImageListResponse.VirtualMachineImage> GetEnumerator()
+        public IEnumerator<VirtualMachineOSImageListResponse.VirtualMachineOSImage> GetEnumerator()
         {
             return this.Images.GetEnumerator();
         }
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// A virtual machine image associated with your subscription.
         /// </summary>
-        public partial class VirtualMachineImage
+        public partial class VirtualMachineOSImage
         {
             private string _affinityGroup;
             
@@ -317,9 +317,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             }
             
             /// <summary>
-            /// Initializes a new instance of the VirtualMachineImage class.
+            /// Initializes a new instance of the VirtualMachineOSImage class.
             /// </summary>
-            public VirtualMachineImage()
+            public VirtualMachineOSImage()
             {
             }
         }

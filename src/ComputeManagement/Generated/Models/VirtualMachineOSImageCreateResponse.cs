@@ -26,25 +26,10 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// A virtual machine image associated with your subscription.
+    /// Parameters returned from the Create Virtual Machine Image operation.
     /// </summary>
-    public partial class VirtualMachineImageGetResponse : OperationResponse
+    public partial class VirtualMachineOSImageCreateResponse : OperationResponse
     {
-        private string _affinityGroup;
-        
-        /// <summary>
-        /// The affinity in which the media is located. The AffinityGroup value
-        /// is derived from storage account that contains the blob in which
-        /// the media is located. If the storage account does not belong to an
-        /// affinity group the value is NULL and the element is not displayed
-        /// in the response.  This value is NULL for platform images.
-        /// </summary>
-        public string AffinityGroup
-        {
-            get { return this._affinityGroup; }
-            set { this._affinityGroup = value; }
-        }
-        
         private string _category;
         
         /// <summary>
@@ -60,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _description;
         
         /// <summary>
-        /// Specifies the description of the image.
+        /// Specifies the description of the OS image.
         /// </summary>
         public string Description
         {
@@ -84,7 +69,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _iconUri;
         
         /// <summary>
-        /// Provides the URI to the icon for this Operating System Image.
+        /// Specifies the Uri to the icon that is displayed for the image in
+        /// the Management Portal.
         /// </summary>
         public Uri IconUri
         {
@@ -95,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _imageFamily;
         
         /// <summary>
-        /// Specifies a value that can be used to group images.
+        /// Specifies a value that can be used to group OS images.
         /// </summary>
         public string ImageFamily
         {
@@ -106,10 +92,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _isPremium;
         
         /// <summary>
-        /// Indicates whether the image contains software or associated
-        /// services that will incur charges above the core price for the
-        /// virtual machine. For additional details, see the PricingDetailLink
-        /// element.
+        /// Indicates if the image contains software or associated services
+        /// that will incur charges above the core price for the virtual
+        /// machine.
         /// </summary>
         public bool? IsPremium
         {
@@ -120,7 +105,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// An identifier for the image.
+        /// Specifies the friendly name of the image.
         /// </summary>
         public string Label
         {
@@ -170,10 +155,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// The location of the blob in Windows Azure storage. The blob
-        /// location belongs to a storage account in the subscription
+        /// Specifies the location of the blob in Windows Azure storage. The
+        /// blob location must belong to a storage account in the subscription
         /// specified by the SubscriptionId value in the operation call.
-        /// Example: http://example.blob.core.windows.net/disks/myimage.vhd
+        /// Example: http://example.blob.core.windows.net/disks/mydisk.vhd
         /// </summary>
         public Uri MediaLinkUri
         {
@@ -184,8 +169,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// The name of the operating system image. This is the name that is
-        /// used when creating one or more virtual machines using the image.
+        /// Specifies a name that Windows Azure uses to identify the image when
+        /// creating one or more virtual machines.
         /// </summary>
         public string Name
         {
@@ -209,7 +194,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Specifies the URI that points to a document that contains the
-        /// privacy policy related to the image.
+        /// privacy policy related to the OS image.
         /// </summary>
         public Uri PrivacyUri
         {
@@ -217,12 +202,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._privacyUri = value; }
         }
         
-        private DateTime _publishedDate;
+        private System.DateTime? _publishedDate;
         
         /// <summary>
-        /// Specifies the date when the image was added to the image repository.
+        /// Specifies the date when the OS image was added to the image
+        /// repository.
         /// </summary>
-        public DateTime PublishedDate
+        public System.DateTime? PublishedDate
         {
             get { return this._publishedDate; }
             set { this._publishedDate = value; }
@@ -231,7 +217,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _publisherName;
         
         /// <summary>
-        /// The name of the publisher of this OS Image in Windows Azure.
+        /// Specifies the name of the publisher of the image.
         /// </summary>
         public string PublisherName
         {
@@ -242,8 +228,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _recommendedVMSize;
         
         /// <summary>
-        /// Optional. Specifies the size to use for the virtual machine that is
-        /// created from the OS image.
+        /// Specifies the size to use for the virtual machine that is created
+        /// from the OS image.
         /// </summary>
         public string RecommendedVMSize
         {
@@ -254,8 +240,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _showInGui;
         
         /// <summary>
-        /// Indicates whther the image should be shown in the windows azure
-        /// portal.
+        /// Specifies whether the image should appear in the image gallery.
         /// </summary>
         public bool? ShowInGui
         {
@@ -278,10 +263,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineImageGetResponse
-        /// class.
+        /// Initializes a new instance of the
+        /// VirtualMachineOSImageCreateResponse class.
         /// </summary>
-        public VirtualMachineImageGetResponse()
+        public VirtualMachineOSImageCreateResponse()
         {
         }
     }

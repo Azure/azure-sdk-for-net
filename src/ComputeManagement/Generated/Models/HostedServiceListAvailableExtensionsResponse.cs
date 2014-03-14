@@ -84,13 +84,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._description = value; }
             }
             
-            private HostingResources _hostingResources;
+            private string _hostingResources;
             
             /// <summary>
             /// The type of resource that supports the extension. This value
             /// can be WebRole, WorkerRole, or WebRole|WorkerRole.
             /// </summary>
-            public HostingResources HostingResources
+            public string HostingResources
             {
                 get { return this._hostingResources; }
                 set { this._hostingResources = value; }
