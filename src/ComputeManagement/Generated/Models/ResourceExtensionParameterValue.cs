@@ -43,9 +43,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _type;
         
         /// <summary>
-        /// If this value is set to Private, the parameter will not be returned
-        /// by Get Deployment. You can only specify one public parameter and
-        /// one private parameter for a maximum of two parameters.
+        /// Optional. Public | Private. If this value is set to Private, the
+        /// parameter will not be returned by Get Deployment. You can only
+        /// specify one public parameter and one private parameter for a
+        /// maximum of two parameters.
         /// </summary>
         public string Type
         {
