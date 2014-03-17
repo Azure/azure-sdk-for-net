@@ -103,8 +103,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -128,10 +139,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 
                 if (parameters.Setting != null)
                 {
-                    JObject settingValue = new JObject();
-                    requestDoc = new JObject();
-                    requestDoc["Setting"] = settingValue;
-                    
                     if (parameters.Setting.Profiles != null)
                     {
                         JArray profilesArray = new JArray();
@@ -291,10 +298,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 }
                             }
                         }
-                        settingValue["Profiles"] = profilesArray;
+                        requestDoc = profilesArray;
                     }
                     
-                    settingValue["Enabled"] = parameters.Setting.Enabled;
+                    requestDoc = new JObject();
+                    requestDoc["Enabled"] = parameters.Setting.Enabled;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -389,8 +397,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -496,8 +515,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

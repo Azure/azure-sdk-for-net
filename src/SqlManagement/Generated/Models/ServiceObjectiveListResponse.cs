@@ -30,15 +30,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// Response containing the list of service objective for a given server.
     /// </summary>
-    public partial class ServiceObjectiveListResponse : OperationResponse, IEnumerable<ServiceObjectiveListResponse.ServiceObjective>
+    public partial class ServiceObjectiveListResponse : OperationResponse, IEnumerable<ServiceObjective>
     {
-        private IList<ServiceObjectiveListResponse.ServiceObjective> _serviceObjectives;
+        private IList<ServiceObjective> _serviceObjectives;
         
         /// <summary>
         /// Gets or sets the list of Service Objectives that are existing in a
         /// server.
         /// </summary>
-        public IList<ServiceObjectiveListResponse.ServiceObjective> ServiceObjectives
+        public IList<ServiceObjective> ServiceObjectives
         {
             get { return this._serviceObjectives; }
             set { this._serviceObjectives = value; }
@@ -50,13 +50,13 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServiceObjectiveListResponse()
         {
-            this._serviceObjectives = new List<ServiceObjectiveListResponse.ServiceObjective>();
+            this._serviceObjectives = new List<ServiceObjective>();
         }
         
         /// <summary>
         /// Gets the sequence of ServiceObjectives.
         /// </summary>
-        public IEnumerator<ServiceObjectiveListResponse.ServiceObjective> GetEnumerator()
+        public IEnumerator<ServiceObjective> GetEnumerator()
         {
             return this.ServiceObjectives.GetEnumerator();
         }
@@ -67,258 +67,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Service objective.
-        /// </summary>
-        public partial class ServiceObjective
-        {
-            private string _description;
-            
-            /// <summary>
-            /// Gets or sets the service objective description.
-            /// </summary>
-            public string Description
-            {
-                get { return this._description; }
-                set { this._description = value; }
-            }
-            
-            private IList<ServiceObjectiveListResponse.ServiceObjective.DimensionSettingResponse> _dimensionSettings;
-            
-            /// <summary>
-            /// Gets or sets the service objective dimension settings.
-            /// </summary>
-            public IList<ServiceObjectiveListResponse.ServiceObjective.DimensionSettingResponse> DimensionSettings
-            {
-                get { return this._dimensionSettings; }
-                set { this._dimensionSettings = value; }
-            }
-            
-            private bool _enabled;
-            
-            /// <summary>
-            /// Gets or sets a value indicating whether the service objective
-            /// is enabled.
-            /// </summary>
-            public bool Enabled
-            {
-                get { return this._enabled; }
-                set { this._enabled = value; }
-            }
-            
-            private string _id;
-            
-            /// <summary>
-            /// Gets or sets the service objective id.
-            /// </summary>
-            public string Id
-            {
-                get { return this._id; }
-                set { this._id = value; }
-            }
-            
-            private bool _isDefault;
-            
-            /// <summary>
-            /// Gets or sets a value indicating whether the service objective
-            /// is the default objective.
-            /// </summary>
-            public bool IsDefault
-            {
-                get { return this._isDefault; }
-                set { this._isDefault = value; }
-            }
-            
-            private bool _isSystem;
-            
-            /// <summary>
-            /// Gets or sets a value indicating whether the service objective
-            /// is a system objective.
-            /// </summary>
-            public bool IsSystem
-            {
-                get { return this._isSystem; }
-                set { this._isSystem = value; }
-            }
-            
-            private string _name;
-            
-            /// <summary>
-            /// Gets or sets the name of the service objective.
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private string _parentLink;
-            
-            /// <summary>
-            /// Gets or sets the ParentLink of the service objective.
-            /// </summary>
-            public string ParentLink
-            {
-                get { return this._parentLink; }
-                set { this._parentLink = value; }
-            }
-            
-            private string _selfLink;
-            
-            /// <summary>
-            /// Gets or sets the SelfLink of the service objective.
-            /// </summary>
-            public string SelfLink
-            {
-                get { return this._selfLink; }
-                set { this._selfLink = value; }
-            }
-            
-            private string _state;
-            
-            /// <summary>
-            /// Gets or sets the state of the service objective.
-            /// </summary>
-            public string State
-            {
-                get { return this._state; }
-                set { this._state = value; }
-            }
-            
-            private string _type;
-            
-            /// <summary>
-            /// Gets or sets the type of resource.
-            /// </summary>
-            public string Type
-            {
-                get { return this._type; }
-                set { this._type = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the ServiceObjective class.
-            /// </summary>
-            public ServiceObjective()
-            {
-                this._dimensionSettings = new List<ServiceObjectiveListResponse.ServiceObjective.DimensionSettingResponse>();
-            }
-            
-            /// <summary>
-            /// Dimension setting.
-            /// </summary>
-            public partial class DimensionSettingResponse
-            {
-                private string _description;
-                
-                /// <summary>
-                /// Gets or sets the dimension setting description.
-                /// </summary>
-                public string Description
-                {
-                    get { return this._description; }
-                    set { this._description = value; }
-                }
-                
-                private string _id;
-                
-                /// <summary>
-                /// Gets or sets the dimension setting id.
-                /// </summary>
-                public string Id
-                {
-                    get { return this._id; }
-                    set { this._id = value; }
-                }
-                
-                private bool _isDefault;
-                
-                /// <summary>
-                /// Gets or sets a value indicating whether the dimension
-                /// setting is the default setting.
-                /// </summary>
-                public bool IsDefault
-                {
-                    get { return this._isDefault; }
-                    set { this._isDefault = value; }
-                }
-                
-                private string _name;
-                
-                /// <summary>
-                /// Gets or sets the name of the dimension setting.
-                /// </summary>
-                public string Name
-                {
-                    get { return this._name; }
-                    set { this._name = value; }
-                }
-                
-                private byte _ordinal;
-                
-                /// <summary>
-                /// Gets or sets the dimension setting ordinal position.
-                /// </summary>
-                public byte Ordinal
-                {
-                    get { return this._ordinal; }
-                    set { this._ordinal = value; }
-                }
-                
-                private string _parentLink;
-                
-                /// <summary>
-                /// Gets or sets the ParentLink of the dimension setting.
-                /// </summary>
-                public string ParentLink
-                {
-                    get { return this._parentLink; }
-                    set { this._parentLink = value; }
-                }
-                
-                private string _selfLink;
-                
-                /// <summary>
-                /// Gets or sets the SelfLink of the dimension setting.
-                /// </summary>
-                public string SelfLink
-                {
-                    get { return this._selfLink; }
-                    set { this._selfLink = value; }
-                }
-                
-                private string _state;
-                
-                /// <summary>
-                /// Gets or sets the state of the dimension setting.
-                /// </summary>
-                public string State
-                {
-                    get { return this._state; }
-                    set { this._state = value; }
-                }
-                
-                private string _type;
-                
-                /// <summary>
-                /// Gets or sets the type of resource.
-                /// </summary>
-                public string Type
-                {
-                    get { return this._type; }
-                    set { this._type = value; }
-                }
-                
-                /// <summary>
-                /// Initializes a new instance of the DimensionSettingResponse
-                /// class.
-                /// </summary>
-                public DimensionSettingResponse()
-                {
-                }
-            }
         }
     }
 }

@@ -31,14 +31,14 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class FirewallRuleListResponse : OperationResponse, IEnumerable<FirewallRuleListResponse.FirewallRule>
+    public partial class FirewallRuleListResponse : OperationResponse, IEnumerable<FirewallRule>
     {
-        private IList<FirewallRuleListResponse.FirewallRule> _firewallRules;
+        private IList<FirewallRule> _firewallRules;
         
         /// <summary>
         /// Gets or sets the firewall rules for this SQL Database Server.
         /// </summary>
-        public IList<FirewallRuleListResponse.FirewallRule> FirewallRules
+        public IList<FirewallRule> FirewallRules
         {
             get { return this._firewallRules; }
             set { this._firewallRules = value; }
@@ -49,13 +49,13 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public FirewallRuleListResponse()
         {
-            this._firewallRules = new List<FirewallRuleListResponse.FirewallRule>();
+            this._firewallRules = new List<FirewallRule>();
         }
         
         /// <summary>
         /// Gets the sequence of FirewallRules.
         /// </summary>
-        public IEnumerator<FirewallRuleListResponse.FirewallRule> GetEnumerator()
+        public IEnumerator<FirewallRule> GetEnumerator()
         {
             return this.FirewallRules.GetEnumerator();
         }
@@ -66,63 +66,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Firewall rule.
-        /// </summary>
-        public partial class FirewallRule
-        {
-            private string _endIPAddress;
-            
-            /// <summary>
-            /// Gets or sets the ending IP address applied to this rule.
-            /// </summary>
-            public string EndIPAddress
-            {
-                get { return this._endIPAddress; }
-                set { this._endIPAddress = value; }
-            }
-            
-            private string _name;
-            
-            /// <summary>
-            /// Gets or sets the name of the Firewall Rule.
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private string _startIPAddress;
-            
-            /// <summary>
-            /// Gets or sets the beginning IP address applied to this rule.
-            /// </summary>
-            public string StartIPAddress
-            {
-                get { return this._startIPAddress; }
-                set { this._startIPAddress = value; }
-            }
-            
-            private string _type;
-            
-            /// <summary>
-            /// Gets or sets the type of resource.
-            /// </summary>
-            public string Type
-            {
-                get { return this._type; }
-                set { this._type = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the FirewallRule class.
-            /// </summary>
-            public FirewallRule()
-            {
-            }
         }
     }
 }
