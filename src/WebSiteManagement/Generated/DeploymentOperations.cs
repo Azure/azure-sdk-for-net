@@ -94,7 +94,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/" + deploymentId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -352,7 +363,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId + "/log/" + deploymentLogId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/" + deploymentId + "/log/" + deploymentLogId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -500,7 +522,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -509,6 +532,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -769,7 +802,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId + "/log";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/" + deploymentId + "/log";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -778,6 +812,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -936,7 +980,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/" + deploymentId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

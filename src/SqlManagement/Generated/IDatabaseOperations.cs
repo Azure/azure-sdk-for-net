@@ -47,8 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response containing the database create response.
         /// </returns>
         Task<DatabaseCreateResponse> CreateAsync(string serverName, DatabaseCreateParameters parameters, CancellationToken cancellationToken);
         
@@ -85,10 +84,30 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
+        /// Response containing the database get response.
+        /// </returns>
+        Task<DatabaseGetResponse> GetAsync(string serverName, string databaseName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns information about a SQL Server database event logs.
+        /// </summary>
+        /// <param name='serverName'>
+        /// The name of the SQL Server on which the database is housed.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the SQL Server database to be obtained.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters for the get event logs database operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<DatabaseGetResponse> GetAsync(string serverName, string databaseName, CancellationToken cancellationToken);
+        Task<DatabaseGetEventLogsResponse> GetEventLogsAsync(string serverName, string databaseName, DatabaseGetEventLogsParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns the list SQL Server databases.
@@ -120,8 +139,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response containing the database update response.
         /// </returns>
         Task<DatabaseUpdateResponse> UpdateAsync(string serverName, string databaseName, DatabaseUpdateParameters parameters, CancellationToken cancellationToken);
     }

@@ -22,68 +22,21 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// Response containing the firewall rule create response.
     /// </summary>
     public partial class FirewallRuleCreateResponse : OperationResponse
     {
-        private string _endIPAddress;
+        private FirewallRule _firewallRule;
         
-        /// <summary>
-        /// Gets or sets the ending IP address applied to this rule.
-        /// </summary>
-        public string EndIPAddress
+        public FirewallRule FirewallRule
         {
-            get { return this._endIPAddress; }
-            set { this._endIPAddress = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Gets or sets the name of the Firewall Rule.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _startIPAddress;
-        
-        /// <summary>
-        /// Gets or sets the beginning IP address applied to this rule.
-        /// </summary>
-        public string StartIPAddress
-        {
-            get { return this._startIPAddress; }
-            set { this._startIPAddress = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Gets or sets the state of the rule.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Gets or sets the type of resource.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._firewallRule; }
+            set { this._firewallRule = value; }
         }
         
         /// <summary>

@@ -56,8 +56,7 @@ namespace Microsoft.WindowsAzure
         /// Parameters for the Create Firewall Rule operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response containing the firewall rule create response.
         /// </returns>
         public static FirewallRuleCreateResponse Create(this IFirewallRuleOperations operations, string serverName, FirewallRuleCreateParameters parameters)
         {
@@ -96,8 +95,7 @@ namespace Microsoft.WindowsAzure
         /// Parameters for the Create Firewall Rule operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response containing the firewall rule create response.
         /// </returns>
         public static Task<FirewallRuleCreateResponse> CreateAsync(this IFirewallRuleOperations operations, string serverName, FirewallRuleCreateParameters parameters)
         {
@@ -249,8 +247,7 @@ namespace Microsoft.WindowsAzure
         /// Parameters for the Update Firewall Rule operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response containing the firewall rule update response.
         /// </returns>
         public static FirewallRuleUpdateResponse Update(this IFirewallRuleOperations operations, string serverName, string ruleName, FirewallRuleUpdateParameters parameters)
         {
@@ -292,8 +289,7 @@ namespace Microsoft.WindowsAzure
         /// Parameters for the Update Firewall Rule operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response containing the firewall rule update response.
         /// </returns>
         public static Task<FirewallRuleUpdateResponse> UpdateAsync(this IFirewallRuleOperations operations, string serverName, string ruleName, FirewallRuleUpdateParameters parameters)
         {

@@ -114,7 +114,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -303,7 +314,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -434,7 +456,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -633,9 +666,20 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/?";
             url = url + "op=checknameavailability";
             url = url + "&resourceName=" + Uri.EscapeUriString(jobCollectionName);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -965,7 +1009,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/~/JobCollections/" + jobCollectionName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/~/JobCollections/" + jobCollectionName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1047,13 +1102,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             result.SchemaVersion = schemaVersionInstance;
                         }
                         
-                        XElement planElement = resourceElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                        if (planElement != null && planElement.IsEmpty == false)
-                        {
-                            string planInstance = planElement.Value;
-                            result.Plan = planInstance;
-                        }
-                        
                         XElement promotionCodeElement = resourceElement.Element(XName.Get("PromotionCode", "http://schemas.microsoft.com/windowsazure"));
                         if (promotionCodeElement != null && promotionCodeElement.IsEmpty == false)
                         {
@@ -1067,11 +1115,11 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             JobCollectionIntrinsicSettings intrinsicSettingsInstance = new JobCollectionIntrinsicSettings();
                             result.IntrinsicSettings = intrinsicSettingsInstance;
                             
-                            XElement planElement2 = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                            if (planElement2 != null && planElement2.IsEmpty == false)
+                            XElement planElement = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                            if (planElement != null && planElement.IsEmpty == false)
                             {
-                                JobCollectionPlan planInstance2 = (JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement2.Value, true);
-                                intrinsicSettingsInstance.Plan = planInstance2;
+                                JobCollectionPlan planInstance = (JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement.Value, true);
+                                intrinsicSettingsInstance.Plan = planInstance;
                             }
                             
                             XElement quotaElement = intrinsicSettingsElement.Element(XName.Get("Quota", "http://schemas.microsoft.com/windowsazure"));

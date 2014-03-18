@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._hostCaching = value; }
         }
         
-        private int _logicalDiskSizeInGB;
+        private int? _logicalDiskSizeInGB;
         
         /// <summary>
         /// Specifies the size, in GB, of an empty VHD to be attached to the
@@ -64,7 +64,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// preference and attaches the newly created VHD to the virtual
         /// machine.
         /// </summary>
-        public int LogicalDiskSizeInGB
+        public int? LogicalDiskSizeInGB
         {
             get { return this._logicalDiskSizeInGB; }
             set { this._logicalDiskSizeInGB = value; }
@@ -87,7 +87,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLink;
         
         /// <summary>
-        /// Specifies the location of the disk in Windows Azure storage.
+        /// Optional. If the disk that is being added is already registered in
+        /// the subscription or the VHD for the disk already exists in blob
+        /// storage, this element is ignored. If a VHD file does not exist in
+        /// blob storage, this element defines the location of the new VHD
+        /// that is created when the new disk is added. Example:
+        /// http://example.blob.core.windows.net/disks/mydatadisk.vhd
         /// </summary>
         public Uri MediaLink
         {
@@ -105,6 +110,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._name; }
             set { this._name = value; }
+        }
+        
+        private Uri _sourceMediaLink;
+        
+        /// <summary>
+        /// Optional. If the disk that is being added is already registered in
+        /// the subscription or the VHD for the disk does not exist in blob
+        /// storage, this element is ignored. If the VHD file exists in blob
+        /// storage, this element defines the path to the VHD and a disk is
+        /// registered from it and attached to the virtual machine.
+        /// </summary>
+        public Uri SourceMediaLink
+        {
+            get { return this._sourceMediaLink; }
+            set { this._sourceMediaLink = value; }
         }
         
         /// <summary>
