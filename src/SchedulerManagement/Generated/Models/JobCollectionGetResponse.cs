@@ -87,17 +87,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             set { this._name = value; }
         }
         
-        private string _plan;
-        
-        /// <summary>
-        /// The plan of the resource.
-        /// </summary>
-        public string Plan
-        {
-            get { return this._plan; }
-            set { this._plan = value; }
-        }
-        
         private string _promotionCode;
         
         /// <summary>

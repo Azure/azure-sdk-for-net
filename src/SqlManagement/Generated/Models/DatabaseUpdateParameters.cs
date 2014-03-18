@@ -62,12 +62,12 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._id = value; }
         }
         
-        private long _maximumDatabaseSizeInGB;
+        private int _maximumDatabaseSizeInGB;
         
         /// <summary>
         /// Gets or sets the maximum size of this database, in Gigabytes.
         /// </summary>
-        public long MaximumDatabaseSizeInGB
+        public int MaximumDatabaseSizeInGB
         {
             get { return this._maximumDatabaseSizeInGB; }
             set { this._maximumDatabaseSizeInGB = value; }
