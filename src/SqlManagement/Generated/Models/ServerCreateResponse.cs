@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serverName;
         
         /// <summary>
-        /// Gets or sets the name of the server that was created.
+        /// Optional. Gets or sets the name of the server that was created.
         /// </summary>
         public string ServerName
         {

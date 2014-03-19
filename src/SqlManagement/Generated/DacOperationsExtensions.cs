@@ -45,10 +45,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being exported from.
+        /// Required. The name of the server being exported from.
         /// </param>
         /// <param name='parameters'>
-        /// Export parameters.
+        /// Optional. Export parameters.
         /// </param>
         /// <returns>
         /// Response for an DAC Import/Export request.
@@ -80,10 +80,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being exported from.
+        /// Required. The name of the server being exported from.
         /// </param>
         /// <param name='parameters'>
-        /// Export parameters.
+        /// Optional. Export parameters.
         /// </param>
         /// <returns>
         /// Response for an DAC Import/Export request.
@@ -101,19 +101,19 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server.
+        /// Required. The name of the server.
         /// </param>
         /// <param name='fullyQualifiedServerName'>
-        /// The fully qualified name of the server.
+        /// Required. The fully qualified name of the server.
         /// </param>
         /// <param name='username'>
-        /// The server's username.
+        /// Required. The server's username.
         /// </param>
         /// <param name='password'>
-        /// The server's password.
+        /// Required. The server's password.
         /// </param>
         /// <param name='requestId'>
-        /// The request ID of the operation being queried.
+        /// Required. The request ID of the operation being queried.
         /// </param>
         /// <returns>
         /// The response structure for the DAC GetStatus operation.
@@ -145,19 +145,19 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server.
+        /// Required. The name of the server.
         /// </param>
         /// <param name='fullyQualifiedServerName'>
-        /// The fully qualified name of the server.
+        /// Required. The fully qualified name of the server.
         /// </param>
         /// <param name='username'>
-        /// The server's username.
+        /// Required. The server's username.
         /// </param>
         /// <param name='password'>
-        /// The server's password.
+        /// Required. The server's password.
         /// </param>
         /// <param name='requestId'>
-        /// The request ID of the operation being queried.
+        /// Required. The request ID of the operation being queried.
         /// </param>
         /// <returns>
         /// The response structure for the DAC GetStatus operation.
@@ -175,10 +175,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being imported to.
+        /// Required. The name of the server being imported to.
         /// </param>
         /// <param name='parameters'>
-        /// Import parameters.
+        /// Optional. Import parameters.
         /// </param>
         /// <returns>
         /// Response for an DAC Import/Export request.
@@ -210,10 +210,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server being imported to.
+        /// Required. The name of the server being imported to.
         /// </param>
         /// <param name='parameters'>
-        /// Import parameters.
+        /// Optional. Import parameters.
         /// </param>
         /// <returns>
         /// Response for an DAC Import/Export request.

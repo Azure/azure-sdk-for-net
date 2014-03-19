@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _collationName;
         
         /// <summary>
-        /// Gets or sets the database resource's collation name.
+        /// Optional. Gets or sets the database resource's collation name.
         /// </summary>
         public string CollationName
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DateTime _creationDate;
         
         /// <summary>
-        /// Gets or sets the date this database was created.
+        /// Optional. Gets or sets the date this database was created.
         /// </summary>
         public DateTime CreationDate
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _edition;
         
         /// <summary>
-        /// Gets or sets the database resource's edition.
+        /// Optional. Gets or sets the database resource's edition.
         /// </summary>
         public string Edition
         {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _id;
         
         /// <summary>
-        /// Gets or sets the id of the database.
+        /// Optional. Gets or sets the id of the database.
         /// </summary>
         public int Id
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isFederationRoot;
         
         /// <summary>
-        /// Gets or sets a value indicating whether the database is a
+        /// Optional. Gets or sets a value indicating whether the database is a
         /// federation root.
         /// </summary>
         public bool IsFederationRoot
@@ -88,8 +88,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isSystemObject;
         
         /// <summary>
-        /// Gets or sets a value indicating whether the database is a system
-        /// object.
+        /// Optional. Gets or sets a value indicating whether the database is a
+        /// system object.
         /// </summary>
         public bool IsSystemObject
         {
@@ -100,7 +100,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _maximumDatabaseSizeInGB;
         
         /// <summary>
-        /// Gets or sets the maximum size of this database, in Gigabytes.
+        /// Optional. Gets or sets the maximum size of this database, in
+        /// Gigabytes.
         /// </summary>
         public int MaximumDatabaseSizeInGB
         {
@@ -111,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// Gets or sets the name of the database.
+        /// Optional. Gets or sets the name of the database.
         /// </summary>
         public string Name
         {
@@ -122,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveAssignmentErrorCode;
         
         /// <summary>
-        /// Gets or sets the error code for this service objective.
+        /// Optional. Gets or sets the error code for this service objective.
         /// </summary>
         public string ServiceObjectiveAssignmentErrorCode
         {
@@ -133,7 +134,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveAssignmentErrorDescription;
         
         /// <summary>
-        /// Gets or sets the error description, if any.
+        /// Optional. Gets or sets the error description, if any.
         /// </summary>
         public string ServiceObjectiveAssignmentErrorDescription
         {
@@ -144,7 +145,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveAssignmentState;
         
         /// <summary>
-        /// Gets or sets the state of the current assignment.
+        /// Optional. Gets or sets the state of the current assignment.
         /// </summary>
         public string ServiceObjectiveAssignmentState
         {
@@ -155,7 +156,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveAssignmentStateDescription;
         
         /// <summary>
-        /// Gets or sets the state description.
+        /// Optional. Gets or sets the state description.
         /// </summary>
         public string ServiceObjectiveAssignmentStateDescription
         {
@@ -166,7 +167,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveAssignmentSuccessDate;
         
         /// <summary>
-        /// Gets or sets the date the service's assignment succeeded.
+        /// Optional. Gets or sets the date the service's assignment succeeded.
         /// </summary>
         public string ServiceObjectiveAssignmentSuccessDate
         {
@@ -177,7 +178,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveId;
         
         /// <summary>
-        /// Gets or sets the id of this service objective.
+        /// Optional. Gets or sets the id of this service objective.
         /// </summary>
         public string ServiceObjectiveId
         {
@@ -188,7 +189,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _sizeMB;
         
         /// <summary>
-        /// Gets or sets the size of this database in megabytes (MB).
+        /// Optional. Gets or sets the size of this database in megabytes (MB).
         /// </summary>
         public string SizeMB
         {
@@ -199,7 +200,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _state;
         
         /// <summary>
-        /// Gets or sets the state of the database.
+        /// Optional. Gets or sets the state of the database.
         /// </summary>
         public string State
         {
@@ -210,7 +211,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _type;
         
         /// <summary>
-        /// Gets or sets the type of resource.
+        /// Optional. Gets or sets the type of resource.
         /// </summary>
         public string Type
         {

@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _endIPAddress;
         
         /// <summary>
-        /// Gets or sets the ending IP address applied to this rule.
+        /// Optional. Gets or sets the ending IP address applied to this rule.
         /// </summary>
         public string EndIPAddress
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// Gets or sets the name of the Firewall Rule.
+        /// Optional. Gets or sets the name of the Firewall Rule.
         /// </summary>
         public string Name
         {
@@ -54,7 +54,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _startIPAddress;
         
         /// <summary>
-        /// Gets or sets the beginning IP address applied to this rule.
+        /// Optional. Gets or sets the beginning IP address applied to this
+        /// rule.
         /// </summary>
         public string StartIPAddress
         {
@@ -65,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _type;
         
         /// <summary>
-        /// Gets or sets the type of resource.
+        /// Optional. Gets or sets the type of resource.
         /// </summary>
         public string Type
         {

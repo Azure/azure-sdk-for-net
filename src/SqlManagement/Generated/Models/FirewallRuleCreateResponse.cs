@@ -33,6 +33,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     {
         private FirewallRule _firewallRule;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public FirewallRule FirewallRule
         {
             get { return this._firewallRule; }

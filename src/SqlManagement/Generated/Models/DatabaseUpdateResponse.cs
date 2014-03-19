@@ -33,6 +33,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     {
         private Database _database;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public Database Database
         {
             get { return this._database; }

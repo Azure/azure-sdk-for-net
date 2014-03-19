@@ -49,11 +49,12 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The server that will have the change made to the administrative
-        /// user.
+        /// Required. The server that will have the change made to the
+        /// administrative user.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Manage Administrator Password operation.
+        /// Required. Parameters for the Manage Administrator Password
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -89,11 +90,12 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The server that will have the change made to the administrative
-        /// user.
+        /// Required. The server that will have the change made to the
+        /// administrative user.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Manage Administrator Password operation.
+        /// Required. Parameters for the Manage Administrator Password
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -114,7 +116,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Server operation.
+        /// Required. Parameters supplied to the Create Server operation.
         /// </param>
         /// <returns>
         /// The response returned from the Create Server operation.
@@ -148,7 +150,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Server operation.
+        /// Required. Parameters supplied to the Create Server operation.
         /// </param>
         /// <returns>
         /// The response returned from the Create Server operation.
@@ -168,7 +170,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server to be deleted.
+        /// Required. The name of the server to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -203,7 +205,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server to be deleted.
+        /// Required. The name of the server to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
